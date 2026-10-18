@@ -18,8 +18,8 @@ volta e ricominciare da capo.
 
 | Voce | Priorità | Taglia | Prima di cominciare |
 |---|---|---|---|
-| 20. Le dipendenze | alta | da misurare | una cernita, non un aggiornamento |
 | 19. Le dignità, per scuola | media | grande, a commit piccoli | il primo commit, i domicili, si fa subito |
+| 21. SvelteKit 3 | media | media | Vite 8 e TypeScript 6 vengono con lui |
 | 11. Gli elenchi in più posti | media | piccola | prima del punto 5 |
 | 13. Due semplificazioni | bassa | piccola | niente |
 | 9. Il linter | media | piccola | decidere lo strumento |
@@ -29,10 +29,11 @@ volta e ricominciare da capo.
 | 6. La prosa che invecchia | bassa | piccola | farla insieme al punto 8 |
 | 5. I varga che mancano | non dichiarata | tre lotti | il punto 11; per il D-2, la convenzione |
 | 17. L'astrologia oraria | bassa | la più grande | il punto 19 |
+| 22. Vitest 5 | bassa | piccola | niente, non aspetta la 21 |
 
-L'ordine consigliato è quello della tabella: la cernita delle dipendenze, il
-primo commit delle dignità, che chiude un difetto già presente, poi le voci
-piccole che tolgono copie e righe morte prima che il lavoro grande ci passi
+L'ordine consigliato è quello della tabella: il primo commit delle dignità, che
+chiude un difetto già presente, SvelteKit 3, che toglie l'ultima vulnerabilità
+che arriva a chi usa il programma, poi le voci piccole che tolgono copie e righe morte prima che il lavoro grande ci passi
 sopra.
 
 ## 5. I dieci varga che mancano
@@ -795,51 +796,46 @@ Le tavole contro la fonte, segno per segno e scuola per scuola: è una prova a
 tabella e non chiede effemeridi. Per i domicili, anche il test che
 `tropicale.ts` non dica più «li ricavi dal segno».
 
-## 20. Le dipendenze: ventotto vulnerabilità, e SvelteKit 3
+## 21. SvelteKit 3, e con lui cookie
 
-**Priorità alta, e da guardare per prima:** non per la fretta di aggiornare, ma
-per sapere che cosa arriva davvero a chi usa il programma. La voce prende il
-posto di quella su `cookie@0.6.0` che stava fra le cose esaminate: si chiudeva
-con «da riguardare quando SvelteKit alza la dipendenza», e la condizione si è
-verificata.
+**Priorità media.** È l'ultima vulnerabilità che arriva a chi usa il
+programma: `cookie@0.6.0`, bassa, sotto `@sveltejs/kit` 2.x, il cui runtime
+finisce nel server compilato e quindi anche nel desktop (la stringa d'errore
+di `cookie` si trova in `apps/desktop/bundle/server/server/chunks/`). È la
+voce su `cookie` che stava fra le cose esaminate, chiusa con «da riguardare
+quando SvelteKit alza la dipendenza»: la condizione si è verificata.
 
-Il 18 ottobre 2026 `npm audit` conta **28 vulnerabilità**: 3 basse, 12
-moderate, 10 alte, 3 critiche. Le critiche sono `vitest`, `tinypool` e
-`proxy-addr`; fra le alte ci sono `electron`, `@modelcontextprotocol/sdk`,
-`undici`, `devalue`, `js-yaml`, `fast-uri`, `http-cache-semantics`,
-`source-map-js`, `brace-expansion`, `@xmldom/xmldom`.
+SvelteKit 3.0.0 è uscito il 1° ottobre 2026 e la 3.1.0 il 14, con
+`cookie@^2.0.1`; la linea 2.x (installata la 2.70.3) resta su `cookie@^0.6.0`.
+Non è un salto solo. `@sveltejs/kit@3.1.0` chiede in `peerDependencies`:
 
-SvelteKit 3.0.0 è uscito il 1° ottobre e la 3.1.0 il 14, con `cookie@^2.0.1`;
-la linea 2.x, quella installata (2.70.2), resta su `cookie@^0.6.0`. `npm audit`
-oggi propone `@sveltejs/kit@3.1.0` e `@sveltejs/adapter-node@6.0.0`: due salti
-di versione maggiore, non una correzione.
+- `vite@^8.0.12` (installata la 6.4.3), due versioni maggiori;
+- `@sveltejs/vite-plugin-svelte@^7.0.0` (installata la 5.1.1);
+- `typescript@^6.0.0`, opzionale per npm ma non per noi (installata la 5.9.3,
+  e la usano tutti i workspace, non solo `web`);
+- Node `>=22.17`, più stretto del `≥ 22` scritto in `CLAUDE.md` e nel `README`.
 
-### Il primo passo è una cernita
+E con lui `@sveltejs/adapter-node@6.0.0`, che vuole `kit@^3`.
 
-Per ogni pacchetto, da dove arriva e se raggiunge chi usa il programma:
+Il pool di worker, il service worker e `cache-policy.ts` sono i punti dove
+un cambio del runtime si vede; `pool.test.ts` va fatto girare per primo.
 
-- **Solo sviluppo.** `vitest` e `tinypool` girano nei test e non entrano in
-  nessun pacchetto distribuito: critiche sulla carta, ma sulla macchina di chi
-  sviluppa.
-- **Incorporate nel server compilato.** `npm audit --omit=dev` qui inganna:
-  SvelteKit è una dipendenza di sviluppo, ma il suo runtime finisce nel server
-  compilato. La stringa d'errore di `cookie` si trova in
-  `apps/desktop/bundle/server/server/chunks/`. Ogni vulnerabilità che arrivi da
-  quella catena (`devalue` è il primo candidato, `proxy-addr` va verificato) va
-  trattata come runtime.
-- **Distribuite.** `electron` è dentro l'AppImage; `@modelcontextprotocol/sdk`
-  è il server MCP che i client lanciano.
+Verifica: `npm audit` senza `cookie`, `npm test && npm run typecheck`,
+`npm run build`, la web app in `npm start` e il desktop che parte.
 
-Poi gli aggiornamenti compatibili subito, in un commit; i salti di versione
-maggiore (SvelteKit 3 con adapter-node 6, Electron se serve) come lavori propri,
-ciascuno con la sua voce. Il precedente per Electron è `2977ca0`, «Porta
-Electron alla 43.4.1».
+## 22. Vitest 5
 
-**Non `npm audit fix --force`**: applica tutti i salti maggiori in un colpo, e
-il diff che ne esce non si rilegge.
+**Priorità bassa**, nonostante le due critiche. `vitest` 3.2.7, `tinypool` e
+`@vitest/mocker` girano solo nei test, sulla macchina di chi sviluppa: non
+entrano in nessun pacchetto distribuito. Vitest 5 non dipende più da
+`tinypool`.
 
-Verifica: `npm audit` dopo ciascun passo, `npm test && npm run typecheck`, e la
-build del desktop che parte.
+Si fa da sola, prima o dopo la 21: `vitest@5.0.5` accetta `vite` da `^6.4.0` a
+`^8.0.0`, quindi non aspetta SvelteKit 3. Chiede Node `^22.12.0 || ^24.0.0 ||
+>=26.0.0`. È in due `package.json`, la radice e `apps/web`.
+
+Verifica: `npm audit` senza le tre voci di vitest, e lo stesso numero di test
+verdi di prima in ogni workspace.
 
 ## Deciso, e da non riaprire
 
@@ -874,3 +870,10 @@ che incorpora le Raphael's Tables of Houses)**, su archive.org come
 le latitudini da 22 a 60. L'OCR delle tabelle è illeggibile ma le pagine si
 leggono a vista. Le tavole di Koch (le sue *Häusertabellen* del 1971 e il *Koch
 Book of Tables* di Michelsen) ci sono, ma in prestito, non scaricabili.
+
+**`sprintf-js` sotto `electron-builder`.** `npm audit` lo dà moderato in tutte
+le versioni (`*`), e con lui `roarr`, `global-agent`, `@electron/get` e la
+catena di `app-builder-lib`, che dicono «fix available» ma non ne hanno uno.
+Girano solo quando si costruisce l'AppImage, sulla macchina di chi la
+costruisce, e nell'AppImage non entrano. Da riguardare quando
+`electron-builder` smette di dipendere da `@electron/get@3`.
