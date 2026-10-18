@@ -29,7 +29,6 @@ volta e ricominciare da capo.
 | 6. La prosa che invecchia | bassa | piccola | farla insieme al punto 8 |
 | 5. I varga che mancano | non dichiarata | tre lotti | il punto 11; per il D-2, la convenzione |
 | 17. L'astrologia oraria | bassa | la più grande | il punto 19 |
-| 22. Vitest 5 | bassa | piccola | niente, non aspetta la 21 |
 
 L'ordine consigliato è quello della tabella: il primo commit delle dignità, che
 chiude un difetto già presente, SvelteKit 3, che toglie l'ultima vulnerabilità
@@ -822,20 +821,6 @@ un cambio del runtime si vede; `pool.test.ts` va fatto girare per primo.
 
 Verifica: `npm audit` senza `cookie`, `npm test && npm run typecheck`,
 `npm run build`, la web app in `npm start` e il desktop che parte.
-
-## 22. Vitest 5
-
-**Priorità bassa**, nonostante le due critiche. `vitest` 3.2.7, `tinypool` e
-`@vitest/mocker` girano solo nei test, sulla macchina di chi sviluppa: non
-entrano in nessun pacchetto distribuito. Vitest 5 non dipende più da
-`tinypool`.
-
-Si fa da sola, prima o dopo la 21: `vitest@5.0.5` accetta `vite` da `^6.4.0` a
-`^8.0.0`, quindi non aspetta SvelteKit 3. Chiede Node `^22.12.0 || ^24.0.0 ||
->=26.0.0`. È in due `package.json`, la radice e `apps/web`.
-
-Verifica: `npm audit` senza le tre voci di vitest, e lo stesso numero di test
-verdi di prima in ogni workspace.
 
 ## Deciso, e da non riaprire
 
