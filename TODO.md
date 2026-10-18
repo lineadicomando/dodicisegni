@@ -1,250 +1,44 @@
-# Cosa manca
+# TODO
 
-Lavoro aperto e rimandato di proposito, con dentro quello che serve per
-riprenderlo senza rifare l'indagine che l'ha trovato. Non è un elenco di idee:
-ogni voce è una cosa nota, con il file, la riga e il modo di verificarla.
+Lavoro aperto, con dentro quello che serve per riprenderlo senza rifare
+l'indagine che l'ha trovato. Non è un elenco di idee: ogni voce è una cosa nota,
+con il file, la riga e il modo di verificarla.
 
-In fondo c'è una lista che non è lavoro — roba esaminata e lasciata stare, per
-non ritrovarla una seconda volta e ricominciare da capo.
+I numeri delle voci sono stabili, perché altrove, anche nei messaggi di commit,
+le voci si citano così. Una voce chiusa esce dal file e il suo numero non si
+riusa; quello che aveva da dire o è finito nel codice, nei commenti e nei test,
+o sta in uno dei due elenchi in fondo. L'ultima versione che le contiene tutte,
+chiuse comprese, è `cf5219a`, quando il file si chiamava ancora `ROADMAP.md`.
 
-## 1. Il nome: da undicesimacasa a dodicisegni — **fatto**
+In fondo ci sono due elenchi che non sono lavoro: le decisioni prese, da non
+riaprire, e le cose esaminate e lasciate stare, per non ritrovarle una seconda
+volta e ricominciare da capo.
 
-I tre passi sono chiusi, e con il **punto 10** è chiuso anche `REPOSITORY_URL`,
-l'unico che dipendeva da un rinomino su GitHub.
+## Da dove ripartire
 
-Il progetto prende il nome `dodicisegni`, sul dominio `dodicisegni.it`; `12segni.it` è il dominio di servizio, già registrato. Nel
-marchio il numero è in cifre — «12» sopra «segni» — perché «XII» si legge
-anche «dodicesima» e il nome dice dodici segni, non il dodicesimo di qualcosa;
-il nome breve dell'icona installata è `12segni`, che sta nei sette caratteri
-che un lanciatore concede.
+| Voce | Priorità | Taglia | Prima di cominciare |
+|---|---|---|---|
+| 20. Le dipendenze | alta | da misurare | una cernita, non un aggiornamento |
+| 19. Le dignità, per scuola | media | grande, a commit piccoli | il primo commit, i domicili, si fa subito |
+| 11. Gli elenchi in più posti | media | piccola | prima del punto 5 |
+| 13. Due semplificazioni | bassa | piccola | niente |
+| 9. Il linter | media | piccola | decidere lo strumento |
+| 18. Le orbite senza autore | media | media | decidere fra le due strade |
+| 7. I transiti attivi in un arco | non dichiarata | media | niente, è pronta |
+| 8. Il glossario e /metodo | media | grande | si incrocia col punto 6 |
+| 6. La prosa che invecchia | bassa | piccola | farla insieme al punto 8 |
+| 5. I varga che mancano | non dichiarata | tre lotti | il punto 11; per il D-2, la convenzione |
+| 17. L'astrologia oraria | bassa | la più grande | il punto 19 |
 
-**Non c'è niente da preservare.** Il progetto non è in produzione: nessuno ha
-una preferenza di tema salvata da migrare, nessun client MCP ha memorizzato un
-`undicesimacasa://`, nessuno ha l'AppImage installata sotto il vecchio `appId`.
-Ogni identificatore si cambia sul posto, e chi lo cambia non deve niente a
-nessuno. È la ragione per cui questa voce è più corta di quanto sarebbe stata
-fra un anno, ed è anche la ragione per cui conviene farla adesso.
-
-È andato in tre passi per una ragione sola e molto più piccola di quella: **la
-leggibilità del diff**. Il rinomino dello scope npm tocca quasi ogni file del
-repo ed è rumore meccanico; impastarlo con le decisioni di nome — la CLI, il
-server MCP, l'applicazione desktop — avrebbe prodotto un commit che nessuno
-rilegge.
-
-### Il sigillo non va ridisegnato
-
-La stella al centro del marchio è il poligono stellato {12/5}: **dodici punte
-già oggi**, e non undici. `apps/web/src/lib/components/Marchio.svelte`, righe
-16-21, se ne scusava per esteso — il cielo si divide in dodici, e undici era
-«solo il nome di questo progetto». Col nome nuovo la scusa non serve più e il
-disegno diventa esatto: cambia soltanto la scritta sotto. Vale anche per
-`graphics/favicon.svg` e per le icone che `apps/web/scripts/build-icons.mjs`
-ne rasterizza, perché la fonte è il favicon e il favicon è la stessa stella.
-
-### Passo 1 — quello che si legge — **fatto**
-
-Il nome come parola, in ciò che una persona vede o incolla.
-`apps/web/src/lib/project.ts` (`SITE_NAME`, `SITE_SHORT_NAME`),
-`Marchio.svelte`, l'informativa privacy, i tre testi di `packages/lettura` che
-finiscono negli appunti di chi li copia, il titolo della pagina senza rete,
-`README.md`, `CLAUDE.md` e la skill `nuova-funzione`.
-
-Nello stesso passaggio `Meta.svelte` e `service-worker.ts` hanno smesso di
-ripetere il nome alla lettera e lo leggono da `SITE_NAME`, e la proprietà
-`--marchio-casa` è diventata `--marchio-parola`: chi posa il marchio decide una
-misura, non che cosa ci sta scritto.
-
-### Passo 2 — lo scope npm e i tag — **fatto**
-
-Meccanico e voluminoso, senza una sola decisione dentro. È andato in un commit
-solo perché a metà l'albero non compila.
-
-- `@undicesimacasa/*` → `@dodicisegni/*`: sette `package.json`, ogni import di
-  ogni workspace, gli script della radice, `Dockerfile:48,58-65`,
-  `.github/workflows/controlli.yml`, `compose.yaml:82` e
-  `apps/desktop/scripts/stage.mjs:47,61,68`, che compone percorsi dentro
-  `node_modules/@undicesimacasa`.
-- Il nome del pacchetto radice (`package.json:2`), il nome del progetto compose
-  (`compose.yaml:1`) e i tag immagine (`compose.yaml:9,72`,
-  `controlli.yml:87,94,125`).
-- I nomi di comodo nei test, che non provano niente e vanno per compagnia: i
-  prefissi di `mkdtempSync` in `packages/mcp/test/server.test.ts:25`,
-  `packages/geo/test/search.test.ts:98` e
-  `packages/core/test/ephemeris.test.ts:9`, la URL finta in
-  `packages/lettura/test/lettura.test.ts:68` e il sito finto in
-  `apps/web/src/lib/cache-policy.test.ts:4`.
-
-Verifica: `npm install` (rifà i collegamenti in `node_modules`, che con lo scope
-nuovo sono altri file), poi
-`npm run typecheck && npm test && npm run build`, poi il giro Docker con i
-profili espliciti.
-
-### Passo 3 — gli identificatori con un nome da scegliere — **fatto**
-
-Pochi, e ciascuno voleva una decisione prima di una riga di codice. Nessuno
-aveva più un vincolo di compatibilità: restava scegliere bene, e la scelta è
-stata la stessa dappertutto — `dodicisegni`. `12segni` ha una giustificazione
-sola, i sette caratteri sotto un'icona, e nessuno di questi posti è quello.
-
-- **La CLI `casa11` è diventata `dodicisegni`** — **fatto**. La ragione era
-  che il nome vecchio era già un terzo nome, né `undicesimacasa` né altro, e un
-  progetto che si chiama in tre modi si spiega tre volte. `12segni` si sarebbe
-  digitato meglio, ma il nome breve ha una sola giustificazione — i sette
-  caratteri sotto un'icona — e sulla riga di comando quella giustificazione non
-  c'è. Cambiati il `bin` di `packages/core/package.json`, l'aiuto e il commento
-  a `printSky` in `cli.ts`, e le citazioni in `README.md`, `CLAUDE.md`,
-  `packages/ruota/src/types.ts` e `.claude/skills/nuova-funzione/SKILL.md`.
-
-  Una nota per chi rifà il giro su un altro identificatore: `npm install` non
-  toglie il collegamento vecchio in `node_modules/.bin`, lo affianca. Finché
-  non si cancella a mano, `npx casa11` continua a rispondere e il rinomino
-  sembra non aver preso.
-- **Il server MCP** — **fatto**. `SERVER_NAME` vale `dodicisegni`, il binario
-  è `dodicisegni-mcp`, la chiave in `.mcp.json` e l'esempio del `README` pure,
-  e le risorse di riferimento stanno su `dodicisegni://riferimento/…`.
-
-  Come nel passo 1, il nome ha smesso di essere ripetuto alla lettera dove una
-  costante c'era già: i due URI in `server.ts` e la riga di avvio in `stdio.ts`
-  si compongono da `SERVER_NAME`. Il test resta sui letterali di proposito —
-  deve provare il valore che passa sul filo, non che due costanti siano la
-  stessa costante.
-
-  Verificato avviando `dist/stdio.js` su stdio con un `initialize` a mano:
-  `serverInfo.name` è `dodicisegni`, `resources/list` restituisce i due URI
-  nuovi e `resources/read` serve il contenuto. Come per la CLI, il
-  collegamento vecchio in `node_modules/.bin` è andato tolto a mano.
-- **L'applicazione desktop** — **fatto**. `appId` è `it.dodicisegni.desktop`,
-  `productName` ed `executableName` sono `dodicisegni`, e così la descrizione
-  del pacchetto, che finisce nel `Comment` della voce di menu. In `main.ts` il
-  nome sta in una costante `NOME` — dichiarata lì e non importata da `web`, che
-  non è una libreria e da cui il desktop non dipende.
-
-  Verificato impacchettando davvero: `npm run dist` produce
-  `dodicisegni-0.1.0.AppImage`, l'eseguibile dentro è `dodicisegni`, e il
-  `.desktop` porta `Name`, `Icon` e `StartupWMClass` tutti col nome nuovo.
-  L'app avviata mostra il titolo giusto.
-
-  Due cose viste di passaggio e **non toccate**, perché non sono di questo
-  lavoro: `release/` tiene ancora l'AppImage vecchia del nome vecchio, e
-  `electron-builder` avvisa che `desktopName` non è impostato in
-  `package.json`, il che rende `syncDesktopName: true` meno efficace di quanto
-  la riga qui sopra dicesse. L'avviso c'era già prima del rinomino.
-- **La chiave del tema** — **fatto**. Vale `dodicisegni:color-scheme`, e
-  `COLOR_SCHEME_KEY` la compone da `SITE_NAME` invece di ripeterla.
-
-  Lo script in linea di `app.html` **non può** fare altrettanto: gira prima di
-  ogni import, per non far lampeggiare la pagina, e la chiave se la scrive a
-  mano. Prima erano due letterali e si dimenticavano insieme; ora la costante
-  segue `SITE_NAME` e la copia in `app.html` no, che è un modo peggiore di
-  sbagliare — cambiare il nome del sito perderebbe l'aspetto scelto a ogni
-  caricamento, in silenzio. Per questo `color-scheme.test.ts` adesso legge
-  `app.html` e confronta le due copie: è l'unico posto dove si guardano in
-  faccia. Provato facendolo cadere.
-- **Il nome della cache** — **fatto**. `service-worker.ts` lo compone da
-  `SITE_NAME`, che già importava per il titolo della pagina senza rete;
-  nel worker compilato risulta `dodicisegni-<versione>`. Le cache di nome
-  vecchio le butta `activate` da sé.
-
-  In tutt'e due i casi è cambiata anche la prosa dell'informativa privacy, che
-  i due valori li cita alla lettera.
-
-Il repository non è in questo elenco: `REPOSITORY_URL` dipende da un rinomino
-su GitHub, che è fuori dal repo e non si può fare da qui. Sta al **punto 10**,
-e non blocca niente di quanto sopra.
-
-### Deciso, per non ridiscuterlo
-
-- **Niente riscrittura della storia di git**, e nessun rinomino della cartella
-  locale `it-undicesimacasa`: la prima è pericolosa, il secondo non è codice.
-- **Il dominio non entra nel codice.** Nessun file lo scrive oggi: `Meta.svelte`
-  compone gli indirizzi da `page.url.origin`, e in produzione è `ORIGIN` a
-  dirlo. Il cambio di dominio è configurazione, non un passo di questo lavoro.
-- **`12segni` non è un secondo marchio.** È il dominio di servizio e il nome
-  breve sotto l'icona, dove sette caratteri sono il tetto. Nella prosa il nome
-  è uno solo.
-
-## 2. Il guardiano della navigazione nell'app desktop — **fatto**
-
-Entrambi i rimedi, che erano due allo stesso inciampo a due livelli diversi.
-
-Nel processo principale, `creaFinestra` ora installa anche un gestore di
-`will-navigate` accanto a `setWindowOpenHandler`, che copriva il solo
-`window.open`: confronta l'**origine** della destinazione con quella del server
-interno — l'origine e non l'indirizzo, perché la porta del loopback è
-sorteggiata a ogni avvio — e quando differisce annulla e passa a
-`shell.openExternal`, per i soli `http(s)`.
-
-Sull'interfaccia, i link che escono dal sito prendono `target="_blank"` e
-`rel="noopener"`. Erano **sei e non tre**: la conta di questa voce dimenticava
-i due su `REPOSITORY_URL` — il piè di pagina e l'informativa, cioè l'offerta del
-sorgente che impone l'AGPL articolo 13 — e quello di Swiss Ephemeris in
-`/metodo`. Il referrer non ha richiesto niente: la politica predefinita dei
-browser è `strict-origin-when-cross-origin`, che fuori origine manda l'origine
-e non il percorso, ed è il percorso a portare data e luogo di nascita.
-
-**Attenzione se si rimette mano qui**: la verifica che questa voce prescriveva
-— cliccare «Swiss Ephemeris» nel piè di pagina — adesso **non prova più il
-guardiano**, perché con `target="_blank"` quel click passa dal gestore delle
-finestre nuove. Per toccare `will-navigate` serve una navigazione di primo
-livello, cioè un `location.href` verso un'altra origine.
-
-Verificata così, e non a mano: Electron avviato con
-`--remote-debugging-port`, la finestra pilotata via CDP con `location.href`
-verso un indirizzo esterno, e `xdg-open` sostituito da uno stub che registra
-quello che gli arriva. La finestra è rimasta sull'origine interna, lo stub ha
-ricevuto l'indirizzo esterno, e la navigazione interna verso `/metodo` è
-passata. Resta comunque fuori dai test: vuole un display e un binario Electron.
-
-## 3. Electron da 38 a 43 — **fatto**
-
-`apps/desktop/package.json` porta `electron` a `43.4.1`, esatta come prima. I
-diciannove avvisi che `npm audit` contava sulla `38.8.6` sono chiusi:
-l'intervallo vulnerabile di quel major si ferma a `43.0.0-beta.8`. Il conto del
-repo passa da cinque vulnerabilità a tre, e le tre che restano sono `cookie`
-sotto SvelteKit, che sta in fondo fra le cose esaminate e lasciate stare.
-
-**Perché la 43 e non la 44.** La `44.0.0` era uscita stabile ed era quella che
-`npm audit fix --force` proponeva, ma è anche l'unica versione della sua serie:
-nessuna patch dietro, nessun rodaggio. Il desktop è l'unico posto del progetto
-dove una regressione la vede chi usa il programma e non un test, e un major in
-più si prende quando la serie ha qualche settimana addosso.
-
-### Quello che non si sapeva da qui
-
-**`extract-zip` non va ignorato: sparisce.** Era il ventesimo avviso, quello che
-si era deciso di accettare perché il path traversal richiede uno zip malevolo.
-Electron 43 non dipende più dal pacchetto pubblico — il `postinstall` usa
-`@electron-internal/extract-zip`, un fork interno caricato pigramente — e
-`node_modules/extract-zip` non esiste più nell'albero. L'avviso si chiude da
-solo, senza che nessuno debba ragionarci sopra.
-
-**Dentro l'AppImage il motore dà gli stessi numeri di fuori.** Verificato sul
-tema del 2 giugno 1978, 15:15, Palermo: `ephemerisMode: swisseph`, Sole 11°39'
-Gemelli, Luna 4°56' Toro, le stesse case della CLI lanciata fuori da Electron.
-Il modulo nativo gira nell'`utilityProcess` senza accorgersi del motore nuovo.
-
-Percorse tutt'e due le strade che il processo principale governa. L'importazione
-GeoNames al primo avvio ha scaricato, costruito i 90 MB in
-`~/.config/@dodicisegni/desktop` e mostrato l'avanzamento riga per riga
-attraverso il `preload.cjs` in sandbox; il calcolo di un tema passa dalla
-ricerca delle località alla carta a schermo. Nessuna delle due si comporta
-diversamente da prima.
-
-L'importazione ha però mostrato un difetto che con l'aggiornamento non c'entra
-ed è più vecchio di lui: sta al **punto 16**.
-
-## 4. Le azioni di GitHub su Node 24 — **fatto**
-
-`controlli.yml` è salito a `checkout@v7`, `setup-node@v7` e `cache@v6` nel
-commit «Porta le azioni sul runtime che i runner eseguono»: gli ultimi major, e
-non il minimo che togliesse l'annotazione, così il file si tocca una volta
-sola. La voce resta al suo numero invece di sparire: togliendola scalerebbero
-tutte quelle dopo, e i punti 2, 3 e 6 sono citati per numero altrove.
+L'ordine consigliato è quello della tabella: la cernita delle dipendenze, il
+primo commit delle dignità, che chiude un difetto già presente, poi le voci
+piccole che tolgono copie e righe morte prima che il lavoro grande ci passi
+sopra.
 
 ## 5. I dieci varga che mancano
 
 Calcolati: D-1, D-3, D-9, D-10, D-12, D-30, in `packages/core/src/varga.ts`.
-Sono i più usati, ed è la ragione per cui vengono per primi — non la
+Sono i più usati, ed è la ragione per cui vengono per primi, non la
 completezza. Dei sedici classici ne restano dieci.
 
 **Non vanno fatti in un colpo solo.** Ogni varga è una regola a sé, e le regole
@@ -258,7 +52,15 @@ Per tutti vale la procedura già collaudata: la regola in una riga dentro
 ricontrollabile; le prove ai confini dei segni pari e dispari; l'aggiunta a
 `VargaId` in `types.ts` e all'elenco di `--varga` nell'aiuto della CLI.
 
-### Lotto A — quelli che si biforcano su pari e dispari
+L'elenco dei varga però non vive solo lì: è ricopiato in
+`packages/mcp/src/tools.ts:123` (`VARGA_IDS`, uno `z.enum`), nelle due rotte
+`apps/web/src/routes/api/jyotish/+server.ts:17` e `api/jyotish/quadro/+server.ts:12`
+(un `Set<string>`), in `apps/web/src/lib/components/JyotishaSettings.svelte` e
+nella pagina del metodo, righe 346-347. Un varga nuovo dimenticato in una delle
+copie viene rifiutato da quella superficie senza nessun errore: è lo stesso
+difetto del punto 11, che conviene chiudere prima.
+
+### Lotto A: quelli che si biforcano su pari e dispari
 
 **D-2 Hora, D-4 Chaturthamsa, D-7 Saptamsa.** Stessa forma del D-10 già
 fatto: si guarda se il segno è pari o dispari e si parte da due punti diversi.
@@ -271,19 +73,19 @@ Luna» senza un segno. `VargaChart.positions` porta un `ZodiacSign`, quindi la
 seconda convenzione non ci sta dentro senza cambiare il tipo. Va deciso prima
 di scrivere, non dopo.
 
-### Lotto B — i multipli con partenza fissa
+### Lotto B: i multipli con partenza fissa
 
 **D-16 Shodashamsa, D-20 Vimshamsa, D-24 Chaturvimshamsa, D-27
 Nakshatramsa.** Qui la partenza non dipende dal segno di arrivo ma da un segno
-fisso deciso dalla natura del segno di partenza — cardinale, fisso o mobile per
-alcuni; pari o dispari per altri. Il meccanismo è quello del D-9, applicato a
+fisso deciso dalla natura del segno di partenza (cardinale, fisso o mobile per
+alcuni; pari o dispari per altri). Il meccanismo è quello del D-9, applicato a
 divisioni più fini.
 
 Il D-27 è il più utile del lotto e anche il più semplice: ventisette parti da
 1°6'40", cioè un pada di nakshatra, e si parte sempre dall'Ariete. Si può fare
 per primo e da solo.
 
-### Lotto C — i fini, che vogliono un'ora di nascita esatta
+### Lotto C: i fini, che vogliono un'ora di nascita esatta
 
 **D-40 Khavedamsa, D-45 Akshavedamsa, D-60 Shashtiamsa.**
 
@@ -295,10 +97,10 @@ al quarto d'ora produce un D-60 sbagliato, e non se ne accorge nessuno.
 Questo lotto vuole quindi una cosa che gli altri non chiedono: **un'avvertenza
 propria**, sul modello di quella delle dasha in `dasha.ts`, che dica quanti
 minuti di scarto valgano una divisione. Senza, sarebbe il caso peggiore di
-tutti — un dato che sembra preciso perché ha molte cifre.
+tutti: un dato che sembra preciso perché ha molte cifre.
 
-Verifica per tutti i lotti: `packages/core/test/varga.test.ts` ha già la forma
-— confini noti calcolati a mano per un segno pari e uno dispari, più la prova
+Verifica per tutti i lotti: `packages/core/test/varga.test.ts` ha già la forma:
+confini noti calcolati a mano per un segno pari e uno dispari, più la prova
 che la regola viaggi col risultato.
 
 ## 6. La prosa che può invecchiare senza dirlo
@@ -311,13 +113,13 @@ fosse quella giusta.
 ### La precisione di Moshier, dichiarata due volte e in due modi
 
 `packages/core/src/ephemeris.ts`, riga 20, dice «0,1 secondi d'arco per i
-pianeti maggiori». `README.md`, riga 44, dice «~0,4 secondi d'arco sui pianeti
+pianeti maggiori». `README.md`, riga 46, dice «~0,4 secondi d'arco sui pianeti
 principali». Sono la stessa affermazione sullo stesso ripiego, e differiscono di
 un fattore quattro.
 
 Una delle due è sbagliata e non si sa quale: il numero non viene da una misura
 fatta qui, ma dalla documentazione di Swiss Ephemeris, dove la cifra dipende da
-quali corpi e da quale epoca si guardano — Moshier degrada allontanandosi dal
+quali corpi e da quale epoca si guardano: Moshier degrada allontanandosi dal
 presente, e i pianeti esterni non si comportano come i lunari.
 
 La via per chiuderla non è scegliere il numero che suona meglio: è
@@ -328,7 +130,7 @@ modalità e la differenza in secondi d'arco, su qualche data sparsa nell'arco
 riportato.
 
 Finché non è deciso, `apps/web/src/routes/(informativa)/metodo/+page.svelte`,
-riga 77, dice «una frazione di secondo d'arco» senza cifra — di proposito, e va
+riga 77, dice «una frazione di secondo d'arco» senza cifra, di proposito, e va
 aggiornata insieme alle altre due.
 
 Verifica: un test in `packages/core/test/` che confronti le due modalità e
@@ -340,23 +142,23 @@ tre righe di prosa possono portare la stessa cifra.
 `apps/web/src/routes/(informativa)/metodo/+page.svelte` ricopia in prosa valori
 che vivono nel motore: le nove orbite e i nove aspetti da `ASPECTS`
 (`packages/core/src/constants.ts:275`), che la pagina ricopia nella tabella a
-riga 194; i nove sistemi di case da `HOUSE_SYSTEM_CODES`, il bonus dei
+riga 195; i nove sistemi di case da `HOUSE_SYSTEM_CODES`, il bonus dei
 luminari, le orbite dei transiti da `TRANSIT_ORBS`; i sei ayanamsa da
 `AYANAMSAS` (`ayanamsa.ts:44`) e i sei varga da `VARGAS` (`varga.ts:75`), che
-la pagina elenca a riga 344.
+la pagina elenca alle righe 346-347.
 
 Cambiando un'orbita, la pagina resta vecchia in silenzio. Non c'è nessun test
 che colleghi le due cose, ed è la scelta scritta nel commento in testa al file:
 legare la pagina ai valori vorrebbe dire generarla, e una tabella generata non
-può dire *perché* le orbite dei transiti sono strette — che è l'unica ragione
+può dire *perché* le orbite dei transiti sono strette, che è l'unica ragione
 per cui la pagina esiste.
 
 La forma che risolve senza generare la prosa esiste, ed è quella che il progetto
 usa già altrove: **un test che fallisce a voce alta quando i due divergono**, sul
 modello di `packages/ruota/test/tipi.test.ts`, che verifica che i tipi
 ridichiarati combacino con quelli di `core` senza importarli. Qui vorrebbe dire
-leggere il file `.svelte` e cercarci i valori di `ASPECTS` — nove righe di
-tabella, non tutta la pagina — e fallire se un'orbita non compare più.
+leggere il file `.svelte` e cercarci i valori di `ASPECTS` (nove righe di
+tabella, non tutta la pagina) e fallire se un'orbita non compare più.
 
 Un test così è brutto e va tenuto stretto: se comincia a cercare frasi invece
 che numeri diventa un impedimento a riscrivere la prosa, che è il contrario di
@@ -370,7 +172,7 @@ Verifica: cambiare un'orbita in `ASPECTS` e vedere il test cadere.
 Oggi ci sono due tool e nessuno dei due risponde a «che cosa è in orbita fra il
 1° e il 30 settembre». `compute_transits` fotografa **un istante**;
 `find_transit_passages` elenca **gli istanti in cui un aspetto si perfeziona**.
-Fra i due manca l'intervallo, che è quello che serve per leggere un periodo —
+Fra i due manca l'intervallo, che è quello che serve per leggere un periodo:
 un giorno, una settimana, un mese, un bimestre. È una domanda sola con `from` e
 `to` diversi: **non serve un enum di periodi**, e non deve entrarci. Chiamare
 «bimestre» un arco è comodità di chi chiama, non un fatto del motore.
@@ -384,7 +186,7 @@ già presi e dimezza solo l'ultimo. Il margine di campionamento a
 tempo massimo che un corpo impiega ad attraversare l'orbita più larga concessa:
 non è un margine prudenziale, è dimensionato sul caso peggiore.
 
-Quel lavoro viene poi buttato via da una riga, `passages.ts:79`:
+Quel lavoro viene poi buttato via da un filtro, `passages.ts:78-80`:
 
 ```js
 found.filter((passage) => passage.julianDay >= start && passage.julianDay <= end)
@@ -400,7 +202,7 @@ commento sopra il filtro lo dice quasi in chiaro.
 di `gap`, cioè le perfezioni. Un transito che entra in orbita, staziona a due
 gradi e mezzo dal punto natale e retrocede **senza mai perfezionarsi** non
 produce nessuna radice, quindi nessun passaggio, quindi nessuna finestra. Oggi è
-invisibile a ragione, perché lì non c'è nessun istante esatto da elencare — ma
+invisibile a ragione, perché lì non c'è nessun istante esatto da elencare; ma
 in un elenco di ciò che è attivo quel transito c'è, e per mesi.
 
 Va quindi cercata la radice di `|gap| − orbLimit` **indipendentemente** da
@@ -409,7 +211,9 @@ quella di `gap`. `bisect` in `roots.ts` sa già farlo ed è la stessa funzione c
 scollegata da quell'ancora.
 
 Secondo caso, più semplice: quando il bordo non si trova entro
-`MAX_WINDOW_DAYS` (1095, `roots.ts:30`) la finestra oggi viene omessa. In un
+`MAX_WINDOW_DAYS` (1095, `roots.ts:30`, che fa anche da tetto al margine di
+riga 65), o quando i campioni finiscono prima di trovarlo, la finestra oggi
+viene omessa. In un
 elenco di transiti attivi «in orbita per tutto l'arco» **è la risposta**, non un
 dato mancante, e va detta invece che taciuta.
 
@@ -431,7 +235,7 @@ dell'ayanamsa: si resta dentro `zodiacContext`, come il resto del file.
   fonte sarebbe un'altra domanda (vedi il vincolo in `CLAUDE.md`), ma per i
   transiti di un periodo non se ne conosce uno.
 - **Nessun `mode:` su `find_transit_passages`.** Il precedente è un tool per
-  domanda — `compute_sky` accanto a `find_sky_events` — e le descrizioni sono
+  domanda (`compute_sky` accanto a `find_sky_events`), e le descrizioni sono
   scritte apposta perché un modello non li confonda. Un flag che ribalta il
   significato delle righe è la cosa più facile da sbagliare per un agente.
 - **Niente interfaccia web.** La funzione serve agli agenti e alla riga di
@@ -459,19 +263,19 @@ Verifica, in due casi distinti perché provano due cose diverse:
    oggi `find_transit_passages` su quell'arco non restituisce nulla. Caso reale,
    già verificato, nessuna costruzione.
 2. **La radice nuova.** Un transito che entri in orbita e retroceda senza mai
-   perfezionarsi va costruito apposta — il caso 1 non lo copre, perché lì le
+   perfezionarsi va costruito apposta: il caso 1 non lo copre, perché lì le
    perfezioni esistono e cadono solo fuori dall'arco.
 
 ## 8. Il glossario, e /metodo da rivedere
 
 **Priorità media.** Viene da un esame del SEO organico, dove l'ipotesi di
-partenza era un payoff da mettere nel titolo. Il payoff non sposta niente — è
+partenza era un payoff da mettere nel titolo. Il payoff non sposta niente: è
 del marchio, quindi si ripete su ogni pagina, e un titolo ripetuto è la cosa
 che i motori riscrivono per prima. Quello che sposta è il testo, e di testo qui
 ce n'è pochissimo.
 
 Il conto è in `apps/web/src/lib/seo.ts`: sette indirizzi in
-`PAGINE_PUBBLICHE`, e cinque sono strumenti — `h1` nascosto, un cappello di due
+`PAGINE_PUBBLICHE`, e cinque sono strumenti: `h1` nascosto, un cappello di due
 paragrafi e sotto il modulo. Le pagine fatte di prosa sono `/metodo` e
 `/privacy`, e la seconda la cerca soltanto chi la deve controllare. Un sito con
 due pagine di testo non si posiziona su niente, per quanto bene siano scritti i
@@ -481,20 +285,20 @@ Il vincolo del progetto, qui, non è un impedimento: è il filtro che sceglie il
 contenuto. Che cos'è un nakshatra è un fatto verificabile; che cosa prometta
 Saturno in settima no. **Il glossario è la prosa che questo progetto può
 scrivere senza tradirsi**, ed è anche quella che intercetta le ricerche più
-precise — in italiano, su questi termini, non copre bene nessuno.
+precise: in italiano, su questi termini, non copre bene nessuno.
 
 ### Il glossario
 
 I termini ci sono già tutti, sparsi: quelli del Jyotisha che la regola di stile
-tiene in sanscrito — `nakshatra`, `tithi`, `karana`, `yoga`, `dasha`, `varga`,
-`drishti`, `pada`, più `ayanamsa` e `panchanga` — e quelli che il motore
+tiene in sanscrito (`nakshatra`, `tithi`, `karana`, `yoga`, `dasha`, `varga`,
+`drishti`, `pada`, più `ayanamsa` e `panchanga`) e quelli che il motore
 occidentale calcola e nomina: Parte di Fortuna, Luna vuota di corso, ore
 planetarie, cuspidi, orbita, retrogradazione, stazione, ingresso, distribuzione
 fra elementi e modalità, i nove sistemi di case.
 
 Non c'è niente da inventare e non si deve: la fonte è scritta due volte, nei
-commenti di `packages/core` — `VoidOfCourse` in `types.ts`, `dasha.ts`,
-`varga.ts`, `constants.ts` — e nella pagina del metodo, che quasi tutti li
+commenti di `packages/core` (`VoidOfCourse` in `types.ts`, `dasha.ts`,
+`varga.ts`, `constants.ts`) e nella pagina del metodo, che quasi tutti li
 spiega già.
 
 Ed è esattamente lì il rischio. **Due pagine che dicono la stessa cosa si
@@ -502,15 +306,15 @@ tolgono i lettori a vicenda**, e un motore che deve scegliere fra le due
 sceglie male. Il taglio va deciso prima di scrivere una riga, e la forma che
 regge è questa: il glossario dice *che cos'è* il termine, in tre righe, e
 rimanda; `/metodo` dice *con quale convenzione questo sito lo calcola*. Il
-primo definisce, il secondo dichiara — che è poi la differenza fra i due
+primo definisce, il secondo dichiara, che è poi la differenza fra i due
 vincoli del progetto.
 
 **Da decidere, e non è una scelta di stile.** Una pagina per termine è la forma
 che intercetta le ricerche, ma sono trenta indirizzi da poche righe l'uno, che
 è la definizione di pagina magra, e la sitemap li porterebbe tutti. Una pagina
 sola con le ancore è un indirizzo solo e trenta ricerche perse. La via di mezzo
-— una pagina per famiglia, il Jyotisha da una parte, il tempo e i moti
-dall'altra — è probabilmente quella giusta, ma va scelta guardando quanto testo
+(una pagina per famiglia, il Jyotisha da una parte, il tempo e i moti
+dall'altra) è probabilmente quella giusta, ma va scelta guardando quanto testo
 regge davvero ogni termine, non prima.
 
 Qualunque sia la forma, le pagine nuove **non sono sezioni**: vanno aggiunte a
@@ -519,14 +323,14 @@ mano in `PAGINE_PUBBLICHE`, come `/metodo` e `/privacy`, e
 
 ### La revisione di /metodo
 
-La pagina non è povera: 476 righe e diciassette sezioni, ciascuna con il suo
+La pagina non è povera: 478 righe e diciassette sezioni, ciascuna con il suo
 `id`. Il problema è che è **una pagina sola**. Le diciassette ancore non sono
 diciassette risultati: `#dasha` non è mai un indirizzo per sé, e chi cerca
 «dasha vimshottari» trova al più la pagina intera, che parla di altre sedici
 cose.
 
-Va quindi valutato — non è deciso — se le cinque parti dell'astrologia indiana
-(`#nakshatra`, `#dasha`, `#varga`, `#drishti`, `#panchanga`, righe 298-388)
+Va quindi valutato (non è deciso) se le cinque parti dell'astrologia indiana
+(`#nakshatra`, `#dasha`, `#varga`, `#drishti`, `#panchanga`, righe 300-390)
 debbano staccarsi in pagine proprie. Contro: spezzare una pagina che si legge
 bene di seguito, e che è l'unica cosa che risponda a «perché la stessa nascita
 dà carte diverse altrove». A favore: sono già cinque capitoli con un titolo e
@@ -539,7 +343,7 @@ Due cose invece vanno fatte comunque:
   giusti; il titolo li butta via tutti.
 - **Il coordinamento con il punto 6**, che tocca questa stessa pagina in due
   modi: la precisione di Moshier senza cifra alla riga 77, e il legame mancante
-  con `constants.ts`. Se la pagina si riscrive, i due lavori si incrociano —
+  con `constants.ts`. Se la pagina si riscrive, i due lavori si incrociano:
   farli in ordine sparso significa riscrivere due volte gli stessi paragrafi.
 
 ### Deciso, per non ridiscuterlo
@@ -551,53 +355,37 @@ Due cose invece vanno fatte comunque:
   prosa fra chi arriva e il modulo che è venuto a compilare, e il guadagno
   sarebbe comunque il più piccolo dei tre.
 - **Il payoff nel titolo non fa parte di questo lavoro.** Quello che
-  dell'esame è rimasto in piedi — il titolo della home, che oggi spreca la
-  pagina più forte del sito, e uno `slogan` nei dati strutturati — è piccolo,
-  isolato e va per conto suo.
+  dell'esame era rimasto in piedi, il titolo della home e uno `slogan` nei dati
+  strutturati, è già fatto (`f7696e8`).
 
 ## 9. Il codice morto non lo vede nessuno
 
-**Priorità media**, e il primo passo è **fatto**: restano il linter vero e la
-decisione che porta con sé. Il progetto non ha alcuna configurazione di lint o
-di formattazione — nessun ESLint, nessun Prettier, nessun Biome, nessun oxlint,
+**Priorità media.** Restano il linter vero e la decisione che porta con
+sé. Il progetto non ha alcuna configurazione di lint o
+di formattazione: nessun ESLint, nessun Prettier, nessun Biome, nessun oxlint,
 e in `package.json` nessuno script che li chiami.
 
 Non è un'ipotesi: due difetti reali sono entrati e nessuno se n'è accorto.
 `api/chart/wheel/+server.ts` importava `ruotaSvg` e `ruotaPng` senza usarli, e
-il secondo apriva una seconda porta su `ruota/png` — il punto d'ingresso col
+il secondo apriva una seconda porta su `ruota/png`, il punto d'ingresso col
 modulo nativo che deve entrare solo da `lib/server`, cioè una regola di
 `CLAUDE.md` aggirata da un import dimenticato. Quello è corretto; l'altro no.
 Nessuno dei due lo vedono `typecheck` né i test, che girano verdi lo stesso.
 
-### Il primo passo — **fatto**
+### Quello che c'è già
 
-`noUnusedLocals` e `noUnusedParameters` in `tsconfig.base.json`, e **anche in
-`apps/web/tsconfig.json`**, che è la cosa che non si vedeva da qui: quello non
-estende la base ma il `tsconfig` generato da SvelteKit, quindi i due flag alla
-radice non lo raggiungono. Nessuna dipendenza nuova, quindi nessuna questione
-di licenza aperta.
-
-Il parametro morto che teneva fermo l'albero è tolto: `findVoidsOfCourse`
-riceveva un `EphemerisContext` e non lo toccava, per la ragione dichiarata alle
-righe 92-93 dello stesso file — l'elezione è tropicale per scelta, e «il vuoto
-di corso siderale non è una tecnica di nessuno».
-
-Due cose sono andate meglio del previsto. Si temeva che coprire i `.svelte`
-volesse qualcosa in più: non lo vuole, perché `svelte-check` legge i due flag
-come **errori** e non come suggerimenti, e li applica ai componenti come ai
-`.ts`. E accendendoli è saltato fuori subito un import morto vero, `ASPECT_GLYPH`
-in `components/TransitAspectTable.svelte`, che nessuno aveva visto — il terzo
-della serie, dopo i due che aprono questa voce.
-
-Verificato aggiungendo un import inutile in `packages/core/src/place.ts` e una
-costante inutile in `apps/web/src/lib/seo.ts`: cadono tutt'e due, la seconda
-solo dopo il flag nel `tsconfig` dell'app.
+`noUnusedLocals` e `noUnusedParameters` stanno in `tsconfig.base.json` e anche
+in `apps/web/tsconfig.json`, che non estende la base ma il `tsconfig` generato
+da SvelteKit, quindi i flag della radice non lo raggiungono. `svelte-check` li
+legge come errori e li applica ai componenti come ai `.ts`: import e variabili
+morte, anche nei `.svelte`, oggi cadono. Accendendoli è saltato fuori un terzo
+import morto, `ASPECT_GLYPH` in `TransitAspectTable.svelte`.
 
 ### Il linter vero è una decisione a parte
 
 Va deciso, e non è ovvio:
 
-- **Quale strumento**, e con quale licenza — ogni dipendenza nuova deve essere
+- **Quale strumento**, e con quale licenza: ogni dipendenza nuova deve essere
   compatibile con l'AGPL-3.0-or-later.
 - **Se la formattazione entri o no.** Qui la cautela è concreta: i commenti di
   questo repo sono prosa italiana mandata a capo a mano, spesso su misura del
@@ -607,26 +395,9 @@ Va deciso, e non è ovvio:
   prima.
 - **Che cosa aggiunge, ora che i `.svelte` sono coperti.** Il primo passo li
   prende già, import e variabili morte comprese. Quello che un linter porta in
-  più sono le regole che il compilatore non ha — le promesse non attese, i
-  confronti che non possono essere veri — e vanno guardate una per una prima di
+  più sono le regole che il compilatore non ha (le promesse non attese, i
+  confronti che non possono essere veri), e vanno guardate una per una prima di
   accenderle tutte.
-
-## 10. Il rinomino su GitHub, e i due riferimenti che lascia indietro — **fatto**
-
-Il repository è `lineadicomando/dodicisegni`, e i due riferimenti che il
-rinomino lasciava indietro sono aggiornati: `REPOSITORY_URL` in
-`apps/web/src/lib/project.ts:16` e il remote della copia locale.
-
-L'ordine obbligato è stato rispettato — prima il rinomino su GitHub, poi la
-costante — e per la ragione che lo rendeva obbligato: `REPOSITORY_URL` è
-insieme il recapito che l'informativa privacy dichiara e l'offerta del sorgente
-che l'AGPL articolo 13 impone, quindi un collegamento rotto lì non è un refuso
-ma una violazione di licenza. Cambiarla prima avrebbe rotto l'indirizzo per il
-tempo che passava in mezzo.
-
-Verificato che l'indirizzo nuovo risponda **200 diretto e non per redirezione**,
-prima di scriverlo: GitHub redirige il nome vecchio, quindi un 200 raggiunto
-saltando non avrebbe distinto un rinomino avvenuto da uno solo annunciato.
 
 ## 11. Gli elenchi che vivono in quattro posti
 
@@ -634,15 +405,18 @@ saltando non avrebbe distinto un rinomino avvenuto da uno solo annunciato.
 di nuovo in `packages/mcp/src/tools.ts:88`, di nuovo in
 `apps/web/src/lib/server/birth.ts:27` e una quarta volta in
 `apps/web/src/lib/zodiacs.ts:28`. I sistemi di case stanno in cinque, contando
-`HOUSE_SYSTEM_CODES` in `constants.ts:255`. Oggi combaciano tutti: verificati uno
+`HOUSE_SYSTEM_CODES` in `constants.ts:255` e `HOUSE_SYSTEMS` in
+`packages/mcp/src/tools.ts:125`. L'elenco dei varga ha lo stesso difetto (vedi
+il punto 5). Oggi combaciano tutti: verificati uno
 per uno.
 
-Il commento in testa a `ayanamsa.ts` dice che aggiungerne uno «è una riga qui».
-Sono quattro, e due delle quattro non se ne accorgerebbero. `zodiacs.ts` e
+Il commento sopra `AYANAMSAS` (`ayanamsa.ts:40-41`) dice che aggiungerne uno
+«è una riga qui». Non lo è nemmeno nel motore, perché serve anche l'unione
+`AyanamsaId` in `types.ts`; fuori dal motore le copie sono quattro, e due delle quattro non se ne accorgerebbero. `zodiacs.ts` e
 `house-systems.ts` dichiarano `AyanamsaId` e `HouseSystem`, quindi il
 compilatore le tiene legate al motore; `birth.ts` usa un `Set<string>` e il
 server MCP uno `z.enum` scritto lì, e un settimo ayanamsa non produrrebbe
-nessun errore da nessuna parte — le due superfici continuerebbero a rifiutarlo,
+nessun errore da nessuna parte: le due superfici continuerebbero a rifiutarlo,
 cioè a dire che non esiste una cosa che esiste.
 
 Il guasto è sicuro: un rifiuto, non un numero sbagliato, ed è la ragione per cui
@@ -656,49 +430,10 @@ motore trascina le effemeridi. Quella ragione non vale per `packages/mcp`, che �
 codice di server e che in `server.ts:3` importa già `HOUSE_SYSTEM_CODES` da
 `core`: là la copia non ha nessuna giustificazione e si toglie. Per `birth.ts` e
 per i due elenchi del client la forma è quella che il progetto usa già in
-`packages/ruota/test/tipi.test.ts` — un test che confronta e cade a voce alta.
+`packages/ruota/test/tipi.test.ts`: un test che confronta e cade a voce alta.
 
 Verifica: un settimo ayanamsa in `AYANAMSAS`, e il test che cade nominando i
 posti rimasti indietro.
-
-## 12. Le funzioni che compongono gli indirizzi non hanno test — **fatto**
-
-`apps/web/src/lib/api.test.ts` e `apps/web/src/lib/server/birth.test.ts`, in
-tutto settantaquattro prove.
-
-La proprietà che la pagina del tema dichiara per iscritto —
-`apps/web/src/routes/+page.svelte:47`, «un indirizzo condiviso che
-ricalcolasse un tema diverso da quello a schermo sarebbe il peggiore dei
-difetti, perché non si vede» — non è provata guardando i nomi dei parametri,
-che sarebbe copiarli una seconda volta. L'indirizzo composto da
-`chartParameters` viene **dato da rileggere a `lib/server/birth.ts`**, cioè al
-codice vero delle rotte, e si confronta quel che ne esce con la nascita di
-partenza. Un nome cambiato da una parte sola cade lì, in tutt'e due i versi:
-verificato rinominando `locationId` nel client (dodici prove rosse) e
-`houseSystem` nella rotta (sedici).
-
-Nello stesso giro passano i nove sistemi di case e i sei ayanamsa che il modulo
-propone, presi da `house-systems.ts` e `zodiacs.ts` e fatti accettare alla
-rotta. **Non chiude il punto 11**: lega due delle quattro copie fra loro, non
-al motore, e un settimo ayanamsa aggiunto in `core` continuerebbe a non far
-cadere niente.
-
-### Quello che non si sapeva da qui
-
-`api.ts` non era senza test: undici prove su `chartParameters`,
-`transitParameters`, `skyParameters` e `skyCalendarParameters` vivevano in
-`moment.test.ts`, dove erano arrivate al seguito di `MomentInput` e di
-`shiftDate`. È la ragione per cui la lacuna sembrava totale ed era invece
-parziale — e anche la ragione per cui conveniva toglierle di lì: un test che
-sta nel file del modulo sbagliato non lo trova chi cerca, e in un repo dove
-ogni modulo ha il suo `.test.ts` accanto è l'assenza a fare da indice. Ora
-`moment.test.ts` prova `moment.ts` e basta.
-
-Il dataset GeoNames è sostituito da due località — Napoli e Tokyo, che servono
-anche a provare che i due luoghi di una richiesta di transiti non si scambino.
-`getLocation` è l'unica cosa che `server/place.ts` gli chiede, e nessuna prova
-deve dipendere da un database da 215 MB che potrebbe non essere stato
-importato.
 
 ## 13. Due semplificazioni piccole
 
@@ -706,246 +441,16 @@ importato.
 
 `fetchChartCompact` (`apps/web/src/lib/api.ts:142`) e `fetchJyotishaCompact`
 (riga 224) sono la stessa funzione scritta due volte: cambiano l'indirizzo e due
-messaggi. Che non passino da `request` è giusto — quella risposta è testo e non
-JSON — ma è una ragione che vale una volta sola.
+messaggi. Che non passino da `request` è giusto (quella risposta è testo e non
+JSON), ma è una ragione che vale una volta sola.
 
 `packages/core/src/chart.ts:64` calcola la distribuzione e la butta: viene
 rifatta a riga 123, quando anche gli assi e la Parte di Fortuna esistono, ed è
 quella la buona. La prima serve solo a costruire un `NatalChart` completo. Costa
-un conteggio su tredici elementi, quindi non è una questione di tempo: è che in
-un file dove ogni riga ha una ragione ce n'è una che non ne ha, e il commento
-accanto spiega la seconda chiamata senza dire niente della prima.
-
-## 14. Il calcolo tiene fermo il server mentre gira — **fatto**
-
-Le tre ricerche che costano secondi — i passaggi dei transiti, il calendario del
-cielo, l'elezione — girano in un pool di worker thread. Il rimedio è **attorno
-al motore e non dentro**, come la voce prevedeva: la catena di calcolo resta
-sincrona e il vincolo su `await` non è stato toccato.
-
-Sta in `apps/web/src/lib/server/pool.ts`, senza dipendenze nuove — quindi
-nessuna questione di licenza — e le tre rotte lo chiamano con `nelPool`.
-
-### Quello che non si sapeva da qui, ed è la ragione per cui si poteva fare
-
-**Lo stato globale dell'ayanamsa è per thread, non per processo.** La voce dava
-per scontato il contrario, ed è per questo che chiamava il pool un rimedio da
-rimandare: se `set_sid_mode` valesse per il processo, due richieste con
-ayanamsa diversi servite da thread diversi si contaminerebbero, e il risultato
-non sarebbe un errore ma un tema sbagliato di ventiquattro gradi. Ogni thread
-carica invece la **sua istanza** del modulo nativo.
-
-Verificato, e non dedotto: due worker che calcolano in parallelo con `lahiri` e
-`raman` danno gli stessi valori che darebbero da soli, cifra per cifra. La
-prova sta in `pool.test.ts` e tiene fermo il fatto — se un domani smettesse di
-valere, il pool va smontato e non aggiustato.
-
-### Perché solo tre rotte
-
-Misurato su questa macchina: tema natale **0,4 ms**, passaggi su tre anni
-**621 ms**, con la Luna **1884 ms**. Avviare un worker e caricarci il motore
-costa **~50 ms**. Mandare un tema natale nel pool lo peggiorerebbe di cento
-volte, quindi le rotte leggere restano sincrone: il pool è un rimedio a una
-misura, non una regola di stile.
-
-Il pool ha una **coda** e un tetto di thread — `min(4, nuclei − 1)`, uno resta
-al filo principale, che deve poter servire le richieste leggere mentre le
-pesanti girano. Un worker per richiesta, l'altra forma che questa voce
-proponeva, sarebbe stato ~50 ms di avvio ogni volta e nessun tetto al numero di
-thread: il problema di prima con un nome diverso.
-
-### La misura che dice se è servito
-
-Sul server compilato, una `/api/chart` lanciata mentre gira una ricerca di
-passaggi da 1,94 s:
-
-| | prima | dopo |
-|---|---|---|
-| richiesta leggera durante una pesante | **1,677 s** | **0,004 s** |
-
-Il «prima» non è una stima: le rotte sono state rimesse nella forma sincrona,
-ricompilate e rimisurate.
-
-### Quello che è costato scriverlo
-
-Il worker è **una sorgente e non un file**, ed è la sola bruttezza della voce.
-Vite impacchetta il codice di server in `build/server/chunks`, quindi un file
-lasciato fuori dalla pipeline andrebbe ritrovato a runtime in tre posti diversi
-— `vite dev`, `build/index.js` e il `bundle/` che `apps/desktop` compone — con
-tre percorsi da tenere allineati a mano. Un `data:` non ha percorso e non ne
-può sbagliare nessuno. Da un `data:` però i nomi dei pacchetti non si
-risolvono, e il motore arriva quindi come URL assoluta in `workerData`, risolta
-dal thread principale, che sta in un file vero.
-
-Verificato in tutti e tre gli ambienti, perché è l'unica cosa che poteva
-rompersi in uno solo: i test, il server compilato, e il bundle di Electron
-dove `node_modules` è composto a mano da `stage.mjs`. In tutti e tre le tre
-rotte rispondono 200, e un errore di dominio resta un **400 con il suo codice**
-— l'errore attraversa il confine smontato e si rimonta di qua, perché
-`structuredClone` conserva il messaggio e perde la classe, quindi perderebbe il
-`code`.
-
-Verificato anche che i thread inattivi non trattengano il processo: il server
-esce su `SIGTERM` dopo aver usato il pool.
-
-### Quello che resta fuori, e non per dimenticanza
-
-Il **server MCP** non ha un pool e non gli serve: è un processo per client, sul
-trasporto stdio, e non c'è nessun'altra richiesta da tenere in attesa.
-
-Resta vero che sotto carico vero i thread non bastano: sono quattro, e quattro
-richieste pesanti insieme mettono in coda la quinta. Il tetto è voluto — il
-lavoro è tutto CPU, e più thread che nuclei non calcolano niente di più — ma
-se un giorno l'applicazione sta in rete pubblica con concorrenza seria, la coda
-va guardata di nuovo, e non da dentro il motore.
-
-## 15. Le cuspidi sono ancorate a una fonte esterna — **fatto**
-
-`packages/core/test/houses.test.ts`: le dodici cuspidi dei nove sistemi su un
-tema solo, confrontate al primo d'arco con valori che non vengono dal motore.
-Centootto cuspidi, scarto massimo ventitré secondi d'arco.
-
-Il tema è quello dell'esempio pubblicato da Jan Kampherbeek su **RadixPro** —
-Enschede, 2 novembre 2016, 21:17:30 UT — dove il calcolo è svolto passo per
-passo, con tutte le cifre intermedie, sulle formule di Geoffrey Dean (*Recent
-Advances in Natal Astrology*, 1977, p. 185) e di Michael Munkasey (*An
-Astrological House Formulary*). È aritmetica su carta, e copre Porfirio,
-Regiomontano e Alcabizio. Gli altri sei vengono da **Astrolog 8.00** di Walter
-D. Pullen, compilato dai sorgenti **senza il modulo Swiss Ephemeris** — che è
-la sola precauzione che conti, e sta qui sotto.
-
-Verificato scambiando le lettere, come la voce chiedeva: `O` con `B` fa cadere
-Porfirio di sessantun primi, e anche `P` con `T` — la coppia più vicina di
-tutte — cade, di sette primi. Il messaggio nomina il sistema e la cuspide.
-
-### Quello che non si sapeva da qui, ed è la ragione per cui poteva non servire a niente
-
-**Astrolog, compilato come esce dalla scatola, non calcola le case: le chiede a
-Swiss Ephemeris.** `calc.cpp:2824` chiama `swe_houses_armc_ex2`, e il commento
-sopra `ComputeHouses` lo dice in chiaro — «is only called when Swiss Ephemeris
-is NOT computing the houses». Un confronto fatto con quel binario avrebbe
-mostrato un accordo perfetto e non avrebbe provato niente, perché sarebbe stato
-il motore contro sé stesso. Va disattivato `SWISS` in `astrolog.h` e usato
-`-bm`: allora le cuspidi escono da `matrix.cpp` e `calc.cpp`, discendenti dalle
-routine di James Neely per Matrix Software degli anni Settanta. È l'unica
-precauzione che conti in tutta questa voce.
-
-**Lo scarto residuo non è imprecisione, è una convenzione diversa, e si sa
-quale.** I sette-ventitré secondi che restano sono sistematici e tutti dello
-stesso segno: entrambe le fonti usano l'obliquità **media** dell'eclittica, il
-motore quella **vera**. La differenza è la nutazione in obliquità, che a quella
-data vale −8,67 secondi d'arco. Dando a Swiss Ephemeris lo stesso ARMC e la
-stessa obliquità delle fonti — `houses_armc_ex2`, che li prende espliciti — i
-nove sistemi rientrano entro **un secondo d'arco**, e sui tre di RadixPro
-l'accordo è esatto fino all'ultima cifra pubblicata. La domificazione non
-aggiunge errore: lo eredita dagli assi. È la ragione per cui un primo d'arco è
-la tolleranza giusta e non se ne può chiedere meno.
-
-**Le due fonti si sono trovate d'accordo fra loro al secondo d'arco** sui tre
-sistemi che entrambe calcolano, arrivandoci per vie separate — aritmetica a
-mano da una parte, codice di quarant'anni fa dall'altra.
-
-**La tolleranza regge perché i nove sistemi su quel tema stanno larghi.** La
-coppia più vicina è Placido/Topocentrico, a quarantadue primi: quaranta volte
-la tolleranza. Il fatto è provato da un test suo, perché è quello che regge
-l'altro — se due sistemi cadessero vicini, scambiarne le lettere non farebbe
-cadere niente.
-
-Due trappole più piccole. Astrolog con `-C` stampa Medio Cielo e Fondo Cielo
-come **punti angolari** e non come cuspidi decima e quarta: nell'equale e nei
-segni interi quelle sono un'altra cosa, e vanno derivate dalla definizione.
-E le cuspidi non dipendono dai file delle effemeridi — obliquità e tempo
-siderale sono analitici — quindi la prova vale identica con Moshier.
-
-### Le fonti che sembrano indipendenti e non lo sono
-
-Da non ricontrollare: **astro.com** e le sue tavole delle case in PDF,
-**AstroSeek**, **Cafe Astrology**, **AstroLibrary**, e ogni libreria costruita
-su `pyswisseph` o `sweph` — Kerykeion, flatlib, immanuel. Sono tutte lo stesso
-motore visto da fuori.
-
-Se un giorno servisse un secondo ancoraggio, la strada c'è ed è di pubblico
-dominio: **Dalton, *The Spherical Basis of Astrology* (1911, settima edizione,
-che incorpora le Raphael's Tables of Houses)**, su archive.org come
-`sphericalbasisof00dalt`, senza restrizioni, cuspidi Placido al primo d'arco per
-le latitudini da 22 a 60. L'OCR delle tabelle è illeggibile ma le pagine si
-leggono a vista. Le tavole di Koch — le sue *Häusertabellen* del 1971 e il
-*Koch Book of Tables* di Michelsen — ci sono ma sono in prestito, non
-scaricabili.
-
-## 16. L'importazione finisce e non lo dice a nessuno — **fatto**
-
-A download completo la finestra di avanzamento restava aperta e ferma
-sull'ultima riga del log: per andare avanti bisognava accorgersene leggendo,
-chiudere la finestra a mano e riavviare il programma.
-
-**Non era una regressione di Electron 43**: lo stesso `utilityProcess.fork` su
-uno script che stampa e finisce si comporta identico sulla `38.8.6` e sulla
-`43.4.1`. Un figlio avviato così non esce quando il suo event loop si svuota,
-perché il canale col processo padre lo tiene vivo, e `import-geonames.mjs`
-chiude tutto quello che apre e finisce senza chiamare `process.exit`. La
-promessa su `processo.once('exit')` non si risolveva mai, quindi
-`splash.destroy()` non veniva mai raggiunto.
-
-Le quattro vie, misurate prima di scegliere:
-
-| | codice d'uscita | ultima riga del log |
-|---|---|---|
-| com'era | non esce | completa, ma la finestra resta |
-| `process.exit(0)` nel figlio | 0 | **persa** |
-| `process.parentPort?.close()` | **1** | completa |
-| `exitCode = 0` più `parentPort.close()` | **1** | completa |
-
-Le due che il processo lo chiudono davvero sbagliano ciascuna una cosa.
-`process.exit` tronca l'output, perché su una pipe `console.log` scrive in modo
-asincrono e le righe che si perdono sono proprio il riepilogo finale; chiudere
-`parentPort` conserva l'output ma esce con `1`, che `importaDatabase`
-leggerebbe come fallimento di un'importazione andata bene.
-
-Ha vinto la quinta, che era da valutare per prima: `ELECTRON_RUN_AS_NODE` con
-`child_process.spawn` su `process.execPath`. Dà al figlio la semantica di Node
-vera — esce da solo, col suo codice d'uscita e tutto il suo output — e il
-binario resta quello di Electron, quindi l'ABI non cambia e il modulo nativo di
-SQLite si carica come prima. Il rimedio sta tutto in `apps/desktop/src/main.ts`
-e `packages/geo` non si tocca, che è la sponda giusta: quello script serve
-anche alla riga di comando e al container, dove si comportava già bene.
-
-`utilityProcess` resta dov'era per il server, che invece deve **restare vivo**:
-è la stessa proprietà, guardata dai due lati.
-
-Verificato eseguendo l'importazione vera — non un finto script — col binario e
-i moduli presi dall'AppImage impacchettata: dodici secondi riusando la cache
-dei sorgenti, codice d'uscita `0`, log completo fino a «Fatto.», database di 90
-MB costruito.
-
-### La seconda metà, che si vedeva solo dopo la prima
-
-Chiusa la finestra dell'importazione, l'applicazione si chiudeva con lei:
-`window-all-closed` scatta nell'istante in cui quella sparisce, e la finestra
-vera non esiste ancora — il server sta ancora salendo. Il rimedio è una guardia
-su `avviato` nell'ascoltatore, che lascia passare la chiusura solo da quando la
-finestra vera è stata aperta la prima volta.
-
-Era lo stesso difetto visto dall'altro capo, e finché la splash non si chiudeva
-da sola non si poteva vedere: chi la chiudeva a mano faceva scattare quella
-stessa riga, ed è la ragione per cui l'importazione sembrava chiedere un
-riavvio. Provato in isolamento — una finestra distrutta, una seconda aperta un
-secondo e mezzo dopo — con la guardia e senza: senza, l'applicazione muore
-prima della seconda.
-
-### E i secondi di silenzio dopo «Scarica ora»
-
-Fra il consenso e la comparsa della finestra passavano un paio di secondi
-senza niente a schermo. Non è il caricamento della pagina, che è di 0,3: è il
-primo processo renderer dentro l'AppImage, dove le librerie di Chromium si
-leggono da un filesystem compresso — misurati 2,1 secondi contro i 0,3 dello
-stesso codice in un albero non impacchettato.
-
-La finestra si costruisce quindi **prima** del dialogo e resta invisibile, così
-quei secondi passano mentre chi legge decide; alla scelta, `show()` costa un
-millesimo. Chi risponde «Continua senza» o «Esci» non la vede mai, perché viene
-distrutta lì. Nel frattempo il `<pre>` non è più vuoto: porta una riga
-d'attesa, che la prima riga vera dello scaricamento porta via.
+un conteggio su tredici elementi, quindi non è una questione di tempo. Il
+commento a riga 63 lo dice («riempita in fondo, quando anche assi e Parte di
+Fortuna esistono»), ma un valore calcolato per essere buttato resta una riga
+che si può togliere: basta un segnaposto vuoto, o costruire il tema dopo.
 
 ## 17. L'astrologia oraria
 
@@ -1003,7 +508,7 @@ già come «tradizionale nell'astrologia oraria»). Ci sono anche:
 - `applying` sugli aspetti (`aspects.ts:170`), gli istanti esatti in
   `findSkyPassages` (`sky-passages.ts:58`), le stazioni in `findStations`, gli
   ingressi in `findSignIngresses`;
-- `retrograde` e `speed` (`types.ts:622`);
+- `speed` e `retrograde` (`types.ts:623-624`);
 - la setta (`points.ts:13`);
 - la Luna vuota di corso, alba, tramonto e ore planetarie in `election.ts`.
 
@@ -1130,7 +635,7 @@ un pacchetto di tavole nel punto 19, ed è la prova che la struttura regge.
 
 Le figure d'esempio del libro II portano data, ora e luogo, e Lilly scrive per
 ciascuna le condizioni dei significatori e gli eventi che le legano. Sono
-l'àncora esterna, come le cuspidi del punto 15: ricalcolare la figura e
+l'àncora esterna, come le cuspidi in `houses.test.ts`: ricalcolare la figura e
 confrontare ciò che Lilly dichiara, scegliendo i casi lontani dai confini,
 perché le sue effemeridi sbagliavano di qualche primo e un confine li
 ribalta. Per il lotto B la verifica non chiede Lilly: una sequenza di eventi si
@@ -1181,7 +686,7 @@ chiudono un difetto che c'è già.
 ### Il difetto di oggi
 
 Le dignità nel repo ci sono già, nello strato che non può verificarle.
-`packages/lettura/src/tropicale.ts:86` dice al modello che domicilio,
+`packages/lettura/src/tropicale.ts:87` dice al modello che domicilio,
 esaltazione, esilio e caduta «li ricavi dal segno», contro la regola con cui
 lo stesso documento si apre («se una tecnica ti servirebbe e il dato manca,
 dillo e fermati lì»); e non dice se i domicili siano quelli tradizionali o
@@ -1290,27 +795,82 @@ Le tavole contro la fonte, segno per segno e scuola per scuola: è una prova a
 tabella e non chiede effemeridi. Per i domicili, anche il test che
 `tropicale.ts` non dica più «li ricavi dal segno».
 
+## 20. Le dipendenze: ventotto vulnerabilità, e SvelteKit 3
+
+**Priorità alta, e da guardare per prima:** non per la fretta di aggiornare, ma
+per sapere che cosa arriva davvero a chi usa il programma. La voce prende il
+posto di quella su `cookie@0.6.0` che stava fra le cose esaminate: si chiudeva
+con «da riguardare quando SvelteKit alza la dipendenza», e la condizione si è
+verificata.
+
+Il 18 ottobre 2026 `npm audit` conta **28 vulnerabilità**: 3 basse, 12
+moderate, 10 alte, 3 critiche. Le critiche sono `vitest`, `tinypool` e
+`proxy-addr`; fra le alte ci sono `electron`, `@modelcontextprotocol/sdk`,
+`undici`, `devalue`, `js-yaml`, `fast-uri`, `http-cache-semantics`,
+`source-map-js`, `brace-expansion`, `@xmldom/xmldom`.
+
+SvelteKit 3.0.0 è uscito il 1° ottobre e la 3.1.0 il 14, con `cookie@^2.0.1`;
+la linea 2.x, quella installata (2.70.2), resta su `cookie@^0.6.0`. `npm audit`
+oggi propone `@sveltejs/kit@3.1.0` e `@sveltejs/adapter-node@6.0.0`: due salti
+di versione maggiore, non una correzione.
+
+### Il primo passo è una cernita
+
+Per ogni pacchetto, da dove arriva e se raggiunge chi usa il programma:
+
+- **Solo sviluppo.** `vitest` e `tinypool` girano nei test e non entrano in
+  nessun pacchetto distribuito: critiche sulla carta, ma sulla macchina di chi
+  sviluppa.
+- **Incorporate nel server compilato.** `npm audit --omit=dev` qui inganna:
+  SvelteKit è una dipendenza di sviluppo, ma il suo runtime finisce nel server
+  compilato. La stringa d'errore di `cookie` si trova in
+  `apps/desktop/bundle/server/server/chunks/`. Ogni vulnerabilità che arrivi da
+  quella catena (`devalue` è il primo candidato, `proxy-addr` va verificato) va
+  trattata come runtime.
+- **Distribuite.** `electron` è dentro l'AppImage; `@modelcontextprotocol/sdk`
+  è il server MCP che i client lanciano.
+
+Poi gli aggiornamenti compatibili subito, in un commit; i salti di versione
+maggiore (SvelteKit 3 con adapter-node 6, Electron se serve) come lavori propri,
+ciascuno con la sua voce. Il precedente per Electron è `2977ca0`, «Porta
+Electron alla 43.4.1».
+
+**Non `npm audit fix --force`**: applica tutti i salti maggiori in un colpo, e
+il diff che ne esce non si rilegge.
+
+Verifica: `npm audit` dopo ciascun passo, `npm test && npm run typecheck`, e la
+build del desktop che parte.
+
+## Deciso, e da non riaprire
+
+- **Niente riscrittura della storia di git.** Il rinomino da undicesimacasa a
+  dodicisegni l'ha lasciata com'era, ed è pericolosa per un guadagno estetico.
+- **Il dominio non entra nel codice.** `Meta.svelte` compone gli indirizzi da
+  `page.url.origin`, e in produzione è `ORIGIN` a dirlo: il cambio di dominio è
+  configurazione.
+- **`12segni` non è un secondo marchio.** È il dominio di servizio e il nome
+  breve sotto l'icona, dove sette caratteri sono il tetto. Nella prosa il nome
+  è uno solo.
+- **Il server MCP non ha un pool, e non gli serve**: è un processo per client,
+  sul trasporto stdio, e non c'è nessun'altra richiesta da tenere in attesa.
+- **I thread del pool web sono quattro, e la quinta richiesta pesante aspetta.**
+  Il tetto è voluto: il lavoro è tutto CPU, e più thread che nuclei non
+  calcolano niente di più. Va riguardato solo se l'applicazione va in rete
+  pubblica con concorrenza seria, e non da dentro il motore.
+
 ## Esaminato, e lasciato stare
 
-**`cookie@0.6.0` sotto SvelteKit** — `npm audit` conta tre vulnerabilità basse:
-`cookie`, `@sveltejs/kit` e `@sveltejs/adapter-node` sono la stessa cosa vista da
-tre punti della catena, e portano a una copia sola in
-`node_modules/@sveltejs/kit/node_modules/cookie`. Quella di primo livello è
-`0.7.2` e sta bene.
+**Le fonti per le cuspidi che sembrano indipendenti e non lo sono.** Da non
+ricontrollare: **astro.com** e le sue tavole delle case in PDF, **AstroSeek**,
+**Cafe Astrology**, **AstroLibrary**, e ogni libreria costruita su `pyswisseph`
+o `sweph` (Kerykeion, flatlib, immanuel). Sono tutte lo stesso motore visto da
+fuori. Le cuspidi sono ancorate in `houses.test.ts` a RadixPro e ad Astrolog
+compilato senza Swiss Ephemeris, e il commento in testa al test dice perché.
 
-Tre ragioni per non farci niente, e la terza è quella che chiude il discorso.
-
-1. **Non esiste una correzione.** L'ultima versione pubblicata di SvelteKit
-   dipende ancora da `cookie@^0.6.0`, esattamente come quella installata. Il
-   `fixAvailable` che npm propone è `@sveltejs/kit@0.0.30`, un pre-release del
-   2023: **`npm audit fix --force` qui rompe il progetto invece di ripararlo.**
-2. **Il codice viene messo in rete davvero**, e su questo `npm audit --omit=dev`
-   inganna: dice zero perché SvelteKit è una dipendenza di sviluppo, ma il suo
-   runtime viene incorporato nel server compilato. La stringa d'errore di
-   `cookie` si trova in `apps/web/build/server/chunks/`.
-3. **Non c'è un punto di chiamata.** L'avviso riguarda `serialize()`, che accetta
-   caratteri fuori intervallo in nome, path e domain: serve a qualcosa solo se
-   ci arriva input non fidato. Non esiste `hooks.server.ts`, e in tutto il repo
-   `cookies.` non compare mai. Questa applicazione non imposta cookie.
-
-Da riguardare quando SvelteKit alza la dipendenza, non prima.
+Se un giorno servisse un secondo ancoraggio, la strada c'è ed è di pubblico
+dominio: **Dalton, *The Spherical Basis of Astrology* (1911, settima edizione,
+che incorpora le Raphael's Tables of Houses)**, su archive.org come
+`sphericalbasisof00dalt`, senza restrizioni, cuspidi Placido al primo d'arco per
+le latitudini da 22 a 60. L'OCR delle tabelle è illeggibile ma le pagine si
+leggono a vista. Le tavole di Koch (le sue *Häusertabellen* del 1971 e il *Koch
+Book of Tables* di Michelsen) ci sono, ma in prestito, non scaricabili.
