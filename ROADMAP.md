@@ -1216,23 +1216,67 @@ per la sua tavola delle dignità; Doroteo per le triplicità; il *Brihat
 Parashara Hora Shastra* per il Jyotisha. Un modulo `dignita.ts` in `core`,
 con le scuole come pacchetti e mai mescolate.
 
-### Il punto da decidere
+### Le scuole, e il default deciso il 18 ottobre 2026
 
-Il default. Il vincolo dice che nessuna scuola è un default taciuto, non che
-non ci sia un default: il tema natale deve pur mostrare qualcosa senza che si
-scelga. Va deciso quale pacchetto si mostra per primo nello zodiaco tropicale,
-e il risultato deve dirlo. Nel Jyotisha la scelta è più semplice, perché
-Parashara è il riferimento che i documenti di lettura già presuppongono.
+Per il tema tropicale le scuole possibili sono cinque, ciascuna come pacchetto:
+
+| | Domicili | Esaltazioni | Triplicità | Termini | Facce | Punteggio | Fonte primaria |
+|---|---|---|---|---|---|---|---|
+| Ellenistica (Doroteo, Valente) | tradizionali | col grado | tre reggenti, uno partecipe | egizi | sì | nessuno | Doroteo sopravvive in arabo, e la traduzione di Pingree è protetta; Valente in greco è libero |
+| Tolomeo, *Tetrabiblos* | tradizionali | sì, gradi da verificare | due reggenti, acqua da verificare | tolemaici | da verificare | nessuno | greco e Ashmand (1822) liberi |
+| Medievale araba (Abū Maʿshar, al-Bīrūnī, Bonatti) | tradizionali | col grado | doroteiche | egizi | caldee | 5-4-3-2-1, almuten | Bonatti latino (1491) libero |
+| Lilly, 1647 | tradizionali | col grado | due reggenti, Marte sull'acqua | tolemaici, nella sua versione | caldee | da +5 a +1, esilio −5, caduta −4, peregrino −5 | scansioni libere |
+| Moderna, XX secolo | con Urano, Nettuno, Plutone | segni, i pianeti esterni contesi | nessuna | nessuno | decani per triplicità (Alan Leo) | nessuno | senza un autore unico |
+
+Il default nel tema tropicale sono **due colonne affiancate, mai mescolate**:
+
+- **i domicili tradizionali con esaltazione, esilio e caduta**, dichiarati come
+  la parte comune alle scuole occidentali antiche. Sulle quattro dignità
+  maggiori le prime quattro righe concordano, ed è per questo che mostrarle
+  non sceglie fra loro in silenzio. Sono anche le quattro che `tropicale.ts`
+  usa oggi;
+- **i domicili moderni**, attribuiti alla convenzione del Novecento con le sue
+  fonti parziali: Alan Leo per Urano all'Acquario e Nettuno ai Pesci. Per
+  Plutone allo Scorpione il risultato dice che non c'è un autore. Il progetto
+  ha già scelto quella convenzione mettendo Plutone nel tema: qui la si
+  dichiara.
+
+Con due schemi i segni dello Scorpione, dell'Acquario e dei Pesci hanno due
+signori, e così le case che vi cadono: il risultato li porta tutti e due, col
+nome della convenzione.
+
+Triplicità, termini, facce e punteggio **non compaiono per default**: si
+chiedono nominando la scuola. La prima disponibile è Lilly, che l'oraria
+richiede comunque; le altre entrano quando le loro fonti sono state lette.
+
+Nel Jyotisha la scelta è più semplice, perché Parashara è il riferimento che i
+documenti di lettura già presuppongono.
+
+### Da verificare prima di scrivere le tavole
+
+- **Che la parte comune sia davvero comune.** Domicili ed esaltazioni per segno
+  in ciascuna delle quattro scuole antiche, sulla fonte. È un test a tabella, e
+  se una scuola diverge la colonna di default si restringe invece di
+  sceglierne una.
+- **I gradi di esaltazione in Tolomeo**: le fonti secondarie non dicono se ci
+  siano. Se mancano, il default porta i segni e il grado resta della scuola che
+  lo dà.
+- **La triplicità d'acqua in Tolomeo.** Una fonte gli attribuisce Marte di
+  giorno e di notte come Lilly, un'altra un reggente diverso per setta.
+- **I punti 5-4-3-2-1 medievali**: a chi vanno attribuiti. I siti li danno
+  come «medievali» senza un testo.
+- **Una fonte per Plutone allo Scorpione**, o la dichiarazione che non c'è.
 
 ### Superfici, in commit
 
-1. **I domicili soli**, con i signori delle case, nella tabella di `format.ts`;
-   `tropicale.ts` passa da «li ricavi dal segno» a «li trovi nella tabella», e
-   dice quale scuola. È il commit che chiude il difetto, e va fatto per primo
-   anche se il resto aspetta.
-2. Esaltazione, caduta, esilio, e le ricezioni.
-3. Triplicità, termini, facce, nelle due scuole: è il pezzo che il punto 17
-   aspetta.
+1. **I domicili nelle due colonne**, con i signori delle case, nella tabella di
+   `format.ts`; `tropicale.ts` passa da «li ricavi dal segno» a «li trovi nella
+   tabella», e dice che le colonne sono due e perché. È il commit che chiude il
+   difetto, e va fatto per primo anche se il resto aspetta.
+2. Esaltazione, caduta, esilio nella colonna tradizionale, e le ricezioni.
+3. Il pacchetto di Lilly a richiesta: triplicità, termini, facce. È il pezzo
+   che il punto 17 aspetta, e il suo punteggio sta là, perché chiede anche le
+   condizioni di un istante.
 4. Le dignità del Jyotisha, e il documento `jyotisha.ts` che smette di
    ricopiare la tavola in prosa o la tiene come istruzione, col dato che ora
    arriva calcolato.
