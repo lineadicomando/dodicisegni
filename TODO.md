@@ -53,9 +53,9 @@ ricontrollabile; le prove ai confini dei segni pari e dispari; l'aggiunta a
 `VargaId` in `types.ts` e all'elenco di `--varga` nell'aiuto della CLI.
 
 L'elenco dei varga però non vive solo lì: è ricopiato in
-`packages/mcp/src/tools.ts:123` (`VARGA_IDS`, uno `z.enum`), nelle due rotte
-`apps/web/src/routes/api/jyotish/+server.ts:17` e `api/jyotish/quadro/+server.ts:12`
-(un `Set<string>`), in `apps/web/src/lib/components/JyotishaSettings.svelte:57`
+`packages/mcp/src/tools.ts:123` (`VARGA_IDS`, una tupla che diventa `z.enum`),
+nelle due rotte `apps/web/src/routes/api/jyotish/+server.ts:17` e
+`api/jyotish/quadro/+server.ts:12` (un `Set<string>`), in `apps/web/src/lib/components/JyotishaSettings.svelte:57`
 (`VARGHE`) e nella pagina del metodo, righe 346-347. Un varga nuovo
 dimenticato in una delle copie viene rifiutato da quella superficie senza
 nessun errore: è lo stesso difetto del punto 11, che conviene chiudere prima.
@@ -182,7 +182,8 @@ un giorno, una settimana, un mese, un bimestre. È una domanda sola con `from` e
 `windowAround`, `packages/core/src/passages.ts:180`, calcola già l'intervallo in
 cui ogni passaggio resta in orbita, e lo fa quasi gratis: cammina sui campioni
 già presi e dimezza solo l'ultimo. Il margine di campionamento a
-`passages.ts:64` è `WIDEST_ORB / MEAN_DAILY_MOTION[bodyId]`, cioè esattamente il
+`passages.ts:65` è `WIDEST_ORB / MEAN_DAILY_MOTION[bodyId]` (`WIDEST_ORB` vale
+4°, `roots.ts:32`), cioè esattamente il
 tempo massimo che un corpo impiega ad attraversare l'orbita più larga concessa:
 non è un margine prudenziale, è dimensionato sul caso peggiore.
 
@@ -212,9 +213,10 @@ scollegata da quell'ancora.
 
 Secondo caso, più semplice: quando il bordo non si trova entro
 `MAX_WINDOW_DAYS` (1095, `roots.ts:30`, che fa anche da tetto al margine di
-riga 64), o quando i campioni finiscono prima di trovarlo, la finestra oggi
-viene omessa. In un elenco di transiti attivi «in orbita per tutto l'arco»
-**è la risposta**, non un dato mancante, e va detta invece che taciuta.
+riga 65 e dentro `windowAround`), o quando i campioni finiscono prima di
+trovarlo, la finestra oggi viene omessa. In un elenco di transiti attivi «in
+orbita per tutto l'arco» **è la risposta**, non un dato mancante, e va detta
+invece che taciuta.
 
 Niente di tutto questo tocca la catena di calcolo sincrona né lo stato globale
 dell'ayanamsa: si resta dentro `zodiacContext`, come il resto del file.
@@ -491,7 +493,9 @@ le regole di una scuola per leggerlo.
 Per Lilly: *Christian Astrology*, 1647. Il libro II è il metodo orario intero,
 il libro I ha le tavole. È di pubblico dominio, e se ne trovano scansioni
 dell'originale: quella del Museo Franz Mayer (Città del Messico) sta sotto
-CC BY-SA 4.0, altre vengono da EEBO attraverso la Wellcome Collection.
+CC BY-SA 4.0, altre vengono da EEBO attraverso la Wellcome Collection
+(archive.org, `b30338724`, quella su cui è stata letta la p. 104 per il punto
+19).
 
 **I numeri si leggono sulla scansione, non sui siti.** L'edizione trascritta che
 si trova in rete (Deborah Houlding, Skyscript) è protetta e non si ricopia, e le
@@ -515,11 +519,11 @@ lo fa già, e il Regiomontano è fra i nove sistemi
 (`packages/mcp/src/server.ts:159` lo descrive già come «tradizionale
 nell'astrologia oraria»). Ci sono anche:
 
-- `applying` sugli aspetti (`isApplying`, `aspects.ts:170`), gli istanti esatti in
-  `findSkyPassages` (`sky-passages.ts:58`), le stazioni in `findStations`, gli
-  ingressi in `findSignIngresses`;
+- `applying` sugli aspetti (`isApplying`, privata, `aspects.ts:170`), gli
+  istanti esatti in `findSkyPassages` (`sky-passages.ts:58`), le stazioni in
+  `findStations`, gli ingressi in `findSignIngresses`;
 - `speed` e `retrograde` (`types.ts:623-624`);
-- la setta (`points.ts:13`);
+- la setta (`chartSect`, `points.ts:13`);
 - la Luna vuota di corso, alba, tramonto e ore planetarie in `election.ts`.
 
 Manca, oltre alle dignità del punto 19:
@@ -691,56 +695,86 @@ diversi, e ciascuno dice quale l'ha prodotto.
 
 **Priorità media.** Viene dal punto 17, che ne ha bisogno, ma vale da sola: le
 dignità servono al natale letto alla maniera tradizionale e al Jyotisha, e
-chiudono un difetto che c'è già.
+chiudono un difetto che nel Jyotisha c'è ancora.
 
-### Il difetto di oggi
+### A che punto è
 
-Chiuso per il tropicale. Domicili, esilio, esaltazione e caduta stanno in
-`packages/core/src/dignita.ts`, con le fonti nei commenti, e nella sezione
-DIGNITÀ di `format.ts`: le due colonne dei signori con le case, e una riga
-per convenzione con chi è in domicilio, esaltazione, esilio o caduta.
-`tropicale.ts` manda lì il modello invece di farglieli ricavare.
+Fatto per il tema tropicale, in `2feb3be` e `ac7c553`.
+`packages/core/src/dignita.ts` tiene domicili (tradizionali e moderni),
+esilio, esaltazione e caduta, con le fonti e le pagine nei commenti;
+`packages/core/test/dignita.test.ts` le prova contro le tavole delle fonti,
+ricopiate indipendentemente. La sezione DIGNITÀ di `format.ts`
+(`dignityLines`) porta le due colonne dei signori con le case e, in coda, una
+riga per convenzione con chi è in domicilio, esaltazione, esilio o caduta.
+`packages/lettura/src/tropicale.ts` manda lì il modello invece di fargliele
+ricavare dal segno, e `lettura.test.ts` lo verifica.
 
-Resta il Jyotisha, e il difetto lì è doppio. `packages/lettura/src/jyotisha.ts:45`
-ricopia in prosa la tavola dei domicili antichi; e `jyotisha.ts:126` chiede di
-confrontare «un pianeta forte nel tema e debole nel D9» senza che la tabella
-porti alcun dato sulla forza: esaltazione e debilitazione il modello le prende
-a memoria, con i gradi della scuola che preferisce. Tutti e due col commit 4.
+Che cosa la sezione porta, e perché così:
 
-Le dignità non sono ancora nel JSON di `NatalChart`, solo nella tabella:
-entrano col passo delle superfici, e lì va deciso come, perché `NatalChart` è
-anche la carta siderale che il Jyotisha riusa, dove le dignità occidentali
-sarebbero dottrina sbagliata. Fino ad allora il compatto porta un dato che il
-JSON non ha, e i due test sul rapporto fra le rese
-(`packages/core/test/chart.test.ts` e «costa molti meno token» in
-`packages/mcp/test/server.test.ts`) tolgono la sezione DIGNITÀ prima di
-confrontare. Quando il dato entra nel JSON, quella sottrazione va tolta.
+- **domicili** in due colonne mai fuse. La tradizionale, dei sette pianeti, è
+  comune alle scuole antiche; la moderna dà lo Scorpione a Plutone, l'Acquario
+  a Urano, i Pesci a Nettuno, e dichiara di non avere un autore unico;
+- **esilio** in tutte e due: il segno opposto al domicilio. Nella tradizionale
+  ha una fonte, la colonna Detriment di Lilly; nella moderna è la stessa
+  regola sull'altra tavola, e la riga lo dice. È così che Saturno in Leone è in
+  esilio per una colonna e non per l'altra;
+- **esaltazione e caduta** solo nella tradizionale, **per segno e senza
+  gradi**: è la parte su cui Tolomeo, Firmico e Lilly concordano. I gradi e
+  le esaltazioni dei Nodi vengono col pacchetto di Lilly. Per Urano, Nettuno
+  e Plutone nessuna esaltazione ha un autore, e non entrano.
 
-### Che cosa
+### Che cosa resta, nell'ordine
 
-Tavole, senza moto e senza tempo, ciascuna con la sua scuola e la fonte:
+1. **Il Jyotisha, che chiude il difetto ancora aperto.** È doppio:
+   `packages/lettura/src/jyotisha.ts:45` ricopia in prosa la tavola dei
+   domicili antichi, e `jyotisha.ts:126` chiede di confrontare «un pianeta
+   forte nel tema e debole nel D9» senza che la tabella porti alcun dato sulla
+   forza, quindi esaltazione e debilitazione il modello le prende a memoria,
+   con i gradi della scuola che preferisce. Che cosa serve:
+   - le tavole di Parashara: esaltazione e debilitazione **col grado**, che qui
+     sono diversi da quelli occidentali (Sole a 10 dell'Ariete, Giove a 5 del
+     Cancro, contro 19 e 15 di Firmico), moolatrikona, segno proprio. Fonte:
+     BPHS 3.49-50 nella traduzione di Santhanam, vol. I (Ranjan, 1992), pp.
+     38-39; le pagine vengono dall'OCR e vanno viste sulla scansione
+     (archive.org, `heag_brihat-parasara-hora-sastra-vol-1-…`). Il testo della
+     traduzione è protetto, i valori no. Moolatrikona e segno proprio non sono
+     ancora stati letti. Per l'esaltazione dei Nodi il traduttore dice che le
+     opinioni divergono: non entra senza una fonte che la dia;
+   - **dove metterle**: in `JyotishaChart` (`types.ts:500`), il composto che
+     `computeJyotisha` costruisce, e non in `NatalChart`. Così entrano nel
+     JSON del tema vedico subito, senza aspettare la questione di
+     `NatalChart` qui sotto e senza mescolare le dottrine;
+   - una sezione in `formatJyotishaCompact`, e `jyotisha.ts` che a riga 45
+     rimanda alla tabella invece di ricopiarla, e a riga 126 dice da dove si
+     legge la forza. Il test in `lettura.test.ts:164` («dà i domicili
+     antichi») va riscritto di conseguenza.
+2. **Le ricezioni** (per domicilio, per esaltazione, la mutua), che erano
+   previste con le esaltazioni e non ci sono entrate. Si ricavano dalle
+   tavole che ci sono già, ma la definizione va presa da una fonte con la
+   pagina, non dai manuali.
+3. **Il pacchetto di Lilly a richiesta**: triplicità, termini, facce, i gradi
+   delle esaltazioni e i Nodi. È il pezzo che il punto 17
+   aspetta; il suo punteggio sta là, perché chiede anche le condizioni di un
+   istante.
+4. **Le superfici**: CLI, rotta, tool MCP e una tabella Svelte, nell'ordine
+   della skill `nuova-funzione`. La tabella prende i dati, non il tema.
 
-- **Domicili**, tradizionali e moderni come due campi distinti, non uno
-  scelto; esilio come derivato.
-- **Esaltazione** col grado, e caduta come derivato. L'esaltazione dei Nodi
-  diverge (Gemelli e Sagittario in molti testi occidentali, Toro e Scorpione in
-  molti vedici) e va nominata.
-- **Triplicità**: Lilly (due reggenti) e Doroteo (tre, uno partecipe).
-- **Termini**: tolemaici ed egizi.
-- **Facce** caldee.
-- **Peregrinità**, che ogni scuola definisce sulle sue tavole.
-- Per il Jyotisha: esaltazione e caduta col grado, moolatrikona, segno
-  proprio. Le amicizie fra graha (la naturale, la temporanea, e la loro
-  composizione in cinque gradi) dopo, e con le due tavole di partenza esposte.
+### Le dignità non sono nel JSON
 
-E le relazioni che dalle tavole si ricavano per regola: **signori delle case,
-dispositori, ricezioni** (per domicilio, per esaltazione, la mutua).
+Oggi stanno solo nella tabella compatta, e `NatalChart` non le ha. Vanno messe
+nel JSON col passo delle superfici, e lì va deciso come: `NatalChart` è anche
+la carta siderale che il Jyotisha riusa, dove le dignità occidentali sarebbero
+dottrina sbagliata.
 
-Le tavole si leggono sulle fonti primarie, con la pagina accanto: Tolomeo,
-*Tetrabiblos*, per domicili, esaltazioni e termini tolemaici; Lilly, libro I,
-per la sua tavola delle dignità; Doroteo per le triplicità; il *Brihat
-Parashara Hora Shastra* per il Jyotisha. Un modulo `dignita.ts` in `core`,
-con le scuole come pacchetti e mai mescolate.
+Finché non ci sono, il compatto porta un dato che il JSON non ha, e i due test
+che confrontano le rese (`packages/core/test/chart.test.ts`, «resta
+sensibilmente più compatto», e `packages/mcp/test/server.test.ts`, «costa
+molti meno token», con la funzione `senzaDignita`) tolgono la sezione DIGNITÀ
+prima di confrontare. Quando il dato entra nel JSON, quella sottrazione va
+tolta. Le descrizioni che parlano del rapporto («un quarto del JSON, e in più
+le dignità») stanno in `format.ts`, in `packages/mcp/src/tools.ts` (parametro
+`format` di `compute_natal_chart`) e in
+`apps/web/src/routes/api/chart/+server.ts`.
 
 ### Le scuole, e il default deciso il 18 ottobre 2026
 
@@ -748,101 +782,77 @@ Per il tema tropicale le scuole possibili sono cinque, ciascuna come pacchetto:
 
 | | Domicili | Esaltazioni | Triplicità | Termini | Facce | Punteggio | Fonte primaria |
 |---|---|---|---|---|---|---|---|
-| Ellenistica (Doroteo, Valente) | tradizionali | col grado | tre reggenti, uno partecipe | egizi | sì | nessuno | Doroteo sopravvive in arabo, e la traduzione di Pingree è protetta; Valente in greco è libero |
-| Tolomeo, *Tetrabiblos* | tradizionali | sì, gradi da verificare | due reggenti, acqua da verificare | tolemaici | da verificare | nessuno | greco e Ashmand (1822) liberi |
+| Ellenistica (Doroteo, Valente) | tradizionali | da verificare: Valente I.2 non ha la tavola | tre reggenti, uno partecipe | egizi | sì | nessuno | Doroteo sopravvive in arabo, e la traduzione di Pingree è protetta; Valente in greco è libero |
+| Tolomeo, *Tetrabiblos* | tradizionali | per segno, senza gradi (I.19) | due reggenti, acqua da verificare | tolemaici | da verificare | nessuno | greco e Ashmand (1822) liberi |
 | Medievale araba (Abū Maʿshar, al-Bīrūnī, Bonatti) | tradizionali | col grado | doroteiche | egizi | caldee | 5-4-3-2-1, almuten | Bonatti latino (1491) libero |
-| Lilly, 1647 | tradizionali | col grado | due reggenti, Marte sull'acqua | tolemaici, nella sua versione | caldee | da +5 a +1, esilio −5, caduta −4, peregrino −5 | scansioni libere |
-| Moderna, XX secolo | con Urano, Nettuno, Plutone | segni, i pianeti esterni contesi | nessuna | nessuno | decani per triplicità (Alan Leo) | nessuno | senza un autore unico |
+| Lilly, 1647 | tradizionali | col grado, e i Nodi | due reggenti, Marte sull'acqua | tolemaici, nella sua versione | caldee | da +5 a +1, esilio −5, caduta −4, peregrino −5 | scansioni libere |
+| Moderna, XX secolo | con Urano, Nettuno, Plutone | segni, i pianeti esterni senza autore | nessuna | nessuno | decani per triplicità (Alan Leo) | nessuno | senza un autore unico |
 
-Il default nel tema tropicale sono **due colonne affiancate, mai mescolate**:
+Le righe medievale, Lilly e moderna, fuori da quanto verificato qui sotto,
+vengono da fonti secondarie e vanno lette sulle primarie prima di diventare
+tavole.
+
+Il default nel tema tropicale sono **due colonne affiancate, mai mescolate**,
+ed è quello che la sezione DIGNITÀ porta oggi:
 
 - **i domicili tradizionali con esaltazione, esilio e caduta**, dichiarati come
-  la parte comune alle scuole occidentali antiche. Sulle quattro dignità
-  maggiori le prime quattro righe concordano, ed è per questo che mostrarle
-  non sceglie fra loro in silenzio. Sono anche le quattro che `tropicale.ts`
-  usa oggi;
+  la parte comune alle scuole occidentali antiche;
 - **i domicili moderni**, attribuiti alla convenzione del Novecento, che un
-  autore unico non ce l'ha: Alan Leo riferisce Urano all'Acquario e Nettuno
-  ai Pesci ma non li fonda, e per Plutone allo Scorpione il risultato dice che
-  non c'è un autore. Il progetto ha già scelto quella convenzione mettendo
-  Plutone nel tema: qui la si dichiara.
-
-Con due schemi i segni dello Scorpione, dell'Acquario e dei Pesci hanno due
-signori, e così le case che vi cadono: il risultato li porta tutti e due, col
-nome della convenzione.
+  autore unico non ce l'ha. Il progetto ha già scelto quella convenzione
+  mettendo Plutone nel tema: qui la si dichiara.
 
 Triplicità, termini, facce e punteggio **non compaiono per default**: si
 chiedono nominando la scuola. La prima disponibile è Lilly, che l'oraria
 richiede comunque; le altre entrano quando le loro fonti sono state lette.
-
 Nel Jyotisha la scelta è più semplice, perché Parashara è il riferimento che i
 documenti di lettura già presuppongono.
 
-### Da verificare prima di scrivere le tavole
+### Le fonti: verificato e da verificare
 
-Già verificato, per i domicili, e scritto in `dignita.ts`: Tolomeo I.17 (Loeb
-pp. 79-83) e Lilly (p. 104) coincidono; Valente I.2 (Kroll pp. 5-13) scrive
-«οἶκος» solo per nove segni, tutti concordi; Bonatti non è stato letto.
-Leo, *The Art of Synthesis* p. 117, riferisce Urano e Nettuno senza essere il
-primo; per Plutone allo Scorpione nessun autore, e Zain nel 1942 lo usa come
-il più diffuso. Resta:
+Verificato sulle scansioni il 18 ottobre 2026, e scritto nei commenti di
+`dignita.ts`:
 
-Verificato anche, per le esaltazioni, il 18 ottobre 2026:
+- **Domicili.** Tolomeo I.17 (ed. Robbins, Loeb 1940, pp. 79-83, su
+  LacusCurtius) e Lilly, *Christian Astrology* (1647), p. 104 (archive.org,
+  `b30338724`) coincidono. Valente I.2 (ed. Kroll 1908, pp. 5-13) scrive
+  «οἶκος» per nove segni, concordi; per Toro, Acquario e Pesci no.
+- **Domicili moderni.** Alan Leo, *The Art of Synthesis* (1912), p. 117,
+  riferisce Urano all'Acquario e Nettuno ai Pesci come un uso, senza esserne
+  il primo: Urano all'Acquario circolava già nell'Ottocento (Varley 1828,
+  secondo Skyscript, pagina non vista). Per Plutone allo Scorpione nessun
+  autore; C. C. Zain (1942) lo usa dichiarandolo solo il più diffuso.
+- **Esaltazioni.** Tolomeo I.19 (Loeb pp. 89-91) dà i segni e nessun grado, e
+  scrive lui le cadute («depression») nel segno opposto. Firmico, *Mathesis*
+  II.3.5-6 (ed. Kroll-Skutsch I, 1897, p. 44, rr. 7-17) dà i gradi, con la
+  caduta allo stesso grado del segno opposto; Lilly p. 104 dà gli stessi gradi
+  e in più il Nodo Nord a 3° Gemelli e il Sud a 3° Sagittario (glifo stampato
+  male). I gradi sono quindi della tradizione da Firmico a Lilly, non di
+  Tolomeo, anche se Lilly intitola la tavola «according to Ptolomy». Valente
+  I.2 una tavola delle esaltazioni non ce l'ha.
+- **Esilio.** La colonna Detriment di Lilly p. 104 nomina, segno per segno, il
+  signore del segno opposto; la colonna Fall coincide con Tolomeo per i sette
+  pianeti. Sulla scansione l'immagine è la n137 contando da zero
+  (`archive.org/download/b30338724/page/n137_w2000.jpg`).
 
-- **Tolomeo I.19** (Loeb pp. 89-91) dà i segni e **nessun grado**, e le
-  cadute («depression») esplicite nel segno opposto: Sole Ariete, Luna Toro,
-  Saturno Bilancia, Giove Cancro, Marte Capricorno, Venere Pesci, Mercurio
-  Vergine. Niente Nodi. Quindi la colonna di default porta i segni, come già
-  deciso, e la caduta non è un derivato nostro: la scrive Tolomeo.
-- **Firmico**, *Mathesis* II.3.5-6, ed. Kroll-Skutsch I (1897), p. 44,
-  rr. 7-17, dà i gradi (Sole 19, Luna 3, Saturno 21, Giove 15, Marte 28,
-  Venere 27, Mercurio 15) e la caduta allo stesso grado del segno opposto.
-  **Lilly** p. 104 dà gli stessi gradi, e in più il Nodo Nord a 3° Gemelli e
-  il Sud a 3° Sagittario (il glifo in Sagittario è stampato male). I gradi
-  sono quindi di una tradizione che va da Firmico a Lilly, non di Tolomeo,
-  anche se Lilly intitola la tavola «according to Ptolomy».
-- **Valente I.2** (Kroll pp. 5-13) non ha una tavola delle esaltazioni: la
-  riga «Ellenistica» della tabella delle scuole qui sopra, che le dà «col
-  grado», è da correggere o da verificare altrove nell'opera.
-- **Il BPHS** (3.49-50, trad. Santhanam, vol. I, pp. 38-39, pagine dall'OCR)
-  ha gradi diversi per Sole (10) e Giove (5): è un'altra tradizione, e va col
-  commit 4, non mescolata qui. Per i Nodi il traduttore dice che le opinioni
-  divergono.
-- **Urano, Nettuno, Plutone**: nessuna esaltazione con un autore. Non entrano.
+Da verificare:
 
-Resta:
-
-- **I domicili in Bonatti.** La colonna Detriment di Lilly p. 104 invece è
-  verificata sulla scansione: segno per segno il signore del segno opposto,
-  ed è la fonte dell'esilio tradizionale. La colonna Fall coincide con
-  Tolomeo per i sette pianeti.
+- **Bonatti**, per domicili ed esaltazioni: non è stato letto. La scansione
+  dell'edizione Ratdolt 1491 è segnalata alla Bayerische Staatsbibliothek.
+- **Le esaltazioni nella scuola ellenistica**: altrove in Valente, o in Doroteo.
 - **La triplicità d'acqua in Tolomeo.** Una fonte gli attribuisce Marte di
   giorno e di notte come Lilly, un'altra un reggente diverso per setta.
+- **Le facce in Tolomeo.**
 - **I punti 5-4-3-2-1 medievali**: a chi vanno attribuiti. I siti li danno
   come «medievali» senza un testo.
-
-### Superfici, in commit
-
-1. Fatto: i domicili nelle due colonne, con i signori delle case.
-2. Fatto: esilio in tutte e due le colonne, esaltazione e caduta nella
-   tradizionale, per segno. Restano **le ricezioni** (per domicilio, per
-   esaltazione, la mutua), che si ricavano dalle stesse tavole.
-3. Il pacchetto di Lilly a richiesta: triplicità, termini, facce. È il pezzo
-   che il punto 17 aspetta, e il suo punteggio sta là, perché chiede anche le
-   condizioni di un istante.
-4. Le dignità del Jyotisha, e il documento `jyotisha.ts` che smette di
-   ricopiare la tavola in prosa o la tiene come istruzione, col dato che ora
-   arriva calcolato.
-
-Poi CLI, rotta, tool MCP e una tabella Svelte, nell'ordine della skill
-`nuova-funzione`. La tabella prende i dati, non il tema.
+- **Per il Jyotisha**: le pagine del BPHS sulla scansione, moolatrikona e
+  segno proprio, e una fonte per l'esaltazione dei Nodi, se c'è.
 
 ### Verifica
 
 Le tavole contro la fonte, segno per segno e scuola per scuola: è una prova a
-tabella e non chiede effemeridi. Per i domicili, anche il test che
-`tropicale.ts` non dica più «li ricavi dal segno»; per il Jyotisha, quello
-che `jyotisha.ts` non chieda una forza che la tabella non porta.
+tabella e non chiede effemeridi, come in `dignita.test.ts`. Per il Jyotisha,
+anche il test che `jyotisha.ts` non ricopi i domicili e non chieda una forza
+che la tabella non porta.
 
 ## Deciso, e da non riaprire
 
