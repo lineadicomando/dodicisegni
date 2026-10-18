@@ -354,7 +354,7 @@ export interface VimshottariDasha {
  * I varga calcolati.
  *
  * Sei dei sedici classici, scelti per uso e non per completezza: gli altri
- * stanno in `ROADMAP.md`, divisi in lotti per forma della regola.
+ * stanno in `TODO.md`, divisi in lotti per forma della regola.
  */
 export type VargaId = 'd1' | 'd3' | 'd9' | 'd10' | 'd12' | 'd30';
 

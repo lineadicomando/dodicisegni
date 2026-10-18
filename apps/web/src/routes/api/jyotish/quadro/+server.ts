@@ -8,7 +8,7 @@ import { readWheelOptions } from '$lib/server/wheel';
 import { quadroResponse } from '$lib/server/wheel-response';
 import type { RequestHandler } from './$types';
 
-/** I varga che il motore calcola. Gli altri stanno in `ROADMAP.md`. */
+/** I varga che il motore calcola. Gli altri stanno in `TODO.md`. */
 const VARGAS = new Set<string>(['d1', 'd3', 'd9', 'd10', 'd12', 'd30']);
 
 /**
