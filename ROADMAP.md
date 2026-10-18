@@ -949,26 +949,39 @@ d'attesa, che la prima riga vera dello scaricamento porta via.
 
 ## 17. L'astrologia oraria
 
-**Priorità bassa, ed è la voce più grande dell'elenco.** Non è un calcolo in
-più: è uno strato di dottrina che il motore oggi non ha, e che servirebbe anche
-al tema natale letto alla maniera tradizionale. Sta qui perché la ricerca è
-fatta e dice che si può fare; non dice che convenga farlo presto.
+**Priorità bassa, e presuppone il punto 19.** Le dignità, che l'oraria non può
+fare a meno di avere, sono una voce a sé: servono anche al natale e al
+Jyotisha, e chiudono un difetto che c'è già oggi. Qui resta ciò che è proprio
+delle domande: le condizioni di un istante, il moto fino all'uscita dal segno,
+le regole di una scuola per leggerlo.
 
-### Le fonti bastano, a una condizione
+### Deciso il 18 ottobre 2026
 
-Il testo di riferimento è uno solo e tutti gli altri lo citano: William Lilly,
-*Christian Astrology*, 1647. Il libro II è il metodo orario intero, il libro I
-ha le tavole. È di pubblico dominio, e se ne trovano scansioni dell'originale:
-quella del Museo Franz Mayer (Città del Messico) sta sotto CC BY-SA 4.0, altre
-vengono da EEBO attraverso la Wellcome Collection. Prima di Lilly c'è Guido
-Bonatti, *Decem tractatus astronomiae* (Ratdolt, 1491), con il trattato sulle
-interrogazioni; la copia digitale più probabile è alla Bayerische
-Staatsbibliothek.
+- **Le scuole sono pacchetti, e la prima è Lilly.** Il piano non è «Lilly più
+  varianti»: è un substrato comune e neutro, con sopra le scuole, ciascuna
+  intera, ciascuna nominata nel risultato. La prima versione ne implementa una
+  sola, ma la struttura deve permettere di aggiungere le altre senza rifare
+  niente (vedi *Le scuole che verranno*).
+- **Il documento di lettura ha un registro attribuito.** L'oraria per natura
+  risponde: «otterrò il lavoro?», «dov'è l'anello?». Gli altri due documenti di
+  `packages/lettura` vietano le previsioni, e questo non può farlo senza perdere
+  la ragione per cui esiste. La forma è «secondo il metodo di Lilly la figura
+  indica…», con il metodo esposto e la lettura attribuita alla scuola, non
+  affermata. Restano escluse come ovunque salute, morte, questioni legali e
+  finanziarie: Lilly giudicava anche «il malato guarirà?», e quelle domande il
+  documento le rifiuta dicendo perché.
+- **Le dignità stanno nel punto 19.**
 
-La condizione è che **i numeri si leggono sulla scansione, non sui siti**.
-L'edizione trascritta che si trova in rete (Deborah Houlding, Skyscript) è
-protetta e non si ricopia, e le fonti secondarie non sono d'accordo fra loro su
-cose che qui diventano costanti. Due esempi trovati cercando:
+### Le fonti
+
+Per Lilly: *Christian Astrology*, 1647. Il libro II è il metodo orario intero,
+il libro I ha le tavole. È di pubblico dominio, e se ne trovano scansioni
+dell'originale: quella del Museo Franz Mayer (Città del Messico) sta sotto
+CC BY-SA 4.0, altre vengono da EEBO attraverso la Wellcome Collection.
+
+**I numeri si leggono sulla scansione, non sui siti.** L'edizione trascritta che
+si trova in rete (Deborah Houlding, Skyscript) è protetta e non si ricopia, e le
+fonti secondarie non concordano su cose che qui diventano costanti:
 
 - **La combustione.** Una fonte attribuisce a Lilly 8°30' per la combustione e
   17° per i raggi; un'altra cita dal volume orario 12° per i raggi. Il cazimi è
@@ -981,146 +994,147 @@ Luna 12°, Saturno e Giove 9°, Marte 8°, Venere e Mercurio 7°, l'orbita di un
 aspetto è la media delle due), l'ordine caldeo delle ore, le considerazioni
 prima del giudizio alle pp. 121-123.
 
-### Le scuole divergono, e vanno nominate
-
-Più che nel resto dell'astrologia occidentale, e quasi quanto nei varga:
-
-- **Triplicità**: quelle di Lilly (due reggenti, Marte sull'acqua di giorno e
-  di notte) e quelle di Doroteo (tre reggenti, uno partecipe). I praticanti
-  moderni dell'oraria sono divisi esattamente su questo punto.
-- **Termini**: tolemaici, che sono quelli di Lilly, ed egizi, che sono quelli
-  della tradizione ellenistica e di Bonatti.
-- **I modi della perfezione e del suo impedimento.** Lilly li semplifica
-  rispetto agli antichi: la tradizione conta sei negazioni (refranazione,
-  evasione, proibizione, abscissione, contrarietà, ritorno della luce), Lilly ne
-  usa meno e con nomi propri, e la «frustrazione» dei manuali moderni non
-  coincide con nessuna delle sei.
-
-La forma è quella che il progetto usa già: una scuola nominata nel risultato,
-un'opzione per sceglierla, i componenti e, dove la scuola ne ha uno, il suo
-totale accanto. È la Parte di Fortuna che porta la formula.
-
-### Quasi tutto il tempo c'è già, quasi tutta la dottrina no
+### Che cosa c'è già
 
 Il tema orario è un tema dell'istante in un luogo: `computeSky` con luogo e ora
 lo fa già, e il Regiomontano è fra i nove sistemi (`server.ts:159` lo descrive
 già come «tradizionale nell'astrologia oraria»). Ci sono anche:
 
-- `applying` sugli aspetti (`aspects.ts:170`) e gli istanti esatti in
-  `findSkyPassages` (`sky-passages.ts:58`), cioè la perfezione futura;
-- `retrograde` e `speed` (`types.ts:622`) e `findStations`;
+- `applying` sugli aspetti (`aspects.ts:170`), gli istanti esatti in
+  `findSkyPassages` (`sky-passages.ts:58`), le stazioni in `findStations`, gli
+  ingressi in `findSignIngresses`;
+- `retrograde` e `speed` (`types.ts:622`);
 - la setta (`points.ts:13`);
 - la Luna vuota di corso, alba, tramonto e ore planetarie in `election.ts`.
 
-Manca invece tutto quello che dice in che condizione sta un pianeta:
+Manca, oltre alle dignità del punto 19:
 
-- **nessuna tavola dei domicili**. Non c'è nemmeno «segno → reggente», quindi
-  nessun signore di casa, nessun dispositore, nessuna ricezione;
-- esaltazioni, triplicità, termini, facce, esilio, caduta, peregrinità;
-- combustione, sotto i raggi, cazimi; la velocità rispetto a
-  `MEAN_DAILY_MOTION`, che esiste ma serve solo al campionamento;
-- angolare, succedente, cadente;
-- le *moieties* (oggi le orbite sono per aspetto, `constants.ts:275`);
-- antiscia e Via Combusta;
 - **il signore dell'ora a un istante dato.** `rulerOfDay` e `chaldeanRuler`
   (`election.ts:364` e `:379`) sono privati, e l'ora si ottiene solo dentro un
   calendario. Va estratta, e serve per prima: è la prima considerazione di
-  Lilly.
+  Lilly;
+- combustione, sotto i raggi, cazimi; la velocità rispetto a
+  `MEAN_DAILY_MOTION`, che esiste ma serve solo al campionamento;
+- angolare, succedente, cadente;
+- le *moieties* (oggi le orbite sono per aspetto, punto 18);
+- antiscia e Via Combusta.
 
-### Il confine, deciso il 18 ottobre 2026
+### Il substrato comune: che cosa succede fino all'uscita dal segno
 
-`jyotisha.ts:21` diceva: «Yoga, dignità, forze. Sono la riga oltre cui il
-motore non va». Era una lettura più stretta del vincolo, che dice «mai un
-totale solo» e non «mai un totale», e con quella l'oraria non si poteva fare.
-Il vincolo in `CLAUDE.md` ora lo dice per esteso (commit «Ammette le dottrine
-nominate al posto di una soglia dottrinale»), e la riga di `jyotisha.ts` è
-riscritta.
+Le scuole divergono su come **classificare** quello che succede: traslazione e
+collezione di luce, proibizione, refranazione. La tradizione araba e medievale
+conta sei negazioni della perfezione (refranazione, evasione, proibizione,
+abscissione, contrarietà, ritorno della luce), Lilly ne usa meno e con nomi
+propri, e la «frustrazione» dei manuali moderni non coincide con nessuna delle
+sei. Su **che cosa succede** invece non divergono, perché è moto.
 
-Per l'oraria vuol dire tre cose:
+Il substrato è quindi **la sequenza degli eventi di un corpo fino all'uscita dal
+segno**: gli aspetti che perfeziona e con chi, le stazioni, l'ingresso, in
+ordine e con l'istante. È un predicato puro, non sceglie nessuna scuola, e
+`findSkyPassages`, `findStations` e `findSignIngresses` lo fanno già quasi
+tutto: manca la composizione, ristretta all'arco che finisce col cambio di
+segno. Si calcola per la Luna e per i significatori.
 
-- **Le dignità entrano come appartenenza a una tavola nominata.** «Marte a 10°
-  del Capricorno è nella sua esaltazione e nei termini di Venere, secondo i
-  termini tolemaici» si ricalcola da chiunque abbia la tavola, esattamente come
-  il segno di un varga con la sua regola.
-- **Entra anche il punteggio di Lilly** (p. 115, da +38 a −38), ma come un
-  pacchetto intero: le sue tavole, i suoi pesi, le sue soglie, e ogni riga del
-  conto accanto alla somma. Non si applica ai termini egizi o alle triplicità di
-  Doroteo, perché quel conto Lilly non l'ha mai fatto: sarebbe una dottrina
-  nostra. Lo stesso vale per l'almuten, che è il pianeta col punteggio più
-  alto e quindi porta la scuola del punteggio.
-- **Non entra un peso senza autore.** Se una scuola che si vuole esporre non ha
-  un punteggio, non glielo si costruisce.
+Da lì escono anche le Lune vuote, che sono più di una e vanno nominate.
+Quella di `election.ts` ha il criterio moderno, l'ultimo aspetto **esatto**
+prima del cambio di segno. Quella di Lilly (p. 112) è il pianeta «separato da
+un altro, che non applica a nessun altro finché resta nel segno», e con le
+*moieties* l'esito può cambiare. Sono due classificatori sulla stessa sequenza,
+e il risultato dice quale ha usato.
 
-Lo stesso ragionamento separa il resto:
+Ogni scuola è un **classificatore nominato sopra la sequenza**: legge gli eventi
+e dice «traslazione di luce secondo Lilly, p. …», con gli eventi che la
+compongono accanto. Una scuola nuova è un classificatore nuovo, non un calcolo
+nuovo.
 
-- **Si calcola**: traslazione e collezione di luce, proibizione, refranazione,
-  perfezione dentro o fuori dal segno. Sono fatti di moto futuro, con una
-  definizione scritta per ciascuno e la scuola accanto.
-- **Si calcola come predicato, mai come rifiuto**: le considerazioni prima del
-  giudizio. 0°-2° o 27°-29° all'Ascendente, Luna nella Via Combusta, Luna vuota,
-  Saturno in prima o in settima, signore dell'Ascendente combusto. Lilly stesso
-  le scavalca spesso, e il motore che «non giudica il tema» sarebbe il motore
-  che giudica. Il fallimento resta parziale: una carta e un elenco di
-  condizioni.
-- **Non si calcola**: la risposta, il «sì o no»; quale casa sia quella del
-  quesito, che dipende dalla domanda e la decide chi legge; la conversione dei
-  gradi in giorni o mesi. Questi non sono regole di una scuola ma il giudizio
-  stesso, e restano a chi legge.
+### Che cosa entra e che cosa no
+
+- **La casa del quesito è un input.** Quale casa riguardi una domanda dipende
+  dalla domanda, e la sceglie chi la pone. Ma una volta dichiarata (anche come
+  casa derivata: il coniuge del fratello è la settima dalla terza, cioè la
+  nona) il motore calcola tutto rispetto ai due significatori, il signore
+  dell'Ascendente e quello della casa del quesito. È una funzione verificabile
+  dei suoi input, e l'uscita passa da dodici signori incrociati a una coppia.
+  Senza la casa, il risultato porta le condizioni di tutti e la sequenza della
+  Luna.
+- **Le considerazioni prima del giudizio si calcolano come predicati, mai come
+  rifiuto.** 0°-2° o 27°-29° all'Ascendente, Luna nella Via Combusta, Luna
+  vuota, Saturno in prima o in settima, signore dell'Ascendente combusto.
+  Lilly stesso le scavalca spesso, e il motore che «non giudica il tema»
+  sarebbe il motore che giudica. Il fallimento resta parziale: una carta e un
+  elenco di condizioni.
+- **Il punteggio di Lilly entra come pacchetto intero**: le tavole del punto
+  19, le condizioni di un istante, i suoi pesi, e ogni riga del conto accanto
+  alla somma. Non si applica ai termini egizi o alle triplicità di Doroteo,
+  perché quel conto Lilly non l'ha mai fatto.
+- **Non entrano** il sì o no, la conversione dei gradi in giorni o mesi, la
+  scelta della casa. Non sono regole di una scuola ma il giudizio stesso: li fa
+  chi legge, e il documento di lettura dice come li faceva Lilly.
 - **Da leggere sulla scansione prima di decidere**: la «stessa natura» fra
   signore dell'ora e dell'Ascendente (la stessa triplicità e lo stesso pianeta
   si calcolano già). Se Lilly intende le qualità del libro I, caldo e freddo,
   secco e umido, è una tavola e si calcola; se no resta fuori. Lo stesso vale
   per i «gradi tardi» della Luna, che nelle trascrizioni non hanno una soglia.
 
-Una cosa da notare sulla **Luna vuota**: quella di `election.ts` ha il
-criterio moderno, l'ultimo aspetto **esatto** prima del cambio di segno. Quella
-di Lilly (p. 112) è il pianeta «separato da un altro, che non applica a nessun
-altro finché resta nel segno», e con le *moieties* l'esito può cambiare. Sono
-due predicati diversi con lo stesso nome, e il risultato deve dire quale porta.
-
 ### Forma, in lotti
 
-Come per i varga, per forma della regola, così che dentro ogni lotto il
-meccanismo si verifichi una volta sola.
+Dopo il punto 19, e in quest'ordine: ogni lotto vale anche se il successivo non
+si fa.
 
-**Lotto A: le tavole.** Domicili, esaltazioni (col grado), triplicità nelle due
-scuole, termini nelle due, facce caldee, esilio e caduta come derivati. Poi
-signori delle case e ricezioni (per domicilio, esaltazione, e la mutua). Un
-modulo `dignita.ts`, senza moto e senza tempo: si prova con delle tavole.
-Serve anche al tema natale, ed è la ragione per cui viene prima e da solo.
-
-**Lotto B: le condizioni di un istante.** Signore dell'ora a un istante
+**Lotto A: le condizioni di un istante.** Signore dell'ora a un istante
 (estratto da `election.ts`), angolarità, combustione, raggi e cazimi con le
 soglie lette da Lilly, velocità rispetto alla media, Via Combusta, gradi
-dell'Ascendente, antiscia. In fondo al lotto, il punteggio di Lilly: chiede le
-tavole di A e le condizioni di B, e conviene scriverlo quando ci sono tutte e
-due.
+dell'Ascendente, antiscia. In fondo, il punteggio di Lilly, che chiede le
+tavole del punto 19 e queste condizioni insieme. Serve anche al natale letto
+alla maniera tradizionale.
 
-**Lotto C: il moto futuro.** *Moieties* come convenzione di orbita alternativa,
-la Luna vuota di Lilly, e i modi della perfezione. È il lotto difficile: per
-ciascun modo una definizione scritta nel commento con la pagina di Lilly, e una
-ricerca sul moto che `findSkyPassages` fa già a metà (sa quando due corpi si
-incontrano, non che cosa succede prima con un terzo).
+**Lotto B: la sequenza degli eventi.** Il substrato neutro, e le due Lune vuote
+come primi classificatori. Le *moieties* come seconda convenzione di orbita,
+che il punto 18 chiede comunque. È il lotto che regge tutto il resto, ed è il
+meno dottrinale.
+
+**Lotto C: la scuola di Lilly.** I modi della perfezione e del suo impedimento,
+ciascuno con la definizione scritta nel commento e la pagina accanto; le
+considerazioni prima del giudizio; i significatori a partire dalla casa del
+quesito.
 
 **Lotto D: le superfici.** Un tool MCP che dia il tema dell'istante con tutto
-questo accanto (nome da decidere vicino a `compute_sky`, la cui descrizione va
-aggiornata perché un modello non scelga quello sbagliato); un documento di
-lettura `oraria` in `packages/lettura`, che è dove il metodo di giudizio sta
-legittimamente, perché lì le istruzioni le segue l'agente e non il motore; un
-prompt MCP che li unisca, come `lettura_del_tema`. Una pagina web solo dopo, e
-solo se le tabelle di condizioni reggono da sole.
+questo accanto e `date` omessa uguale ad adesso, come `compute_sky` (nome da
+decidere vicino a quello, la cui descrizione va aggiornata perché un modello
+non scelga il tool sbagliato); il documento di lettura `oraria` in
+`packages/lettura`, col registro attribuito; un prompt MCP che li unisca, come
+`lettura_del_tema`. Una pagina web solo dopo, e solo se le tabelle reggono da
+sole.
 
-Il lotto A si chiude in un paio di commit e vale anche se il resto non si fa
-mai. Da B in poi conviene fermarsi a ogni lotto e chiedersi se continuare.
+Da B in poi conviene fermarsi a ogni lotto e chiedersi se continuare.
+
+### Le scuole che verranno
+
+Note, non pianificate. Ciascuna è un classificatore sul substrato del lotto B e
+un pacchetto di tavole nel punto 19, ed è la prova che la struttura regge.
+
+- **La linea araba e medievale**: Māshā'allāh e Sahl ibn Bishr, poi Bonatti
+  (*Decem tractatus astronomiae*, Ratdolt 1491, col trattato sulle
+  interrogazioni; la copia digitale più probabile è alla Bayerische
+  Staatsbibliothek). Termini egizi, le sei negazioni. Le traduzioni latine
+  medievali sono di pubblico dominio, quelle inglesi moderne (Dykes) no.
+- **Il prashna del Jyotisha.** Il *Prasna Marga* (Kerala, XVII secolo), e
+  soprattutto l'oraria Krishnamurti Paddhati (KP), la più calcolabile di
+  tutte: il consultante dà un numero da 1 a 249 che fissa il grado
+  dell'Ascendente, e i sotto-signori si ricavano dalle proporzioni vimshottari
+  che il motore ha già in `nakshatra.ts` e `dasha.ts`. Va verificato lo stato
+  dei diritti sui libri di Krishnamurti; la regola si ricalcola dalla
+  definizione e non chiede di ricopiarne il testo.
 
 ### Verifica
 
 Le figure d'esempio del libro II portano data, ora e luogo, e Lilly scrive per
-ciascuna le condizioni dei significatori. Sono l'àncora esterna, come le cuspidi
-del punto 15: ricalcolare la figura e confrontare le dignità che Lilly dichiara,
-scegliendo i casi lontani dai confini dei termini, perché le sue effemeridi
-sbagliavano di qualche primo e un confine li ribalta. Per il lotto A bastano le
-tavole contro la scansione, segno per segno.
+ciascuna le condizioni dei significatori e gli eventi che le legano. Sono
+l'àncora esterna, come le cuspidi del punto 15: ricalcolare la figura e
+confrontare ciò che Lilly dichiara, scegliendo i casi lontani dai confini,
+perché le sue effemeridi sbagliavano di qualche primo e un confine li
+ribalta. Per il lotto B la verifica non chiede Lilly: una sequenza di eventi si
+controlla con `findSkyPassages` sullo stesso arco.
 
 ## 18. Le orbite senza autore
 
@@ -1148,7 +1162,7 @@ Due strade, da scegliere prima di scrivere:
   identici la tavola va sostituita con quella di un autore, non attribuita a
   uno che le somiglia.
 - **Più convenzioni nominate, una per default.** Le *moieties* di Lilly (punto
-  17, lotto C) sono la seconda tavola già prevista, ed è la forma che le orbite
+  17, lotto B) sono la seconda tavola già prevista, ed è la forma che le orbite
   per aspetto e quelle per pianeta chiedono comunque: un identificatore della
   convenzione nel risultato, come il sistema di case.
 
@@ -1157,6 +1171,80 @@ convenzione, e la risorsa MCP e `/metodo` devono dire da dove viene.
 
 Verifica: un tema calcolato con due convenzioni produce due elenchi di aspetti
 diversi, e ciascuno dice quale l'ha prodotto.
+
+## 19. Le dignità, per scuola
+
+**Priorità media.** Viene dal punto 17, che ne ha bisogno, ma vale da sola: le
+dignità servono al natale letto alla maniera tradizionale e al Jyotisha, e
+chiudono un difetto che c'è già.
+
+### Il difetto di oggi
+
+Le dignità nel repo ci sono già, nello strato che non può verificarle.
+`packages/lettura/src/tropicale.ts:86` dice al modello che domicilio,
+esaltazione, esilio e caduta «li ricavi dal segno», contro la regola con cui
+lo stesso documento si apre («se una tecnica ti servirebbe e il dato manca,
+dillo e fermati lì»); e non dice se i domicili siano quelli tradizionali o
+quelli con Urano, Nettuno e Plutone, quindi la scuola la sceglie il modello
+senza dirlo. `packages/lettura/src/jyotisha.ts:45` ricopia in prosa la tavola
+dei domicili antichi, e `lettura.test.ts:153` la chiama «la trappola più
+insidiosa». Il vincolo riscritto in `CLAUDE.md` le ammette nel motore.
+
+### Che cosa
+
+Tavole, senza moto e senza tempo, ciascuna con la sua scuola e la fonte:
+
+- **Domicili**, tradizionali e moderni come due campi distinti, non uno
+  scelto; esilio come derivato.
+- **Esaltazione** col grado, e caduta come derivato. L'esaltazione dei Nodi
+  diverge (Gemelli e Sagittario in molti testi occidentali, Toro e Scorpione in
+  molti vedici) e va nominata.
+- **Triplicità**: Lilly (due reggenti) e Doroteo (tre, uno partecipe).
+- **Termini**: tolemaici ed egizi.
+- **Facce** caldee.
+- **Peregrinità**, che ogni scuola definisce sulle sue tavole.
+- Per il Jyotisha: esaltazione e caduta col grado, moolatrikona, segno
+  proprio. Le amicizie fra graha (la naturale, la temporanea, e la loro
+  composizione in cinque gradi) dopo, e con le due tavole di partenza esposte.
+
+E le relazioni che dalle tavole si ricavano per regola: **signori delle case,
+dispositori, ricezioni** (per domicilio, per esaltazione, la mutua).
+
+Le tavole si leggono sulle fonti primarie, con la pagina accanto: Tolomeo,
+*Tetrabiblos*, per domicili, esaltazioni e termini tolemaici; Lilly, libro I,
+per la sua tavola delle dignità; Doroteo per le triplicità; il *Brihat
+Parashara Hora Shastra* per il Jyotisha. Un modulo `dignita.ts` in `core`,
+con le scuole come pacchetti e mai mescolate.
+
+### Il punto da decidere
+
+Il default. Il vincolo dice che nessuna scuola è un default taciuto, non che
+non ci sia un default: il tema natale deve pur mostrare qualcosa senza che si
+scelga. Va deciso quale pacchetto si mostra per primo nello zodiaco tropicale,
+e il risultato deve dirlo. Nel Jyotisha la scelta è più semplice, perché
+Parashara è il riferimento che i documenti di lettura già presuppongono.
+
+### Superfici, in commit
+
+1. **I domicili soli**, con i signori delle case, nella tabella di `format.ts`;
+   `tropicale.ts` passa da «li ricavi dal segno» a «li trovi nella tabella», e
+   dice quale scuola. È il commit che chiude il difetto, e va fatto per primo
+   anche se il resto aspetta.
+2. Esaltazione, caduta, esilio, e le ricezioni.
+3. Triplicità, termini, facce, nelle due scuole: è il pezzo che il punto 17
+   aspetta.
+4. Le dignità del Jyotisha, e il documento `jyotisha.ts` che smette di
+   ricopiare la tavola in prosa o la tiene come istruzione, col dato che ora
+   arriva calcolato.
+
+Poi CLI, rotta, tool MCP e una tabella Svelte, nell'ordine della skill
+`nuova-funzione`. La tabella prende i dati, non il tema.
+
+### Verifica
+
+Le tavole contro la fonte, segno per segno e scuola per scuola: è una prova a
+tabella e non chiede effemeridi. Per i domicili, anche il test che
+`tropicale.ts` non dica più «li ricavi dal segno».
 
 ## Esaminato, e lasciato stare
 
