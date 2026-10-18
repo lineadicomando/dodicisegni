@@ -1,8 +1,8 @@
 import { computeNatalChart, formatChartCompact } from '@dodicisegni/core';
-import { error, json } from '@sveltejs/kit';
-import { placeLabel, readBirth, readChartOptions } from '$lib/server/birth';
-import { toHttpError } from '$lib/server/errors';
-import { isHttpError } from '$lib/server/place';
+import { error } from '@sveltejs/kit';
+import { placeLabel, readBirth, readChartOptions } from '#lib/server/birth.js';
+import { toHttpError } from '#lib/server/errors.js';
+import { isHttpError } from '#lib/server/place.js';
 import type { RequestHandler } from './$types';
 
 /**
@@ -45,7 +45,7 @@ export const GET: RequestHandler = ({ url, setHeaders }) => {
     // aziendali) a conservarla, e la chiave di quella cache è un indirizzo
     // che contiene data, ora e luogo di nascita.
     setHeaders({ 'cache-control': 'private, max-age=86400' });
-    return json({ chart, place: placeLabel(place) });
+    return Response.json({ chart, place: placeLabel(place) });
   } catch (cause) {
     // Gli errori già formati da `error()` hanno la propria risposta: si rilanciano.
     if (isHttpError(cause)) throw cause;
@@ -63,10 +63,11 @@ export const GET: RequestHandler = ({ url, setHeaders }) => {
 function readFormat(parameters: URLSearchParams): 'json' | 'compact' {
   const formato = parameters.get('format') ?? 'json';
   if (formato !== 'json' && formato !== 'compact') {
-    throw error(400, {
-      message: `Formato "${formato}" non riconosciuto: attesi "json" oppure "compact".`,
-      code: 'FORMATO_NON_VALIDO',
-    });
+    throw error(
+      400,
+      `Formato "${formato}" non riconosciuto: attesi "json" oppure "compact".`,
+      { code: 'FORMATO_NON_VALIDO' },
+    );
   }
   return formato;
 }

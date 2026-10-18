@@ -3,12 +3,11 @@ import {
   DEFAULT_PASSAGE_BODIES,
   type PassageOptions,
 } from '@dodicisegni/core';
-import { json } from '@sveltejs/kit';
-import { placeLabel, readBirth, readChartOptions } from '$lib/server/birth';
-import { toHttpError } from '$lib/server/errors';
-import { isHttpError } from '$lib/server/place';
-import { nelPool } from '$lib/server/pool';
-import { resolvePassageRange } from '$lib/server/range';
+import { placeLabel, readBirth, readChartOptions } from '#lib/server/birth.js';
+import { toHttpError } from '#lib/server/errors.js';
+import { isHttpError } from '#lib/server/place.js';
+import { nelPool } from '#lib/server/pool.js';
+import { resolvePassageRange } from '#lib/server/range.js';
 import type { RequestHandler } from './$types';
 
 /**
@@ -47,7 +46,7 @@ export const GET: RequestHandler = async ({ url, setHeaders }) => {
     // Stessa regola dei transiti: un arco indicato è una funzione pura dei
     // parametri, un arco che comincia «oggi» scade a mezzanotte.
     setHeaders({ 'cache-control': explicit ? 'private, max-age=86400' : 'no-store' });
-    return json({ chart, range, passages, warnings, place: placeLabel(place) });
+    return Response.json({ chart, range, passages, warnings, place: placeLabel(place) });
   } catch (cause) {
     if (isHttpError(cause)) throw cause;
     toHttpError(cause);

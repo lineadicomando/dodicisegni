@@ -1,13 +1,13 @@
 <script lang="ts">
-  import { dev } from '$app/environment';
+  import { dev } from '$app/env';
   import { page } from '$app/state';
-  import { cielo } from '$lib/cielo.svelte';
-  import CieloStellato from '$lib/components/CieloStellato.svelte';
-  import CieloToggle from '$lib/components/CieloToggle.svelte';
-  import ColorSchemeToggle from '$lib/components/ColorSchemeToggle.svelte';
-  import Marchio from '$lib/components/Marchio.svelte';
-  import { isActive, SECTIONS } from '$lib/navigation';
-  import { REPOSITORY_URL } from '$lib/project';
+  import { cielo } from '#lib/cielo.svelte.js';
+  import CieloStellato from '#lib/components/CieloStellato.svelte';
+  import CieloToggle from '#lib/components/CieloToggle.svelte';
+  import ColorSchemeToggle from '#lib/components/ColorSchemeToggle.svelte';
+  import Marchio from '#lib/components/Marchio.svelte';
+  import { isActive, SECTIONS } from '#lib/navigation.js';
+  import { REPOSITORY_URL } from '#lib/project.js';
   import { onMount } from 'svelte';
   import '../app.css';
 

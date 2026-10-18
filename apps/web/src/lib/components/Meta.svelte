@@ -21,8 +21,8 @@
     SITE_NAME,
     SITE_SHORT_NAME,
     SITE_TAGLINE,
-  } from '$lib/project';
-  import { titoloCompleto } from '$lib/seo';
+  } from '#lib/project.js';
+  import { titoloCompleto } from '#lib/seo.js';
 
   interface Props {
     /**

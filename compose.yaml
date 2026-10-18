@@ -6,17 +6,17 @@ x-runtime: &runtime
   build:
     context: .
     target: runtime
+    args:
+      # L'indirizzo pubblico del sito, scritto nel server alla build: cambiarlo
+      # vuol dire rifare l'immagine (`docker compose build`). Viene da `.env` o
+      # dall'ambiente; se manca arriva vuoto, e `vite.config.ts` tratta il
+      # vuoto come assente, che con la variabile del runtime di prima faceva
+      # morire il server all'avvio. Riguarda solo la superficie web: gli altri
+      # due servizi condividono l'immagine e non lo usano.
+      ORIGIN: ${ORIGIN:-}
   image: dodicisegni:latest
   environment:
     GEONAMES_DB_PATH: /data/geonames.db
-    # L'indirizzo pubblico del sito. Senza valore di proposito: la chiave nuda
-    # significa «prendila dall'ambiente, e se là non c'è non impostarla», che è
-    # l'unica forma che distingue davvero il non dichiarato. Scriverla come
-    # `"${ORIGIN:-}"` la impostava alla stringa vuota, e `adapter-node` la
-    # rifiuta invece di dedurre l'indirizzo dalla richiesta: senza un `.env`
-    # il server moriva all'avvio con `Invalid ORIGIN: ''`. Riguarda solo la
-    # superficie web — gli altri due servizi condividono l'ancora e la ignorano.
-    ORIGIN:
 
 services:
   # Applicazione web e API REST. http://localhost:3000

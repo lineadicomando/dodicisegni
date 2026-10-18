@@ -10,7 +10,7 @@
  * sul dispositivo, e chi torna ad `auto` cancella quel che aveva lasciato.
  */
 
-import { SITE_NAME } from '$lib/project';
+import { SITE_NAME } from '#lib/project.js';
 
 export type ColorScheme = 'auto' | 'light' | 'dark';
 

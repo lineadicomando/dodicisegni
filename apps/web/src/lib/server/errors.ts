@@ -14,17 +14,18 @@ export function toHttpError(cause: unknown): never {
     // Sono tutti errori d'input tranne il fallimento delle effemeridi,
     // che è una condizione del server.
     const status = cause.code === 'ERRORE_EFFEMERIDI' ? 500 : 400;
-    throw error(status, { message: cause.message, code: cause.code });
+    throw error(status, cause.message, { code: cause.code });
   }
 
   if (cause instanceof GeoError) {
     // Un database assente è un problema di installazione, non della richiesta.
     const status = cause.code === 'QUERY_VUOTA' ? 400 : 503;
-    throw error(status, { message: cause.message, code: cause.code });
+    throw error(status, cause.message, { code: cause.code });
   }
 
-  throw error(500, {
-    message: cause instanceof Error ? cause.message : 'Errore interno.',
-    code: 'ERRORE_INTERNO',
-  });
+  throw error(
+    500,
+    cause instanceof Error ? cause.message : 'Errore interno.',
+    { code: 'ERRORE_INTERNO' },
+  );
 }

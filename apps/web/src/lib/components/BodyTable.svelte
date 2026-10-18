@@ -1,7 +1,7 @@
 <script lang="ts">
   import type { ChartPoint, TransitingBody } from '@dodicisegni/core';
-  import type { Evidenza } from '$lib/evidenza.svelte';
-  import { formatSignDegree } from '$lib/format';
+  import type { Evidenza } from '#lib/evidenza.svelte.js';
+  import { formatSignDegree } from '#lib/format.js';
   import {
     BODY_GLYPH,
     ELEMENT_COLOR,

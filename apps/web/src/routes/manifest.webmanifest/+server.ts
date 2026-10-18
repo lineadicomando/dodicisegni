@@ -1,5 +1,5 @@
-import { SECTIONS } from '$lib/navigation';
-import { SITE_DESCRIPTION, SITE_NAME, SITE_SHORT_NAME } from '$lib/project';
+import { SECTIONS } from '#lib/navigation.js';
+import { SITE_DESCRIPTION, SITE_NAME, SITE_SHORT_NAME } from '#lib/project.js';
 import type { RequestHandler } from './$types';
 
 /**
@@ -61,9 +61,9 @@ export const GET: RequestHandler = () => {
     })),
   };
 
-  // `json()` scriverebbe `application/json`, che i browser accettano ma che non
-  // è il tipo di questo documento. In produzione il file è prerenderizzato e il
-  // tipo glielo dà l'estensione; questo vale in sviluppo.
+  // `Response.json()` scriverebbe `application/json`, che i browser accettano ma
+  // che non è il tipo di questo documento. In produzione il file è
+  // prerenderizzato e il tipo glielo dà l'estensione; questo vale in sviluppo.
   return new Response(JSON.stringify(manifesto, null, 2), {
     headers: { 'content-type': 'application/manifest+json' },
   });

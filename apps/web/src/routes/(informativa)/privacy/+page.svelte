@@ -1,6 +1,6 @@
 <script lang="ts">
-  import Meta from '$lib/components/Meta.svelte';
-  import { REPOSITORY_URL } from '$lib/project';
+  import Meta from '#lib/components/Meta.svelte';
+  import { REPOSITORY_URL } from '#lib/project.js';
 
   /**
    * Data dell'ultima revisione del testo. Va aggiornata **a mano** insieme al

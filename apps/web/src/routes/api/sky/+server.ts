@@ -1,9 +1,8 @@
 import { computeSky, type SkyOptions } from '@dodicisegni/core';
-import { json } from '@sveltejs/kit';
-import { placeLabel, readChartOptions } from '$lib/server/birth';
-import { toHttpError } from '$lib/server/errors';
-import { resolveSkyMoment } from '$lib/server/moment';
-import { isHttpError, resolveOptionalPlace } from '$lib/server/place';
+import { placeLabel, readChartOptions } from '#lib/server/birth.js';
+import { toHttpError } from '#lib/server/errors.js';
+import { resolveSkyMoment } from '#lib/server/moment.js';
+import { isHttpError, resolveOptionalPlace } from '#lib/server/place.js';
 import type { RequestHandler } from './$types';
 
 /**
@@ -36,7 +35,7 @@ export const GET: RequestHandler = ({ url, setHeaders }) => {
     // il cielo di un istante è lo stesso per tutti, e non è di nessuno.
     // «Adesso» invece invecchia mentre lo si legge.
     setHeaders({ 'cache-control': explicit ? 'public, max-age=86400' : 'no-store' });
-    return json({ sky, place: placeLabel(place) });
+    return Response.json({ sky, place: placeLabel(place) });
   } catch (cause) {
     // Gli errori già formati da `error()` hanno la propria risposta: si rilanciano.
     if (isHttpError(cause)) throw cause;

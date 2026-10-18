@@ -1,9 +1,8 @@
 import { computeNatalChart, computeTransits, type TransitOptions } from '@dodicisegni/core';
-import { json } from '@sveltejs/kit';
-import { placeLabel, readBirth, readChartOptions } from '$lib/server/birth';
-import { toHttpError } from '$lib/server/errors';
-import { resolveTransitMoment } from '$lib/server/moment';
-import { isHttpError, LUOGO_TRANSITO, resolveOptionalPlace } from '$lib/server/place';
+import { placeLabel, readBirth, readChartOptions } from '#lib/server/birth.js';
+import { toHttpError } from '#lib/server/errors.js';
+import { resolveTransitMoment } from '#lib/server/moment.js';
+import { isHttpError, LUOGO_TRANSITO, resolveOptionalPlace } from '#lib/server/place.js';
 import type { RequestHandler } from './$types';
 
 /**
@@ -55,7 +54,7 @@ export const GET: RequestHandler = ({ url, setHeaders }) => {
     setHeaders({
       'cache-control': explicit ? 'private, max-age=86400' : 'no-store',
     });
-    return json({
+    return Response.json({
       chart,
       transits,
       place: placeLabel(place),

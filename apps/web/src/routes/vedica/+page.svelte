@@ -9,25 +9,25 @@
     fetchLocation,
     jyotishaParameters,
     RequestError,
-  } from '$lib/api';
-  import { birthFromParameters, isComplete, missingBirthFields } from '$lib/birth';
-  import { birthStore } from '$lib/birth-store.svelte';
-  import BirthForm from '$lib/components/BirthForm.svelte';
-  import JyotishaSettings from '$lib/components/JyotishaSettings.svelte';
-  import QuadroVedico from '$lib/components/QuadroVedico.svelte';
-  import StrumentiDisegno from '$lib/components/StrumentiDisegno.svelte';
-  import BodyTable from '$lib/components/BodyTable.svelte';
-  import CampiMancanti from '$lib/components/CampiMancanti.svelte';
-  import DashaTable from '$lib/components/DashaTable.svelte';
-  import DrishtiTable from '$lib/components/DrishtiTable.svelte';
-  import Meta from '$lib/components/Meta.svelte';
-  import ModuloPieghevole from '$lib/components/ModuloPieghevole.svelte';
-  import NakshatraTable from '$lib/components/NakshatraTable.svelte';
-  import Risultato from '$lib/components/Risultato.svelte';
-  import StrumentiLettura from '$lib/components/StrumentiLettura.svelte';
-  import VargaTable from '$lib/components/VargaTable.svelte';
-  import { Evidenza } from '$lib/evidenza.svelte';
-  import { ayanamsaOrDefault } from '$lib/zodiacs';
+  } from '#lib/api.js';
+  import { birthFromParameters, isComplete, missingBirthFields } from '#lib/birth.js';
+  import { birthStore } from '#lib/birth-store.svelte.js';
+  import BirthForm from '#lib/components/BirthForm.svelte';
+  import JyotishaSettings from '#lib/components/JyotishaSettings.svelte';
+  import QuadroVedico from '#lib/components/QuadroVedico.svelte';
+  import StrumentiDisegno from '#lib/components/StrumentiDisegno.svelte';
+  import BodyTable from '#lib/components/BodyTable.svelte';
+  import CampiMancanti from '#lib/components/CampiMancanti.svelte';
+  import DashaTable from '#lib/components/DashaTable.svelte';
+  import DrishtiTable from '#lib/components/DrishtiTable.svelte';
+  import Meta from '#lib/components/Meta.svelte';
+  import ModuloPieghevole from '#lib/components/ModuloPieghevole.svelte';
+  import NakshatraTable from '#lib/components/NakshatraTable.svelte';
+  import Risultato from '#lib/components/Risultato.svelte';
+  import StrumentiLettura from '#lib/components/StrumentiLettura.svelte';
+  import VargaTable from '#lib/components/VargaTable.svelte';
+  import { Evidenza } from '#lib/evidenza.svelte.js';
+  import { ayanamsaOrDefault } from '#lib/zodiacs.js';
 
   // La nascita è la stessa delle altre sezioni: chi l'ha scritta nel tema la
   // ritrova qui, e viceversa.

@@ -31,7 +31,7 @@ jobs:
           # La versione che `engines` chiede come minima. Non `latest`: un
           # controllo che si rompe da solo il giorno in cui esce Node 25 non
           # sta dicendo niente sul codice.
-          node-version: 22
+          node-version: 22.17
           cache: npm
 
       # Le effemeridi non sono versionate e non cambiano mai: due megabyte di

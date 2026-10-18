@@ -9,7 +9,7 @@
 
 import type { LocalMoment } from '@dodicisegni/core';
 import { error } from '@sveltejs/kit';
-import { isKnownTimezone, wallClock } from '$lib/clock';
+import { isKnownTimezone, wallClock } from '#lib/clock.js';
 
 const DATE_PATTERN = /^\d{4}-\d{2}-\d{2}$/;
 const TIME_PATTERN = /^\d{2}:\d{2}(:\d{2})?$/;
@@ -133,7 +133,7 @@ function read(
   if (value === null || value === '') return null;
 
   if (!pattern.test(value)) {
-    throw error(400, { message: `Valore di "${name}" non valido: atteso ${expected}.`, code });
+    throw error(400, `Valore di "${name}" non valido: atteso ${expected}.`, { code });
   }
   return value;
 }
@@ -150,10 +150,11 @@ function readTimezone(parameters: URLSearchParams, fields: MomentFields): string
   if (timezone === null || timezone === '') return null;
 
   if (!isKnownTimezone(timezone)) {
-    throw error(400, {
-      message: `Fuso orario "${timezone}" sconosciuto: atteso un identificatore IANA, es. Europe/Rome.`,
-      code: fields.codes.timezone,
-    });
+    throw error(
+      400,
+      `Fuso orario "${timezone}" sconosciuto: atteso un identificatore IANA, es. Europe/Rome.`,
+      { code: fields.codes.timezone },
+    );
   }
   return timezone;
 }

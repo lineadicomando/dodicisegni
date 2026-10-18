@@ -1,5 +1,5 @@
 <script lang="ts">
-  import type { Cielo } from '$lib/cielo.svelte';
+  import type { Cielo } from '#lib/cielo.svelte.js';
 
   /**
    * Il pulsante che accende il cielo stellato dietro la pagina.

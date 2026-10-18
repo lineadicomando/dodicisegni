@@ -14,8 +14,8 @@
 -->
 <script lang="ts">
   import { letturaDaIncollare, type Sistema } from '@dodicisegni/lettura';
-  import { RequestError } from '$lib/api';
-  import { REPOSITORY_URL } from '$lib/project';
+  import { RequestError } from '#lib/api.js';
+  import { REPOSITORY_URL } from '#lib/project.js';
 
   interface Props {
     /**

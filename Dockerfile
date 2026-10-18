@@ -55,6 +55,11 @@ COPY tsconfig.base.json ./
 COPY packages/ packages/
 COPY apps/ apps/
 
+# L'indirizzo pubblico del sito. È un argomento della build e non una variabile
+# del runtime perché SvelteKit 3 lo scrive nel server compilato: all'avvio
+# nessuno lo legge più. Vuoto, l'origine si ricava dalla richiesta.
+ARG ORIGIN
+
 RUN npm run build -w @dodicisegni/ruota -w @dodicisegni/lettura -w @dodicisegni/core -w @dodicisegni/geo \
   && npm run build -w @dodicisegni/mcp \
   && npm run build -w @dodicisegni/web

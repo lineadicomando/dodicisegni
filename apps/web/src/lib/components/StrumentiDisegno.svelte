@@ -13,8 +13,8 @@
 -->
 <script lang="ts">
   import { tick } from 'svelte';
-  import { comePng, nomeFile, scarica, serializza } from '$lib/esporta';
-  import type { Evidenza } from '$lib/evidenza.svelte';
+  import { comePng, nomeFile, scarica, serializza } from '#lib/esporta.js';
+  import type { Evidenza } from '#lib/evidenza.svelte.js';
 
   interface Props {
     /** Il disegno da portare via. Manca finché il componente non è montato. */

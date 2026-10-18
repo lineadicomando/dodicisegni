@@ -1,14 +1,14 @@
 <script lang="ts">
   import type { TransitAspect } from '@dodicisegni/core';
-  import type { Evidenza } from '$lib/evidenza.svelte';
-  import { formatDegrees } from '$lib/format';
+  import type { Evidenza } from '#lib/evidenza.svelte.js';
+  import { formatDegrees } from '#lib/format.js';
   import {
     ASPECT_MAJOR,
     isNatalPointSigla,
     natalPointGlyph,
     natalPointLabel,
   } from '@dodicisegni/ruota';
-  import { byOrb, collapseNodalAxis } from '$lib/nodal-axis';
+  import { byOrb, collapseNodalAxis } from '#lib/nodal-axis.js';
 
   /**
    * I due lati non sono intercambiabili: uno si muove e l'altro è fermo per

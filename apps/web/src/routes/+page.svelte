@@ -8,27 +8,27 @@
     fetchChartCompact,
     fetchLocation,
     RequestError,
-  } from '$lib/api';
-  import { birthFromParameters, isComplete, missingBirthFields } from '$lib/birth';
-  import { Evidenza } from '$lib/evidenza.svelte';
-  import { houseSystemOrDefault } from '$lib/house-systems';
-  import { ayanamsaOrDefault, zodiacOrDefault } from '$lib/zodiacs';
-  import { birthStore } from '$lib/birth-store.svelte';
-  import { SITE_TAGLINE } from '$lib/project';
-  import AngleTable from '$lib/components/AngleTable.svelte';
-  import AspectTable from '$lib/components/AspectTable.svelte';
-  import BirthForm from '$lib/components/BirthForm.svelte';
-  import BodyTable from '$lib/components/BodyTable.svelte';
-  import ChartSettings from '$lib/components/ChartSettings.svelte';
-  import ChartWheel from '$lib/components/ChartWheel.svelte';
-  import CampiMancanti from '$lib/components/CampiMancanti.svelte';
-  import DistributionTable from '$lib/components/DistributionTable.svelte';
-  import LegendaElementi from '$lib/components/LegendaElementi.svelte';
-  import Meta from '$lib/components/Meta.svelte';
-  import ModuloPieghevole from '$lib/components/ModuloPieghevole.svelte';
-  import Risultato from '$lib/components/Risultato.svelte';
-  import StrumentiLettura from '$lib/components/StrumentiLettura.svelte';
-  import StrumentiDisegno from '$lib/components/StrumentiDisegno.svelte';
+  } from '#lib/api.js';
+  import { birthFromParameters, isComplete, missingBirthFields } from '#lib/birth.js';
+  import { Evidenza } from '#lib/evidenza.svelte.js';
+  import { houseSystemOrDefault } from '#lib/house-systems.js';
+  import { ayanamsaOrDefault, zodiacOrDefault } from '#lib/zodiacs.js';
+  import { birthStore } from '#lib/birth-store.svelte.js';
+  import { SITE_TAGLINE } from '#lib/project.js';
+  import AngleTable from '#lib/components/AngleTable.svelte';
+  import AspectTable from '#lib/components/AspectTable.svelte';
+  import BirthForm from '#lib/components/BirthForm.svelte';
+  import BodyTable from '#lib/components/BodyTable.svelte';
+  import ChartSettings from '#lib/components/ChartSettings.svelte';
+  import ChartWheel from '#lib/components/ChartWheel.svelte';
+  import CampiMancanti from '#lib/components/CampiMancanti.svelte';
+  import DistributionTable from '#lib/components/DistributionTable.svelte';
+  import LegendaElementi from '#lib/components/LegendaElementi.svelte';
+  import Meta from '#lib/components/Meta.svelte';
+  import ModuloPieghevole from '#lib/components/ModuloPieghevole.svelte';
+  import Risultato from '#lib/components/Risultato.svelte';
+  import StrumentiLettura from '#lib/components/StrumentiLettura.svelte';
+  import StrumentiDisegno from '#lib/components/StrumentiDisegno.svelte';
 
   // La nascita non è di questa pagina: chi la scrive qui la ritrova nei
   // transiti e nell'elezione, e viceversa.

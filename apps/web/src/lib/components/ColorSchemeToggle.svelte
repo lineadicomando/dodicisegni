@@ -5,7 +5,7 @@
     nextColorScheme,
     readColorScheme,
     type ColorScheme,
-  } from '$lib/color-scheme';
+  } from '#lib/color-scheme.js';
 
   const NOMI: Record<ColorScheme, string> = {
     auto: 'automatico',

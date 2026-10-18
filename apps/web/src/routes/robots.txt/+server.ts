@@ -1,4 +1,4 @@
-import { robotsTxt } from '$lib/seo';
+import { robotsTxt } from '#lib/seo.js';
 import type { RequestHandler } from './$types';
 
 /**

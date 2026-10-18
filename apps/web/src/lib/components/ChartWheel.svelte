@@ -1,6 +1,6 @@
 <script lang="ts">
   import type { TransitChart } from '@dodicisegni/core';
-  import type { Evidenza } from '$lib/evidenza.svelte';
+  import type { Evidenza } from '#lib/evidenza.svelte.js';
   import {
     ASPECT_COLOR,
     CENTER,

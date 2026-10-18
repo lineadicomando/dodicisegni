@@ -1,6 +1,6 @@
 <script lang="ts">
   import type { AyanamsaId, DashaYear, NodeDrishti, VargaId } from '@dodicisegni/core';
-  import { AYANAMSAS } from '$lib/zodiacs';
+  import { AYANAMSAS } from '#lib/zodiacs.js';
 
   /**
    * Le opzioni della sezione vedica, con la stessa forma di `ChartSettings`.

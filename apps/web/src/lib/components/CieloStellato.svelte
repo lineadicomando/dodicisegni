@@ -13,14 +13,14 @@
     type Figura,
     type Stella,
     type Tavolozza,
-  } from '$lib/cielo';
-  import type { Cielo } from '$lib/cielo.svelte';
+  } from '#lib/cielo.js';
+  import type { Cielo } from '#lib/cielo.svelte.js';
   import {
     COLOR_SCHEME_ATTRIBUTE,
     readColorScheme,
     resolveColorScheme,
     type ColorScheme,
-  } from '$lib/color-scheme';
+  } from '#lib/color-scheme.js';
 
   /**
    * Il fondale: un `canvas` fisso dietro tutta la pagina, che il pulsante

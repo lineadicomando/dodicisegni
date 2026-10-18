@@ -1,7 +1,3 @@
-/// <reference types="@sveltejs/kit" />
-/// <reference lib="esnext" />
-/// <reference lib="webworker" />
-
 /**
  * Il guscio dell'applicazione, conservato sul dispositivo.
  *
@@ -25,11 +21,13 @@
  * Chi lo registra — e chi non lo registra — è `routes/+layout.svelte`.
  */
 
-import { build, files, prerendered, version } from '$service-worker';
-import { cacheKey, isApiRequest, isCrawlerAsset } from '$lib/cache-policy';
-import { SITE_NAME } from '$lib/project';
-
-const sw = self as unknown as ServiceWorkerGlobalScope;
+import { version } from '$app/env';
+import { assets, immutable, prerendered } from '$app/manifest';
+import { asset, resolve } from '$app/paths';
+import { self as sw } from '$app/service-worker';
+import type { AssetPath } from '$app/types';
+import { cacheKey, isApiRequest, isCrawlerAsset } from '#lib/cache-policy.js';
+import { SITE_NAME } from '#lib/project.js';
 
 /**
  * Una cache per versione. `version` cambia a ogni build, quindi l'attivazione
@@ -40,14 +38,25 @@ const CACHE = `${SITE_NAME}-${version}`;
 
 /**
  * Tutto ciò che la build produce e che ha un indirizzo stabile: i chunk con
- * l'impronta nel nome (`build`), i file di `static/` — favicon e icone —
- * (`files`), e le rotte prerenderizzate, cioè il manifesto (`prerendered`).
+ * l'impronta nel nome (`immutable`), i file di `static/` — favicon e icone —
+ * (`assets`), e le rotte prerenderizzate, cioè il manifesto (`prerendered`).
+ *
+ * `$app/manifest` li dà relativi alla base e senza la barra iniziale:
+ * `asset` e `resolve` li riportano a percorsi assoluti, la forma di
+ * `url.pathname` con cui `NELLA_SCORTA` li confronta. I chunk passano da
+ * `asset` come i file statici, perché SvelteKit li serve dallo stesso
+ * prefisso; il tipo di `asset` conosce solo quelli di `static/`, da cui il
+ * cast.
  *
  * Meno l'anteprima dei collegamenti condivisi, che sta in `static/` ma non è
  * roba da browser: il perché è in `lib/cache-policy.ts`, insieme alle altre
  * due regole.
  */
-const PRECARICATI = [...build, ...files.filter((file) => !isCrawlerAsset(file)), ...prerendered];
+const PRECARICATI = [
+  ...immutable.map(({ path }) => asset(path as AssetPath)),
+  ...assets.map(({ path }) => asset(path)).filter((file) => !isCrawlerAsset(file)),
+  ...prerendered.map(({ path }) => resolve(path)),
+];
 
 /** Per sapere in fretta se una richiesta è di quelle precaricate. */
 const NELLA_SCORTA = new Set(PRECARICATI);

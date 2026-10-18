@@ -71,18 +71,20 @@ export function resolvePlace(
     // Un identificatore malformato è un errore suo, non un motivo per
     // ripiegare sulle coordinate e rispondere che "manca il luogo".
     if (!Number.isInteger(locationId) || locationId <= 0) {
-      throw error(400, {
-        message: `Valore di "${fields.locationId}" non valido: atteso un identificatore GeoNames intero positivo.`,
-        code: 'LOCALITA_NON_VALIDA',
-      });
+      throw error(
+        400,
+        `Valore di "${fields.locationId}" non valido: atteso un identificatore GeoNames intero positivo.`,
+        { code: 'LOCALITA_NON_VALIDA' },
+      );
     }
 
     const location = getLocation(locationId);
     if (!location) {
-      throw error(404, {
-        message: `Nessuna località con identificatore ${locationId}.`,
-        code: 'LOCALITA_SCONOSCIUTA',
-      });
+      throw error(
+        404,
+        `Nessuna località con identificatore ${locationId}.`,
+        { code: 'LOCALITA_SCONOSCIUTA' },
+      );
     }
 
     const overrides = readCoordinateOverrides(parameters, fields);
@@ -101,12 +103,12 @@ export function resolvePlace(
   const timezone = parameters.get('timezone');
 
   if (!Number.isFinite(latitude) || !Number.isFinite(longitude) || !timezone) {
-    throw error(400, {
-      message:
-        `Luogo non specificato: indica "${fields.locationId}" oppure ` +
+    throw error(
+      400,
+      `Luogo non specificato: indica "${fields.locationId}" oppure ` +
         `tutti e tre "${fields.latitude}", "${fields.longitude}" e "timezone".`,
-      code: 'LUOGO_MANCANTE',
-    });
+      { code: 'LUOGO_MANCANTE' },
+    );
   }
 
   return { latitude, longitude, timezone };
@@ -144,10 +146,11 @@ export function resolveOptionalPlace(
   if (latitude === undefined && longitude === undefined) return null;
 
   if (latitude === undefined || longitude === undefined) {
-    throw error(400, {
-      message: `Luogo incompleto: "${fields.latitude}" e "${fields.longitude}" vanno indicate insieme.`,
-      code: 'LUOGO_INCOMPLETO',
-    });
+    throw error(
+      400,
+      `Luogo incompleto: "${fields.latitude}" e "${fields.longitude}" vanno indicate insieme.`,
+      { code: 'LUOGO_INCOMPLETO' },
+    );
   }
 
   return { latitude, longitude };
@@ -178,10 +181,11 @@ function readCoordinateOverrides(
 
     const valore = Number(grezzo);
     if (!Number.isFinite(valore) || Math.abs(valore) > limite) {
-      throw error(400, {
-        message: `Valore di "${nome}" non valido: atteso un numero fra -${limite} e ${limite}.`,
-        code: 'COORDINATE_NON_VALIDE',
-      });
+      throw error(
+        400,
+        `Valore di "${nome}" non valido: atteso un numero fra -${limite} e ${limite}.`,
+        { code: 'COORDINATE_NON_VALIDE' },
+      );
     }
     overrides[chiave] = valore;
   }

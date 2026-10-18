@@ -1,7 +1,7 @@
 <script lang="ts">
   import type { BodyId, DashaPeriod, VimshottariDasha } from '@dodicisegni/core';
   import { BODY_GLYPH } from '@dodicisegni/ruota';
-  import type { Evidenza } from '$lib/evidenza.svelte';
+  import type { Evidenza } from '#lib/evidenza.svelte.js';
 
   /**
    * La catena delle dasha, coi sotto-periodi rientrati.

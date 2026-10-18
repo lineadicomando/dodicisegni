@@ -1,9 +1,9 @@
 /**
  * Che cosa il service worker può conservare, e sotto quale nome.
  *
- * Due regole sole, tenute qui invece che dentro `service-worker.ts` perché sono
- * l'unica parte di quel file che si possa provare: un worker si prova aprendo
- * un browser, queste due funzioni no. Sono anche le due su cui non si può
+ * Due regole sole, tenute qui invece che dentro `service-worker/index.ts`
+ * perché sono l'unica parte di quel file che si possa provare: un worker si
+ * prova aprendo un browser, queste due funzioni no. Sono anche le due su cui non si può
  * sbagliare — vedi sotto.
  */
 
@@ -53,8 +53,8 @@ export function cacheKey(url: URL): string {
  * L'anteprima dei collegamenti condivisi è trenta chilobyte che nessuno che
  * apra il sito guarderà mai: la chiedono i server delle piattaforme quando
  * qualcuno incolla un indirizzo, e la chiedono da casa loro. Sta in `static/`
- * perché è un file fermo con un indirizzo fermo, e da lì `$service-worker` la
- * metterebbe fra i `files` da scaricare all'installazione — cioè addosso a
+ * perché è un file fermo con un indirizzo fermo, e da lì `$app/manifest` la
+ * metterebbe fra gli `assets` da scaricare all'installazione — cioè addosso a
  * ogni dispositivo, per un'immagine che su quel dispositivo non comparirà.
  *
  * Restarne fuori non le toglie niente: chi la chiede non esegue service

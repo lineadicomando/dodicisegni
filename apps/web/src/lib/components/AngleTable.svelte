@@ -1,6 +1,6 @@
 <script lang="ts">
   import type { Angles, House } from '@dodicisegni/core';
-  import { formatSignDegree } from '$lib/format';
+  import { formatSignDegree } from '#lib/format.js';
   import { SIGN_GLYPH, SIGN_LABEL, signOfLongitude } from '@dodicisegni/ruota';
 
   interface Props {

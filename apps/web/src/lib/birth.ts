@@ -78,7 +78,7 @@ export function refinedCoordinates(
  * mezzanotte.
  */
 export function birthFromParameters(
-  parametri: URLSearchParams,
+  parametri: Pick<URLSearchParams, 'get'>,
   location: Location | null,
 ): BirthInput {
   const input = emptyBirthInput();

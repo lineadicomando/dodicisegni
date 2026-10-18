@@ -3,9 +3,10 @@
  * Prepara `bundle/` per electron-builder: il server SvelteKit compilato, i
  * pacchetti del monorepo disposti come in un `node_modules`, e le sole
  * dipendenze che il server carica a runtime — quelle dichiarate esterne in
- * `apps/web/vite.config.ts`, più `node-gyp-build` che risolve il binario
- * nativo di `sweph`. electron-builder copia `bundle/` in `resources/` fuori
- * dall'asar, così il modulo nativo resta un file caricabile.
+ * `apps/web/vite.config.ts`, più le `dependencies` di `apps/web`, che
+ * `adapter-node` lascia fuori dal bundle, più `node-gyp-build` che risolve il
+ * binario nativo di `sweph`. electron-builder copia `bundle/` in `resources/`
+ * fuori dall'asar, così il modulo nativo resta un file caricabile.
  *
  * Rasterizza anche l'icona da `graphics/favicon.svg`, per non tenere a mano
  * una copia che prima o poi divergerebbe dall'originale.
@@ -30,10 +31,12 @@ const webBuild = join(repoRoot, 'apps', 'web', 'build');
 const corePkg = join(repoRoot, 'packages', 'core');
 const geoPkg = join(repoRoot, 'packages', 'geo');
 const ruotaPkg = join(repoRoot, 'packages', 'ruota');
+const letturaPkg = join(repoRoot, 'packages', 'lettura');
 richiedi(webBuild);
 richiedi(join(corePkg, 'dist'));
 richiedi(join(geoPkg, 'dist'));
 richiedi(join(ruotaPkg, 'dist'));
+richiedi(join(letturaPkg, 'dist'));
 
 rmSync(bundle, { recursive: true, force: true });
 
@@ -68,6 +71,10 @@ cpSync(join(geoPkg, 'scripts'), join(geo, 'scripts'), { recursive: true });
 const ruota = join(moduli, '@dodicisegni', 'ruota');
 cpSync(join(ruotaPkg, 'package.json'), join(ruota, 'package.json'));
 cpSync(join(ruotaPkg, 'dist'), join(ruota, 'dist'), { recursive: true });
+
+const lettura = join(moduli, '@dodicisegni', 'lettura');
+cpSync(join(letturaPkg, 'package.json'), join(lettura, 'package.json'));
+cpSync(join(letturaPkg, 'dist'), join(lettura, 'dist'), { recursive: true });
 
 for (const nome of ['luxon', 'node-gyp-build']) {
   cpSync(join(repoRoot, 'node_modules', nome), join(moduli, nome), { recursive: true });

@@ -1,7 +1,7 @@
 <script lang="ts">
   import type { Aspect } from '@dodicisegni/core';
-  import type { Evidenza } from '$lib/evidenza.svelte';
-  import { formatDegrees } from '$lib/format';
+  import type { Evidenza } from '#lib/evidenza.svelte.js';
+  import { formatDegrees } from '#lib/format.js';
   import { ASPECT_GLYPH, ASPECT_MAJOR, BODY_GLYPH, BODY_LABEL } from '@dodicisegni/ruota';
 
   interface Props {

@@ -1,8 +1,8 @@
 <script lang="ts">
   import type { JyotishaChart } from '@dodicisegni/core';
   import { BODY_GLYPH, SIGN_GLYPH, SIGN_LABEL } from '@dodicisegni/ruota';
-  import type { Evidenza } from '$lib/evidenza.svelte';
-  import { formatSignDegree } from '$lib/format';
+  import type { Evidenza } from '#lib/evidenza.svelte.js';
+  import { formatSignDegree } from '#lib/format.js';
 
   /**
    * I nakshatra dei graha: la ventisettesima parte di cielo in cui ciascuno

@@ -7,8 +7,8 @@
  * accorge un test che confronta l'elenco con `lib/navigation.ts`.
  */
 
-import { SECTIONS } from '$lib/navigation';
-import { SITE_NAME } from '$lib/project';
+import { SECTIONS } from '#lib/navigation.js';
+import { SITE_NAME } from '#lib/project.js';
 
 /**
  * Quanti caratteri di titolo un motore di ricerca mostra prima di troncare.

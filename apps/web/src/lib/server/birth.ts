@@ -54,7 +54,7 @@ export interface RequestedBirth {
 export function readBirth(parameters: URLSearchParams): RequestedBirth {
   const date = parameters.get('date');
   if (!date) {
-    throw error(400, { message: 'Parametro "date" mancante.', code: 'DATA_MANCANTE' });
+    throw error(400, 'Parametro "date" mancante.', { code: 'DATA_MANCANTE' });
   }
 
   const place = resolvePlace(parameters);
@@ -83,10 +83,11 @@ export function readZodiacOptions(parameters: URLSearchParams): ZodiacOptions {
   const zodiac = parameters.get('zodiac');
   if (zodiac) {
     if (zodiac !== 'tropicale' && zodiac !== 'siderale') {
-      throw error(400, {
-        message: `Zodiaco "${zodiac}" non riconosciuto: atteso "tropicale" oppure "siderale".`,
-        code: 'ZODIACO_NON_VALIDO',
-      });
+      throw error(
+        400,
+        `Zodiaco "${zodiac}" non riconosciuto: atteso "tropicale" oppure "siderale".`,
+        { code: 'ZODIACO_NON_VALIDO' },
+      );
     }
     options.zodiac = zodiac;
   }
@@ -97,10 +98,11 @@ export function readZodiacOptions(parameters: URLSearchParams): ZodiacOptions {
       // Accettarlo sullo zodiaco tropicale vuol dire restituire un tema in cui
       // l'ayanamsa chiesto non compare da nessuna parte, e nessuno se ne
       // accorge finché non confronta i gradi con un altro programma.
-      throw error(400, {
-        message: 'Il parametro "ayanamsa" richiede "zodiac=siderale".',
-        code: 'AYANAMSA_SENZA_ZODIACO',
-      });
+      throw error(
+        400,
+        'Il parametro "ayanamsa" richiede "zodiac=siderale".',
+        { code: 'AYANAMSA_SENZA_ZODIACO' },
+      );
     }
     options.ayanamsa = ayanamsa;
   }
@@ -121,10 +123,11 @@ export function readAyanamsa(parameters: URLSearchParams): AyanamsaId | undefine
   if (!ayanamsa) return undefined;
 
   if (!AYANAMSAS.has(ayanamsa)) {
-    throw error(400, {
-      message: `Ayanamsa "${ayanamsa}" non riconosciuto. Ammessi: ${[...AYANAMSAS].join(', ')}.`,
-      code: 'AYANAMSA_NON_VALIDO',
-    });
+    throw error(
+      400,
+      `Ayanamsa "${ayanamsa}" non riconosciuto. Ammessi: ${[...AYANAMSAS].join(', ')}.`,
+      { code: 'AYANAMSA_NON_VALIDO' },
+    );
   }
 
   return ayanamsa as AyanamsaId;
@@ -139,10 +142,11 @@ export function readChartOptions(parameters: URLSearchParams): ChartOptions {
   const houseSystem = parameters.get('houseSystem');
   if (houseSystem) {
     if (!HOUSE_SYSTEMS.has(houseSystem)) {
-      throw error(400, {
-        message: `Sistema di case "${houseSystem}" non riconosciuto.`,
-        code: 'SISTEMA_CASE_NON_VALIDO',
-      });
+      throw error(
+        400,
+        `Sistema di case "${houseSystem}" non riconosciuto.`,
+        { code: 'SISTEMA_CASE_NON_VALIDO' },
+      );
     }
     options.houseSystem = houseSystem as HouseSystem;
   }
@@ -150,12 +154,12 @@ export function readChartOptions(parameters: URLSearchParams): ChartOptions {
   const fortuneFormula = parameters.get('partOfFortuneFormula');
   if (fortuneFormula) {
     if (fortuneFormula !== 'settore' && fortuneFormula !== 'diurna') {
-      throw error(400, {
-        message:
-          `Formula "${fortuneFormula}" non riconosciuta per la Parte di Fortuna: ` +
+      throw error(
+        400,
+        `Formula "${fortuneFormula}" non riconosciuta per la Parte di Fortuna: ` +
           'attesa "settore" oppure "diurna".',
-        code: 'FORMULA_FORTUNA_NON_VALIDA',
-      });
+        { code: 'FORMULA_FORTUNA_NON_VALIDA' },
+      );
     }
     options.partOfFortuneFormula = fortuneFormula;
   }

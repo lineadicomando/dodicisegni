@@ -1,10 +1,10 @@
 import { computeNatalChart, computeTransits, type TransitOptions } from '@dodicisegni/core';
-import { readBirth, readChartOptions } from '$lib/server/birth';
-import { toHttpError } from '$lib/server/errors';
-import { resolveTransitMoment } from '$lib/server/moment';
-import { isHttpError, LUOGO_TRANSITO, resolveOptionalPlace } from '$lib/server/place';
-import { readWheelOptions } from '$lib/server/wheel';
-import { disegnoResponse } from '$lib/server/wheel-response';
+import { readBirth, readChartOptions } from '#lib/server/birth.js';
+import { toHttpError } from '#lib/server/errors.js';
+import { resolveTransitMoment } from '#lib/server/moment.js';
+import { isHttpError, LUOGO_TRANSITO, resolveOptionalPlace } from '#lib/server/place.js';
+import { readWheelOptions } from '#lib/server/wheel.js';
+import { disegnoResponse } from '#lib/server/wheel-response.js';
 import type { RequestHandler } from './$types';
 
 /**

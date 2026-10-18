@@ -17,29 +17,29 @@
     passageParameters,
     RequestError,
     transitParameters,
-  } from '$lib/api';
-  import { birthFromParameters, isComplete, missingBirthFields } from '$lib/birth';
-  import { houseSystemOrDefault } from '$lib/house-systems';
-  import { ayanamsaOrDefault, zodiacOrDefault } from '$lib/zodiacs';
-  import { Evidenza } from '$lib/evidenza.svelte';
-  import { birthStore } from '$lib/birth-store.svelte';
-  import AngleTable from '$lib/components/AngleTable.svelte';
-  import BirthForm from '$lib/components/BirthForm.svelte';
-  import BodyTable from '$lib/components/BodyTable.svelte';
-  import ChartSettings from '$lib/components/ChartSettings.svelte';
-  import ChartWheel from '$lib/components/ChartWheel.svelte';
-  import CampiMancanti from '$lib/components/CampiMancanti.svelte';
-  import LocationSearch from '$lib/components/LocationSearch.svelte';
-  import DistributionTable from '$lib/components/DistributionTable.svelte';
-  import LegendaElementi from '$lib/components/LegendaElementi.svelte';
-  import Meta from '$lib/components/Meta.svelte';
-  import ModuloPieghevole from '$lib/components/ModuloPieghevole.svelte';
-  import MomentFields from '$lib/components/MomentFields.svelte';
-  import PassageTable from '$lib/components/PassageTable.svelte';
-  import Risultato from '$lib/components/Risultato.svelte';
-  import StrumentiDisegno from '$lib/components/StrumentiDisegno.svelte';
-  import TransitAspectTable from '$lib/components/TransitAspectTable.svelte';
-  import { isCompleteMoment, nowMoment } from '$lib/moment';
+  } from '#lib/api.js';
+  import { birthFromParameters, isComplete, missingBirthFields } from '#lib/birth.js';
+  import { houseSystemOrDefault } from '#lib/house-systems.js';
+  import { ayanamsaOrDefault, zodiacOrDefault } from '#lib/zodiacs.js';
+  import { Evidenza } from '#lib/evidenza.svelte.js';
+  import { birthStore } from '#lib/birth-store.svelte.js';
+  import AngleTable from '#lib/components/AngleTable.svelte';
+  import BirthForm from '#lib/components/BirthForm.svelte';
+  import BodyTable from '#lib/components/BodyTable.svelte';
+  import ChartSettings from '#lib/components/ChartSettings.svelte';
+  import ChartWheel from '#lib/components/ChartWheel.svelte';
+  import CampiMancanti from '#lib/components/CampiMancanti.svelte';
+  import LocationSearch from '#lib/components/LocationSearch.svelte';
+  import DistributionTable from '#lib/components/DistributionTable.svelte';
+  import LegendaElementi from '#lib/components/LegendaElementi.svelte';
+  import Meta from '#lib/components/Meta.svelte';
+  import ModuloPieghevole from '#lib/components/ModuloPieghevole.svelte';
+  import MomentFields from '#lib/components/MomentFields.svelte';
+  import PassageTable from '#lib/components/PassageTable.svelte';
+  import Risultato from '#lib/components/Risultato.svelte';
+  import StrumentiDisegno from '#lib/components/StrumentiDisegno.svelte';
+  import TransitAspectTable from '#lib/components/TransitAspectTable.svelte';
+  import { isCompleteMoment, nowMoment } from '#lib/moment.js';
 
   // La stessa nascita del tema e dell'elezione: si scrive una volta sola.
   const birth = $derived(birthStore.value);

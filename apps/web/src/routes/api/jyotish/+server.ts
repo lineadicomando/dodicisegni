@@ -7,10 +7,10 @@ import {
   type VargaId,
   type VimshottariOptions,
 } from '@dodicisegni/core';
-import { error, json } from '@sveltejs/kit';
-import { placeLabel, readAyanamsa, readBirth } from '$lib/server/birth';
-import { toHttpError } from '$lib/server/errors';
-import { isHttpError } from '$lib/server/place';
+import { error } from '@sveltejs/kit';
+import { placeLabel, readAyanamsa, readBirth } from '#lib/server/birth.js';
+import { toHttpError } from '#lib/server/errors.js';
+import { isHttpError } from '#lib/server/place.js';
 import type { RequestHandler } from './$types';
 
 /** I varga che il motore calcola. Gli altri stanno in `TODO.md`. */
@@ -62,12 +62,12 @@ export const GET: RequestHandler = ({ url, setHeaders }) => {
     // dire chiedere un parametro che non può avere un altro valore.
     const zodiac = parameters.get('zodiac');
     if (zodiac && zodiac !== 'siderale') {
-      throw error(400, {
-        message:
-          `Il Jyotisha è siderale per definizione: "zodiac=${zodiac}" non si applica. ` +
+      throw error(
+        400,
+        `Il Jyotisha è siderale per definizione: "zodiac=${zodiac}" non si applica. ` +
           'Per un tema tropicale usa /api/chart.',
-        code: 'ZODIACO_NON_SIDERALE',
-      });
+        { code: 'ZODIACO_NON_SIDERALE' },
+      );
     }
 
     // Siderale e a segni interi non sono predefiniti sostituibili: sono ciò
@@ -93,7 +93,7 @@ export const GET: RequestHandler = ({ url, setHeaders }) => {
       });
     }
 
-    return json({ jyotisha, place: placeLabel(place) });
+    return Response.json({ jyotisha, place: placeLabel(place) });
   } catch (cause) {
     if (isHttpError(cause)) throw cause;
     toHttpError(cause);
@@ -107,10 +107,11 @@ function readJyotishaOptions(parameters: URLSearchParams): JyotishaOptions {
   const levels = parameters.get('dashaLevels');
   if (levels) {
     if (levels !== '1' && levels !== '2' && levels !== '3') {
-      throw error(400, {
-        message: 'Il parametro "dashaLevels" vuole 1, 2 oppure 3.',
-        code: 'LIVELLI_DASHA_NON_VALIDI',
-      });
+      throw error(
+        400,
+        'Il parametro "dashaLevels" vuole 1, 2 oppure 3.',
+        { code: 'LIVELLI_DASHA_NON_VALIDI' },
+      );
     }
     dasha.levels = Number(levels) as 1 | 2 | 3;
   }
@@ -118,10 +119,11 @@ function readJyotishaOptions(parameters: URLSearchParams): JyotishaOptions {
   const year = parameters.get('dashaYear');
   if (year) {
     if (year !== 'solare' && year !== 'savana') {
-      throw error(400, {
-        message: `Anno di dasha "${year}" non riconosciuto: atteso "solare" oppure "savana".`,
-        code: 'ANNO_DASHA_NON_VALIDO',
-      });
+      throw error(
+        400,
+        `Anno di dasha "${year}" non riconosciuto: atteso "solare" oppure "savana".`,
+        { code: 'ANNO_DASHA_NON_VALIDO' },
+      );
     }
     dasha.yearLength = year;
   }
@@ -137,10 +139,11 @@ function readJyotishaOptions(parameters: URLSearchParams): JyotishaOptions {
 
     for (const id of chiesti) {
       if (!VARGAS.has(id)) {
-        throw error(400, {
-          message: `Varga "${id}" non disponibile. Calcolati: ${[...VARGAS].join(', ')}.`,
-          code: 'VARGA_NON_VALIDO',
-        });
+        throw error(
+          400,
+          `Varga "${id}" non disponibile. Calcolati: ${[...VARGAS].join(', ')}.`,
+          { code: 'VARGA_NON_VALIDO' },
+        );
       }
     }
     options.vargas = chiesti as VargaId[];
@@ -149,10 +152,11 @@ function readJyotishaOptions(parameters: URLSearchParams): JyotishaOptions {
   const nodes = parameters.get('drishtiNodes');
   if (nodes) {
     if (nodes !== 'nessuna' && nodes !== 'gioviana') {
-      throw error(400, {
-        message: `Drishti dei nodi "${nodes}" non riconosciute: atteso "nessuna" oppure "gioviana".`,
-        code: 'DRISHTI_NODI_NON_VALIDE',
-      });
+      throw error(
+        400,
+        `Drishti dei nodi "${nodes}" non riconosciute: atteso "nessuna" oppure "gioviana".`,
+        { code: 'DRISHTI_NODI_NON_VALIDE' },
+      );
     }
     options.drishti = { nodes };
   }
@@ -169,10 +173,11 @@ function readJyotishaOptions(parameters: URLSearchParams): JyotishaOptions {
 function readFormat(parameters: URLSearchParams): 'json' | 'compact' {
   const formato = parameters.get('format') ?? 'json';
   if (formato !== 'json' && formato !== 'compact') {
-    throw error(400, {
-      message: `Formato "${formato}" non riconosciuto: atteso "json" oppure "compact".`,
-      code: 'FORMATO_NON_VALIDO',
-    });
+    throw error(
+      400,
+      `Formato "${formato}" non riconosciuto: atteso "json" oppure "compact".`,
+      { code: 'FORMATO_NON_VALIDO' },
+    );
   }
   return formato;
 }

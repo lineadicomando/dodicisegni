@@ -1,10 +1,10 @@
 import type { BodyId, SkyEventOptions, SkyPassageOptions } from '@dodicisegni/core';
-import { error, json } from '@sveltejs/kit';
-import { readZodiacOptions } from '$lib/server/birth';
-import { toHttpError } from '$lib/server/errors';
-import { isHttpError } from '$lib/server/place';
-import { nelPool } from '$lib/server/pool';
-import { resolvePassageRange } from '$lib/server/range';
+import { error } from '@sveltejs/kit';
+import { readZodiacOptions } from '#lib/server/birth.js';
+import { toHttpError } from '#lib/server/errors.js';
+import { isHttpError } from '#lib/server/place.js';
+import { nelPool } from '#lib/server/pool.js';
+import { resolvePassageRange } from '#lib/server/range.js';
 import type { RequestHandler } from './$types';
 
 /**
@@ -65,7 +65,7 @@ export const GET: RequestHandler = async ({ url, setHeaders }) => {
     // del 2026 è lo stesso per tutti. Se l'arco parte da oggi invece scade.
     setHeaders({ 'cache-control': explicit ? 'public, max-age=86400' : 'no-store' });
 
-    return json({
+    return Response.json({
       range,
       passages: incontri.passages,
       ingresses: ingressi.ingresses,
@@ -95,10 +95,11 @@ function readBodies(parameters: URLSearchParams): BodyId[] | null {
     .filter((id) => id !== '');
 
   if (bodies.length === 0) {
-    throw error(400, {
-      message: 'Valore di "bodies" vuoto: elenca i corpi separati da virgola, es. "sole,luna".',
-      code: 'CORPO_SCONOSCIUTO',
-    });
+    throw error(
+      400,
+      'Valore di "bodies" vuoto: elenca i corpi separati da virgola, es. "sole,luna".',
+      { code: 'CORPO_SCONOSCIUTO' },
+    );
   }
 
   return bodies as BodyId[];

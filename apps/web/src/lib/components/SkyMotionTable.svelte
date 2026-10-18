@@ -1,7 +1,7 @@
 <script lang="ts">
   import type { SignIngress, Station } from '@dodicisegni/core';
   import { BODY_GLYPH, BODY_LABEL, SIGN_GLYPH, SIGN_LABEL } from '@dodicisegni/ruota';
-  import { formatSignDegree } from '$lib/format';
+  import { formatSignDegree } from '#lib/format.js';
 
   /**
    * Ingressi nei segni e stazioni, in un elenco solo.

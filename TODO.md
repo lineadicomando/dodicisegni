@@ -19,7 +19,6 @@ volta e ricominciare da capo.
 | Voce | Priorità | Taglia | Prima di cominciare |
 |---|---|---|---|
 | 19. Le dignità, per scuola | media | grande, a commit piccoli | il primo commit, i domicili, si fa subito |
-| 21. SvelteKit 3 | media | media | Vite 8 e TypeScript 6 vengono con lui |
 | 11. Gli elenchi in più posti | media | piccola | prima del punto 5 |
 | 13. Due semplificazioni | bassa | piccola | niente |
 | 9. Il linter | media | piccola | decidere lo strumento |
@@ -31,9 +30,8 @@ volta e ricominciare da capo.
 | 17. L'astrologia oraria | bassa | la più grande | il punto 19 |
 
 L'ordine consigliato è quello della tabella: il primo commit delle dignità, che
-chiude un difetto già presente, SvelteKit 3, che toglie l'ultima vulnerabilità
-che arriva a chi usa il programma, poi le voci piccole che tolgono copie e righe morte prima che il lavoro grande ci passi
-sopra.
+chiude un difetto già presente, poi le voci piccole che tolgono copie e righe
+morte prima che il lavoro grande ci passi sopra.
 
 ## 5. I dieci varga che mancano
 
@@ -795,40 +793,18 @@ Le tavole contro la fonte, segno per segno e scuola per scuola: è una prova a
 tabella e non chiede effemeridi. Per i domicili, anche il test che
 `tropicale.ts` non dica più «li ricavi dal segno».
 
-## 21. SvelteKit 3, e con lui cookie
-
-**Priorità media.** È l'ultima vulnerabilità che arriva a chi usa il
-programma: `cookie@0.6.0`, bassa, sotto `@sveltejs/kit` 2.x, il cui runtime
-finisce nel server compilato e quindi anche nel desktop (la stringa d'errore
-di `cookie` si trova in `apps/desktop/bundle/server/server/chunks/`). È la
-voce su `cookie` che stava fra le cose esaminate, chiusa con «da riguardare
-quando SvelteKit alza la dipendenza»: la condizione si è verificata.
-
-SvelteKit 3.0.0 è uscito il 1° ottobre 2026 e la 3.1.0 il 14, con
-`cookie@^2.0.1`; la linea 2.x (installata la 2.70.3) resta su `cookie@^0.6.0`.
-Non è un salto solo. `@sveltejs/kit@3.1.0` chiede in `peerDependencies`:
-
-- `vite@^8.0.12` (installata la 6.4.3), due versioni maggiori;
-- `@sveltejs/vite-plugin-svelte@^7.0.0` (installata la 5.1.1);
-- `typescript@^6.0.0`, opzionale per npm ma non per noi (installata la 5.9.3,
-  e la usano tutti i workspace, non solo `web`);
-- Node `>=22.17`, più stretto del `≥ 22` scritto in `CLAUDE.md` e nel `README`.
-
-E con lui `@sveltejs/adapter-node@6.0.0`, che vuole `kit@^3`.
-
-Il pool di worker, il service worker e `cache-policy.ts` sono i punti dove
-un cambio del runtime si vede; `pool.test.ts` va fatto girare per primo.
-
-Verifica: `npm audit` senza `cookie`, `npm test && npm run typecheck`,
-`npm run build`, la web app in `npm start` e il desktop che parte.
-
 ## Deciso, e da non riaprire
 
 - **Niente riscrittura della storia di git.** Il rinomino da undicesimacasa a
   dodicisegni l'ha lasciata com'era, ed è pericolosa per un guadagno estetico.
 - **Il dominio non entra nel codice.** `Meta.svelte` compone gli indirizzi da
   `page.url.origin`, e in produzione è `ORIGIN` a dirlo: il cambio di dominio è
-  configurazione.
+  configurazione. Da SvelteKit 3 è configurazione della build e non
+  dell'avvio, perché `paths.origin` finisce nel server compilato: cambiare
+  dominio vuol dire rifare la build, o l'immagine. Scelto il 18 ottobre 2026
+  contro l'alternativa degli header del proxy (`PROTOCOL_HEADER`,
+  `HOST_HEADER`), che avrebbe lasciato l'immagine indipendente dal dominio ma
+  appesa alla configurazione del proxy.
 - **`12segni` non è un secondo marchio.** È il dominio di servizio e il nome
   breve sotto l'icona, dove sette caratteri sono il tetto. Nella prosa il nome
   è uno solo.

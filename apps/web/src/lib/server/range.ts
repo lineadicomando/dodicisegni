@@ -9,7 +9,7 @@
 
 import type { PassageRange } from '@dodicisegni/core';
 import { error } from '@sveltejs/kit';
-import { wallClock } from '$lib/clock';
+import { wallClock } from '#lib/clock.js';
 
 const DATE_PATTERN = /^\d{4}-\d{2}-\d{2}$/;
 const GIORNO = 86_400_000;
@@ -60,18 +60,19 @@ export function resolvePassageRange(
   const durata = (Date.parse(`${end}T00:00:00Z`) - Date.parse(`${start}T00:00:00Z`)) / GIORNO;
   const minimo = span === 'giorno' ? 0 : 1;
   if (!Number.isFinite(durata) || durata < minimo) {
-    throw error(400, {
-      message: `Intervallo vuoto: "${end}" non è successivo a "${start}".`,
-      code: 'INTERVALLO_NON_VALIDO',
-    });
+    throw error(
+      400,
+      `Intervallo vuoto: "${end}" non è successivo a "${start}".`,
+      { code: 'INTERVALLO_NON_VALIDO' },
+    );
   }
   if (durata > MAX_RANGE_DAYS) {
-    throw error(400, {
-      message:
-        `Intervallo di ${Math.round(durata)} giorni: il massimo è ${MAX_RANGE_DAYS}, ` +
+    throw error(
+      400,
+      `Intervallo di ${Math.round(durata)} giorni: il massimo è ${MAX_RANGE_DAYS}, ` +
         'cioè tre anni. Chiedi archi più brevi, uno dopo l\'altro.',
-      code: 'INTERVALLO_TROPPO_LUNGO',
-    });
+      { code: 'INTERVALLO_TROPPO_LUNGO' },
+    );
   }
 
   return { range: { from: start, to: end, timezone }, explicit: from !== null };
@@ -82,10 +83,11 @@ function read(parameters: URLSearchParams, name: string, code: string): string |
   if (value === null || value === '') return null;
 
   if (!DATE_PATTERN.test(value)) {
-    throw error(400, {
-      message: `Valore di "${name}" non valido: atteso il formato YYYY-MM-DD.`,
-      code,
-    });
+    throw error(
+      400,
+      `Valore di "${name}" non valido: atteso il formato YYYY-MM-DD.`,
+      { code },
+    );
   }
   return value;
 }

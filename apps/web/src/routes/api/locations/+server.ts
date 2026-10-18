@@ -1,6 +1,5 @@
 import { getLocation, searchLocations, type SearchOptions } from '@dodicisegni/geo';
-import { json } from '@sveltejs/kit';
-import { toHttpError } from '$lib/server/errors';
+import { toHttpError } from '#lib/server/errors.js';
 import type { RequestHandler } from './$types';
 
 /**
@@ -21,7 +20,7 @@ export const GET: RequestHandler = ({ url, setHeaders }) => {
     try {
       const location = getLocation(identificativo);
       setHeaders({ 'cache-control': 'public, max-age=3600' });
-      return json({ results: location ? [location] : [] });
+      return Response.json({ results: location ? [location] : [] });
     } catch (cause) {
       toHttpError(cause);
     }
@@ -29,7 +28,7 @@ export const GET: RequestHandler = ({ url, setHeaders }) => {
 
   const query = url.searchParams.get('q')?.trim() ?? '';
   if (query.length < 2) {
-    return json({ results: [] });
+    return Response.json({ results: [] });
   }
 
   try {
@@ -45,7 +44,7 @@ export const GET: RequestHandler = ({ url, setHeaders }) => {
 
     // Il dataset cambia solo quando lo si reimporta: la cache è sicura.
     setHeaders({ 'cache-control': 'public, max-age=3600' });
-    return json({ results });
+    return Response.json({ results });
   } catch (cause) {
     toHttpError(cause);
   }

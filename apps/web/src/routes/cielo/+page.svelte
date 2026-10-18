@@ -2,7 +2,7 @@
   import type { AyanamsaId, HouseSystem, SkyChart, Zodiac } from '@dodicisegni/core';
   import type { Location } from '@dodicisegni/geo';
   import { onMount } from 'svelte';
-  import { replaceState } from '$app/navigation';
+  import { goto } from '$app/navigation';
   import { page } from '$app/state';
   import {
     fetchLocation,
@@ -12,27 +12,27 @@
     skyCalendarParameters,
     skyParameters,
     type SkyCalendarResponse,
-  } from '$lib/api';
-  import AngleTable from '$lib/components/AngleTable.svelte';
-  import AspectTable from '$lib/components/AspectTable.svelte';
-  import BodyTable from '$lib/components/BodyTable.svelte';
-  import ChartSettings from '$lib/components/ChartSettings.svelte';
-  import ChartWheel from '$lib/components/ChartWheel.svelte';
-  import CampiMancanti from '$lib/components/CampiMancanti.svelte';
-  import LocationSearch from '$lib/components/LocationSearch.svelte';
-  import DistributionTable from '$lib/components/DistributionTable.svelte';
-  import LegendaElementi from '$lib/components/LegendaElementi.svelte';
-  import Meta from '$lib/components/Meta.svelte';
-  import ModuloPieghevole from '$lib/components/ModuloPieghevole.svelte';
-  import MomentFields from '$lib/components/MomentFields.svelte';
-  import Risultato from '$lib/components/Risultato.svelte';
-  import StrumentiDisegno from '$lib/components/StrumentiDisegno.svelte';
-  import SkyMotionTable from '$lib/components/SkyMotionTable.svelte';
-  import SkyPassageTable from '$lib/components/SkyPassageTable.svelte';
-  import { houseSystemOrDefault } from '$lib/house-systems';
-  import { ayanamsaOrDefault, zodiacOrDefault } from '$lib/zodiacs';
-  import { isCompleteMoment, nowMoment } from '$lib/moment';
-  import { Evidenza } from '$lib/evidenza.svelte';
+  } from '#lib/api.js';
+  import AngleTable from '#lib/components/AngleTable.svelte';
+  import AspectTable from '#lib/components/AspectTable.svelte';
+  import BodyTable from '#lib/components/BodyTable.svelte';
+  import ChartSettings from '#lib/components/ChartSettings.svelte';
+  import ChartWheel from '#lib/components/ChartWheel.svelte';
+  import CampiMancanti from '#lib/components/CampiMancanti.svelte';
+  import LocationSearch from '#lib/components/LocationSearch.svelte';
+  import DistributionTable from '#lib/components/DistributionTable.svelte';
+  import LegendaElementi from '#lib/components/LegendaElementi.svelte';
+  import Meta from '#lib/components/Meta.svelte';
+  import ModuloPieghevole from '#lib/components/ModuloPieghevole.svelte';
+  import MomentFields from '#lib/components/MomentFields.svelte';
+  import Risultato from '#lib/components/Risultato.svelte';
+  import StrumentiDisegno from '#lib/components/StrumentiDisegno.svelte';
+  import SkyMotionTable from '#lib/components/SkyMotionTable.svelte';
+  import SkyPassageTable from '#lib/components/SkyPassageTable.svelte';
+  import { houseSystemOrDefault } from '#lib/house-systems.js';
+  import { ayanamsaOrDefault, zodiacOrDefault } from '#lib/zodiacs.js';
+  import { isCompleteMoment, nowMoment } from '#lib/moment.js';
+  import { Evidenza } from '#lib/evidenza.svelte.js';
 
   let moment = $state(nowMoment());
   let location = $state<Location | null>(null);
@@ -86,7 +86,7 @@
    * Senza `date` nell'indirizzo non si tocca niente: vale «adesso», che è il
    * valore da cui la pagina è già partita.
    */
-  async function dallIndirizzo(parametri: URLSearchParams): Promise<void> {
+  async function dallIndirizzo(parametri: Pick<URLSearchParams, 'get'>): Promise<void> {
     const date = parametri.get('date');
     if (!date) return;
 
@@ -107,14 +107,15 @@
   /**
    * Rimette nell'indirizzo quello che si sta guardando.
    *
-   * `replaceState` e non `pushState`: le frecce del passo si premono in fretta,
-   * e un giorno per volta riempirebbero la cronologia di decine di voci da
-   * risalire una a una. Quello che si guadagna è la ricarica, il segnalibro e
-   * il link da mandare a qualcuno — non il tasto Indietro.
+   * Sostituendo la voce della cronologia invece di aggiungerne una: le frecce
+   * del passo si premono in fretta, e un giorno per volta riempirebbero la
+   * cronologia di decine di voci da risalire una a una. Quello che si guadagna
+   * è la ricarica, il segnalibro e il link da mandare a qualcuno — non il
+   * tasto Indietro.
    */
   function nellIndirizzo(): void {
     const parametri = skyParameters(moment, opzioniCielo, location);
-    replaceState(`?${parametri}`, {});
+    void goto(`?${parametri}`, { shallow: true, replace: true });
   }
 
   // Il cielo di adesso non ha bisogno di essere chiesto: è la risposta che la

@@ -1,3 +1,5 @@
+import adapter from '@sveltejs/adapter-node';
+import { vitePreprocess } from '@sveltejs/vite-plugin-svelte';
 import { sveltekit } from '@sveltejs/kit/vite';
 import { defineConfig } from 'vite';
 
@@ -20,7 +22,29 @@ import { defineConfig } from 'vite';
  * tenerlo fuori è il fatto che lo importi solo `lib/server`.
  */
 export default defineConfig({
-  plugins: [sveltekit()],
+  plugins: [
+    sveltekit({
+      preprocess: vitePreprocess(),
+      adapter: adapter(),
+      /*
+       * `src/service-worker/index.ts` viene compilato ma non registrato da
+       * qui: la registrazione ha due condizioni da rispettare — non in
+       * sviluppo, e non dentro Electron — e sta in `routes/+layout.svelte`,
+       * dove quelle condizioni si possono scrivere. Il perché della seconda è
+       * là.
+       */
+      serviceWorker: { register: false },
+      /*
+       * L'indirizzo pubblico del sito, da cui escono il canonico e l'`og:url`
+       * di ogni pagina. Si legge qui, cioè alla build: `adapter-node` lo
+       * scrive nel server compilato, e all'avvio non lo cerca più
+       * nell'ambiente. Senza, l'origine si ricava dagli header della
+       * richiesta, con `https` come schema. Vedi «Prima di mettere in rete»
+       * nel README. `||` e non `??`: una chiave vuota vale come assente.
+       */
+      paths: { origin: process.env['ORIGIN'] || undefined },
+    }),
+  ],
   ssr: {
     external: [
       'sweph',

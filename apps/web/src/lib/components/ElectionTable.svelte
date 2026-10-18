@@ -1,6 +1,6 @@
 <script lang="ts">
   import type { BodyId, PlanetaryHour, VoidOfCourse } from '@dodicisegni/core';
-  import { formatSignDegree } from '$lib/format';
+  import { formatSignDegree } from '#lib/format.js';
   import { BODY_GLYPH, BODY_LABEL, SIGN_GLYPH, SIGN_LABEL } from '@dodicisegni/ruota';
 
   /**

@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { nowMoment, shiftMoment, type MomentInput, type StepUnit } from '$lib/moment';
+  import { nowMoment, shiftMoment, type MomentInput, type StepUnit } from '#lib/moment.js';
 
   interface Props {
     value: MomentInput;

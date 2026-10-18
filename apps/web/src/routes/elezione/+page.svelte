@@ -8,7 +8,7 @@
   } from '@dodicisegni/core';
   import type { Location } from '@dodicisegni/geo';
   import { onMount, tick } from 'svelte';
-  import { replaceState } from '$app/navigation';
+  import { goto } from '$app/navigation';
   import { page } from '$app/state';
   import {
     electionParameters,
@@ -18,27 +18,27 @@
     RequestError,
     transitParameters,
     type ElectionResponse,
-  } from '$lib/api';
-  import { isComplete } from '$lib/birth';
-  import { Evidenza } from '$lib/evidenza.svelte';
-  import { birthStore } from '$lib/birth-store.svelte';
-  import BirthForm from '$lib/components/BirthForm.svelte';
-  import BodyTable from '$lib/components/BodyTable.svelte';
-  import ChartSettings from '$lib/components/ChartSettings.svelte';
-  import ChartWheel from '$lib/components/ChartWheel.svelte';
-  import CampiMancanti from '$lib/components/CampiMancanti.svelte';
-  import ElectionTable from '$lib/components/ElectionTable.svelte';
-  import LocationSearch from '$lib/components/LocationSearch.svelte';
-  import DistributionTable from '$lib/components/DistributionTable.svelte';
-  import LegendaElementi from '$lib/components/LegendaElementi.svelte';
-  import Meta from '$lib/components/Meta.svelte';
-  import ModuloPieghevole from '$lib/components/ModuloPieghevole.svelte';
-  import Risultato from '$lib/components/Risultato.svelte';
-  import StrumentiDisegno from '$lib/components/StrumentiDisegno.svelte';
-  import TransitAspectTable from '$lib/components/TransitAspectTable.svelte';
-  import { formatDegrees } from '$lib/format';
+  } from '#lib/api.js';
+  import { isComplete } from '#lib/birth.js';
+  import { Evidenza } from '#lib/evidenza.svelte.js';
+  import { birthStore } from '#lib/birth-store.svelte.js';
+  import BirthForm from '#lib/components/BirthForm.svelte';
+  import BodyTable from '#lib/components/BodyTable.svelte';
+  import ChartSettings from '#lib/components/ChartSettings.svelte';
+  import ChartWheel from '#lib/components/ChartWheel.svelte';
+  import CampiMancanti from '#lib/components/CampiMancanti.svelte';
+  import ElectionTable from '#lib/components/ElectionTable.svelte';
+  import LocationSearch from '#lib/components/LocationSearch.svelte';
+  import DistributionTable from '#lib/components/DistributionTable.svelte';
+  import LegendaElementi from '#lib/components/LegendaElementi.svelte';
+  import Meta from '#lib/components/Meta.svelte';
+  import ModuloPieghevole from '#lib/components/ModuloPieghevole.svelte';
+  import Risultato from '#lib/components/Risultato.svelte';
+  import StrumentiDisegno from '#lib/components/StrumentiDisegno.svelte';
+  import TransitAspectTable from '#lib/components/TransitAspectTable.svelte';
+  import { formatDegrees } from '#lib/format.js';
   import { BODY_LABEL, SIGN_LABEL } from '@dodicisegni/ruota';
-  import { nowMoment, shiftDate, type MomentInput } from '$lib/moment';
+  import { nowMoment, shiftDate, type MomentInput } from '#lib/moment.js';
 
   /** I sette dell'ordine caldeo: sono gli unici che reggano un'ora. */
   const REGGITORI: readonly BodyId[] = [
@@ -132,7 +132,7 @@
    * facoltativa, e chi la scrive lo fa per confrontarla con un'ora, non per
    * mandarla in giro.
    */
-  async function dallIndirizzo(parametri: URLSearchParams): Promise<void> {
+  async function dallIndirizzo(parametri: Pick<URLSearchParams, 'get'>): Promise<void> {
     const id = Number(parametri.get('locationId'));
     if (!Number.isInteger(id) || id <= 0) return;
 
@@ -150,15 +150,15 @@
    *
    * Senza `to`, che è `from` più i giorni della finestra: un valore che si
    * ricava non va scritto due volte, o prima o poi i due si contraddicono.
-   * `replaceState` e non `pushState`, perché le frecce dei giorni riempirebbero
-   * la cronologia di voci da risalire una a una.
+   * La voce della cronologia si sostituisce invece di aggiungersi, perché le
+   * frecce dei giorni riempirebbero la cronologia di voci da risalire una a una.
    */
   function nellIndirizzo(): void {
     if (!location) return;
     const parametri = new URLSearchParams({ locationId: String(location.id), from });
     if (ruler) parametri.set('rulers', ruler);
     if (skipMoonVoid) parametri.set('skipMoonVoid', 'true');
-    replaceState(`?${parametri}`, {});
+    void goto(`?${parametri}`, { shallow: true, replace: true });
   }
 
   onMount(() => {

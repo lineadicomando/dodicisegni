@@ -21,7 +21,7 @@ ridiscutere.
 | `apps/web` | SvelteKit: interfaccia + API REST, tutti gli endpoint in GET |
 | `apps/desktop` | Electron: la web app in una finestra. Avvia il server di `web` compilato, non duplica superfici |
 
-Monorepo npm workspaces, Node ≥ 22, ESM, TypeScript.
+Monorepo npm workspaces, Node ≥ 22.17, ESM, TypeScript.
 
 ## Comandi
 

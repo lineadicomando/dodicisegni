@@ -1,9 +1,9 @@
 import { MAX_ELECTION_DAYS, type BodyId, type ElectionOptions } from '@dodicisegni/core';
-import { error, json } from '@sveltejs/kit';
-import { toHttpError } from '$lib/server/errors';
-import { isHttpError, resolvePlace } from '$lib/server/place';
-import { nelPool } from '$lib/server/pool';
-import { resolvePassageRange } from '$lib/server/range';
+import { error } from '@sveltejs/kit';
+import { toHttpError } from '#lib/server/errors.js';
+import { isHttpError, resolvePlace } from '#lib/server/place.js';
+import { nelPool } from '#lib/server/pool.js';
+import { resolvePassageRange } from '#lib/server/range.js';
 import type { RequestHandler } from './$types';
 
 /**
@@ -38,12 +38,12 @@ export const GET: RequestHandler = async ({ url, setHeaders }) => {
     const giorni =
       (Date.parse(`${range.to}T00:00:00Z`) - Date.parse(`${range.from}T00:00:00Z`)) / 86_400_000;
     if (giorni > MAX_ELECTION_DAYS) {
-      throw error(400, {
-        message:
-          `Intervallo di ${Math.round(giorni)} giorni: l'elezione ne ammette al massimo ` +
+      throw error(
+        400,
+        `Intervallo di ${Math.round(giorni)} giorni: l'elezione ne ammette al massimo ` +
           `${MAX_ELECTION_DAYS}, perché ogni giorno porta ventiquattro ore planetarie.`,
-        code: 'INTERVALLO_TROPPO_LUNGO',
-      });
+        { code: 'INTERVALLO_TROPPO_LUNGO' },
+      );
     }
 
     const options: ElectionOptions = {};
@@ -69,7 +69,7 @@ export const GET: RequestHandler = async ({ url, setHeaders }) => {
     // da oggi, oggi scade.
     setHeaders({ 'cache-control': explicit ? 'public, max-age=86400' : 'no-store' });
 
-    return json({
+    return Response.json({
       range: election.range,
       place: { label: place.label, refined: place.refined ?? false },
       hours: election.hours,
@@ -103,11 +103,11 @@ function readBodies(parameters: URLSearchParams, name: 'bodies' | 'rulers'): Bod
     .filter((id) => id !== '');
 
   if (bodies.length === 0) {
-    throw error(400, {
-      message:
-        `Valore di "${name}" vuoto: elenca i corpi separati da virgola, es. "sole,venere,giove".`,
-      code: 'CORPO_SCONOSCIUTO',
-    });
+    throw error(
+      400,
+      `Valore di "${name}" vuoto: elenca i corpi separati da virgola, es. "sole,venere,giove".`,
+      { code: 'CORPO_SCONOSCIUTO' },
+    );
   }
 
   return bodies as BodyId[];

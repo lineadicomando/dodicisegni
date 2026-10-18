@@ -8,7 +8,7 @@
     natalPointGlyph,
     natalPointLabel,
   } from '@dodicisegni/ruota';
-  import { byInstant, collapseNodalAxis } from '$lib/nodal-axis';
+  import { byInstant, collapseNodalAxis } from '#lib/nodal-axis.js';
 
   /**
    * Gli istanti in cui i transiti si perfezionano.

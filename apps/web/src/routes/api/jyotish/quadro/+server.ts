@@ -1,11 +1,11 @@
 import { computeNatalChart, computeVarga, type ChartOptions, type VargaId } from '@dodicisegni/core';
 import type { StileQuadro } from '@dodicisegni/ruota';
 import { error } from '@sveltejs/kit';
-import { readAyanamsa, readBirth } from '$lib/server/birth';
-import { toHttpError } from '$lib/server/errors';
-import { isHttpError } from '$lib/server/place';
-import { readWheelOptions } from '$lib/server/wheel';
-import { quadroResponse } from '$lib/server/wheel-response';
+import { readAyanamsa, readBirth } from '#lib/server/birth.js';
+import { toHttpError } from '#lib/server/errors.js';
+import { isHttpError } from '#lib/server/place.js';
+import { readWheelOptions } from '#lib/server/wheel.js';
+import { quadroResponse } from '#lib/server/wheel-response.js';
 import type { RequestHandler } from './$types';
 
 /** I varga che il motore calcola. Gli altri stanno in `TODO.md`. */
@@ -51,12 +51,12 @@ export const GET: RequestHandler = ({ url, setHeaders }) => {
     // Il rifiuto arriva prima del disegno, e dice che cosa fare: la geometria
     // solleverebbe lo stesso, ma con un messaggio che parla di poligoni.
     if (stile === 'nord' && !varga.ascendant) {
-      throw error(400, {
-        message:
-          "Lo stile del nord ha le case fisse, e senza ora di nascita non c'è un lagna da " +
+      throw error(
+        400,
+        "Lo stile del nord ha le case fisse, e senza ora di nascita non c'è un lagna da " +
           'mettere in prima casa. Usa "stile=sud", dove a essere fissi sono i segni.',
-        code: 'QUADRO_NORD_SENZA_LAGNA',
-      });
+        { code: 'QUADRO_NORD_SENZA_LAGNA' },
+      );
     }
 
     setHeaders({ 'cache-control': 'private, max-age=86400' });
@@ -71,10 +71,11 @@ export const GET: RequestHandler = ({ url, setHeaders }) => {
 function readStile(parameters: URLSearchParams): StileQuadro {
   const stile = parameters.get('stile') ?? 'sud';
   if (stile !== 'nord' && stile !== 'sud') {
-    throw error(400, {
-      message: `Stile "${stile}" non riconosciuto: attesi "nord" oppure "sud".`,
-      code: 'STILE_QUADRO_NON_VALIDO',
-    });
+    throw error(
+      400,
+      `Stile "${stile}" non riconosciuto: attesi "nord" oppure "sud".`,
+      { code: 'STILE_QUADRO_NON_VALIDO' },
+    );
   }
   return stile;
 }
@@ -82,10 +83,11 @@ function readStile(parameters: URLSearchParams): StileQuadro {
 function readVarga(parameters: URLSearchParams): VargaId {
   const varga = parameters.get('varga') ?? 'd1';
   if (!VARGAS.has(varga)) {
-    throw error(400, {
-      message: `Varga "${varga}" non disponibile. Calcolati: ${[...VARGAS].join(', ')}.`,
-      code: 'VARGA_NON_VALIDO',
-    });
+    throw error(
+      400,
+      `Varga "${varga}" non disponibile. Calcolati: ${[...VARGAS].join(', ')}.`,
+      { code: 'VARGA_NON_VALIDO' },
+    );
   }
   return varga as VargaId;
 }

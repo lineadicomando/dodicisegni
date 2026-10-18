@@ -1,7 +1,7 @@
 <script lang="ts">
   import type { VargaChart } from '@dodicisegni/core';
   import { BODY_GLYPH, SIGN_GLYPH, SIGN_LABEL, type StileQuadro } from '@dodicisegni/ruota';
-  import type { Evidenza } from '$lib/evidenza.svelte';
+  import type { Evidenza } from '#lib/evidenza.svelte.js';
   import QuadroVedico from './QuadroVedico.svelte';
 
   /**

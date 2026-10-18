@@ -21,7 +21,7 @@ I dati delle località vengono da [GeoNames](https://www.geonames.org/), CC BY 4
 
 ## Struttura
 
-Monorepo npm workspaces, Node ≥ 22, ESM, TypeScript.
+Monorepo npm workspaces, Node ≥ 22.17, ESM, TypeScript.
 
 | | |
 |---|---|
@@ -122,19 +122,22 @@ Dove viva il dataset lo decide `GEONAMES_DATA` in `.env`; vedi
 Tre cose che il codice non può indovinare da solo, e che una copia pubblicata
 deve sistemare.
 
-**`ORIGIN`.** `adapter-node` ricava l'indirizzo pubblico dagli header della
-richiesta, e dietro un reverse proxy quella deduzione sbaglia lo schema: il
-proxy parla `http` col server anche quando parla `https` col mondo. Ogni
+**`ORIGIN`.** Senza, `adapter-node` ricava l'indirizzo pubblico dalla
+richiesta: l'host è quello che il reverse proxy passa al server, che non è
+detto sia quello del mondo, e lo schema è sempre `https`. Ogni
 `<link rel="canonical">` e ogni `og:url` del sito uscirebbe con l'indirizzo
 sbagliato, che è il modo più silenzioso di dividere in due un sito agli occhi
-di un motore di ricerca. Si dichiara una volta:
+di un motore di ricerca. Si dichiara una volta, **alla build**: SvelteKit lo
+scrive nel server compilato, e all'avvio non lo legge più nessuno.
 
 ```sh
-ORIGIN=https://esempio.it node apps/web/build/index.js
+ORIGIN=https://esempio.it npm run build
 ```
 
-Con Docker sta in `.env`; in sviluppo e dentro Electron non serve: là
-l'indirizzo è quello del loopback e il sito non è indicizzato da nessuno.
+Con Docker sta in `.env` e arriva alla build come argomento, quindi dopo
+averlo cambiato si rifà l'immagine (`docker compose build`). In sviluppo e
+dentro Electron non serve: là l'indirizzo è quello del loopback e il sito non è
+indicizzato da nessuno.
 
 **`REPOSITORY_URL`** in `apps/web/src/lib/project.ts` va cambiato con
 l'indirizzo del **proprio** sorgente. L'AGPL, articolo 13, obbliga a offrirlo a

@@ -1,9 +1,9 @@
 <script lang="ts">
   import type { Location } from '@dodicisegni/geo';
   import type { Snippet } from 'svelte';
-  import { resetCoordinates, type BirthInput } from '$lib/birth';
-  import LocationSearch from '$lib/components/LocationSearch.svelte';
-  import { distanceKm, formatCoordinateDMS, parseCoordinate } from '$lib/coordinates';
+  import { resetCoordinates, type BirthInput } from '#lib/birth.js';
+  import LocationSearch from '#lib/components/LocationSearch.svelte';
+  import { distanceKm, formatCoordinateDMS, parseCoordinate } from '#lib/coordinates.js';
 
   interface Props {
     value: BirthInput;
