@@ -9,6 +9,8 @@ le voci si citano così. Una voce chiusa esce dal file e il suo numero non si
 riusa; quello che aveva da dire o è finito nel codice, nei commenti e nei test,
 o sta in uno dei due elenchi in fondo. L'ultima versione che le contiene tutte,
 chiuse comprese, è `cf5219a`, quando il file si chiamava ancora `ROADMAP.md`.
+Le voci dalla 20 alla 22 sono nate e si sono chiuse dopo: la 20 per intero sta
+in `3314553`, la 21 e la 22 in `819ce59`.
 
 In fondo ci sono due elenchi che non sono lavoro: le decisioni prese, da non
 riaprire, e le cose esaminate e lasciate stare, per non ritrovarle una seconda
@@ -18,6 +20,7 @@ volta e ricominciare da capo.
 
 | Voce | Priorità | Taglia | Prima di cominciare |
 |---|---|---|---|
+| 23. L'immagine Docker dopo SvelteKit 3 | media | piccola | serve Docker, qui non c'è |
 | 19. Le dignità, per scuola | media | grande, a commit piccoli | il primo commit, i domicili, si fa subito |
 | 11. Gli elenchi in più posti | media | piccola | prima del punto 5 |
 | 13. Due semplificazioni | bassa | piccola | niente |
@@ -29,9 +32,10 @@ volta e ricominciare da capo.
 | 5. I varga che mancano | non dichiarata | tre lotti | il punto 11; per il D-2, la convenzione |
 | 17. L'astrologia oraria | bassa | la più grande | il punto 19 |
 
-L'ordine consigliato è quello della tabella: il primo commit delle dignità, che
-chiude un difetto già presente, poi le voci piccole che tolgono copie e righe
-morte prima che il lavoro grande ci passi sopra.
+L'ordine consigliato è quello della tabella: la prova dell'immagine Docker, che
+è l'unica parte del passaggio a SvelteKit 3 rimasta senza verifica, il primo
+commit delle dignità, che chiude un difetto già presente, poi le voci piccole
+che tolgono copie e righe morte prima che il lavoro grande ci passi sopra.
 
 ## 5. I dieci varga che mancano
 
@@ -53,10 +57,10 @@ ricontrollabile; le prove ai confini dei segni pari e dispari; l'aggiunta a
 L'elenco dei varga però non vive solo lì: è ricopiato in
 `packages/mcp/src/tools.ts:123` (`VARGA_IDS`, uno `z.enum`), nelle due rotte
 `apps/web/src/routes/api/jyotish/+server.ts:17` e `api/jyotish/quadro/+server.ts:12`
-(un `Set<string>`), in `apps/web/src/lib/components/JyotishaSettings.svelte` e
-nella pagina del metodo, righe 346-347. Un varga nuovo dimenticato in una delle
-copie viene rifiutato da quella superficie senza nessun errore: è lo stesso
-difetto del punto 11, che conviene chiudere prima.
+(un `Set<string>`), in `apps/web/src/lib/components/JyotishaSettings.svelte:57`
+(`VARGHE`) e nella pagina del metodo, righe 346-347. Un varga nuovo
+dimenticato in una delle copie viene rifiutato da quella superficie senza
+nessun errore: è lo stesso difetto del punto 11, che conviene chiudere prima.
 
 ### Lotto A: quelli che si biforcano su pari e dispari
 
@@ -180,7 +184,7 @@ un giorno, una settimana, un mese, un bimestre. È una domanda sola con `from` e
 `windowAround`, `packages/core/src/passages.ts:180`, calcola già l'intervallo in
 cui ogni passaggio resta in orbita, e lo fa quasi gratis: cammina sui campioni
 già presi e dimezza solo l'ultimo. Il margine di campionamento a
-`passages.ts:65` è `WIDEST_ORB / MEAN_DAILY_MOTION[bodyId]`, cioè esattamente il
+`passages.ts:64` è `WIDEST_ORB / MEAN_DAILY_MOTION[bodyId]`, cioè esattamente il
 tempo massimo che un corpo impiega ad attraversare l'orbita più larga concessa:
 non è un margine prudenziale, è dimensionato sul caso peggiore.
 
@@ -210,10 +214,9 @@ scollegata da quell'ancora.
 
 Secondo caso, più semplice: quando il bordo non si trova entro
 `MAX_WINDOW_DAYS` (1095, `roots.ts:30`, che fa anche da tetto al margine di
-riga 65), o quando i campioni finiscono prima di trovarlo, la finestra oggi
-viene omessa. In un
-elenco di transiti attivi «in orbita per tutto l'arco» **è la risposta**, non un
-dato mancante, e va detta invece che taciuta.
+riga 64), o quando i campioni finiscono prima di trovarlo, la finestra oggi
+viene omessa. In un elenco di transiti attivi «in orbita per tutto l'arco»
+**è la risposta**, non un dato mancante, e va detta invece che taciuta.
 
 Niente di tutto questo tocca la catena di calcolo sincrona né lo stato globale
 dell'ayanamsa: si resta dentro `zodiacContext`, come il resto del file.
@@ -238,8 +241,9 @@ dell'ayanamsa: si resta dentro `zodiacContext`, come il resto del file.
   significato delle righe è la cosa più facile da sbagliare per un agente.
 - **Niente interfaccia web.** La funzione serve agli agenti e alla riga di
   comando: l'endpoint sì, la pagina e la tabella Svelte no.
-- Serve un tetto all'arco: `MAX_RANGE_DAYS` in `tools.ts` e
-  `lib/server/range.ts` sono il precedente.
+- Serve un tetto all'arco: `MAX_RANGE_DAYS` in `packages/mcp/src/tools.ts:816`
+  e in `apps/web/src/lib/server/range.ts:18` (1096 giorni, tre anni) è il
+  precedente.
 
 ### Nome e superfici
 
@@ -373,11 +377,18 @@ Nessuno dei due lo vedono `typecheck` né i test, che girano verdi lo stesso.
 ### Quello che c'è già
 
 `noUnusedLocals` e `noUnusedParameters` stanno in `tsconfig.base.json` e anche
-in `apps/web/tsconfig.json`, che non estende la base ma il `tsconfig` generato
-da SvelteKit, quindi i flag della radice non lo raggiungono. `svelte-check` li
-legge come errori e li applica ai componenti come ai `.ts`: import e variabili
-morte, anche nei `.svelte`, oggi cadono. Accendendoli è saltato fuori un terzo
-import morto, `ASPECT_GLYPH` in `TransitAspectTable.svelte`.
+in `apps/web/tsconfig.json`, che non estende la base ma `$app/tsconfig`, quello
+generato da SvelteKit, quindi i flag della radice non lo raggiungono.
+`svelte-check` li legge come errori e li applica ai componenti come ai `.ts`:
+import e variabili morte, anche nei `.svelte`, oggi cadono. Accendendoli è
+saltato fuori un terzo import morto, `ASPECT_GLYPH` in
+`TransitAspectTable.svelte`.
+
+Resta scoperto il service worker. Da SvelteKit 3 è un progetto TypeScript a sé,
+`apps/web/src/service-worker/tsconfig.json`, che estende
+`$app/tsconfig/service-worker` e non porta i due flag: lo script `typecheck` di
+`web` lo controlla con `tsc`, ma un import morto lì non cade. Sono due righe in
+`compilerOptions`, da aggiungere con questa voce o prima.
 
 ### Il linter vero è una decisione a parte
 
@@ -402,15 +413,17 @@ Va deciso, e non è ovvio:
 **Priorità media.** `AYANAMSAS` è dichiarato in `packages/core/src/ayanamsa.ts:44`,
 di nuovo in `packages/mcp/src/tools.ts:88`, di nuovo in
 `apps/web/src/lib/server/birth.ts:27` e una quarta volta in
-`apps/web/src/lib/zodiacs.ts:28`. I sistemi di case stanno in cinque, contando
-`HOUSE_SYSTEM_CODES` in `constants.ts:255` e `HOUSE_SYSTEMS` in
-`packages/mcp/src/tools.ts:125`. L'elenco dei varga ha lo stesso difetto (vedi
-il punto 5). Oggi combaciano tutti: verificati uno
-per uno.
+`apps/web/src/lib/zodiacs.ts:28`. I sistemi di case stanno in cinque: l'unione
+`HouseSystem` in `packages/core/src/types.ts:39`, `HOUSE_SYSTEM_CODES` in
+`constants.ts:255`, `HOUSE_SYSTEMS` in `packages/mcp/src/tools.ts:125`, in
+`apps/web/src/lib/server/birth.ts:36` e in `apps/web/src/lib/house-systems.ts:15`.
+L'elenco dei varga ha lo stesso difetto (vedi il punto 5). Oggi combaciano
+tutti: verificati uno per uno.
 
-Il commento sopra `AYANAMSAS` (`ayanamsa.ts:40-41`) dice che aggiungerne uno
+Il commento sopra `AYANAMSAS` (`ayanamsa.ts:41-42`) dice che aggiungerne uno
 «è una riga qui». Non lo è nemmeno nel motore, perché serve anche l'unione
-`AyanamsaId` in `types.ts`; fuori dal motore le copie sono quattro, e due delle quattro non se ne accorgerebbero. `zodiacs.ts` e
+`AyanamsaId` in `types.ts`; fuori dal motore le copie sono tre, e due delle tre
+non se ne accorgerebbero. `zodiacs.ts` e
 `house-systems.ts` dichiarano `AyanamsaId` e `HouseSystem`, quindi il
 compilatore le tiene legate al motore; `birth.ts` usa un `Set<string>` e il
 server MCP uno `z.enum` scritto lì, e un settimo ayanamsa non produrrebbe
@@ -500,10 +513,11 @@ prima del giudizio alle pp. 121-123.
 ### Che cosa c'è già
 
 Il tema orario è un tema dell'istante in un luogo: `computeSky` con luogo e ora
-lo fa già, e il Regiomontano è fra i nove sistemi (`server.ts:159` lo descrive
-già come «tradizionale nell'astrologia oraria»). Ci sono anche:
+lo fa già, e il Regiomontano è fra i nove sistemi
+(`packages/mcp/src/server.ts:159` lo descrive già come «tradizionale
+nell'astrologia oraria»). Ci sono anche:
 
-- `applying` sugli aspetti (`aspects.ts:170`), gli istanti esatti in
+- `applying` sugli aspetti (`isApplying`, `aspects.ts:170`), gli istanti esatti in
   `findSkyPassages` (`sky-passages.ts:58`), le stazioni in `findStations`, gli
   ingressi in `findSignIngresses`;
 - `speed` e `retrograde` (`types.ts:623-624`);
@@ -773,9 +787,10 @@ documenti di lettura già presuppongono.
 ### Superfici, in commit
 
 1. **I domicili nelle due colonne**, con i signori delle case, nella tabella di
-   `format.ts`; `tropicale.ts` passa da «li ricavi dal segno» a «li trovi nella
-   tabella», e dice che le colonne sono due e perché. È il commit che chiude il
-   difetto, e va fatto per primo anche se il resto aspetta.
+   `packages/core/src/format.ts`; `tropicale.ts` passa da «li ricavi dal
+   segno» a «li trovi nella tabella», e dice che le colonne sono due e
+   perché. È il commit che chiude il difetto, e va fatto per primo anche se
+   il resto aspetta.
 2. Esaltazione, caduta, esilio nella colonna tradizionale, e le ricezioni.
 3. Il pacchetto di Lilly a richiesta: triplicità, termini, facce. È il pezzo
    che il punto 17 aspetta, e il suo punteggio sta là, perché chiede anche le
@@ -792,6 +807,44 @@ Poi CLI, rotta, tool MCP e una tabella Svelte, nell'ordine della skill
 Le tavole contro la fonte, segno per segno e scuola per scuola: è una prova a
 tabella e non chiede effemeridi. Per i domicili, anche il test che
 `tropicale.ts` non dica più «li ricavi dal segno».
+
+## 23. L'immagine Docker dopo SvelteKit 3
+
+**Priorità media, taglia piccola.** È l'unica superficie che il passaggio a
+SvelteKit 3 (`20a3e2b`) ha cambiato senza provarla: sulla macchina dove è
+stato fatto Docker non c'era. Il server compilato, la web app nel browser e
+l'AppImage sono stati provati; `compose.yaml` è stato controllato solo con
+`podman compose config`, che risolve `ORIGIN` come argomento della build ma non
+costruisce niente.
+
+Che cosa è cambiato, e che cosa può rompersi:
+
+- **`ORIGIN` è un argomento della build** (`ARG ORIGIN` nello stage `build` del
+  `Dockerfile`, `build.args` nell'ancora `x-runtime` di `compose.yaml`) e non
+  più una variabile del runtime. Va visto che dentro lo stage arrivi a
+  `vite.config.ts`, che lo legge in `paths.origin` con `|| undefined`.
+- **adapter-node 6 lascia fuori dal bundle le `dependencies` di `apps/web`**,
+  fra cui `lettura`, che prima finiva dentro il server. Il runtime del
+  `Dockerfile` copia già `packages/lettura/dist` (righe 113-114, per il server
+  MCP), quindi dovrebbe reggere; nel desktop invece mancava, e `stage.mjs` ora
+  la copia. È il guasto più probabile, ed è silenzioso fino alla prima pagina:
+  il server parte, e cade con `ERR_MODULE_NOT_FOUND` quando una pagina carica
+  il modulo.
+- **Node 22.17 come minimo.** L'immagine usa `node:24-bookworm-slim`, quindi non
+  dovrebbe toccarla.
+
+Verifica, con un `.env` che dichiari `ORIGIN=https://esempio.it`:
+
+1. `docker compose build` e `docker compose up -d`;
+2. `curl -s localhost:3000/transiti | grep canonical` deve dare
+   `https://esempio.it/transiti`; senza `ORIGIN` e dopo un'altra build,
+   `https://localhost:3000/transiti` (lo schema senza `ORIGIN` è sempre
+   `https`, anche su localhost);
+3. una rotta per tipo: `/api/chart` con `locationId`, `/api/chart/wheel` in
+   PNG, `/api/transits/passages` (passa dal pool), e le pagine `/` e
+   `/vedica`, che sono quelle che importano `lettura`;
+4. `docker compose --profile mcp run --rm -T mcp` risponde a `tools/list` con
+   dieci tool.
 
 ## Deciso, e da non riaprire
 
@@ -810,10 +863,12 @@ tabella e non chiede effemeridi. Per i domicili, anche il test che
   è uno solo.
 - **Il server MCP non ha un pool, e non gli serve**: è un processo per client,
   sul trasporto stdio, e non c'è nessun'altra richiesta da tenere in attesa.
-- **I thread del pool web sono quattro, e la quinta richiesta pesante aspetta.**
-  Il tetto è voluto: il lavoro è tutto CPU, e più thread che nuclei non
-  calcolano niente di più. Va riguardato solo se l'applicazione va in rete
-  pubblica con concorrenza seria, e non da dentro il motore.
+- **I thread del pool web sono al massimo quattro, e la quinta richiesta
+  pesante aspetta.** Sono uno meno dei nuclei, fino a quattro
+  (`apps/web/src/lib/server/pool.ts:133`). Il tetto è voluto: il lavoro è
+  tutto CPU, e più thread che nuclei non calcolano niente di più. Va
+  riguardato solo se l'applicazione va in rete pubblica con concorrenza
+  seria, e non da dentro il motore.
 
 ## Esaminato, e lasciato stare
 
@@ -838,3 +893,16 @@ catena di `app-builder-lib`, che dicono «fix available» ma non ne hanno uno.
 Girano solo quando si costruisce l'AppImage, sulla macchina di chi la
 costruisce, e nell'AppImage non entrano. Da riguardare quando
 `electron-builder` smette di dipendere da `@electron/get@3`.
+
+**L'avviso di Chrome sui campi di modulo senza `id` né `name`.** Compare in
+console come *issue*, «A form field element should have an id or name
+attribute», e i campi sono una decina: le caselle di `BirthForm.svelte`,
+`ChartSettings.svelte`, `JyotishaSettings.svelte`, `MomentFields.svelte`,
+`LocationSearch.svelte`, `StrumentiLettura.svelte`, `elezione` e `vedica`.
+Non è accessibilità: stanno tutti dentro un `<label>`, che è ciò che li
+nomina. Riguarda l'autocompilazione del browser, che senza `name` non sa che
+cosa proporre, e il progetto in parte la spegne già (`autocomplete="off"` in
+`BirthForm.svelte:91` e `:103` e in `LocationSearch.svelte:156`). Prima di
+aggiungere `name` per zittire l'avviso va ricordato che un browser che ricorda
+date e luoghi di nascita costruisce lo stesso archivio che il service worker si
+rifiuta di costruire (`lib/cache-policy.ts`).
