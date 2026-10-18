@@ -9,8 +9,8 @@ le voci si citano così. Una voce chiusa esce dal file e il suo numero non si
 riusa; quello che aveva da dire o è finito nel codice, nei commenti e nei test,
 o sta in uno dei due elenchi in fondo. L'ultima versione che le contiene tutte,
 chiuse comprese, è `cf5219a`, quando il file si chiamava ancora `ROADMAP.md`.
-Le voci dalla 20 alla 22 sono nate e si sono chiuse dopo: la 20 per intero sta
-in `3314553`, la 21 e la 22 in `819ce59`.
+Le voci dalla 20 alla 23 sono nate e si sono chiuse dopo: la 20 per intero sta
+in `3314553`, la 21 e la 22 in `819ce59`, la 23 in `db332a6`.
 
 In fondo ci sono due elenchi che non sono lavoro: le decisioni prese, da non
 riaprire, e le cose esaminate e lasciate stare, per non ritrovarle una seconda
@@ -20,7 +20,6 @@ volta e ricominciare da capo.
 
 | Voce | Priorità | Taglia | Prima di cominciare |
 |---|---|---|---|
-| 23. L'immagine Docker dopo SvelteKit 3 | media | piccola | serve Docker, qui non c'è |
 | 19. Le dignità, per scuola | media | grande, a commit piccoli | il primo commit, i domicili, si fa subito |
 | 11. Gli elenchi in più posti | media | piccola | prima del punto 5 |
 | 13. Due semplificazioni | bassa | piccola | niente |
@@ -32,10 +31,9 @@ volta e ricominciare da capo.
 | 5. I varga che mancano | non dichiarata | tre lotti | il punto 11; per il D-2, la convenzione |
 | 17. L'astrologia oraria | bassa | la più grande | il punto 19 |
 
-L'ordine consigliato è quello della tabella: la prova dell'immagine Docker, che
-è l'unica parte del passaggio a SvelteKit 3 rimasta senza verifica, il primo
-commit delle dignità, che chiude un difetto già presente, poi le voci piccole
-che tolgono copie e righe morte prima che il lavoro grande ci passi sopra.
+L'ordine consigliato è quello della tabella: il primo commit delle dignità,
+che chiude un difetto già presente, poi le voci piccole che tolgono copie
+e righe morte prima che il lavoro grande ci passi sopra.
 
 ## 5. I dieci varga che mancano
 
@@ -807,44 +805,6 @@ Poi CLI, rotta, tool MCP e una tabella Svelte, nell'ordine della skill
 Le tavole contro la fonte, segno per segno e scuola per scuola: è una prova a
 tabella e non chiede effemeridi. Per i domicili, anche il test che
 `tropicale.ts` non dica più «li ricavi dal segno».
-
-## 23. L'immagine Docker dopo SvelteKit 3
-
-**Priorità media, taglia piccola.** È l'unica superficie che il passaggio a
-SvelteKit 3 (`20a3e2b`) ha cambiato senza provarla: sulla macchina dove è
-stato fatto Docker non c'era. Il server compilato, la web app nel browser e
-l'AppImage sono stati provati; `compose.yaml` è stato controllato solo con
-`podman compose config`, che risolve `ORIGIN` come argomento della build ma non
-costruisce niente.
-
-Che cosa è cambiato, e che cosa può rompersi:
-
-- **`ORIGIN` è un argomento della build** (`ARG ORIGIN` nello stage `build` del
-  `Dockerfile`, `build.args` nell'ancora `x-runtime` di `compose.yaml`) e non
-  più una variabile del runtime. Va visto che dentro lo stage arrivi a
-  `vite.config.ts`, che lo legge in `paths.origin` con `|| undefined`.
-- **adapter-node 6 lascia fuori dal bundle le `dependencies` di `apps/web`**,
-  fra cui `lettura`, che prima finiva dentro il server. Il runtime del
-  `Dockerfile` copia già `packages/lettura/dist` (righe 113-114, per il server
-  MCP), quindi dovrebbe reggere; nel desktop invece mancava, e `stage.mjs` ora
-  la copia. È il guasto più probabile, ed è silenzioso fino alla prima pagina:
-  il server parte, e cade con `ERR_MODULE_NOT_FOUND` quando una pagina carica
-  il modulo.
-- **Node 22.17 come minimo.** L'immagine usa `node:24-bookworm-slim`, quindi non
-  dovrebbe toccarla.
-
-Verifica, con un `.env` che dichiari `ORIGIN=https://esempio.it`:
-
-1. `docker compose build` e `docker compose up -d`;
-2. `curl -s localhost:3000/transiti | grep canonical` deve dare
-   `https://esempio.it/transiti`; senza `ORIGIN` e dopo un'altra build,
-   `https://localhost:3000/transiti` (lo schema senza `ORIGIN` è sempre
-   `https`, anche su localhost);
-3. una rotta per tipo: `/api/chart` con `locationId`, `/api/chart/wheel` in
-   PNG, `/api/transits/passages` (passa dal pool), e le pagine `/` e
-   `/vedica`, che sono quelle che importano `lettura`;
-4. `docker compose --profile mcp run --rm -T mcp` risponde a `tools/list` con
-   dieci tool.
 
 ## Deciso, e da non riaprire
 
