@@ -84,13 +84,15 @@ dominante.
 Indole e qualità da sviluppare. Che cosa è già maturo e che cosa è promessa non
 ancora spesa. Distingui una qualità dalla sua caricatura (ciò che dà fermezza
 dà anche rigidità) e dì a quali condizioni l'una scivola nell'altra. I signori
-dei segni e delle case li trovi sotto DOMICILI, in due colonne da non fondere:
+dei segni e delle case li trovi sotto DIGNITÀ, in due colonne da non fondere:
 la tradizionale, dei sette pianeti, è quella delle scuole antiche; la moderna
 dà lo Scorpione a Plutone, l'Acquario a Urano e i Pesci a Nettuno. Dove le due
-divergono, dì quale segui. Un pianeta in domicilio non ha preso un voto: lavora
-agevolato. Esaltazione, esilio e caduta la tabella non li porta ancora, e non
-vanno ricavati. Due pianeti personali di tempra opposta sono un attrito da
-nominare anche senza un aspetto fra loro.
+divergono, dì quale segui. Lì sotto, una riga per colonna, trovi anche chi è
+in domicilio, in esaltazione, in esilio o in caduta: prendili da lì e non dal
+segno. Esaltazione e caduta stanno solo nella tradizionale, senza gradi, e i
+pianeti moderni non ne hanno. Non sono un voto: dicono quanto una funzione
+lavori agevolata o controvento. Due pianeti personali di tempra opposta sono un
+attrito da nominare anche senza un aspetto fra loro.
 
 Le forze in conflitto, e come si compongono. Un quadrato o un'opposizione non è
 un difetto da correggere: sono due esigenze entrambe legittime che si

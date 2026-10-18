@@ -20,7 +20,7 @@ volta e ricominciare da capo.
 
 | Voce | Priorità | Taglia | Prima di cominciare |
 |---|---|---|---|
-| 19. Le dignità, per scuola | media | grande, a commit piccoli | il commit 2, le esaltazioni: i gradi di Tolomeo |
+| 19. Le dignità, per scuola | media | grande, a commit piccoli | il Jyotisha, poi le ricezioni |
 | 11. Gli elenchi in più posti | media | piccola | prima del punto 5 |
 | 13. Due semplificazioni | bassa | piccola | niente |
 | 9. Il linter | media | piccola | decidere lo strumento |
@@ -31,9 +31,9 @@ volta e ricominciare da capo.
 | 5. I varga che mancano | non dichiarata | tre lotti | il punto 11; per il D-2, la convenzione |
 | 17. L'astrologia oraria | bassa | la più grande | il punto 19 |
 
-L'ordine consigliato è quello della tabella: il secondo commit delle dignità,
-che rende alla lettura le esaltazioni tolte dal primo, poi le voci piccole che tolgono copie
-e righe morte prima che il lavoro grande ci passi sopra.
+L'ordine consigliato è quello della tabella: le dignità del Jyotisha, che
+chiudono un difetto ancora aperto, poi le voci piccole che tolgono copie e
+righe morte prima che il lavoro grande ci passi sopra.
 
 ## 5. I dieci varga che mancano
 
@@ -695,20 +695,26 @@ chiudono un difetto che c'è già.
 
 ### Il difetto di oggi
 
-Per metà chiuso. I domicili stanno in `packages/core/src/dignita.ts`, con le
-fonti nei commenti, e nella sezione DOMICILI di `format.ts`, in due colonne
-con i signori delle case; `tropicale.ts` manda lì il modello invece di
-farglieli ricavare. Resta l'altra metà: esaltazione, esilio e caduta la
-tabella non li porta, e `tropicale.ts` per ora dice di non ricavarli, che
-toglie alla lettura qualcosa che prima aveva. È la ragione per cui il commit 2
-viene subito dopo. `packages/lettura/src/jyotisha.ts:45` ricopia ancora in
-prosa la tavola dei domicili antichi (commit 4).
+Chiuso per il tropicale. Domicili, esilio, esaltazione e caduta stanno in
+`packages/core/src/dignita.ts`, con le fonti nei commenti, e nella sezione
+DIGNITÀ di `format.ts`: le due colonne dei signori con le case, e una riga
+per convenzione con chi è in domicilio, esaltazione, esilio o caduta.
+`tropicale.ts` manda lì il modello invece di farglieli ricavare.
 
-I domicili non sono ancora nel JSON di `NatalChart`, solo nella tabella:
-entrano col passo delle superfici. Fino ad allora il compatto porta un dato
-che il JSON non ha, ed è per questo che il test MCP sul rapporto fra le due
-rese (`packages/mcp/test/server.test.ts`, «costa molti meno token») chiede un
-terzo e non più un quarto.
+Resta il Jyotisha, e il difetto lì è doppio. `packages/lettura/src/jyotisha.ts:45`
+ricopia in prosa la tavola dei domicili antichi; e `jyotisha.ts:126` chiede di
+confrontare «un pianeta forte nel tema e debole nel D9» senza che la tabella
+porti alcun dato sulla forza: esaltazione e debilitazione il modello le prende
+a memoria, con i gradi della scuola che preferisce. Tutti e due col commit 4.
+
+Le dignità non sono ancora nel JSON di `NatalChart`, solo nella tabella:
+entrano col passo delle superfici, e lì va deciso come, perché `NatalChart` è
+anche la carta siderale che il Jyotisha riusa, dove le dignità occidentali
+sarebbero dottrina sbagliata. Fino ad allora il compatto porta un dato che il
+JSON non ha, e i due test sul rapporto fra le rese
+(`packages/core/test/chart.test.ts` e «costa molti meno token» in
+`packages/mcp/test/server.test.ts`) tolgono la sezione DIGNITÀ prima di
+confrontare. Quando il dato entra nel JSON, quella sottrazione va tolta.
 
 ### Che cosa
 
@@ -781,12 +787,35 @@ Leo, *The Art of Synthesis* p. 117, riferisce Urano e Nettuno senza essere il
 primo; per Plutone allo Scorpione nessun autore, e Zain nel 1942 lo usa come
 il più diffuso. Resta:
 
-- **Che la parte comune sia davvero comune** anche per le esaltazioni, e i
-  domicili in Bonatti. È un test a tabella, e se una scuola diverge la
-  colonna di default si restringe invece di sceglierne una.
-- **I gradi di esaltazione in Tolomeo**: le fonti secondarie non dicono se ci
-  siano. Se mancano, il default porta i segni e il grado resta della scuola che
-  lo dà.
+Verificato anche, per le esaltazioni, il 18 ottobre 2026:
+
+- **Tolomeo I.19** (Loeb pp. 89-91) dà i segni e **nessun grado**, e le
+  cadute («depression») esplicite nel segno opposto: Sole Ariete, Luna Toro,
+  Saturno Bilancia, Giove Cancro, Marte Capricorno, Venere Pesci, Mercurio
+  Vergine. Niente Nodi. Quindi la colonna di default porta i segni, come già
+  deciso, e la caduta non è un derivato nostro: la scrive Tolomeo.
+- **Firmico**, *Mathesis* II.3.5-6, ed. Kroll-Skutsch I (1897), p. 44,
+  rr. 7-17, dà i gradi (Sole 19, Luna 3, Saturno 21, Giove 15, Marte 28,
+  Venere 27, Mercurio 15) e la caduta allo stesso grado del segno opposto.
+  **Lilly** p. 104 dà gli stessi gradi, e in più il Nodo Nord a 3° Gemelli e
+  il Sud a 3° Sagittario (il glifo in Sagittario è stampato male). I gradi
+  sono quindi di una tradizione che va da Firmico a Lilly, non di Tolomeo,
+  anche se Lilly intitola la tavola «according to Ptolomy».
+- **Valente I.2** (Kroll pp. 5-13) non ha una tavola delle esaltazioni: la
+  riga «Ellenistica» della tabella delle scuole qui sopra, che le dà «col
+  grado», è da correggere o da verificare altrove nell'opera.
+- **Il BPHS** (3.49-50, trad. Santhanam, vol. I, pp. 38-39, pagine dall'OCR)
+  ha gradi diversi per Sole (10) e Giove (5): è un'altra tradizione, e va col
+  commit 4, non mescolata qui. Per i Nodi il traduttore dice che le opinioni
+  divergono.
+- **Urano, Nettuno, Plutone**: nessuna esaltazione con un autore. Non entrano.
+
+Resta:
+
+- **I domicili in Bonatti.** La colonna Detriment di Lilly p. 104 invece è
+  verificata sulla scansione: segno per segno il signore del segno opposto,
+  ed è la fonte dell'esilio tradizionale. La colonna Fall coincide con
+  Tolomeo per i sette pianeti.
 - **La triplicità d'acqua in Tolomeo.** Una fonte gli attribuisce Marte di
   giorno e di notte come Lilly, un'altra un reggente diverso per setta.
 - **I punti 5-4-3-2-1 medievali**: a chi vanno attribuiti. I siti li danno
@@ -795,7 +824,9 @@ il più diffuso. Resta:
 ### Superfici, in commit
 
 1. Fatto: i domicili nelle due colonne, con i signori delle case.
-2. Esaltazione, caduta, esilio nella colonna tradizionale, e le ricezioni.
+2. Fatto: esilio in tutte e due le colonne, esaltazione e caduta nella
+   tradizionale, per segno. Restano **le ricezioni** (per domicilio, per
+   esaltazione, la mutua), che si ricavano dalle stesse tavole.
 3. Il pacchetto di Lilly a richiesta: triplicità, termini, facce. È il pezzo
    che il punto 17 aspetta, e il suo punteggio sta là, perché chiede anche le
    condizioni di un istante.
@@ -810,7 +841,8 @@ Poi CLI, rotta, tool MCP e una tabella Svelte, nell'ordine della skill
 
 Le tavole contro la fonte, segno per segno e scuola per scuola: è una prova a
 tabella e non chiede effemeridi. Per i domicili, anche il test che
-`tropicale.ts` non dica più «li ricavi dal segno».
+`tropicale.ts` non dica più «li ricavi dal segno»; per il Jyotisha, quello
+che `jyotisha.ts` non chieda una forza che la tabella non porta.
 
 ## Deciso, e da non riaprire
 

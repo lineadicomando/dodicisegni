@@ -84,6 +84,18 @@ function senzaAvvertenze(compact: string): string {
   return inizio === -1 ? compact : compact.slice(0, inizio);
 }
 
+/**
+ * Il compatto senza la sezione DIGNITÀ, che il JSON non ha ancora: entra in
+ * `NatalChart` col passo delle superfici (voce 19 del TODO), e fino ad allora
+ * contarla vorrebbe dire confrontare due rese che non dicono la stessa cosa.
+ */
+function senzaDignita(compact: string): string {
+  const inizio = compact.indexOf('\n\nDIGNITÀ\n');
+  if (inizio === -1) return compact;
+  const fine = compact.indexOf('\n\n', inizio + 2);
+  return compact.slice(0, inizio) + (fine === -1 ? '' : compact.slice(fine));
+}
+
 /** Lo stesso JSON senza il campo `warnings`, riimpaginato come lo serve il tool. */
 function senzaJsonWarnings(json: string): string {
   const parsed = JSON.parse(json) as { warnings?: unknown };
@@ -522,13 +534,12 @@ describe('compute_natal_chart', () => {
     // quindi pesano sul compatto molto più che sul JSON. Quante ne compaiano
     // dipende dalla macchina — su un clone senza effemeridi ce n'è una in più
     // per il ripiego su Moshier — e la proprietà da dimostrare qui è come il
-    // motore impagina un tema, non quale effemeride abbia sottomano.
-    //
-    // Un terzo e non più un quarto da quando il compatto porta i domicili,
-    // che nel JSON non ci sono ancora: il confronto non è più a parità di
-    // contenuto, e la soglia lo tiene in conto invece di far stringere la
-    // tabella fino a renderla illeggibile.
-    expect(senzaAvvertenze(compact).length).toBeLessThan(senzaJsonWarnings(json).length / 3);
+    // motore impagina un tema, non quale effemeride abbia sottomano. Per la
+    // stessa ragione resta fuori la sezione DIGNITÀ, che nel JSON non c'è.
+    expect(compact).toContain('\n\nDIGNITÀ\n');
+    expect(senzaDignita(senzaAvvertenze(compact)).length).toBeLessThan(
+      senzaJsonWarnings(json).length / 4,
+    );
   });
 
   it('calcola nello zodiaco siderale, e lo dichiara nella tabella', async () => {

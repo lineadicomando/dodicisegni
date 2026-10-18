@@ -184,6 +184,14 @@ describe('formatChartCompact', () => {
     const compact = formatChartCompact(chart);
     const json = JSON.stringify(chart);
 
-    expect(compact.length).toBeLessThan(json.length / 2);
+    // Senza la sezione DIGNITÀ, che il JSON non ha ancora: le dignità entrano
+    // in `NatalChart` col passo delle superfici (voce 19 del TODO), e fino ad
+    // allora le due rese non dicono la stessa cosa.
+    const inizio = compact.indexOf('\n\nDIGNITÀ\n');
+    const fine = compact.indexOf('\n\n', inizio + 2);
+    const aParita = compact.slice(0, inizio) + (fine === -1 ? '' : compact.slice(fine));
+
+    expect(inizio).toBeGreaterThan(0);
+    expect(aParita.length).toBeLessThan(json.length / 2);
   });
 });

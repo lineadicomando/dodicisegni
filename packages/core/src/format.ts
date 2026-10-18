@@ -1,5 +1,13 @@
 import { BODIES, NATAL_POINT_NAMES, SIGN_ABBR, ZODIAC_SIGNS } from './constants.js';
-import { DOMICILE_SOURCES, domicileLord, type DomicileScheme } from './dignita.js';
+import {
+  DETRIMENT_SOURCE,
+  dignitiesOf,
+  DOMICILE_SOURCES,
+  domicileLord,
+  EXALTATION_SOURCE,
+  type Dignity,
+  type DomicileScheme,
+} from './dignita.js';
 import { formatDegrees, formatZodiacal } from './math.js';
 import { grahaName, nakshatraOf, requireSidereal } from './nakshatra.js';
 import type {
@@ -37,9 +45,9 @@ import type {
 /**
  * Rende il tema in forma tabellare compatta.
  *
- * Pensata per essere consumata da un modello linguistico: meno di un terzo
- * della lunghezza del JSON completo, pur portando i domicili che il JSON non
- * ha ancora.
+ * Pensata per essere consumata da un modello linguistico: a parità di
+ * contenuto, meno di un quarto della lunghezza del JSON impaginato, e in più
+ * le dignità, che il JSON non ha ancora.
  * Per le integrazioni programmatiche usare direttamente l'oggetto `NatalChart`.
  */
 export function formatChartCompact(
@@ -80,7 +88,7 @@ export function formatChartCompact(
   if (occidentali) {
     lines.push('', 'ASPETTI', ...aspectLines(chart));
     lines.push('', 'DISTRIBUZIONE', ...distributionLines(chart.distribution));
-    lines.push('', 'DOMICILI', ...domicileLines(chart));
+    lines.push('', 'DIGNITÀ', ...dignityLines(chart));
   }
   lines.push(...warningLines(chart.warnings));
 
@@ -485,7 +493,8 @@ function distributionLines(distribution: Distribution): string[] {
 }
 
 /**
- * I signori dei segni, nelle due convenzioni affiancate e mai fuse.
+ * I signori dei segni, nelle due convenzioni affiancate e mai fuse, e in coda
+ * le dignità dei corpi del tema.
  *
  * Una riga per segno e non per corpo: è il segno ad avere un signore, e la
  * domanda che la tabella deve reggere è «chi governa la decima», che si legge
@@ -494,17 +503,22 @@ function distributionLines(distribution: Distribution): string[] {
  * signore quello del segno in cui cade la sua cuspide. Con le case
  * diseguali un segno può non averne nessuna o averne due, e la riga lo mostra.
  *
- * Chi sta nel proprio domicilio è scritto in coda. Si ricaverebbe dalle
- * righe sopra, ma è la prima cosa che chi legge cerca, e lasciarla da
- * ricavare a un modello è la via per cui i domicili se li ricavava da sé.
+ * Le dignità dei corpi stanno in coda, una riga per convenzione. Domicilio
+ * ed esilio si ricaverebbero dalle righe sopra, ma sono la prima cosa che
+ * chi legge cerca, e lasciarli da ricavare a un modello è la via per cui se li
+ * ricavava da sé, con la scuola che preferiva. Esaltazione e caduta stanno
+ * solo nella riga tradizionale, perché solo lì hanno una tavola con un autore:
+ * la riga moderna lo dice invece di tacerlo.
  */
-function domicileLines(chart: NatalChart): string[] {
+function dignityLines(chart: NatalChart): string[] {
   const schemi: readonly DomicileScheme[] = ['tradizionale', 'moderno'];
   const conCase = chart.houses.length > 0;
 
   const lines = [
-    `Tradizionale: ${DOMICILE_SOURCES.tradizionale}`,
-    `Moderno: ${DOMICILE_SOURCES.moderno}`,
+    `Domicili tradizionali: ${DOMICILE_SOURCES.tradizionale}`,
+    `Domicili moderni: ${DOMICILE_SOURCES.moderno}`,
+    `Esilio: ${DETRIMENT_SOURCE}`,
+    `Esaltazione e caduta, solo tradizionali: ${EXALTATION_SOURCE}`,
   ];
   if (conCase) lines.push('Case: ciascuna al signore del segno della sua cuspide.');
   lines.push(`Segno ${'tradiz.'.padEnd(10)} ${'moderno'.padEnd(10)}${conCase ? ' case' : ''}`.trimEnd());
@@ -519,11 +533,19 @@ function domicileLines(chart: NatalChart): string[] {
     lines.push(riga.trimEnd());
   }
 
-  const inDomicilio = schemi.map((schema) => {
-    const corpi = chart.bodies.filter((body) => domicileLord(body.sign, schema) === body.id);
-    return `${schema}: ${corpi.map((body) => body.name).join(', ') || 'nessuno'}`;
-  });
-  lines.push(`In domicilio — ${inDomicilio.join(' | ')}`);
+  const voci: Record<DomicileScheme, readonly Dignity[]> = {
+    tradizionale: ['domicilio', 'esaltazione', 'esilio', 'caduta'],
+    moderno: ['domicilio', 'esilio'],
+  };
+  for (const schema of schemi) {
+    const parti = voci[schema].map((voce) => {
+      const corpi = chart.bodies.filter((body) =>
+        dignitiesOf(body.id, body.sign, schema).includes(voce),
+      );
+      return `${voce} ${corpi.map((body) => body.name).join(', ') || '—'}`;
+    });
+    lines.push(`${schema === 'tradizionale' ? 'Tradiz.' : 'Moderno'} — ${parti.join('; ')}`);
+  }
 
   return lines;
 }

@@ -1,6 +1,15 @@
 import { describe, expect, it } from 'vitest';
 import { computeNatalChart } from '../src/chart.js';
-import { DOMICILES, DOMICILE_SOURCES, domicileLord } from '../src/dignita.js';
+import { ZODIAC_SIGNS } from '../src/constants.js';
+import {
+  detrimentsOf,
+  dignitiesOf,
+  DOMICILES,
+  DOMICILE_SOURCES,
+  domicileLord,
+  exaltationOf,
+  fallOf,
+} from '../src/dignita.js';
 import { formatChartCompact } from '../src/format.js';
 import type { BirthData, BodyId, ZodiacSign } from '../src/types.js';
 
@@ -67,17 +76,95 @@ describe('i domicili moderni', () => {
   });
 
   it('dicono che per Plutone allo Scorpione non c\'è un autore', () => {
-    expect(DOMICILE_SOURCES.moderno).toContain('Plutone allo Scorpione senza un autore');
+    expect(DOMICILE_SOURCES.moderno).toContain('Plutone senza un autore');
   });
 });
 
-describe('la tabella DOMICILI', () => {
+/**
+ * Esaltazioni e cadute da Tolomeo, I.19 (Loeb pp. 89-91), per segno: la
+ * caduta («depression») la scrive lui, pianeta per pianeta.
+ */
+const TOLOMEO_ESALTAZIONI: readonly [BodyId, ZodiacSign, ZodiacSign][] = [
+  ['sole', 'ariete', 'bilancia'],
+  ['luna', 'toro', 'scorpione'],
+  ['saturno', 'bilancia', 'ariete'],
+  ['giove', 'cancro', 'capricorno'],
+  ['marte', 'capricorno', 'cancro'],
+  ['venere', 'pesci', 'vergine'],
+  ['mercurio', 'vergine', 'pesci'],
+];
+
+/** La colonna Detriment di Lilly, p. 104, segno per segno, dall'Ariete. */
+const LILLY_DETRIMENT: readonly BodyId[] = [
+  'venere',
+  'marte',
+  'giove',
+  'saturno',
+  'saturno',
+  'giove',
+  'marte',
+  'venere',
+  'mercurio',
+  'luna',
+  'sole',
+  'mercurio',
+];
+
+describe('le esaltazioni e le cadute', () => {
+  it('coincidono con Tolomeo, pianeta per pianeta', () => {
+    for (const [corpo, esaltazione, caduta] of TOLOMEO_ESALTAZIONI) {
+      expect(exaltationOf(corpo)).toBe(esaltazione);
+      expect(fallOf(corpo)).toBe(caduta);
+    }
+  });
+
+  it('non ne danno ai pianeti moderni né ai Nodi, che non hanno una tavola con un autore', () => {
+    for (const corpo of ['urano', 'nettuno', 'plutone', 'nodo-nord', 'nodo-sud'] as const) {
+      expect(exaltationOf(corpo)).toBeUndefined();
+      expect(fallOf(corpo)).toBeUndefined();
+    }
+  });
+
+  it('stanno solo nella convenzione tradizionale', () => {
+    expect(dignitiesOf('sole', 'ariete', 'tradizionale')).toEqual(['esaltazione']);
+    expect(dignitiesOf('sole', 'ariete', 'moderno')).toEqual([]);
+  });
+});
+
+describe("l'esilio", () => {
+  it('coincide con la colonna Detriment di Lilly, segno per segno', () => {
+    for (const [i, corpo] of LILLY_DETRIMENT.entries()) {
+      expect(detrimentsOf(corpo, 'tradizionale')).toContain(ZODIAC_SIGNS[i]);
+    }
+  });
+
+  it('cambia con la convenzione: Saturno in Leone è in esilio solo per la tradizionale', () => {
+    expect(dignitiesOf('saturno', 'leone', 'tradizionale')).toEqual(['esilio']);
+    expect(dignitiesOf('saturno', 'leone', 'moderno')).toEqual([]);
+    expect(detrimentsOf('plutone', 'moderno')).toEqual(['toro']);
+    expect(detrimentsOf('plutone', 'tradizionale')).toEqual([]);
+  });
+
+  it('si somma alla caduta, come il domicilio all\'esaltazione', () => {
+    expect(dignitiesOf('mercurio', 'pesci', 'tradizionale')).toEqual(['esilio', 'caduta']);
+    expect(dignitiesOf('mercurio', 'vergine', 'tradizionale')).toEqual(['domicilio', 'esaltazione']);
+  });
+});
+
+describe('la tabella DIGNITÀ', () => {
   const testo = formatChartCompact(computeNatalChart(NAPOLI));
-  const sezione = testo.slice(testo.indexOf('DOMICILI'));
+  const sezione = testo.slice(testo.indexOf('DIGNITÀ'));
 
   it('porta le due convenzioni, ciascuna con la sua fonte', () => {
-    expect(sezione).toContain(`Tradizionale: ${DOMICILE_SOURCES.tradizionale}`);
-    expect(sezione).toContain(`Moderno: ${DOMICILE_SOURCES.moderno}`);
+    expect(sezione).toContain(`Domicili tradizionali: ${DOMICILE_SOURCES.tradizionale}`);
+    expect(sezione).toContain(`Domicili moderni: ${DOMICILE_SOURCES.moderno}`);
+    expect(sezione).toContain('Tolomeo, Tetrabiblos I.19');
+  });
+
+  it('dice le dignità dei corpi, una riga per convenzione', () => {
+    // A Napoli, il 12 marzo 1968: Marte e Saturno in Ariete.
+    expect(sezione).toContain('Tradiz. — domicilio Marte; esaltazione —; esilio —; caduta Saturno');
+    expect(sezione).toContain('Moderno — domicilio Marte; esilio —');
   });
 
   it('dà allo Scorpione due signori, uno per colonna', () => {
@@ -100,13 +187,13 @@ describe('la tabella DOMICILI', () => {
 
   it('senza ora non ha la colonna delle case', () => {
     const senzaOra = formatChartCompact(computeNatalChart({ ...NAPOLI, time: undefined }));
-    const parte = senzaOra.slice(senzaOra.indexOf('DOMICILI'));
+    const parte = senzaOra.slice(senzaOra.indexOf('DIGNITÀ'));
     expect(parte).not.toContain('case');
     expect(parte).toMatch(/^Sco\s+Marte\s+Plutone$/m);
   });
 
   it('non compare nel tema vedico, che ha altri domicili', () => {
     const vedico = formatChartCompact(computeNatalChart(NAPOLI), { westernSections: false });
-    expect(vedico).not.toContain('DOMICILI');
+    expect(vedico).not.toContain('DIGNITÀ');
   });
 });
