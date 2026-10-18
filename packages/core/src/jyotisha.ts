@@ -18,8 +18,14 @@
  *   il nakshatra della Luna — è già qui.
  * - Le case dei varga. In un varga si contano dal lagna a segni interi, quindi
  *   si ricavano dai due segni senza altro calcolo.
- * - Yoga, dignità, forze. Sono la riga oltre cui il motore non va: vedi il
- *   vincolo in `CLAUDE.md`.
+ * - Yoga (le configurazioni con un nome), dignità, forze. Non per principio:
+ *   il vincolo in `CLAUDE.md` le ammette, se portano scuola e fonte. Mancano
+ *   perché non sono ancora state scritte, e ciascuna ha la sua difficoltà. Gli
+ *   yoga vanno con le loro cancellazioni (bhanga, le condizioni che li
+ *   annullano), senza le quali un Kemadruma «presente» è un dato monco. Le
+ *   dignità vanno con la scuola di ogni tavola, che qui diverge anche
+ *   sull'esaltazione dei nodi. Le forze, lo shadbala (le sei forze di
+ *   Parashara), con tutte le componenti e non il solo totale.
  */
 
 import { computeVimshottari } from './dasha.js';

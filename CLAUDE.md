@@ -42,15 +42,27 @@ il motore usa Moshier invece delle effemeridi Swiss.
 
 - **Licenza AGPL-3.0-or-later**, imposta da Swiss Ephemeris. Ogni nuova
   dipendenza deve esserle compatibile.
-- **Il motore non interpreta: emette predicati verificabili.** Un dato è
+- **Il motore non interpreta: calcola dottrine nominate.** Un dato è
   un'affermazione che chiunque può ricalcolare dagli stessi input seguendo la
-  convenzione che il motore dichiara: `Distribution` porta `counted` perché chi
-  conta diversamente rifaccia la somma, la Parte di Fortuna nomina la formula, il
-  tema porta il sistema di case. Che cosa significhi non lo dice mai: la riga sta
-  per esteso nel commento a `VoidOfCourse` in `types.ts`. Il confine è il
-  significato, non l'ampiezza: un conteggio su tutto il tema si può fare,
-  «Saturno in settima ritarda il matrimonio» no. Dove le scuole divergono si
-  espongono i componenti e si nomina la scuola, mai un totale solo.
+  convenzione che il motore dichiara, con il suo nome e, dove viene da un testo,
+  la sua fonte: `Distribution` porta `counted` perché chi conta diversamente
+  rifaccia la somma, la Parte di Fortuna nomina la formula, il tema porta il
+  sistema di case. Che cosa significhi non lo dice mai: la riga sta per esteso
+  nel commento a `VoidOfCourse` in `types.ts`. Il confine è il significato, non
+  l'ampiezza e non la dottrina: un conteggio su tutto il tema si può fare, e
+  così il punteggio delle dignità di Lilly o uno yoga del Parashara, che sono
+  regole di una tradizione e si ricalcolano; «Saturno in settima ritarda il
+  matrimonio» no.
+
+  L'astrologia non ha un'ortodossia, e il motore non ne sceglie una. Le scuole
+  convivono e nessuna è un default taciuto: dove divergono, il risultato dice
+  quale ha seguito e ne espone i componenti, mai un totale solo. Una scuola
+  entra intera (tavole, regole e pesi insieme) e non a pezzi mescolati con
+  un'altra: le triplicità di Doroteo con i punti di Lilly sono un ibrido che
+  nessuno ha praticato, cioè una dottrina nostra. Per la stessa ragione non
+  entra un peso che non abbia un autore fuori da questo repo, e le costanti si
+  prendono dalla fonte primaria, con la pagina accanto, non dai riassunti che
+  ne circolano.
 - **Il client non importa valori da `@dodicisegni/core`, solo tipi.** Un
   import di valore trascina effemeridi e modulo nativo nel bundle del browser.
 - **Niente `async`/`await` nella catena di calcolo**: `chart`, `sky`,
