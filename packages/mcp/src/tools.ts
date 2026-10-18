@@ -281,7 +281,7 @@ export function registerComputeNatalChart(server: McpServer, context: ToolContex
           .enum(['compact', 'json'])
           .optional()
           .describe(
-            'compact (default): tabella densa, circa un ottavo dei token. ' +
+            'compact (default): tabella densa, meno di un terzo del JSON, con i domicili. ' +
               'json: oggetto completo, da usare solo se devi elaborare i valori numerici.',
           ),
       },

@@ -1,4 +1,5 @@
-import { BODIES, NATAL_POINT_NAMES } from './constants.js';
+import { BODIES, NATAL_POINT_NAMES, SIGN_ABBR, ZODIAC_SIGNS } from './constants.js';
+import { DOMICILE_SOURCES, domicileLord, type DomicileScheme } from './dignita.js';
 import { formatDegrees, formatZodiacal } from './math.js';
 import { grahaName, nakshatraOf, requireSidereal } from './nakshatra.js';
 import type {
@@ -36,8 +37,9 @@ import type {
 /**
  * Rende il tema in forma tabellare compatta.
  *
- * Pensata per essere consumata da un modello linguistico: circa un ottavo
- * dei token del JSON completo, a parità di informazione astrologica.
+ * Pensata per essere consumata da un modello linguistico: meno di un terzo
+ * della lunghezza del JSON completo, pur portando i domicili che il JSON non
+ * ha ancora.
  * Per le integrazioni programmatiche usare direttamente l'oggetto `NatalChart`.
  */
 export function formatChartCompact(
@@ -78,6 +80,7 @@ export function formatChartCompact(
   if (occidentali) {
     lines.push('', 'ASPETTI', ...aspectLines(chart));
     lines.push('', 'DISTRIBUZIONE', ...distributionLines(chart.distribution));
+    lines.push('', 'DOMICILI', ...domicileLines(chart));
   }
   lines.push(...warningLines(chart.warnings));
 
@@ -479,6 +482,50 @@ function distributionLines(distribution: Distribution): string[] {
         .join('  ');
       return `${nome.padEnd(8)} ${elementi.padEnd(38)} | ${modalita}`;
     });
+}
+
+/**
+ * I signori dei segni, nelle due convenzioni affiancate e mai fuse.
+ *
+ * Una riga per segno e non per corpo: è il segno ad avere un signore, e la
+ * domanda che la tabella deve reggere è «chi governa la decima», che si legge
+ * dalla cuspide anche quando lì non c'è nessuno. La colonna delle case segue
+ * la regola più comune, che va detta perché non è l'unica: una casa ha per
+ * signore quello del segno in cui cade la sua cuspide. Con le case
+ * diseguali un segno può non averne nessuna o averne due, e la riga lo mostra.
+ *
+ * Chi sta nel proprio domicilio è scritto in coda. Si ricaverebbe dalle
+ * righe sopra, ma è la prima cosa che chi legge cerca, e lasciarla da
+ * ricavare a un modello è la via per cui i domicili se li ricavava da sé.
+ */
+function domicileLines(chart: NatalChart): string[] {
+  const schemi: readonly DomicileScheme[] = ['tradizionale', 'moderno'];
+  const conCase = chart.houses.length > 0;
+
+  const lines = [
+    `Tradizionale: ${DOMICILE_SOURCES.tradizionale}`,
+    `Moderno: ${DOMICILE_SOURCES.moderno}`,
+  ];
+  if (conCase) lines.push('Case: ciascuna al signore del segno della sua cuspide.');
+  lines.push(`Segno ${'tradiz.'.padEnd(10)} ${'moderno'.padEnd(10)}${conCase ? ' case' : ''}`.trimEnd());
+
+  for (const sign of ZODIAC_SIGNS) {
+    const case_ = chart.houses.filter((house) => house.sign === sign).map((house) => house.number);
+    const riga =
+      `${SIGN_ABBR[sign].padEnd(5)} ` +
+      `${bodyName(domicileLord(sign, 'tradizionale')).padEnd(10)} ` +
+      `${bodyName(domicileLord(sign, 'moderno')).padEnd(10)}` +
+      `${conCase ? ` ${case_.join(' ') || '—'}` : ''}`;
+    lines.push(riga.trimEnd());
+  }
+
+  const inDomicilio = schemi.map((schema) => {
+    const corpi = chart.bodies.filter((body) => domicileLord(body.sign, schema) === body.id);
+    return `${schema}: ${corpi.map((body) => body.name).join(', ') || 'nessuno'}`;
+  });
+  lines.push(`In domicilio — ${inDomicilio.join(' | ')}`);
+
+  return lines;
 }
 
 /**

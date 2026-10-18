@@ -61,6 +61,16 @@ describe('letturaDaIncollare', () => {
     }
   });
 
+  it('manda i domicili alla tabella invece di farli ricavare', () => {
+    // Ricavati dal segno, li sceglieva il modello, e senza dire se con Urano,
+    // Nettuno e Plutone o senza: la scuola la decideva lui in silenzio.
+    const testo = istruzioniDi('tropicale');
+    expect(testo).not.toContain('li ricavi dal segno');
+    expect(testo).toContain('sotto DOMICILI');
+    expect(testo).toContain('due colonne da non fondere');
+    expect(testo).toContain('la tabella non li porta ancora');
+  });
+
   it("dichiara la provenienza solo quando c'è un indirizzo", () => {
     expect(letturaDaIncollare(TEMA)).not.toContain('Tema calcolato da');
     expect(letturaDaIncollare(TEMA, { repository: '' })).not.toContain('Tema calcolato da');

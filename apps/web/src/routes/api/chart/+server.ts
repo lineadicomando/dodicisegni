@@ -22,8 +22,8 @@ import type { RequestHandler } from './$types';
  * senza `zodiac=siderale` viene rifiutato invece che ignorato.
  *
  * Con `format=compact` il tema torna come tabella di testo invece che come
- * JSON. È la stessa resa che il server MCP dà ai suoi agenti — un ottavo dei
- * token, e leggibile anche da chi la incolla altrove — e per la stessa ragione
+ * JSON. È la stessa resa che il server MCP dà ai suoi agenti — meno di un
+ * terzo della lunghezza, e leggibile anche da chi la incolla altrove — e per la stessa ragione
  * porta in testa il nome del luogo, che nel JSON sta in un campo a parte.
  */
 export const GET: RequestHandler = ({ url, setHeaders }) => {

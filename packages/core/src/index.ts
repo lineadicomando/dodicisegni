@@ -23,6 +23,7 @@ export {
 } from './dasha.js';
 export { computeVarga, findVarga, VARGAS, vargaSignOf } from './varga.js';
 export { computeDrishti, housesSeenBy } from './drishti.js';
+export { DOMICILE_SOURCES, DOMICILES, domicileLord, type DomicileScheme } from './dignita.js';
 export { computeJyotisha } from './jyotisha.js';
 export { computeAspects, computeCrossAspects, type AspectOptions } from './aspects.js';
 export { computeDistribution, type DistributionInput } from './distribution.js';

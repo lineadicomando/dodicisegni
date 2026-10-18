@@ -523,7 +523,12 @@ describe('compute_natal_chart', () => {
     // dipende dalla macchina — su un clone senza effemeridi ce n'è una in più
     // per il ripiego su Moshier — e la proprietà da dimostrare qui è come il
     // motore impagina un tema, non quale effemeride abbia sottomano.
-    expect(senzaAvvertenze(compact).length).toBeLessThan(senzaJsonWarnings(json).length / 4);
+    //
+    // Un terzo e non più un quarto da quando il compatto porta i domicili,
+    // che nel JSON non ci sono ancora: il confronto non è più a parità di
+    // contenuto, e la soglia lo tiene in conto invece di far stringere la
+    // tabella fino a renderla illeggibile.
+    expect(senzaAvvertenze(compact).length).toBeLessThan(senzaJsonWarnings(json).length / 3);
   });
 
   it('calcola nello zodiaco siderale, e lo dichiara nella tabella', async () => {

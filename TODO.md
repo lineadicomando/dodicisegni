@@ -20,7 +20,7 @@ volta e ricominciare da capo.
 
 | Voce | Priorità | Taglia | Prima di cominciare |
 |---|---|---|---|
-| 19. Le dignità, per scuola | media | grande, a commit piccoli | il primo commit, i domicili, si fa subito |
+| 19. Le dignità, per scuola | media | grande, a commit piccoli | il commit 2, le esaltazioni: i gradi di Tolomeo |
 | 11. Gli elenchi in più posti | media | piccola | prima del punto 5 |
 | 13. Due semplificazioni | bassa | piccola | niente |
 | 9. Il linter | media | piccola | decidere lo strumento |
@@ -31,8 +31,8 @@ volta e ricominciare da capo.
 | 5. I varga che mancano | non dichiarata | tre lotti | il punto 11; per il D-2, la convenzione |
 | 17. L'astrologia oraria | bassa | la più grande | il punto 19 |
 
-L'ordine consigliato è quello della tabella: il primo commit delle dignità,
-che chiude un difetto già presente, poi le voci piccole che tolgono copie
+L'ordine consigliato è quello della tabella: il secondo commit delle dignità,
+che rende alla lettura le esaltazioni tolte dal primo, poi le voci piccole che tolgono copie
 e righe morte prima che il lavoro grande ci passi sopra.
 
 ## 5. I dieci varga che mancano
@@ -695,15 +695,20 @@ chiudono un difetto che c'è già.
 
 ### Il difetto di oggi
 
-Le dignità nel repo ci sono già, nello strato che non può verificarle.
-`packages/lettura/src/tropicale.ts:87` dice al modello che domicilio,
-esaltazione, esilio e caduta «li ricavi dal segno», contro la regola con cui
-lo stesso documento si apre («se una tecnica ti servirebbe e il dato manca,
-dillo e fermati lì»); e non dice se i domicili siano quelli tradizionali o
-quelli con Urano, Nettuno e Plutone, quindi la scuola la sceglie il modello
-senza dirlo. `packages/lettura/src/jyotisha.ts:45` ricopia in prosa la tavola
-dei domicili antichi, e `lettura.test.ts:153` la chiama «la trappola più
-insidiosa». Il vincolo riscritto in `CLAUDE.md` le ammette nel motore.
+Per metà chiuso. I domicili stanno in `packages/core/src/dignita.ts`, con le
+fonti nei commenti, e nella sezione DOMICILI di `format.ts`, in due colonne
+con i signori delle case; `tropicale.ts` manda lì il modello invece di
+farglieli ricavare. Resta l'altra metà: esaltazione, esilio e caduta la
+tabella non li porta, e `tropicale.ts` per ora dice di non ricavarli, che
+toglie alla lettura qualcosa che prima aveva. È la ragione per cui il commit 2
+viene subito dopo. `packages/lettura/src/jyotisha.ts:45` ricopia ancora in
+prosa la tavola dei domicili antichi (commit 4).
+
+I domicili non sono ancora nel JSON di `NatalChart`, solo nella tabella:
+entrano col passo delle superfici. Fino ad allora il compatto porta un dato
+che il JSON non ha, ed è per questo che il test MCP sul rapporto fra le due
+rese (`packages/mcp/test/server.test.ts`, «costa molti meno token») chiede un
+terzo e non più un quarto.
 
 ### Che cosa
 
@@ -750,11 +755,11 @@ Il default nel tema tropicale sono **due colonne affiancate, mai mescolate**:
   maggiori le prime quattro righe concordano, ed è per questo che mostrarle
   non sceglie fra loro in silenzio. Sono anche le quattro che `tropicale.ts`
   usa oggi;
-- **i domicili moderni**, attribuiti alla convenzione del Novecento con le sue
-  fonti parziali: Alan Leo per Urano all'Acquario e Nettuno ai Pesci. Per
-  Plutone allo Scorpione il risultato dice che non c'è un autore. Il progetto
-  ha già scelto quella convenzione mettendo Plutone nel tema: qui la si
-  dichiara.
+- **i domicili moderni**, attribuiti alla convenzione del Novecento, che un
+  autore unico non ce l'ha: Alan Leo riferisce Urano all'Acquario e Nettuno
+  ai Pesci ma non li fonda, e per Plutone allo Scorpione il risultato dice che
+  non c'è un autore. Il progetto ha già scelto quella convenzione mettendo
+  Plutone nel tema: qui la si dichiara.
 
 Con due schemi i segni dello Scorpione, dell'Acquario e dei Pesci hanno due
 signori, e così le case che vi cadono: il risultato li porta tutti e due, col
@@ -769,10 +774,16 @@ documenti di lettura già presuppongono.
 
 ### Da verificare prima di scrivere le tavole
 
-- **Che la parte comune sia davvero comune.** Domicili ed esaltazioni per segno
-  in ciascuna delle quattro scuole antiche, sulla fonte. È un test a tabella, e
-  se una scuola diverge la colonna di default si restringe invece di
-  sceglierne una.
+Già verificato, per i domicili, e scritto in `dignita.ts`: Tolomeo I.17 (Loeb
+pp. 79-83) e Lilly (p. 104) coincidono; Valente I.2 (Kroll pp. 5-13) scrive
+«οἶκος» solo per nove segni, tutti concordi; Bonatti non è stato letto.
+Leo, *The Art of Synthesis* p. 117, riferisce Urano e Nettuno senza essere il
+primo; per Plutone allo Scorpione nessun autore, e Zain nel 1942 lo usa come
+il più diffuso. Resta:
+
+- **Che la parte comune sia davvero comune** anche per le esaltazioni, e i
+  domicili in Bonatti. È un test a tabella, e se una scuola diverge la
+  colonna di default si restringe invece di sceglierne una.
 - **I gradi di esaltazione in Tolomeo**: le fonti secondarie non dicono se ci
   siano. Se mancano, il default porta i segni e il grado resta della scuola che
   lo dà.
@@ -780,15 +791,10 @@ documenti di lettura già presuppongono.
   giorno e di notte come Lilly, un'altra un reggente diverso per setta.
 - **I punti 5-4-3-2-1 medievali**: a chi vanno attribuiti. I siti li danno
   come «medievali» senza un testo.
-- **Una fonte per Plutone allo Scorpione**, o la dichiarazione che non c'è.
 
 ### Superfici, in commit
 
-1. **I domicili nelle due colonne**, con i signori delle case, nella tabella di
-   `packages/core/src/format.ts`; `tropicale.ts` passa da «li ricavi dal
-   segno» a «li trovi nella tabella», e dice che le colonne sono due e
-   perché. È il commit che chiude il difetto, e va fatto per primo anche se
-   il resto aspetta.
+1. Fatto: i domicili nelle due colonne, con i signori delle case.
 2. Esaltazione, caduta, esilio nella colonna tradizionale, e le ricezioni.
 3. Il pacchetto di Lilly a richiesta: triplicità, termini, facce. È il pezzo
    che il punto 17 aspetta, e il suo punteggio sta là, perché chiede anche le
