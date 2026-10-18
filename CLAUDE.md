@@ -5,7 +5,9 @@ lo espongono su superfici diverse. Il `README.md` tiene la descrizione, la
 licenza e i comandi; qui c'è ciò che serve sapere prima di toccare qualsiasi
 cosa. Il progetto è agli inizi e **non ha una documentazione estesa**: i
 parametri si leggono nei commenti delle rotte e nelle descrizioni dei tool MCP,
-che sono la fonte.
+che sono la fonte. Il lavoro aperto sta in `TODO.md`: una voce per cosa, con il
+file, la riga e il modo di verificarla, e le decisioni già prese da non
+ridiscutere.
 
 ## Mappa
 
@@ -15,7 +17,7 @@ che sono la fonte.
 | `packages/geo` | ricerca località su dataset GeoNames locale (SQLite) |
 | `packages/ruota` | il disegno: la ruota e il quadro vedico nei due stili. Geometria, glifi, colori, SVG e PNG. Non dipende da `core` |
 | `packages/lettura` | il tema più le istruzioni per leggerlo, in un testo solo. Un documento per sistema astrologico. Riceve una tabella già impaginata: non dipende da `core`, nemmeno dai tipi |
-| `packages/mcp` | server MCP: dieci tool e un prompt di lettura, trasporto stdio |
+| `packages/mcp` | server MCP: dieci tool, un prompt di lettura e due risorse di riferimento, trasporto stdio |
 | `apps/web` | SvelteKit: interfaccia + API REST, tutti gli endpoint in GET |
 | `apps/desktop` | Electron: la web app in una finestra. Avvia il server di `web` compilato, non duplica superfici |
 
@@ -26,7 +28,7 @@ Monorepo npm workspaces, Node ≥ 22, ESM, TypeScript.
 ```sh
 npm test                                   # tutti i workspace (vitest)
 npm run test:watch -w @dodicisegni/core
-npm run typecheck                          # ricompila core e geo, poi controlla il resto
+npm run typecheck                          # ricompila ruota, lettura, core e geo, poi controlla il resto
 npm run build
 npm run dev -w @dodicisegni/web         # http://localhost:5173 (Vite)
 npm start -w @dodicisegni/web           # http://localhost:3000, dopo build
@@ -66,7 +68,8 @@ il motore usa Moshier invece delle effemeridi Swiss.
 - **Il client non importa valori da `@dodicisegni/core`, solo tipi.** Un
   import di valore trascina effemeridi e modulo nativo nel bundle del browser.
 - **Niente `async`/`await` nella catena di calcolo**: `chart`, `sky`,
-  `transits`, `passages`, `election`, `sky-events`. Swiss Ephemeris tiene lo
+  `transits`, `passages`, `election`, `sky-events`, `panchanga`, e ogni modulo
+  nuovo che passi da `zodiacContext`. Swiss Ephemeris tiene lo
   zodiaco siderale in **stato globale del modulo nativo**: `set_sid_mode` vale
   per il processo, non per la chiamata. Oggi è sicuro perché fra l'impostazione
   e l'ultima `calc_ut` l'event loop non gira; il primo `await` lì dentro apre
@@ -88,7 +91,9 @@ il motore usa Moshier invece delle effemeridi Swiss.
 - Le tabelle Svelte prendono **i dati, non il tema**: legarle a `NatalChart`
   le rende inutilizzabili per i transiti.
 - **`packages/ruota` non importa da `core`, nemmeno i tipi**: li ridichiara in
-  `types.ts`, e `test/tipi.test.ts` verifica che combacino. Serve a rompere il
+  `types.ts`, e `test/tipi.test.ts` verifica che combacino. Quel test è l'unico
+  punto che vede `core`, ed è la ragione per cui `core` sta fra le sue
+  dipendenze di sviluppo. Serve a rompere il
   ciclo con la CLI, che vive in `core` e disegna. Il disegno riceve una carta
   già calcolata e non deve poterne calcolare una.
 - **Il PNG sta in `@dodicisegni/ruota/png`**, punto d'ingresso separato:

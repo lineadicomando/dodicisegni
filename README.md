@@ -57,7 +57,8 @@ npx dodicisegni --help        # tutte le opzioni
 ```
 
 **Applicazione web.** Cinque sezioni e undici endpoint, tutti in GET perché un
-tema è una funzione pura dei suoi parametri:
+tema è una funzione pura dei suoi parametri, più due pagine di testo: `/metodo`
+dice come si calcola, `/privacy` che cosa resta sul dispositivo.
 
 ```sh
 npm run dev -w @dodicisegni/web      # http://localhost:5173
@@ -74,7 +75,9 @@ in `apps/web/src/routes/+layout.svelte`.
 **Server MCP.** Dieci tool su stdio: non è un servizio da avviare, è un processo
 che il client lancia. Accanto ai tool c'è il prompt `lettura_del_tema`, che
 consegna il tema insieme alle istruzioni per interpretarlo: un prompt e non un
-tool perché lo sceglie chi usa il client, non il modello.
+tool perché lo sceglie chi usa il client, non il modello. Due risorse,
+`riferimento/aspetti` e `riferimento/sistemi-case`, danno gli angoli, le orbite
+e i sistemi di case che il motore usa.
 
 ```json
 {
@@ -158,10 +161,13 @@ npm run build
 Il motore non interpreta, ed è un vincolo, non una funzione mancante. Quello che
 produce sono **predicati verificabili**: affermazioni che chiunque può
 ricalcolare dagli stessi dati di partenza, seguendo la convenzione che il motore
-dichiara accanto al risultato. Dove le scuole divergono (la formula della Parte
-di Fortuna, che cosa entri in un conteggio) espone i componenti e nomina la
-convenzione, invece di sceglierne una in silenzio e presentarne l'esito come un
-fatto. Che cosa significhino, quei dati, non lo dice mai.
+dichiara accanto al risultato. L'astrologia non è una disciplina sola ma molte
+tradizioni, e il motore non ne sceglie una: dove le scuole divergono (la
+formula della Parte di Fortuna, che cosa entri in un conteggio, l'ayanamsa)
+espone i componenti e nomina la convenzione, invece di sceglierne una in
+silenzio e presentarne l'esito come un fatto. Una regola di una tradizione può
+entrare anche quando pesa o assegna, purché porti il nome della scuola e la sua
+fonte. Che cosa significhino, quei dati, non lo dice mai.
 
 Sotto il tema calcolato, l'interfaccia offre un pulsante che copia negli appunti
 un **prompt già pronto** (il tema in forma di tabella più le istruzioni per
