@@ -12,6 +12,12 @@ chiuse comprese, è `cf5219a`, quando il file si chiamava ancora `ROADMAP.md`.
 Le voci dalla 20 alla 23 sono nate e si sono chiuse dopo: la 20 per intero sta
 in `3314553`, la 21 e la 22 in `819ce59`, la 23 in `db332a6`.
 
+Le fonti citate qui stanno in copia locale in `texts/`, fuori dal repo: la
+cartella, le schede `FONTE.md` e l'elenco `texts/INDICE.md` si mantengono come
+dice `CLAUDE.md` (*Le fonti testuali*). In una sessione nuova `texts/` può non
+esserci, se il clone è un altro: le schede dicono da dove riscaricare ogni
+fonte, e la voce 24 quelle che mancano ancora.
+
 In fondo ci sono due elenchi che non sono lavoro: le decisioni prese, da non
 riaprire, e le cose esaminate e lasciate stare, per non ritrovarle una seconda
 volta e ricominciare da capo.
@@ -56,7 +62,7 @@ ricontrollabile; le prove ai confini dei segni pari e dispari; l'aggiunta a
 L'elenco dei varga però non vive solo lì: è ricopiato in
 `packages/mcp/src/tools.ts:123` (`VARGA_IDS`, una tupla che diventa `z.enum`),
 nelle due rotte `apps/web/src/routes/api/jyotish/+server.ts:17` e
-`api/jyotish/quadro/+server.ts:12` (un `Set<string>`), in `apps/web/src/lib/components/JyotishaSettings.svelte:56`
+`api/jyotish/quadro/+server.ts:12` (un `Set<string>`), in `apps/web/src/lib/components/JyotishaSettings.svelte:57`
 (`VARGHE`) e nella pagina del metodo, righe 346-347. Un varga nuovo
 dimenticato in una delle copie viene rifiutato da quella superficie senza
 nessun errore: è lo stesso difetto del punto 11, che conviene chiudere prima.
@@ -102,6 +108,12 @@ propria**, sul modello di quella delle dasha in `dasha.ts`, che dica quanti
 minuti di scarto valgano una divisione. Senza, sarebbe il caso peggiore di
 tutti: un dato che sembra preciso perché ha molte cifre.
 
+Fonte: BPHS cap. 6-7, nella traduzione di Santhanam, vol. I, che sta in
+`texts/jyotisha/bphs-santhanam-1992-vol1` (OCR, righe ~5840-6000 di
+`ocr.txt`; le pagine si leggono sull'immagine, vedi la scheda). Le regole dei
+varga già calcolati vengono da una sessione precedente e non portano la
+pagina: conviene ricontrollarle lì quando si apre il primo lotto.
+
 Verifica per tutti i lotti: `packages/core/test/varga.test.ts` ha già la forma:
 confini noti calcolati a mano per un segno pari e uno dispari, più la prova
 che la regola viaggi col risultato.
@@ -124,6 +136,10 @@ Una delle due è sbagliata e non si sa quale: il numero non viene da una misura
 fatta qui, ma dalla documentazione di Swiss Ephemeris, dove la cifra dipende da
 quali corpi e da quale epoca si guardano: Moshier degrada allontanandosi dal
 presente, e i pianeti esterni non si comportano come i lunari.
+
+La documentazione di Swiss Ephemeris è in `texts/tecnica/swiss-ephemeris`
+(`swisseph.txt`, sezione «The Moshier Ephemeris»): è da lì che vengono le
+cifre, e conviene rileggerla prima di misurare.
 
 La via per chiuderla non è scegliere il numero che suona meglio: è
 **misurarlo**. Il motore sa calcolare in tutt'e due i modi, e `initEphemeris`
@@ -244,7 +260,7 @@ dell'ayanamsa: si resta dentro `zodiacContext`, come il resto del file.
   significato delle righe è la cosa più facile da sbagliare per un agente.
 - **Niente interfaccia web.** La funzione serve agli agenti e alla riga di
   comando: l'endpoint sì, la pagina e la tabella Svelte no.
-- Serve un tetto all'arco: `MAX_RANGE_DAYS` in `packages/mcp/src/tools.ts:816`
+- Serve un tetto all'arco: `MAX_RANGE_DAYS` in `packages/mcp/src/tools.ts:817`
   e in `apps/web/src/lib/server/range.ts:18` (1096 giorni, tre anni) è il
   precedente.
 
@@ -499,8 +515,10 @@ Per Lilly: *Christian Astrology*, 1647. Il libro II è il metodo orario intero,
 il libro I ha le tavole. È di pubblico dominio, e se ne trovano scansioni
 dell'originale: quella del Museo Franz Mayer (Città del Messico) sta sotto
 CC BY-SA 4.0, altre vengono da EEBO attraverso la Wellcome Collection
-(archive.org, `b30338724`, quella su cui è stata letta la p. 104 per il punto
-19).
+(archive.org, `b30338724`, quella su cui sono state lette le pp. 104, 112 e
+176 per il punto 19). È in `texts/occidentale/lilly-christian-astrology-1647`
+con le pagine lette e la trascrizione; la scheda ha la mappa fra pagine e
+immagini.
 
 **I numeri si leggono sulla scansione, non sui siti.** L'edizione trascritta che
 si trova in rete (Deborah Houlding, Skyscript) è protetta e non si ricopia, e le
@@ -527,7 +545,7 @@ nell'astrologia oraria»). Ci sono anche:
 - `applying` sugli aspetti (`isApplying`, privata, `aspects.ts:170`), gli
   istanti esatti in `findSkyPassages` (`sky-passages.ts:58`), le stazioni in
   `findStations`, gli ingressi in `findSignIngresses`;
-- `speed` e `retrograde` (`types.ts:623-624`);
+- `speed` e `retrograde` (`types.ts:655-656`);
 - la setta (`chartSect`, `points.ts:13`);
 - la Luna vuota di corso, alba, tramonto e ore planetarie in `election.ts`.
 
@@ -639,8 +657,9 @@ un pacchetto di tavole nel punto 19, ed è la prova che la struttura regge.
 
 - **La linea araba e medievale**: Māshā'allāh e Sahl ibn Bishr, poi Bonatti
   (*Decem tractatus astronomiae*, Ratdolt 1491, col trattato sulle
-  interrogazioni; la copia digitale più probabile è alla Bayerische
-  Staatsbibliothek). Termini egizi, le sei negazioni. Le traduzioni latine
+  interrogazioni; scaricato in `texts/occidentale/bonatti-decem-tractatus-1491`,
+  copia della Biblioteca Jagellonica: l'OCR dell'incunabolo è inutile e si
+  legge sulle immagini). Termini egizi, le sei negazioni. Le traduzioni latine
   medievali sono di pubblico dominio, quelle inglesi moderne (Dykes) no.
 - **Il prashna del Jyotisha.** Il *Prasna Marga* (Kerala, XVII secolo), e
   soprattutto l'oraria Krishnamurti Paddhati (KP), la più calcolabile di
@@ -727,7 +746,7 @@ Che cosa la sezione porta, e perché così:
   le esaltazioni dei Nodi vengono col pacchetto di Lilly. Per Urano, Nettuno
   e Plutone nessuna esaltazione ha un autore, e non entrano.
 
-Fatto anche per il Jyotisha. `packages/core/src/dignita-parashara.ts` tiene
+Fatto anche per il Jyotisha, in `15e79a3`. `packages/core/src/dignita-parashara.ts` tiene
 uccha col grado più profondo, neecha nel settimo segno, moolatrikona e segno
 proprio secondo il BPHS, e `computeJyotisha` le mette in `JyotishaChart.dignities`,
 quindi nel JSON del tema vedico, non in `NatalChart`. La sezione DIGNITÀ
@@ -747,7 +766,7 @@ non mostra le dignità (il JSON le porta già), e le dignità nei varga, che il
 BPHS tratta a parte (cap. 6-7, i varga di esaltazione, di moolatrikona e
 propri) e che il motore non calcola.
 
-Fatte anche le ricezioni, nella stessa sezione del tema tropicale:
+Fatte anche le ricezioni, in `3349553`, nella stessa sezione del tema tropicale:
 `receptionsOf` in `dignita.ts`, mutue e semplici fra i sette pianeti. La
 definizione è di Lilly, p. 112 («in each others dignity», per domicilio,
 triplicità, termine, faccia o «any essentiall dignity»), e a p. 176 il verbo
@@ -765,15 +784,17 @@ dedurle.
    termini vanno lette sull'immagine a 2000 pixel o più, non sull'OCR). Con
    quelle tavole `receptionsOf` prende anche le ricezioni per triplicità,
    termine e faccia, e la triplicità chiede la setta, che c'è già
-   (`chartSect`). È il pezzo che il punto 17 aspetta; il suo punteggio sta
-   là, perché chiede anche le condizioni di un istante.
+   (`chartSect`). Le tavole non vanno nel default: si chiedono nominando la
+   scuola (vedi *Le scuole* qui sotto), quindi serve anche un'opzione che
+   le accenda. È il pezzo che il punto 17 aspetta; il suo punteggio sta là,
+   perché chiede anche le condizioni di un istante.
 2. **Le superfici**: CLI, rotta, tool MCP e una tabella Svelte, nell'ordine
    della skill `nuova-funzione`. La tabella prende i dati, non il tema.
 
 ### Le dignità occidentali non sono nel JSON
 
-Quelle di Parashara ci sono, in `JyotishaChart`. Le occidentali stanno solo
-nella tabella compatta, e `NatalChart` non le ha. Vanno messe
+Quelle di Parashara ci sono, in `JyotishaChart`. Le occidentali, ricezioni
+comprese, stanno solo nella tabella compatta, e `NatalChart` non le ha. Vanno messe
 nel JSON col passo delle superfici, e lì va deciso come: `NatalChart` è anche
 la carta siderale che il Jyotisha riusa, dove le dignità occidentali sarebbero
 dottrina sbagliata.
@@ -841,6 +862,9 @@ Verificato sulle scansioni il 18 ottobre 2026, e scritto nei commenti di
   male). I gradi sono quindi della tradizione da Firmico a Lilly, non di
   Tolomeo, anche se Lilly intitola la tavola «according to Ptolomy». Valente
   I.2 una tavola delle esaltazioni non ce l'ha.
+- **Ricezioni.** Lilly p. 112 (immagine n145) la definisce mutua, «in each
+  others dignity», per qualunque dignità essenziale; p. 176 (n209) usa la
+  ricezione in un verso solo. Trascritte in `texts/`.
 - **Esilio.** La colonna Detriment di Lilly p. 104 nomina, segno per segno, il
   signore del segno opposto; la colonna Fall coincide con Tolomeo per i sette
   pianeti. Sulla scansione l'immagine è la n137 contando da zero
@@ -856,8 +880,9 @@ Verificato sulle scansioni il 18 ottobre 2026, e scritto nei commenti di
 
 Da verificare:
 
-- **Bonatti**, per domicili ed esaltazioni: non è stato letto. La scansione
-  dell'edizione Ratdolt 1491 è segnalata alla Bayerische Staatsbibliothek.
+- **Bonatti**, per domicili ed esaltazioni: non è stato letto. L'edizione
+  Ratdolt 1491 è in `texts/occidentale/bonatti-decem-tractatus-1491`; quella
+  della Bayerische Staatsbibliothek non si è trovata.
 - **Le esaltazioni nella scuola ellenistica**: altrove in Valente, o in Doroteo.
 - **La triplicità d'acqua in Tolomeo.** Una fonte gli attribuisce Marte di
   giorno e di notte come Lilly, un'altra un reggente diverso per setta.
