@@ -136,6 +136,39 @@ parole che nessun libro usa e che non si possono cercare da nessuna parte:
 commenti resta italiana, e la prima volta che un termine compare lo si spiega
 in mezza riga.
 
+## Le fonti testuali: `texts/`
+
+Le costanti che vengono da un testo (tavole, gradi, regole) si prendono dalla
+fonte primaria con la pagina accanto, e la fonte si tiene in `texts/`, una
+cartella **fuori dal repo** (è in `.gitignore`): molte non sono
+redistribuibili, e tutte pesano. Serve a rileggere un valore senza rifare la
+ricerca che l'ha trovato.
+
+- **Prima di citare, scaricare.** Una fonte che una ricerca trova e che entra
+  nel codice, in un test o nel `TODO.md` va salvata qui nella stessa sessione.
+  Quelle che non si possono scaricare (protette, solo in prestito) stanno in
+  `texts/INDICE.md` con lo stato, e in una voce del `TODO.md` se servono.
+- **Una cartella per edizione**, in
+  `texts/<ambito>/<autore>-<opera>-<curatore>-<anno>/`, con l'ambito fra
+  `jyotisha`, `occidentale` e `tecnica` (effemeridi, algoritmi, software).
+  Nomi in minuscolo, col trattino, senza accenti.
+- **Dentro, nomi fissi**: `FONTE.md` (titolo, edizione, URL e identificativo,
+  stato dei diritti, la mappa fra pagine stampate e immagini, che cosa è stato
+  letto e per quale file o voce), `scansione.pdf`, `ocr.txt`,
+  `numeri-pagina.json`, `pagine/pNNN.jpg` col numero **stampato** sulla
+  pagina, `trascrizioni.md` per i passi letti a vista, `html/` e `testo/` per
+  le pagine web.
+- **Una scansione porta sempre il suo testo**: l'OCR quando c'è, convertito
+  in `.txt` quando la fonte è HTML, perché si possa cercare con `grep`. L'OCR
+  però non è una lettura: il numero che entra nel codice si legge
+  sull'immagine, che si salva in `pagine/`, e il passo si trascrive in
+  `trascrizioni.md`.
+- **`texts/INDICE.md`** ha una riga per fonte: cartella, opera, stato
+  (scaricata, da scaricare, non libera), dove è usata. Va aggiornato con la
+  cartella, non dopo.
+- Dal repo della fonte esce solo ciò che si cita: il valore, l'opera, la
+  pagina. Il testo di una traduzione protetta non si ricopia nei commenti.
+
 ## Aggiungere una funzione
 
 Attraversa più superfici e ha una procedura sua: vedi la skill `nuova-funzione`.

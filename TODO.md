@@ -30,6 +30,7 @@ volta e ricominciare da capo.
 | 6. La prosa che invecchia | bassa | piccola | farla insieme al punto 8 |
 | 5. I varga che mancano | non dichiarata | tre lotti | il punto 11; per il D-2, la convenzione |
 | 17. L'astrologia oraria | bassa | la più grande | il punto 19 |
+| 24. Le fonti da scaricare in `texts/` | bassa | piccola | niente |
 
 L'ordine consigliato è quello della tabella: le ricezioni, che completano le
 tavole già scritte, poi le voci piccole che tolgono copie e righe morte prima
@@ -862,6 +863,35 @@ Da verificare:
 Le tavole contro la fonte, segno per segno e scuola per scuola: è una prova a
 tabella e non chiede effemeridi, come in `dignita.test.ts` e
 `dignita-parashara.test.ts`.
+
+## 24. Le fonti già usate che non stanno ancora in `texts/`
+
+**Priorità bassa.** Le regole sono in `CLAUDE.md` (*Le fonti testuali*),
+l'elenco in `texts/INDICE.md`. Le fonti citate nel codice prima che la
+cartella esistesse sono quasi tutte scaricate; restano queste, una per riga,
+ciascuna con la pagina da salvare in `pagine/` e da trascrivere:
+
+- **Firmico, *Mathesis*, ed. Kroll-Skutsch, vol. I (1897)**, p. 44, rr.
+  7-17: i gradi delle esaltazioni in `dignita.ts`. archive.org
+  `matheseoslibrivi01firmuoft`, in `occidentale/firmico-mathesis-kroll-skutsch-1897`.
+- **Alan Leo, *The Art of Synthesis*, 3ª ed. (1912)**, p. 117: Urano e
+  Nettuno in `dignita.ts`. La 1912 su archive.org non si è trovata (ci sono
+  la 1926, `artofsynthesis00leoa`, e la 1936): va cercata su HathiTrust o
+  Google Books, e se si trova solo un'altra edizione la pagina va
+  ricontrollata e il commento corretto.
+- **RadixPro, l'esempio di Jan Kampherbeek** (Enschede, 2 novembre 2016,
+  21:17:30 UT): la pagina web con le cifre intermedie su cui sta
+  `houses.test.ts`. In `tecnica/radixpro-esempio-case`, `html/` e `testo/`.
+- **Astrolog 8.00, i sorgenti**, almeno `matrix.cpp` e `calc.cpp`: l'altra
+  metà dell'ancoraggio di `houses.test.ts`. In `tecnica/astrolog-8.00`.
+- **Valente, I.2, pp. 5-13**: lo scan c'è, mancano le immagini delle pagine
+  e la conferma che sia la stessa copia letta per `dignita.ts`.
+
+Non si scaricano, perché protette: Meeus (`time.ts`), Dean e Munkasey
+(attraverso RadixPro), Zain. Stanno in `texts/INDICE.md` con lo stato.
+
+Verifica: ogni fonte citata in un commento di `packages/` ha una riga in
+`texts/INDICE.md` che non sia «da scaricare».
 
 ## Deciso, e da non riaprire
 
