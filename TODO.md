@@ -20,7 +20,7 @@ volta e ricominciare da capo.
 
 | Voce | Priorità | Taglia | Prima di cominciare |
 |---|---|---|---|
-| 19. Le dignità, per scuola | media | grande, a commit piccoli | il Jyotisha, poi le ricezioni |
+| 19. Le dignità, per scuola | media | grande, a commit piccoli | le ricezioni, con una fonte |
 | 11. Gli elenchi in più posti | media | piccola | prima del punto 5 |
 | 13. Due semplificazioni | bassa | piccola | niente |
 | 9. Il linter | media | piccola | decidere lo strumento |
@@ -31,9 +31,9 @@ volta e ricominciare da capo.
 | 5. I varga che mancano | non dichiarata | tre lotti | il punto 11; per il D-2, la convenzione |
 | 17. L'astrologia oraria | bassa | la più grande | il punto 19 |
 
-L'ordine consigliato è quello della tabella: le dignità del Jyotisha, che
-chiudono un difetto ancora aperto, poi le voci piccole che tolgono copie e
-righe morte prima che il lavoro grande ci passi sopra.
+L'ordine consigliato è quello della tabella: le ricezioni, che completano le
+tavole già scritte, poi le voci piccole che tolgono copie e righe morte prima
+che il lavoro grande ci passi sopra.
 
 ## 5. I dieci varga che mancano
 
@@ -55,10 +55,12 @@ ricontrollabile; le prove ai confini dei segni pari e dispari; l'aggiunta a
 L'elenco dei varga però non vive solo lì: è ricopiato in
 `packages/mcp/src/tools.ts:123` (`VARGA_IDS`, una tupla che diventa `z.enum`),
 nelle due rotte `apps/web/src/routes/api/jyotish/+server.ts:17` e
-`api/jyotish/quadro/+server.ts:12` (un `Set<string>`), in `apps/web/src/lib/components/JyotishaSettings.svelte:57`
+`api/jyotish/quadro/+server.ts:12` (un `Set<string>`), in `apps/web/src/lib/components/JyotishaSettings.svelte:56`
 (`VARGHE`) e nella pagina del metodo, righe 346-347. Un varga nuovo
 dimenticato in una delle copie viene rifiutato da quella superficie senza
 nessun errore: è lo stesso difetto del punto 11, che conviene chiudere prima.
+`VARGHE` è tipata `VargaId` e lascia fuori la D-1 apposta (il commento sopra
+dice perché): un test che confronti gli elenchi deve saperlo.
 
 ### Lotto A: quelli che si biforcano su pari e dispari
 
@@ -371,8 +373,10 @@ Non è un'ipotesi: due difetti reali sono entrati e nessuno se n'è accorto.
 `api/chart/wheel/+server.ts` importava `ruotaSvg` e `ruotaPng` senza usarli, e
 il secondo apriva una seconda porta su `ruota/png`, il punto d'ingresso col
 modulo nativo che deve entrare solo da `lib/server`, cioè una regola di
-`CLAUDE.md` aggirata da un import dimenticato. Quello è corretto; l'altro no.
-Nessuno dei due lo vedono `typecheck` né i test, che girano verdi lo stesso.
+`CLAUDE.md` aggirata da un import dimenticato. L'altro era un parametro
+`context` che `findVoidsOfCourse` in `election.ts` riceveva senza usarlo.
+Tutti e due sono corretti, ma allora non li vedevano né `typecheck` né i test,
+che giravano verdi lo stesso.
 
 ### Quello che c'è già
 
@@ -694,8 +698,7 @@ diversi, e ciascuno dice quale l'ha prodotto.
 ## 19. Le dignità, per scuola
 
 **Priorità media.** Viene dal punto 17, che ne ha bisogno, ma vale da sola: le
-dignità servono al natale letto alla maniera tradizionale e al Jyotisha, e
-chiudono un difetto che nel Jyotisha c'è ancora.
+dignità servono al natale letto alla maniera tradizionale e al Jyotisha.
 
 ### A che punto è
 
@@ -723,45 +726,43 @@ Che cosa la sezione porta, e perché così:
   le esaltazioni dei Nodi vengono col pacchetto di Lilly. Per Urano, Nettuno
   e Plutone nessuna esaltazione ha un autore, e non entrano.
 
+Fatto anche per il Jyotisha. `packages/core/src/dignita-parashara.ts` tiene
+uccha col grado più profondo, neecha nel settimo segno, moolatrikona e segno
+proprio secondo il BPHS, e `computeJyotisha` le mette in `JyotishaChart.dignities`,
+quindi nel JSON del tema vedico, non in `NatalChart`. La sezione DIGNITÀ
+(PARASHARA) di `formatJyotishaCompact` porta la fonte, i signori dei segni, le
+esaltazioni e una riga per graha. `packages/lettura/src/jyotisha.ts` manda lì
+invece di ricopiare i domicili, e per il D9 dice che la forza si ricava per
+segno da quella sezione e va detta come confronto, non come dignità calcolata.
+Prove in `packages/core/test/dignita-parashara.test.ts` e in `lettura.test.ts`.
+
+Una scelta di lettura, scritta nel commento a `TRATTI`: nei sette segni che
+3.51-54 divide in tratti decide il tratto, anche contro 3.49 letto da solo.
+La Luna a 10 del Toro è in moolatrikona e non in uccha, Mercurio a 18 della
+Vergine pure. È il testo che precisa se stesso, non un'altra scuola.
+
+Restano scoperte, e vanno con le superfici del passo 3: la pagina `/vedica`
+non mostra le dignità (il JSON le porta già), e le dignità nei varga, che il
+BPHS tratta a parte (cap. 6-7, i varga di esaltazione, di moolatrikona e
+propri) e che il motore non calcola.
+
 ### Che cosa resta, nell'ordine
 
-1. **Il Jyotisha, che chiude il difetto ancora aperto.** È doppio:
-   `packages/lettura/src/jyotisha.ts:45` ricopia in prosa la tavola dei
-   domicili antichi, e `jyotisha.ts:126` chiede di confrontare «un pianeta
-   forte nel tema e debole nel D9» senza che la tabella porti alcun dato sulla
-   forza, quindi esaltazione e debilitazione il modello le prende a memoria,
-   con i gradi della scuola che preferisce. Che cosa serve:
-   - le tavole di Parashara: esaltazione e debilitazione **col grado**, che qui
-     sono diversi da quelli occidentali (Sole a 10 dell'Ariete, Giove a 5 del
-     Cancro, contro 19 e 15 di Firmico), moolatrikona, segno proprio. Fonte:
-     BPHS 3.49-50 nella traduzione di Santhanam, vol. I (Ranjan, 1992), pp.
-     38-39; le pagine vengono dall'OCR e vanno viste sulla scansione
-     (archive.org, `heag_brihat-parasara-hora-sastra-vol-1-…`). Il testo della
-     traduzione è protetto, i valori no. Moolatrikona e segno proprio non sono
-     ancora stati letti. Per l'esaltazione dei Nodi il traduttore dice che le
-     opinioni divergono: non entra senza una fonte che la dia;
-   - **dove metterle**: in `JyotishaChart` (`types.ts:500`), il composto che
-     `computeJyotisha` costruisce, e non in `NatalChart`. Così entrano nel
-     JSON del tema vedico subito, senza aspettare la questione di
-     `NatalChart` qui sotto e senza mescolare le dottrine;
-   - una sezione in `formatJyotishaCompact`, e `jyotisha.ts` che a riga 45
-     rimanda alla tabella invece di ricopiarla, e a riga 126 dice da dove si
-     legge la forza. Il test in `lettura.test.ts:164` («dà i domicili
-     antichi») va riscritto di conseguenza.
-2. **Le ricezioni** (per domicilio, per esaltazione, la mutua), che erano
+1. **Le ricezioni** (per domicilio, per esaltazione, la mutua), che erano
    previste con le esaltazioni e non ci sono entrate. Si ricavano dalle
    tavole che ci sono già, ma la definizione va presa da una fonte con la
    pagina, non dai manuali.
-3. **Il pacchetto di Lilly a richiesta**: triplicità, termini, facce, i gradi
+2. **Il pacchetto di Lilly a richiesta**: triplicità, termini, facce, i gradi
    delle esaltazioni e i Nodi. È il pezzo che il punto 17
    aspetta; il suo punteggio sta là, perché chiede anche le condizioni di un
    istante.
-4. **Le superfici**: CLI, rotta, tool MCP e una tabella Svelte, nell'ordine
+3. **Le superfici**: CLI, rotta, tool MCP e una tabella Svelte, nell'ordine
    della skill `nuova-funzione`. La tabella prende i dati, non il tema.
 
-### Le dignità non sono nel JSON
+### Le dignità occidentali non sono nel JSON
 
-Oggi stanno solo nella tabella compatta, e `NatalChart` non le ha. Vanno messe
+Quelle di Parashara ci sono, in `JyotishaChart`. Le occidentali stanno solo
+nella tabella compatta, e `NatalChart` non le ha. Vanno messe
 nel JSON col passo delle superfici, e lì va deciso come: `NatalChart` è anche
 la carta siderale che il Jyotisha riusa, dove le dignità occidentali sarebbero
 dottrina sbagliata.
@@ -810,7 +811,7 @@ documenti di lettura già presuppongono.
 ### Le fonti: verificato e da verificare
 
 Verificato sulle scansioni il 18 ottobre 2026, e scritto nei commenti di
-`dignita.ts`:
+`dignita.ts` (il BPHS il 26 ottobre, in `dignita-parashara.ts`):
 
 - **Domicili.** Tolomeo I.17 (ed. Robbins, Loeb 1940, pp. 79-83, su
   LacusCurtius) e Lilly, *Christian Astrology* (1647), p. 104 (archive.org,
@@ -833,6 +834,14 @@ Verificato sulle scansioni il 18 ottobre 2026, e scritto nei commenti di
   signore del segno opposto; la colonna Fall coincide con Tolomeo per i sette
   pianeti. Sulla scansione l'immagine è la n137 contando da zero
   (`archive.org/download/b30338724/page/n137_w2000.jpg`).
+- **BPHS, per il Jyotisha.** Santhanam, vol. I (Ranjan, 1992), su
+  archive.org (`heag_brihat-parasara-hora-sastra-vol-1-…`): 3.49-50 a pp.
+  38-39 (immagini n42 e n43 contando da zero), 3.51-54 a p. 39, i signori dei
+  segni in 4.6-24 a pp. 50-53, questi ultimi solo sull'OCR. I numeri
+  combaciano anche col sanscrito stampato accanto. La scansione porta la
+  dicitura «CC-0. In Public Domain. Gurukul Kangri Collection», ma vale per la
+  copia digitale e non dice niente dei diritti sulla traduzione: se ne
+  prendono i valori, non il testo.
 
 Da verificare:
 
@@ -844,15 +853,15 @@ Da verificare:
 - **Le facce in Tolomeo.**
 - **I punti 5-4-3-2-1 medievali**: a chi vanno attribuiti. I siti li danno
   come «medievali» senza un testo.
-- **Per il Jyotisha**: le pagine del BPHS sulla scansione, moolatrikona e
-  segno proprio, e una fonte per l'esaltazione dei Nodi, se c'è.
+- **Per il Jyotisha**: una fonte per l'esaltazione dei Nodi, se c'è.
+  Santhanam in nota a 3.50 rimanda alla sua traduzione dello *Horasara*,
+  p. 20, che non è stata cercata. Finché non c'è, i nodi restano senza.
 
 ### Verifica
 
 Le tavole contro la fonte, segno per segno e scuola per scuola: è una prova a
-tabella e non chiede effemeridi, come in `dignita.test.ts`. Per il Jyotisha,
-anche il test che `jyotisha.ts` non ricopi i domicili e non chieda una forza
-che la tabella non porta.
+tabella e non chiede effemeridi, come in `dignita.test.ts` e
+`dignita-parashara.test.ts`.
 
 ## Deciso, e da non riaprire
 

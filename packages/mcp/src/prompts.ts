@@ -76,7 +76,7 @@ export function registerLetturaDelTema(server: McpServer, context: ToolContext =
             `Sistema astrologico della lettura. Ammessi: ${SISTEMI.join(', ')}. ` +
               `Default: ${SISTEMA_PREDEFINITO}, che è l'astrologia occidentale. ` +
               'jyotisha è quella indiana: zodiaco siderale, case a segni interi, e ' +
-              'in più nakshatra, dasha, navamsa e drishti. Non sceglierlo tu: ' +
+              'in più nakshatra, dasha, navamsa, drishti e dignità. Non sceglierlo tu: ' +
               'chiedilo solo se chi scrive lo domanda.',
           ),
       },

@@ -36,6 +36,14 @@ export {
   type Dignity,
   type DomicileScheme,
 } from './dignita.js';
+export {
+  computeParasharaDignities,
+  PARASHARA_GRAHAS,
+  PARASHARA_SOURCE,
+  parasharaDignityOf,
+  parasharaExaltation,
+  parasharaSignLord,
+} from './dignita-parashara.js';
 export { computeJyotisha } from './jyotisha.js';
 export { computeAspects, computeCrossAspects, type AspectOptions } from './aspects.js';
 export { computeDistribution, type DistributionInput } from './distribution.js';
@@ -156,6 +164,8 @@ export type {
   NodeDrishti,
   Paksha,
   Panchanga,
+  ParasharaDignities,
+  ParasharaDignity,
   PanchangaOptions,
   PanchangaYoga,
   PassageOptions,

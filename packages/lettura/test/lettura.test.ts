@@ -161,12 +161,21 @@ describe('il documento vedico', () => {
     expect(testo).toMatch(/Urano, Nettuno e Plutone non appartengono/);
   });
 
-  it('dà i domicili antichi, che sono la trappola più insidiosa', () => {
+  it('manda alla tabella per i signori dei segni, che sono la trappola più insidiosa', () => {
     // Un modello che usa le rulership occidentali su un tema vedico produce
-    // una lettura interamente sbagliata e perfettamente plausibile.
-    expect(testo).toContain('Ariete e Scorpione a Marte');
-    expect(testo).toContain('Capricorno e Acquario a Saturno');
+    // una lettura interamente sbagliata e perfettamente plausibile. La tavola
+    // sta nella sezione DIGNITÀ con la sua fonte, e il documento non la
+    // ricopia: due copie divergono, e quella in prosa non ha i versi accanto.
+    expect(testo).toContain('DIGNITÀ (PARASHARA)');
+    expect(testo).toContain('non da quello che ricordi');
     expect(testo).toContain('Nessun segno è di Urano');
+    expect(testo).not.toContain('Ariete e Scorpione a Marte');
+  });
+
+  it('dice da dove si legge la forza, invece di chiederla a memoria', () => {
+    expect(testo).toContain('uccha');
+    expect(testo).toContain('neecha');
+    expect(testo).toContain('non una dignità calcolata');
   });
 
   it('mette al centro la Luna e il lagna, non il Sole', () => {

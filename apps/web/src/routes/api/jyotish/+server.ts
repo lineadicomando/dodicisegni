@@ -21,7 +21,8 @@ const VARGAS = new Set<string>(['d1', 'd3', 'd9', 'd10', 'd12', 'd30']);
  *
  * Il tema secondo l'astrologia indiana: zodiaco siderale, case a segni interi
  * dal lagna, e in più i nakshatra dei graha, la catena delle dasha
- * vimshottari, le carte divisionali e le drishti.
+ * vimshottari, le carte divisionali, le drishti e le dignità secondo
+ * Parashara.
  *
  * **Non è `/api/chart` con un parametro.** I gradi si contano dalle stelle
  * fisse invece che dal punto vernale, e fra i due zodiaci corrono oltre

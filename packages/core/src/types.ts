@@ -490,6 +490,37 @@ export interface JyotishaOptions {
 }
 
 /**
+ * La dignità di un graha nel suo segno secondo Parashara: esaltazione,
+ * moolatrikona (il tratto migliore di uno dei segni propri), segno proprio,
+ * debilitazione. Vedi `dignita-parashara.ts`.
+ */
+export type ParasharaDignity = 'uccha' | 'moolatrikona' | 'swakshetra' | 'neecha';
+
+/** Le dignità di un tema vedico, con la scuola e la fonte che le assegnano. */
+export interface ParasharaDignities {
+  school: 'parashara';
+  /** La fonte con i versi e le pagine, come la regola di un varga. */
+  source: string;
+  /** Il signore di ciascun segno, dalla stessa fonte. */
+  signLords: Record<ZodiacSign, BodyId>;
+  /** I sette graha dal Sole a Saturno che la carta contiene. I nodi no. */
+  grahas: {
+    id: BodyId;
+    name: string;
+    sign: ZodiacSign;
+    signDegree: number;
+    /** `null` quando il graha non ha nessuna delle quattro nel suo segno. */
+    dignity: ParasharaDignity | null;
+    /**
+     * Solo con uccha e neecha: il grado del segno dove l'esaltazione, o la
+     * debilitazione, è più profonda. Il testo lo dà come numero intero e non
+     * dice se intenda il punto o il grado che vi finisce.
+     */
+    deepestDegree?: number;
+  }[];
+}
+
+/**
  * Il tema vedico: la carta più ciò che il Jyotisha ci legge sopra.
  *
  * Non è un `NatalChart` con dei campi in più. La carta ci sta dentro intera,
@@ -505,6 +536,7 @@ export interface JyotishaChart {
   dasha: VimshottariDasha;
   vargas: VargaChart[];
   drishti: DrishtiChart;
+  dignities: ParasharaDignities;
   /**
    * Le avvertenze dei pezzi, raccolte qui.
    *

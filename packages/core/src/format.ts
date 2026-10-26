@@ -8,6 +8,7 @@ import {
   type Dignity,
   type DomicileScheme,
 } from './dignita.js';
+import { PARASHARA_GRAHAS, parasharaExaltation } from './dignita-parashara.js';
 import { formatDegrees, formatZodiacal } from './math.js';
 import { grahaName, nakshatraOf, requireSidereal } from './nakshatra.js';
 import type {
@@ -25,6 +26,7 @@ import type {
   House,
   JyotishaChart,
   NatalChart,
+  ParasharaDignities,
   NatalPointId,
   Panchanga,
   PassageRange,
@@ -748,8 +750,8 @@ export function formatDrishtiCompact(drishti: DrishtiChart): string {
 }
 
 /**
- * Il tema vedico impaginato: la carta, i nakshatra, le dasha, i varga e le
- * drishti, in un testo solo.
+ * Il tema vedico impaginato: la carta, le dignità, i nakshatra, le dasha, i
+ * varga e le drishti, in un testo solo.
  *
  * Prende il composto e non la carta: che cosa sia «il tema vedico» lo decide
  * `computeJyotisha`, in un posto solo, e qui si impagina quello che arriva.
@@ -765,12 +767,55 @@ export function formatJyotishaCompact(jyotisha: JyotishaChart): string {
     parti.push(['AVVERTENZE DEL TEMA VEDICO', ...jyotisha.warnings.map((w) => `- ${w}`)].join('\n'));
   }
 
+  parti.push(formatParasharaDignitiesCompact(jyotisha.dignities));
   parti.push(formatNakshatraCompact(jyotisha.chart));
   parti.push(formatDashaCompact(jyotisha.dasha));
   for (const varga of jyotisha.vargas) parti.push(formatVargaCompact(varga));
   parti.push(formatDrishtiCompact(jyotisha.drishti));
 
   return parti.join('\n\n');
+}
+
+/**
+ * Le dignità del tema vedico: la fonte, i signori dei segni, una riga per graha.
+ *
+ * I signori dei segni e le esaltazioni stanno qui anche se non cambiano da
+ * un tema all'altro. Il primo dato che una lettura vedica cerca è il signore
+ * del lagna, e un modello che non lo trova nella tabella lo ricava da sé, con
+ * le tavole occidentali che conosce meglio e Plutone nello Scorpione. Le
+ * esaltazioni servono a leggere i varga, che portano solo segni: senza la
+ * riga, i gradi il modello li prenderebbe dalla scuola che preferisce.
+ *
+ * Accanto a uccha e neecha il grado più profondo, nello stesso segno: la
+ * distanza la vede chi legge, e il motore non ne fa una forza.
+ */
+function formatParasharaDignitiesCompact(dignities: ParasharaDignities): string {
+  const lines = [
+    'DIGNITÀ (PARASHARA)',
+    `Fonte: ${dignities.source}`,
+    `Signori dei segni: ${ZODIAC_SIGNS.map(
+      (sign) => `${SIGN_ABBR[sign]} ${bodyName(dignities.signLords[sign])}`,
+    ).join(', ')}`,
+    `Uccha, neecha nel settimo segno allo stesso grado: ${PARASHARA_GRAHAS.map((graha) => {
+      const uccha = parasharaExaltation(graha)!;
+      return `${bodyName(graha)} ${uccha.degree}° ${SIGN_ABBR[uccha.sign]}`;
+    }).join(', ')}`,
+    '',
+  ];
+
+  for (const graha of dignities.grahas) {
+    const longitudine = ZODIAC_SIGNS.indexOf(graha.sign) * 30 + graha.signDegree;
+    const profondo =
+      graha.deepestDegree !== undefined
+        ? `, ${graha.dignity === 'uccha' ? 'esaltazione' : 'debilitazione'} più profonda a ` +
+          `${graha.deepestDegree}° ${SIGN_ABBR[graha.sign]}`
+        : '';
+    lines.push(
+      `${graha.name.padEnd(11)} ${formatZodiacal(longitudine).padEnd(11)} ${graha.dignity ?? '—'}${profondo}`,
+    );
+  }
+
+  return lines.join('\n');
 }
 
 function warningLines(warnings: readonly string[]): string[] {

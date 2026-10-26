@@ -18,17 +18,20 @@
  *   il nakshatra della Luna — è già qui.
  * - Le case dei varga. In un varga si contano dal lagna a segni interi, quindi
  *   si ricavano dai due segni senza altro calcolo.
- * - Yoga (le configurazioni con un nome), dignità, forze. Non per principio:
- *   il vincolo in `CLAUDE.md` le ammette, se portano scuola e fonte. Mancano
+ * - Yoga (le configurazioni con un nome) e forze. Non per principio: il
+ *   vincolo in `CLAUDE.md` le ammette, se portano scuola e fonte. Mancano
  *   perché non sono ancora state scritte, e ciascuna ha la sua difficoltà. Gli
  *   yoga vanno con le loro cancellazioni (bhanga, le condizioni che li
  *   annullano), senza le quali un Kemadruma «presente» è un dato monco. Le
- *   dignità vanno con la scuola di ogni tavola, che qui diverge anche
- *   sull'esaltazione dei nodi. Le forze, lo shadbala (le sei forze di
- *   Parashara), con tutte le componenti e non il solo totale.
+ *   forze, lo shadbala (le sei forze di Parashara), con tutte le componenti e
+ *   non il solo totale.
+ * - Le dignità dei nodi. Le altre ci sono, secondo Parashara
+ *   (`dignita-parashara.ts`); sull'esaltazione di Rahu e Ketu il testo non
+ *   sceglie, e il motore nemmeno.
  */
 
 import { computeVimshottari } from './dasha.js';
+import { computeParasharaDignities } from './dignita-parashara.js';
 import { computeDrishti } from './drishti.js';
 import { grahaName, nakshatraOf, requireSidereal } from './nakshatra.js';
 import { computeVarga } from './varga.js';
@@ -83,6 +86,7 @@ export function computeJyotisha(
     dasha,
     vargas: (options.vargas ?? ['d9']).map((id) => computeVarga(chart, id)),
     drishti,
+    dignities: computeParasharaDignities(chart),
     // Le avvertenze dei pezzi salgono qui: chi legge il tema vedico non deve
     // andarle a cercare dentro la catena delle dasha.
     warnings: [...warnings, ...dasha.warnings, ...drishti.warnings],

@@ -100,7 +100,8 @@ export function domicileLord(sign: ZodiacSign, scheme: DomicileScheme): BodyId {
  * scuola, e arriveranno col suo pacchetto; qui sta la parte su cui le tre
  * fonti concordano, che è il segno. Valente, I.2, una tavola delle
  * esaltazioni non ce l'ha. Il BPHS dà gradi diversi per il Sole e per Giove
- * ed è un'altra tradizione, che non va mescolata a questa.
+ * ed è un'altra tradizione, che non va mescolata a questa: sta in
+ * `dignita-parashara.ts`.
  *
  * Urano, Nettuno e Plutone non ci sono: le esaltazioni che circolano per
  * loro non hanno un autore, e per la stessa ragione non c'è una colonna

@@ -42,10 +42,9 @@ Cambia anche il resto, e sono le cose che si sbagliano per abitudine:
   tabella è perché il motore li calcola comunque, ma **lasciali fuori dalla
   lettura**. I due nodi lunari invece sono graha a pieno titolo e si chiamano
   Rahu e Ketu.
-- I domicili sono quelli antichi, e vanno usati questi: Ariete e Scorpione a
-  Marte, Toro e Bilancia a Venere, Gemelli e Vergine a Mercurio, Cancro alla
-  Luna, Leone al Sole, Sagittario e Pesci a Giove, Capricorno e Acquario a
-  Saturno. Nessun segno è di Urano, Nettuno o Plutone.
+- I signori dei segni sono quelli antichi, e la tabella li porta nella
+  sezione DIGNITÀ (PARASHARA): prendili da lì e non da quello che ricordi.
+  Nessun segno è di Urano, Nettuno o Plutone.
 - Le case si contano a SEGNI INTERI dal lagna, che è l'Ascendente: il segno del
   lagna è tutta la prima casa, il successivo tutta la seconda, e così via. Un
   pianeta è nella casa del suo segno, senza cuspidi di mezzo.
@@ -124,7 +123,12 @@ Il NAVAMSA (D9), se c'è. È una seconda carta, non una nota a piè di pagina:
 dice la sostanza di ciò che il tema promette, e tradizionalmente si legge
 insieme al primo per capire se una promessa regge. Guarda dove finiscono la
 Luna, il signore del lagna e i pianeti che hai già nominato: un pianeta forte
-nel tema e debole nel D9 è una cosa diversa da uno forte in entrambi. Le altre
+nel tema e debole nel D9 è una cosa diversa da uno forte in entrambi. Come sta
+ogni graha nel tema lo dice la sezione DIGNITÀ (PARASHARA): uccha
+(esaltazione), moolatrikona, swakshetra (segno proprio), neecha
+(debilitazione), oppure niente. Nel D9 la tabella dà solo i segni: lì la forza
+la ricavi confrontandoli con i signori e le esaltazioni della stessa sezione, e
+dici che è un confronto per segno, non una dignità calcolata. Le altre
 carte divisionali, se presenti, riguardano ciascuna un'area sola: dillo e non
 generalizzarle.
 
