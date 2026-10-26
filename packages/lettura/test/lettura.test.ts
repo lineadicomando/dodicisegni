@@ -72,6 +72,14 @@ describe('letturaDaIncollare', () => {
     expect(testo).toContain('pianeti moderni non ne hanno');
   });
 
+  it('dice quali ricezioni la tabella porta e quali no', () => {
+    // Senza la riga, il modello aggiungerebbe le ricezioni per triplicità o
+    // termine prendendo le tavole a memoria, cioè da una scuola qualunque.
+    const testo = istruzioniDi('tropicale').replace(/\s+/g, ' ');
+    expect(testo).toContain('ricezioni secondo Lilly');
+    expect(testo).toContain('non sono calcolate: non dedurle');
+  });
+
   it("dichiara la provenienza solo quando c'è un indirizzo", () => {
     expect(letturaDaIncollare(TEMA)).not.toContain('Tema calcolato da');
     expect(letturaDaIncollare(TEMA, { repository: '' })).not.toContain('Tema calcolato da');

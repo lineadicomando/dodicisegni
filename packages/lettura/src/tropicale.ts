@@ -91,7 +91,11 @@ divergono, dì quale segui. Lì sotto, una riga per colonna, trovi anche chi è
 in domicilio, in esaltazione, in esilio o in caduta: prendili da lì e non dal
 segno. Esaltazione e caduta stanno solo nella tradizionale, senza gradi, e i
 pianeti moderni non ne hanno. Non sono un voto: dicono quanto una funzione
-lavori agevolata o controvento. Due pianeti personali di tempra opposta sono un
+lavori agevolata o controvento. In fondo alla sezione ci sono le ricezioni
+secondo Lilly: nella mutua due pianeti stanno ciascuno in una dignità
+dell'altro, e Lilly la legge come un legame che regge anche dove l'aspetto
+manca o è difficile. Quelle per triplicità, termine e faccia non sono
+calcolate: non dedurle. Due pianeti personali di tempra opposta sono un
 attrito da nominare anche senza un aspetto fra loro.
 
 Le forze in conflitto, e come si compongono. Un quadrato o un'opposizione non è

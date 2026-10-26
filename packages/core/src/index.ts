@@ -33,8 +33,13 @@ export {
   EXALTATION_SOURCE,
   exaltationOf,
   fallOf,
+  RECEPTION_SOURCE,
+  receptionsOf,
   type Dignity,
   type DomicileScheme,
+  type MutualReception,
+  type Reception,
+  type ReceptionDignity,
 } from './dignita.js';
 export {
   computeParasharaDignities,

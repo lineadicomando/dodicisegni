@@ -20,7 +20,7 @@ volta e ricominciare da capo.
 
 | Voce | Priorità | Taglia | Prima di cominciare |
 |---|---|---|---|
-| 19. Le dignità, per scuola | media | grande, a commit piccoli | le ricezioni, con una fonte |
+| 19. Le dignità, per scuola | media | grande, a commit piccoli | trascrivere la tavola di Lilly, p. 104 |
 | 11. Gli elenchi in più posti | media | piccola | prima del punto 5 |
 | 13. Due semplificazioni | bassa | piccola | niente |
 | 9. Il linter | media | piccola | decidere lo strumento |
@@ -32,9 +32,9 @@ volta e ricominciare da capo.
 | 17. L'astrologia oraria | bassa | la più grande | il punto 19 |
 | 24. Le fonti da scaricare in `texts/` | bassa | piccola | niente |
 
-L'ordine consigliato è quello della tabella: le ricezioni, che completano le
-tavole già scritte, poi le voci piccole che tolgono copie e righe morte prima
-che il lavoro grande ci passi sopra.
+L'ordine consigliato è quello della tabella: il pacchetto di Lilly, che
+completa anche le ricezioni, poi le voci piccole che tolgono copie e righe
+morte prima che il lavoro grande ci passi sopra.
 
 ## 5. I dieci varga che mancano
 
@@ -742,22 +742,32 @@ Una scelta di lettura, scritta nel commento a `TRATTI`: nei sette segni che
 La Luna a 10 del Toro è in moolatrikona e non in uccha, Mercurio a 18 della
 Vergine pure. È il testo che precisa se stesso, non un'altra scuola.
 
-Restano scoperte, e vanno con le superfici del passo 3: la pagina `/vedica`
+Restano scoperte, e vanno con le superfici del passo 2: la pagina `/vedica`
 non mostra le dignità (il JSON le porta già), e le dignità nei varga, che il
 BPHS tratta a parte (cap. 6-7, i varga di esaltazione, di moolatrikona e
 propri) e che il motore non calcola.
 
+Fatte anche le ricezioni, nella stessa sezione del tema tropicale:
+`receptionsOf` in `dignita.ts`, mutue e semplici fra i sette pianeti. La
+definizione è di Lilly, p. 112 («in each others dignity», per domicilio,
+triplicità, termine, faccia o «any essentiall dignity»), e a p. 176 il verbo
+vale anche in un verso solo («single reception by exaltation»). Le pagine sono
+in `texts/occidentale/lilly-christian-astrology-1647`, con la trascrizione.
+Oggi le ricezioni sono per domicilio ed esaltazione; la riga della fonte dice
+che le altre tre mancano, e il documento di lettura tropicale vieta di
+dedurle.
+
 ### Che cosa resta, nell'ordine
 
-1. **Le ricezioni** (per domicilio, per esaltazione, la mutua), che erano
-   previste con le esaltazioni e non ci sono entrate. Si ricavano dalle
-   tavole che ci sono già, ma la definizione va presa da una fonte con la
-   pagina, non dai manuali.
-2. **Il pacchetto di Lilly a richiesta**: triplicità, termini, facce, i gradi
-   delle esaltazioni e i Nodi. È il pezzo che il punto 17
-   aspetta; il suo punteggio sta là, perché chiede anche le condizioni di un
-   istante.
-3. **Le superfici**: CLI, rotta, tool MCP e una tabella Svelte, nell'ordine
+1. **Il pacchetto di Lilly a richiesta**: triplicità, termini, facce, i gradi
+   delle esaltazioni e i Nodi, dalla tavola di p. 104, che è già salvata in
+   `texts/` e va trascritta colonna per colonna (le cifre piccole dei
+   termini vanno lette sull'immagine a 2000 pixel o più, non sull'OCR). Con
+   quelle tavole `receptionsOf` prende anche le ricezioni per triplicità,
+   termine e faccia, e la triplicità chiede la setta, che c'è già
+   (`chartSect`). È il pezzo che il punto 17 aspetta; il suo punteggio sta
+   là, perché chiede anche le condizioni di un istante.
+2. **Le superfici**: CLI, rotta, tool MCP e una tabella Svelte, nell'ordine
    della skill `nuova-funzione`. La tabella prende i dati, non il tema.
 
 ### Le dignità occidentali non sono nel JSON

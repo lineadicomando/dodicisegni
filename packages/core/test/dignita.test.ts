@@ -9,6 +9,7 @@ import {
   domicileLord,
   exaltationOf,
   fallOf,
+  receptionsOf,
 } from '../src/dignita.js';
 import { formatChartCompact } from '../src/format.js';
 import type { BirthData, BodyId, ZodiacSign } from '../src/types.js';
@@ -195,5 +196,76 @@ describe('la tabella DIGNITÀ', () => {
   it('non compare nel tema vedico, che ha altri domicili', () => {
     const vedico = formatChartCompact(computeNatalChart(NAPOLI), { westernSections: false });
     expect(vedico).not.toContain('DIGNITÀ');
+  });
+});
+
+/**
+ * Lilly, p. 112: «as ☉ in ♈, and ♂ in ♌; here is reception of these two
+ * Planets by Houses». La prova usa il suo esempio, non uno costruito qui.
+ */
+describe('le ricezioni', () => {
+  it("riconoscono la mutua per domicilio dell'esempio di Lilly", () => {
+    const { mutual } = receptionsOf([
+      { id: 'sole', sign: 'ariete' },
+      { id: 'marte', sign: 'leone' },
+    ]);
+    expect(mutual).toEqual([
+      { bodies: ['sole', 'marte'], firstReceives: ['domicilio'], secondReceives: ['domicilio'] },
+    ]);
+  });
+
+  it("del secondo esempio, che per Lilly è per triplicità, vedono solo ciò che le tavole hanno", () => {
+    // ♀ in ♈ e ☉ in ♉: Venere riceve il Sole per domicilio, il Sole riceve
+    // Venere per esaltazione. La triplicità ancora non c'è, e la mutua esce
+    // per le due dignità che ci sono.
+    const { mutual } = receptionsOf([
+      { id: 'venere', sign: 'ariete' },
+      { id: 'sole', sign: 'toro' },
+    ]);
+    expect(mutual).toEqual([
+      { bodies: ['venere', 'sole'], firstReceives: ['domicilio'], secondReceives: ['esaltazione'] },
+    ]);
+  });
+
+  it('danno le semplici in un verso solo', () => {
+    const { single, mutual } = receptionsOf([
+      { id: 'saturno', sign: 'ariete' },
+      { id: 'marte', sign: 'cancro' },
+    ]);
+    // Saturno in Ariete sta nel domicilio di Marte: Marte lo riceve. Marte in
+    // Cancro non sta in nessuna dignità di Saturno.
+    expect(single).toEqual([{ receiver: 'marte', received: 'saturno', by: ['domicilio'] }]);
+    expect(mutual).toEqual([]);
+  });
+
+  it('possono essere per due dignità insieme', () => {
+    // Mercurio in Vergine è nel domicilio e nell'esaltazione di sé stesso, e
+    // non si riceve; ma la Luna in Vergine Mercurio la riceve per tutte e due.
+    const { single } = receptionsOf([
+      { id: 'mercurio', sign: 'gemelli' },
+      { id: 'luna', sign: 'vergine' },
+    ]);
+    expect(single).toContainEqual({
+      receiver: 'mercurio',
+      received: 'luna',
+      by: ['domicilio', 'esaltazione'],
+    });
+  });
+
+  it('lasciano fuori i corpi senza domicili nelle tavole di Lilly', () => {
+    const { single } = receptionsOf([
+      { id: 'plutone', sign: 'leone' },
+      { id: 'sole', sign: 'scorpione' },
+      { id: 'nodo-nord', sign: 'leone' },
+    ]);
+    expect(single).toEqual([]);
+  });
+
+  it('stanno in fondo alla sezione, con la fonte', () => {
+    const testo = formatChartCompact(computeNatalChart(NAPOLI));
+    expect(testo).toContain('Ricezioni: Lilly, p. 112');
+    // A Napoli il Sole è in Pesci e Giove in Leone: domicilio per domicilio.
+    expect(testo).toMatch(/^Mutue — Sole e Giove \(domicilio \/ domicilio\)$/m);
+    expect(testo).toContain('Venere riceve Sole (esaltazione)');
   });
 });

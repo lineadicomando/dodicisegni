@@ -10,8 +10,9 @@
  * convenzioni divergono il risultato le porta tutte e due, ciascuna col suo
  * nome, invece di sceglierne una in silenzio. Oggi ci sono i domicili, nelle
  * due forme che un tema tropicale si sente chiedere, l'esilio che ne discende
- * e le esaltazioni con le cadute, che hanno una forma sola; triplicità,
- * termini e facce verranno come tavole a sé, con le loro fonti.
+ * e le esaltazioni con le cadute, che hanno una forma sola, più le ricezioni
+ * che se ne ricavano; triplicità, termini e facce verranno come tavole a sé,
+ * con le loro fonti.
  */
 
 import { ZODIAC_SIGNS } from './constants.js';
@@ -172,4 +173,89 @@ export function dignitiesOf(body: BodyId, sign: ZodiacSign, scheme: DomicileSche
   if (detrimentsOf(body, scheme).includes(sign)) risultato.push('esilio');
   if (scheme === 'tradizionale' && fallOf(body) === sign) risultato.push('caduta');
   return risultato;
+}
+
+/** La dignità per cui un pianeta ne riceve un altro. */
+export type ReceptionDignity = 'domicilio' | 'esaltazione';
+
+/** `receiver` riceve `received`: il secondo sta in una dignità del primo. */
+export interface Reception {
+  receiver: BodyId;
+  received: BodyId;
+  by: ReceptionDignity[];
+}
+
+/** Due pianeti ciascuno nella dignità dell'altro. */
+export interface MutualReception {
+  /** I due pianeti, nell'ordine dei corpi del tema. */
+  bodies: [BodyId, BodyId];
+  /** Per che cosa il primo riceve il secondo. */
+  firstReceives: ReceptionDignity[];
+  /** Per che cosa il secondo riceve il primo. */
+  secondReceives: ReceptionDignity[];
+}
+
+/**
+ * Lilly, *Christian Astrology* (1647), p. 112: la ricezione è quando due
+ * pianeti «are in each others dignity», per domicilio («the strongest and
+ * best of all receptions»), triplicità, termine, faccia o «any essentiall
+ * dignity». A p. 176 il verbo vale anche in un verso solo («that Planet
+ * receive the Lord of the Ascendant») e Lilly parla di «single reception by
+ * exaltation»: le ricezioni semplici sono quelle.
+ *
+ * Qui ci sono le due dignità per cui le tavole esistono già, domicilio ed
+ * esaltazione per segno, che coincidono con la tavola di Lilly a p. 104.
+ * Triplicità, termini e facce arriveranno col suo pacchetto: finché non ci
+ * sono, una ricezione per triplicità manca, e la riga lo dice invece di
+ * lasciarlo credere assente.
+ */
+export const RECEPTION_SOURCE =
+  "Lilly, p. 112 (mutua) e p. 176 (semplice), per domicilio ed esaltazione; per triplicità, termine e faccia non ancora calcolate.";
+
+/** I sette pianeti, gli unici che nelle tavole di Lilly hanno domicili. */
+const SETTE: readonly BodyId[] = ['sole', 'luna', 'mercurio', 'venere', 'marte', 'giove', 'saturno'];
+
+/** Per quali dignità `receiver` riceve un pianeta che sta in `sign`. */
+function receivesBy(receiver: BodyId, sign: ZodiacSign): ReceptionDignity[] {
+  const per: ReceptionDignity[] = [];
+  if (DOMICILI_TRADIZIONALI[sign] === receiver) per.push('domicilio');
+  if (ESALTAZIONI[receiver] === sign) per.push('esaltazione');
+  return per;
+}
+
+/**
+ * Le ricezioni fra i sette pianeti di un tema, semplici e mutue.
+ *
+ * Un pianeta nella propria dignità non riceve sé stesso, e i corpi che non
+ * sono fra i sette (i pianeti moderni, i nodi, Chirone) restano fuori: Lilly
+ * non dà loro né domicili né, per i nodi, una ricezione. Ogni mutua compare
+ * anche fra le semplici, nei due versi: sono due affermazioni, e la seconda
+ * non si ricava dalla prima senza guardare l'altra.
+ */
+export function receptionsOf(bodies: readonly { id: BodyId; sign: ZodiacSign }[]): {
+  single: Reception[];
+  mutual: MutualReception[];
+} {
+  const pianeti = bodies.filter((body) => SETTE.includes(body.id));
+  const single: Reception[] = [];
+  for (const receiver of pianeti) {
+    for (const received of pianeti) {
+      if (receiver.id === received.id) continue;
+      const by = receivesBy(receiver.id, received.sign);
+      if (by.length > 0) single.push({ receiver: receiver.id, received: received.id, by });
+    }
+  }
+
+  const mutual: MutualReception[] = [];
+  pianeti.forEach((primo, i) => {
+    for (const secondo of pianeti.slice(i + 1)) {
+      const firstReceives = receivesBy(primo.id, secondo.sign);
+      const secondReceives = receivesBy(secondo.id, primo.sign);
+      if (firstReceives.length > 0 && secondReceives.length > 0) {
+        mutual.push({ bodies: [primo.id, secondo.id], firstReceives, secondReceives });
+      }
+    }
+  });
+
+  return { single, mutual };
 }

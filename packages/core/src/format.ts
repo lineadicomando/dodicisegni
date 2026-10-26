@@ -5,6 +5,8 @@ import {
   DOMICILE_SOURCES,
   domicileLord,
   EXALTATION_SOURCE,
+  RECEPTION_SOURCE,
+  receptionsOf,
   type Dignity,
   type DomicileScheme,
 } from './dignita.js';
@@ -511,6 +513,10 @@ function distributionLines(distribution: Distribution): string[] {
  * ricavava da sé, con la scuola che preferiva. Esaltazione e caduta stanno
  * solo nella riga tradizionale, perché solo lì hanno una tavola con un autore:
  * la riga moderna lo dice invece di tacerlo.
+ *
+ * Le ricezioni chiudono la sezione, secondo Lilly e sulle sole tavole
+ * tradizionali. Le mutue vengono prima perché sono la sua definizione; le
+ * semplici le contengono anche loro, nei due versi.
  */
 function dignityLines(chart: NatalChart): string[] {
   const schemi: readonly DomicileScheme[] = ['tradizionale', 'moderno'];
@@ -548,6 +554,28 @@ function dignityLines(chart: NatalChart): string[] {
     });
     lines.push(`${schema === 'tradizionale' ? 'Tradiz.' : 'Moderno'} — ${parti.join('; ')}`);
   }
+
+  const { single, mutual } = receptionsOf(chart.bodies);
+  const nome = (id: BodyId): string => nameOf(chart, id);
+  const per = (by: readonly string[]): string => by.join(' e ');
+  lines.push(`Ricezioni: ${RECEPTION_SOURCE}`);
+  lines.push(
+    `Mutue — ${
+      mutual
+        .map(
+          (m) =>
+            `${nome(m.bodies[0])} e ${nome(m.bodies[1])} ` +
+            `(${per(m.firstReceives)} / ${per(m.secondReceives)})`,
+        )
+        .join('; ') || '—'
+    }`,
+  );
+  lines.push(
+    `Semplici — ${
+      single.map((r) => `${nome(r.receiver)} riceve ${nome(r.received)} (${per(r.by)})`).join('; ') ||
+      '—'
+    }`,
+  );
 
   return lines;
 }
