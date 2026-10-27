@@ -187,6 +187,13 @@ describe('formatChartCompact', () => {
     expect(compact).toContain('\n\nDIGNITÀ\n');
     expect(compact.length).toBeLessThan(json.length / 2);
   });
+
+  it('porta le condizioni di Lilly solo col suo pacchetto', () => {
+    expect(formatChartCompact(computeNatalChart(NAPOLI))).not.toContain('CONDIZIONI (LILLY)');
+    const compact = formatChartCompact(computeNatalChart(NAPOLI, { dignitySchool: 'lilly' }));
+    expect(compact).toContain('\n\nCONDIZIONI (LILLY)\n');
+    expect(compact).toContain('Conto di p. 115');
+  });
 });
 
 describe('le orbite del tema', () => {

@@ -38,6 +38,11 @@ import type {
   VargaChart,
   VimshottariDasha,
   WesternDignities,
+  LillyConditions,
+  LillyScoreItem,
+  LillyScoreRow,
+  LillySolarState,
+  LillyStar,
   Zodiac,
 } from './types.js';
 
@@ -87,6 +92,9 @@ export function formatChartCompact(
     lines.push('', 'ASPETTI', orbLine(chart.orbConvention), ...aspectLines(chart));
     lines.push('', 'DISTRIBUZIONE', ...distributionLines(chart.distribution));
     if (chart.dignities) lines.push('', 'DIGNITÀ', ...dignityLines(chart, chart.dignities));
+    if (chart.dignities?.lilly) {
+      lines.push('', 'CONDIZIONI (LILLY)', ...lillyConditionLines(chart.dignities.lilly.conditions));
+    }
   }
   lines.push(...warningLines(chart.warnings));
 
@@ -128,6 +136,10 @@ export function formatSkyCompact(sky: SkyChart): string {
 
   lines.push('', 'ASPETTI', orbLine(sky.orbConvention), ...aspectLines(sky));
   lines.push('', 'DISTRIBUZIONE', ...distributionLines(sky.distribution));
+  if (sky.dignities) lines.push('', 'DIGNITÀ', ...dignityLines(sky, sky.dignities));
+  if (sky.dignities?.lilly) {
+    lines.push('', 'CONDIZIONI (LILLY)', ...lillyConditionLines(sky.dignities.lilly.conditions));
+  }
   lines.push(...warningLines(sky.warnings));
 
   return lines.join('\n');
@@ -590,7 +602,10 @@ function distributionLines(distribution: Distribution): string[] {
  * Tutto viene da `chart.dignities`: la tabella impagina il JSON, non
  * ricalcola, e le due rese dicono la stessa cosa.
  */
-function dignityLines(chart: NatalChart, dignities: WesternDignities): string[] {
+function dignityLines(
+  chart: Pick<NatalChart, 'houses' | 'bodies' | 'sect'>,
+  dignities: WesternDignities,
+): string[] {
   const schemi: readonly DomicileScheme[] = ['tradizionale', 'moderno'];
   const conCase = chart.houses.length > 0;
 
@@ -685,6 +700,97 @@ function lillyLines(lilly: NonNullable<WesternDignities['lilly']>, sect: Sect | 
     lines.push(`${body.name.padEnd(11)} ${colonne} | ${dignita.join(', ') || '—'}`);
   }
   return lines;
+}
+
+/**
+ * Le condizioni di Lilly e il suo conto, una riga per pianeta.
+ *
+ * Il conto si scrive per esteso, voce per voce, e dopo le due somme e la
+ * differenza: è così che lo scrive Lilly a pp. 178-180, ed è ciò che lascia
+ * a chi legge la possibilità di rifarlo togliendo una riga che non accetta.
+ * Le letture fatte dove il testo lascia una scelta vengono prima, una per
+ * riga, perché sono la cosa da cui dipende il resto.
+ */
+function lillyConditionLines(conditions: LillyConditions): string[] {
+  const lines = [`Fonte: ${conditions.source}`, ...conditions.readings.map((r) => `Lettura: ${r}`)];
+
+  const istante: string[] = [];
+  if (conditions.hour) {
+    const { ruler, dayRuler, diurnal, index, local } = conditions.hour;
+    istante.push(
+      `ora di ${bodyName(ruler)} (${index}ª ${diurnal ? 'diurna' : 'notturna'}, giorno di ${bodyName(dayRuler)}, ` +
+        `${local.start.slice(11, 16)}-${local.end.slice(11, 16)})`,
+    );
+  }
+  if (conditions.ascendant) {
+    const { signDegree, early, late } = conditions.ascendant;
+    const quando = early ? ', nei primi tre gradi' : late ? ', negli ultimi tre gradi' : '';
+    istante.push(`Ascendente a ${formatDegrees(signDegree)}${quando}`);
+  }
+  if (conditions.moonInViaCombusta !== undefined) {
+    istante.push(`Luna ${conditions.moonInViaCombusta ? '' : 'non '}in Via Combusta`);
+  }
+  if (istante.length > 0) lines.push(`Istante: ${istante.join('; ')}`);
+  if (conditions.stars) {
+    const { regolo, spica, algol } = conditions.stars;
+    lines.push(
+      `Stelle: Regolo ${formatZodiacal(regolo)}, Spica ${formatZodiacal(spica)}, Algol ${formatZodiacal(algol)}`,
+    );
+  }
+  for (const voce of conditions.missing) lines.push(`Non calcolato: ${voce}`);
+
+  const statoSole: Record<LillySolarState, string> = {
+    cazimi: 'cazimi',
+    combusto: 'combusto',
+    'sotto-i-raggi': 'sotto i raggi',
+    libero: 'libero',
+  };
+  lines.push(
+    `${'Corpo'.padEnd(10)} ${'casa'.padEnd(4)} ${'dal Sole'.padEnd(23)} ${'fase'.padEnd(11)} moto`,
+  );
+  for (const body of conditions.bodies) {
+    const sole = body.sun ? `${formatDegrees(body.sun.distance)} ${statoSole[body.sun.state]}` : '—';
+    const moto = [body.motion.pace, body.motion.direction === 'retrogrado' ? 'retrogrado' : ''].filter(Boolean);
+    const extra = [body.peregrine ? 'peregrino' : '', body.besieged ? 'assediato' : ''].filter(Boolean);
+    lines.push(
+      `${body.name.padEnd(10)} ${String(body.house ?? '—').padEnd(4)} ${sole.padEnd(23)} ` +
+        `${(body.phase ?? '—').padEnd(11)} ${[...moto, ...extra].join(', ')}`,
+    );
+  }
+
+  lines.push('Conto di p. 115: fortezze | debilità | differenza');
+  for (const body of conditions.bodies) {
+    const { fortitudes, debilities, totals } = body.score;
+    lines.push(
+      `${body.name.padEnd(10)} ${fortitudes.map(scoreRowLabel).join(', ') || '—'} = ${totals.fortitudes} | ` +
+        `${debilities.map(scoreRowLabel).join(', ') || '—'} = ${totals.debilities} | ` +
+        `${totals.net > 0 ? '+' : ''}${totals.net}`,
+    );
+  }
+
+  lines.push(
+    `Antiscia: ${conditions.bodies.map((body) => `${body.name} ${formatZodiacal(body.antiscion)}`).join(', ')}; ` +
+      'il contrantiscion è il punto opposto.',
+  );
+  return lines;
+}
+
+/** Una riga del conto: la voce, con che cosa, e i punti. */
+function scoreRowLabel(row: LillyScoreRow): string {
+  const nomi: Partial<Record<LillyScoreItem, string>> = {
+    triplicita: 'triplicità',
+    'ricezione-domicilio': 'ricezione per domicilio',
+    'ricezione-esaltazione': 'ricezione per esaltazione',
+    libero: 'libero dal Sole',
+    'sotto-i-raggi': 'sotto i raggi',
+  };
+  const stelle: Record<LillyStar, string> = { regolo: 'Regolo', spica: 'Spica', algol: 'Algol' };
+  let voce = nomi[row.item] ?? row.item;
+  if (row.item === 'casa') voce = `casa ${row.house}`;
+  if (row.item === 'partile') voce = `partile ${row.aspect} ${row.with ? bodyName(row.with) : ''}`;
+  if (row.item.startsWith('ricezione') && row.with) voce = `${voce} con ${bodyName(row.with)}`;
+  if (row.item === 'stella' && row.star) voce = stelle[row.star];
+  return `${voce} ${row.points}`;
 }
 
 /**

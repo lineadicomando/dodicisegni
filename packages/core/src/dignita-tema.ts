@@ -24,6 +24,7 @@ import {
   lillyReceptionsOf,
   lillyRulersAt,
 } from './dignita-lilly.js';
+import { computeLillyConditions, type LillyConditionsInput } from './condizioni-lilly.js';
 import type {
   CelestialBody,
   DignitySchool,
@@ -42,11 +43,16 @@ const CONTATE: Readonly<Record<'comune' | DignitySchool, readonly ReceptionDigni
  * Il blocco delle dignità per i corpi di un tema tropicale. La setta serve
  * solo alla triplicità di Lilly; senza, quella resta dov'è la stessa di
  * giorno e di notte.
+ *
+ * `instant` serve alle condizioni di Lilly, che oltre ai corpi chiedono le
+ * case, le stelle e l'ora planetaria: chi lo omette le ha senza case e senza
+ * stelle, e `missing` lo dice.
  */
 export function computeWesternDignities(
   bodies: readonly CelestialBody[],
   sect: Sect | undefined,
   school?: DignitySchool,
+  instant?: Omit<LillyConditionsInput, 'bodies' | 'sect'>,
 ): WesternDignities {
   const signLords = Object.fromEntries(
     ZODIAC_SIGNS.map((sign) => [
@@ -92,6 +98,11 @@ export function computeWesternDignities(
         rulers: lillyRulersAt(body.longitude, sect),
         dignities: lillyDignitiesOf(body.id, body.longitude, sect),
       })),
+      conditions: computeLillyConditions({
+        bodies,
+        sect,
+        ...(instant ?? { houses: [], stars: { missing: 'non richieste' } }),
+      }),
     };
   }
 

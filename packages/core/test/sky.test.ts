@@ -137,3 +137,36 @@ describe('formatSkyCompact', () => {
     expect(testo).toContain('CUSPIDI');
   });
 });
+
+describe('le dignità nel cielo', () => {
+  it('le porta solo se chieste, con le condizioni di Lilly', () => {
+    expect(computeSky(ISTANTE, { place: ROMA }).dignities).toBeUndefined();
+
+    const sky = computeSky(ISTANTE, { place: ROMA, houseSystem: 'regiomontano', dignitySchool: 'lilly' });
+    const conditions = sky.dignities?.lilly?.conditions;
+    expect(conditions?.bodies.map((body) => body.id)).toEqual([
+      'sole',
+      'luna',
+      'mercurio',
+      'venere',
+      'marte',
+      'giove',
+      'saturno',
+    ]);
+    // Il 1° agosto 2026 è un sabato, e alle 18:30 a Roma il Sole è ancora su.
+    expect(conditions?.hour).toMatchObject({ dayRuler: 'saturno', diurnal: true });
+    expect(conditions?.ascendant).toBeDefined();
+    expect(formatSkyCompact(sky)).toContain('\n\nCONDIZIONI (LILLY)\n');
+  });
+
+  it('senza luogo non ha case né ora, e lo dice', () => {
+    const conditions = computeSky(ISTANTE, { dignitySchool: 'lilly' }).dignities?.lilly?.conditions;
+    expect(conditions?.hour).toBeUndefined();
+    expect(conditions?.missing.join(' ')).toMatch(/casa/);
+    expect(conditions?.bodies.every((body) => body.house === undefined)).toBe(true);
+  });
+
+  it('rifiuta la scuola nello zodiaco siderale', () => {
+    expect(() => computeSky(ISTANTE, { dignitySchool: 'lilly', zodiac: 'siderale' })).toThrow(ChartError);
+  });
+});

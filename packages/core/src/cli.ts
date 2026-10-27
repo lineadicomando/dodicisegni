@@ -122,8 +122,11 @@ Opzioni
                         notturni) oppure diurna (sempre ASC + Luna − Sole)
   --dignita <scuola>    Aggiunge alla sezione DIGNITÀ la tavola di una scuola:
                         lilly (Christian Astrology, 1647), con triplicità,
-                        termini, facce e le ricezioni per tutte e cinque. Solo
-                        per il tema natale tropicale, in tabella e in --json
+                        termini, facce e le ricezioni per tutte e cinque, e la
+                        sezione CONDIZIONI (LILLY): ora planetaria, Sole, moto,
+                        orientalità, partili, stelle e il conto di p. 115.
+                        Solo nello zodiaco tropicale, col tema natale o con
+                        --sky, in tabella e in --json
   --json                Stampa il JSON completo invece della tabella compatta
   --lettura             Stampa il tema preceduto dalle istruzioni per farlo
                         interpretare: si incolla in un assistente. Solo per il
@@ -388,9 +391,9 @@ function main(argv: string[]): number {
     return 2;
   }
 
-  // Le dignità di una scuola stanno nel tema natale, tabella e JSON: transiti,
-  // cielo e ore non le portano, e accettarle lì vorrebbe dire ignorarle in
-  // silenzio.
+  // Le dignità di una scuola stanno nel tema natale e nel cielo, tabella e
+  // JSON: transiti, calendari e ore non le portano, e accettarle lì vorrebbe
+  // dire ignorarle in silenzio.
   let scuolaDignita: DignitySchool | undefined;
   if (values.dignita !== undefined) {
     const scuole = Object.keys(DIGNITY_SCHOOL_NAMES);
@@ -406,12 +409,12 @@ function main(argv: string[]): number {
       );
       return 2;
     }
-    const altrove = (['transits', 'passages', 'attivi', 'sky', 'events', 'elezione', 'panchanga'] as const).filter(
+    const altrove = (['transits', 'passages', 'attivi', 'events', 'elezione', 'panchanga'] as const).filter(
       (key) => values[key],
     );
     if (altrove.length > 0) {
       process.stderr.write(
-        `--dignita vale per il tema natale, non con ${altrove
+        `--dignita vale per il tema natale e per --sky, non con ${altrove
           .map((key) => `--${key}`)
           .join(', ')}.\n`,
       );
@@ -496,7 +499,7 @@ function main(argv: string[]): number {
     }
     if (values.passages) return printSkyPassages(values);
     if (values.events) return printSkyEvents(values);
-    return printSky(values);
+    return printSky(values, scuolaDignita);
   }
 
   if (values.events) {
@@ -854,7 +857,7 @@ function printSky(values: {
   minor: boolean;
   orbite?: string | undefined;
   json: boolean;
-}): number {
+}, dignitySchool?: DignitySchool): number {
   if (values['transit-tz']) {
     process.stderr.write('Con --sky il fuso si indica con --tz.\n');
     return 2;
@@ -874,6 +877,7 @@ function printSky(values: {
   const orbite = orbiteDa(values.orbite);
   if (orbite === null) return 2;
   const options: SkyOptions = { minorAspects: values.minor, ...zodiaco };
+  if (dignitySchool) options.dignitySchool = dignitySchool;
   if (orbite) options.orbConvention = orbite;
   if (values.houses) options.houseSystem = values.houses as HouseSystem;
   if (values.ephe) options.ephemerisPath = values.ephe;

@@ -1,11 +1,12 @@
 import { describe, expect, it } from 'vitest';
-import { findElectionHours, MAX_ELECTION_DAYS } from '../src/election.js';
+import { findElectionHours, MAX_ELECTION_DAYS, planetaryHourAt } from '../src/election.js';
 import { ChartError } from '../src/errors.js';
 import { formatElectionCompact } from '../src/format.js';
 import { computeSky } from '../src/sky.js';
 import { riseOrSet } from '../src/rise.js';
 import { initEphemeris } from '../src/ephemeris.js';
 import { findSignIngresses } from '../src/sky-events.js';
+import { resolveTime } from '../src/time.js';
 import type { PassageRange, Place } from '../src/types.js';
 
 /** Palermo: le coordinate del dataset GeoNames. */
@@ -257,5 +258,45 @@ describe('formatElectionCompact', () => {
     expect(testo).toContain('Luna vuota di corso');
     // I vuoti restano elencati in coda anche quando le loro ore sono sparite.
     expect(testo).toMatch(/LUNA VUOTA DI CORSO/);
+  });
+});
+
+describe('planetaryHourAt', () => {
+  const giuliano = (iso: string): number => Date.parse(iso) / 86_400_000 + 2440587.5;
+
+  it("dà l'ora di ogni istante come il calendario elettivo", () => {
+    // Il punto di mezzo di ciascuna delle quarantotto ore: l'ora a un istante
+    // e il calendario devono dire lo stesso pianeta, la stessa posizione e gli
+    // stessi estremi, perché sono la stessa regola.
+    const context = initEphemeris();
+    const { hours } = findElectionHours(DUE_GIORNI, PALERMO);
+    expect(hours.length).toBeGreaterThan(40);
+    for (const hour of hours) {
+      const mezzo = (giuliano(hour.start) + giuliano(hour.end)) / 2;
+      const at = planetaryHourAt(mezzo, PALERMO, 'Europe/Rome', context);
+      expect(at).not.toBeNull();
+      expect([at!.ruler, at!.diurnal, at!.index]).toEqual([hour.ruler, hour.diurnal, hour.index]);
+      expect(at!.start).toBe(hour.start);
+      expect(at!.end).toBe(hour.end);
+    }
+  });
+
+  it("trova l'ora del Sole nella figura di Lilly del 16 luglio 1634", () => {
+    // Christian Astrology, p. 177: «16. July 1634, 11 H 6 A M», Londra, con
+    // «Dns: diei ☿, Hor: astr: ☉». La data è giuliana: nel gregoriano che il
+    // motore usa è il 26 luglio, un mercoledì in tutti e due i calendari.
+    const { time } = resolveTime({ date: '1634-07-26', time: '11:06', timezone: 'Europe/London' });
+    const at = planetaryHourAt(
+      time.julianDayUT,
+      { latitude: 51.5074, longitude: -0.1278 },
+      'Europe/London',
+      initEphemeris(),
+    );
+    expect(at).toMatchObject({ dayRuler: 'mercurio', ruler: 'sole', diurnal: true, index: 6 });
+  });
+
+  it('non dà ore dove il Sole non tramonta', () => {
+    const { time } = resolveTime({ date: '2029-06-21', time: '12:00', timezone: 'Europe/Oslo' });
+    expect(planetaryHourAt(time.julianDayUT, TROMSO, 'Europe/Oslo', initEphemeris())).toBeNull();
   });
 });

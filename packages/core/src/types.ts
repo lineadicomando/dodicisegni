@@ -526,6 +526,127 @@ export interface LillyRulers {
   faccia: BodyId;
 }
 
+/** Le tre stelle fisse della tavola di Lilly, p. 115. */
+export type LillyStar = 'regolo' | 'spica' | 'algol';
+
+/**
+ * Le voci della tavola delle fortezze e debilità di Lilly, p. 115. Una voce
+ * può stare da una parte o dall'altra secondo il pianeta: `orientale` è una
+ * fortezza per Saturno, Giove e Marte e una debilità per Venere e Mercurio,
+ * e `casa` dipende dalla casa.
+ */
+export type LillyScoreItem =
+  | 'domicilio'
+  | 'ricezione-domicilio'
+  | 'esaltazione'
+  | 'ricezione-esaltazione'
+  | 'triplicita'
+  | 'termine'
+  | 'faccia'
+  | 'esilio'
+  | 'caduta'
+  | 'peregrino'
+  | 'casa'
+  | 'diretto'
+  | 'retrogrado'
+  | 'veloce'
+  | 'lento'
+  | 'orientale'
+  | 'occidentale'
+  | 'crescente'
+  | 'calante'
+  | 'libero'
+  | 'cazimi'
+  | 'combusto'
+  | 'sotto-i-raggi'
+  | 'partile'
+  | 'assediato'
+  | 'stella';
+
+/** Una riga del conto di Lilly: la voce, i punti e con che cosa. */
+export interface LillyScoreRow {
+  item: LillyScoreItem;
+  /** Sempre positivi, come li stampa Lilly: è la colonna a dire il verso. */
+  points: number;
+  /** Per `casa`. */
+  house?: number;
+  /** Per `partile`: l'aspetto e il corpo. Per le ricezioni: l'altro pianeta. */
+  aspect?: AspectId;
+  with?: BodyId;
+  /** Per `stella`. */
+  star?: LillyStar;
+}
+
+/** Il rapporto col Sole secondo Lilly, p. 113. */
+export type LillySolarState = 'cazimi' | 'combusto' | 'sotto-i-raggi' | 'libero';
+
+/** Le condizioni di uno dei sette pianeti a un istante, e il suo conto. */
+export interface LillyBodyConditions {
+  id: BodyId;
+  name: string;
+  /**
+   * La casa secondo Lilly: quella del tema, salvo che il pianeta stia entro
+   * cinque gradi dalla cuspide successiva (p. 33). Assente senza l'ora.
+   */
+  house?: number;
+  angularity?: 'angolare' | 'succedente' | 'cadente';
+  /** Distanza dal Sole in gradi e lo stato che ne segue. Assente per il Sole. */
+  sun?: { distance: number; state: LillySolarState };
+  /**
+   * Orientale o occidentale del Sole, p. 114. Per la Luna occidentale vuol
+   * dire crescente. Assente per il Sole.
+   */
+  phase?: 'orientale' | 'occidentale';
+  motion: {
+    /** Gradi al giorno, col segno: negativa se retrogrado. */
+    speed: number;
+    /** Il moto medio di Lilly, gradi al giorno (libro I, pp. 57-80). */
+    mean: number;
+    pace: 'veloce' | 'lento' | 'medio';
+    direction: 'diretto' | 'retrogrado';
+  };
+  /** Nessuna delle cinque dignità essenziali nel grado, p. 112. */
+  peregrine: boolean;
+  /** Fra Saturno e Marte nello stesso segno, p. 114. */
+  besieged: boolean;
+  /** Longitudine dell'antiscion (p. 90) e del contrantiscion. */
+  antiscion: number;
+  contrantiscion: number;
+  /**
+   * Il conto della tavola di p. 115, riga per riga, e le tre somme come le fa
+   * Lilly a pp. 178-181: le fortezze, le debilità, e la differenza.
+   */
+  score: {
+    fortitudes: LillyScoreRow[];
+    debilities: LillyScoreRow[];
+    totals: { fortitudes: number; debilities: number; net: number };
+  };
+}
+
+/**
+ * Le condizioni di un istante secondo Lilly, e il suo punteggio. Vedi
+ * `condizioni-lilly.ts`.
+ */
+export interface LillyConditions {
+  source: string;
+  /**
+   * Le letture fatte dove il testo lascia una scelta, una riga ciascuna:
+   * chi legge Lilly in un altro modo sa che cosa rifare.
+   */
+  readings: string[];
+  /** L'ora planetaria. Assente senza l'ora o dove il Sole non sorge. */
+  hour?: PlanetaryHourAt;
+  /** I gradi dell'Ascendente che Lilly sconsiglia di giudicare, p. 122. */
+  ascendant?: { signDegree: number; early: boolean; late: boolean };
+  /** La Luna fra 15° della Bilancia e 15° dello Scorpione, p. 122. */
+  moonInViaCombusta?: boolean;
+  /** Le longitudini delle tre stelle all'istante, se il catalogo c'è. */
+  stars?: Record<LillyStar, number>;
+  /** Le voci del conto che non si sono potute calcolare, e perché. */
+  missing: string[];
+  bodies: LillyBodyConditions[];
+}
+
 /**
  * Le dignità occidentali di un tema tropicale. Vedi `dignita.ts` e
  * `dignita-lilly.ts`.
@@ -580,6 +701,12 @@ export interface WesternDignities {
       rulers: LillyRulers;
       dignities: LillyDignity[];
     }[];
+    /**
+     * Le condizioni accidentali dei sette e il punteggio di p. 115. Senza
+     * l'ora mancano le case, e con loro le righe che ne dipendono: lo dice
+     * `missing`.
+     */
+    conditions: LillyConditions;
   };
 }
 
@@ -970,6 +1097,13 @@ export interface SkyOptions extends ZodiacOptions {
   orbConvention?: NatalOrbConvention;
   /** Corpi da calcolare. Default: tutti tranne Chirone e Lilith. */
   bodies?: BodyId[];
+  /**
+   * Le dignità di una scuola, con le condizioni dell'istante: oggi Lilly.
+   * Omessa, il cielo non porta dignità. Solo nel tropicale, come nel tema.
+   * Le case, l'ora planetaria e i gradi dell'Ascendente chiedono il luogo e
+   * l'ora.
+   */
+  dignitySchool?: DignitySchool;
   /** Percorso della cartella con i file `.se1`. */
   ephemerisPath?: string;
 }
@@ -1015,6 +1149,8 @@ export interface SkyChart {
   aspects: Aspect[];
   /** Come nel tema. Il gruppo degli assi resta vuoto senza luogo o senza ora. */
   distribution: Distribution;
+  /** Le dignità e le condizioni di Lilly, solo con `dignitySchool`. */
+  dignities?: WesternDignities;
   /**
    * Avvertimenti non bloccanti: ora non indicata, luogo senza ora, ripiego
    * sulle effemeridi Moshier, corpi non calcolabili.
@@ -1487,6 +1623,29 @@ export interface PlanetaryHour {
   ascendant: { longitude: number; sign: ZodiacSign; signDegree: number };
   /** `true` se la Luna è vuota di corso durante tutta l'ora o parte di essa. */
   moonVoid: boolean;
+}
+
+/**
+ * L'ora planetaria in cui cade un istante: la stessa divisione del calendario
+ * elettivo, presa per un istante solo. È la prima cosa che Lilly guarda in
+ * una domanda (*Christian Astrology*, p. 121).
+ */
+export interface PlanetaryHourAt {
+  /** Il pianeta che regge l'ora, secondo l'ordine caldeo. */
+  ruler: BodyId;
+  /** Il pianeta del giorno planetario, che comincia all'alba. */
+  dayRuler: BodyId;
+  /** `true` fra alba e tramonto. */
+  diurnal: boolean;
+  /** Posizione nella dodicina, 1-12. */
+  index: number;
+  /** Inizio e fine in UTC, ISO 8601. */
+  start: string;
+  end: string;
+  /** Gli stessi due istanti nel fuso richiesto. */
+  local: { start: string; end: string };
+  /** Durata effettiva in minuti. */
+  minutes: number;
 }
 
 /**

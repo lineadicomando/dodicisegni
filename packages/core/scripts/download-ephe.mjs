@@ -25,6 +25,7 @@ const FILES = [
   { name: 'sepl_18.se1', description: 'pianeti principali, 1800-2399', required: true },
   { name: 'semo_18.se1', description: 'Luna, 1800-2399', required: true },
   { name: 'seas_18.se1', description: 'asteroidi (Chirone), 1800-2399', required: false },
+  { name: 'sefstars.txt', description: 'stelle fisse (Regolo, Spica e Algol per Lilly)', required: false },
 ];
 
 const packageRoot = dirname(fileURLToPath(new URL('../package.json', import.meta.url)));
@@ -62,7 +63,8 @@ async function download(file) {
     }
     await pipeline(Readable.fromWeb(response.body), createWriteStream(target));
     const info = await stat(target);
-    console.log(`ok (${(info.size / 1024 / 1024).toFixed(1)} MB)`);
+    const size = info.size >= 1024 * 1024 ? `${(info.size / 1024 / 1024).toFixed(1)} MB` : `${Math.round(info.size / 1024)} KB`;
+    console.log(`ok (${size})`);
     return true;
   } catch (error) {
     console.log(`FALLITO (${error.message})`);

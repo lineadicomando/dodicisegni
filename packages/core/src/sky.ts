@@ -1,4 +1,9 @@
 import { computeAspects } from './aspects.js';
+import { lillyStarsAt } from './condizioni-lilly.js';
+import { DIGNITY_SCHOOL_NAMES } from './constants.js';
+import { computeWesternDignities } from './dignita-tema.js';
+import { planetaryHourAt } from './election.js';
+import { ChartError } from './errors.js';
 import { ayanamsaAt, DEFAULT_AYANAMSA, zodiacContext } from './ayanamsa.js';
 import { computeDistribution } from './distribution.js';
 import { DEFAULT_BODIES } from './constants.js';
@@ -34,6 +39,13 @@ export function computeSky(moment: SkyMoment, options: SkyOptions = {}): SkyChar
   if (place) validatePlace(place);
 
   const zodiac = options.zodiac ?? 'tropicale';
+  if (options.dignitySchool && zodiac !== 'tropicale') {
+    throw new ChartError(
+      'ZODIACO_NON_TROPICALE',
+      `Le dignità di ${DIGNITY_SCHOOL_NAMES[options.dignitySchool]} sono costruite sullo zodiaco tropicale: ` +
+        'nel siderale non si calcolano.',
+    );
+  }
   const context = zodiacContext(initEphemeris(options.ephemerisPath), options);
   const { time, warnings: timeWarnings } = resolveTime(moment);
   const { bodies, warnings: bodyWarnings } = computeBodies(
@@ -81,6 +93,17 @@ export function computeSky(moment: SkyMoment, options: SkyOptions = {}): SkyChar
    */
   const concludi = (): SkyChart => {
     sky.distribution = computeDistribution(sky);
+    // Le dignità per ultime, come nel tema: le condizioni di Lilly vogliono
+    // le case e l'ora planetaria, che arrivano solo col luogo e con l'ora.
+    if (options.dignitySchool) {
+      const conOra = place !== undefined && time.timeKnown;
+      sky.dignities = computeWesternDignities(sky.bodies, sky.sect, options.dignitySchool, {
+        houses: sky.houses,
+        ...(sky.angles ? { ascendant: sky.angles.ascendant } : {}),
+        stars: lillyStarsAt(time.julianDayUT, context),
+        ...(conOra ? { hour: planetaryHourAt(time.julianDayUT, place, moment.timezone, context) } : {}),
+      });
+    }
     return sky;
   };
 

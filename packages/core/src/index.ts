@@ -12,7 +12,7 @@ export { findTransitPassages } from './passages.js';
 export { findActiveTransits } from './attivi.js';
 export { findSkyPassages } from './sky-passages.js';
 export { findSignIngresses, findStations } from './sky-events.js';
-export { findElectionHours, MAX_ELECTION_DAYS } from './election.js';
+export { findElectionHours, MAX_ELECTION_DAYS, planetaryHourAt } from './election.js';
 export { riseOrSet, type RiseOptions } from './rise.js';
 export { computePanchanga, karanaOf, tithiOf, yogaOf } from './panchanga.js';
 export {
@@ -44,6 +44,15 @@ export {
   type ReceptionDignity,
 } from './dignita.js';
 export { computeWesternDignities } from './dignita-tema.js';
+export {
+  computeLillyConditions,
+  LILLY_CONDITIONS_READINGS,
+  LILLY_CONDITIONS_SOURCE,
+  lillyHouse,
+  lillyStarsAt,
+  partileAspect,
+  type LillyConditionsInput,
+} from './condizioni-lilly.js';
 export {
   LILLY_PLANETS,
   LILLY_RECEPTION_SOURCE,
@@ -237,6 +246,13 @@ export type {
   VimshottariOptions,
   VoidOfCourse,
   WesternDignities,
+  LillyBodyConditions,
+  LillyConditions,
+  LillyScoreItem,
+  LillyScoreRow,
+  LillySolarState,
+  LillyStar,
+  PlanetaryHourAt,
   Zodiac,
   ZodiacOptions,
   ZodiacSign,

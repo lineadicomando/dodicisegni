@@ -38,6 +38,7 @@ import type {
   PassageRange,
   Place,
   PlanetaryHour,
+  PlanetaryHourAt,
   VoidOfCourse,
 } from './types.js';
 
@@ -136,6 +137,62 @@ export function findElectionHours(
     // settecento sembrerebbero tutte quelle che esistono.
     ...(Object.keys(filters).length > 0 ? { filters } : {}),
     warnings,
+  };
+}
+
+/**
+ * L'ora planetaria in cui cade un istante, in un luogo.
+ *
+ * La regola è quella di `findElectionHours`: il giorno planetario comincia
+ * all'alba geometrica, il giorno e la notte si dividono in dodici parti
+ * ciascuno, e la prima ora del giorno è del pianeta del giorno. `null` dove
+ * il Sole non sorge o non tramonta, e quindi le ore non ci sono.
+ *
+ * Il fuso serve al giorno della settimana dell'alba, che decide il pianeta
+ * del giorno, e all'ora locale del risultato.
+ */
+export function planetaryHourAt(
+  julianDay: number,
+  place: Place,
+  timezone: string,
+  context: EphemerisContext,
+): PlanetaryHourAt | null {
+  // L'ultima alba non successiva all'istante: si parte da un giorno prima e
+  // si avanza, come in `buildPlanetaryHours`.
+  let sunrise = riseOrSet('rise', julianDay - 1, place, context);
+  if (sunrise === null || sunrise > julianDay) return null;
+  for (;;) {
+    const next = riseOrSet('rise', sunrise + 0.5, place, context);
+    if (next === null) return null;
+    if (next > julianDay) break;
+    sunrise = next;
+  }
+  const sunset = riseOrSet('set', sunrise, place, context);
+  const nextSunrise = riseOrSet('rise', sunrise + 0.5, place, context);
+  if (sunset === null || nextSunrise === null) return null;
+
+  const diurnal = julianDay < sunset;
+  const from = diurnal ? sunrise : sunset;
+  const length = ((diurnal ? sunset : nextSunrise) - from) / 12;
+  // L'istante esatto della fine appartiene all'ora dopo; il `min` tiene
+  // dentro la dodicesima ora l'arrotondamento dell'ultimo istante.
+  const position = Math.min(Math.floor((julianDay - from) / length), 11);
+  const hourStart = from + position * length;
+  const hourEnd = hourStart + length;
+  const dayRuler = rulerOfDay(sunrise, timezone);
+
+  return {
+    ruler: chaldeanRuler(dayRuler, diurnal ? position : position + 12),
+    dayRuler,
+    diurnal,
+    index: position + 1,
+    start: julianDayToISO(hourStart),
+    end: julianDayToISO(hourEnd),
+    local: {
+      start: julianDayToISO(hourStart, timezone),
+      end: julianDayToISO(hourEnd, timezone),
+    },
+    minutes: Math.round((hourEnd - hourStart) * 1440),
   };
 }
 

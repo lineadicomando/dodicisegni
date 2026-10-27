@@ -12,6 +12,8 @@ import type { BodyId, CelestialBody, EphemerisMode } from './types.js';
  */
 const REQUIRED_FILES = ['sepl_18.se1', 'semo_18.se1'];
 const ASTEROID_FILE = 'seas_18.se1';
+/** Il catalogo delle stelle fisse, facoltativo: serve solo alle stelle della tavola di Lilly. */
+const STARS_FILE = 'sefstars.txt';
 
 export interface EphemerisContext {
   /**
@@ -26,6 +28,12 @@ export interface EphemerisContext {
   path: string | null;
   /** `false` in modalità Moshier o se manca `seas_18.se1`: Chirone non è calcolabile. */
   asteroidsAvailable: boolean;
+  /**
+   * `false` se manca `sefstars.txt`: le stelle fisse non sono calcolabili.
+   * Il catalogo non dipende dalle effemeridi dei pianeti, e vale anche col
+   * ripiego su Moshier.
+   */
+  starsAvailable: boolean;
   warnings: string[];
 }
 
@@ -45,6 +53,7 @@ export function initEphemeris(explicitPath?: string): EphemerisContext {
 
   const warnings: string[] = [];
   const hasRequired = REQUIRED_FILES.every((file) => existsSync(joinPath(path, file)));
+  const starsAvailable = existsSync(joinPath(path, STARS_FILE));
 
   let context: EphemerisContext;
   if (hasRequired) {
@@ -60,9 +69,13 @@ export function initEphemeris(explicitPath?: string): EphemerisContext {
       flags: sweph.constants.SEFLG_SWIEPH | sweph.constants.SEFLG_SPEED,
       path,
       asteroidsAvailable,
+      starsAvailable,
       warnings,
     };
   } else {
+    // Senza i `.se1` il percorso serve ancora al catalogo delle stelle, se c'è:
+    // Swiss Ephemeris lo cerca lì anche quando i pianeti vengono da Moshier.
+    if (starsAvailable) sweph.set_ephe_path(path);
     warnings.push(
       `File di effemeridi non trovati in ${path}: uso le effemeridi Moshier ` +
         '(nessun file richiesto, precisione leggermente inferiore, Chirone non disponibile). ' +
@@ -73,6 +86,7 @@ export function initEphemeris(explicitPath?: string): EphemerisContext {
       flags: sweph.constants.SEFLG_MOSEPH | sweph.constants.SEFLG_SPEED,
       path: null,
       asteroidsAvailable: false,
+      starsAvailable,
       warnings,
     };
   }
@@ -187,6 +201,28 @@ function computeBody(
     sign: signOf(normalized),
     signDegree: degreeInSign(normalized),
   };
+}
+
+/**
+ * La longitudine eclittica di una stella fissa all'istante dato, coi flag del
+ * contesto: precessione e moto proprio dal catalogo di Swiss Ephemeris
+ * (`sefstars.txt`, coordinate ICRS). Una stringa con il messaggio se la
+ * stella non è calcolabile, come `computeBody`.
+ *
+ * `name` è il nome del catalogo, per esteso o con la sigla di Bayer dopo la
+ * virgola (`,alLeo`): la sigla è univoca, il nome no.
+ */
+export function fixedStarLongitude(
+  julianDayUT: number,
+  name: string,
+  context: EphemerisContext,
+): number | string {
+  if (!context.starsAvailable) return `manca il catalogo delle stelle (${STARS_FILE})`;
+  const result = sweph.fixstar2_ut(name, julianDayUT, context.flags);
+  if (result.flag < 0) return result.error || 'errore sconosciuto in fixstar2_ut';
+  const [longitude] = result.data;
+  if (typeof longitude !== 'number') return 'risposta inattesa da fixstar2_ut';
+  return normalize360(longitude);
 }
 
 function computeNorthNodeOnDemand(

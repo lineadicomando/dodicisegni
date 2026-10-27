@@ -1,7 +1,9 @@
 import { computeAspects } from './aspects.js';
 import { ayanamsaAt, DEFAULT_AYANAMSA, zodiacContext } from './ayanamsa.js';
 import { DEFAULT_BODIES, DIGNITY_SCHOOL_NAMES } from './constants.js';
+import { lillyStarsAt } from './condizioni-lilly.js';
 import { computeWesternDignities } from './dignita-tema.js';
+import { planetaryHourAt } from './election.js';
 import { computeDistribution } from './distribution.js';
 import { ChartError } from './errors.js';
 import { computeBodies, initEphemeris } from './ephemeris.js';
@@ -153,7 +155,22 @@ export function computeNatalChart(birth: BirthData, options: ChartOptions = {}):
   // Solo nel tropicale: vedi `NatalChart.dignities`. La setta serve alla
   // triplicità di Lilly, e c'è solo con l'ora.
   if (zodiac === 'tropicale') {
-    chart.dignities = computeWesternDignities(chart.bodies, chart.sect, options.dignitySchool);
+    const lilly = options.dignitySchool === 'lilly';
+    chart.dignities = computeWesternDignities(
+      chart.bodies,
+      chart.sect,
+      options.dignitySchool,
+      lilly
+        ? {
+            houses: chart.houses,
+            ...(angles ? { ascendant: angles.ascendant } : {}),
+            stars: lillyStarsAt(time.julianDayUT, context),
+            ...(time.timeKnown
+              ? { hour: planetaryHourAt(time.julianDayUT, birth, birth.timezone, context) }
+              : {}),
+          }
+        : undefined,
+    );
   }
 
   return chart;
