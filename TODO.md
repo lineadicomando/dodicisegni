@@ -26,7 +26,6 @@ volta e ricominciare da capo.
 
 | Voce | Priorità | Taglia | Prima di cominciare |
 |---|---|---|---|
-| 19. Le dignità, per scuola | media | media: restano le superfici | decidere come entrano nel JSON |
 | 11. Gli elenchi in più posti | media | piccola | prima del punto 5 |
 | 13. Due semplificazioni | bassa | piccola | niente |
 | 9. Il linter | media | piccola | decidere lo strumento |
@@ -35,12 +34,13 @@ volta e ricominciare da capo.
 | 8. Il glossario e /metodo | media | grande | si incrocia col punto 6 |
 | 6. La prosa che invecchia | bassa | piccola | farla insieme al punto 8 |
 | 5. I varga che mancano | non dichiarata | tre lotti | il punto 11; per il D-2, la convenzione |
+| 19. Le dignità, per scuola | bassa | media | il Jyotisha: i varga del BPHS, cap. 6-7 |
 | 17. L'astrologia oraria | bassa | la più grande | le tavole ci sono; il punteggio no |
 | 24. Le fonti da scaricare in `texts/` | bassa | piccola | niente |
 
-L'ordine consigliato è quello della tabella: le superfici delle dignità, ora
-che il pacchetto di Lilly c'è, poi le voci piccole che tolgono copie e righe
-morte prima che il lavoro grande ci passi sopra.
+L'ordine consigliato è quello della tabella: le voci piccole che tolgono
+copie e righe morte prima che il lavoro grande ci passi sopra. Quel che resta
+della 19 sta col Jyotisha, accanto ai varga della 5.
 
 ## 5. I dieci varga che mancano
 
@@ -803,31 +803,29 @@ domicili il numero è illeggibile (ci si aspetta 5). Non sono nel codice: il
 punteggio sta col punto 17, che chiede anche le condizioni accidentali (la
 tavola delle fortezze di p. 115). Anche il peregrino (p. 112) entra lì.
 
+Fatte anche le superfici, in `510d777` e `8622c05`. Le dignità occidentali
+stanno in `NatalChart.dignities` (`dignita-tema.ts`), **solo nello zodiaco
+tropicale**: nel siderale, che è anche la carta che il Jyotisha riusa,
+mancano dal JSON e dalla tabella, e chiedere Lilly lì è `ZODIACO_NON_TROPICALE`.
+È un cambiamento: prima la tabella compatta del tema siderale portava la
+sezione DIGNITÀ coi domicili occidentali, e ora no. Il pacchetto di Lilly si
+chiede nel calcolo (`ChartOptions.dignitySchool`), non nel formato: la tabella
+compatta impagina il JSON e non ricalcola, e i test che confrontavano le due
+rese non tolgono più la sezione. Le ricezioni portano `counted`, come la
+distribuzione. Superfici: `--dignita lilly` (anche con `--json`),
+`dignitySchool=lilly` su `/api/chart`, `dignity_school` su
+`compute_natal_chart`, la casella «Dignità di Lilly» e `DignityTable.svelte`
+nella pagina del tema. Il compatto ora pesa circa il 25% del JSON, e le
+descrizioni dicono «circa un quarto».
+
 ### Che cosa resta
 
-1. **Le superfici**: rotta, tool MCP e una tabella Svelte, nell'ordine della
-   skill `nuova-funzione`. La tabella prende i dati, non il tema. Prima va
-   deciso come le dignità entrano nel JSON (qui sotto): finché non ci sono,
-   la rotta e il tool possono passare solo l'opzione al formato compatto.
-2. **Le dignità nei varga del Jyotisha** e la pagina `/vedica`, scritte sopra.
-
-### Le dignità occidentali non sono nel JSON
-
-Quelle di Parashara ci sono, in `JyotishaChart`. Le occidentali, ricezioni
-comprese, stanno solo nella tabella compatta, e `NatalChart` non le ha. Vanno messe
-nel JSON col passo delle superfici, e lì va deciso come: `NatalChart` è anche
-la carta siderale che il Jyotisha riusa, dove le dignità occidentali sarebbero
-dottrina sbagliata.
-
-Finché non ci sono, il compatto porta un dato che il JSON non ha, e i due test
-che confrontano le rese (`packages/core/test/chart.test.ts`, «resta
-sensibilmente più compatto», e `packages/mcp/test/server.test.ts`, «costa
-molti meno token», con la funzione `senzaDignita`) tolgono la sezione DIGNITÀ
-prima di confrontare. Quando il dato entra nel JSON, quella sottrazione va
-tolta. Le descrizioni che parlano del rapporto («un quarto del JSON, e in più
-le dignità») stanno in `format.ts`, in `packages/mcp/src/tools.ts` (parametro
-`format` di `compute_natal_chart`) e in
-`apps/web/src/routes/api/chart/+server.ts`.
+1. **Le dignità nei varga del Jyotisha**, che il BPHS tratta a parte (cap.
+   6-7), e la pagina `/vedica`, che non mostra le dignità di Parashara anche
+   se il JSON le porta.
+2. **Le altre scuole occidentali**, quando le loro fonti sono state lette
+   (vedi *Da verificare* qui sotto): ciascuna come valore nuovo di
+   `DignitySchool`, intera.
 
 ### Le scuole, e il default deciso il 18 ottobre 2026
 
