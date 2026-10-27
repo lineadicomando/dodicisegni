@@ -11,6 +11,7 @@ export type ChartErrorCode =
   | 'VARGA_NON_VALIDO'
   | 'INTERVALLO_NON_VALIDO'
   | 'ORBITE_NON_VALIDE'
+  | 'CASA_NON_VALIDA'
   | 'ERRORE_EFFEMERIDI';
 
 /**

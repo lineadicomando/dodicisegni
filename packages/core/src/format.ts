@@ -39,6 +39,8 @@ import type {
   VimshottariDasha,
   WesternDignities,
   SignCourse,
+  HoraryFinding,
+  HoraryLilly,
   LillyConditions,
   LillyScoreItem,
   LillyScoreRow,
@@ -289,6 +291,77 @@ export function formatSkyEventsCompact(
 
   lines.push(...warningLines(warnings));
 
+  return lines.join('\n');
+}
+
+/**
+ * Il tema orario secondo Lilly: la domanda, i significatori, ciò che i
+ * classificatori della scuola trovano, le considerazioni, e sotto la figura
+ * intera e il corso dei significatori.
+ *
+ * Nessuna riga dice se la cosa avverrà: i modi della perfezione e degli
+ * impedimenti stanno ciascuno con la sua definizione e la pagina, e gli
+ * eventi da cui si leggono.
+ */
+export function formatHoraryCompact(horary: HoraryLilly): string {
+  const quando = (iso: string): string => iso.slice(0, 16).replace('T', ' ');
+  const { question } = horary;
+  const casa = question.derivedFrom
+    ? `casa ${question.house} dalla ${question.derivedFrom}, cioè la ${question.effectiveHouse}`
+    : `casa ${question.effectiveHouse}`;
+  const lines = [
+    `TEMA ORARIO (LILLY) — ${casa}, cuspide in ${question.cuspSign}`,
+    `Fonte: ${horary.source}`,
+    ...horary.readings.map((r) => `Lettura: ${r}`),
+    '',
+    'SIGNIFICATORI',
+  ];
+  const ruolo = { querente: 'querente', quesito: 'quesito', cosignificatore: 'cosignificatore' } as const;
+  for (const s of horary.significators) {
+    lines.push(
+      `${ruolo[s.role].padEnd(15)} ${bodyName(s.body).padEnd(10)} ` +
+        `${s.role === 'cosignificatore' ? 'col signore della 1' : `signore della ${s.rules}`}, ` +
+        `${formatZodiacal(s.longitude)}${s.house !== undefined ? `, in casa ${s.house}` : ''}`,
+    );
+  }
+
+  const riga = (f: HoraryFinding): string => {
+    const quale = [f.by ? bodyName(f.by) : '', f.aspect ?? ''].filter(Boolean).join(', ');
+    const eventi = f.events
+      .map((e) =>
+        e.kind === 'aspetto'
+          ? `${bodyName(e.body)} ${e.aspect} ${bodyName(e.with)} ${quando(e.local)}`
+          : e.kind === 'stazione'
+            ? `${bodyName(e.body)} stazione ${e.direction} ${quando(e.local)}`
+            : `${bodyName(e.body)} ingresso ${quando(e.local)}`,
+      )
+      .join('; ');
+    const ricezioni = (f.reception ?? [])
+      .map((r) => `${bodyName(r.by)} riceve ${bodyName(r.of)}: ${r.dignities.map(dignityLabel).join(', ') || 'no'}`)
+      .join('; ');
+    return (
+      `${f.mode}${quale ? ` (${quale})` : ''}, p. ${f.page}. ${f.definition}\n  Eventi: ${eventi}` +
+      (ricezioni ? `\n  Ricezione: ${ricezioni}` : '') +
+      (f.note ? `\n  ${f.note}` : '')
+    );
+  };
+  lines.push('', 'PERFEZIONE');
+  if (horary.sameSignificator) lines.push('(un solo significatore: lo stesso pianeta regge le due case)');
+  else if (horary.perfections.length === 0) lines.push('(nessuno dei modi di pp. 125-126 entro la finestra)');
+  lines.push(...horary.perfections.map(riga));
+  lines.push('', 'IMPEDIMENTI');
+  if (horary.impediments.length === 0) lines.push('(nessuno entro la finestra)');
+  lines.push(...horary.impediments.map(riga));
+
+  lines.push('', 'CONSIDERAZIONI PRIMA DEL GIUDIZIO');
+  for (const c of horary.considerations) {
+    const esito = c.holds === undefined ? 'non calcolata' : c.holds ? 'sì' : 'no';
+    lines.push(`${esito.padEnd(13)} p. ${c.page} ${c.text}${c.detail ? ` ${c.detail}` : ''}`);
+  }
+  lines.push(...warningLines(horary.warnings));
+
+  lines.push('', formatSkyCompact(horary.chart));
+  for (const course of horary.courses) lines.push('', formatSignCourseCompact(course));
   return lines.join('\n');
 }
 

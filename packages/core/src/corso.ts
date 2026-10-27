@@ -101,7 +101,9 @@ export function findSignCourse(
 
   const exit = findIngress(body, julianDay, 'dopo', warnings);
   const entry = findIngress(body, julianDay, 'prima', warnings);
-  const end = exit?.julianDay ?? julianDay + MAX_COURSE_DAYS;
+  const segnoFinisce = exit?.julianDay ?? julianDay + MAX_COURSE_DAYS;
+  const end = options.until !== undefined ? Math.min(segnoFinisce, Math.max(options.until, julianDay)) : segnoFinisce;
+  const conUscita = exit !== undefined && exit.julianDay <= end;
   const from = entry?.julianDay ?? julianDay;
 
   const perfezioni: (CourseEvent & { julianDay: number })[] = [];
@@ -148,7 +150,7 @@ export function findSignCourse(
 
   const prima = perfezioni.filter((event) => event.julianDay < julianDay);
   const dopo = [...perfezioni.filter((event) => event.julianDay > julianDay), ...stazioni];
-  if (exit) {
+  if (exit && conUscita) {
     dopo.push({
       kind: 'ingresso',
       sign: exit.sign,
@@ -158,7 +160,7 @@ export function findSignCourse(
       local: julianDayToISO(exit.julianDay, timezone),
       julianDay: exit.julianDay,
     });
-  } else {
+  } else if (!exit) {
     warnings.push(
       `${now.name} non cambia segno entro ${MAX_COURSE_DAYS} giorni: la sequenza resta aperta, ` +
         'e le Lune vuote non si classificano.',
@@ -176,15 +178,18 @@ export function findSignCourse(
     sign: now.sign,
     signDegree: degreeInSign(now.longitude),
     with: others,
+    separations: [],
     events: dopo.map(pubblico),
     voids: [],
     warnings,
   };
-  const ultima = prima.sort((a, b) => a.julianDay - b.julianDay).at(-1);
+  prima.sort((a, b) => a.julianDay - b.julianDay);
+  course.separations = prima.map(pubblico);
+  const ultima = prima.at(-1);
   if (ultima) course.lastPerfected = pubblico(ultima);
   if (entry) course.entered = julianDayToISO(entry.julianDay);
 
-  if (exit) course.voids = classifyVoids(body, others, dopo.some((event) => event.kind === 'aspetto'), exit.julianDay, options);
+  if (exit && conUscita) course.voids = classifyVoids(body, others, dopo.some((event) => event.kind === 'aspetto'), exit.julianDay, options);
   return course;
 }
 

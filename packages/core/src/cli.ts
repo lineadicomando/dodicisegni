@@ -25,6 +25,7 @@ import {
   formatPanchangaCompact,
   formatActiveTransitsCompact,
   formatPassagesCompact,
+  formatHoraryCompact,
   formatSignCourseCompact,
   formatSkyCompact,
   formatSkyEventsCompact,
@@ -44,6 +45,7 @@ import { findSignIngresses, findStations } from './sky-events.js';
 import { findSkyPassages } from './sky-passages.js';
 import { BODIES, DEFAULT_PASSAGE_BODIES, DIGNITY_SCHOOL_NAMES } from './constants.js';
 import { findSignCourse } from './corso.js';
+import { computeHoraryLilly } from './oraria-lilly.js';
 import { NATAL_ORB_CONVENTIONS } from './orbite.js';
 import { computeSky } from './sky.js';
 import { currentMoment, resolveTime, systemTimezone } from './time.js';
@@ -51,6 +53,7 @@ import { computeTransits } from './transits.js';
 import type {
   BirthData,
   BodyId,
+  HoraryQuestion,
   NatalChart,
   ChartOptions,
   DignitySchool,
@@ -190,6 +193,17 @@ Cielo
                         fino al cambio di segno: aspetti tolemaici coi sette,
                         stazioni, ingresso, e la Luna vuota moderna e quella di
                         Lilly. Anche in --json
+
+Oraria
+  --oraria <casa>       Il tema orario di una domanda secondo Lilly (Christian
+                        Astrology, 1647): la casa del quesito, 1-12. Vogliono
+                        --lat, --lon e l'ora (--on, --at, --tz; se omessi,
+                        adesso). Dà i significatori, la perfezione e i suoi
+                        impedimenti con la pagina, le considerazioni prima del
+                        giudizio, la figura col conto di Lilly e il corso dei
+                        significatori. Non dice se la cosa avverrà
+  --derivata <casa>     Conta --oraria da un'altra casa: il coniuge del
+                        fratello è --oraria 7 --derivata 3
 
 Panchanga
   --panchanga           Le cinque parti del calendario indiano (tithi, vara,
@@ -353,6 +367,8 @@ function main(argv: string[]): number {
       sky: { type: 'boolean', default: false },
       events: { type: 'boolean', default: false },
       corso: { type: 'string' },
+      oraria: { type: 'string' },
+      derivata: { type: 'string' },
       elezione: { type: 'boolean', default: false },
       reggitori: { type: 'string' },
       'senza-vuoti': { type: 'boolean', default: false },
@@ -483,6 +499,13 @@ function main(argv: string[]): number {
       );
       return 2;
     }
+  }
+
+  // Anche l'oraria: è la figura di una domanda, non di una nascita.
+  if (values.oraria !== undefined) return printHorary(values);
+  if (values.derivata !== undefined) {
+    process.stderr.write('--derivata vale solo con --oraria.\n');
+    return 2;
   }
 
   // L'elezione, come il cielo, non riguarda nessuna nascita: si risponde prima
@@ -918,6 +941,37 @@ function printSky(values: {
   process.stdout.write(
     values.json ? `${JSON.stringify(sky, null, 2)}\n` : `${formatSkyCompact(sky)}\n`,
   );
+  return 0;
+}
+
+/**
+ * Stampa il tema orario di una domanda secondo Lilly.
+ */
+function printHorary(values: {
+  oraria?: string | undefined;
+  derivata?: string | undefined;
+  on?: string | undefined;
+  at?: string | undefined;
+  tz?: string | undefined;
+  lat?: string | undefined;
+  lon?: string | undefined;
+  ephe?: string | undefined;
+  json: boolean;
+}): number {
+  if (!values.lat || !values.lon) {
+    process.stderr.write("--oraria richiede --lat e --lon: senza il luogo non ci sono case, e nemmeno la casa del quesito.\n");
+    return 2;
+  }
+  const timezone = values.tz ?? systemTimezone();
+  const moment = momentFrom(values, timezone);
+  const question: HoraryQuestion = { house: Number(values.oraria) };
+  if (values.derivata !== undefined) question.derivedFrom = Number(values.derivata);
+  const horary = computeHoraryLilly(
+    moment,
+    { latitude: Number(values.lat), longitude: Number(values.lon) },
+    { question, ...(values.ephe ? { ephemerisPath: values.ephe } : {}) },
+  );
+  process.stdout.write(values.json ? `${JSON.stringify(horary, null, 2)}\n` : `${formatHoraryCompact(horary)}\n`);
   return 0;
 }
 

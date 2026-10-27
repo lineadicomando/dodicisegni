@@ -1657,6 +1657,12 @@ export interface SignCourseOptions {
   bodies?: BodyId[];
   /** Il fuso in cui scrivere gli istanti locali. Default: UTC. */
   timezone?: string;
+  /**
+   * Un giorno giuliano oltre il quale non cercare aspetti e stazioni, se
+   * viene prima del cambio di segno. Il cambio di segno si cerca comunque, ma
+   * entra negli eventi, e con lui le Lune vuote, solo se cade entro il limite.
+   */
+  until?: number;
   /** Percorso della cartella con i file `.se1`. */
   ephemerisPath?: string;
 }
@@ -1723,10 +1729,131 @@ export interface SignCourse {
    * ciò da cui il corpo si sta separando.
    */
   lastPerfected?: CourseEvent;
+  /**
+   * Tutti gli aspetti perfezionati da quando il corpo è nel segno fino
+   * all'istante, in ordine: le separazioni. L'ultimo è `lastPerfected`.
+   */
+  separations: CourseEvent[];
   /** In ordine; l'ultimo è l'ingresso nel segno dopo, se cade entro l'arco. */
   events: CourseEvent[];
   /** La Luna vuota moderna e quella di Lilly. Vuoto se il segno non finisce entro l'arco. */
   voids: VoidVerdict[];
+  warnings: string[];
+}
+
+/**
+ * La domanda di un tema orario, ridotta a ciò che il motore può calcolare: la
+ * casa che la riguarda. Sceglierla è il primo atto del giudizio e lo fa chi
+ * pone la domanda; il motore la riceve.
+ */
+export interface HoraryQuestion {
+  /** La casa del quesito, 1-12, contata dall'Ascendente o da `derivedFrom`. */
+  house: number;
+  /**
+   * Per le case derivate: la casa da cui contare. Il coniuge del fratello è
+   * la settima dalla terza, `{ house: 7, derivedFrom: 3 }`, cioè la nona.
+   */
+  derivedFrom?: number;
+}
+
+export interface HoraryOptions {
+  question: HoraryQuestion;
+  /** Percorso della cartella con i file `.se1`. */
+  ephemerisPath?: string;
+}
+
+/** Un significatore e la casa che significa. */
+export interface HorarySignificator {
+  body: BodyId;
+  /** `querente` per l'Ascendente, `quesito` per la casa del quesito, `cosignificatore` la Luna (p. 124). */
+  role: 'querente' | 'quesito' | 'cosignificatore';
+  /** La casa di cui è signore; per la Luna, la prima. */
+  rules: number;
+  longitude: number;
+  sign: ZodiacSign;
+  /** La casa in cui sta, con la regola dei cinque gradi. */
+  house?: number;
+}
+
+/** I modi della perfezione, pp. 125-126, e del suo impedimento, pp. 110-113. */
+export type HoraryFindingMode =
+  | 'congiunzione'
+  | 'aspetto'
+  | 'traslazione'
+  | 'collezione'
+  | 'proibizione'
+  | 'frustrazione'
+  | 'refranazione';
+
+/** Un evento del corso di un corpo, col nome del corpo. */
+export type HoraryEvent = CourseEvent & { body: BodyId };
+
+/**
+ * Ciò che un classificatore della scuola di Lilly trova nella sequenza: il
+ * modo, la pagina della definizione, e gli eventi che lo compongono. Non dice
+ * se la cosa domandata avverrà: dice che la figura ha questa configurazione
+ * secondo quella definizione.
+ */
+export interface HoraryFinding {
+  mode: HoraryFindingMode;
+  /** La definizione in una riga e la pagina di Christian Astrology. */
+  definition: string;
+  page: number;
+  /** Il pianeta che trasferisce, raccoglie, proibisce o frustra. */
+  by?: BodyId;
+  /** L'aspetto con cui la perfezione o l'impedimento avviene. */
+  aspect?: AspectId;
+  /** L'istante in cui si compie, se c'è. */
+  exact?: string;
+  local?: string;
+  /** Gli eventi da cui la si legge, in ordine. */
+  events: HoraryEvent[];
+  /**
+   * Le ricezioni che la definizione nomina: per la traslazione (p. 126) se
+   * il pianeta che trasferisce è ricevuto da quello da cui si separa, per la
+   * collezione se i due significatori ricevono quello che raccoglie.
+   */
+  reception?: { by: BodyId; of: BodyId; dignities: ReceptionDignity[] }[];
+  note?: string;
+}
+
+/**
+ * Una considerazione prima del giudizio, pp. 121-123: un predicato, mai un
+ * rifiuto. `holds` assente vuol dire che il testo non dà una soglia da
+ * calcolare, e `detail` dice perché.
+ */
+export interface HoraryConsideration {
+  id: string;
+  page: number;
+  /** La condizione, con le parole di Lilly riassunte. */
+  text: string;
+  holds?: boolean;
+  detail?: string;
+}
+
+/**
+ * Il tema orario secondo Lilly: la figura dell'istante con le sue condizioni,
+ * i significatori della domanda, il loro corso fino al cambio di segno, e ciò
+ * che i classificatori della scuola vi trovano. Vedi `oraria-lilly.ts`.
+ *
+ * Non c'è un sì o un no, né un tempo in giorni: sono il giudizio, e il
+ * giudizio lo fa chi legge.
+ */
+export interface HoraryLilly {
+  school: 'lilly';
+  source: string;
+  readings: string[];
+  /** La figura: Regiomontano, tropicale, col pacchetto di Lilly. */
+  chart: SkyChart;
+  question: HoraryQuestion & { effectiveHouse: number; cuspSign: ZodiacSign };
+  significators: HorarySignificator[];
+  /** Lo stesso pianeta regge l'Ascendente e la casa del quesito. */
+  sameSignificator: boolean;
+  /** Il corso dei significatori e della Luna fino al cambio di segno. */
+  courses: SignCourse[];
+  perfections: HoraryFinding[];
+  impediments: HoraryFinding[];
+  considerations: HoraryConsideration[];
   warnings: string[];
 }
 

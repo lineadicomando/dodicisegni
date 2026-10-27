@@ -14,6 +14,13 @@ export { findSkyPassages } from './sky-passages.js';
 export { findSignIngresses, findStations } from './sky-events.js';
 export { findElectionHours, MAX_ELECTION_DAYS, planetaryHourAt } from './election.js';
 export { findSignCourse, MAX_COURSE_DAYS } from './corso.js';
+export {
+  classifyLilly,
+  computeHoraryLilly,
+  HORARY_LILLY_READINGS,
+  HORARY_LILLY_SOURCE,
+  type LillyClassifierInput,
+} from './oraria-lilly.js';
 export { riseOrSet, type RiseOptions } from './rise.js';
 export { computePanchanga, karanaOf, tithiOf, yogaOf } from './panchanga.js';
 export {
@@ -128,6 +135,8 @@ export {
   formatNakshatraCompact,
   formatPanchangaCompact,
   formatPassagesCompact,
+  formatHoraryCompact,
+  formatSignCourseCompact,
   formatSkyCompact,
   formatSkyEventsCompact,
   formatSkyPassagesCompact,
@@ -257,6 +266,14 @@ export type {
   CourseEvent,
   SignCourse,
   SignCourseOptions,
+  HoraryConsideration,
+  HoraryEvent,
+  HoraryFinding,
+  HoraryFindingMode,
+  HoraryLilly,
+  HoraryOptions,
+  HoraryQuestion,
+  HorarySignificator,
   VoidVerdict,
   Zodiac,
   ZodiacOptions,
