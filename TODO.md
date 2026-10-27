@@ -50,14 +50,14 @@ volta e ricominciare da capo.
 | 6. La prosa che invecchia | bassa | piccola | farla insieme al punto 8 |
 | 5. I varga che mancano | non dichiarata | tre lotti | niente: il D-2 è deciso, gli altri hanno la fonte |
 | 19. Le dignità, per scuola | bassa | media | il Jyotisha: i varga del BPHS, cap. 6-7 |
-| 17. L'astrologia oraria | bassa | la più grande | lotto A fatto; il B è il substrato neutro |
+| 17. L'astrologia oraria | bassa | la più grande | lotti A e B fatti; il C è la scuola di Lilly |
 | 24. Le fonti da scaricare in `texts/` | bassa | piccola | niente |
 
 L'ordine consigliato è quello della tabella. La 8 e la 6 toccano la stessa
 pagina, `/metodo`, e conviene farle insieme. Della 19 resta soprattutto il
 Jyotisha, che sta accanto ai varga della 5: il D-2 deciso lì cambia anche il
 modo di dire la dignità nella hora. La 17 usa le tavole di Lilly della 19 e
-aggiunge le *moieties* come terza convenzione delle orbite, nel lotto B.
+ha già le *moieties* come terza convenzione delle orbite.
 
 ## 5. I nove varga che mancano
 
@@ -402,7 +402,8 @@ Due cose invece vanno fatte comunque:
 
 **Priorità bassa.** Le tavole di Lilly che presupponeva ci sono
 (`dignita-lilly.ts`, punto 19), e il lotto A, le condizioni di un istante col
-punteggio, è fatto (`condizioni-lilly.ts`). Il prossimo è il lotto B. Le
+punteggio, è fatto (`condizioni-lilly.ts`), e così il lotto B, il corso fino
+al cambio di segno con le due Lune vuote (`corso.ts`). Il prossimo è il C. Le
 dignità, che l'oraria non può fare a meno di avere, sono una voce a sé perché
 servono anche al natale e al Jyotisha. Qui resta ciò che è proprio delle
 domande: il moto fino all'uscita dal segno, le regole di una scuola per
@@ -452,16 +453,9 @@ best Remembereth»; l'esempio di p. 107 usa la prima, quello di p. 110 la
 seconda, con la regola della metà di ciascuno sommate. Il «Marte 8°» che
 questa voce riportava è di al-Biruni (§436, trad. Wright 1934, in
 `texts/occidentale/biruni-elements-of-astrology-wright-1934`), non di Lilly.
-Implementarle vuol dire scegliere una colonna e dirla: la convenzione entra
-in `NATAL_ORB_CONVENTIONS` (`packages/core/src/orbite.ts`) come una terza,
-accanto a Greene e Leo, e `NatalOrbConvention` in `types.ts` prende il
-nome nuovo. La firma `orbOf(aspect, a, b)` regge già un'orbita per pianeta:
-la coppia è la somma delle due metà. Due cose vanno decise e scritte nella
-`rule`, come fanno Greene e Leo per i corpi che non nominano: la tavola copre
-solo i sette pianeti, e va detto che cosa valga per Urano, Nettuno, Plutone,
-Chirone, i nodi e gli assi; e copre solo i cinque aspetti tolemaici (Lilly i
-minori non li tratta, `trascrizioni.md` a p. 110), quindi `aspects` va
-ristretto a quelli.
+Sono la convenzione `lilly` di `orbite.ts` (lotto B): la prima colonna,
+quella che Lilly dice sua; la seconda è nella `rule`. Fuori dai sette nessuna
+orbita, e solo i cinque aspetti tolemaici.
 
 ### Fatto: il lotto A, le condizioni di un istante
 
@@ -566,10 +560,29 @@ il successivo non si fa.
 **Lotto A: le condizioni di un istante.** Fatto, vedi sopra; restano le tre
 cose elencate lì.
 
-**Lotto B: la sequenza degli eventi.** Il substrato neutro, e le due Lune vuote
-come primi classificatori. Le *moieties* come terza convenzione di orbita.
-È il lotto che regge tutto il resto, ed è il
-meno dottrinale.
+**Lotto B: la sequenza degli eventi.** Fatto in `916b711` (motore, CLI,
+test) e `dfd9a67` (le orbite nelle superfici). `findSignCourse` in
+`packages/core/src/corso.ts` dà gli eventi di un corpo dall'istante al cambio
+di segno (aspetti tolemaici esatti coi corpi nominati, stazioni, ingresso) e
+l'ultimo aspetto da cui si separa; sopra, `voids` porta la Luna vuota moderna
+e quella di Lilly. Le *moieties* sono la convenzione `lilly` in `orbite.ts`,
+prima colonna di p. 107. Nella CLI, `--sky --corso <corpo>`. Prove in
+`test/corso.test.ts` (la vuota moderna coincide col calendario elettivo; la
+sera del 27 ottobre 2026 le due divergono) e in `test/aspects.test.ts`
+(l'esempio di p. 107).
+
+Letture fatte, scritte nella `rule` dei classificatori: per Lilly il corpo è
+vuoto se non perfeziona nulla prima del cambio di segno e se, all'uscita, non
+sta formando nessun aspetto entro le orbite; la condizione «separated from a
+Planet» non si pretende, ed è riportata in `lastPerfected`. L'applicazione si
+guarda un minuto prima dell'uscita: chi applica lì applicava già, salvo una
+stazione nel mezzo, che per la Luna non c'è. Restano:
+
+- **gli aspetti passivi dei pianeti lenti.** Il corso di Saturno elenca anche
+  i passaggi della Luna su di lui, che sono applicazioni della Luna e non sue.
+  Chi distingue chi applica a chi è il lotto C; intanto `bodies` restringe;
+- **le superfici**: `findSignCourse` non ha ancora una rotta né un tool. Va
+  col lotto D.
 
 **Lotto C: la scuola di Lilly.** I modi della perfezione e del suo impedimento,
 ciascuno con la definizione scritta nel commento e la pagina accanto; le
