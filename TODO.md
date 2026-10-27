@@ -11,7 +11,7 @@ o sta in uno dei due elenchi in fondo. L'ultima versione che le contiene tutte,
 chiuse comprese, è `cf5219a`, quando il file si chiamava ancora `ROADMAP.md`.
 Le voci dalla 20 alla 23 sono nate e si sono chiuse dopo: la 20 per intero sta
 in `3314553`, la 21 e la 22 in `819ce59`, la 23 in `db332a6`. La 11, aperta
-prima e chiusa dopo, sta per intero in `e194d45`.
+prima e chiusa dopo, sta per intero in `e194d45`, la 13 in `e532f2f`.
 
 Le fonti citate qui stanno in copia locale in `texts/`, fuori dal repo: la
 cartella, le schede `FONTE.md` e l'elenco `texts/INDICE.md` si mantengono come
@@ -35,7 +35,6 @@ volta e ricominciare da capo.
 
 | Voce | Priorità | Taglia | Prima di cominciare |
 |---|---|---|---|
-| 13. Due semplificazioni | bassa | piccola | niente |
 | 9. Il linter | media | piccola | decidere lo strumento |
 | 18. Le orbite senza autore | media | media | decidere fra le due strade |
 | 7. I transiti attivi in un arco | non dichiarata | media | niente, è pronta |
@@ -483,23 +482,6 @@ Va deciso, e non è ovvio:
   più sono le regole che il compilatore non ha (le promesse non attese, i
   confronti che non possono essere veri), e vanno guardate una per una prima di
   accenderle tutte.
-
-## 13. Due semplificazioni piccole
-
-**Priorità bassa**, e nessuna delle due rompe niente.
-
-`fetchChartCompact` (`apps/web/src/lib/api.ts:149`) e `fetchJyotishaCompact`
-(riga 231) sono la stessa funzione scritta due volte: cambiano l'indirizzo e due
-messaggi. Che non passino da `request` è giusto (quella risposta è testo e non
-JSON), ma è una ragione che vale una volta sola.
-
-`packages/core/src/chart.ts:78` calcola la distribuzione e la butta: viene
-rifatta a riga 137, quando anche gli assi e la Parte di Fortuna esistono, ed è
-quella la buona. La prima serve solo a costruire un `NatalChart` completo. Costa
-un conteggio su tredici elementi, quindi non è una questione di tempo. Il
-commento a riga 77 lo dice («riempita in fondo, quando anche assi e Parte di
-Fortuna esistono»), ma un valore calcolato per essere buttato resta una riga
-che si può togliere: basta un segnaposto vuoto, o costruire il tema dopo.
 
 ## 17. L'astrologia oraria
 
