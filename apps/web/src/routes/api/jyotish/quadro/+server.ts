@@ -34,8 +34,8 @@ const VARGHE_CALCOLATE = new Set<string>(VARGAS.map((varga) => varga.id));
  * - `stile` — `sud` (default) o `nord`. Non è una preferenza grafica soltanto:
  *   nel sud i segni stanno fermi e le case si spostano, nel nord il contrario.
  *   Dicono la stessa cosa in due disposizioni diverse.
- * - `varga` — uno fra `d1` (default), `d3`, `d9`, `d10`, `d12`, `d30`. **Uno
- *   solo**: un'immagine è un quadro solo.
+ * - `varga` — uno fra `d1` (default), `d3`, `d9`, `d10`, `d12`, `d27`, `d30`.
+ *   **Uno solo**: un'immagine è un quadro solo.
  * - `ayanamsa` — come su `/api/jyotish`.
  *
  * Lo zodiaco non si sceglie, ed è siderale. Lo `stile` del nord **richiede

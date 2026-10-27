@@ -49,11 +49,11 @@ L'ordine consigliato è quello della tabella: le voci piccole che tolgono
 copie e righe morte prima che il lavoro grande ci passi sopra. Quel che resta
 della 19 sta col Jyotisha, accanto ai varga della 5.
 
-## 5. I dieci varga che mancano
+## 5. I nove varga che mancano
 
-Calcolati: D-1, D-3, D-9, D-10, D-12, D-30, in `packages/core/src/varga.ts`.
+Calcolati: D-1, D-3, D-9, D-10, D-12, D-27, D-30, in `packages/core/src/varga.ts`.
 Sono i più usati, ed è la ragione per cui vengono per primi, non la
-completezza. Dei sedici classici ne restano dieci.
+completezza. Dei sedici classici ne restano nove.
 
 **Non vanno fatti in un colpo solo.** Ogni varga è una regola a sé, e le regole
 divergono fra scuole più che nel resto del Jyotisha: farne dieci in un
@@ -98,15 +98,20 @@ di scrivere, non dopo.
 
 ### Lotto B: i multipli con partenza fissa
 
-**D-16 Shodashamsa, D-20 Vimshamsa, D-24 Chaturvimshamsa, D-27
-Nakshatramsa.** Qui la partenza non dipende dal segno di arrivo ma da un segno
+**D-16 Shodashamsa, D-20 Vimshamsa, D-24 Chaturvimshamsa.** Qui la partenza non dipende dal segno di arrivo ma da un segno
 fisso deciso dalla natura del segno di partenza (cardinale, fisso o mobile per
 alcuni; pari o dispari per altri). Il meccanismo è quello del D-9, applicato a
 divisioni più fini.
 
-Il D-27 è il più utile del lotto e anche il più semplice: ventisette parti da
-1°6'40", cioè un pada di nakshatra, e si parte sempre dall'Ariete. Si può fare
-per primo e da solo.
+Il D-27, che stava qui, è fatto: BPHS 6.24-26, pp. 78-79, trascritto in
+`texts/jyotisha/bphs-santhanam-1992-vol1/trascrizioni.md`. La voce lo
+descriveva male in due punti, e vale la pena ricordarlo per gli altri del
+lotto: 1°6'40" è un quarto di pada, non un pada; e non si riparte
+dall'Ariete in ogni segno, si conta di seguito dall'Ariete lungo tutto lo
+zodiaco (fuoco dall'Ariete, terra dal Cancro, aria dalla Bilancia, acqua
+dal Capricorno). La tavola di Santhanam a p. 79 ha un refuso (Gemelli,
+undicesima parte): le tavole stampate vanno controllate contro la regola,
+non copiate.
 
 ### Lotto C: i fini, che vogliono un'ora di nascita esatta
 

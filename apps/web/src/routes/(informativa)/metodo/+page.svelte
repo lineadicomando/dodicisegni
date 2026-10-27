@@ -9,7 +9,7 @@
 
   Ogni numero qui dentro sta anche in `packages/core`, ed è il posto in cui
   cambia per primo: `constants.ts` per orbite, corpi e sistemi di case,
-  `ayanamsa.ts` per i sei ayanamsa, `varga.ts` per le sei divisionali. Quando
+  `ayanamsa.ts` per i sei ayanamsa, `varga.ts` per le sette divisionali. Quando
   quelli cambiano, questa pagina è vecchia — non c'è nessun test che la leghi,
   e non è una dimenticanza: legarla vorrebbe dire ridurre la prosa a una tabella
   generata, che è esattamente la cosa che una pagina come questa non deve
@@ -343,8 +343,8 @@
   Un varga divide ogni segno in <em>n</em> parti e assegna a ciascuna un segno,
   secondo una regola che cambia da varga a varga. Ne esce una carta nuova, con
   gli stessi corpi in posti diversi: il D-9 di una nascita è una seconda carta,
-  non una colonna della prima. Il sito ne calcola sei: <strong>D-1, D-3, D-9,
-  D-10, D-12 e D-30</strong>.
+  non una colonna della prima. Il sito ne calcola sette: <strong>D-1, D-3, D-9,
+  D-10, D-12, D-27 e D-30</strong>.
 </p>
 
 <p>

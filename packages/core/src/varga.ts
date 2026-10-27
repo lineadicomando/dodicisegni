@@ -25,6 +25,9 @@
  * - **D-12** parte sempre dal segno stesso e prosegue.
  * - **D-30** abbandona le parti uguali: cinque tratti di ampiezza diversa,
  *   rovesciati fra segni pari e dispari.
+ * - **D-27** non riparte a ogni segno: conta di seguito dall'Ariete lungo
+ *   tutto lo zodiaco, e il segno da cui comincia ciascun segno ne è la
+ *   conseguenza.
  */
 
 import { ZODIAC_SIGNS } from './constants.js';
@@ -117,6 +120,23 @@ export const VARGAS: readonly VargaDefinition[] = [
     divisions: 12,
     rule: "Dodici parti da 2°30'. Si parte sempre dal segno stesso e si prosegue in ordine.",
     signIndex: (sign, degree) => sign + Math.floor(degree / 2.5),
+  },
+  {
+    // BPHS 6.24-26, trad. Santhanam, vol. I, pp. 78-79: «meṣādi-cara-bha-
+    // kramāt», dall'Ariete e dagli altri segni mobili. Santhanam lo scioglie
+    // per elemento, e la sua tavola (p. 79) lo conferma colonna per colonna,
+    // tranne un refuso: Gemelli, undicesima parte, stampa 3 dove la regola e
+    // la colonna della Bilancia danno 5. Le due formulazioni coincidono
+    // perché 27 fa 3 modulo 12: contare di seguito dall'Ariete porta ogni
+    // segno a cominciare tre segni dopo il precedente.
+    id: 'd27',
+    name: 'Nakshatramsa',
+    divisions: 27,
+    rule:
+      "Ventisette parti da 1°6'40\", un quarto di pada. Si parte dall'Ariete per i segni di " +
+      "fuoco, dal Cancro per la terra, dalla Bilancia per l'aria, dal Capricorno per l'acqua: " +
+      "cioè si conta di seguito dall'Ariete lungo tutto lo zodiaco (BPHS 6.26).",
+    signIndex: (sign, degree) => sign * 3 + Math.floor((degree * 27) / 30),
   },
   {
     id: 'd30',

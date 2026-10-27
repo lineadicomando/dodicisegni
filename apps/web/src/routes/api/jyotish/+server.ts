@@ -44,7 +44,7 @@ const VARGHE_CALCOLATE = new Set<string>(VARGAS.map((varga) => varga.id));
  * - `dashaLevels` — 1, 2 (default) o 3. Nove periodi, ottantuno o
  *   settecentoventinove.
  * - `dashaYear` — `solare` (default, 365,25 giorni) o `savana` (360).
- * - `vargas` — elenco separato da virgola fra `d1,d3,d9,d10,d12,d30`.
+ * - `vargas` — elenco separato da virgola fra `d1,d3,d9,d10,d12,d27,d30`.
  *   Default: `d9`.
  * - `drishtiNodes` — `nessuna` (default, forma classica) o `gioviana`.
  * - `format` — `json` (default) o `compact`.

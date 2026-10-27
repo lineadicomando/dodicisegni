@@ -100,6 +100,62 @@ describe('D-12, che parte sempre dal segno stesso', () => {
   });
 });
 
+describe('D-27, che conta di seguito dall Ariete', () => {
+  // BPHS 6.24-26, trad. Santhanam, vol. I, pp. 78-79.
+  const parte = 30 / 27;
+
+  it('apre ogni segno dove dice l elemento', () => {
+    // Fuoco dall'Ariete, terra dal Cancro, aria dalla Bilancia, acqua dal
+    // Capricorno: la riga «1st» della tavola di Santhanam, p. 79.
+    const aperture = Array.from({ length: 12 }, (_, i) => vargaSignOf(inizioSegno(i), 'd27'));
+    expect(aperture).toEqual([
+      'ariete', 'cancro', 'bilancia', 'capricorno',
+      'ariete', 'cancro', 'bilancia', 'capricorno',
+      'ariete', 'cancro', 'bilancia', 'capricorno',
+    ]);
+  });
+
+  it("cambia parte ogni 1°6'40\", in un segno dispari e in uno pari", () => {
+    // Ariete, dispari: parti 1, 2, 3 all'Ariete, al Toro, ai Gemelli; la
+    // ventisettesima ai Gemelli, perché 27 fa 3 modulo 12.
+    expect(vargaSignOf(0.5 * parte, 'd27')).toBe('ariete');
+    expect(vargaSignOf(1.5 * parte, 'd27')).toBe('toro');
+    expect(vargaSignOf(2.5 * parte, 'd27')).toBe('gemelli');
+    expect(vargaSignOf(26.5 * parte, 'd27')).toBe('gemelli');
+    // Ai due lati del confine fra la prima e la seconda parte.
+    expect(vargaSignOf(parte - 1e-6, 'd27')).toBe('ariete');
+    expect(vargaSignOf(parte + 1e-6, 'd27')).toBe('toro');
+    // Toro, pari: dal Cancro, e l'ultima parte alla Vergine; i Gemelli
+    // ripartono dalla Bilancia, il segno dopo, perché il conto non si
+    // interrompe.
+    expect(vargaSignOf(30 + 0.5 * parte, 'd27')).toBe('cancro');
+    expect(vargaSignOf(30 + 26.5 * parte, 'd27')).toBe('vergine');
+    expect(vargaSignOf(60 + 0.5 * parte, 'd27')).toBe('bilancia');
+  });
+
+  it('coincide con la tavola di Santhanam, refuso escluso', () => {
+    // Le colonne di p. 79 per Ariete, Toro, Gemelli e Cancro, dalla prima
+    // alla dodicesima parte (le righe si ripetono ogni dodici). Ai Gemelli,
+    // undicesima parte, la stampa dice 3: la regola dà 5, come la colonna
+    // della Bilancia, che è lo stesso conto.
+    const tavola: Record<number, number[]> = {
+      0: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
+      1: [4, 5, 6, 7, 8, 9, 10, 11, 12, 1, 2, 3],
+      2: [7, 8, 9, 10, 11, 12, 1, 2, 3, 4, 5, 6],
+      3: [10, 11, 12, 1, 2, 3, 4, 5, 6, 7, 8, 9],
+    };
+    const segni = ['ariete', 'toro', 'gemelli', 'cancro', 'leone', 'vergine', 'bilancia',
+      'scorpione', 'sagittario', 'capricorno', 'acquario', 'pesci'];
+    for (const [segno, colonna] of Object.entries(tavola)) {
+      colonna.forEach((atteso, k) => {
+        expect(vargaSignOf(inizioSegno(Number(segno)) + (k + 0.5) * parte, 'd27')).toBe(
+          segni[atteso - 1],
+        );
+      });
+    }
+  });
+});
+
 describe('D-30, che abbandona le parti uguali', () => {
   it('divide i segni dispari in cinque tratti disuguali', () => {
     // 5° Marte, 5° Saturno, 8° Giove, 7° Mercurio, 5° Venere, ciascuno col

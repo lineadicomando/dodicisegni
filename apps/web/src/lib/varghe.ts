@@ -20,5 +20,6 @@ export const VARGHE: readonly { value: VargaId; label: string }[] = [
   { value: 'd9', label: 'D9 Navamsa' },
   { value: 'd10', label: 'D10 Dasamsa' },
   { value: 'd12', label: 'D12 Dwadasamsa' },
+  { value: 'd27', label: 'D27 Nakshatramsa' },
   { value: 'd30', label: 'D30 Trimsamsa' },
 ];

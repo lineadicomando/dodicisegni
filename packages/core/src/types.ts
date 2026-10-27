@@ -353,10 +353,10 @@ export interface VimshottariDasha {
 /**
  * I varga calcolati.
  *
- * Sei dei sedici classici, scelti per uso e non per completezza: gli altri
+ * Sette dei sedici classici, scelti per uso e non per completezza: gli altri
  * stanno in `TODO.md`, divisi in lotti per forma della regola.
  */
-export type VargaId = 'd1' | 'd3' | 'd9' | 'd10' | 'd12' | 'd30';
+export type VargaId = 'd1' | 'd3' | 'd9' | 'd10' | 'd12' | 'd27' | 'd30';
 
 /**
  * Una carta divisionale: gli stessi corpi in segni diversi.
