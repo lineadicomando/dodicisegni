@@ -292,7 +292,7 @@ describe('le ricezioni di Lilly', () => {
   });
 });
 
-describe('la tabella DIGNITÀ con il pacchetto di Lilly', () => {
+describe('il pacchetto di Lilly nel tema', () => {
   const NAPOLI: BirthData = {
     date: '1968-03-12',
     time: '14:30',
@@ -310,7 +310,7 @@ describe('la tabella DIGNITÀ con il pacchetto di Lilly', () => {
 
   it('chiesto, aggiunge le sue righe con la fonte e lascia le comuni come sono', () => {
     const comune = sezione(formatChartCompact(computeNatalChart(NAPOLI)));
-    const testo = sezione(formatChartCompact(computeNatalChart(NAPOLI), { dignitySchool: 'lilly' }));
+    const testo = sezione(formatChartCompact(computeNatalChart(NAPOLI, { dignitySchool: 'lilly' })));
     expect(testo).toContain(`Lilly (a richiesta): ${LILLY_SOURCE}`);
     expect(testo).toContain('reggente diurno');
     const primaDiLilly = (t: string): string => t.slice(0, t.indexOf(t.includes('Lilly (a') ? 'Lilly (a' : 'Ricezioni:'));
@@ -321,20 +321,44 @@ describe('la tabella DIGNITÀ con il pacchetto di Lilly', () => {
     // A Napoli, il 12 marzo 1968 alle 14:30: Marte a 18°31' dell'Ariete, tema
     // diurno. Domicilio suo, esaltazione e triplicità del Sole, termine di
     // Mercurio, faccia del Sole.
-    const testo = formatChartCompact(computeNatalChart(NAPOLI), { dignitySchool: 'lilly' });
+    const testo = formatChartCompact(computeNatalChart(NAPOLI, { dignitySchool: 'lilly' }));
     expect(testo).toMatch(/^Marte\s+Marte\s+Sole\s+Sole\s+Mercurio\s+Sole\s+\| domicilio$/m);
   });
 
   it('conta le ricezioni su tutta la tavola', () => {
-    const testo = formatChartCompact(computeNatalChart(NAPOLI), { dignitySchool: 'lilly' });
+    const testo = formatChartCompact(computeNatalChart(NAPOLI, { dignitySchool: 'lilly' }));
     expect(testo).toContain('Ricezioni: Lilly, p. 112 (mutua, per «any essentiall dignity»)');
     expect(testo).toMatch(/^Mutue — .*Sole e Marte \(esaltazione e triplicità e faccia \//m);
   });
 
-  it("senza l'ora dice che la setta manca", () => {
-    const testo = formatChartCompact(computeNatalChart({ ...NAPOLI, time: undefined }), {
-      dignitySchool: 'lilly',
+  it('sta anche nel JSON, con le ricezioni contate su tutte e cinque le dignità', () => {
+    const chart = computeNatalChart(NAPOLI, { dignitySchool: 'lilly' });
+    expect(chart.dignities?.lilly?.source).toBe(LILLY_SOURCE);
+    expect(chart.dignities?.lilly?.bodies.find((b) => b.id === 'marte')).toEqual({
+      id: 'marte',
+      name: 'Marte',
+      rulers: { domicilio: 'marte', esaltazione: 'sole', triplicita: 'sole', termine: 'mercurio', faccia: 'sole' },
+      dignities: ['domicilio'],
     });
+    expect(chart.dignities?.receptions.counted).toEqual([
+      'domicilio',
+      'esaltazione',
+      'triplicita',
+      'termine',
+      'faccia',
+    ]);
+  });
+
+  it('non si chiede nel siderale, e lo dice invece di ignorarlo', () => {
+    expect(() => computeNatalChart(NAPOLI, { zodiac: 'siderale', dignitySchool: 'lilly' })).toThrow(
+      expect.objectContaining({ code: 'ZODIACO_NON_TROPICALE' }),
+    );
+  });
+
+  it("senza l'ora dice che la setta manca", () => {
+    const testo = formatChartCompact(
+      computeNatalChart({ ...NAPOLI, time: undefined }, { dignitySchool: 'lilly' }),
+    );
     expect(testo).toContain("senza l'ora la setta manca");
   });
 });

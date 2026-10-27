@@ -16,10 +16,17 @@
  */
 
 import { ZODIAC_SIGNS } from './constants.js';
-import type { BodyId, ZodiacSign } from './types.js';
+import type {
+  BodyId,
+  Dignity,
+  DomicileScheme,
+  MutualReception,
+  Reception,
+  ReceptionDignity,
+  ZodiacSign,
+} from './types.js';
 
-/** Le due convenzioni dei domicili, che il tema porta affiancate. */
-export type DomicileScheme = 'tradizionale' | 'moderno';
+export type { Dignity, DomicileScheme, MutualReception, Reception, ReceptionDignity };
 
 /**
  * I domicili tradizionali: a ogni segno il suo signore fra i sette pianeti.
@@ -156,9 +163,6 @@ export function detrimentsOf(body: BodyId, scheme: DomicileScheme): ZodiacSign[]
   return ZODIAC_SIGNS.filter((sign) => DOMICILES[scheme][sign] === body).map(opposite);
 }
 
-/** Che cosa un corpo ha nel segno in cui sta. */
-export type Dignity = 'domicilio' | 'esaltazione' | 'esilio' | 'caduta';
-
 /**
  * Le dignità e le debilità di un corpo in un segno, secondo una convenzione.
  *
@@ -173,29 +177,6 @@ export function dignitiesOf(body: BodyId, sign: ZodiacSign, scheme: DomicileSche
   if (detrimentsOf(body, scheme).includes(sign)) risultato.push('esilio');
   if (scheme === 'tradizionale' && fallOf(body) === sign) risultato.push('caduta');
   return risultato;
-}
-
-/**
- * La dignità per cui un pianeta ne riceve un altro. Le ultime tre vengono
- * solo dal pacchetto di Lilly (`dignita-lilly.ts`), a richiesta.
- */
-export type ReceptionDignity = 'domicilio' | 'esaltazione' | 'triplicita' | 'termine' | 'faccia';
-
-/** `receiver` riceve `received`: il secondo sta in una dignità del primo. */
-export interface Reception {
-  receiver: BodyId;
-  received: BodyId;
-  by: ReceptionDignity[];
-}
-
-/** Due pianeti ciascuno nella dignità dell'altro. */
-export interface MutualReception {
-  /** I due pianeti, nell'ordine dei corpi del tema. */
-  bodies: [BodyId, BodyId];
-  /** Per che cosa il primo riceve il secondo. */
-  firstReceives: ReceptionDignity[];
-  /** Per che cosa il secondo riceve il primo. */
-  secondReceives: ReceptionDignity[];
 }
 
 /**

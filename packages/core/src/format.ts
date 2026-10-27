@@ -1,23 +1,5 @@
 import { BODIES, NATAL_POINT_NAMES, SIGN_ABBR, ZODIAC_SIGNS } from './constants.js';
-import {
-  DETRIMENT_SOURCE,
-  dignitiesOf,
-  DOMICILE_SOURCES,
-  domicileLord,
-  EXALTATION_SOURCE,
-  RECEPTION_SOURCE,
-  receptionsOf,
-  type Dignity,
-  type DomicileScheme,
-} from './dignita.js';
 import { PARASHARA_GRAHAS, parasharaExaltation } from './dignita-parashara.js';
-import {
-  LILLY_RECEPTION_SOURCE,
-  LILLY_SOURCE,
-  lillyDignitiesOf,
-  lillyReceptionsOf,
-  lillyRulersAt,
-} from './dignita-lilly.js';
 import { formatDegrees, formatZodiacal } from './math.js';
 import { grahaName, nakshatraOf, requireSidereal } from './nakshatra.js';
 import type {
@@ -32,7 +14,8 @@ import type {
   DrishtiChart,
   ElectionResult,
   ChartFormatOptions,
-  DignitySchool,
+  Dignity,
+  DomicileScheme,
   House,
   JyotishaChart,
   NatalChart,
@@ -44,6 +27,7 @@ import type {
   SignIngress,
   SkyChart,
   SkyPassage,
+  Sect,
   Station,
   TransitChart,
   TransitingBody,
@@ -51,6 +35,7 @@ import type {
   TransitPassage,
   VargaChart,
   VimshottariDasha,
+  WesternDignities,
   Zodiac,
 } from './types.js';
 
@@ -58,8 +43,7 @@ import type {
  * Rende il tema in forma tabellare compatta.
  *
  * Pensata per essere consumata da un modello linguistico: a parità di
- * contenuto, meno di un quarto della lunghezza del JSON impaginato, e in più
- * le dignità, che il JSON non ha ancora.
+ * contenuto, circa un quarto della lunghezza del JSON impaginato.
  * Per le integrazioni programmatiche usare direttamente l'oggetto `NatalChart`.
  */
 export function formatChartCompact(
@@ -100,7 +84,7 @@ export function formatChartCompact(
   if (occidentali) {
     lines.push('', 'ASPETTI', ...aspectLines(chart));
     lines.push('', 'DISTRIBUZIONE', ...distributionLines(chart.distribution));
-    lines.push('', 'DIGNITÀ', ...dignityLines(chart, options.dignitySchool));
+    if (chart.dignities) lines.push('', 'DIGNITÀ', ...dignityLines(chart, chart.dignities));
   }
   lines.push(...warningLines(chart.warnings));
 
@@ -522,34 +506,38 @@ function distributionLines(distribution: Distribution): string[] {
  * solo nella riga tradizionale, perché solo lì hanno una tavola con un autore:
  * la riga moderna lo dice invece di tacerlo.
  *
- * Con `school` la scuola chiesta aggiunge le sue righe sotto quelle comuni,
- * senza toccarle: le due colonne di default restano quello che erano, e la
- * scuola si legge accanto, col suo nome.
+ * Se il tema porta il pacchetto di una scuola, le sue righe vengono sotto
+ * quelle comuni senza toccarle: le due colonne di default restano quello che
+ * erano, e la scuola si legge accanto, col suo nome.
  *
  * Le ricezioni chiudono la sezione, secondo Lilly: sulle sole tavole comuni,
  * o su tutta la sua tavola quando il pacchetto è acceso. Le mutue vengono
  * prima perché sono la sua definizione; le semplici le contengono anche
  * loro, nei due versi.
+ *
+ * Tutto viene da `chart.dignities`: la tabella impagina il JSON, non
+ * ricalcola, e le due rese dicono la stessa cosa.
  */
-function dignityLines(chart: NatalChart, school?: DignitySchool): string[] {
+function dignityLines(chart: NatalChart, dignities: WesternDignities): string[] {
   const schemi: readonly DomicileScheme[] = ['tradizionale', 'moderno'];
   const conCase = chart.houses.length > 0;
 
   const lines = [
-    `Domicili tradizionali: ${DOMICILE_SOURCES.tradizionale}`,
-    `Domicili moderni: ${DOMICILE_SOURCES.moderno}`,
-    `Esilio: ${DETRIMENT_SOURCE}`,
-    `Esaltazione e caduta, solo tradizionali: ${EXALTATION_SOURCE}`,
+    `Domicili tradizionali: ${dignities.sources.domicili.tradizionale}`,
+    `Domicili moderni: ${dignities.sources.domicili.moderno}`,
+    `Esilio: ${dignities.sources.esilio}`,
+    `Esaltazione e caduta, solo tradizionali: ${dignities.sources.esaltazione}`,
   ];
   if (conCase) lines.push('Case: ciascuna al signore del segno della sua cuspide.');
   lines.push(`Segno ${'tradiz.'.padEnd(10)} ${'moderno'.padEnd(10)}${conCase ? ' case' : ''}`.trimEnd());
 
   for (const sign of ZODIAC_SIGNS) {
     const case_ = chart.houses.filter((house) => house.sign === sign).map((house) => house.number);
+    const signori = dignities.signLords[sign];
     const riga =
       `${SIGN_ABBR[sign].padEnd(5)} ` +
-      `${bodyName(domicileLord(sign, 'tradizionale')).padEnd(10)} ` +
-      `${bodyName(domicileLord(sign, 'moderno')).padEnd(10)}` +
+      `${bodyName(signori.tradizionale).padEnd(10)} ` +
+      `${bodyName(signori.moderno).padEnd(10)}` +
       `${conCase ? ` ${case_.join(' ') || '—'}` : ''}`;
     lines.push(riga.trimEnd());
   }
@@ -560,21 +548,18 @@ function dignityLines(chart: NatalChart, school?: DignitySchool): string[] {
   };
   for (const schema of schemi) {
     const parti = voci[schema].map((voce) => {
-      const corpi = chart.bodies.filter((body) =>
-        dignitiesOf(body.id, body.sign, schema).includes(voce),
-      );
+      const corpi = dignities.bodies.filter((body) => body.dignities[schema].includes(voce));
       return `${voce} ${corpi.map((body) => body.name).join(', ') || '—'}`;
     });
     lines.push(`${schema === 'tradizionale' ? 'Tradiz.' : 'Moderno'} — ${parti.join('; ')}`);
   }
 
-  if (school === 'lilly') lines.push(...lillyLines(chart));
+  if (dignities.lilly) lines.push(...lillyLines(dignities.lilly, chart.sect));
 
-  const { single, mutual } =
-    school === 'lilly' ? lillyReceptionsOf(chart.bodies, chart.sect) : receptionsOf(chart.bodies);
+  const { source, single, mutual } = dignities.receptions;
   const nome = (id: BodyId): string => nameOf(chart, id);
   const per = (by: readonly string[]): string => by.map(dignityLabel).join(' e ');
-  lines.push(`Ricezioni: ${school === 'lilly' ? LILLY_RECEPTION_SOURCE : RECEPTION_SOURCE}`);
+  lines.push(`Ricezioni: ${source}`);
   lines.push(
     `Mutue — ${
       mutual
@@ -610,21 +595,21 @@ function dignityLabel(voce: string): string {
  * i Nodi. Senza l'ora la setta manca, e la triplicità resta solo dove il
  * giorno e la notte hanno lo stesso reggente: la riga lo dice.
  */
-function lillyLines(chart: NatalChart): string[] {
+function lillyLines(lilly: NonNullable<WesternDignities['lilly']>, sect: Sect | undefined): string[] {
   const nome = (id: BodyId | undefined): string => (id ? bodyName(id) : '—');
   const lines = [
-    `Lilly (a richiesta): ${LILLY_SOURCE}`,
-    chart.sect
-      ? `Triplicità: reggente ${chart.sect === 'diurna' ? 'diurno' : 'notturno'}, dalla setta del tema.`
+    `Lilly (a richiesta): ${lilly.source}`,
+    sect
+      ? `Triplicità: reggente ${sect === 'diurna' ? 'diurno' : 'notturno'}, dalla setta del tema.`
       : "Triplicità: senza l'ora la setta manca, e il reggente c'è solo nell'acqua, dove è lo stesso di giorno e di notte.",
     `${'Corpo'.padEnd(11)} ${['domic.', 'esalt.', 'tripl.', 'termine', 'faccia'].map((t) => t.padEnd(9)).join(' ')} | dignità`,
   ];
-  for (const body of chart.bodies) {
-    const signori = lillyRulersAt(body.longitude, chart.sect);
-    const colonne = [signori.domicilio, signori.esaltazione, signori.triplicita, signori.termine, signori.faccia]
+  for (const body of lilly.bodies) {
+    const { domicilio, esaltazione, triplicita, termine, faccia } = body.rulers;
+    const colonne = [domicilio, esaltazione, triplicita, termine, faccia]
       .map((id) => nome(id).padEnd(9))
       .join(' ');
-    const dignita = lillyDignitiesOf(body.id, body.longitude, chart.sect).map(dignityLabel);
+    const dignita = body.dignities.map(dignityLabel);
     lines.push(`${body.name.padEnd(11)} ${colonne} | ${dignita.join(', ') || '—'}`);
   }
   return lines;

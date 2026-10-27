@@ -1,7 +1,9 @@
 import { computeAspects } from './aspects.js';
 import { ayanamsaAt, DEFAULT_AYANAMSA, zodiacContext } from './ayanamsa.js';
 import { DEFAULT_BODIES } from './constants.js';
+import { computeWesternDignities } from './dignita-tema.js';
 import { computeDistribution } from './distribution.js';
+import { ChartError } from './errors.js';
 import { computeBodies, initEphemeris } from './ephemeris.js';
 import { computeHouses, houseOf } from './houses.js';
 import { validatePlace } from './place.js';
@@ -35,6 +37,15 @@ export function computeNatalChart(birth: BirthData, options: ChartOptions = {}):
   const bodyIds = options.bodies ?? DEFAULT_BODIES;
 
   const zodiac = options.zodiac ?? 'tropicale';
+  // Rifiutata e non ignorata: chi chiede Lilly e non lo trova penserebbe che
+  // il tema non abbia dignità da mostrare.
+  if (options.dignitySchool && zodiac !== 'tropicale') {
+    throw new ChartError(
+      'ZODIACO_NON_TROPICALE',
+      `Le dignità di ${options.dignitySchool} sono costruite sullo zodiaco tropicale: ` +
+        'nel siderale non si calcolano.',
+    );
+  }
   // Il contesto siderale è una copia: quello in cache resta tropicale, e il
   // tema dopo questo non eredita i suoi flag.
   const context = zodiacContext(initEphemeris(options.ephemerisPath), options);
@@ -121,6 +132,12 @@ export function computeNatalChart(birth: BirthData, options: ChartOptions = {}):
   // e la Parte di Fortuna. Calcolarla prima darebbe un tema senza assi anche
   // quando l'ora di nascita è nota.
   chart.distribution = computeDistribution(chart);
+
+  // Solo nel tropicale: vedi `NatalChart.dignities`. La setta serve alla
+  // triplicità di Lilly, e c'è solo con l'ora.
+  if (zodiac === 'tropicale') {
+    chart.dignities = computeWesternDignities(chart.bodies, chart.sect, options.dignitySchool);
+  }
 
   return chart;
 }

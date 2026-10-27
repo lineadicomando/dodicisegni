@@ -28,15 +28,20 @@
 
 import { SIGN_ELEMENT } from './constants.js';
 import { degreeInSign, signOf } from './math.js';
-import {
-  collectReceptions,
-  DOMICILES,
-  detrimentsOf,
-  type MutualReception,
-  type Reception,
-  type ReceptionDignity,
-} from './dignita.js';
-import type { BodyId, Element, Sect, ZodiacSign } from './types.js';
+import { collectReceptions, DOMICILES, detrimentsOf } from './dignita.js';
+import type {
+  BodyId,
+  Element,
+  LillyDignity,
+  LillyRulers,
+  MutualReception,
+  Reception,
+  ReceptionDignity,
+  Sect,
+  ZodiacSign,
+} from './types.js';
+
+export type { LillyDignity, LillyRulers };
 
 /** La riga che viaggia col risultato: da dove vengono le tavole. */
 export const LILLY_SOURCE =
@@ -178,17 +183,6 @@ export function lillyFaceRuler(longitude: number): LillyPlanet {
   return FACCE[signOf(longitude)][Math.min(Math.floor(degreeInSign(longitude) / 10), 2)]!;
 }
 
-/** Chi ha autorità su un grado dello zodiaco, dignità per dignità. */
-export interface LillyRulers {
-  domicilio: LillyPlanet;
-  /** Il corpo esaltato nel segno, se ce n'è uno: in Leone, Scorpione e Acquario nessuno. */
-  esaltazione?: Esaltato;
-  /** Assente senza la setta, fuori dall'acqua. */
-  triplicita?: LillyPlanet;
-  termine: LillyPlanet;
-  faccia: LillyPlanet;
-}
-
 /** I signori di un grado, secondo la tavola di p. 104. */
 export function lillyRulersAt(longitude: number, sect: Sect | undefined): LillyRulers {
   const sign = signOf(longitude);
@@ -204,16 +198,6 @@ export function lillyRulersAt(longitude: number, sect: Sect | undefined): LillyR
     faccia: lillyFaceRuler(longitude),
   };
 }
-
-/** Le voci della tavola di Lilly, dignità e debilità. */
-export type LillyDignity =
-  | 'domicilio'
-  | 'esaltazione'
-  | 'triplicita'
-  | 'termine'
-  | 'faccia'
-  | 'esilio'
-  | 'caduta';
 
 /**
  * Le dignità e le debilità essenziali di un corpo nel grado in cui sta.

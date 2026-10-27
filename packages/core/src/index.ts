@@ -42,6 +42,7 @@ export {
   type Reception,
   type ReceptionDignity,
 } from './dignita.js';
+export { computeWesternDignities } from './dignita-tema.js';
 export {
   LILLY_PLANETS,
   LILLY_RECEPTION_SOURCE,
@@ -162,6 +163,7 @@ export type {
   ChartPoint,
   DashaPeriod,
   DashaYear,
+  DignitySchool,
   Distribution,
   DistributionGroup,
   Drishti,
@@ -220,6 +222,7 @@ export type {
   VimshottariDasha,
   VimshottariOptions,
   VoidOfCourse,
+  WesternDignities,
   Zodiac,
   ZodiacOptions,
   ZodiacSign,

@@ -471,18 +471,117 @@ export interface ChartFormatOptions {
    * contano affatto — e chi le trovasse stampate le userebbe.
    */
   westernSections?: boolean;
-  /**
-   * La scuola delle dignità da aggiungere a quelle comuni, nella sezione
-   * DIGNITÀ. Omessa, nessuna: triplicità, termini e facce non hanno una forma
-   * sola, e si chiedono nominando chi le ha scritte. Oggi c'è Lilly (1647),
-   * vedi `dignita-lilly.ts`. Vale solo per lo zodiaco tropicale, su cui le
-   * sue tavole sono costruite.
-   */
-  dignitySchool?: DignitySchool;
 }
 
 /** Le scuole delle dignità che si possono chiedere per nome. */
 export type DignitySchool = 'lilly';
+
+/** Le due convenzioni dei domicili, che il tema porta affiancate. */
+export type DomicileScheme = 'tradizionale' | 'moderno';
+
+/** Che cosa un corpo ha nel segno in cui sta, nelle tavole comuni. */
+export type Dignity = 'domicilio' | 'esaltazione' | 'esilio' | 'caduta';
+
+/**
+ * La dignità per cui un pianeta ne riceve un altro. Le ultime tre vengono
+ * solo dal pacchetto di Lilly, a richiesta.
+ */
+export type ReceptionDignity = 'domicilio' | 'esaltazione' | 'triplicita' | 'termine' | 'faccia';
+
+/** `receiver` riceve `received`: il secondo sta in una dignità del primo. */
+export interface Reception {
+  receiver: BodyId;
+  received: BodyId;
+  by: ReceptionDignity[];
+}
+
+/** Due pianeti ciascuno nella dignità dell'altro. */
+export interface MutualReception {
+  /** I due pianeti, nell'ordine dei corpi del tema. */
+  bodies: [BodyId, BodyId];
+  /** Per che cosa il primo riceve il secondo. */
+  firstReceives: ReceptionDignity[];
+  /** Per che cosa il secondo riceve il primo. */
+  secondReceives: ReceptionDignity[];
+}
+
+/** Le voci della tavola di Lilly, dignità e debilità. */
+export type LillyDignity =
+  | 'domicilio'
+  | 'esaltazione'
+  | 'triplicita'
+  | 'termine'
+  | 'faccia'
+  | 'esilio'
+  | 'caduta';
+
+/** Chi ha autorità su un grado dello zodiaco secondo Lilly, dignità per dignità. */
+export interface LillyRulers {
+  domicilio: BodyId;
+  /** Il corpo esaltato nel segno, se ce n'è uno: in Leone, Scorpione e Acquario nessuno. */
+  esaltazione?: BodyId;
+  /** Assente senza la setta, fuori dall'acqua. */
+  triplicita?: BodyId;
+  termine: BodyId;
+  faccia: BodyId;
+}
+
+/**
+ * Le dignità occidentali di un tema tropicale. Vedi `dignita.ts` e
+ * `dignita-lilly.ts`.
+ *
+ * Come per le altre dottrine, ogni blocco porta la sua fonte, e dove le scuole
+ * divergono ci sono tutte e due: i domicili in due colonne mai fuse, e le
+ * tavole di una scuola solo se la si è chiesta per nome.
+ */
+export interface WesternDignities {
+  /** Da dove vengono le tavole comuni, una riga per tavola. */
+  sources: {
+    domicili: Record<DomicileScheme, string>;
+    esilio: string;
+    esaltazione: string;
+  };
+  /** Il signore di ciascun segno, nelle due convenzioni. */
+  signLords: Record<ZodiacSign, Record<DomicileScheme, BodyId>>;
+  /**
+   * Ogni corpo del tema con le sue dignità nelle due convenzioni. Esaltazione
+   * e caduta stanno solo nella tradizionale, l'unica che ne abbia una tavola
+   * con un autore.
+   */
+  bodies: {
+    id: BodyId;
+    name: string;
+    sign: ZodiacSign;
+    dignities: Record<DomicileScheme, Dignity[]>;
+  }[];
+  /**
+   * Le ricezioni fra i sette pianeti, secondo Lilly. `counted` dice per quali
+   * dignità sono state contate, come `Distribution.counted`: senza la scuola,
+   * domicilio ed esaltazione; con Lilly, tutte e cinque.
+   */
+  receptions: {
+    source: string;
+    counted: ReceptionDignity[];
+    single: Reception[];
+    mutual: MutualReception[];
+  };
+  /** Il pacchetto di Lilly, solo se chiesto con `dignitySchool: 'lilly'`. */
+  lilly?: {
+    school: 'lilly';
+    source: string;
+    /**
+     * Per ogni corpo, i signori del grado in cui sta e le dignità che ha lì.
+     * I signori sono un fatto del grado e ci sono per tutti; le dignità solo
+     * per i sette pianeti e i Nodi, gli unici che la tavola nomina.
+     */
+    bodies: {
+      id: BodyId;
+      name: string;
+      rulers: LillyRulers;
+      dignities: LillyDignity[];
+    }[];
+  };
+}
 
 /**
  * Che cosa mettere nel tema vedico.
@@ -635,6 +734,14 @@ export interface ChartOptions extends ZodiacOptions {
    * per confrontare i risultati con essi.
    */
   partOfFortuneFormula?: 'settore' | 'diurna';
+  /**
+   * La scuola delle dignità da aggiungere a quelle comuni, in
+   * `NatalChart.dignities`. Omessa, nessuna: triplicità, termini e facce non
+   * hanno una forma sola, e si chiedono nominando chi le ha scritte. Oggi c'è
+   * Lilly (1647), vedi `dignita-lilly.ts`. Solo nello zodiaco tropicale, su
+   * cui le sue tavole sono costruite: nel siderale è un `ChartError`.
+   */
+  dignitySchool?: DignitySchool;
   /** Percorso della cartella con i file `.se1`. Default: variabile d'ambiente o `<pkg>/ephe`. */
   ephemerisPath?: string;
 }
@@ -794,6 +901,13 @@ export interface NatalChart {
    * gruppo. È un conteggio e non una lettura: vedi `Distribution`.
    */
   distribution: Distribution;
+  /**
+   * Le dignità occidentali. Solo nello zodiaco tropicale: le tavole sono
+   * costruite lì, e nel siderale, che è anche la carta che il Jyotisha riusa,
+   * sarebbero una dottrina applicata fuori dal suo zodiaco. Le dignità di
+   * Parashara stanno in `JyotishaChart.dignities`.
+   */
+  dignities?: WesternDignities;
   /**
    * Avvertimenti non bloccanti: ora ambigua o inesistente per il cambio
    * ora legale, ripiego sulle effemeridi Moshier, corpi non calcolabili,

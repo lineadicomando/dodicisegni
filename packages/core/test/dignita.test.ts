@@ -193,6 +193,23 @@ describe('la tabella DIGNITÀ', () => {
     expect(parte).toMatch(/^Sco\s+Marte\s+Plutone$/m);
   });
 
+  it('impagina il JSON: le stesse dignità stanno in chart.dignities', () => {
+    const chart = computeNatalChart(NAPOLI);
+    expect(chart.dignities?.signLords.scorpione).toEqual({ tradizionale: 'marte', moderno: 'plutone' });
+    expect(chart.dignities?.bodies.find((b) => b.id === 'saturno')?.dignities).toEqual({
+      tradizionale: ['caduta'],
+      moderno: [],
+    });
+    expect(chart.dignities?.receptions.counted).toEqual(['domicilio', 'esaltazione']);
+    expect(chart.dignities?.lilly).toBeUndefined();
+  });
+
+  it('nel tema siderale non ci sono, né nel JSON né nella tabella', () => {
+    const chart = computeNatalChart(NAPOLI, { zodiac: 'siderale' });
+    expect(chart.dignities).toBeUndefined();
+    expect(formatChartCompact(chart)).not.toContain('DIGNITÀ');
+  });
+
   it('non compare nel tema vedico, che ha altri domicili', () => {
     const vedico = formatChartCompact(computeNatalChart(NAPOLI), { westernSections: false });
     expect(vedico).not.toContain('DIGNITÀ');
