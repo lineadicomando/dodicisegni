@@ -50,7 +50,7 @@ volta e ricominciare da capo.
 | 6. La prosa che invecchia | bassa | piccola | farla insieme al punto 8 |
 | 5. I varga che mancano | non dichiarata | tre lotti | niente: il D-2 è deciso, gli altri hanno la fonte |
 | 19. Le dignità, per scuola | bassa | media | il Jyotisha: i varga del BPHS, cap. 6-7 |
-| 17. L'astrologia oraria | bassa | la più grande | lotti A e B fatti; il C è la scuola di Lilly |
+| 17. L'astrologia oraria | bassa | media, ormai | lotti A, B e C fatti; resta il D, le superfici |
 | 24. Le fonti da scaricare in `texts/` | bassa | piccola | niente |
 
 L'ordine consigliato è quello della tabella. La 8 e la 6 toccano la stessa
@@ -403,7 +403,8 @@ Due cose invece vanno fatte comunque:
 **Priorità bassa.** Le tavole di Lilly che presupponeva ci sono
 (`dignita-lilly.ts`, punto 19), e il lotto A, le condizioni di un istante col
 punteggio, è fatto (`condizioni-lilly.ts`), e così il lotto B, il corso fino
-al cambio di segno con le due Lune vuote (`corso.ts`). Il prossimo è il C. Le
+al cambio di segno con le due Lune vuote (`corso.ts`), e così il lotto C,
+la scuola di Lilly (`oraria-lilly.ts`). Resta il D, le superfici. Le
 dignità, che l'oraria non può fare a meno di avere, sono una voce a sé perché
 servono anche al natale e al Jyotisha. Qui resta ciò che è proprio delle
 domande: il moto fino all'uscita dal segno, le regole di una scuola per
@@ -490,9 +491,6 @@ Resta, del lotto A:
   lotto D, la cui descrizione deve distinguersi da `compute_sky`;
 - **la Parte di Fortuna nel conto.** Lilly la conta a p. 180 («in ♍ hath
   five Debilities», rimando a p. 145): pagina da leggere;
-- **la «stessa natura»** fra signore dell'ora e dell'Ascendente (p. 122):
-  è la tavola delle qualità del libro I, caldo, freddo, secco, umido. Si
-  calcola, ma è una considerazione, e va col lotto C.
 
 ### Il substrato comune: che cosa succede fino all'uscita dal segno
 
@@ -546,11 +544,9 @@ nuovo.
 - **Non entrano** il sì o no, la conversione dei gradi in giorni o mesi, la
   scelta della casa. Non sono regole di una scuola ma il giudizio stesso: li fa
   chi legge, e il documento di lettura dice come li faceva Lilly.
-- **Da leggere sulla scansione prima di decidere**: la «stessa natura» fra
-  signore dell'ora e dell'Ascendente (la stessa triplicità e lo stesso pianeta
-  si calcolano già). Se Lilly intende le qualità del libro I, caldo e freddo,
-  secco e umido, è una tavola e si calcola; se no resta fuori. Lo stesso vale
-  per i «gradi tardi» della Luna, che nelle trascrizioni non hanno una soglia.
+- **Letto**: la «stessa natura» sono le qualità del libro I (p. 122: Sole e
+  Marte «both of one nature, viz. Hot and Dry»), e si calcola; i «gradi
+  tardi» della Luna non hanno una soglia, e restano non calcolati.
 
 ### Forma, in lotti
 
@@ -584,10 +580,31 @@ stazione nel mezzo, che per la Luna non c'è. Restano:
 - **le superfici**: `findSignCourse` non ha ancora una rotta né un tool. Va
   col lotto D.
 
-**Lotto C: la scuola di Lilly.** I modi della perfezione e del suo impedimento,
-ciascuno con la definizione scritta nel commento e la pagina accanto; le
-considerazioni prima del giudizio; i significatori a partire dalla casa del
-quesito.
+**Lotto C: la scuola di Lilly.** Fatto in `2433924`.
+`packages/core/src/oraria-lilly.ts`: `computeHoraryLilly(moment, place,
+{ question: { house, derivedFrom? } })` erige la figura (Regiomontano,
+pacchetto di Lilly, orbite `lilly`), trova i significatori (p. 123, la Luna
+cosignificatrice di p. 124) e classifica sul corso dei sette, fino al cambio
+di segno del più leggero dei due: congiunzione e aspetto (p. 125),
+traslazione e collezione (p. 126, con le ricezioni riportate), proibizione e
+frustrazione (pp. 110-113), refranazione (p. 111). Le considerazioni di pp.
+121-123 sono predicati con la pagina; quelle senza soglia nel testo (i
+«later degrees» della Luna, la settima «afflitta», il signore «sfortunato»)
+restano non calcolate e lo dicono. I classificatori sono puri
+(`classifyLilly`) e il test li prova sugli esempi del libro I; sulla domanda
+del 1634 il motore trova la traslazione della Luna da Marte a Venere di p.
+182. CLI: `--oraria <casa>` e `--derivata`. Le letture fatte stanno in
+`HORARY_LILLY_READINGS`.
+
+Restano, del lotto C:
+
+- **le condizioni di qualità della perfezione** di p. 125 (per quadrato
+  «each Planet have dignity», per opposizione la mutua ricezione, «out of
+  good Houses»): i dati per giudicarle ci sono tutti nel risultato, ma il
+  classificatore non li incrocia;
+- **la perfezione per dimora** (p. 126), che Lilly dice non vera: fuori;
+- **chi applica a chi** nei corsi dei pianeti lenti (vedi lotto B): la
+  proibizione la risolve col peso, il corso no.
 
 **Lotto D: le superfici.** Un tool MCP che dia il tema dell'istante con tutto
 questo accanto e `date` omessa uguale ad adesso, come `compute_sky` (nome da
