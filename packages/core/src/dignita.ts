@@ -11,8 +11,8 @@
  * nome, invece di sceglierne una in silenzio. Oggi ci sono i domicili, nelle
  * due forme che un tema tropicale si sente chiedere, l'esilio che ne discende
  * e le esaltazioni con le cadute, che hanno una forma sola, più le ricezioni
- * che se ne ricavano; triplicità, termini e facce verranno come tavole a sé,
- * con le loro fonti.
+ * che se ne ricavano. Triplicità, termini, facce e i gradi delle esaltazioni
+ * sono di una scuola, e stanno nel suo pacchetto: `dignita-lilly.ts`.
  */
 
 import { ZODIAC_SIGNS } from './constants.js';
@@ -98,8 +98,8 @@ export function domicileLord(sign: ZodiacSign, scheme: DomicileScheme): BodyId {
  * gradi (il Sole a 19 dell'Ariete, la Luna a 3 del Toro...) Tolomeo non li
  * dà: vengono da Firmico, *Mathesis* II.3.5-6, ed. Kroll-Skutsch I (1897),
  * p. 44, e Lilly li ripete a p. 104, dove aggiunge anche i Nodi. Sono una
- * scuola, e arriveranno col suo pacchetto; qui sta la parte su cui le tre
- * fonti concordano, che è il segno. Valente, I.2, una tavola delle
+ * scuola, e stanno nel suo pacchetto (`dignita-lilly.ts`); qui sta la parte
+ * su cui le tre fonti concordano, che è il segno. Valente, I.2, una tavola delle
  * esaltazioni non ce l'ha. Il BPHS dà gradi diversi per il Sole e per Giove
  * ed è un'altra tradizione, che non va mescolata a questa: sta in
  * `dignita-parashara.ts`.

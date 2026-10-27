@@ -42,6 +42,20 @@ export {
   type ReceptionDignity,
 } from './dignita.js';
 export {
+  LILLY_PLANETS,
+  LILLY_SOURCE,
+  lillyDignitiesOf,
+  lillyExaltation,
+  lillyFaceRuler,
+  lillyFall,
+  lillyRulersAt,
+  lillyTermRuler,
+  lillyTriplicityRuler,
+  type LillyDignity,
+  type LillyPlanet,
+  type LillyRulers,
+} from './dignita-lilly.js';
+export {
   computeParasharaDignities,
   PARASHARA_GRAHAS,
   PARASHARA_SOURCE,
