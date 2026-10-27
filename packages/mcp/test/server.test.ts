@@ -1117,40 +1117,40 @@ describe('le orbite', () => {
 });
 
 describe('find_active_transits', () => {
-  // Il caso della voce 7, con le orbite di Hand (1°): in luglio 2026 Saturno è
-  // in opposizione a Plutone per tutto il mese, esatto a giugno e ad agosto,
-  // cioè fuori.
-  const PALERMO = {
-    date: '1978-06-02',
-    time: '15:15',
-    latitude: 38.1157,
-    longitude: 13.3615,
+  // Una nascita inventata (la stessa di packages/core/test/attivi.test.ts):
+  // con le orbite di Hand (1°), in febbraio 2026 Urano, fermo sui 27° del
+  // Toro, è in quadrato a Venere per tutto il mese senza mai essere esatto.
+  const TORINO = {
+    date: '1985-09-20',
+    time: '08:40',
+    latitude: 45.0703,
+    longitude: 7.6869,
     timezone: 'Europe/Rome',
   };
 
   it('vede un transito in orbita per tutto l arco che i passaggi non vedono', async () => {
-    const argomenti = { ...PALERMO, from: '2026-07-01', to: '2026-08-01', bodies: ['saturno'], format: 'json' };
+    const argomenti = { ...TORINO, from: '2026-02-01', to: '2026-02-28', bodies: ['urano'], format: 'json' };
     const attivi = await client.callTool({ name: 'find_active_transits', arguments: argomenti });
     const passaggi = await client.callTool({ name: 'find_transit_passages', arguments: argomenti });
 
     expect(JSON.parse(textOf(passaggi)).passages).toEqual([]);
     const { transits } = JSON.parse(textOf(attivi));
-    const plutone = transits.find(
-      (t: { natal: string; aspect: string }) => t.natal === 'plutone' && t.aspect === 'opposizione',
+    const venere = transits.find(
+      (t: { natal: string; aspect: string }) => t.natal === 'venere' && t.aspect === 'quadrato',
     );
-    expect(plutone).toMatchObject({ throughout: true, perfections: [] });
-    expect(plutone.enters.slice(0, 10)).toBe('2026-06-11');
+    expect(venere).toMatchObject({ throughout: true, perfections: [] });
+    expect(venere.enters.slice(0, 10)).toBe('2025-12-08');
     expect(JSON.parse(textOf(attivi)).orbConvention.id).toBe('hand');
   });
 
   it('nella forma compatta dice da quando a quando, e che non è esatto', async () => {
     const result = await client.callTool({
       name: 'find_active_transits',
-      arguments: { ...PALERMO, from: '2026-07-01', to: '2026-08-01', bodies: ['saturno'] },
+      arguments: { ...TORINO, from: '2026-02-01', to: '2026-02-28', bodies: ['urano'] },
     });
 
     expect(textOf(result)).toMatch(/TRANSITI ATTIVI/);
-    expect(textOf(result)).toMatch(/2026-06-11 → 2026-09-11\s+Saturno\s+opposizione\s+Plutone/);
+    expect(textOf(result)).toMatch(/2025-12-08 → 2026-04-01\s+Urano\s+quadrato\s+Venere/);
     expect(textOf(result)).toMatch(/Orbite: Robert Hand/);
     expect(textOf(result)).toMatch(/tutto l'arco/);
   });
@@ -1158,7 +1158,7 @@ describe('find_active_transits', () => {
   it('rifiuta un arco troppo lungo', async () => {
     const result = await client.callTool({
       name: 'find_active_transits',
-      arguments: { ...PALERMO, from: '2026-01-01', to: '2050-01-01' },
+      arguments: { ...TORINO, from: '2026-01-01', to: '2050-01-01' },
     });
     expect(result.isError).toBe(true);
   });

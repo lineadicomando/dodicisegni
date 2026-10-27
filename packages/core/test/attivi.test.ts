@@ -6,16 +6,19 @@ import { findTransitPassages } from '../src/passages.js';
 import { findStations } from '../src/sky-events.js';
 import type { NatalChart, PassageRange } from '../src/types.js';
 
-// Il caso della voce 7 del `TODO.md`, con le orbite di Hand (1°): in luglio
-// 2026 Saturno è in opposizione a Plutone per tutto il mese, esatto il 27
-// giugno e il 25 agosto, cioè fuori; e in quadrato a Venere in due tratti,
-// fino al 22 luglio e dal 31. `findTransitPassages` sull'arco non vede né
-// l'uno né l'altro.
-const PALERMO: NatalChart = computeNatalChart({
-  date: '1978-06-02',
-  time: '15:15',
-  latitude: 38.1157,
-  longitude: 13.3615,
+// Una nascita inventata, scelta perché il suo cielo del 2025-26 contiene i
+// due casi che la domanda «che cosa è attivo» deve saper vedere, con le
+// orbite dei transiti di Hand (1°). In febbraio 2026 Urano, fermo sui 27° del
+// Toro, è in quadrato a Venere per tutto il mese senza mai essere esatto. In
+// luglio 2025 Saturno, che si ferma poco dopo 1° Ariete, esce dall'orbita del
+// quadrato a Nettuno il 4 e ci rientra il 22: esatto il 7 giugno e il 18
+// agosto, cioè fuori dal mese. `findTransitPassages` su quei due mesi non vede
+// né l'uno né l'altro.
+const TORINO: NatalChart = computeNatalChart({
+  date: '1985-09-20',
+  time: '08:40',
+  latitude: 45.0703,
+  longitude: 7.6869,
   timezone: 'Europe/Rome',
 });
 
@@ -23,53 +26,58 @@ const PALERMO: NatalChart = computeNatalChart({
 const minuti = (a?: string, b?: string): number =>
   Math.abs(Date.parse(a ?? '') - Date.parse(b ?? '')) / 60_000;
 
-const LUGLIO: PassageRange = { from: '2026-07-01', to: '2026-08-01', timezone: 'Europe/Rome' };
+const FEBBRAIO: PassageRange = { from: '2026-02-01', to: '2026-02-28', timezone: 'Europe/Rome' };
+const LUGLIO: PassageRange = { from: '2025-07-01', to: '2025-07-31', timezone: 'Europe/Rome' };
 
 describe('findActiveTransits', () => {
   it('vede i transiti in orbita per tutto l arco, che i passaggi non vedono', () => {
-    const { transits, orbConvention } = findActiveTransits(PALERMO, LUGLIO, { bodies: ['saturno'] });
-    const { passages } = findTransitPassages(PALERMO, LUGLIO, { bodies: ['saturno'] });
+    const { transits, orbConvention } = findActiveTransits(TORINO, FEBBRAIO, { bodies: ['urano'] });
+    const { passages } = findTransitPassages(TORINO, FEBBRAIO, { bodies: ['urano'] });
     expect(passages).toEqual([]);
     expect(orbConvention.id).toBe('hand');
 
-    const plutone = transits.find((t) => t.natal === 'plutone' && t.aspect === 'opposizione');
-    expect(plutone).toMatchObject({ throughout: true, perfections: [] });
-    expect(plutone?.enters?.slice(0, 10)).toBe('2026-06-11');
-    expect(plutone?.leaves?.slice(0, 10)).toBe('2026-09-11');
+    const venere = transits.find((t) => t.natal === 'venere' && t.aspect === 'quadrato');
+    expect(venere).toMatchObject({ throughout: true, perfections: [] });
+    expect(venere?.enters?.slice(0, 10)).toBe('2025-12-08');
+    expect(venere?.leaves?.slice(0, 10)).toBe('2026-04-01');
     // Ai bordi dell'arco la distanza dall'esatto c'è, ed è dentro l'orbita.
-    expect(plutone?.orbAtFrom).toBeGreaterThan(0);
-    expect(plutone?.orbAtFrom).toBeLessThan(plutone!.orb);
-    expect(plutone?.orbAtTo).toBeLessThan(plutone!.orb);
+    expect(venere?.orbAtFrom).toBeGreaterThan(0);
+    expect(venere?.orbAtFrom).toBeLessThan(venere!.orb);
+    expect(venere?.orbAtTo).toBeLessThan(venere!.orb);
+    // Non si perfeziona: la riga dice quanto si avvicina, e quando.
+    expect(venere?.closest?.orb).toBeGreaterThan(0);
   });
 
   it('dà due righe allo stesso transito quando esce dall orbita ed entra di nuovo', () => {
-    const { transits } = findActiveTransits(PALERMO, LUGLIO, {
+    const { transits } = findActiveTransits(TORINO, LUGLIO, {
       bodies: ['saturno'],
-      targets: ['venere'],
+      targets: ['nettuno'],
     });
+    const { passages } = findTransitPassages(TORINO, LUGLIO, { bodies: ['saturno'] });
     const quadrati = transits.filter((t) => t.aspect === 'quadrato');
 
+    expect(passages).toEqual([]);
     expect(quadrati).toHaveLength(2);
     expect(quadrati.map((t) => t.throughout)).toEqual([false, false]);
-    expect(quadrati[0]?.leaves?.slice(0, 10)).toBe('2026-07-22');
+    expect(quadrati[0]?.leaves?.slice(0, 10)).toBe('2025-07-04');
     expect(quadrati[0]?.orbAtFrom).toBeDefined();
     expect(quadrati[0]?.orbAtTo).toBeUndefined();
-    expect(quadrati[1]?.enters?.slice(0, 10)).toBe('2026-07-31');
+    expect(quadrati[1]?.enters?.slice(0, 10)).toBe('2025-07-22');
     expect(quadrati[1]?.orbAtFrom).toBeUndefined();
   });
 
   it('coincide con le finestre dei passaggi su un arco che le contiene', () => {
-    const arco: PassageRange = { from: '2026-05-01', to: '2026-10-31', timezone: 'Europe/Rome' };
-    const opzioni = { bodies: ['saturno' as const], targets: ['venere' as const] };
-    const passaggi = findTransitPassages(PALERMO, arco, opzioni).passages.filter(
+    const arco: PassageRange = { from: '2025-03-01', to: '2025-12-31', timezone: 'Europe/Rome' };
+    const opzioni = { bodies: ['saturno' as const], targets: ['nettuno' as const] };
+    const passaggi = findTransitPassages(TORINO, arco, opzioni).passages.filter(
       (p) => p.aspect === 'quadrato',
     );
-    const attivi = findActiveTransits(PALERMO, arco, opzioni).transits.filter(
+    const attivi = findActiveTransits(TORINO, arco, opzioni).transits.filter(
       (t) => t.aspect === 'quadrato',
     );
 
-    // Due perfezioni, il 22 giugno e il 31 agosto, ciascuna nel suo tratto.
-    expect(passaggi.map((p) => p.local.slice(0, 10))).toEqual(['2026-06-22', '2026-08-31']);
+    // Due perfezioni, il 7 giugno e il 18 agosto, ciascuna nel suo tratto.
+    expect(passaggi.map((p) => p.local.slice(0, 10))).toEqual(['2025-06-07', '2025-08-18']);
     expect(attivi).toHaveLength(2);
     attivi.forEach((tratto, k) => {
       expect(tratto.perfections.map((p) => p.local)).toEqual([passaggi[k]?.local]);
@@ -83,18 +91,18 @@ describe('findActiveTransits', () => {
   });
 
   it('riproduce le finestre di un orbita più larga, se la si chiede', () => {
-    // Con 2° invece di 1°, Saturno quadrato Venere torna in orbita per tutto
-    // luglio: dal 26 maggio al 29 settembre. Il risultato dichiara che
+    // Con 2° invece di 1°, Saturno quadrato Nettuno resta in orbita per tutto
+    // luglio: dall'11 maggio al 16 settembre. Il risultato dichiara che
     // l'orbita è stata sostituita.
-    const { transits, orbConvention } = findActiveTransits(PALERMO, LUGLIO, {
+    const { transits, orbConvention } = findActiveTransits(TORINO, LUGLIO, {
       bodies: ['saturno'],
-      targets: ['venere'],
+      targets: ['nettuno'],
       orbs: { quadrato: 2 },
     });
     const quadrato = transits.find((t) => t.aspect === 'quadrato');
     expect(quadrato).toMatchObject({ throughout: true, orb: 2 });
-    expect(quadrato?.enters?.slice(0, 10)).toBe('2026-05-26');
-    expect(quadrato?.leaves?.slice(0, 10)).toBe('2026-09-29');
+    expect(quadrato?.enters?.slice(0, 10)).toBe('2025-05-11');
+    expect(quadrato?.leaves?.slice(0, 10)).toBe('2025-09-16');
     expect(orbConvention.overridden).toEqual(['quadrato']);
   });
 
@@ -112,8 +120,8 @@ describe('findActiveTransits', () => {
 
     const punto = (stazione!.longitude + 0.5) % 360;
     const tema: NatalChart = {
-      ...PALERMO,
-      bodies: PALERMO.bodies.map((b) => (b.id === 'marte' ? { ...b, longitude: punto } : b)),
+      ...TORINO,
+      bodies: TORINO.bodies.map((b) => (b.id === 'marte' ? { ...b, longitude: punto } : b)),
     };
     const anno: PassageRange = { from: '2026-01-01', to: '2026-12-31', timezone: 'UTC' };
     const opzioni = { bodies: ['giove' as const], targets: ['marte' as const] };
@@ -135,9 +143,9 @@ describe('findActiveTransits', () => {
   it('dà due righe allo stesso aspetto quando entra in orbita due volte', () => {
     // Il Sole sul proprio punto natale per un anno e un giorno: due ritorni
     // solari, due tratti distinti.
-    const natale = PALERMO.input.date;
+    const natale = TORINO.input.date;
     const { transits } = findActiveTransits(
-      PALERMO,
+      TORINO,
       { from: '2026-01-01', to: '2027-12-31', timezone: 'Europe/Rome' },
       { bodies: ['sole'], targets: ['sole'] },
     );
@@ -150,9 +158,9 @@ describe('findActiveTransits', () => {
   });
 
   it('mette i transiti in ordine di attivazione dentro l arco', () => {
-    const { transits } = findActiveTransits(PALERMO, LUGLIO);
+    const { transits } = findActiveTransits(TORINO, LUGLIO);
     const inizi = transits.map((t) =>
-      t.enters && t.enters > '2026-07-01' ? t.enters : '2026-07-01',
+      t.enters && t.enters > '2025-07-01' ? t.enters : '2025-07-01',
     );
     expect(inizi).toEqual([...inizi].sort());
     // Il Sole, i pianeti lenti e i Nodi insieme: non è un elenco vuoto.
@@ -161,7 +169,7 @@ describe('findActiveTransits', () => {
 
   it('rifiuta un intervallo vuoto', () => {
     expect(() =>
-      findActiveTransits(PALERMO, { from: '2026-08-01', to: '2026-07-01', timezone: 'UTC' }),
+      findActiveTransits(TORINO, { from: '2026-08-01', to: '2026-07-01', timezone: 'UTC' }),
     ).toThrow(ChartError);
   });
 });

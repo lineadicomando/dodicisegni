@@ -4,12 +4,13 @@ import { chiudiPool, nelPool } from './pool';
 
 afterAll(() => chiudiPool());
 
+/** Una nascita inventata, la stessa dei test dei transiti attivi in `core`. */
 const NASCITA = {
-  date: '1978-06-02',
-  time: '15:15',
+  date: '1985-09-20',
+  time: '08:40',
   timezone: 'Europe/Rome',
-  latitude: 38.1157,
-  longitude: 13.3615,
+  latitude: 45.0703,
+  longitude: 7.6869,
 };
 
 const ARCO = { from: '2026-07-01', to: '2026-08-01', timezone: 'Europe/Rome' };
@@ -52,7 +53,7 @@ describe('il pool restituisce quello che restituirebbe il motore', () => {
   it('le ore planetarie dell\'elezione', async () => {
     const core = await import('@dodicisegni/core');
     const giorno = { from: '2029-08-24', to: '2029-08-26', timezone: 'Europe/Rome' };
-    const luogo = { latitude: 38.1157, longitude: 13.3615 };
+    const luogo = { latitude: 45.0703, longitude: 7.6869 };
 
     const esito = await nelPool('elezione', giorno, luogo, {});
     expect(esito.hours).toEqual(core.findElectionHours(giorno, luogo, {}).hours);

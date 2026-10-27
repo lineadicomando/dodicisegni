@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import { istruzioniDi, letturaDaIncollare, SISTEMI } from '../src/lettura.js';
 
-const TEMA = 'TEMA NATALE — 1978-06-02 15:15 (Europe/Rome, UTC+02:00)\n\nCORPI\nSole 11°39\' Gem';
+const TEMA = 'TEMA NATALE — 1985-09-20 08:40 (Europe/Rome, UTC+02:00)\n\nCORPI\nSole 27°15\' Ver';
 
 describe('letturaDaIncollare', () => {
   it('mette le istruzioni prima dei dati', () => {
