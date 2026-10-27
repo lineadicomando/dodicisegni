@@ -147,19 +147,34 @@ export async function fetchChart(parameters: URLSearchParams): Promise<ChartResp
  * divergere sarebbe proprio il testo che qualcun altro legge.
  */
 export async function fetchChartCompact(parameters: URLSearchParams): Promise<string> {
+  return requestCompact('/api/chart', parameters, 'Tema non riletto');
+}
+
+/**
+ * La resa compatta di una rotta: lo stesso indirizzo con `format=compact`.
+ *
+ * Non passa da `request` perché la risposta buona è testo e non JSON; quella
+ * d'errore invece è JSON come altrove, e il messaggio si legge allo stesso
+ * modo.
+ */
+async function requestCompact(
+  path: string,
+  parameters: URLSearchParams,
+  failure: string,
+): Promise<string> {
   const compatti = new URLSearchParams(parameters);
   compatti.set('format', 'compact');
 
   let response: Response;
   try {
-    response = await fetch(`/api/chart?${compatti}`);
+    response = await fetch(`${path}?${compatti}`);
   } catch {
-    throw new RequestError('Tema non riletto: server non raggiungibile.');
+    throw new RequestError(`${failure}: server non raggiungibile.`);
   }
 
   if (!response.ok) {
     const body: unknown = await response.json().catch(() => null);
-    throw new RequestError(messageOf(body) ?? `Tema non riletto (errore ${response.status}).`);
+    throw new RequestError(messageOf(body) ?? `${failure} (errore ${response.status}).`);
   }
 
   return response.text();
@@ -229,24 +244,7 @@ export async function fetchJyotisha(parameters: URLSearchParams): Promise<Jyotis
 
 /** Lo stesso tema in forma compatta, per il prompt di lettura. */
 export async function fetchJyotishaCompact(parameters: URLSearchParams): Promise<string> {
-  const compatti = new URLSearchParams(parameters);
-  compatti.set('format', 'compact');
-
-  let response: Response;
-  try {
-    response = await fetch(`/api/jyotish?${compatti}`);
-  } catch {
-    throw new RequestError('Tema vedico non riletto: server non raggiungibile.');
-  }
-
-  if (!response.ok) {
-    const body: unknown = await response.json().catch(() => null);
-    throw new RequestError(
-      messageOf(body) ?? `Tema vedico non riletto (errore ${response.status}).`,
-    );
-  }
-
-  return response.text();
+  return requestCompact('/api/jyotish', parameters, 'Tema vedico non riletto');
 }
 
 export interface SkyResponse {
