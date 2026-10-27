@@ -50,7 +50,7 @@ volta e ricominciare da capo.
 | 6. La prosa che invecchia | bassa | piccola | farla insieme al punto 8 |
 | 5. I varga che mancano | non dichiarata | tre lotti | niente: il D-2 è deciso, gli altri hanno la fonte |
 | 19. Le dignità, per scuola | bassa | media | il Jyotisha: i varga del BPHS, cap. 6-7 |
-| 17. L'astrologia oraria | bassa | media, ormai | lotti A, B e C fatti; resta il D, le superfici |
+| 17. L'astrologia oraria | bassa | piccola, ormai | i quattro lotti sono fatti; restano sei cose indipendenti |
 | 24. Le fonti da scaricare in `texts/` | bassa | piccola | niente |
 
 L'ordine consigliato è quello della tabella. La 8 e la 6 toccano la stessa
@@ -400,15 +400,25 @@ Due cose invece vanno fatte comunque:
 
 ## 17. L'astrologia oraria
 
-**Priorità bassa.** Le tavole di Lilly che presupponeva ci sono
-(`dignita-lilly.ts`, punto 19), e il lotto A, le condizioni di un istante col
-punteggio, è fatto (`condizioni-lilly.ts`), e così il lotto B, il corso fino
-al cambio di segno con le due Lune vuote (`corso.ts`), e così il lotto C,
-la scuola di Lilly (`oraria-lilly.ts`). Resta il D, le superfici. Le
-dignità, che l'oraria non può fare a meno di avere, sono una voce a sé perché
-servono anche al natale e al Jyotisha. Qui resta ciò che è proprio delle
-domande: il moto fino all'uscita dal segno, le regole di una scuola per
-leggerlo.
+**Priorità bassa.** I quattro lotti sono fatti: le condizioni di un istante
+col punteggio (`condizioni-lilly.ts`), il corso fino al cambio di segno con le
+due Lune vuote (`corso.ts`), la scuola di Lilly (`oraria-lilly.ts`), le
+superfici (`compute_horary`, `lettura_oraria`, `/api/horary`). Il dettaglio
+di ciascun lotto è più sotto. Restano cose piccole e indipendenti:
+
+- **la pagina web.** Il TODO la voleva «solo se le tabelle reggono da sole»:
+  `formatHoraryCompact` sì, ma l'interfaccia non ha ancora un modulo per la
+  domanda, e la casa va scelta da un elenco che spieghi le case;
+- **le superfici del cielo con la scuola**: `/api/sky` e `compute_sky` senza
+  `dignitySchool`. Con `compute_horary` servono meno, e forse non servono;
+- **le condizioni di qualità della perfezione** di p. 125 (dignità per il
+  quadrato, mutua ricezione per l'opposizione, «good Houses»);
+- **la Parte di Fortuna nel conto** di p. 180, con p. 145 da leggere;
+- **chi applica a chi** nel corso dei pianeti lenti, che elenca anche i
+  passaggi della Luna su di loro;
+- **la Luna come proibitore**: Lilly non la esclude e il motore nemmeno, ma
+  perfeziona con tutti ogni pochi giorni. Se le figure mostrano proibizioni
+  ovunque, è il primo posto da guardare.
 
 ### Deciso il 18 ottobre 2026
 
@@ -606,13 +616,10 @@ Restano, del lotto C:
 - **chi applica a chi** nei corsi dei pianeti lenti (vedi lotto B): la
   proibizione la risolve col peso, il corso no.
 
-**Lotto D: le superfici.** Un tool MCP che dia il tema dell'istante con tutto
-questo accanto e `date` omessa uguale ad adesso, come `compute_sky` (nome da
-decidere vicino a quello, la cui descrizione va aggiornata perché un modello
-non scelga il tool sbagliato); il documento di lettura `oraria` in
-`packages/lettura`, col registro attribuito; un prompt MCP che li unisca, come
-`lettura_del_tema`. Una pagina web solo dopo, e solo se le tabelle reggono da
-sole.
+**Lotto D: le superfici.** Fatto in `ec58bdf`: il tool `compute_horary` (e
+`compute_sky` che rimanda a lui), il prompt `lettura_oraria`, il documento
+`ORARIA` in `packages/lettura/src/oraria.ts` fuori da `SISTEMI`, la rotta
+`GET /api/horary`. La pagina web no: vedi sotto.
 
 Da B in poi conviene fermarsi a ogni lotto e chiedersi se continuare.
 
