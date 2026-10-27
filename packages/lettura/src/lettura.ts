@@ -18,6 +18,7 @@
  */
 
 import { JYOTISHA } from './jyotisha.js';
+import { ORARIA } from './oraria.js';
 import { TROPICALE } from './tropicale.js';
 
 /**
@@ -83,4 +84,23 @@ export function letturaDaIncollare(tema: string, opzioni: OpzioniLettura = {}): 
     : '';
 
   return `${istruzioni}${provenienza}\n\n${tema}\n`;
+}
+
+/**
+ * Le istruzioni dell'oraria, la domanda e la figura, in quest'ordine.
+ *
+ * La domanda sta fra le istruzioni e la figura perché senza non si legge
+ * niente: la stessa figura risponde a «otterrò il lavoro?» e a «tornerà?»
+ * con significatori diversi, e chi legge deve sapere quale delle due gli è
+ * stata posta. Sta fra virgolette, così com'è stata scritta.
+ */
+export function letturaOrariaDaIncollare(
+  domanda: string,
+  figura: string,
+  opzioni: Pick<OpzioniLettura, 'repository'> = {},
+): string {
+  const provenienza = opzioni.repository
+    ? `\n\nTema calcolato da dodicisegni, con le effemeridi Swiss Ephemeris: ${opzioni.repository}`
+    : '';
+  return `${ORARIA}${provenienza}\n\nLA DOMANDA\n«${domanda.trim()}»\n\n${figura}\n`;
 }

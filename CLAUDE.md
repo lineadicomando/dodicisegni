@@ -16,8 +16,8 @@ ridiscutere.
 | `packages/core` | motore di calcolo e CLI `dodicisegni`. Nessuna dipendenza da HTTP, framework o MCP |
 | `packages/geo` | ricerca località su dataset GeoNames locale (SQLite) |
 | `packages/ruota` | il disegno: la ruota e il quadro vedico nei due stili. Geometria, glifi, colori, SVG e PNG. Non dipende da `core` |
-| `packages/lettura` | il tema più le istruzioni per leggerlo, in un testo solo. Un documento per sistema astrologico. Riceve una tabella già impaginata: non dipende da `core`, nemmeno dai tipi |
-| `packages/mcp` | server MCP: undici tool, un prompt di lettura e due risorse di riferimento, trasporto stdio |
+| `packages/lettura` | il tema più le istruzioni per leggerlo, in un testo solo. Un documento per sistema astrologico, più quello dell'oraria, che legge una domanda e non una nascita. Riceve una tabella già impaginata: non dipende da `core`, nemmeno dai tipi |
+| `packages/mcp` | server MCP: dodici tool, due prompt di lettura e due risorse di riferimento, trasporto stdio |
 | `apps/web` | SvelteKit: interfaccia + API REST, tutti gli endpoint in GET |
 | `apps/desktop` | Electron: la web app in una finestra. Avvia il server di `web` compilato, non duplica superfici |
 

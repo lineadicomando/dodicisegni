@@ -21,6 +21,9 @@
 
 import { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
 import {
+  computeHoraryLilly,
+  currentMoment,
+  formatHoraryCompact,
   computeJyotisha,
   computeNatalChart,
   formatChartCompact,
@@ -28,7 +31,7 @@ import {
   type BirthData,
   type ChartOptions,
 } from '@dodicisegni/core';
-import { letturaDaIncollare, SISTEMI, type Sistema } from '@dodicisegni/lettura';
+import { letturaDaIncollare, letturaOrariaDaIncollare, SISTEMI, type Sistema } from '@dodicisegni/lettura';
 import { z } from 'zod';
 import { describeError, resolvePlace, type ToolContext } from './tools.js';
 
@@ -175,6 +178,108 @@ function componi(
       : formatChartCompact(chart);
 
     return letturaDaIncollare(intestazione + tavola, { sistema: sistema as Sistema });
+  } catch (error) {
+    return describeError(error);
+  }
+}
+
+/**
+ * Il prompt dell'oraria: la domanda, la figura e le istruzioni per leggerla.
+ *
+ * La domanda è un argomento e non un contesto lasciato al modello: senza,
+ * le istruzioni non sanno a che cosa rispondere, e la stessa figura dice cose
+ * diverse a domande diverse. La casa invece resta da indicare, come nel tool:
+ * sceglierla è il primo passo del giudizio, e il motore non lo fa al posto di
+ * nessuno.
+ */
+export function registerLetturaOraria(server: McpServer, context: ToolContext = {}): void {
+  server.registerPrompt(
+    'lettura_oraria',
+    {
+      title: 'Leggi una domanda con l\'astrologia oraria',
+      description:
+        "Erige il tema orario di una domanda col metodo di Lilly e lo consegna insieme alle " +
+        'istruzioni per giudicarlo, nel registro attribuito («secondo il metodo di Lilly la figura ' +
+        'indica…»). Le istruzioni sono vincolanti e dicono anche che cosa non si giudica: salute, ' +
+        'morte, cause e denaro. Ometti date e time per l\'istante presente.',
+      argsSchema: {
+        domanda: z.string().min(1).describe('La domanda, come l\'ha posta chi chiede.'),
+        casa: z.string().describe('La casa del quesito, 1-12, scelta dalla domanda.'),
+        derivata_da: z.string().optional().describe('Per le case derivate: la casa da cui contare.'),
+        date: z.string().optional().describe('Giorno della domanda, YYYY-MM-DD. Ometti per adesso.'),
+        time: z.string().optional().describe('Ora della domanda, HH:mm. Ometti per adesso.'),
+        location_id: z.string().optional().describe('Dove si trova chi chiede, da search_location.'),
+        latitude: z.string().optional().describe('Latitudine, positiva a Nord.'),
+        longitude: z.string().optional().describe('Longitudine, positiva a Est.'),
+        timezone: z.string().optional().describe('Fuso IANA. Obbligatorio senza location_id.'),
+      },
+    },
+    (args) => ({
+      messages: [{ role: 'user', content: { type: 'text', text: componiOraria(args, context) } }],
+    }),
+  );
+}
+
+function componiOraria(
+  args: {
+    domanda: string;
+    casa: string;
+    derivata_da?: string | undefined;
+    date?: string | undefined;
+    time?: string | undefined;
+    location_id?: string | undefined;
+    latitude?: string | undefined;
+    longitude?: string | undefined;
+    timezone?: string | undefined;
+  },
+  context: ToolContext,
+): string {
+  const intero = (valore: string | undefined): number | undefined =>
+    valore === undefined || valore.trim() === '' ? undefined : Number(valore);
+  const casa = intero(args.casa);
+  const derivata = intero(args.derivata_da);
+  if (casa === undefined || !Number.isInteger(casa) || casa < 1 || casa > 12) {
+    return 'casa deve essere un numero da 1 a 12: la casa del quesito, scelta dalla domanda.';
+  }
+  if (derivata !== undefined && (!Number.isInteger(derivata) || derivata < 1 || derivata > 12)) {
+    return 'derivata_da deve essere un numero da 1 a 12.';
+  }
+  if (args.date !== undefined && args.time === undefined) {
+    return "Con date va indicata anche time: senza l'ora della domanda la figura non ha case.";
+  }
+
+  const location_id = intero(args.location_id);
+  const latitude = intero(args.latitude);
+  const longitude = intero(args.longitude);
+  if ([location_id, latitude, longitude].some((v) => v !== undefined && Number.isNaN(v))) {
+    return 'location_id, latitude e longitude devono essere numeri.';
+  }
+  const place = resolvePlace(
+    {
+      ...(location_id !== undefined ? { location_id } : {}),
+      ...(latitude !== undefined ? { latitude } : {}),
+      ...(longitude !== undefined ? { longitude } : {}),
+      ...(args.timezone !== undefined ? { timezone: args.timezone } : {}),
+    },
+    context,
+  );
+  if ('error' in place) return place.error;
+
+  try {
+    const moment =
+      args.date === undefined
+        ? currentMoment(place.timezone)
+        : { date: args.date, time: args.time!, timezone: place.timezone };
+    const horary = computeHoraryLilly(
+      moment,
+      { latitude: place.latitude, longitude: place.longitude },
+      {
+        question: { house: casa, ...(derivata !== undefined ? { derivedFrom: derivata } : {}) },
+        ...(context.ephemerisPath ? { ephemerisPath: context.ephemerisPath } : {}),
+      },
+    );
+    const intestazione = place.label ? `Luogo: ${place.label}\n` : '';
+    return letturaOrariaDaIncollare(args.domanda, intestazione + formatHoraryCompact(horary));
   } catch (error) {
     return describeError(error);
   }

@@ -1,5 +1,6 @@
 import { describe, expect, it } from 'vitest';
-import { istruzioniDi, letturaDaIncollare, SISTEMI } from '../src/lettura.js';
+import { istruzioniDi, letturaDaIncollare, letturaOrariaDaIncollare, SISTEMI } from '../src/lettura.js';
+import { ORARIA } from '../src/oraria.js';
 
 const TEMA = 'TEMA NATALE — 1985-09-20 08:40 (Europe/Rome, UTC+02:00)\n\nCORPI\nSole 27°15\' Ver';
 
@@ -232,5 +233,56 @@ describe('il documento vedico', () => {
     // comporli da blocchi condivisi, questa prova direbbe che non si può.
     expect(istruzioniDi('jyotisha')).not.toBe(istruzioniDi('tropicale'));
     expect(istruzioniDi('jyotisha')).not.toContain('Sole, Luna e Ascendente sono tre voci');
+  });
+});
+
+/**
+ * Il documento dell'oraria: l'unico che risponde, e per questo quello che
+ * deve dire più chiaramente che cosa non giudica.
+ */
+describe("il documento dell'oraria", () => {
+  const testo = ORARIA.replace(/\s+/g, ' ');
+
+  it('non è uno dei sistemi del tema natale', () => {
+    expect(SISTEMI).not.toContain('oraria');
+  });
+
+  it('vieta di ricalcolare e di aggiungere dati', () => {
+    expect(testo).toContain('non ricalcolarlo, non correggerlo');
+    expect(testo).toContain('deve poggiare su un dato presente');
+  });
+
+  it('chiede il registro attribuito, non affermazioni proprie', () => {
+    expect(testo).toContain('Secondo il metodo di Lilly la figura indica');
+    expect(testo).toContain('non tu e non il programma');
+  });
+
+  it('rifiuta salute, morte, cause e denaro dicendo perché', () => {
+    expect(testo).toMatch(/salute/);
+    expect(testo).toMatch(/morte/);
+    expect(testo).toMatch(/processo/);
+    expect(testo).toMatch(/denaro/);
+    expect(testo).toContain('non giudicarla');
+    expect(testo).toContain('Lilly giudicava anche queste domande');
+  });
+
+  it('lascia al lettore il tempo, come stima e col metodo di Lilly', () => {
+    expect(testo).toContain('Il motore non converte i gradi in giorni');
+    expect(testo).toContain('non presentarli come tali');
+  });
+
+  it("dice come rispondere sulla validità dell'astrologia", () => {
+    expect(testo).toContain('non ha fondamento scientifico');
+  });
+
+  it('mette la domanda fra le istruzioni e la figura', () => {
+    const composto = letturaOrariaDaIncollare('  Otterrò il lavoro? ', 'TEMA ORARIO (LILLY) — casa 10');
+    const istruzioni = composto.indexOf('Il registro è attribuito');
+    const domanda = composto.indexOf('«Otterrò il lavoro?»');
+    const figura = composto.indexOf('TEMA ORARIO (LILLY)');
+    expect(istruzioni).toBeGreaterThan(-1);
+    expect(domanda).toBeGreaterThan(istruzioni);
+    expect(figura).toBeGreaterThan(domanda);
+    expect(composto).not.toContain('Tema calcolato da dodicisegni');
   });
 });

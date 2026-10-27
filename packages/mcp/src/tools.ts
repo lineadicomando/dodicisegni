@@ -6,6 +6,7 @@ import {
   NATAL_ORB_CONVENTIONS,
   VARGAS,
   computeNatalChart,
+  computeHoraryLilly,
   computeSky,
   computeTransits,
   currentMoment,
@@ -19,6 +20,7 @@ import {
   formatElectionCompact,
   formatPassagesCompact,
   formatActiveTransitsCompact,
+  formatHoraryCompact,
   formatSkyCompact,
   formatSkyEventsCompact,
   formatSkyPassagesCompact,
@@ -41,6 +43,7 @@ import {
   type PassageRange,
   type Place,
   type SkyEventOptions,
+  type HoraryQuestion,
   type SkyMoment,
   type SkyOptions,
   type SkyPassageOptions,
@@ -710,7 +713,9 @@ export function registerComputeSky(server: McpServer, context: ToolContext = {})
         '"dov\'è la Luna adesso", "in che segno è Marte", "quando è il prossimo plenilunio". ' +
         'Se invece una data di nascita c\'è, e la domanda è che cosa il cielo tocchi di quella ' +
         'persona, il tool giusto è compute_transits: senza un tema non esistono transiti, ' +
-        'esiste solo il cielo. Non chiamare questo tool inventando una nascita. ' +
+        'esiste solo il cielo. Non chiamare questo tool inventando una nascita. Se chi scrive ' +
+        'pone una domanda da giudicare con l\'astrologia oraria («otterrò il lavoro?»), il tool ' +
+        'giusto è compute_horary, che erige la figura col metodo di Lilly. ' +
         'OMETTI date per adesso: la data corrente la mette il server, tu non la sai. ' +
         'Il luogo è FACOLTATIVO perché le posizioni nello zodiaco sono le stesse ovunque ' +
         'sulla Terra: indicalo solo se ti servono Ascendente e case, e non inventarlo mai. ' +
@@ -784,6 +789,110 @@ export function registerComputeSky(server: McpServer, context: ToolContext = {})
 
         const header = observation.label ? `Luogo: ${observation.label}\n` : '';
         return ok(header + formatSkyCompact(sky));
+      } catch (error) {
+        return fail(describeError(error));
+      }
+    },
+  );
+}
+
+export function registerComputeHorary(server: McpServer, context: ToolContext = {}): void {
+  server.registerTool(
+    'compute_horary',
+    {
+      title: 'Erige il tema orario di una domanda, secondo Lilly',
+      description:
+        "Erige la figura dell'istante in cui una domanda viene posta e la analizza col metodo " +
+        'di William Lilly (Christian Astrology, 1647): significatori, modi della perfezione ' +
+        '(congiunzione, aspetto, traslazione, collezione) e impedimenti (proibizione, ' +
+        'frustrazione, refranazione) con la pagina del libro, considerazioni prima del giudizio, ' +
+        'la figura col conto delle fortezze, il corso dei significatori. USA QUESTO TOOL quando ' +
+        'chi scrive pone una domanda da giudicare con l\'astrologia oraria: «otterrò il lavoro?», ' +
+        '«dov\'è l\'anello?», «tornerà?». Non per il cielo di un momento senza domanda ' +
+        '(compute_sky), non per una nascita (compute_natal_chart). ' +
+        'La CASA DEL QUESITO la scegli tu dalla domanda, come la sceglieva Lilly: la 7 per il ' +
+        'partner o la controparte, la 10 per il lavoro e la carriera, la 2 per i beni mobili, la ' +
+        '3 per fratelli e brevi viaggi, la 5 per i figli, la 11 per gli amici e le speranze; per ' +
+        'le persone della persona usa le case derivate (il partner del fratello è house 7 con ' +
+        'derived_from 3). Se la domanda non indica con chiarezza una casa, chiedilo prima di ' +
+        'chiamare il tool. Salute, morte, cause legali e denaro non si giudicano: non chiamare ' +
+        'il tool per queste domande, e dillo. ' +
+        "OMETTI date e time per l'istante presente: la figura si erige quando la domanda è " +
+        "posta, e l'ora corrente la mette il server, tu non la sai. Il LUOGO È OBBLIGATORIO, " +
+        'perché senza non ci sono case: è dove si trova chi chiede; non inventarlo, chiedilo o ' +
+        'cercalo con search_location. Il risultato non dice se la cosa avverrà: il giudizio, ' +
+        'attribuito a Lilly, lo fa chi legge, e il prompt lettura_oraria porta le istruzioni.',
+      inputSchema: {
+        question_house: z
+          .number()
+          .int()
+          .min(1)
+          .max(12)
+          .describe('La casa del quesito, 1-12, contata dall\'Ascendente o da derived_from.'),
+        derived_from: z
+          .number()
+          .int()
+          .min(1)
+          .max(12)
+          .optional()
+          .describe('Per le case derivate: la casa da cui contare question_house. Ometti altrimenti.'),
+        date: z
+          .string()
+          .regex(/^\d{4}-\d{2}-\d{2}$/)
+          .optional()
+          .describe('Giorno della domanda, YYYY-MM-DD. OMETTILO per adesso.'),
+        time: z
+          .string()
+          .regex(/^\d{2}:\d{2}(:\d{2})?$/)
+          .optional()
+          .describe(
+            "Ora della domanda, HH:mm. OMETTILA per adesso. Con una date passata è obbligatoria: " +
+              "senza l'ora la figura non ha case.",
+          ),
+        timezone: z
+          .string()
+          .optional()
+          .describe("Fuso IANA dell'istante. Default: quello della località, se viene da search_location."),
+        location_id: z.number().int().optional().describe('Dove si trova chi chiede, da search_location.'),
+        latitude: z.number().min(-90).max(90).optional().describe('Latitudine, positiva a Nord. Con longitude.'),
+        longitude: z.number().min(-180).max(180).optional().describe('Longitudine, positiva a Est. Con latitude.'),
+        format: z
+          .enum(['compact', 'json'])
+          .optional()
+          .describe('compact (default): tabella densa. json: oggetto completo.'),
+      },
+    },
+    async (args) => {
+      try {
+        const observation = resolveObservation(
+          args,
+          context,
+          'senza luogo la figura non ha case, e la domanda non ha un significatore',
+        );
+        if ('error' in observation) return fail(observation.error);
+        if (!observation.place) {
+          return fail(
+            'Il tema orario vuole il luogo in cui si trova chi chiede: indica location_id (da ' +
+              'search_location) oppure latitude e longitude. Non inventarlo: chiedilo.',
+          );
+        }
+        if (args.date !== undefined && args.time === undefined) {
+          return fail(
+            "Con una date va indicata anche time: senza l'ora della domanda la figura non ha case. " +
+              "Per l'istante presente ometti tutte e due.",
+          );
+        }
+        const timezone = args.timezone ?? observation.timezone ?? 'UTC';
+        const question: HoraryQuestion = { house: args.question_house };
+        if (args.derived_from !== undefined) question.derivedFrom = args.derived_from;
+
+        const horary = computeHoraryLilly(skyMoment(args, timezone), observation.place, {
+          question,
+          ...(context.ephemerisPath ? { ephemerisPath: context.ephemerisPath } : {}),
+        });
+        if (args.format === 'json') return ok(JSON.stringify(horary, null, 2));
+        const header = observation.label ? `Luogo: ${observation.label}\n` : '';
+        return ok(header + formatHoraryCompact(horary));
       } catch (error) {
         return fail(describeError(error));
       }

@@ -1,5 +1,5 @@
 import { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
-import { registerLetturaDelTema } from './prompts.js';
+import { registerLetturaDelTema, registerLetturaOraria } from './prompts.js';
 import {
   ASPECTS,
   DEFAULT_NATAL_ORB_CONVENTION,
@@ -12,6 +12,7 @@ import {
 import {
   registerComputeJyotishaChart,
   registerComputeNatalChart,
+  registerComputeHorary,
   registerComputeSky,
   registerComputeTransits,
   registerDrawChartWheel,
@@ -51,6 +52,9 @@ export function createServer(context: ToolContext = {}): McpServer {
         'Per scegliere QUANDO cominciare qualcosa in un luogo (ore planetarie, Ascendente ' +
         "che sorge, Luna vuota di corso) c'è find_election_hours, che vuole il luogo e " +
         'nessuna nascita. ' +
+        'Per GIUDICARE una domanda con l\'astrologia oraria («otterrò il lavoro?») c\'è ' +
+        "compute_horary, col metodo di Lilly: vuole il luogo di chi chiede e la casa del quesito, " +
+        "che scegli tu dalla domanda; il prompt lettura_oraria porta le istruzioni per leggerlo. " +
         'Per il presente ometti sempre la data: la data corrente la mette il server. ' +
         'Per MOSTRARE la carta invece che leggerla c\'è draw_chart_wheel, che ne restituisce ' +
         "l'immagine: si chiama dopo compute_natal_chart e non al posto suo, perché un disegno " +
@@ -71,12 +75,14 @@ export function createServer(context: ToolContext = {}): McpServer {
   registerDrawChartWheel(server, context);
   registerDrawJyotishaChart(server, context);
   registerComputeSky(server, context);
+  registerComputeHorary(server, context);
   registerComputeTransits(server, context);
   registerFindTransitPassages(server, context);
   registerFindActiveTransits(server, context);
   registerFindSkyEvents(server, context);
   registerFindElectionHours(server, context);
   registerLetturaDelTema(server, context);
+  registerLetturaOraria(server, context);
   registerReferenceResources(server);
 
   return server;

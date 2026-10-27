@@ -101,7 +101,7 @@ function imageOf(
 }
 
 describe('superficie MCP', () => {
-  it('espone gli undici tool con descrizione e schema', async () => {
+  it('espone i dodici tool con descrizione e schema', async () => {
     const { tools } = await client.listTools();
     const names = tools.map((tool) => tool.name);
 
@@ -116,6 +116,8 @@ describe('superficie MCP', () => {
     expect(names).toContain('find_election_hours');
     expect(names).toContain('compute_jyotisha_chart');
     expect(names).toContain('draw_jyotisha_chart');
+    expect(names).toContain('compute_horary');
+    expect(names).toHaveLength(12);
 
     const quadroTool = tools.find((tool) => tool.name === 'draw_jyotisha_chart');
     // Deve dire che si chiama dopo i dati e non al posto loro, come la ruota.
@@ -336,6 +338,59 @@ describe('superficie MCP', () => {
 
     const { tools } = await client.listTools();
     expect(tools.map((tool) => tool.name)).not.toContain('lettura_del_tema');
+  });
+
+  it("erige il tema orario e dice che la casa la sceglie chi chiama", async () => {
+    const { tools } = await client.listTools();
+    const horary = tools.find((tool) => tool.name === 'compute_horary');
+    expect(horary?.inputSchema.required).toEqual(['question_house']);
+    expect(horary?.description).toMatch(/OMETTI date e time/);
+    expect(horary?.description).toMatch(/LUOGO È OBBLIGATORIO/);
+    expect(horary?.description).toMatch(/Salute, morte, cause legali e denaro/);
+    // compute_sky deve rimandare qui, o un modello sceglie il cielo per una domanda.
+    expect(tools.find((tool) => tool.name === 'compute_sky')?.description).toMatch(/compute_horary/);
+
+    const result = await client.callTool({
+      name: 'compute_horary',
+      arguments: { question_house: 10, date: '2026-10-27', time: '22:15', location_id: ROMA_ID },
+    });
+    const testo = textOf(result);
+    expect(result.isError).toBeFalsy();
+    expect(testo).toContain('Luogo: Roma');
+    expect(testo).toContain('TEMA ORARIO (LILLY) — casa 10');
+    expect(testo).toContain('SIGNIFICATORI');
+    expect(testo).toContain('CONSIDERAZIONI PRIMA DEL GIUDIZIO');
+  });
+
+  it("rifiuta il tema orario senza luogo, o con la data e senza l'ora", async () => {
+    const senzaLuogo = await client.callTool({ name: 'compute_horary', arguments: { question_house: 7 } });
+    expect(senzaLuogo.isError).toBe(true);
+    expect(textOf(senzaLuogo)).toMatch(/Non inventarlo/);
+    const senzaOra = await client.callTool({
+      name: 'compute_horary',
+      arguments: { question_house: 7, date: '2026-10-27', location_id: ROMA_ID },
+    });
+    expect(senzaOra.isError).toBe(true);
+    expect(textOf(senzaOra)).toMatch(/anche time/);
+  });
+
+  it("consegna la domanda fra le istruzioni dell'oraria e la figura", async () => {
+    const { prompts } = await client.listPrompts();
+    expect(prompts.map((prompt) => prompt.name)).toContain('lettura_oraria');
+    const result = await client.getPrompt({
+      name: 'lettura_oraria',
+      arguments: {
+        domanda: 'Otterrò il lavoro?',
+        casa: '10',
+        date: '2026-10-27',
+        time: '22:15',
+        location_id: String(ROMA_ID),
+      },
+    });
+    const testo = String(result.messages[0]?.content?.text);
+    expect(testo).toContain('Secondo il metodo di Lilly');
+    expect(testo.indexOf('Il registro è attribuito')).toBeLessThan(testo.indexOf('«Otterrò il lavoro?»'));
+    expect(testo.indexOf('«Otterrò il lavoro?»')).toBeLessThan(testo.indexOf('TEMA ORARIO (LILLY)'));
   });
 
   it('consegna le istruzioni prima della tabella, senza farla riscrivere', async () => {
