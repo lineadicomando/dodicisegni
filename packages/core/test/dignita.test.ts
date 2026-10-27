@@ -216,8 +216,8 @@ describe('le ricezioni', () => {
 
   it("del secondo esempio, che per Lilly è per triplicità, vedono solo ciò che le tavole hanno", () => {
     // ♀ in ♈ e ☉ in ♉: Venere riceve il Sole per domicilio, il Sole riceve
-    // Venere per esaltazione. La triplicità ancora non c'è, e la mutua esce
-    // per le due dignità che ci sono.
+    // Venere per esaltazione. La triplicità è del pacchetto di Lilly
+    // (`dignita-lilly.test.ts`): qui la mutua esce per le due dignità comuni.
     const { mutual } = receptionsOf([
       { id: 'venere', sign: 'ariete' },
       { id: 'sole', sign: 'toro' },

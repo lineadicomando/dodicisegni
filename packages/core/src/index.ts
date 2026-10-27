@@ -33,6 +33,7 @@ export {
   EXALTATION_SOURCE,
   exaltationOf,
   fallOf,
+  collectReceptions,
   RECEPTION_SOURCE,
   receptionsOf,
   type Dignity,
@@ -43,11 +44,13 @@ export {
 } from './dignita.js';
 export {
   LILLY_PLANETS,
+  LILLY_RECEPTION_SOURCE,
   LILLY_SOURCE,
   lillyDignitiesOf,
   lillyExaltation,
   lillyFaceRuler,
   lillyFall,
+  lillyReceptionsOf,
   lillyRulersAt,
   lillyTermRuler,
   lillyTriplicityRuler,

@@ -28,7 +28,14 @@
 
 import { SIGN_ELEMENT } from './constants.js';
 import { degreeInSign, signOf } from './math.js';
-import { DOMICILES, detrimentsOf } from './dignita.js';
+import {
+  collectReceptions,
+  DOMICILES,
+  detrimentsOf,
+  type MutualReception,
+  type Reception,
+  type ReceptionDignity,
+} from './dignita.js';
 import type { BodyId, Element, Sect, ZodiacSign } from './types.js';
 
 /** La riga che viaggia col risultato: da dove vengono le tavole. */
@@ -232,4 +239,30 @@ export function lillyDignitiesOf(body: BodyId, longitude: number, sect: Sect | u
   if (detrimentsOf(body, 'tradizionale').includes(sign)) risultato.push('esilio');
   if (lillyFall(body) === sign) risultato.push('caduta');
   return risultato;
+}
+
+/** La riga delle ricezioni quando il pacchetto è acceso. */
+export const LILLY_RECEPTION_SOURCE =
+  'Lilly, p. 112 (mutua, per «any essentiall dignity») e p. 176 (semplice), sulla tavola di p. 104.';
+
+/**
+ * Le ricezioni secondo Lilly per tutte e cinque le dignità essenziali, come le
+ * definisce a p. 112: domicilio, esaltazione, triplicità, termine e faccia.
+ * Chiedono la longitudine e non il segno, perché termini e facce sono tratti
+ * di segno, e la setta per la triplicità: senza, la triplicità c'è solo
+ * nell'acqua, come in `lillyTriplicityRuler`.
+ *
+ * Solo i sette pianeti ricevono e sono ricevuti: la definizione di p. 112
+ * parla di «two Planets», e i Nodi, che un'esaltazione ce l'hanno, restano
+ * fuori come in `receptionsOf`.
+ */
+export function lillyReceptionsOf(
+  bodies: readonly { id: BodyId; longitude: number }[],
+  sect: Sect | undefined,
+): { single: Reception[]; mutual: MutualReception[] } {
+  const voci = ['domicilio', 'esaltazione', 'triplicita', 'termine', 'faccia'] as const;
+  return collectReceptions(bodies, (receiver, received) => {
+    const signori = lillyRulersAt(received.longitude, sect);
+    return voci.filter((voce) => signori[voce] === receiver) as ReceptionDignity[];
+  });
 }

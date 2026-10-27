@@ -175,8 +175,11 @@ export function dignitiesOf(body: BodyId, sign: ZodiacSign, scheme: DomicileSche
   return risultato;
 }
 
-/** La dignità per cui un pianeta ne riceve un altro. */
-export type ReceptionDignity = 'domicilio' | 'esaltazione';
+/**
+ * La dignità per cui un pianeta ne riceve un altro. Le ultime tre vengono
+ * solo dal pacchetto di Lilly (`dignita-lilly.ts`), a richiesta.
+ */
+export type ReceptionDignity = 'domicilio' | 'esaltazione' | 'triplicita' | 'termine' | 'faccia';
 
 /** `receiver` riceve `received`: il secondo sta in una dignità del primo. */
 export interface Reception {
@@ -203,28 +206,30 @@ export interface MutualReception {
  * receive the Lord of the Ascendant») e Lilly parla di «single reception by
  * exaltation»: le ricezioni semplici sono quelle.
  *
- * Qui ci sono le due dignità per cui le tavole esistono già, domicilio ed
+ * Qui ci sono le due dignità comuni alle scuole antiche, domicilio ed
  * esaltazione per segno, che coincidono con la tavola di Lilly a p. 104.
- * Triplicità, termini e facce arriveranno col suo pacchetto: finché non ci
- * sono, una ricezione per triplicità manca, e la riga lo dice invece di
- * lasciarlo credere assente.
+ * Triplicità, termini e facce sono del suo pacchetto, che li aggiunge quando
+ * lo si chiede (`lillyReceptionsOf`): senza, una ricezione per triplicità
+ * manca, e la riga lo dice invece di lasciarla credere assente.
  */
 export const RECEPTION_SOURCE =
-  "Lilly, p. 112 (mutua) e p. 176 (semplice), per domicilio ed esaltazione; per triplicità, termine e faccia non ancora calcolate.";
+  "Lilly, p. 112 (mutua) e p. 176 (semplice), per domicilio ed esaltazione; per triplicità, termine e faccia non calcolate senza il pacchetto di Lilly.";
 
 /** I sette pianeti, gli unici che nelle tavole di Lilly hanno domicili. */
 const SETTE: readonly BodyId[] = ['sole', 'luna', 'mercurio', 'venere', 'marte', 'giove', 'saturno'];
 
 /** Per quali dignità `receiver` riceve un pianeta che sta in `sign`. */
-function receivesBy(receiver: BodyId, sign: ZodiacSign): ReceptionDignity[] {
+function receivesBy(receiver: BodyId, received: { sign: ZodiacSign }): ReceptionDignity[] {
   const per: ReceptionDignity[] = [];
-  if (DOMICILI_TRADIZIONALI[sign] === receiver) per.push('domicilio');
-  if (ESALTAZIONI[receiver] === sign) per.push('esaltazione');
+  if (DOMICILI_TRADIZIONALI[received.sign] === receiver) per.push('domicilio');
+  if (ESALTAZIONI[receiver] === received.sign) per.push('esaltazione');
   return per;
 }
 
 /**
- * Le ricezioni fra i sette pianeti di un tema, semplici e mutue.
+ * Le ricezioni fra i sette pianeti, semplici e mutue, per una regola data:
+ * `per` dice per quali dignità un pianeta ne riceve un altro. La regola
+ * cambia con la scuola; il modo di contare no, ed è questo.
  *
  * Un pianeta nella propria dignità non riceve sé stesso, e i corpi che non
  * sono fra i sette (i pianeti moderni, i nodi, Chirone) restano fuori: Lilly
@@ -232,16 +237,16 @@ function receivesBy(receiver: BodyId, sign: ZodiacSign): ReceptionDignity[] {
  * anche fra le semplici, nei due versi: sono due affermazioni, e la seconda
  * non si ricava dalla prima senza guardare l'altra.
  */
-export function receptionsOf(bodies: readonly { id: BodyId; sign: ZodiacSign }[]): {
-  single: Reception[];
-  mutual: MutualReception[];
-} {
+export function collectReceptions<B extends { id: BodyId }>(
+  bodies: readonly B[],
+  per: (receiver: BodyId, received: B) => ReceptionDignity[],
+): { single: Reception[]; mutual: MutualReception[] } {
   const pianeti = bodies.filter((body) => SETTE.includes(body.id));
   const single: Reception[] = [];
   for (const receiver of pianeti) {
     for (const received of pianeti) {
       if (receiver.id === received.id) continue;
-      const by = receivesBy(receiver.id, received.sign);
+      const by = per(receiver.id, received);
       if (by.length > 0) single.push({ receiver: receiver.id, received: received.id, by });
     }
   }
@@ -249,8 +254,8 @@ export function receptionsOf(bodies: readonly { id: BodyId; sign: ZodiacSign }[]
   const mutual: MutualReception[] = [];
   pianeti.forEach((primo, i) => {
     for (const secondo of pianeti.slice(i + 1)) {
-      const firstReceives = receivesBy(primo.id, secondo.sign);
-      const secondReceives = receivesBy(secondo.id, primo.sign);
+      const firstReceives = per(primo.id, secondo);
+      const secondReceives = per(secondo.id, primo);
       if (firstReceives.length > 0 && secondReceives.length > 0) {
         mutual.push({ bodies: [primo.id, secondo.id], firstReceives, secondReceives });
       }
@@ -258,4 +263,12 @@ export function receptionsOf(bodies: readonly { id: BodyId; sign: ZodiacSign }[]
   });
 
   return { single, mutual };
+}
+
+/** Le ricezioni di un tema per domicilio ed esaltazione, le sole senza scuola. */
+export function receptionsOf(bodies: readonly { id: BodyId; sign: ZodiacSign }[]): {
+  single: Reception[];
+  mutual: MutualReception[];
+} {
+  return collectReceptions(bodies, receivesBy);
 }

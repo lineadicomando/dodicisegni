@@ -6,6 +6,7 @@ import {
   lillyExaltation,
   lillyFaceRuler,
   lillyFall,
+  lillyReceptionsOf,
   lillyRulersAt,
   lillyTermRuler,
   lillyTriplicityRuler,
@@ -203,5 +204,88 @@ describe('le dignità di un corpo in un grado', () => {
 
   it('portano la fonte con la pagina', () => {
     expect(LILLY_SOURCE).toContain('pp. 104-105');
+  });
+});
+
+/**
+ * Lilly, p. 112, dà due esempi oltre a quello per domicilio: «♀ in ♈, and ☉
+ * in ♉; here is reception by triplicity, if the Question or Nativity be by
+ * day: so ♀ in the 24. of ♈ and ♂ in the 16. of ♊; here is reception by
+ * terme». Le prove usano i suoi, non esempi costruiti qui.
+ */
+describe('le ricezioni di Lilly', () => {
+  it('riconoscono la mutua per triplicità del suo esempio, di giorno', () => {
+    // I gradi li sceglie il test, perché Lilly dà solo i segni: a 2 dell'Ariete
+    // e a 20 del Toro termini e facce non sono di nessuno dei due.
+    const { mutual } = lillyReceptionsOf(
+      [
+        { id: 'venere', longitude: lon('ariete', 2) },
+        { id: 'sole', longitude: lon('toro', 20) },
+      ],
+      'diurna',
+    );
+    expect(mutual).toEqual([
+      {
+        bodies: ['venere', 'sole'],
+        firstReceives: ['domicilio', 'triplicita'],
+        secondReceives: ['esaltazione', 'triplicita'],
+      },
+    ]);
+  });
+
+  it('di notte la triplicità passa ad altri reggenti, e resta solo il resto', () => {
+    const { mutual } = lillyReceptionsOf(
+      [
+        { id: 'venere', longitude: lon('ariete', 2) },
+        { id: 'sole', longitude: lon('toro', 20) },
+      ],
+      'notturna',
+    );
+    expect(mutual).toEqual([
+      { bodies: ['venere', 'sole'], firstReceives: ['domicilio'], secondReceives: ['esaltazione'] },
+    ]);
+  });
+
+  it('riconoscono la mutua per termine del suo esempio: ♀ a 24 dell\'Ariete, ♂ a 16 dei Gemelli', () => {
+    const { mutual } = lillyReceptionsOf(
+      [
+        { id: 'venere', longitude: lon('ariete', 24) },
+        { id: 'marte', longitude: lon('gemelli', 16) },
+      ],
+      undefined,
+    );
+    // Venere riceve Marte per termine; Marte riceve Venere per domicilio e
+    // per termine. La faccia di ciascuno è la propria, e non conta.
+    expect(mutual).toEqual([
+      {
+        bodies: ['venere', 'marte'],
+        firstReceives: ['termine'],
+        secondReceives: ['domicilio', 'termine'],
+      },
+    ]);
+  });
+
+  it('danno le semplici per faccia', () => {
+    // Venere a 25 dell'Acquario sta nella faccia della Luna, e in nessun'altra
+    // sua dignità; la Luna a 5 dei Gemelli non sta in nessuna di Venere.
+    const { single } = lillyReceptionsOf(
+      [
+        { id: 'luna', longitude: lon('gemelli', 5) },
+        { id: 'venere', longitude: lon('acquario', 25) },
+      ],
+      'notturna',
+    );
+    expect(single).toEqual([{ receiver: 'luna', received: 'venere', by: ['faccia'] }]);
+  });
+
+  it('lasciano fuori i Nodi, anche dove sono esaltati', () => {
+    const { single } = lillyReceptionsOf(
+      [
+        { id: 'nodo-nord', longitude: lon('ariete', 1) },
+        { id: 'mercurio', longitude: lon('gemelli', 1) },
+      ],
+      'diurna',
+    );
+    expect(single).toEqual([]);
   });
 });
