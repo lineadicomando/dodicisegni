@@ -1,9 +1,10 @@
 /**
  * Il calcolo lungo, fuori dal filo che serve le richieste.
  *
- * Tre ricerche costano secondi e non millesimi: i passaggi dei transiti, il
- * calendario del cielo, l'elezione. Misurato su questa macchina, i passaggi su
- * tre anni con la Luna sono circa 1,9 secondi. Node è a un filo solo, e quei
+ * Quattro ricerche costano secondi e non millesimi: i passaggi dei transiti,
+ * i transiti attivi in un arco, il calendario del cielo, l'elezione. Misurato
+ * su questa macchina, i passaggi su tre anni con la Luna sono circa 1,9
+ * secondi, e i transiti attivi lo stesso. Node è a un filo solo, e quei
  * secondi sono **sincroni per costruzione**: il vincolo che vieta `await`
  * dentro la catena di calcolo esiste perché Swiss Ephemeris tiene lo zodiaco
  * siderale in stato globale, quindi spezzarla dall'interno non è un'opzione.
@@ -27,6 +28,7 @@
 
 import { ChartError } from '@dodicisegni/core';
 import type {
+  ActiveTransit,
   ElectionOptions,
   ElectionResult,
   NatalChart,
@@ -49,7 +51,7 @@ import { Worker } from 'node:worker_threads';
  * I lavori che il pool sa fare, con la firma di ciò che sta dall'altra parte.
  *
  * L'elenco è chiuso apposta: non è un modo generico di eseguire codice altrove
- * ma tre domande note, e la firma le lega a quelle del motore, così che un
+ * ma quattro domande note, e la firma le lega a quelle del motore, così che un
  * argomento cambiato di là non passi inosservato di qua.
  *
  * `calendario` ne accorpa tre perché la rotta le chiede sempre insieme, sullo
@@ -62,6 +64,11 @@ interface Lavori {
     range: PassageRange,
     options: PassageOptions,
   ) => { passages: TransitPassage[]; warnings: string[] };
+  attivi: (
+    natal: NatalChart,
+    range: PassageRange,
+    options: PassageOptions,
+  ) => { transits: ActiveTransit[]; warnings: string[] };
   elezione: (range: PassageRange, place: Place, options: ElectionOptions) => ElectionResult;
   calendario: (
     range: PassageRange,
@@ -98,6 +105,7 @@ const core = await import(workerData.core);
 
 const LAVORI = {
   passaggi: (natal, range, options) => core.findTransitPassages(natal, range, options),
+  attivi: (natal, range, options) => core.findActiveTransits(natal, range, options),
   elezione: (range, place, options) => core.findElectionHours(range, place, options),
   calendario: (range, perPassaggi, perEventi) => ({
     incontri: core.findSkyPassages(range, perPassaggi),

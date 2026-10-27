@@ -11,7 +11,8 @@ o sta in uno dei due elenchi in fondo. L'ultima versione che le contiene tutte,
 chiuse comprese, è `cf5219a`, quando il file si chiamava ancora `ROADMAP.md`.
 Le voci dalla 20 alla 23 sono nate e si sono chiuse dopo: la 20 per intero sta
 in `3314553`, la 21 e la 22 in `819ce59`, la 23 in `db332a6`. La 11, aperta
-prima e chiusa dopo, sta per intero in `e194d45`, la 13 in `e532f2f`.
+prima e chiusa dopo, sta per intero in `e194d45`, la 13 in `e532f2f`, la 7 in
+`955977b`.
 
 Le fonti citate qui stanno in copia locale in `texts/`, fuori dal repo: la
 cartella, le schede `FONTE.md` e l'elenco `texts/INDICE.md` si mantengono come
@@ -37,7 +38,6 @@ volta e ricominciare da capo.
 |---|---|---|---|
 | 9. Il linter | media | piccola | decidere lo strumento; il resto è fatto |
 | 18. Le orbite senza autore | media | media | decidere fra le due strade |
-| 7. I transiti attivi in un arco | non dichiarata | media | niente, è pronta |
 | 8. Il glossario e /metodo | media | grande | si incrocia col punto 6 |
 | 6. La prosa che invecchia | bassa | piccola | farla insieme al punto 8 |
 | 5. I varga che mancano | non dichiarata | tre lotti | per il D-2, la convenzione |
@@ -219,119 +219,6 @@ quello che serve. Da fare solo per i valori tabellari, e solo se la pagina
 sopravvive abbastanza da giustificarlo.
 
 Verifica: cambiare un'orbita in `ASPECTS` e vedere il test cadere.
-
-## 7. La domanda che manca ai transiti: che cosa è attivo in un arco
-
-Oggi ci sono due tool e nessuno dei due risponde a «che cosa è in orbita fra il
-1° e il 30 settembre». `compute_transits` fotografa **un istante**;
-`find_transit_passages` elenca **gli istanti in cui un aspetto si perfeziona**.
-Fra i due manca l'intervallo, che è quello che serve per leggere un periodo:
-un giorno, una settimana, un mese, un bimestre. È una domanda sola con `from` e
-`to` diversi: **non serve un enum di periodi**, e non deve entrarci. Chiamare
-«bimestre» un arco è comodità di chi chiama, non un fatto del motore.
-
-### Quasi tutto il calcolo c'è già
-
-`windowAround`, `packages/core/src/passages.ts:180`, calcola già l'intervallo in
-cui ogni passaggio resta in orbita, e lo fa quasi gratis: cammina sui campioni
-già presi e dimezza solo l'ultimo. Il margine di campionamento a
-`passages.ts:65` è `WIDEST_ORB / MEAN_DAILY_MOTION[bodyId]` (`WIDEST_ORB` vale
-4°, `roots.ts:32`), cioè il tempo che un corpo impiega ad attraversare
-l'orbita più larga **al moto medio**. Non è il caso peggiore: vicino a una
-stazione un corpo lento ci mette di più. Nel caso di verifica 1 qui sotto
-Saturno quadrato Venere resta in orbita 126 giorni contro un margine di circa
-121, e la finestra può cadere fuori dai campioni, che è il secondo caso
-descritto più avanti. Anche `options.orbs`, passato al motore direttamente,
-può superare i 4° (MCP e CLI non lo espongono).
-
-Quel lavoro viene poi buttato via da un filtro, `passages.ts:78-80`:
-
-```js
-found.filter((passage) => passage.julianDay >= start && passage.julianDay <= end)
-```
-
-Sostituire «l'istante esatto cade nell'arco» con «la finestra interseca l'arco»
-non è matematica nuova: è un predicato diverso su valori già calcolati. Il
-commento sopra il filtro lo dice quasi in chiaro.
-
-### Il pezzo che invece manca davvero
-
-`passagesOf`, `passages.ts:116`, trova i passaggi cercando i **cambi di segno**
-di `gap`, cioè le perfezioni. Un transito che entra in orbita, staziona a due
-gradi e mezzo dal punto natale e retrocede **senza mai perfezionarsi** non
-produce nessuna radice, quindi nessun passaggio, quindi nessuna finestra. Oggi è
-invisibile a ragione, perché lì non c'è nessun istante esatto da elencare; ma
-in un elenco di ciò che è attivo quel transito c'è, e per mesi.
-
-Va quindi cercata la radice di `|gap| − orbLimit` **indipendentemente** da
-quella di `gap`. `bisect` in `roots.ts` sa già farlo ed è la stessa funzione che
-`windowAround` chiama: solo, oggi la invoca ancorata a un istante esatto. Va
-scollegata da quell'ancora.
-
-Secondo caso, più semplice: quando il bordo non si trova entro
-`MAX_WINDOW_DAYS` (1095, `roots.ts:30`, che fa anche da tetto al margine di
-riga 65 e dentro `windowAround`), o quando i campioni finiscono prima di
-trovarlo, la finestra oggi viene omessa. In un elenco di transiti attivi «in
-orbita per tutto l'arco» **è la risposta**, non un dato mancante, e va detta
-invece che taciuta.
-
-Niente di tutto questo tocca la catena di calcolo sincrona né lo stato globale
-dell'ayanamsa: si resta dentro `zodiacContext`, come il resto del file.
-
-### Decisioni già prese, per non ridiscuterle
-
-- **Le superfici espongono solo dati.** MCP, CLI e API restano agnostiche
-  rispetto alla lettura: dicono quale transito è in orbita, con che aspetto, con
-  quanta orbita ai bordi, e quante volte si perfeziona dentro l'arco.
-  L'interpretazione la fanno gli agenti, su fattori che non si trattano qui e
-  che non entrano nel repo.
-- **Nessun punteggio, nessun indice di intensità del periodo.** Sarebbe il
-  «totale solo» che il progetto rifiuta: pesare Saturno contro Giove è una
-  dottrina, e qui non ce n'è una da nominare. Sarebbe la nostra, e finirebbe
-  nel codice senza che chi legge possa vederla. Si espongono i componenti,
-  come `Distribution` porta `counted`. Un indice che avesse un autore e una
-  fonte sarebbe un'altra domanda (vedi il vincolo in `CLAUDE.md`), ma per i
-  transiti di un periodo non se ne conosce uno.
-- **Nessun `mode:` su `find_transit_passages`.** Il precedente è un tool per
-  domanda (`compute_sky` accanto a `find_sky_events`), e le descrizioni sono
-  scritte apposta perché un modello non li confonda. Un flag che ribalta il
-  significato delle righe è la cosa più facile da sbagliare per un agente.
-- **Niente interfaccia web.** La funzione serve agli agenti e alla riga di
-  comando: l'endpoint sì, la pagina e la tabella Svelte no.
-- Serve un tetto all'arco: `MAX_RANGE_DAYS` in `packages/mcp/src/tools.ts:829`
-  (usato da `find_sky_events` e `find_transit_passages`) e in
-  `apps/web/src/lib/server/range.ts:18` (1096 giorni, tre anni) è il
-  precedente.
-
-### Nome e superfici
-
-`find_transit_passages` risponde a *quando*, questo a *che cosa*: i due nomi
-devono renderlo ovvio a un modello che li legge di fianco. `find_active_transits`
-per l'MCP, `attivi.ts` accanto a `passages.ts` in `core`.
-
-Due commit, nell'ordine della skill `nuova-funzione`: il calcolo con la CLI e i
-test, che è il grosso; poi rotta GET e tool MCP con la descrizione che dice
-anche che cosa non fare. I precedenti da ricalcare sono la rotta
-`apps/web/src/routes/api/transits/passages/+server.ts` e la registrazione di
-`find_transit_passages` in `packages/mcp/src/tools.ts:1404`.
-
-Verifica, in due casi distinti perché provano due cose diverse:
-
-1. **Il filtro.** Tema del 2 giugno 1978, 15:15, Palermo, arco
-   `2026-07-01 → 2026-08-01`. Saturno quadrato Venere (finestra
-   2026-05-26 → 2026-09-29, esatto il 22 giugno e il 31 agosto) e Saturno
-   opposizione Plutone (finestra 2026-05-29 → 2026-09-25, esatto il 27 giugno e
-   il 25 agosto) sono in orbita per tutto l'arco e non si perfezionano dentro:
-   oggi `find_transit_passages` su quell'arco non ne restituisce nessuno dei
-   due (restituisce invece i passaggi dei corpi veloci, Sole, Venere, Marte,
-   Giove). Caso reale, ricontrollato il 27 ottobre 2026. Il comando:
-   `cd packages/core && npx tsx src/cli.ts --date 1978-06-02 --time 15:15
-   --lat 38.1157 --lon 13.3615 --tz Europe/Rome --passages --json --from
-   2026-07-01 --to 2026-08-01`; con `--from 2026-05-01 --to 2026-10-31`
-   compaiono le due finestre con le date esatte.
-2. **La radice nuova.** Un transito che entri in orbita e retroceda senza mai
-   perfezionarsi va costruito apposta: il caso 1 non lo copre, perché lì le
-   perfezioni esistono e cadono solo fuori dall'arco.
 
 ## 8. Il glossario, e /metodo da rivedere
 
@@ -1006,6 +893,12 @@ Verifica: ogni fonte citata in un commento di `packages/` ha una riga in
 - **`12segni` non è un secondo marchio.** È il dominio di servizio e il nome
   breve sotto l'icona, dove sette caratteri sono il tetto. Nella prosa il nome
   è uno solo.
+- **I transiti attivi non hanno un'interfaccia web, né un punteggio.**
+  `find_active_transits`, `/api/transits/active` e `--attivi` servono agli
+  agenti e alla riga di comando: la pagina e la tabella Svelte no. E nessun
+  indice di intensità del periodo, che sarebbe un peso senza autore: si
+  espongono i componenti (bordi, orbita ai bordi, perfezioni, avvicinamento
+  massimo). Deciso con la voce 7.
 - **Il server MCP non ha un pool, e non gli serve**: è un processo per client,
   sul trasporto stdio, e non c'è nessun'altra richiesta da tenere in attesa.
 - **I thread del pool web sono al massimo quattro, e la quinta richiesta

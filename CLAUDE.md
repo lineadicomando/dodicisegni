@@ -17,7 +17,7 @@ ridiscutere.
 | `packages/geo` | ricerca località su dataset GeoNames locale (SQLite) |
 | `packages/ruota` | il disegno: la ruota e il quadro vedico nei due stili. Geometria, glifi, colori, SVG e PNG. Non dipende da `core` |
 | `packages/lettura` | il tema più le istruzioni per leggerlo, in un testo solo. Un documento per sistema astrologico. Riceve una tabella già impaginata: non dipende da `core`, nemmeno dai tipi |
-| `packages/mcp` | server MCP: dieci tool, un prompt di lettura e due risorse di riferimento, trasporto stdio |
+| `packages/mcp` | server MCP: undici tool, un prompt di lettura e due risorse di riferimento, trasporto stdio |
 | `apps/web` | SvelteKit: interfaccia + API REST, tutti gli endpoint in GET |
 | `apps/desktop` | Electron: la web app in una finestra. Avvia il server di `web` compilato, non duplica superfici |
 
@@ -79,8 +79,8 @@ il motore usa Moshier invece delle effemeridi Swiss.
   flag di quello che `initEphemeris` tiene in cache.
 
   Quello stato è però **per thread**, non per processo: ogni thread carica la
-  sua istanza del modulo nativo. È la ragione per cui le tre rotte che costano
-  secondi (passaggi, calendario del cielo, elezione) girano in un pool di
+  sua istanza del modulo nativo. È la ragione per cui le quattro rotte che costano
+  secondi (passaggi, transiti attivi, calendario del cielo, elezione) girano in un pool di
   worker (`apps/web/src/lib/server/pool.ts`) senza che il vincolo qui sopra
   cambi di una virgola: la catena resta sincrona, solo gira altrove. Il fatto è
   verificato in `pool.test.ts` e non va dato per scontato: se cadesse, il pool

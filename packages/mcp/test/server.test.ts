@@ -101,7 +101,7 @@ function imageOf(
 }
 
 describe('superficie MCP', () => {
-  it('espone i dieci tool con descrizione e schema', async () => {
+  it('espone gli undici tool con descrizione e schema', async () => {
     const { tools } = await client.listTools();
     const names = tools.map((tool) => tool.name);
 
@@ -111,6 +111,7 @@ describe('superficie MCP', () => {
     expect(names).toContain('compute_sky');
     expect(names).toContain('compute_transits');
     expect(names).toContain('find_transit_passages');
+    expect(names).toContain('find_active_transits');
     expect(names).toContain('find_sky_events');
     expect(names).toContain('find_election_hours');
     expect(names).toContain('compute_jyotisha_chart');
@@ -1088,6 +1089,63 @@ describe('find_transit_passages', () => {
 
     expect(tool?.description).toMatch(/retrogradazione/i);
     expect(tool?.description).toMatch(/previsione/i);
+  });
+});
+
+describe('find_active_transits', () => {
+  // Il caso di TODO.md, voce 7: in luglio 2026 Saturno è in orbita su Venere
+  // per tutto il mese, esatto a giugno e ad agosto, cioè fuori.
+  const PALERMO = {
+    date: '1978-06-02',
+    time: '15:15',
+    latitude: 38.1157,
+    longitude: 13.3615,
+    timezone: 'Europe/Rome',
+  };
+
+  it('vede un transito in orbita per tutto l arco che i passaggi non vedono', async () => {
+    const argomenti = { ...PALERMO, from: '2026-07-01', to: '2026-08-01', bodies: ['saturno'], format: 'json' };
+    const attivi = await client.callTool({ name: 'find_active_transits', arguments: argomenti });
+    const passaggi = await client.callTool({ name: 'find_transit_passages', arguments: argomenti });
+
+    expect(JSON.parse(textOf(passaggi)).passages).toEqual([]);
+    const { transits } = JSON.parse(textOf(attivi));
+    const venere = transits.find(
+      (t: { natal: string; aspect: string }) => t.natal === 'venere' && t.aspect === 'quadrato',
+    );
+    expect(venere).toMatchObject({ throughout: true, perfections: [] });
+    expect(venere.enters.slice(0, 10)).toBe('2026-05-26');
+  });
+
+  it('nella forma compatta dice da quando a quando, e che non è esatto', async () => {
+    const result = await client.callTool({
+      name: 'find_active_transits',
+      arguments: { ...PALERMO, from: '2026-07-01', to: '2026-08-01', bodies: ['saturno'] },
+    });
+
+    expect(textOf(result)).toMatch(/TRANSITI ATTIVI/);
+    expect(textOf(result)).toMatch(/2026-05-26 → 2026-09-29\s+Saturno\s+quadrato\s+Venere/);
+    expect(textOf(result)).toMatch(/tutto l'arco/);
+  });
+
+  it('rifiuta un arco troppo lungo', async () => {
+    const result = await client.callTool({
+      name: 'find_active_transits',
+      arguments: { ...PALERMO, from: '2026-01-01', to: '2050-01-01' },
+    });
+    expect(result.isError).toBe(true);
+  });
+
+  it('distingue nella descrizione che cosa da quando, e non pesa i transiti', async () => {
+    const { tools } = await client.listTools();
+    const attivi = tools.find((t) => t.name === 'find_active_transits');
+    const passaggi = tools.find((t) => t.name === 'find_transit_passages');
+
+    expect(attivi?.description).toMatch(/CHE COSA/);
+    expect(attivi?.description).toMatch(/find_transit_passages/);
+    expect(attivi?.description).toMatch(/punteggio/);
+    expect(attivi?.description).toMatch(/OMETTI from/);
+    expect(passaggi?.description).toMatch(/find_active_transits/);
   });
 });
 

@@ -28,6 +28,18 @@ describe('il pool restituisce quello che restituirebbe il motore', () => {
     expect(di_la.passages.length).toBeGreaterThan(0);
   });
 
+  it('i transiti attivi, identici al calcolo sul posto', async () => {
+    const tema = computeNatalChart(NASCITA, {});
+    const qui = (await import('@dodicisegni/core')).findActiveTransits(tema, ARCO, {
+      minorAspects: false,
+    });
+    const di_la = await nelPool('attivi', tema, ARCO, { minorAspects: false });
+
+    expect(di_la.transits).toEqual(qui.transits);
+    expect(di_la.warnings).toEqual(qui.warnings);
+    expect(di_la.transits.length).toBeGreaterThan(0);
+  });
+
   it('il calendario del cielo, con le tre ricerche in un viaggio solo', async () => {
     const core = await import('@dodicisegni/core');
     const esito = await nelPool('calendario', ARCO, { minorAspects: false }, {});

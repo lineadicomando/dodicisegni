@@ -61,7 +61,7 @@ che diverge. Il README tiene descrizione, licenza e comandi, e basta.
 4. **Il commento in testa alla rotta e la descrizione del tool**, che sono la
    documentazione: dicono i parametri, i valori ammessi e che cosa non fare.
    Il README solo se cambiano i comandi o i conteggi scritti a mano: i tool
-   MCP («dieci tool», anche in `CLAUDE.md`), gli endpoint e le sezioni web.
+   MCP («undici tool», anche in `CLAUDE.md`), gli endpoint e le sezioni web.
 5. `npm test && npm run typecheck`.
 
 ## I commit

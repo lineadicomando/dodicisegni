@@ -11,6 +11,7 @@ import {
   registerFindElectionHours,
   registerFindSkyEvents,
   registerFindTransitPassages,
+  registerFindActiveTransits,
   registerSearchLocation,
   type ToolContext,
 } from './tools.js';
@@ -34,7 +35,9 @@ export function createServer(context: ToolContext = {}): McpServer {
         'search_location per ottenere un location_id, poi compute_natal_chart oppure ' +
         'compute_transits. Data e ora vanno passate in ora locale, come segnate sul documento ' +
         'di nascita. Per sapere quando un transito diventa esatto, e quante volte, c\'è ' +
-        'find_transit_passages. Senza una nascita non esistono transiti ma solo il cielo: ' +
+        'find_transit_passages; per sapere che cosa è attivo in un periodo, anche senza un ' +
+        "istante esatto dentro, c'è find_active_transits. " +
+        'Senza una nascita non esistono transiti ma solo il cielo: ' +
         'per quello c\'è compute_sky, che non chiede né data di nascita né luogo, e ' +
         'find_sky_events per gli incontri, gli ingressi e le stazioni di un periodo. ' +
         'Per scegliere QUANDO cominciare qualcosa in un luogo (ore planetarie, Ascendente ' +
@@ -62,6 +65,7 @@ export function createServer(context: ToolContext = {}): McpServer {
   registerComputeSky(server, context);
   registerComputeTransits(server, context);
   registerFindTransitPassages(server, context);
+  registerFindActiveTransits(server, context);
   registerFindSkyEvents(server, context);
   registerFindElectionHours(server, context);
   registerLetturaDelTema(server, context);
