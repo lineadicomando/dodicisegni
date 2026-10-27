@@ -13,6 +13,7 @@ export { findActiveTransits } from './attivi.js';
 export { findSkyPassages } from './sky-passages.js';
 export { findSignIngresses, findStations } from './sky-events.js';
 export { findElectionHours, MAX_ELECTION_DAYS, planetaryHourAt } from './election.js';
+export { findSignCourse, MAX_COURSE_DAYS } from './corso.js';
 export { riseOrSet, type RiseOptions } from './rise.js';
 export { computePanchanga, karanaOf, tithiOf, yogaOf } from './panchanga.js';
 export {
@@ -253,6 +254,10 @@ export type {
   LillySolarState,
   LillyStar,
   PlanetaryHourAt,
+  CourseEvent,
+  SignCourse,
+  SignCourseOptions,
+  VoidVerdict,
   Zodiac,
   ZodiacOptions,
   ZodiacSign,

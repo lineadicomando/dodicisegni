@@ -38,6 +38,7 @@ import type {
   VargaChart,
   VimshottariDasha,
   WesternDignities,
+  SignCourse,
   LillyConditions,
   LillyScoreItem,
   LillyScoreRow,
@@ -288,6 +289,55 @@ export function formatSkyEventsCompact(
 
   lines.push(...warningLines(warnings));
 
+  return lines.join('\n');
+}
+
+/**
+ * Il corso di un corpo fino all'uscita dal segno, e le due Lune vuote.
+ *
+ * Gli eventi in ordine, uno per riga, e i classificatori dopo, ciascuno col
+ * suo nome e la sua regola: sono due letture della stessa sequenza, e chi
+ * legge deve vedere su che cosa divergono.
+ */
+export function formatSignCourseCompact(course: SignCourse): string {
+  const quando = (iso: string): string => iso.slice(0, 16).replace('T', ' ');
+  const lines = [
+    `CORSO — ${course.name} dal ${quando(course.local)} fino all'uscita dal segno`,
+    `${course.name} a ${formatZodiacal(course.longitude)}` +
+      (course.entered ? `, nel segno dal ${quando(course.entered)} UTC` : ''),
+    `Aspetti tolemaici cercati con: ${course.with.map(bodyName).join(', ')}`,
+  ];
+  if (course.lastPerfected?.kind === 'aspetto') {
+    const { aspect, with: altro, local } = course.lastPerfected;
+    lines.push(`Si separa da: ${aspect} a ${bodyName(altro)}, esatto il ${quando(local)}`);
+  }
+
+  lines.push('', 'EVENTI');
+  if (course.events.length === 0) lines.push('(nessuno entro l\'arco)');
+  for (const event of course.events) {
+    const quale =
+      event.kind === 'aspetto'
+        ? `${event.aspect} a ${bodyName(event.with)}${event.retrograde.body ? ' (retrogrado)' : ''}` +
+          `${event.retrograde.other ? ` (${bodyName(event.with)} retrogrado)` : ''}`
+        : event.kind === 'stazione'
+          ? `stazione ${event.direction} a ${formatZodiacal(event.longitude)}`
+          : `ingresso in ${event.sign}${event.retrograde ? ", all'indietro" : ''}`;
+    lines.push(`${quando(event.local)}  ${quale}`);
+  }
+
+  if (course.voids.length > 0) {
+    lines.push('', 'VUOTO DI CORSO');
+    for (const verdict of course.voids) {
+      const perche = verdict.applyingAtExit
+        ? `, all'uscita applica a ${bodyName(verdict.applyingAtExit.with)} ` +
+          `(${verdict.applyingAtExit.aspect} a ${formatDegrees(verdict.applyingAtExit.orb)})`
+        : '';
+      lines.push(`${verdict.name}: ${verdict.void ? 'vuoto' : 'non vuoto'}${perche}. ${verdict.rule}`);
+      lines.push(`  Fonte: ${verdict.source}`);
+      if (verdict.note) lines.push(`  ${verdict.note}`);
+    }
+  }
+  lines.push(...warningLines(course.warnings));
   return lines.join('\n');
 }
 

@@ -801,7 +801,7 @@ export type AspectId =
  * Le convenzioni delle orbite per il tema e il cielo di un istante, ciascuna
  * con un autore: vedi `orbite.ts`. `greene` è la predefinita.
  */
-export type NatalOrbConvention = 'greene' | 'leo';
+export type NatalOrbConvention = 'greene' | 'leo' | 'lilly';
 
 /**
  * Le convenzioni delle orbite per i transiti e i passaggi, più strette di
@@ -1646,6 +1646,88 @@ export interface PlanetaryHourAt {
   local: { start: string; end: string };
   /** Durata effettiva in minuti. */
   minutes: number;
+}
+
+/** Come chiedere il corso di un corpo fino all'uscita dal segno. */
+export interface SignCourseOptions {
+  /**
+   * I corpi con cui cercare gli aspetti. Default: i sette pianeti. La Luna
+   * vuota di Lilly guarda comunque solo i sette, gli unici con un'orbita.
+   */
+  bodies?: BodyId[];
+  /** Il fuso in cui scrivere gli istanti locali. Default: UTC. */
+  timezone?: string;
+  /** Percorso della cartella con i file `.se1`. */
+  ephemerisPath?: string;
+}
+
+/**
+ * Un evento nel corso di un corpo: un aspetto che perfeziona, una stazione,
+ * il cambio di segno che chiude la sequenza.
+ */
+export type CourseEvent = {
+  /** Istante UTC, ISO 8601, e lo stesso nel fuso richiesto. */
+  exact: string;
+  local: string;
+} & (
+  | {
+      kind: 'aspetto';
+      with: BodyId;
+      aspect: AspectId;
+      /** Chi dei due è retrogrado nell'istante esatto. */
+      retrograde: { body: boolean; other: boolean };
+    }
+  | { kind: 'stazione'; direction: 'retrograda' | 'diretta'; longitude: number }
+  | { kind: 'ingresso'; sign: ZodiacSign; from: ZodiacSign; retrograde: boolean }
+);
+
+/**
+ * Il giudizio di un classificatore nominato sulla sequenza: se il corpo è
+ * vuoto di corso secondo una scuola, con la fonte e la regola.
+ */
+export interface VoidVerdict {
+  school: 'moderno' | 'lilly';
+  name: string;
+  source: string;
+  rule: string;
+  void: boolean;
+  /**
+   * Per Lilly: l'aspetto che il corpo sta ancora formando quando esce dal
+   * segno, entro le orbite. È ciò che lo rende non vuoto anche dove il criterio
+   * moderno lo dice vuoto.
+   */
+  applyingAtExit?: { with: BodyId; aspect: AspectId; orb: number };
+  note?: string;
+}
+
+/**
+ * Il corso di un corpo dall'istante dato fino al cambio di segno. Vedi
+ * `corso.ts`. Non sceglie nessuna scuola: gli eventi sono moto, e i
+ * classificatori in `voids` dicono ciascuno il proprio nome.
+ */
+export interface SignCourse {
+  body: BodyId;
+  name: string;
+  /** L'istante di partenza, UTC e nel fuso richiesto. */
+  at: string;
+  local: string;
+  longitude: number;
+  sign: ZodiacSign;
+  signDegree: number;
+  /** I corpi con cui sono stati cercati gli aspetti. */
+  with: BodyId[];
+  /** Quando il corpo è entrato nel segno, se entro l'arco cercato. */
+  entered?: string;
+  /**
+   * L'ultimo aspetto perfezionato prima dell'istante, da quando è nel segno:
+   * ciò da cui il corpo si sta separando.
+   */
+  lastPerfected?: CourseEvent;
+  /** In ordine; l'ultimo è l'ingresso nel segno dopo, se cade entro l'arco. */
+  events: CourseEvent[];
+  /** La Luna vuota moderna e quella di Lilly. Vuoto se il segno non finisce entro l'arco. */
+  voids: VoidVerdict[];
+  warnings: string[];
 }
 
 /**

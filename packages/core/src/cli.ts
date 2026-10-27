@@ -25,6 +25,7 @@ import {
   formatPanchangaCompact,
   formatActiveTransitsCompact,
   formatPassagesCompact,
+  formatSignCourseCompact,
   formatSkyCompact,
   formatSkyEventsCompact,
   formatSkyPassagesCompact,
@@ -41,13 +42,15 @@ import { findTransitPassages } from './passages.js';
 import { findActiveTransits } from './attivi.js';
 import { findSignIngresses, findStations } from './sky-events.js';
 import { findSkyPassages } from './sky-passages.js';
-import { DEFAULT_PASSAGE_BODIES, DIGNITY_SCHOOL_NAMES } from './constants.js';
+import { BODIES, DEFAULT_PASSAGE_BODIES, DIGNITY_SCHOOL_NAMES } from './constants.js';
+import { findSignCourse } from './corso.js';
 import { NATAL_ORB_CONVENTIONS } from './orbite.js';
 import { computeSky } from './sky.js';
-import { currentMoment, systemTimezone } from './time.js';
+import { currentMoment, resolveTime, systemTimezone } from './time.js';
 import { computeTransits } from './transits.js';
 import type {
   BirthData,
+  BodyId,
   NatalChart,
   ChartOptions,
   DignitySchool,
@@ -89,8 +92,10 @@ Opzioni
                         regiomontano, campano, porfirio, topocentrico, alcabizio
   --minor               Includi anche gli aspetti minori
   --orbite <scuola>     Le orbite degli aspetti del tema e del cielo: greene
-                        (default, la predefinita di Astrodienst) oppure leo
-                        (How to Judge a Nativity, 1928). Transiti e passaggi
+                        (default, la predefinita di Astrodienst), leo (How to
+                        Judge a Nativity, 1928) oppure lilly (Christian
+                        Astrology, 1647: metà dell'orbita di ciascun pianeta,
+                        i sette e i cinque aspetti tolemaici). Transiti e passaggi
                         usano sempre quelle di Robert Hand, 1°
   --zodiaco <nome>      tropicale (default) oppure siderale. Fra i due corrono
                         più di ventiquattro gradi: quasi un segno intero
@@ -181,6 +186,10 @@ Cielo
   --sky --passages      Il calendario degli incontri fra i corpi in cielo,
                         con --from, --to e --moon come sopra
   --sky --events        Ingressi nei segni e stazioni, con --from e --to
+  --sky --corso <corpo> Gli eventi di un corpo dall'istante (--on, --at, --tz)
+                        fino al cambio di segno: aspetti tolemaici coi sette,
+                        stazioni, ingresso, e la Luna vuota moderna e quella di
+                        Lilly. Anche in --json
 
 Panchanga
   --panchanga           Le cinque parti del calendario indiano (tithi, vara,
@@ -343,6 +352,7 @@ function main(argv: string[]): number {
       attivi: { type: 'boolean', default: false },
       sky: { type: 'boolean', default: false },
       events: { type: 'boolean', default: false },
+      corso: { type: 'string' },
       elezione: { type: 'boolean', default: false },
       reggitori: { type: 'string' },
       'senza-vuoti': { type: 'boolean', default: false },
@@ -497,6 +507,13 @@ function main(argv: string[]): number {
       process.stderr.write('--passages e --events sono due elenchi diversi: chiedine uno.\n');
       return 2;
     }
+    if (values.corso !== undefined) {
+      if (values.passages || values.events) {
+        process.stderr.write('--corso è un elenco a sé: non si combina con --passages o --events.\n');
+        return 2;
+      }
+      return printCourse(values);
+    }
     if (values.passages) return printSkyPassages(values);
     if (values.events) return printSkyEvents(values);
     return printSky(values, scuolaDignita);
@@ -504,6 +521,10 @@ function main(argv: string[]): number {
 
   if (values.events) {
     process.stderr.write('--events richiede --sky: ingressi e stazioni non hanno un tema.\n');
+    return 2;
+  }
+  if (values.corso !== undefined) {
+    process.stderr.write('--corso richiede --sky: il corso è di un corpo in cielo, non di un tema.\n');
     return 2;
   }
 
@@ -897,6 +918,34 @@ function printSky(values: {
   process.stdout.write(
     values.json ? `${JSON.stringify(sky, null, 2)}\n` : `${formatSkyCompact(sky)}\n`,
   );
+  return 0;
+}
+
+/**
+ * Stampa il corso di un corpo fino all'uscita dal segno.
+ */
+function printCourse(values: {
+  corso?: string | undefined;
+  on?: string | undefined;
+  at?: string | undefined;
+  tz?: string | undefined;
+  ephe?: string | undefined;
+  json: boolean;
+}): number {
+  const corpo = values.corso ?? '';
+  if (!BODIES.some((body) => body.id === corpo)) {
+    process.stderr.write(
+      `Corpo di --corso non riconosciuto: "${corpo}". Ammessi: ${BODIES.map((body) => body.id).join(', ')}.\n`,
+    );
+    return 2;
+  }
+  const timezone = values.tz ?? systemTimezone();
+  const { time } = resolveTime(momentFrom(values, timezone));
+  const course = findSignCourse(time.julianDayUT, corpo as BodyId, {
+    timezone,
+    ...(values.ephe ? { ephemerisPath: values.ephe } : {}),
+  });
+  process.stdout.write(values.json ? `${JSON.stringify(course, null, 2)}\n` : `${formatSignCourseCompact(course)}\n`);
   return 0;
 }
 

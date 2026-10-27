@@ -176,6 +176,22 @@ describe('le convenzioni delle orbite', () => {
     ).toHaveLength(0);
   });
 
+  it('Lilly: la metà dell orbita di ciascuno, sommate, come a p. 107', () => {
+    // «♀ be in the tenth degree of ♉, and ♄ in eighteen degrees of ♍, here ♀
+    // hath a Platick △ … for the moity of ♄ his Rayes or Orbs is five, and of
+    // ♀ 4, and the distance betwixt them and their perfect aspect is eight
+    // degrees»: 5 + 4 = 9.
+    const lilly = { convention: natalOrbConvention('lilly') };
+    expect(computeAspects([body('venere', 40), body('saturno', 168)], lilly)[0]?.aspect).toBe('trigono');
+    expect(computeAspects([body('venere', 40), body('saturno', 169.1)], lilly)).toHaveLength(0);
+    // Sole e Luna: 8°30' + 6°15' = 14°45' a ogni aspetto, il quadrato compreso.
+    expect(computeAspects([body('sole', 0), body('luna', 104.5)], lilly)[0]?.aspect).toBe('quadrato');
+    expect(computeAspects([body('sole', 0), body('luna', 105)], lilly)).toHaveLength(0);
+    // Fuori dalla tavola nessuna orbita, e niente aspetti minori.
+    expect(computeAspects([body('sole', 0), body('urano', 0.5)], lilly)).toHaveLength(0);
+    expect(computeAspects([body('marte', 0), body('giove', 45)], { ...lilly, minorAspects: true })).toHaveLength(0);
+  });
+
   it('Hand: 1° a ogni coppia, luminari compresi', () => {
     const hand = { convention: transitOrbConvention() };
     expect(computeCrossAspects([point('saturno', 120.9)], [point('sole', 0)], hand)).toHaveLength(1);
@@ -193,6 +209,6 @@ describe('le convenzioni delle orbite', () => {
   });
 
   it('rifiuta una convenzione che non conosce', () => {
-    expect(() => natalOrbConvention('lilly' as never)).toThrow(/greene, leo/);
+    expect(() => natalOrbConvention('tolomeo' as never)).toThrow(/greene, leo, lilly/);
   });
 });

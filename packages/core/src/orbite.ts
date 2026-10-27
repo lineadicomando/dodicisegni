@@ -15,7 +15,8 @@
  *
  * Le fonti stanno in `texts/` (vedi `texts/INDICE.md`): la pagina di
  * Astrodienst in `tecnica/astrodienst-orbite-2026`, Leo in
- * `occidentale/leo-how-to-judge-a-nativity-1928`.
+ * `occidentale/leo-how-to-judge-a-nativity-1928`, Lilly in
+ * `occidentale/lilly-christian-astrology-1647`.
  */
 
 import { ChartError } from './errors.js';
@@ -104,6 +105,31 @@ const LEO: Readonly<Partial<Record<AspectId, number>>> = {
 
 const LUMINARI: ReadonlySet<string> = new Set(['sole', 'luna']);
 
+/**
+ * William Lilly, *Christian Astrology* (1647), p. 107: l'orbita è **del
+ * pianeta**, non dell'aspetto, e la coppia è in aspetto entro la somma delle
+ * due metà (*moieties*), p. 110: «every Planet that applies is allowed halfe
+ * his owne orbs and halfe the orbs of that Planet from whom he seperates».
+ *
+ * Lilly stampa due colonne. La prima è quella che dice trovata «by the best
+ * Authors and my owne Experience»; la seconda ha accanto «According to
+ * others», «As some have wrote», «Most say». L'esempio di p. 107 usa la prima,
+ * quello di p. 110 la seconda, e Lilly ammette di usarle «as my Memory best
+ * Remembereth». Qui la prima, dichiarata nella regola.
+ */
+const LILLY_ORBI: Readonly<Record<string, number>> = {
+  saturno: 10,
+  giove: 12,
+  marte: 7.5,
+  sole: 17,
+  venere: 8,
+  mercurio: 7,
+  luna: 12.5,
+};
+
+/** I cinque aspetti che Lilly tratta: i minori non li considera (p. 110). */
+const TOLEMAICI: readonly AspectId[] = ['congiunzione', 'sestile', 'quadrato', 'trigono', 'opposizione'];
+
 const TUTTI: readonly AspectId[] = Object.keys(GREENE) as AspectId[];
 
 export const NATAL_ORB_CONVENTIONS: readonly OrbConventionDefinition<NatalOrbConvention>[] = [
@@ -138,6 +164,24 @@ export const NATAL_ORB_CONVENTIONS: readonly OrbConventionDefinition<NatalOrbCon
       const base = LEO[aspect] ?? 0;
       if (aspect !== 'congiunzione' && aspect !== 'opposizione') return base;
       return base + (LUMINARI.has(a) ? 2 : 0) + (LUMINARI.has(b) ? 2 : 0);
+    },
+  },
+  {
+    id: 'lilly',
+    name: 'William Lilly (moieties)',
+    source: 'William Lilly, Christian Astrology (1647), p. 107 (tavola, prima colonna) e p. 110 (la somma delle metà).',
+    rule:
+      "Per pianeta: Saturno 10°, Giove 12°, Marte 7°30', Sole 17°, Venere 8°, Mercurio 7°, Luna 12°30'; " +
+      'una coppia è in aspetto entro la metà dell\'uno più la metà dell\'altro, per ognuno dei cinque ' +
+      "aspetti tolemaici. Prima colonna della tavola; la seconda (Saturno e Giove 9°, Marte 7°, Sole 15°, " +
+      'Venere 7°, Luna 12°) Lilly la attribuisce ad altri. Urano, Nettuno, Plutone, Chirone, i Nodi, ' +
+      'Lilith e gli assi non sono nella tavola e non hanno orbita: con loro nessun aspetto.',
+    aspects: TOLEMAICI,
+    orbOf: (_aspect, a, b) => {
+      const orboA = LILLY_ORBI[a];
+      const orboB = LILLY_ORBI[b];
+      if (orboA === undefined || orboB === undefined) return 0;
+      return (orboA + orboB) / 2;
     },
   },
 ];
