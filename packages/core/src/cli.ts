@@ -46,6 +46,7 @@ import { computeTransits } from './transits.js';
 import type {
   BirthData,
   NatalChart,
+  ChartFormatOptions,
   ChartOptions,
   ElectionOptions,
   HouseSystem,
@@ -110,6 +111,10 @@ Opzioni
                         vuole anche l'ora, perché le sue caselle sono case
   --fortuna <formula>   Parte di Fortuna: settore (default, si inverte nei temi
                         notturni) oppure diurna (sempre ASC + Luna − Sole)
+  --dignita <scuola>    Aggiunge alla sezione DIGNITÀ la tavola di una scuola:
+                        lilly (Christian Astrology, 1647), con triplicità,
+                        termini, facce e le ricezioni per tutte e cinque. Solo
+                        per la tabella del tema natale tropicale
   --json                Stampa il JSON completo invece della tabella compatta
   --lettura             Stampa il tema preceduto dalle istruzioni per farlo
                         interpretare: si incolla in un assistente. Solo per il
@@ -304,6 +309,7 @@ function main(argv: string[]): number {
       livelli: { type: 'string' },
       'anno-dasha': { type: 'string' },
       fortuna: { type: 'string' },
+      dignita: { type: 'string' },
       json: { type: 'boolean', default: false },
       lettura: { type: 'boolean', default: false },
       sistema: { type: 'string' },
@@ -364,6 +370,35 @@ function main(argv: string[]): number {
     const quale = values.sistema ? '--sistema' : '--repository';
     process.stderr.write(`${quale} richiede --lettura: altrove non compare da nessuna parte.\n`);
     return 2;
+  }
+
+  // Le dignità di una scuola stanno solo nella tabella del tema natale: il
+  // JSON non le porta ancora, e transiti, cielo e ore non hanno la sezione.
+  // Accettarle altrove vorrebbe dire ignorarle in silenzio.
+  const formato: ChartFormatOptions = {};
+  if (values.dignita !== undefined) {
+    if (values.dignita !== 'lilly') {
+      process.stderr.write('Valore di --dignita non riconosciuto: atteso "lilly".\n');
+      return 2;
+    }
+    if (values.zodiaco === 'siderale' || values.sistema === 'jyotisha') {
+      process.stderr.write(
+        '--dignita lilly vale per lo zodiaco tropicale, su cui le sue tavole sono costruite.\n',
+      );
+      return 2;
+    }
+    const altrove = (['json', 'transits', 'passages', 'sky', 'events', 'elezione', 'panchanga'] as const).filter(
+      (key) => values[key],
+    );
+    if (altrove.length > 0) {
+      process.stderr.write(
+        `--dignita vale per la tabella del tema natale, non con ${altrove
+          .map((key) => `--${key}`)
+          .join(', ')}.\n`,
+      );
+      return 2;
+    }
+    formato.dignitySchool = values.dignita;
   }
 
   // Il quadro vedico disegna posizioni siderali: su un tema tropicale sarebbe
@@ -528,7 +563,7 @@ function main(argv: string[]): number {
       const tavola =
         sistema === 'jyotisha'
           ? formatJyotishaCompact(computeJyotisha(chart))
-          : formatChartCompact(chart);
+          : formatChartCompact(chart, formato);
 
       process.stdout.write(`${letturaDaIncollare(tavola, opzioni)}`);
       return 0;
@@ -571,7 +606,7 @@ function main(argv: string[]): number {
     }
 
     process.stdout.write(
-      `${formatChartCompact(chart)}\n${nakshatra}${dasha}${varga}${drishti}`,
+      `${formatChartCompact(chart, formato)}\n${nakshatra}${dasha}${varga}${drishti}`,
     );
     return 0;
   }

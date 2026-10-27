@@ -1,4 +1,5 @@
 import { describe, expect, it } from 'vitest';
+import { computeNatalChart } from '../src/chart.js';
 import { ZODIAC_SIGNS } from '../src/constants.js';
 import {
   LILLY_SOURCE,
@@ -11,7 +12,8 @@ import {
   lillyTermRuler,
   lillyTriplicityRuler,
 } from '../src/dignita-lilly.js';
-import type { BodyId, ZodiacSign } from '../src/types.js';
+import { formatChartCompact } from '../src/format.js';
+import type { BirthData, BodyId, ZodiacSign } from '../src/types.js';
 
 /**
  * La tavola di Lilly, p. 104, riga per riga dall'Ariete, coi glifi della
@@ -287,5 +289,52 @@ describe('le ricezioni di Lilly', () => {
       'diurna',
     );
     expect(single).toEqual([]);
+  });
+});
+
+describe('la tabella DIGNITÀ con il pacchetto di Lilly', () => {
+  const NAPOLI: BirthData = {
+    date: '1968-03-12',
+    time: '14:30',
+    latitude: 40.8518,
+    longitude: 14.2681,
+    timezone: 'Europe/Rome',
+  };
+  const sezione = (testo: string): string => testo.slice(testo.indexOf('DIGNITÀ'));
+
+  it('non compare se non lo si chiede', () => {
+    const testo = sezione(formatChartCompact(computeNatalChart(NAPOLI)));
+    expect(testo).not.toContain('Lilly (a richiesta)');
+    expect(testo).toContain('non calcolate senza il pacchetto di Lilly');
+  });
+
+  it('chiesto, aggiunge le sue righe con la fonte e lascia le comuni come sono', () => {
+    const comune = sezione(formatChartCompact(computeNatalChart(NAPOLI)));
+    const testo = sezione(formatChartCompact(computeNatalChart(NAPOLI), { dignitySchool: 'lilly' }));
+    expect(testo).toContain(`Lilly (a richiesta): ${LILLY_SOURCE}`);
+    expect(testo).toContain('reggente diurno');
+    const primaDiLilly = (t: string): string => t.slice(0, t.indexOf(t.includes('Lilly (a') ? 'Lilly (a' : 'Ricezioni:'));
+    expect(primaDiLilly(testo)).toBe(primaDiLilly(comune));
+  });
+
+  it('dà a ogni corpo i signori del suo grado e le sue dignità', () => {
+    // A Napoli, il 12 marzo 1968 alle 14:30: Marte a 18°31' dell'Ariete, tema
+    // diurno. Domicilio suo, esaltazione e triplicità del Sole, termine di
+    // Mercurio, faccia del Sole.
+    const testo = formatChartCompact(computeNatalChart(NAPOLI), { dignitySchool: 'lilly' });
+    expect(testo).toMatch(/^Marte\s+Marte\s+Sole\s+Sole\s+Mercurio\s+Sole\s+\| domicilio$/m);
+  });
+
+  it('conta le ricezioni su tutta la tavola', () => {
+    const testo = formatChartCompact(computeNatalChart(NAPOLI), { dignitySchool: 'lilly' });
+    expect(testo).toContain('Ricezioni: Lilly, p. 112 (mutua, per «any essentiall dignity»)');
+    expect(testo).toMatch(/^Mutue — .*Sole e Marte \(esaltazione e triplicità e faccia \//m);
+  });
+
+  it("senza l'ora dice che la setta manca", () => {
+    const testo = formatChartCompact(computeNatalChart({ ...NAPOLI, time: undefined }), {
+      dignitySchool: 'lilly',
+    });
+    expect(testo).toContain("senza l'ora la setta manca");
   });
 });

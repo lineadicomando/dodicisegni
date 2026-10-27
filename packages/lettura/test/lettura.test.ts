@@ -78,6 +78,7 @@ describe('letturaDaIncollare', () => {
     const testo = istruzioniDi('tropicale').replace(/\s+/g, ' ');
     expect(testo).toContain('ricezioni secondo Lilly');
     expect(testo).toContain('non sono calcolate: non dedurle');
+    expect(testo).toContain('solo se la sezione porta la tavola di Lilly');
   });
 
   it("dichiara la provenienza solo quando c'è un indirizzo", () => {

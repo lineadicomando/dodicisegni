@@ -11,6 +11,13 @@ import {
   type DomicileScheme,
 } from './dignita.js';
 import { PARASHARA_GRAHAS, parasharaExaltation } from './dignita-parashara.js';
+import {
+  LILLY_RECEPTION_SOURCE,
+  LILLY_SOURCE,
+  lillyDignitiesOf,
+  lillyReceptionsOf,
+  lillyRulersAt,
+} from './dignita-lilly.js';
 import { formatDegrees, formatZodiacal } from './math.js';
 import { grahaName, nakshatraOf, requireSidereal } from './nakshatra.js';
 import type {
@@ -25,6 +32,7 @@ import type {
   DrishtiChart,
   ElectionResult,
   ChartFormatOptions,
+  DignitySchool,
   House,
   JyotishaChart,
   NatalChart,
@@ -92,7 +100,7 @@ export function formatChartCompact(
   if (occidentali) {
     lines.push('', 'ASPETTI', ...aspectLines(chart));
     lines.push('', 'DISTRIBUZIONE', ...distributionLines(chart.distribution));
-    lines.push('', 'DIGNITÀ', ...dignityLines(chart));
+    lines.push('', 'DIGNITÀ', ...dignityLines(chart, options.dignitySchool));
   }
   lines.push(...warningLines(chart.warnings));
 
@@ -514,11 +522,16 @@ function distributionLines(distribution: Distribution): string[] {
  * solo nella riga tradizionale, perché solo lì hanno una tavola con un autore:
  * la riga moderna lo dice invece di tacerlo.
  *
- * Le ricezioni chiudono la sezione, secondo Lilly e sulle sole tavole
- * tradizionali. Le mutue vengono prima perché sono la sua definizione; le
- * semplici le contengono anche loro, nei due versi.
+ * Con `school` la scuola chiesta aggiunge le sue righe sotto quelle comuni,
+ * senza toccarle: le due colonne di default restano quello che erano, e la
+ * scuola si legge accanto, col suo nome.
+ *
+ * Le ricezioni chiudono la sezione, secondo Lilly: sulle sole tavole comuni,
+ * o su tutta la sua tavola quando il pacchetto è acceso. Le mutue vengono
+ * prima perché sono la sua definizione; le semplici le contengono anche
+ * loro, nei due versi.
  */
-function dignityLines(chart: NatalChart): string[] {
+function dignityLines(chart: NatalChart, school?: DignitySchool): string[] {
   const schemi: readonly DomicileScheme[] = ['tradizionale', 'moderno'];
   const conCase = chart.houses.length > 0;
 
@@ -555,10 +568,13 @@ function dignityLines(chart: NatalChart): string[] {
     lines.push(`${schema === 'tradizionale' ? 'Tradiz.' : 'Moderno'} — ${parti.join('; ')}`);
   }
 
-  const { single, mutual } = receptionsOf(chart.bodies);
+  if (school === 'lilly') lines.push(...lillyLines(chart));
+
+  const { single, mutual } =
+    school === 'lilly' ? lillyReceptionsOf(chart.bodies, chart.sect) : receptionsOf(chart.bodies);
   const nome = (id: BodyId): string => nameOf(chart, id);
-  const per = (by: readonly string[]): string => by.join(' e ');
-  lines.push(`Ricezioni: ${RECEPTION_SOURCE}`);
+  const per = (by: readonly string[]): string => by.map(dignityLabel).join(' e ');
+  lines.push(`Ricezioni: ${school === 'lilly' ? LILLY_RECEPTION_SOURCE : RECEPTION_SOURCE}`);
   lines.push(
     `Mutue — ${
       mutual
@@ -577,6 +593,40 @@ function dignityLines(chart: NatalChart): string[] {
     }`,
   );
 
+  return lines;
+}
+
+/** Gli identificatori delle dignità sono senza accento; la tabella no. */
+function dignityLabel(voce: string): string {
+  return voce === 'triplicita' ? 'triplicità' : voce;
+}
+
+/**
+ * Il pacchetto di Lilly: per ogni corpo i signori del grado in cui sta, dignità
+ * per dignità, e le dignità e debilità che ha lì.
+ *
+ * I signori si danno per tutti i corpi, perché sono un fatto del grado e non
+ * del corpo; le dignità solo dove la tavola le prevede, cioè per i sette e per
+ * i Nodi. Senza l'ora la setta manca, e la triplicità resta solo dove il
+ * giorno e la notte hanno lo stesso reggente: la riga lo dice.
+ */
+function lillyLines(chart: NatalChart): string[] {
+  const nome = (id: BodyId | undefined): string => (id ? bodyName(id) : '—');
+  const lines = [
+    `Lilly (a richiesta): ${LILLY_SOURCE}`,
+    chart.sect
+      ? `Triplicità: reggente ${chart.sect === 'diurna' ? 'diurno' : 'notturno'}, dalla setta del tema.`
+      : "Triplicità: senza l'ora la setta manca, e il reggente c'è solo nell'acqua, dove è lo stesso di giorno e di notte.",
+    `${'Corpo'.padEnd(11)} ${['domic.', 'esalt.', 'tripl.', 'termine', 'faccia'].map((t) => t.padEnd(9)).join(' ')} | dignità`,
+  ];
+  for (const body of chart.bodies) {
+    const signori = lillyRulersAt(body.longitude, chart.sect);
+    const colonne = [signori.domicilio, signori.esaltazione, signori.triplicita, signori.termine, signori.faccia]
+      .map((id) => nome(id).padEnd(9))
+      .join(' ');
+    const dignita = lillyDignitiesOf(body.id, body.longitude, chart.sect).map(dignityLabel);
+    lines.push(`${body.name.padEnd(11)} ${colonne} | ${dignita.join(', ') || '—'}`);
+  }
   return lines;
 }
 

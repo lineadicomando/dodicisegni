@@ -471,7 +471,18 @@ export interface ChartFormatOptions {
    * contano affatto — e chi le trovasse stampate le userebbe.
    */
   westernSections?: boolean;
+  /**
+   * La scuola delle dignità da aggiungere a quelle comuni, nella sezione
+   * DIGNITÀ. Omessa, nessuna: triplicità, termini e facce non hanno una forma
+   * sola, e si chiedono nominando chi le ha scritte. Oggi c'è Lilly (1647),
+   * vedi `dignita-lilly.ts`. Vale solo per lo zodiaco tropicale, su cui le
+   * sue tavole sono costruite.
+   */
+  dignitySchool?: DignitySchool;
 }
+
+/** Le scuole delle dignità che si possono chiedere per nome. */
+export type DignitySchool = 'lilly';
 
 /**
  * Che cosa mettere nel tema vedico.

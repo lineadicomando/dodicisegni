@@ -94,8 +94,11 @@ pianeti moderni non ne hanno. Non sono un voto: dicono quanto una funzione
 lavori agevolata o controvento. In fondo alla sezione ci sono le ricezioni
 secondo Lilly: nella mutua due pianeti stanno ciascuno in una dignità
 dell'altro, e Lilly la legge come un legame che regge anche dove l'aspetto
-manca o è difficile. Quelle per triplicità, termine e faccia non sono
-calcolate: non dedurle. Due pianeti personali di tempra opposta sono un
+manca o è difficile. Quelle per triplicità, termine e faccia ci sono solo se
+la sezione porta la tavola di Lilly, che si chiede a parte; se la riga Lilly
+non c'è, non sono calcolate: non dedurle. Quando c'è, dà per ogni corpo i
+signori del suo grado e le dignità che ha lì; esaltazione e caduta valgono per
+tutto il segno, anche se la tavola nomina il grado. Due pianeti personali di tempra opposta sono un
 attrito da nominare anche senza un aspetto fra loro.
 
 Le forze in conflitto, e come si compongono. Un quadrato o un'opposizione non è
