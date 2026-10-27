@@ -34,8 +34,10 @@ import type { RequestHandler } from './$types';
  *
  * Gli aspetti si trovano con le orbite di una scuola nominata, che il tema
  * porta in `chart.orbConvention` con la fonte: `orbConvention=greene`
- * (default, la tavola predefinita di Astrodienst, di Liz Greene) oppure
- * `leo` (Alan Leo, 1928). Un'altra è `ORBITE_NON_VALIDE`. `minorAspects=true`
+ * (default, la tavola predefinita di Astrodienst, di Liz Greene), `leo`
+ * (Alan Leo, 1928) oppure `lilly` (Christian Astrology, 1647: le metà delle
+ * orbite dei due pianeti, solo i sette e i cinque aspetti tolemaici). Un'altra
+ * è `ORBITE_NON_VALIDE`. `minorAspects=true`
  * aggiunge i minori che la scuola tratta: Greene ha anche i quintili.
  *
  * Con `format=compact` il tema torna come tabella di testo invece che come

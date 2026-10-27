@@ -151,7 +151,10 @@ const ORB_CONVENTION_SCHEMA = {
       'Convenzione delle orbite, cioè quanto largo può essere un aspetto. greene (default): la ' +
         'tavola predefinita di Astrodienst, di Liz Greene, 10° ai maggiori e 6° al sestile, con ' +
         'quintile e biquintile fra i minori. leo: Alan Leo (1928), 8° ai maggiori, 10-12° con i ' +
-        'luminari solo per congiunzione e opposizione, niente quintili. Non sceglierla tu: è una ' +
+        'luminari solo per congiunzione e opposizione, niente quintili. lilly: Christian Astrology ' +
+        "(1647), l'orbita è del pianeta e la coppia vale la metà dell'uno più la metà dell'altro " +
+        '(moieties), solo fra i sette pianeti e solo i cinque aspetti tolemaici: Urano, Nettuno, ' +
+        'Plutone, Nodi e assi restano senza aspetti. Non sceglierla tu: è una ' +
         'convenzione di scuola, da usare solo se chi scrive la chiede. Il risultato dice quale ' +
         'è stata usata, in orbConvention.',
     ),

@@ -16,6 +16,7 @@ import type { NatalOrbConvention } from '@dodicisegni/core';
 export const ORB_CONVENTIONS: readonly { value: NatalOrbConvention; label: string }[] = [
   { value: 'greene', label: 'Orbite di Greene' },
   { value: 'leo', label: 'Orbite di Leo' },
+  { value: 'lilly', label: 'Orbite di Lilly' },
 ];
 
 /** La predefinita del motore: non si scrive negli indirizzi. */
