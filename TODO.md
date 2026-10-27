@@ -26,7 +26,7 @@ volta e ricominciare da capo.
 
 | Voce | Priorità | Taglia | Prima di cominciare |
 |---|---|---|---|
-| 19. Le dignità, per scuola | media | grande, a commit piccoli | trascrivere la tavola di Lilly, p. 104 |
+| 19. Le dignità, per scuola | media | media: restano le superfici | decidere come entrano nel JSON |
 | 11. Gli elenchi in più posti | media | piccola | prima del punto 5 |
 | 13. Due semplificazioni | bassa | piccola | niente |
 | 9. Il linter | media | piccola | decidere lo strumento |
@@ -35,11 +35,11 @@ volta e ricominciare da capo.
 | 8. Il glossario e /metodo | media | grande | si incrocia col punto 6 |
 | 6. La prosa che invecchia | bassa | piccola | farla insieme al punto 8 |
 | 5. I varga che mancano | non dichiarata | tre lotti | il punto 11; per il D-2, la convenzione |
-| 17. L'astrologia oraria | bassa | la più grande | il punto 19 |
+| 17. L'astrologia oraria | bassa | la più grande | le tavole ci sono; il punteggio no |
 | 24. Le fonti da scaricare in `texts/` | bassa | piccola | niente |
 
-L'ordine consigliato è quello della tabella: il pacchetto di Lilly, che
-completa anche le ricezioni, poi le voci piccole che tolgono copie e righe
+L'ordine consigliato è quello della tabella: le superfici delle dignità, ora
+che il pacchetto di Lilly c'è, poi le voci piccole che tolgono copie e righe
 morte prima che il lavoro grande ci passi sopra.
 
 ## 5. I dieci varga che mancano
@@ -486,8 +486,9 @@ che si può togliere: basta un segnaposto vuoto, o costruire il tema dopo.
 
 ## 17. L'astrologia oraria
 
-**Priorità bassa, e presuppone il punto 19.** Le dignità, che l'oraria non può
-fare a meno di avere, sono una voce a sé: servono anche al natale e al
+**Priorità bassa.** Le tavole di Lilly che presupponeva ci sono
+(`dignita-lilly.ts`, punto 19). Le dignità, che l'oraria non può fare a meno
+di avere, sono una voce a sé: servono anche al natale e al
 Jyotisha, e chiudono un difetto che c'è già oggi. Qui resta ciò che è proprio
 delle domande: le condizioni di un istante, il moto fino all'uscita dal segno,
 le regole di una scuola per leggerlo.
@@ -549,7 +550,7 @@ nell'astrologia oraria»). Ci sono anche:
 - la setta (`chartSect`, `points.ts:13`);
 - la Luna vuota di corso, alba, tramonto e ore planetarie in `election.ts`.
 
-Manca, oltre alle dignità del punto 19:
+Manca, ora che le tavole del punto 19 ci sono:
 
 - **il signore dell'ora a un istante dato.** `rulerOfDay` e `chaldeanRuler`
   (`election.ts:364` e `:379`) sono privati, e l'ora si ottiene solo dentro un
@@ -776,20 +777,39 @@ Oggi le ricezioni sono per domicilio ed esaltazione; la riga della fonte dice
 che le altre tre mancano, e il documento di lettura tropicale vieta di
 dedurle.
 
-### Che cosa resta, nell'ordine
+Fatto anche il pacchetto di Lilly, in `c7ca93a`, `cbf5b83` e `193a5ee`.
+`packages/core/src/dignita-lilly.ts` tiene la tavola di p. 104 per intero:
+esaltazioni col grado e i Nodi (con le cadute della colonna Fall, il Sud nei
+Gemelli e il Nord nel Sagittario), triplicità di giorno e di notte con l'acqua
+a Marte, termini e facce; `lillyReceptionsOf` conta le ricezioni per tutte e
+cinque le dignità, sugli esempi di Lilly a p. 112. La tavola è trascritta
+riga per riga in `texts/occidentale/lilly-christian-astrology-1647/trascrizioni.md`,
+con la lettura di p. 105 (che dice come si leggono le celle), e il test la
+ricopia coi glifi della stampa. Si accende con `dignitySchool: 'lilly'` nelle
+opzioni di `formatChartCompact` e con `--dignita lilly` nella CLI, solo sul
+tema natale tropicale: la sezione DIGNITÀ aggiunge, sotto le righe comuni,
+una riga per corpo con i signori del suo grado e le sue dignità, e le
+ricezioni diventano quelle di tutta la tavola. `packages/lettura/src/tropicale.ts`
+dice al modello di usarle solo se la riga di Lilly c'è.
 
-1. **Il pacchetto di Lilly a richiesta**: triplicità, termini, facce, i gradi
-   delle esaltazioni e i Nodi, dalla tavola di p. 104, che è già salvata in
-   `texts/` e va trascritta colonna per colonna (le cifre piccole dei
-   termini vanno lette sull'immagine a 2000 pixel o più, non sull'OCR). Con
-   quelle tavole `receptionsOf` prende anche le ricezioni per triplicità,
-   termine e faccia, e la triplicità chiede la setta, che c'è già
-   (`chartSect`). Le tavole non vanno nel default: si chiedono nominando la
-   scuola (vedi *Le scuole* qui sotto), quindi serve anche un'opzione che
-   le accenda. È il pezzo che il punto 17 aspetta; il suo punteggio sta là,
-   perché chiede anche le condizioni di un istante.
-2. **Le superfici**: CLI, rotta, tool MCP e una tabella Svelte, nell'ordine
-   della skill `nuova-funzione`. La tabella prende i dati, non il tema.
+Due scelte, scritte nei commenti: l'esaltazione vale per tutto il segno e il
+grado è un dato a parte («in these Signes the Planets have their
+Exaltations»); senza l'ora la triplicità c'è solo nell'acqua, dove il
+reggente è lo stesso di giorno e di notte.
+
+In calce alla tavola Lilly stampa i punti: 4 l'esaltazione, 3 la triplicità,
+2 il termine, 1 la faccia, 5 l'esilio, 4 la caduta. Sotto la colonna dei
+domicili il numero è illeggibile (ci si aspetta 5). Non sono nel codice: il
+punteggio sta col punto 17, che chiede anche le condizioni accidentali (la
+tavola delle fortezze di p. 115). Anche il peregrino (p. 112) entra lì.
+
+### Che cosa resta
+
+1. **Le superfici**: rotta, tool MCP e una tabella Svelte, nell'ordine della
+   skill `nuova-funzione`. La tabella prende i dati, non il tema. Prima va
+   deciso come le dignità entrano nel JSON (qui sotto): finché non ci sono,
+   la rotta e il tool possono passare solo l'opzione al formato compatto.
+2. **Le dignità nei varga del Jyotisha** e la pagina `/vedica`, scritte sopra.
 
 ### Le dignità occidentali non sono nel JSON
 
