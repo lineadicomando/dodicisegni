@@ -6,44 +6,31 @@
  * cambiando solo l'endpoint — e quindi li leggono nello stesso posto.
  */
 
-import type {
-  AyanamsaId,
-  BirthData,
-  ChartOptions,
-  HouseSystem,
-  ZodiacOptions,
+import {
+  AYANAMSAS as AYANAMSA_DEFINITIONS,
+  DIGNITY_SCHOOL_NAMES,
+  HOUSE_SYSTEM_CODES,
+  type AyanamsaId,
+  type BirthData,
+  type ChartOptions,
+  type DignitySchool,
+  type HouseSystem,
+  type ZodiacOptions,
 } from '@dodicisegni/core';
 import { error } from '@sveltejs/kit';
 import { resolvePlace, type ResolvedPlace } from './place';
 
-/**
- * Gli ayanamsa ammessi.
- *
- * Un elenco scritto qui e non importato da `core`: il client compone gli
- * stessi indirizzi, e un import di valore dal motore gli trascinerebbe le
- * effemeridi nel bundle. È la stessa ragione per cui `HOUSE_SYSTEMS` è una
- * costante locale invece di `Object.keys(HOUSE_SYSTEM_CODES)`.
+/*
+ * Gli elenchi dei valori ammessi si leggono dal motore. Questo modulo sta in
+ * `lib/server`, che SvelteKit non lascia arrivare al browser: l'import di
+ * valore non trascina niente nel bundle, e una copia qui rifiuterebbe in
+ * silenzio il valore che il motore ha appena imparato. Le copie del client,
+ * che invece non può importare, stanno in `lib/zodiacs.ts` e
+ * `lib/house-systems.ts`, legate al motore da `lib/elenchi.test.ts`.
  */
-const AYANAMSAS = new Set<string>([
-  'lahiri',
-  'true-chitra',
-  'krishnamurti',
-  'raman',
-  'yukteshwar',
-  'fagan-bradley',
-]);
-
-const HOUSE_SYSTEMS = new Set<string>([
-  'placidus',
-  'koch',
-  'segni-interi',
-  'equale',
-  'regiomontano',
-  'campano',
-  'porfirio',
-  'topocentrico',
-  'alcabizio',
-]);
+const AYANAMSAS = new Set<string>(AYANAMSA_DEFINITIONS.map((ayanamsa) => ayanamsa.id));
+const HOUSE_SYSTEMS = new Set<string>(Object.keys(HOUSE_SYSTEM_CODES));
+const DIGNITY_SCHOOLS = new Set<string>(Object.keys(DIGNITY_SCHOOL_NAMES));
 
 /** La nascita e il luogo da cui viene, che serve anche a intestare la risposta. */
 export interface RequestedBirth {
@@ -168,14 +155,14 @@ export function readChartOptions(parameters: URLSearchParams): ChartOptions {
   // ZODIACO_NON_TROPICALE: qui si controlla solo il nome.
   const dignitySchool = parameters.get('dignitySchool');
   if (dignitySchool) {
-    if (dignitySchool !== 'lilly') {
+    if (!DIGNITY_SCHOOLS.has(dignitySchool)) {
       throw error(
         400,
-        `Scuola delle dignità "${dignitySchool}" non riconosciuta: attesa "lilly".`,
+        `Scuola delle dignità "${dignitySchool}" non riconosciuta. Ammesse: ${[...DIGNITY_SCHOOLS].join(', ')}.`,
         { code: 'SCUOLA_DIGNITA_NON_VALIDA' },
       );
     }
-    options.dignitySchool = dignitySchool;
+    options.dignitySchool = dignitySchool as DignitySchool;
   }
 
   return options;

@@ -7,7 +7,8 @@
  * domanda da fare a un componente.
  *
  * Del motore si importano i soli **tipi**: un import di valore ne trascinerebbe
- * l'intero grafo nel bundle del browser.
+ * l'intero grafo nel bundle del browser. Gli elenchi sono quindi copie, e
+ * `elenchi.test.ts` cade se restano indietro rispetto al motore.
  */
 
 import type { AyanamsaId, Zodiac } from '@dodicisegni/core';

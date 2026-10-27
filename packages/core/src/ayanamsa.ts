@@ -38,8 +38,11 @@ interface AyanamsaDefinition {
  *
  * Sei e non quaranta: gli altri di Swiss Ephemeris sono ricostruzioni storiche
  * — Suryasiddhanta, Aryabhata, i babilonesi — che servono a chi studia la
- * storia dell'astronomia, non a chi calcola un tema. Aggiungerne uno è una
- * riga qui.
+ * storia dell'astronomia, non a chi calcola un tema. Aggiungerne uno vuol
+ * dire una riga qui e una nell'unione `AyanamsaId` in `types.ts`. Il server
+ * MCP e le rotte web leggono questo elenco; quello dell'interfaccia
+ * (`apps/web/src/lib/zodiacs.ts`) è una copia, per il bundle del browser, e
+ * un test in `apps/web` cade se resta indietro.
  */
 export const AYANAMSAS: readonly AyanamsaDefinition[] = [
   { id: 'lahiri', name: 'Lahiri', swephConstant: 'SE_SIDM_LAHIRI' },

@@ -1,5 +1,9 @@
 import {
+  AYANAMSAS as AYANAMSA_DEFINITIONS,
   ChartError,
+  DIGNITY_SCHOOL_NAMES,
+  HOUSE_SYSTEM_CODES,
+  VARGAS,
   computeNatalChart,
   computeSky,
   computeTransits,
@@ -22,6 +26,7 @@ import {
   formatJyotishaCompact,
   type AyanamsaId,
   type ChartOptions,
+  type DignitySchool,
   type JyotishaOptions,
   type VargaId,
   type VimshottariOptions,
@@ -85,14 +90,21 @@ function fail(message: string): CallToolResult {
   return { content: [{ type: 'text', text: message }], isError: true };
 }
 
-const AYANAMSAS = [
-  'lahiri',
-  'true-chitra',
-  'krishnamurti',
-  'raman',
-  'yukteshwar',
-  'fagan-bradley',
-] as const;
+/**
+ * Un elenco del motore nella forma che `z.enum` vuole: almeno un valore.
+ *
+ * Gli enum dei tool si leggono dal motore e non si ricopiano: questo è codice
+ * di server, e una copia qui rifiuterebbe in silenzio il valore che il motore
+ * ha appena imparato. Un elenco vuoto è un guasto del motore, e lo si dice
+ * all'avvio invece che alla prima chiamata.
+ */
+function nonEmpty<T extends string>(values: readonly T[]): [T, ...T[]] {
+  const [first, ...rest] = values;
+  if (first === undefined) throw new Error('Elenco vuoto: z.enum vuole almeno un valore.');
+  return [first, ...rest];
+}
+
+const AYANAMSAS = nonEmpty<AyanamsaId>(AYANAMSA_DEFINITIONS.map((ayanamsa) => ayanamsa.id));
 
 /**
  * I due parametri dello zodiaco, uguali per ogni tool che riporti un segno.
@@ -120,19 +132,11 @@ const ZODIAC_SCHEMA = {
     ),
 } as const;
 
-const VARGA_IDS = ['d1', 'd3', 'd9', 'd10', 'd12', 'd30'] as const;
+const VARGA_IDS = nonEmpty<VargaId>(VARGAS.map((varga) => varga.id));
 
-const HOUSE_SYSTEMS = [
-  'placidus',
-  'koch',
-  'segni-interi',
-  'equale',
-  'regiomontano',
-  'campano',
-  'porfirio',
-  'topocentrico',
-  'alcabizio',
-] as const;
+const HOUSE_SYSTEMS = nonEmpty(Object.keys(HOUSE_SYSTEM_CODES) as HouseSystem[]);
+
+const DIGNITY_SCHOOLS = nonEmpty(Object.keys(DIGNITY_SCHOOL_NAMES) as DignitySchool[]);
 
 /**
  * Lo zodiaco chiesto, tradotto in opzioni del motore.
@@ -278,7 +282,7 @@ export function registerComputeNatalChart(server: McpServer, context: ToolContex
               'riprodurre il risultato di un programma che ignora il settore.',
           ),
         dignity_school: z
-          .enum(['lilly'])
+          .enum(DIGNITY_SCHOOLS)
           .optional()
           .describe(
             'Aggiunge alle dignità comuni (domicili tradizionali e moderni, esaltazioni, esili, ' +

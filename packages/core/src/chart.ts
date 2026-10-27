@@ -1,6 +1,6 @@
 import { computeAspects } from './aspects.js';
 import { ayanamsaAt, DEFAULT_AYANAMSA, zodiacContext } from './ayanamsa.js';
-import { DEFAULT_BODIES } from './constants.js';
+import { DEFAULT_BODIES, DIGNITY_SCHOOL_NAMES } from './constants.js';
 import { computeWesternDignities } from './dignita-tema.js';
 import { computeDistribution } from './distribution.js';
 import { ChartError } from './errors.js';
@@ -10,10 +10,7 @@ import { validatePlace } from './place.js';
 import { chartSect, computePartOfFortune } from './points.js';
 import { localSiderealTime } from './sidereal.js';
 import { resolveTime } from './time.js';
-import type { BirthData, ChartOptions, DignitySchool, NatalChart } from './types.js';
-
-/** Il nome dell'autore di ciascuna scuola, per i messaggi. */
-const DIGNITY_SCHOOL_NAMES: Readonly<Record<DignitySchool, string>> = { lilly: 'Lilly' };
+import type { BirthData, ChartOptions, NatalChart } from './types.js';
 
 /**
  * Calcola un tema natale completo.

@@ -39,7 +39,7 @@ import { computeDrishti } from './drishti.js';
 import { findTransitPassages } from './passages.js';
 import { findSignIngresses, findStations } from './sky-events.js';
 import { findSkyPassages } from './sky-passages.js';
-import { DEFAULT_PASSAGE_BODIES } from './constants.js';
+import { DEFAULT_PASSAGE_BODIES, DIGNITY_SCHOOL_NAMES } from './constants.js';
 import { computeSky } from './sky.js';
 import { currentMoment, systemTimezone } from './time.js';
 import { computeTransits } from './transits.js';
@@ -377,13 +377,16 @@ function main(argv: string[]): number {
   // silenzio.
   let scuolaDignita: DignitySchool | undefined;
   if (values.dignita !== undefined) {
-    if (values.dignita !== 'lilly') {
-      process.stderr.write('Valore di --dignita non riconosciuto: atteso "lilly".\n');
+    const scuole = Object.keys(DIGNITY_SCHOOL_NAMES);
+    if (!scuole.includes(values.dignita)) {
+      process.stderr.write(
+        `Valore di --dignita non riconosciuto: ammessi ${scuole.map((scuola) => `"${scuola}"`).join(', ')}.\n`,
+      );
       return 2;
     }
     if (values.zodiaco === 'siderale' || values.sistema === 'jyotisha') {
       process.stderr.write(
-        '--dignita lilly vale per lo zodiaco tropicale, su cui le sue tavole sono costruite.\n',
+        `--dignita ${values.dignita} vale per lo zodiaco tropicale, su cui le sue tavole sono costruite.\n`,
       );
       return 2;
     }
@@ -398,7 +401,7 @@ function main(argv: string[]): number {
       );
       return 2;
     }
-    scuolaDignita = values.dignita;
+    scuolaDignita = values.dignita as DignitySchool;
   }
 
   // Il quadro vedico disegna posizioni siderali: su un tema tropicale sarebbe

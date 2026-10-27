@@ -10,7 +10,8 @@ riusa; quello che aveva da dire o è finito nel codice, nei commenti e nei test,
 o sta in uno dei due elenchi in fondo. L'ultima versione che le contiene tutte,
 chiuse comprese, è `cf5219a`, quando il file si chiamava ancora `ROADMAP.md`.
 Le voci dalla 20 alla 23 sono nate e si sono chiuse dopo: la 20 per intero sta
-in `3314553`, la 21 e la 22 in `819ce59`, la 23 in `db332a6`.
+in `3314553`, la 21 e la 22 in `819ce59`, la 23 in `db332a6`. La 11, aperta
+prima e chiusa dopo, sta per intero in `e194d45`.
 
 Le fonti citate qui stanno in copia locale in `texts/`, fuori dal repo: la
 cartella, le schede `FONTE.md` e l'elenco `texts/INDICE.md` si mantengono come
@@ -34,14 +35,13 @@ volta e ricominciare da capo.
 
 | Voce | Priorità | Taglia | Prima di cominciare |
 |---|---|---|---|
-| 11. Gli elenchi in più posti | media | piccola | prima del punto 5 |
 | 13. Due semplificazioni | bassa | piccola | niente |
 | 9. Il linter | media | piccola | decidere lo strumento |
 | 18. Le orbite senza autore | media | media | decidere fra le due strade |
 | 7. I transiti attivi in un arco | non dichiarata | media | niente, è pronta |
 | 8. Il glossario e /metodo | media | grande | si incrocia col punto 6 |
 | 6. La prosa che invecchia | bassa | piccola | farla insieme al punto 8 |
-| 5. I varga che mancano | non dichiarata | tre lotti | il punto 11; per il D-2, la convenzione |
+| 5. I varga che mancano | non dichiarata | tre lotti | per il D-2, la convenzione |
 | 19. Le dignità, per scuola | bassa | media | il Jyotisha: i varga del BPHS, cap. 6-7 |
 | 17. L'astrologia oraria | bassa | la più grande | le tavole ci sono; il punteggio no |
 | 24. Le fonti da scaricare in `texts/` | bassa | piccola | niente |
@@ -67,23 +67,22 @@ Per tutti vale la procedura già collaudata: la regola in una riga dentro
 ricontrollabile; le prove ai confini dei segni pari e dispari; l'aggiunta a
 `VargaId` in `types.ts` e all'elenco di `--varga` nell'aiuto della CLI.
 
-L'elenco dei varga però non vive solo lì: è ricopiato in
-`packages/mcp/src/tools.ts:123` (`VARGA_IDS`, una tupla che diventa `z.enum`),
-nelle due rotte `apps/web/src/routes/api/jyotish/+server.ts:17` e
-`api/jyotish/quadro/+server.ts:12` (un `Set<string>`), in `apps/web/src/lib/components/JyotishaSettings.svelte:57`
-(`VARGHE`) e nella pagina del metodo, righe 346-347. Un varga nuovo
-dimenticato in una delle copie viene rifiutato da quella superficie senza
-nessun errore: è lo stesso difetto del punto 11, che conviene chiudere prima.
+L'elenco dei varga che le superfici accettano si legge da `VARGAS`: il server
+MCP (`VARGA_IDS` in `packages/mcp/src/tools.ts`) e le due rotte
+`api/jyotish/+server.ts` e `api/jyotish/quadro/+server.ts` lo derivano, e la
+CLI lo valida da lì. L'interfaccia no, perché nel bundle del browser non entra
+un valore del motore: le caselle stanno in `apps/web/src/lib/varghe.ts`, una
+copia che lascia fuori la D-1 apposta, e `apps/web/src/lib/elenchi.test.ts`
+cade se resta indietro. Un varga nuovo fa quindi cadere quel test, e va
+aggiunto lì a mano col suo nome.
 
-Sono da aggiornare a mano anche i testi che li elencano: il commento delle
-due rotte (`api/jyotish/+server.ts:46`, `quadro/+server.ts:31`), l'aiuto
-della CLI (`packages/core/src/cli.ts:101-102`; la validazione invece legge
-`VARGAS`, a :277, e non è una copia) e il commento in testa alla pagina del
-metodo («le sei divisionali», `metodo/+page.svelte:12`). `VARGA_IDS` in
-`tools.ts` è usata a :413 e :1337. I tipi: `VargaId` a `types.ts:359`,
-`VargaChart` poco sotto, l'opzione `vargas` a :597.
-`VARGHE` è tipata `VargaId` e lascia fuori la D-1 apposta (il commento sopra
-dice perché): un test che confronti gli elenchi deve saperlo.
+Restano da aggiornare a mano i testi che li elencano, che nessun test vede: il
+commento delle due rotte (`api/jyotish/+server.ts`, parametro `vargas`;
+`quadro/+server.ts`, parametro `varga`), l'aiuto della CLI
+(`packages/core/src/cli.ts:101-102`), la pagina del metodo alle righe
+346-347 e il commento in testa a quella pagina («le sei divisionali»,
+`metodo/+page.svelte:12`). I tipi: `VargaId` a `types.ts:359`, `VargaChart`
+poco sotto, l'opzione `vargas` a :597.
 
 ### Lotto A: quelli che si biforcano su pari e dispari
 
@@ -485,59 +484,6 @@ Va deciso, e non è ovvio:
   confronti che non possono essere veri), e vanno guardate una per una prima di
   accenderle tutte.
 
-## 11. Gli elenchi che vivono in quattro posti
-
-**Priorità media.** `AYANAMSAS` è dichiarato in `packages/core/src/ayanamsa.ts:44`,
-di nuovo in `packages/mcp/src/tools.ts:88`, di nuovo in
-`apps/web/src/lib/server/birth.ts:27` e una quarta volta in
-`apps/web/src/lib/zodiacs.ts:28`. I sistemi di case stanno in cinque: l'unione
-`HouseSystem` in `packages/core/src/types.ts:39`, `HOUSE_SYSTEM_CODES` in
-`constants.ts:255`, `HOUSE_SYSTEMS` in `packages/mcp/src/tools.ts:125`, in
-`apps/web/src/lib/server/birth.ts:36` e in `apps/web/src/lib/house-systems.ts:15`.
-L'elenco dei varga ha lo stesso difetto (vedi il punto 5). Oggi combaciano
-tutti, ordine compreso: ricontrollati il 27 ottobre 2026.
-
-Dal 27 ottobre c'è un elenco in più, le scuole delle dignità, oggi di un
-valore solo: `DignitySchool` in `packages/core/src/types.ts:477`,
-`z.enum(['lilly'])` in `packages/mcp/src/tools.ts:281`, il confronto con la
-stringa in `apps/web/src/lib/server/birth.ts:171` e in
-`packages/core/src/cli.ts:380-381` (più l'aiuto a :115), e la pagina del tema
-che compone e rilegge il parametro (`apps/web/src/routes/+page.svelte:58` e
-:171). Con una seconda scuola il confronto resterebbe su `'lilly'`, e la
-nuova verrebbe rifiutata senza errori di compilazione. Gli zodiaci sono
-copiati allo stesso modo (`types.ts:57`, `tools.ts:105`, `birth.ts:85`,
-`zodiacs.ts:15`), ma con due valori fissi il rischio è basso.
-
-Il commento sopra `AYANAMSAS` (`ayanamsa.ts:41-42`) dice che aggiungerne uno
-«è una riga qui». Non lo è nemmeno nel motore, perché serve anche l'unione
-`AyanamsaId` in `types.ts`; fuori dal motore le copie sono tre, e due delle tre
-non se ne accorgerebbero. `zodiacs.ts` e
-`house-systems.ts` dichiarano `AyanamsaId` e `HouseSystem`, quindi il
-compilatore le tiene legate al motore; `birth.ts` usa un `Set<string>` e il
-server MCP uno `z.enum` scritto lì, e un settimo ayanamsa non produrrebbe
-nessun errore da nessuna parte: le due superfici continuerebbero a rifiutarlo,
-cioè a dire che non esiste una cosa che esiste.
-
-Il guasto è sicuro: un rifiuto, non un numero sbagliato, ed è la ragione per cui
-la priorità è media e non alta. È però invisibile a chi aggiunge, che vede il
-motore accettare il valore nuovo dalla riga di comando e non ha motivo di
-sospettare le altre tre copie.
-
-Il rimedio non è importare dappertutto. La ragione per cui `zodiacs.ts` non lo
-fa sta scritta lì ed è il bundle del browser, dove un import di valore dal
-motore trascina le effemeridi. Quella ragione non vale per `packages/mcp`, che è
-codice di server e che in `server.ts:3` importa già `HOUSE_SYSTEM_CODES` da
-`core`: là la copia non ha nessuna giustificazione e si toglie. Per `birth.ts` e
-per i due elenchi del client la forma è quella che il progetto usa già in
-`packages/ruota/test/tipi.test.ts`: un test che confronta e cade a voce alta.
-Con una differenza: quel test confronta **tipi** al momento della
-compilazione (`Uguali<A, B>`), e un `Set<string>` o uno `z.enum` non hanno un
-tipo da confrontare. Qui serve un confronto sui valori, che giri davvero. Il
-motivo per cui `birth.ts` non importa dal motore è scritto a `birth.ts:20-25`.
-
-Verifica: un settimo ayanamsa in `AYANAMSAS`, e il test che cade nominando i
-posti rimasti indietro.
-
 ## 13. Due semplificazioni piccole
 
 **Priorità bassa**, e nessuna delle due rompe niente.
@@ -920,7 +866,11 @@ descrizioni dicono «circa un quarto».
    se il JSON le porta.
 2. **Le altre scuole occidentali**, quando le loro fonti sono state lette
    (vedi *Da verificare* qui sotto): ciascuna come valore nuovo di
-   `DignitySchool`, intera.
+   `DignitySchool`, intera. Il compilatore pretende il nome in
+   `DIGNITY_SCHOOL_NAMES` (`packages/core/src/constants.ts`), e da lì CLI,
+   MCP e `/api/chart` imparano il valore da soli. L'interfaccia no: oggi è
+   una casella sola, `lilly` in `ChartSettings.svelte` e in
+   `routes/+page.svelte`, e con due scuole diventa una scelta da disegnare.
 
 ### Le scuole, e il default deciso il 18 ottobre 2026
 

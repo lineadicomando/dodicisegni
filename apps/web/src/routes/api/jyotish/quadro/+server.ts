@@ -1,4 +1,10 @@
-import { computeNatalChart, computeVarga, type ChartOptions, type VargaId } from '@dodicisegni/core';
+import {
+  computeNatalChart,
+  computeVarga,
+  VARGAS,
+  type ChartOptions,
+  type VargaId,
+} from '@dodicisegni/core';
 import type { StileQuadro } from '@dodicisegni/ruota';
 import { error } from '@sveltejs/kit';
 import { readAyanamsa, readBirth } from '#lib/server/birth.js';
@@ -8,8 +14,8 @@ import { readWheelOptions } from '#lib/server/wheel.js';
 import { quadroResponse } from '#lib/server/wheel-response.js';
 import type { RequestHandler } from './$types';
 
-/** I varga che il motore calcola. Gli altri stanno in `TODO.md`. */
-const VARGAS = new Set<string>(['d1', 'd3', 'd9', 'd10', 'd12', 'd30']);
+/** I varga che il motore calcola, letti da lui: una copia resterebbe indietro. */
+const VARGHE_CALCOLATE = new Set<string>(VARGAS.map((varga) => varga.id));
 
 /**
  * `GET /api/jyotish/quadro?date=1968-03-12&time=14:30&locationId=3172394`
@@ -82,10 +88,10 @@ function readStile(parameters: URLSearchParams): StileQuadro {
 
 function readVarga(parameters: URLSearchParams): VargaId {
   const varga = parameters.get('varga') ?? 'd1';
-  if (!VARGAS.has(varga)) {
+  if (!VARGHE_CALCOLATE.has(varga)) {
     throw error(
       400,
-      `Varga "${varga}" non disponibile. Calcolati: ${[...VARGAS].join(', ')}.`,
+      `Varga "${varga}" non disponibile. Calcolati: ${[...VARGHE_CALCOLATE].join(', ')}.`,
       { code: 'VARGA_NON_VALIDO' },
     );
   }

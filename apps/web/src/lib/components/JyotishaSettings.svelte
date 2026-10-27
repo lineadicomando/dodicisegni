@@ -1,6 +1,7 @@
 <script lang="ts">
   import type { AyanamsaId, DashaYear, NodeDrishti, VargaId } from '@dodicisegni/core';
   import { AYANAMSAS } from '#lib/zodiacs.js';
+  import { VARGHE } from '#lib/varghe.js';
 
   /**
    * Le opzioni della sezione vedica, con la stessa forma di `ChartSettings`.
@@ -47,20 +48,6 @@
     onchange,
     compact = false,
   }: Props = $props();
-
-  /**
-   * Le divisionali che si possono chiedere, senza la D-1.
-   *
-   * La carta rashi non è un'opzione: è il tema, e sta nella colonna del
-   * disegno. Offrirla anche qui ne farebbe comparire due uguali.
-   */
-  const VARGHE: readonly { value: VargaId; label: string }[] = [
-    { value: 'd3', label: 'D3 Drekkana' },
-    { value: 'd9', label: 'D9 Navamsa' },
-    { value: 'd10', label: 'D10 Dasamsa' },
-    { value: 'd12', label: 'D12 Dwadasamsa' },
-    { value: 'd30', label: 'D30 Trimsamsa' },
-  ];
 
   function commuta(id: VargaId): void {
     vargas = VARGHE.filter((varga) =>

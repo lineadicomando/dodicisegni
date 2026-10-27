@@ -2,6 +2,7 @@ import {
   computeJyotisha,
   computeNatalChart,
   formatJyotishaCompact,
+  VARGAS,
   type ChartOptions,
   type JyotishaOptions,
   type VargaId,
@@ -13,8 +14,8 @@ import { toHttpError } from '#lib/server/errors.js';
 import { isHttpError } from '#lib/server/place.js';
 import type { RequestHandler } from './$types';
 
-/** I varga che il motore calcola. Gli altri stanno in `TODO.md`. */
-const VARGAS = new Set<string>(['d1', 'd3', 'd9', 'd10', 'd12', 'd30']);
+/** I varga che il motore calcola, letti da lui: una copia resterebbe indietro. */
+const VARGHE_CALCOLATE = new Set<string>(VARGAS.map((varga) => varga.id));
 
 /**
  * `GET /api/jyotish?date=1968-03-12&time=14:30&locationId=3172394`
@@ -139,10 +140,10 @@ function readJyotishaOptions(parameters: URLSearchParams): JyotishaOptions {
       .filter((voce) => voce.length > 0);
 
     for (const id of chiesti) {
-      if (!VARGAS.has(id)) {
+      if (!VARGHE_CALCOLATE.has(id)) {
         throw error(
           400,
-          `Varga "${id}" non disponibile. Calcolati: ${[...VARGAS].join(', ')}.`,
+          `Varga "${id}" non disponibile. Calcolati: ${[...VARGHE_CALCOLATE].join(', ')}.`,
           { code: 'VARGA_NON_VALIDO' },
         );
       }

@@ -1,6 +1,7 @@
 import type {
   AspectId,
   BodyId,
+  DignitySchool,
   Element,
   HouseSystem,
   Modality,
@@ -263,6 +264,15 @@ export const HOUSE_SYSTEM_CODES: Readonly<Record<HouseSystem, string>> = {
   topocentrico: 'T',
   alcabizio: 'B',
 };
+
+/**
+ * Le scuole delle dignità che si possono chiedere per nome, con l'autore.
+ *
+ * Un `Record` e non un elenco perché sia il compilatore a pretendere il nome
+ * di una scuola nuova: le superfici leggono le chiavi da qui, e una scuola
+ * aggiunta all'unione `DignitySchool` senza nome non compila.
+ */
+export const DIGNITY_SCHOOL_NAMES: Readonly<Record<DignitySchool, string>> = { lilly: 'Lilly' };
 
 export interface AspectDefinition {
   id: AspectId;
