@@ -29,8 +29,10 @@ esserci, se il clone è un altro: le schede dicono da dove riscaricare ogni
 fonte, e la voce 24 quelle che mancano ancora.
 
 I riferimenti `file:riga` sono stati ricontrollati tutti contro il codice il
-27 ottobre 2026, dopo i commit delle orbite nominate (`555e33b`). Le righe si
-spostano: se una non torna, il nome della funzione o della costante accanto
+27 ottobre 2026, dopo i commit delle orbite nominate (`555e33b`). Il lotto A
+della voce 17 (`da88a36`) ha poi allungato `types.ts`, `format.ts`,
+`election.ts` e `ephemeris.ts`, e i numeri di riga in quei file non sono
+stati riallineati. Le righe si spostano: se una non torna, il nome della funzione o della costante accanto
 è quello che fa fede. Prima di cominciare conviene che `npm test`, `npm run
 typecheck` e `npm run lint` siano verdi; se il typecheck di `apps/web` cade su
 `config.kit.paths.origin`, `node_modules` è indietro rispetto al lockfile e
@@ -48,14 +50,14 @@ volta e ricominciare da capo.
 | 6. La prosa che invecchia | bassa | piccola | farla insieme al punto 8 |
 | 5. I varga che mancano | non dichiarata | tre lotti | niente: il D-2 è deciso, gli altri hanno la fonte |
 | 19. Le dignità, per scuola | bassa | media | il Jyotisha: i varga del BPHS, cap. 6-7 |
-| 17. L'astrologia oraria | bassa | la più grande | le tavole ci sono; il punteggio no |
+| 17. L'astrologia oraria | bassa | la più grande | lotto A fatto; il B è il substrato neutro |
 | 24. Le fonti da scaricare in `texts/` | bassa | piccola | niente |
 
 L'ordine consigliato è quello della tabella. La 8 e la 6 toccano la stessa
 pagina, `/metodo`, e conviene farle insieme. Della 19 resta soprattutto il
 Jyotisha, che sta accanto ai varga della 5: il D-2 deciso lì cambia anche il
 modo di dire la dignità nella hora. La 17 usa le tavole di Lilly della 19 e
-aggiunge le *moieties* come terza convenzione delle orbite.
+aggiunge le *moieties* come terza convenzione delle orbite, nel lotto B.
 
 ## 5. I nove varga che mancano
 
@@ -399,10 +401,12 @@ Due cose invece vanno fatte comunque:
 ## 17. L'astrologia oraria
 
 **Priorità bassa.** Le tavole di Lilly che presupponeva ci sono
-(`dignita-lilly.ts`, punto 19). Le dignità, che l'oraria non può fare a meno
-di avere, sono una voce a sé perché servono anche al natale e al Jyotisha.
-Qui resta ciò che è proprio delle domande: le condizioni di un istante, il
-moto fino all'uscita dal segno, le regole di una scuola per leggerlo.
+(`dignita-lilly.ts`, punto 19), e il lotto A, le condizioni di un istante col
+punteggio, è fatto (`condizioni-lilly.ts`). Il prossimo è il lotto B. Le
+dignità, che l'oraria non può fare a meno di avere, sono una voce a sé perché
+servono anche al natale e al Jyotisha. Qui resta ciò che è proprio delle
+domande: il moto fino all'uscita dal segno, le regole di una scuola per
+leggerlo.
 
 ### Deciso il 18 ottobre 2026
 
@@ -423,31 +427,21 @@ moto fino all'uscita dal segno, le regole di una scuola per leggerlo.
 
 ### Le fonti
 
-Per Lilly: *Christian Astrology*, 1647. Il libro II è il metodo orario intero,
-il libro I ha le tavole. È di pubblico dominio, e se ne trovano scansioni
-dell'originale: quella del Museo Franz Mayer (Città del Messico) sta sotto
-CC BY-SA 4.0, altre vengono da EEBO attraverso la Wellcome Collection
-(archive.org, `b30338724`, quella su cui sono state lette le pp. 104, 105,
-112 e 176 per il punto 19). È in `texts/occidentale/lilly-christian-astrology-1647`
-con le pagine lette e la trascrizione; la scheda ha la mappa fra pagine e
-immagini: fino a p. 176 l'immagine nN è la pagina più 33, quindi p. 113 =
-n146, p. 115 = n148, pp. 121-123 = n154-n156. Nel PDF locale la pagina è
-nN + 1 (p. 105 è la 139): si estrae con `pdftoppm -f 139 -l 139 -r 200
--jpeg scansione.pdf`. Le pagine che servono qui (113, 115, 121-123 e le
-figure del libro II) non sono ancora estratte né trascritte.
+Per Lilly: *Christian Astrology*, 1647, in `texts/occidentale/lilly-christian-astrology-1647`
+(archive.org `b30338724`, pubblico dominio), con le pagine lette in
+`pagine/` e le trascrizioni in `trascrizioni.md`. Nel PDF locale la pagina
+stampata N è la N + 34, verificato fino a p. 180: `pdftoppm -f $((N+34)) -l
+$((N+34)) -r 250 -jpeg -singlefile scansione.pdf pagine/pNNN`. Lette e
+trascritte il 27 ottobre 2026 per il lotto A: pp. 33, 57-80, 90, 106,
+113-115, 122, 177-180. Da leggere per i lotti che seguono: p. 91
+(contrantiscion), pp. 121-123 per intero (le considerazioni), le altre
+figure del libro II.
 
-**I numeri si leggono sulla scansione, non sui siti.** L'edizione trascritta che
-si trova in rete (Deborah Houlding, Skyscript) è protetta e non si ricopia, e le
-fonti secondarie non concordano su cose che qui diventano costanti:
-
-- **La combustione.** Una fonte attribuisce a Lilly 8°30' per la combustione e
-  17° per i raggi; un'altra cita dal volume orario 12° per i raggi. Il cazimi è
-  dato a 16' o a 17'. Va letto a p. 113 circa e scritto con la pagina accanto.
-- **La tavola delle fortezze e debilità**, p. 115, quella che va da +38 a −38.
-  Nessuna fonte trovata la riporta per intero.
-
-Sul resto le fonti convergono: l'ordine caldeo delle ore, le considerazioni
-prima del giudizio alle pp. 121-123.
+**I numeri si leggono sulla scansione, non sui siti.** L'edizione trascritta
+che si trova in rete (Deborah Houlding, Skyscript) è protetta e non si
+ricopia. Le cifre che le fonti secondarie davano in disaccordo ora sono lette:
+combustione 8°30' nello stesso segno, raggi 17°, cazimi 17' (p. 113); la
+tavola delle fortezze di p. 115, col domicilio a 5.
 
 Le orbite per pianeta (*moieties*) **non** convergono, e Lilly ne dà due
 colonne. *Christian Astrology* p. 107 (`pagine/p107.jpg`, trascritta):
@@ -460,7 +454,7 @@ questa voce riportava è di al-Biruni (§436, trad. Wright 1934, in
 `texts/occidentale/biruni-elements-of-astrology-wright-1934`), non di Lilly.
 Implementarle vuol dire scegliere una colonna e dirla: la convenzione entra
 in `NATAL_ORB_CONVENTIONS` (`packages/core/src/orbite.ts`) come una terza,
-accanto a Greene e Leo, e `NatalOrbConvention` (`types.ts:677`) prende il
+accanto a Greene e Leo, e `NatalOrbConvention` in `types.ts` prende il
 nome nuovo. La firma `orbOf(aspect, a, b)` regge già un'orbita per pianeta:
 la coppia è la somma delle due metà. Due cose vanno decise e scritte nella
 `rule`, come fanno Greene e Leo per i corpi che non nominano: la tavola copre
@@ -469,59 +463,42 @@ Chirone, i nodi e gli assi; e copre solo i cinque aspetti tolemaici (Lilly i
 minori non li tratta, `trascrizioni.md` a p. 110), quindi `aspects` va
 ristretto a quelli.
 
-### Che cosa c'è già
+### Fatto: il lotto A, le condizioni di un istante
 
-Il tema orario è un tema dell'istante in un luogo: `computeSky` con luogo e ora
-lo fa già, e il Regiomontano è fra i nove sistemi
-(`packages/mcp/src/server.ts:199` lo descrive già come «tradizionale
-nell'astrologia oraria»). Ci sono anche:
+In `da88a36` (motore, CLI, test) e `cc80d1e` (interfaccia, MCP, lettura).
+`packages/core/src/condizioni-lilly.ts` calcola per i sette pianeti casa
+con la regola dei cinque gradi, rapporto col Sole, moto rispetto al moto
+medio di Lilly, orientalità, partili, assedio, peregrino, le tre stelle,
+l'antiscion, e il conto della tavola di p. 115 voce per voce con fortezze,
+debilità e differenza (`LillyBodyConditions.score`); per l'istante, l'ora
+planetaria (`planetaryHourAt`, estratta da `election.ts`), i gradi
+dell'Ascendente e la Via Combusta. Sta in `WesternDignities.lilly.conditions`,
+quindi nel tema natale con `dignitySchool: 'lilly'` e, nuovo, nel cielo
+dell'istante con `SkyOptions.dignitySchool` (`computeSky`, e `--sky
+--dignita lilly` nella CLI). Le stelle vengono da `sefstars.txt`, che
+`ephe:download` scarica ora come file facoltativo; senza, `missing` lo dice.
+Le letture fatte dove il testo lascia una scelta stanno in
+`LILLY_CONDITIONS_READINGS` e viaggiano col risultato.
 
-- `applying` sugli aspetti (`isApplying`, privata, `aspects.ts:167`), gli
-  istanti esatti in `findSkyPassages` (`sky-passages.ts:63`), le stazioni in
-  `findStations`, gli ingressi in `findSignIngresses`;
-- `speed` e `retrograde` (`CelestialBody`, `types.ts:811-812`);
-- la setta (`chartSect`, `points.ts:13`);
-- la Luna vuota di corso, alba, tramonto e ore planetarie in `election.ts`
-  (il criterio moderno sta in `findVoidsOfCourse`, `election.ts:285`);
-- dal punto 19, la tavola di Lilly intera: `lillyRulersAt`,
-  `lillyDignitiesOf` e le funzioni per ogni dignità
-  (`dignita-lilly.ts:151-226`), le ricezioni per tutte e cinque
-  (`lillyReceptionsOf`, :242), che serviranno ai significatori, e
-  `NatalChart.dignities` con `dignitySchool: 'lilly'`. Il tema dell'istante
-  (`computeSky`) le dignità non le porta ancora: vanno aggiunte lì. La
-  strada è corta, perché `SkyChart` ha già la setta (`sect?`, `types.ts:1011`)
-  e `computeWesternDignities(sky.bodies, sky.sect, 'lilly')`
-  (`dignita-tema.ts:46`) funziona così com'è; serve un `dignitySchool` in
-  `SkyOptions`, come in `ChartOptions`.
+La verifica è la figura del 16 luglio 1634 (pp. 177-180), ricalcolata in
+`test/condizioni-lilly.test.ts`. Venere, Marte e Saturno tornano riga per
+riga; dove l'esempio non segue la tavola il test lo dice, e il motore segue
+la tavola: Mercurio, Luna e Giove entro 17° dal Sole sono sotto i raggi
+(Lilly scrive «Free from Combustion»), Giove orientale prende 2 che Lilly
+non conta, il Sole diurno prende la triplicità che Lilly tace. Anche p. 113
+si contraddice: il secondo esempio di combustione è a 10°, oltre la soglia
+di 8°30' stampata accanto.
 
-Manca:
+Resta, del lotto A:
 
-- **il signore dell'ora a un istante dato.** `rulerOfDay` e `chaldeanRuler`
-  (`election.ts:364` e `:379`) sono privati, e l'ora si ottiene solo dentro un
-  calendario. Va estratta, e serve per prima: è la prima considerazione di
-  Lilly;
-- combustione, sotto i raggi, cazimi;
-- la velocità «swift» o «slow», rispetto al moto medio **di Lilly** (libro I,
-  una cifra per pianeta: nell'`ocr.txt` la Luna a riga 15508, il Sole a
-  15231, la regola a 22237-22245 con rimando a «page 65»; da leggere sulle
-  immagini). Non rispetto a `MEAN_DAILY_MOTION` (`constants.ts:238`, letta da
-  `meanDailyMotion`, `roots.ts:49`), che non ha un autore e serve solo al
-  campionamento e ai margini delle ricerche: usarla qui mescolerebbe una
-  costante nostra con la scuola di Lilly;
-- angolare, succedente, cadente;
-- le *moieties*, come terza convenzione di `orbite.ts` (vedi sopra la colonna
-  da scegliere);
-- antiscia e Via Combusta;
-- **il peregrino**, definito da Lilly a p. 112 (nessuna dignità essenziale
-  nel grado). `lillyDignitiesOf` restituisce un elenco vuoto e il commento
-  (`dignita-lilly.ts:210-211`) dice apposta che non vuol dire «peregrino»:
-  la definizione entra qui, e `LillyDignity` (`types.ts:509`) non ha ancora
-  la voce;
-- **il punteggio delle dignità essenziali.** Metà dei pesi è già letta: in
-  calce alla tavola di p. 104 Lilly stampa esaltazione 4, triplicità 3,
-  termine 2, faccia 1, esilio 5, caduta 4 (`trascrizioni.md`). Il peso del
-  domicilio sulla stampa è illeggibile, e va cercato nel testo, probabilmente
-  alla tavola delle fortezze di p. 115.
+- **le superfici del cielo con la scuola.** `/api/sky`, `compute_sky` e la
+  pagina del cielo non hanno ancora `dignitySchool`: vanno col tool del
+  lotto D, la cui descrizione deve distinguersi da `compute_sky`;
+- **la Parte di Fortuna nel conto.** Lilly la conta a p. 180 («in ♍ hath
+  five Debilities», rimando a p. 145): pagina da leggere;
+- **la «stessa natura»** fra signore dell'ora e dell'Ascendente (p. 122):
+  è la tavola delle qualità del libro I, caldo, freddo, secco, umido. Si
+  calcola, ma è una considerazione, e va col lotto C.
 
 ### Il substrato comune: che cosa succede fino all'uscita dal segno
 
@@ -586,12 +563,8 @@ nuovo.
 In quest'ordine (le tavole del punto 19 ci sono già): ogni lotto vale anche se
 il successivo non si fa.
 
-**Lotto A: le condizioni di un istante.** Signore dell'ora a un istante
-(estratto da `election.ts`), angolarità, combustione, raggi e cazimi con le
-soglie lette da Lilly, velocità rispetto alla media, Via Combusta, gradi
-dell'Ascendente, antiscia, il peregrino. In fondo, il punteggio di Lilly, che
-chiede le tavole del punto 19 e queste condizioni insieme. Serve anche al natale letto
-alla maniera tradizionale.
+**Lotto A: le condizioni di un istante.** Fatto, vedi sopra; restano le tre
+cose elencate lì.
 
 **Lotto B: la sequenza degli eventi.** Il substrato neutro, e le due Lune vuote
 come primi classificatori. Le *moieties* come terza convenzione di orbita.
@@ -723,9 +696,9 @@ reggente è lo stesso di giorno e di notte.
 
 In calce alla tavola Lilly stampa i punti: 4 l'esaltazione, 3 la triplicità,
 2 il termine, 1 la faccia, 5 l'esilio, 4 la caduta. Sotto la colonna dei
-domicili il numero è illeggibile (ci si aspetta 5). Non sono nel codice: il
-punteggio sta col punto 17, che chiede anche le condizioni accidentali (la
-tavola delle fortezze di p. 115). Anche il peregrino (p. 112) entra lì.
+domicili il numero è illeggibile; la tavola delle fortezze di p. 115 dà 5.
+Il punteggio, col peregrino di p. 112, è in `condizioni-lilly.ts` (voce 17,
+lotto A).
 
 Fatte anche le superfici, in `510d777` e `8622c05`. Le dignità occidentali
 stanno in `NatalChart.dignities` (`dignita-tema.ts`), **solo nello zodiaco
@@ -781,7 +754,7 @@ Per il tema tropicale le scuole possibili sono cinque, ciascuna come pacchetto:
 | Ellenistica (Doroteo, Valente) | tradizionali | da verificare: Valente I.2 non ha la tavola | tre reggenti, uno partecipe | egizi | sì | nessuno | Doroteo sopravvive in arabo, e la traduzione di Pingree è protetta; Valente in greco è libero |
 | Tolomeo, *Tetrabiblos* | tradizionali | per segno, senza gradi (I.19) | due reggenti, acqua da verificare | tolemaici | da verificare | nessuno | greco e Ashmand (1822) liberi |
 | Medievale araba (Abū Maʿshar, al-Bīrūnī, Bonatti) | tradizionali | col grado | doroteiche | egizi | caldee | 5-4-3-2-1, almuten | Bonatti latino (1491) libero |
-| Lilly, 1647 | tradizionali | col grado, e i Nodi | due reggenti, Marte sull'acqua | tolemaici, nella sua versione | caldee | p. 104: esaltazione 4, triplicità 3, termine 2, faccia 1, esilio 5, caduta 4; domicilio illeggibile; peregrino definito a p. 112; tavola delle fortezze a p. 115, non letta | scansioni libere; tavole lette il 27 ottobre 2026 |
+| Lilly, 1647 | tradizionali | col grado, e i Nodi | due reggenti, Marte sull'acqua | tolemaici, nella sua versione | caldee | p. 104: esaltazione 4, triplicità 3, termine 2, faccia 1, esilio 5, caduta 4; domicilio illeggibile; peregrino definito a p. 112; tavola delle fortezze a p. 115, letta, domicilio 5 | scansioni libere; tavole lette il 27 ottobre 2026 |
 | Moderna, XX secolo | con Urano, Nettuno, Plutone | segni, i pianeti esterni senza autore | nessuna | nessuno | decani per triplicità (Alan Leo) | nessuno | senza un autore unico |
 
 Le righe medievale e moderna, fuori da quanto verificato qui sotto, vengono
@@ -802,7 +775,8 @@ ed è quello che la sezione DIGNITÀ porta oggi:
 Triplicità, termini e facce **non compaiono per default**: si chiedono
 nominando la scuola. La prima disponibile è Lilly, che l'oraria richiede
 comunque; le altre entrano quando le loro fonti sono state lette. Il
-punteggio non c'è ancora per nessuna scuola: sta col punto 17.
+punteggio c'è per Lilly, in `condizioni-lilly.ts`; una scuola nuova porta il
+suo, o nessuno.
 Nel Jyotisha la scelta è più semplice, perché Parashara è il riferimento che i
 documenti di lettura già presuppongono.
 
