@@ -1,9 +1,10 @@
 import { computeCrossAspects } from './aspects.js';
-import { DEFAULT_TRANSIT_BODIES, TRANSIT_ORB_BONUS, TRANSIT_ORBS } from './constants.js';
+import { DEFAULT_TRANSIT_BODIES } from './constants.js';
 import { ayanamsaAt, zodiacContext } from './ayanamsa.js';
 import { computeBodies, initEphemeris } from './ephemeris.js';
 import { computeHouses, houseOf } from './houses.js';
 import { validatePlace } from './place.js';
+import { orbConventionInfo, transitOrbConvention } from './orbite.js';
 import { localSiderealTime } from './sidereal.js';
 import { resolveTime } from './time.js';
 import type { EphemerisContext } from './ephemeris.js';
@@ -113,6 +114,7 @@ export function computeTransits(
     );
   }
 
+  const orbs = transitOrbConvention(options.orbConvention);
   const chart: TransitChart = {
     input: moment,
     time,
@@ -127,6 +129,7 @@ export function computeTransits(
       : {}),
     transiting,
     houses: [],
+    orbConvention: orbConventionInfo(orbs, options.orbs),
     aspects: [],
     warnings,
   };
@@ -173,8 +176,8 @@ export function computeTransits(
 
   chart.aspects = computeCrossAspects(moving, targets, {
     minorAspects: options.minorAspects ?? false,
-    orbs: { ...TRANSIT_ORBS, ...options.orbs },
-    orbBonuses: TRANSIT_ORB_BONUS,
+    convention: orbs,
+    ...(options.orbs ? { orbs: options.orbs } : {}),
   }).map<TransitAspect>((aspect) => ({
     aspect: aspect.aspect,
     angle: aspect.angle,

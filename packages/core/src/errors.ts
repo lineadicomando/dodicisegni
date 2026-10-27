@@ -10,6 +10,7 @@ export type ChartErrorCode =
   | 'ZODIACO_NON_TROPICALE'
   | 'VARGA_NON_VALIDO'
   | 'INTERVALLO_NON_VALIDO'
+  | 'ORBITE_NON_VALIDE'
   | 'ERRORE_EFFEMERIDI';
 
 /**

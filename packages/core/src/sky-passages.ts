@@ -1,11 +1,10 @@
 import {
-  ASPECTS,
   DEFAULT_PASSAGE_BODIES,
-  TRANSIT_ORB_BONUS,
-  TRANSIT_ORBS,
 } from './constants.js';
 import { computeBodies, initEphemeris, type EphemerisContext } from './ephemeris.js';
 import { signedDifference } from './math.js';
+import { aspectsOf } from './aspects.js';
+import { orbConventionInfo, pairOrb, transitOrbConvention } from './orbite.js';
 import {
   MAX_WINDOW_DAYS,
   WIDEST_ORB,
@@ -17,7 +16,13 @@ import {
   meanDailyMotion,
 } from './roots.js';
 import type { AspectDefinition } from './constants.js';
-import type { BodyId, PassageRange, SkyPassage, SkyPassageOptions } from './types.js';
+import type {
+  BodyId,
+  OrbConventionInfo,
+  PassageRange,
+  SkyPassage,
+  SkyPassageOptions,
+} from './types.js';
 
 /**
  * Velocità relativa minima ammessa nel calcolo del margine.
@@ -58,12 +63,13 @@ interface PairSample {
 export function findSkyPassages(
   range: PassageRange,
   options: SkyPassageOptions = {},
-): { passages: SkyPassage[]; warnings: string[] } {
+): { passages: SkyPassage[]; warnings: string[]; orbConvention: OrbConventionInfo } {
+  const convention = transitOrbConvention(options.orbConvention);
   const context = initEphemeris(options.ephemerisPath);
   const warnings: string[] = [...context.warnings];
 
   const { start, end } = resolveRange(range);
-  const definitions = options.minorAspects ? ASPECTS : ASPECTS.filter((a) => a.major);
+  const definitions = aspectsOf(convention, options.minorAspects ?? false);
   const bodies = options.bodies ?? DEFAULT_PASSAGE_BODIES;
 
   const passages: (SkyPassage & { julianDay: number })[] = [];
@@ -101,6 +107,7 @@ export function findSkyPassages(
   return {
     passages: passages.map(({ julianDay: _, ...passage }) => passage),
     warnings,
+    orbConvention: orbConventionInfo(convention, options.orbs),
   };
 }
 
@@ -174,10 +181,13 @@ function passagesOf(
       return pair === null ? null : f(gap(pair));
     };
 
-  const orbLimit =
-    (options.orbs?.[definition.id] ?? TRANSIT_ORBS[definition.id]) +
-    (TRANSIT_ORB_BONUS[faster] ?? 0) +
-    (TRANSIT_ORB_BONUS[slower] ?? 0);
+  const orbLimit = pairOrb(
+    transitOrbConvention(options.orbConvention),
+    definition.id,
+    faster,
+    slower,
+    options.orbs,
+  );
 
   for (let i = 1; i < samples.length; i += 1) {
     const g0 = gap(samples[i - 1]!);

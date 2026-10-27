@@ -1,6 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import { computeAspects, computeCrossAspects } from '../src/aspects.js';
 import { degreeInSign, signOf } from '../src/math.js';
+import { natalOrbConvention, transitOrbConvention } from '../src/orbite.js';
 import type { AspectPoint, BodyId, CelestialBody } from '../src/types.js';
 
 /**
@@ -36,14 +37,9 @@ describe('computeAspects', () => {
   });
 
   it('tace quando la separazione eccede l orbita prevista', () => {
-    // Sestile a 60°, orbita 5: a 66° la coppia non è in aspetto.
-    expect(computeAspects([body('marte', 10), body('giove', 76)])).toHaveLength(0);
-  });
-
-  it('allarga l orbita quando la coppia comprende un luminare', () => {
-    // Congiunzione: orbita 8, più 2 per ciascun luminare della coppia.
-    expect(computeAspects([body('sole', 10), body('marte', 19)])).toHaveLength(1);
-    expect(computeAspects([body('venere', 10), body('marte', 19)])).toHaveLength(0);
+    // Sestile a 60°, orbita 6 in Greene: a 66° c'è, a 67° no.
+    expect(computeAspects([body('marte', 10), body('giove', 76)])).toHaveLength(1);
+    expect(computeAspects([body('marte', 10), body('giove', 77)])).toHaveLength(0);
   });
 
   it('non produce aspetti fra Nodo Nord e Nodo Sud', () => {
@@ -98,7 +94,11 @@ describe('computeCrossAspects', () => {
   });
 
   it('confronta i due nodi fra insiemi diversi, dove non sono ridondanti', () => {
-    const aspects = computeCrossAspects([point('nodo-nord', 10, -0.05)], [point('nodo-sud', 10)]);
+    // Coi transiti di Hand, che danno 1° a ogni coppia: con Greene i due
+    // nodi, punti senza orbita, non farebbero aspetto fra loro.
+    const aspects = computeCrossAspects([point('nodo-nord', 10, -0.05)], [point('nodo-sud', 10)], {
+      convention: transitOrbConvention(),
+    });
 
     expect(aspects[0]?.aspect).toBe('congiunzione');
   });
@@ -134,5 +134,65 @@ describe('computeCrossAspects', () => {
   it('non produce nulla se uno dei due insiemi è vuoto', () => {
     expect(computeCrossAspects([point('sole', 100, 1)], [])).toHaveLength(0);
     expect(computeCrossAspects([], [point('sole', 100)])).toHaveLength(0);
+  });
+});
+
+describe('le convenzioni delle orbite', () => {
+  const leo = { convention: natalOrbConvention('leo') };
+
+  it('Greene: 10° ai maggiori fra pianeti, metà con un punto, niente fra due punti', () => {
+    // Fonte: astro.com, tavola 2.AT/2.GW/2.GR e FAQ fq_fh_setup_e.htm.
+    expect(computeAspects([body('marte', 10), body('giove', 109.5)])).toHaveLength(1);
+    expect(computeAspects([body('marte', 10), body('giove', 110.5)])).toHaveLength(0);
+    // Con un nodo vale metà dell'orbita del pianeta: 5°.
+    expect(computeAspects([body('marte', 10), body('nodo-nord', 14.5)])).toHaveLength(1);
+    expect(computeAspects([body('marte', 10), body('nodo-nord', 15.5)])).toHaveLength(0);
+    // Fra due punti senza orbita nessun aspetto, nemmeno esatto.
+    expect(computeAspects([body('nodo-nord', 10), body('lilith', 10)])).toHaveLength(0);
+  });
+
+  it('Greene: il quintile e il biquintile, a 2°, fra i minori', () => {
+    const quintile = [body('marte', 10), body('giove', 83.5)];
+    expect(computeAspects(quintile)).toHaveLength(0);
+    expect(computeAspects(quintile, { minorAspects: true })[0]?.aspect).toBe('quintile');
+    expect(
+      computeAspects([body('marte', 10), body('giove', 155)], { minorAspects: true })[0]?.aspect,
+    ).toBe('biquintile');
+  });
+
+  it('Leo: 8°, 10° con un luminare, 12° fra Sole e Luna, solo per congiunzione e opposizione', () => {
+    // Fonte: Alan Leo, How to Judge a Nativity, 4ª ed. (1928), p. 47.
+    expect(computeAspects([body('venere', 10), body('marte', 18)], leo)).toHaveLength(1);
+    expect(computeAspects([body('venere', 10), body('marte', 19)], leo)).toHaveLength(0);
+    expect(computeAspects([body('sole', 10), body('marte', 19)], leo)).toHaveLength(1);
+    expect(computeAspects([body('sole', 10), body('luna', 21.5)], leo)).toHaveLength(1);
+    // Il quadrato è 8° «all round»: il luminare non lo allarga.
+    expect(computeAspects([body('sole', 10), body('marte', 108.5)], leo)).toHaveLength(0);
+  });
+
+  it('Leo non ha il quintile', () => {
+    expect(
+      computeAspects([body('marte', 10), body('giove', 82)], { ...leo, minorAspects: true }),
+    ).toHaveLength(0);
+  });
+
+  it('Hand: 1° a ogni coppia, luminari compresi', () => {
+    const hand = { convention: transitOrbConvention() };
+    expect(computeCrossAspects([point('saturno', 120.9)], [point('sole', 0)], hand)).toHaveLength(1);
+    expect(computeCrossAspects([point('saturno', 121.1)], [point('sole', 0)], hand)).toHaveLength(0);
+  });
+
+  it('un orbita sostituita vale per la coppia intera', () => {
+    const aspects = computeAspects([body('marte', 10), body('giove', 133)], {
+      orbs: { trigono: 3 },
+    });
+    expect(aspects).toHaveLength(1);
+    expect(
+      computeAspects([body('marte', 10), body('giove', 134)], { orbs: { trigono: 3 } }),
+    ).toHaveLength(0);
+  });
+
+  it('rifiuta una convenzione che non conosce', () => {
+    expect(() => natalOrbConvention('lilly' as never)).toThrow(/greene, leo/);
   });
 });

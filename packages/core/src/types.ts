@@ -666,7 +666,40 @@ export type AspectId =
   | 'semisestile'
   | 'quinconce'
   | 'semiquadrato'
-  | 'sesquiquadrato';
+  | 'sesquiquadrato'
+  | 'quintile'
+  | 'biquintile';
+
+/**
+ * Le convenzioni delle orbite per il tema e il cielo di un istante, ciascuna
+ * con un autore: vedi `orbite.ts`. `greene` è la predefinita.
+ */
+export type NatalOrbConvention = 'greene' | 'leo';
+
+/**
+ * Le convenzioni delle orbite per i transiti e i passaggi, più strette di
+ * quelle natali. Una sola, per ora: è l'unica nominata che si sia trovata.
+ */
+export type TransitOrbConvention = 'hand';
+
+/**
+ * La convenzione delle orbite che ha prodotto gli aspetti di un risultato.
+ *
+ * Sta nel risultato per la ragione per cui ci sta il sistema di case: un
+ * elenco di aspetti senza le orbite che lo hanno filtrato non si può
+ * ricontrollare, e fra due scuole il trigono a 9° esiste o no.
+ */
+export interface OrbConventionInfo {
+  id: string;
+  /** L'autore, per primo. */
+  name: string;
+  /** L'opera e la pagina, o l'indirizzo e la data della copia. */
+  source: string;
+  /** La regola per esteso. */
+  rule: string;
+  /** Gli aspetti di cui chi ha chiamato ha sostituito l'orbita, se ce ne sono. */
+  overridden?: AspectId[];
+}
 
 /** Modalità di calcolo effettivamente usata dal motore. */
 export type EphemerisMode = 'swisseph' | 'moshier';
@@ -721,8 +754,13 @@ export interface BirthData extends LocalMoment, Place {
 export interface ChartOptions extends ZodiacOptions {
   /** Sistema di domificazione. Default: `placidus`. */
   houseSystem?: HouseSystem;
-  /** Includi gli aspetti minori (semisestile, quinconce, semiquadrato, sesquiquadrato). */
+  /**
+   * Includi gli aspetti minori (semisestile, quinconce, semiquadrato,
+   * sesquiquadrato, e quintile e biquintile se la convenzione li tratta).
+   */
   minorAspects?: boolean;
+  /** Convenzione delle orbite. Default: `greene`. Vedi `orbite.ts`. */
+  orbConvention?: NatalOrbConvention;
   /** Corpi da calcolare. Default: tutti tranne Chirone e Lilith. */
   bodies?: BodyId[];
   /**
@@ -895,6 +933,8 @@ export interface NatalChart {
    * avvenuta correttamente: è il dato da cui discendono Ascendente e case.
    */
   siderealTime: SiderealTime;
+  /** La convenzione delle orbite con cui sono stati trovati gli aspetti. */
+  orbConvention: OrbConventionInfo;
   aspects: Aspect[];
   /**
    * Quanti punti cadono in ciascun elemento e in ciascuna modalità, divisi per
@@ -926,6 +966,8 @@ export interface SkyOptions extends ZodiacOptions {
   houseSystem?: HouseSystem;
   /** Includi gli aspetti minori. */
   minorAspects?: boolean;
+  /** Convenzione delle orbite per gli aspetti fra i corpi. Default: `greene`. */
+  orbConvention?: NatalOrbConvention;
   /** Corpi da calcolare. Default: tutti tranne Chirone e Lilith. */
   bodies?: BodyId[];
   /** Percorso della cartella con i file `.se1`. */
@@ -968,6 +1010,8 @@ export interface SkyChart {
   /** Diurno se il Sole è sopra l'orizzonte. Richiede gli assi. */
   sect?: Sect;
   /** Aspetti reciproci fra i corpi, con le orbite di un tema. */
+  /** La convenzione delle orbite con cui sono stati trovati gli aspetti. */
+  orbConvention: OrbConventionInfo;
   aspects: Aspect[];
   /** Come nel tema. Il gruppo degli assi resta vuoto senza luogo o senza ora. */
   distribution: Distribution;
@@ -1077,11 +1121,13 @@ export interface TransitOptions {
    * Medio Cielo. Un bersaglio assente dal tema produce un avviso, non un errore.
    */
   targets?: NatalPointId[];
-  /** Includi gli aspetti minori (semisestile, quinconce, semiquadrato, sesquiquadrato). */
+  /** Includi gli aspetti minori. */
   minorAspects?: boolean;
+  /** Convenzione delle orbite. Default: `hand`. Vedi `orbite.ts`. */
+  orbConvention?: TransitOrbConvention;
   /**
-   * Orbite per aspetto, in gradi: sostituiscono `TRANSIT_ORBS` per i soli
-   * aspetti nominati.
+   * Orbite per aspetto, in gradi: sostituiscono quella della convenzione per
+   * i soli aspetti nominati, per ogni coppia. Il risultato lo dichiara.
    */
   orbs?: Partial<Record<AspectId, number>>;
   /** Percorso della cartella con i file `.se1`. Default: variabile d'ambiente o `<pkg>/ephe`. */
@@ -1136,6 +1182,8 @@ export interface PassageOptions {
   targets?: NatalPointId[];
   /** Includi gli aspetti minori. */
   minorAspects?: boolean;
+  /** Convenzione delle orbite delle finestre. Default: `hand`. */
+  orbConvention?: TransitOrbConvention;
   /** Orbite per aspetto: valgono per la finestra, non per l'istante esatto. */
   orbs?: Partial<Record<AspectId, number>>;
   /** Percorso della cartella con i file `.se1`. */
@@ -1222,6 +1270,8 @@ export interface SkyPassageOptions {
   bodies?: BodyId[];
   /** Includi gli aspetti minori. */
   minorAspects?: boolean;
+  /** Convenzione delle orbite delle finestre. Default: `hand`. */
+  orbConvention?: TransitOrbConvention;
   /** Orbite per aspetto: valgono per la finestra, non per l'istante esatto. */
   orbs?: Partial<Record<AspectId, number>>;
   /** Percorso della cartella con i file `.se1`. */
@@ -1352,6 +1402,8 @@ export interface TransitChart {
    * corpo cade, ed è assente se il tema di nascita non ha case.
    */
   transiting: TransitingBody[];
+  /** La convenzione delle orbite con cui sono stati trovati gli aspetti. */
+  orbConvention: OrbConventionInfo;
   aspects: TransitAspect[];
   /** Il luogo da cui il transito è guardato, se ne è stato indicato uno. */
   place?: Place;

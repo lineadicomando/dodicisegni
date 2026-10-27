@@ -29,7 +29,12 @@ export const MAX_STEP_DAYS = 10;
 export const PRECISION_DAYS = 1 / 1440;
 /** Oltre questo arco la finestra non è più una finestra. */
 export const MAX_WINDOW_DAYS = 1095;
-/** L'orbita più larga concessa a un aspetto: congiunzione più i due luminari. */
+/**
+ * Il margine di campionamento oltre l'arco, in gradi di moto: largo il
+ * quadruplo dell'orbita dei transiti di Hand, perché chi sostituisce le
+ * orbite con `orbs` le può allargare. I transiti attivi lo allargano da sé
+ * quando non basta.
+ */
 export const WIDEST_ORB = 4;
 
 /**

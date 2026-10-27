@@ -17,7 +17,9 @@
  * Nessun peso fra un transito e l'altro: vedi `ActiveTransit`.
  */
 
-import { ASPECTS, DEFAULT_PASSAGE_BODIES } from './constants.js';
+import { DEFAULT_PASSAGE_BODIES } from './constants.js';
+import { aspectsOf } from './aspects.js';
+import { orbConventionInfo, transitOrbConvention } from './orbite.js';
 import type { AspectDefinition } from './constants.js';
 import { zodiacContext } from './ayanamsa.js';
 import { initEphemeris, type EphemerisContext } from './ephemeris.js';
@@ -45,6 +47,7 @@ import type {
   BodyId,
   NatalChart,
   NatalPointId,
+  OrbConventionInfo,
   PassageOptions,
   PassageRange,
 } from './types.js';
@@ -70,7 +73,8 @@ export function findActiveTransits(
   natal: NatalChart,
   range: PassageRange,
   options: PassageOptions = {},
-): { transits: ActiveTransit[]; warnings: string[] } {
+): { transits: ActiveTransit[]; warnings: string[]; orbConvention: OrbConventionInfo } {
+  const convention = transitOrbConvention(options.orbConvention);
   // Come nei transiti: lo zodiaco è quello del tema bersagliato.
   const context = zodiacContext(initEphemeris(options.ephemerisPath), {
     zodiac: natal.zodiac,
@@ -80,7 +84,7 @@ export function findActiveTransits(
 
   const { start, end } = resolveRange(range);
 
-  const definitions = options.minorAspects ? ASPECTS : ASPECTS.filter((a) => a.major);
+  const definitions = aspectsOf(convention, options.minorAspects ?? false);
   const targets = natalTargets(natal, options.targets, warnings);
   const bodies = options.bodies ?? DEFAULT_PASSAGE_BODIES;
 
@@ -121,7 +125,11 @@ export function findActiveTransits(
   }
 
   found.sort((a, b) => a.from - b.from);
-  return { transits: found.map((f) => f.transit), warnings };
+  return {
+    transits: found.map((f) => f.transit),
+    warnings,
+    orbConvention: orbConventionInfo(convention, options.orbs),
+  };
 }
 
 /**

@@ -53,6 +53,8 @@ export const CHIARA: Palette = {
     quinconce: '#6c6351',
     semiquadrato: '#6c6351',
     sesquiquadrato: '#6c6351',
+    quintile: '#6c6351',
+    biquintile: '#6c6351',
   },
 };
 
@@ -79,6 +81,8 @@ export const SCURA: Palette = {
     quinconce: '#9b917e',
     semiquadrato: '#9b917e',
     sesquiquadrato: '#9b917e',
+    quintile: '#9b917e',
+    biquintile: '#9b917e',
   },
 };
 

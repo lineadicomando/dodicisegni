@@ -34,6 +34,7 @@ import type {
   TransitingPointId,
   TransitPassage,
   ActiveTransit,
+  OrbConventionInfo,
   VargaChart,
   VimshottariDasha,
   WesternDignities,
@@ -83,7 +84,7 @@ export function formatChartCompact(
   if (chart.houses.length > 0) lines.push('', 'CUSPIDI', ...cuspLines(chart.houses));
 
   if (occidentali) {
-    lines.push('', 'ASPETTI', ...aspectLines(chart));
+    lines.push('', 'ASPETTI', orbLine(chart.orbConvention), ...aspectLines(chart));
     lines.push('', 'DISTRIBUZIONE', ...distributionLines(chart.distribution));
     if (chart.dignities) lines.push('', 'DIGNITÀ', ...dignityLines(chart, chart.dignities));
   }
@@ -125,7 +126,7 @@ export function formatSkyCompact(sky: SkyChart): string {
   if (sky.angles) lines.push('', 'ASSI', ...angleLines(sky.angles));
   if (sky.houses.length > 0) lines.push('', 'CUSPIDI', ...cuspLines(sky.houses));
 
-  lines.push('', 'ASPETTI', ...aspectLines(sky));
+  lines.push('', 'ASPETTI', orbLine(sky.orbConvention), ...aspectLines(sky));
   lines.push('', 'DISTRIBUZIONE', ...distributionLines(sky.distribution));
   lines.push(...warningLines(sky.warnings));
 
@@ -173,7 +174,7 @@ export function formatTransitsCompact(natal: NatalChart, transits: TransitChart)
     lines.push('', "CUSPIDI DELL'ISTANTE", ...cuspLines(transits.houses));
   }
 
-  lines.push('', 'ASPETTI (in transito → natale)');
+  lines.push('', 'ASPETTI (in transito → natale)', orbLine(transits.orbConvention));
   if (transits.aspects.length === 0) {
     lines.push('(nessuno entro le orbite dei transiti)');
   }
@@ -201,9 +202,14 @@ export function formatTransitsCompact(natal: NatalChart, transits: TransitChart)
 export function formatSkyPassagesCompact(
   passages: readonly SkyPassage[],
   range: PassageRange,
+  orbConvention: OrbConventionInfo,
   warnings: readonly string[] = [],
 ): string {
-  const lines = [`INCONTRI IN CIELO — dal ${range.from} al ${range.to} (${range.timezone})`, ''];
+  const lines = [
+    `INCONTRI IN CIELO — dal ${range.from} al ${range.to} (${range.timezone})`,
+    `${orbLine(orbConvention)}, per le finestre`,
+    '',
+  ];
 
   if (passages.length === 0) {
     lines.push('(nessun aspetto si perfeziona in questo arco di tempo)');
@@ -285,6 +291,7 @@ export function formatPassagesCompact(
   natal: NatalChart,
   passages: readonly TransitPassage[],
   range: PassageRange,
+  orbConvention: OrbConventionInfo,
   warnings: readonly string[] = [],
 ): string {
   const birth = natal.time.timeKnown
@@ -294,6 +301,7 @@ export function formatPassagesCompact(
   const lines = [
     `PASSAGGI — dal ${range.from} al ${range.to} (${range.timezone})`,
     `Tema natale: ${birth} — ${formatPlace(natal.input)}`,
+    `${orbLine(orbConvention)}, per le finestre`,
     '',
   ];
 
@@ -333,6 +341,7 @@ export function formatActiveTransitsCompact(
   natal: NatalChart,
   transits: readonly ActiveTransit[],
   range: PassageRange,
+  orbConvention: OrbConventionInfo,
   warnings: readonly string[] = [],
 ): string {
   const birth = natal.time.timeKnown
@@ -342,6 +351,7 @@ export function formatActiveTransitsCompact(
   const lines = [
     `TRANSITI ATTIVI — dal ${range.from} al ${range.to} (${range.timezone})`,
     `Tema natale: ${birth} — ${formatPlace(natal.input)}`,
+    orbLine(orbConvention),
     '',
   ];
 
@@ -686,6 +696,15 @@ function lillyLines(lilly: NonNullable<WesternDignities['lilly']>, sect: Sect | 
  * stata dimenticata. Con l'ayanamsa in chiaro, chi segue un'altra scuola rifà
  * il conto invece di doverci credere.
  */
+/**
+ * La convenzione delle orbite in una riga: il nome, e gli aspetti di cui chi
+ * ha chiamato ha cambiato l'orbita. La fonte e la regola stanno nel JSON.
+ */
+function orbLine(info: OrbConventionInfo): string {
+  const cambiate = info.overridden?.length ? `; sostituite per ${info.overridden.join(', ')}` : '';
+  return `Orbite: ${info.name}${cambiate}`;
+}
+
 function zodiacLine(chart: { zodiac: Zodiac; ayanamsa?: AyanamsaInfo }): string {
   if (!chart.ayanamsa) return `Zodiaco: ${chart.zodiac}`;
   return `Zodiaco: ${chart.zodiac} (${chart.ayanamsa.name} ${formatDegrees(chart.ayanamsa.degrees)})`;

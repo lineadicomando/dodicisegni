@@ -72,7 +72,9 @@ export type AspectId =
   | 'semisestile'
   | 'quinconce'
   | 'semiquadrato'
-  | 'sesquiquadrato';
+  | 'sesquiquadrato'
+  | 'quintile'
+  | 'biquintile';
 
 export type Element = 'fuoco' | 'terra' | 'aria' | 'acqua';
 

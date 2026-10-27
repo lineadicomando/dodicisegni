@@ -42,6 +42,7 @@ import { findActiveTransits } from './attivi.js';
 import { findSignIngresses, findStations } from './sky-events.js';
 import { findSkyPassages } from './sky-passages.js';
 import { DEFAULT_PASSAGE_BODIES, DIGNITY_SCHOOL_NAMES } from './constants.js';
+import { NATAL_ORB_CONVENTIONS } from './orbite.js';
 import { computeSky } from './sky.js';
 import { currentMoment, systemTimezone } from './time.js';
 import { computeTransits } from './transits.js';
@@ -51,6 +52,7 @@ import type {
   ChartOptions,
   DignitySchool,
   ElectionOptions,
+  NatalOrbConvention,
   HouseSystem,
   PassageOptions,
   PanchangaOptions,
@@ -86,6 +88,10 @@ Opzioni
   --houses <sistema>    placidus (default), koch, segni-interi, equale,
                         regiomontano, campano, porfirio, topocentrico, alcabizio
   --minor               Includi anche gli aspetti minori
+  --orbite <scuola>     Le orbite degli aspetti del tema e del cielo: greene
+                        (default, la predefinita di Astrodienst) oppure leo
+                        (How to Judge a Nativity, 1928). Transiti e passaggi
+                        usano sempre quelle di Robert Hand, 1°
   --zodiaco <nome>      tropicale (default) oppure siderale. Fra i due corrono
                         più di ventiquattro gradi: quasi un segno intero
   --ayanamsa <nome>     Con --zodiaco siderale: lahiri (default), true-chitra,
@@ -318,6 +324,7 @@ function main(argv: string[]): number {
       'anno-dasha': { type: 'string' },
       fortuna: { type: 'string' },
       dignita: { type: 'string' },
+      orbite: { type: 'string' },
       json: { type: 'boolean', default: false },
       lettura: { type: 'boolean', default: false },
       sistema: { type: 'string' },
@@ -514,7 +521,10 @@ function main(argv: string[]): number {
   const zodiaco = zodiacoDa(values);
   if (zodiaco === null) return 2;
 
+  const orbite = orbiteDa(values.orbite);
+  if (orbite === null) return 2;
   const options: ChartOptions = { minorAspects: values.minor, ...zodiaco };
+  if (orbite) options.orbConvention = orbite;
   if (scuolaDignita) options.dignitySchool = scuolaDignita;
   if (values.houses) options.houseSystem = values.houses as HouseSystem;
   if (values.ephe) options.ephemerisPath = values.ephe;
@@ -545,11 +555,11 @@ function main(argv: string[]): number {
     if (values.ephe) passageOptions.ephemerisPath = values.ephe;
     if (values.moon) passageOptions.bodies = [...DEFAULT_PASSAGE_BODIES, 'luna'];
 
-    const { transits, warnings } = findActiveTransits(chart, range, passageOptions);
+    const { transits, warnings, orbConvention } = findActiveTransits(chart, range, passageOptions);
     process.stdout.write(
       values.json
-        ? `${JSON.stringify({ chart, range, transits, warnings }, null, 2)}\n`
-        : `${formatActiveTransitsCompact(chart, transits, range, warnings)}\n`,
+        ? `${JSON.stringify({ chart, range, orbConvention, transits, warnings }, null, 2)}\n`
+        : `${formatActiveTransitsCompact(chart, transits, range, orbConvention, warnings)}\n`,
     );
     return 0;
   }
@@ -560,11 +570,11 @@ function main(argv: string[]): number {
     if (values.ephe) passageOptions.ephemerisPath = values.ephe;
     if (values.moon) passageOptions.bodies = [...DEFAULT_PASSAGE_BODIES, 'luna'];
 
-    const { passages, warnings } = findTransitPassages(chart, range, passageOptions);
+    const { passages, warnings, orbConvention } = findTransitPassages(chart, range, passageOptions);
     process.stdout.write(
       values.json
-        ? `${JSON.stringify({ chart, range, passages, warnings }, null, 2)}\n`
-        : `${formatPassagesCompact(chart, passages, range, warnings)}\n`,
+        ? `${JSON.stringify({ chart, range, orbConvention, passages, warnings }, null, 2)}\n`
+        : `${formatPassagesCompact(chart, passages, range, orbConvention, warnings)}\n`,
     );
     return 0;
   }
@@ -842,6 +852,7 @@ function printSky(values: {
   tema?: string | undefined;
   larghezza?: string | undefined;
   minor: boolean;
+  orbite?: string | undefined;
   json: boolean;
 }): number {
   if (values['transit-tz']) {
@@ -860,7 +871,10 @@ function printSky(values: {
   const zodiaco = zodiacoDa(values);
   if (zodiaco === null) return 2;
 
+  const orbite = orbiteDa(values.orbite);
+  if (orbite === null) return 2;
   const options: SkyOptions = { minorAspects: values.minor, ...zodiaco };
+  if (orbite) options.orbConvention = orbite;
   if (values.houses) options.houseSystem = values.houses as HouseSystem;
   if (values.ephe) options.ephemerisPath = values.ephe;
   if (values.lat && values.lon) {
@@ -904,11 +918,11 @@ function printSkyPassages(values: {
   if (values.ephe) options.ephemerisPath = values.ephe;
   if (values.moon) options.bodies = [...DEFAULT_PASSAGE_BODIES, 'luna'];
 
-  const { passages, warnings } = findSkyPassages(range, options);
+  const { passages, warnings, orbConvention } = findSkyPassages(range, options);
   process.stdout.write(
     values.json
-      ? `${JSON.stringify({ range, passages, warnings }, null, 2)}\n`
-      : `${formatSkyPassagesCompact(passages, range, warnings)}\n`,
+      ? `${JSON.stringify({ range, orbConvention, passages, warnings }, null, 2)}\n`
+      : `${formatSkyPassagesCompact(passages, range, orbConvention, warnings)}\n`,
   );
   return 0;
 }
@@ -1088,6 +1102,21 @@ function passageRange(
   const from = values.from ?? currentMoment(timezone).date;
   const to = values.to ?? addYear(from);
   return { from, to, timezone };
+}
+
+/**
+ * La convenzione delle orbite chiesta: `undefined` se non chiesta, `null` se
+ * sconosciuta, dopo averlo detto. Il motore la rifiuterebbe comunque, ma più
+ * tardi e senza dire quali esistono.
+ */
+function orbiteDa(valore: string | undefined): NatalOrbConvention | undefined | null {
+  if (valore === undefined) return undefined;
+  const ammesse = NATAL_ORB_CONVENTIONS.map((convenzione) => convenzione.id);
+  if (!(ammesse as string[]).includes(valore)) {
+    process.stderr.write(`Valore di --orbite non riconosciuto: ammessi ${ammesse.join(', ')}.\n`);
+    return null;
+  }
+  return valore as NatalOrbConvention;
 }
 
 /** Un anno dopo, alla stessa data: il 29 febbraio diventa il 1° marzo. */

@@ -1,11 +1,6 @@
-import {
-  ASPECTS,
-  LUMINARIES,
-  LUMINARY_ORB_BONUS,
-  NON_ASPECTING_PAIRS,
-  type AspectDefinition,
-} from './constants.js';
+import { ASPECTS, NON_ASPECTING_PAIRS, type AspectDefinition } from './constants.js';
 import { angularSeparation } from './math.js';
+import { natalOrbConvention, pairOrb, type OrbConventionDefinition } from './orbite.js';
 import type { Aspect, AspectId, AspectPoint, BodyId, CelestialBody, PointAspect } from './types.js';
 
 /** Passo temporale massimo, in giorni, per stabilire se un aspetto è applicativo. */
@@ -22,37 +17,23 @@ const APPLYING_PROBE_DAYS = 0.05;
  */
 const APPLYING_PROBE_ARC = 0.1;
 
-/**
- * Bonus predefinito: i luminari, secondo la prassi natale corrente.
- *
- * È una mappa e non un elenco perché gli identificatori qui sono stringhe
- * qualsiasi — un asse natale non è un corpo celeste — e perché i transiti
- * concedono ai due luminari bonus diversi fra loro.
- */
-const NATAL_ORB_BONUS: Readonly<Record<string, number>> = Object.fromEntries(
-  LUMINARIES.map((id) => [id, LUMINARY_ORB_BONUS]),
-);
-
 export interface AspectOptions {
-  /** Includi semisestile, quinconce, semiquadrato e sesquiquadrato. */
+  /** Includi gli aspetti minori che la convenzione tratta. */
   minorAspects?: boolean;
+  /** La convenzione delle orbite. Default: la natale predefinita, `greene`. */
+  convention?: OrbConventionDefinition;
   /**
-   * Orbite per aspetto, in gradi: sostituiscono quelle di `ASPECTS` per i soli
-   * aspetti nominati. I transiti le vogliono di molto più strette.
+   * Orbite per aspetto, in gradi: sostituiscono quella della convenzione per
+   * i soli aspetti nominati, per ogni coppia.
    */
   orbs?: Partial<Record<AspectId, number>>;
-  /**
-   * Gradi aggiuntivi per identificatore, sommati per **ciascuno** dei due lati
-   * della coppia. Default: il bonus dei luminari.
-   */
-  orbBonuses?: Readonly<Record<string, number>>;
 }
 
 /** Le regole risolte una volta sola, invece che a ogni coppia. */
 interface AspectRules {
   definitions: readonly AspectDefinition[];
+  convention: OrbConventionDefinition;
   orbs: Partial<Record<AspectId, number>>;
-  bonuses: Readonly<Record<string, number>>;
 }
 
 /**
@@ -128,11 +109,13 @@ function aspectBetween<From extends string, To extends string>(
   rules: AspectRules,
 ): PointAspect<From, To> | null {
   const separation = angularSeparation(a.longitude, b.longitude);
-  const bonus = (rules.bonuses[a.id] ?? 0) + (rules.bonuses[b.id] ?? 0);
 
   for (const definition of rules.definitions) {
     const orb = Math.abs(separation - definition.angle);
-    if (orb > (rules.orbs[definition.id] ?? definition.orb) + bonus) continue;
+    const limit = pairOrb(rules.convention, definition.id, a.id, b.id, rules.orbs);
+    // Un'orbita nulla non è un aspetto esatto al secondo: è un aspetto che la
+    // convenzione non concede, come fra due punti senza orbita in Greene.
+    if (limit <= 0 || orb > limit) continue;
 
     return {
       aspect: definition.id,
@@ -148,11 +131,25 @@ function aspectBetween<From extends string, To extends string>(
 }
 
 function rulesFor(options: AspectOptions): AspectRules {
+  const convention = options.convention ?? natalOrbConvention();
   return {
-    definitions: options.minorAspects ? ASPECTS : ASPECTS.filter((a) => a.major),
+    definitions: aspectsOf(convention, options.minorAspects ?? false),
+    convention,
     orbs: options.orbs ?? {},
-    bonuses: options.orbBonuses ?? NATAL_ORB_BONUS,
   };
+}
+
+/**
+ * Gli aspetti da cercare: quelli che la convenzione tratta, e fra questi i
+ * minori solo se chiesti. In `ASPECTS` l'ordine, che decide chi vince.
+ */
+export function aspectsOf(
+  convention: OrbConventionDefinition,
+  minorAspects: boolean,
+): readonly AspectDefinition[] {
+  return ASPECTS.filter(
+    (aspect) => convention.aspects.includes(aspect.id) && (minorAspects || aspect.major),
+  );
 }
 
 /** L'aspetto più stretto per primo: è quello che pesa di più nella lettura. */

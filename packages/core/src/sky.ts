@@ -4,6 +4,7 @@ import { computeDistribution } from './distribution.js';
 import { DEFAULT_BODIES } from './constants.js';
 import { computeBodies, initEphemeris } from './ephemeris.js';
 import { computeHouses, houseOf } from './houses.js';
+import { natalOrbConvention, orbConventionInfo } from './orbite.js';
 import { validatePlace } from './place.js';
 import { chartSect } from './points.js';
 import { localSiderealTime } from './sidereal.js';
@@ -50,6 +51,7 @@ export function computeSky(moment: SkyMoment, options: SkyOptions = {}): SkyChar
     );
   }
 
+  const orbs = natalOrbConvention(options.orbConvention);
   const sky: SkyChart = {
     input: moment,
     time,
@@ -57,7 +59,11 @@ export function computeSky(moment: SkyMoment, options: SkyOptions = {}): SkyChar
     zodiac,
     bodies,
     houses: [],
-    aspects: computeAspects(bodies, { minorAspects: options.minorAspects ?? false }),
+    orbConvention: orbConventionInfo(orbs),
+    aspects: computeAspects(bodies, {
+      minorAspects: options.minorAspects ?? false,
+      convention: orbs,
+    }),
     distribution: computeDistribution({ bodies }),
     warnings,
   };

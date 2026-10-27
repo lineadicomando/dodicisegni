@@ -66,8 +66,20 @@ describe('findSkyPassages', () => {
     expect(congiunzioni[0]?.exact.slice(0, 10)).toBe('2026-02-20');
     // Due pianeti lenti restano in orbita per settimane, non per anni: la
     // finestra si chiude e quindi c'è.
-    expect(congiunzioni[0]?.window?.start.slice(0, 10)).toBe('2026-01-24');
-    expect(congiunzioni[0]?.window?.end.slice(0, 10)).toBe('2026-03-16');
+    // Con l'orbita di Hand, 1°.
+    expect(congiunzioni[0]?.window?.start.slice(0, 10)).toBe('2026-02-07');
+    expect(congiunzioni[0]?.window?.end.slice(0, 10)).toBe('2026-03-04');
+  });
+
+  it('allarga la finestra se si chiede un orbita più larga, e lo dichiara', () => {
+    const { passages, orbConvention } = findSkyPassages(
+      { from: '2024-01-01', to: '2027-12-31', timezone: 'UTC' },
+      { bodies: ['saturno', 'nettuno'], orbs: { congiunzione: 2 } },
+    );
+    const congiunzione = passages.find((p) => p.aspect === 'congiunzione');
+    expect(congiunzione?.window?.start.slice(0, 10)).toBe('2026-01-24');
+    expect(congiunzione?.window?.end.slice(0, 10)).toBe('2026-03-16');
+    expect(orbConvention).toMatchObject({ id: 'hand', overridden: ['congiunzione'] });
   });
 
   it('conta tre volte l incontro quando il più veloce retrograda', () => {
@@ -124,26 +136,28 @@ describe('findSkyPassages', () => {
 
 describe('formatSkyPassagesCompact', () => {
   it('mostra il moto di entrambi i corpi', () => {
-    const { passages } = findSkyPassages(
+    const { passages, orbConvention } = findSkyPassages(
       { from: '2028-08-01', to: '2028-11-30', timezone: 'Europe/Rome' },
       { bodies: ['mercurio', 'giove'] },
     );
 
-    const testo = formatSkyPassagesCompact(passages, {
-      from: '2028-08-01',
-      to: '2028-11-30',
-      timezone: 'Europe/Rome',
-    });
+    const testo = formatSkyPassagesCompact(
+      passages,
+      { from: '2028-08-01', to: '2028-11-30', timezone: 'Europe/Rome' },
+      orbConvention,
+    );
 
     expect(testo).toContain('INCONTRI IN CIELO — dal 2028-08-01 al 2028-11-30 (Europe/Rome)');
     expect(testo).toContain('Mercurio');
     // Il moto è una coppia: il primo carattere è del più veloce.
     expect(testo).toMatch(/congiunzione\s+Giove\s+R\/D/);
+    // E dice con quali orbite sono state misurate le finestre.
+    expect(testo).toContain('Orbite: Robert Hand, per le finestre');
   });
 
   it('lo dice quando non si perfeziona niente', () => {
     const arco: PassageRange = { from: '2026-01-01', to: '2026-01-02', timezone: 'UTC' };
-    const testo = formatSkyPassagesCompact([], arco);
+    const testo = formatSkyPassagesCompact([], arco, findSkyPassages(arco).orbConvention);
 
     expect(testo).toContain('nessun aspetto si perfeziona');
   });

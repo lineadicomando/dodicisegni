@@ -163,6 +163,10 @@ export const ASPECT_GLYPH: Readonly<Record<AspectId, string>> = {
   quinconce: `⚻${TESTO}`,
   semiquadrato: `∠${TESTO}`,
   sesquiquadrato: `⚼${TESTO}`,
+  // Il quintile non ha un glifo in Unicode: Q e bQ sono le sigle che usano
+  // Astrodienst e la maggior parte dei programmi.
+  quintile: 'Q',
+  biquintile: 'bQ',
 };
 
 /**
@@ -237,6 +241,8 @@ export const ASPECT_COLOR: Readonly<Record<AspectId, string>> = {
   quinconce: 'var(--aspetto-minore)',
   semiquadrato: 'var(--aspetto-minore)',
   sesquiquadrato: 'var(--aspetto-minore)',
+  quintile: 'var(--aspetto-minore)',
+  biquintile: 'var(--aspetto-minore)',
 };
 
 export const ASPECT_MAJOR: Readonly<Record<AspectId, boolean>> = {
@@ -249,6 +255,8 @@ export const ASPECT_MAJOR: Readonly<Record<AspectId, boolean>> = {
   quinconce: false,
   semiquadrato: false,
   sesquiquadrato: false,
+  quintile: false,
+  biquintile: false,
 };
 
 export const SIGN_LABEL: Readonly<Record<ZodiacSign, string>> = {

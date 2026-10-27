@@ -188,3 +188,33 @@ describe('formatChartCompact', () => {
     expect(compact.length).toBeLessThan(json.length / 2);
   });
 });
+
+describe('le orbite del tema', () => {
+  const NASCITA = {
+    date: '1968-03-12',
+    time: '14:30',
+    latitude: 40.8518,
+    longitude: 14.2681,
+    timezone: 'Europe/Rome',
+  };
+
+  it('porta il nome della convenzione con cui ha trovato gli aspetti', () => {
+    const greene = computeNatalChart(NASCITA);
+    expect(greene.orbConvention.id).toBe('greene');
+    expect(greene.orbConvention.source).toMatch(/astro\.com/);
+
+    const leo = computeNatalChart(NASCITA, { orbConvention: 'leo' });
+    expect(leo.orbConvention.id).toBe('leo');
+    expect(leo.orbConvention.source).toMatch(/p\. 47/);
+    // Le due scuole non danno lo stesso elenco: è la ragione per cui il
+    // nome sta nel risultato.
+    expect(leo.aspects).not.toEqual(greene.aspects);
+  });
+
+  it('rifiuta una convenzione che non conosce', () => {
+    expect(() => computeNatalChart(NASCITA, { orbConvention: 'boh' as never })).toThrow(
+      expect.objectContaining({ code: 'ORBITE_NON_VALIDE' }),
+    );
+  });
+});
+

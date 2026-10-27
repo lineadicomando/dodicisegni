@@ -1,4 +1,6 @@
-import { ASPECTS, DEFAULT_PASSAGE_BODIES, TRANSIT_ORB_BONUS, TRANSIT_ORBS } from './constants.js';
+import { DEFAULT_PASSAGE_BODIES } from './constants.js';
+import { aspectsOf } from './aspects.js';
+import { orbConventionInfo, pairOrb, transitOrbConvention } from './orbite.js';
 import { zodiacContext } from './ayanamsa.js';
 import { computeBodies, initEphemeris, type EphemerisContext } from './ephemeris.js';
 import { signedDifference } from './math.js';
@@ -18,6 +20,7 @@ import type {
   BodyId,
   NatalChart,
   NatalPointId,
+  OrbConventionInfo,
   PassageOptions,
   PassageRange,
   TransitPassage,
@@ -44,7 +47,8 @@ export function findTransitPassages(
   natal: NatalChart,
   range: PassageRange,
   options: PassageOptions = {},
-): { passages: TransitPassage[]; warnings: string[] } {
+): { passages: TransitPassage[]; warnings: string[]; orbConvention: OrbConventionInfo } {
+  const convention = transitOrbConvention(options.orbConvention);
   // Come nei transiti: lo zodiaco è quello del tema bersagliato.
   const context = zodiacContext(initEphemeris(options.ephemerisPath), {
     zodiac: natal.zodiac,
@@ -54,7 +58,7 @@ export function findTransitPassages(
 
   const { start, end } = resolveRange(range);
 
-  const definitions = options.minorAspects ? ASPECTS : ASPECTS.filter((a) => a.major);
+  const definitions = aspectsOf(convention, options.minorAspects ?? false);
   const targets = natalTargets(natal, options.targets, warnings);
   const bodies = options.bodies ?? DEFAULT_PASSAGE_BODIES;
 
@@ -91,6 +95,7 @@ export function findTransitPassages(
   return {
     passages: passages.map(({ julianDay: _, ...passage }) => passage),
     warnings,
+    orbConvention: orbConventionInfo(convention, options.orbs),
   };
 }
 
@@ -211,8 +216,8 @@ function windowAround(
 }
 
 /**
- * L'orbita di un transito: quella dell'aspetto, o quella chiesta, più il
- * bonus di ciascun luminare della coppia.
+ * L'orbita di un transito secondo la convenzione chiesta, o quella sostituita
+ * da chi chiama. Condivisa con `attivi.ts`.
  */
 export function transitOrbLimit(
   bodyId: BodyId,
@@ -220,10 +225,12 @@ export function transitOrbLimit(
   definition: AspectDefinition,
   options: PassageOptions,
 ): number {
-  return (
-    (options.orbs?.[definition.id] ?? TRANSIT_ORBS[definition.id]) +
-    (TRANSIT_ORB_BONUS[bodyId] ?? 0) +
-    (TRANSIT_ORB_BONUS[targetId] ?? 0)
+  return pairOrb(
+    transitOrbConvention(options.orbConvention),
+    definition.id,
+    bodyId,
+    targetId,
+    options.orbs,
   );
 }
 

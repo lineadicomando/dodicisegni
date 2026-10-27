@@ -17,6 +17,14 @@ const natal: NatalChart = computeNatalChart(NAPOLI);
 
 const OGGI: TransitMoment = { date: '2024-06-15', time: '12:00', timezone: 'Europe/Rome' };
 
+/**
+ * Un istante in cui un transito tocca un asse natale: Marte quadrato
+ * all'Ascendente, esatto il 23 giugno 2024 alle 13:07 secondo
+ * `findTransitPassages`. Con l'orbita di Hand, 1°, un giorno qualsiasi non
+ * ne ha nessuno.
+ */
+const SULL_ASSE: TransitMoment = { date: '2024-06-23', time: '13:00', timezone: 'Europe/Rome' };
+
 /** La longitudine di un bersaglio natale, corpo o asse che sia. */
 function longitudeOf(chart: NatalChart, id: NatalPointId): number {
   if (id === 'ascendente') return chart.angles!.ascendant;
@@ -80,7 +88,7 @@ describe('computeTransits', () => {
   });
 
   it('bersaglia gli assi natali, non solo i corpi', () => {
-    const transits = computeTransits(natal, OGGI, { targets: ['ascendente'] });
+    const transits = computeTransits(natal, SULL_ASSE, { targets: ['ascendente'] });
 
     expect(transits.aspects.length).toBeGreaterThan(0);
     expect(transits.aspects.every((a) => a.natal === 'ascendente')).toBe(true);
@@ -283,7 +291,7 @@ describe('formatTransitsCompact', () => {
   it('nomina gli assi natali fra i bersagli', () => {
     const soloAsse = formatTransitsCompact(
       natal,
-      computeTransits(natal, OGGI, { targets: ['ascendente', 'medio-cielo'] }),
+      computeTransits(natal, SULL_ASSE, { targets: ['ascendente', 'medio-cielo'] }),
     );
 
     expect(soloAsse).toMatch(/Ascendente|Medio Cielo/);

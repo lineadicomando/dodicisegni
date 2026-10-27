@@ -6,6 +6,7 @@ import { computeDistribution } from './distribution.js';
 import { ChartError } from './errors.js';
 import { computeBodies, initEphemeris } from './ephemeris.js';
 import { computeHouses, houseOf } from './houses.js';
+import { natalOrbConvention, orbConventionInfo } from './orbite.js';
 import { validatePlace } from './place.js';
 import { chartSect, computePartOfFortune } from './points.js';
 import { localSiderealTime } from './sidereal.js';
@@ -43,6 +44,8 @@ export function computeNatalChart(birth: BirthData, options: ChartOptions = {}):
 
   const houseSystem = options.houseSystem ?? 'placidus';
   const bodyIds = options.bodies ?? DEFAULT_BODIES;
+  // Risolta prima del calcolo: un nome sbagliato si rifiuta subito.
+  const orbs = natalOrbConvention(options.orbConvention);
 
   const zodiac = options.zodiac ?? 'tropicale';
   // Rifiutata e non ignorata: chi chiede Lilly e non lo trova penserebbe che
@@ -127,7 +130,11 @@ export function computeNatalChart(birth: BirthData, options: ChartOptions = {}):
     bodies,
     houses,
     siderealTime: localSiderealTime(time.julianDayUT, birth.longitude),
-    aspects: computeAspects(bodies, { minorAspects: options.minorAspects ?? false }),
+    orbConvention: orbConventionInfo(orbs),
+    aspects: computeAspects(bodies, {
+      minorAspects: options.minorAspects ?? false,
+      convention: orbs,
+    }),
     distribution: computeDistribution({ bodies, angles, partOfFortune }),
     warnings,
   };

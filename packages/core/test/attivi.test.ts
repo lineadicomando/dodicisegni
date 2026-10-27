@@ -6,9 +6,11 @@ import { findTransitPassages } from '../src/passages.js';
 import { findStations } from '../src/sky-events.js';
 import type { NatalChart, PassageRange } from '../src/types.js';
 
-// Il caso di `TODO.md`, voce 7: in luglio 2026 due transiti di Saturno sono
-// in orbita per tutto il mese e non si perfezionano dentro, e quindi
-// `findTransitPassages` sull'arco non li vede.
+// Il caso della voce 7 del `TODO.md`, con le orbite di Hand (1°): in luglio
+// 2026 Saturno è in opposizione a Plutone per tutto il mese, esatto il 27
+// giugno e il 25 agosto, cioè fuori; e in quadrato a Venere in due tratti,
+// fino al 22 luglio e dal 31. `findTransitPassages` sull'arco non vede né
+// l'uno né l'altro.
 const PALERMO: NatalChart = computeNatalChart({
   date: '1978-06-02',
   time: '15:15',
@@ -17,67 +19,90 @@ const PALERMO: NatalChart = computeNatalChart({
   timezone: 'Europe/Rome',
 });
 
+/** La distanza in minuti fra due istanti ISO. */
+const minuti = (a?: string, b?: string): number =>
+  Math.abs(Date.parse(a ?? '') - Date.parse(b ?? '')) / 60_000;
+
 const LUGLIO: PassageRange = { from: '2026-07-01', to: '2026-08-01', timezone: 'Europe/Rome' };
 
 describe('findActiveTransits', () => {
   it('vede i transiti in orbita per tutto l arco, che i passaggi non vedono', () => {
-    const { transits } = findActiveTransits(PALERMO, LUGLIO, { bodies: ['saturno'] });
+    const { transits, orbConvention } = findActiveTransits(PALERMO, LUGLIO, { bodies: ['saturno'] });
     const { passages } = findTransitPassages(PALERMO, LUGLIO, { bodies: ['saturno'] });
     expect(passages).toEqual([]);
+    expect(orbConvention.id).toBe('hand');
 
-    const venere = transits.find((t) => t.natal === 'venere' && t.aspect === 'quadrato');
     const plutone = transits.find((t) => t.natal === 'plutone' && t.aspect === 'opposizione');
-
-    // Le finestre sono quelle che `findTransitPassages` dà su un arco largo,
-    // da maggio a ottobre: lo stesso calcolo, guardato da un altro lato.
-    expect(venere).toMatchObject({ throughout: true, perfections: [] });
-    expect(venere?.enters?.slice(0, 10)).toBe('2026-05-26');
-    expect(venere?.leaves?.slice(0, 10)).toBe('2026-09-29');
     expect(plutone).toMatchObject({ throughout: true, perfections: [] });
-    expect(plutone?.enters?.slice(0, 10)).toBe('2026-05-29');
-    expect(plutone?.leaves?.slice(0, 10)).toBe('2026-09-25');
-
+    expect(plutone?.enters?.slice(0, 10)).toBe('2026-06-11');
+    expect(plutone?.leaves?.slice(0, 10)).toBe('2026-09-11');
     // Ai bordi dell'arco la distanza dall'esatto c'è, ed è dentro l'orbita.
-    for (const transit of [venere, plutone]) {
-      expect(transit?.orbAtFrom).toBeGreaterThan(0);
-      expect(transit?.orbAtFrom).toBeLessThan(transit!.orb);
-      expect(transit?.orbAtTo).toBeLessThan(transit!.orb);
-    }
+    expect(plutone?.orbAtFrom).toBeGreaterThan(0);
+    expect(plutone?.orbAtFrom).toBeLessThan(plutone!.orb);
+    expect(plutone?.orbAtTo).toBeLessThan(plutone!.orb);
+  });
+
+  it('dà due righe allo stesso transito quando esce dall orbita ed entra di nuovo', () => {
+    const { transits } = findActiveTransits(PALERMO, LUGLIO, {
+      bodies: ['saturno'],
+      targets: ['venere'],
+    });
+    const quadrati = transits.filter((t) => t.aspect === 'quadrato');
+
+    expect(quadrati).toHaveLength(2);
+    expect(quadrati.map((t) => t.throughout)).toEqual([false, false]);
+    expect(quadrati[0]?.leaves?.slice(0, 10)).toBe('2026-07-22');
+    expect(quadrati[0]?.orbAtFrom).toBeDefined();
+    expect(quadrati[0]?.orbAtTo).toBeUndefined();
+    expect(quadrati[1]?.enters?.slice(0, 10)).toBe('2026-07-31');
+    expect(quadrati[1]?.orbAtFrom).toBeUndefined();
   });
 
   it('coincide con le finestre dei passaggi su un arco che le contiene', () => {
     const arco: PassageRange = { from: '2026-05-01', to: '2026-10-31', timezone: 'Europe/Rome' };
-    const { passages } = findTransitPassages(PALERMO, arco, {
-      bodies: ['saturno'],
-      targets: ['venere'],
-    });
-    const { transits } = findActiveTransits(PALERMO, arco, {
-      bodies: ['saturno'],
-      targets: ['venere'],
-    });
-
-    const quadrato = transits.filter((t) => t.aspect === 'quadrato');
-    expect(quadrato).toHaveLength(1);
-    expect(quadrato[0]?.throughout).toBe(false);
-    expect(quadrato[0]?.perfections.map((p) => p.local.slice(0, 10))).toEqual(
-      passages.filter((p) => p.aspect === 'quadrato').map((p) => p.local.slice(0, 10)),
+    const opzioni = { bodies: ['saturno' as const], targets: ['venere' as const] };
+    const passaggi = findTransitPassages(PALERMO, arco, opzioni).passages.filter(
+      (p) => p.aspect === 'quadrato',
     );
-    expect(quadrato[0]?.perfections.map((p) => p.local.slice(0, 10))).toEqual([
-      '2026-06-22',
-      '2026-08-31',
-    ]);
-    const window = passages.find((p) => p.aspect === 'quadrato')?.window;
-    expect(quadrato[0]?.enters).toBe(window?.start);
-    expect(quadrato[0]?.leaves).toBe(window?.end);
-    // Con una perfezione la distanza minima è zero, e non si ripete.
-    expect(quadrato[0]?.closest).toBeUndefined();
+    const attivi = findActiveTransits(PALERMO, arco, opzioni).transits.filter(
+      (t) => t.aspect === 'quadrato',
+    );
+
+    // Due perfezioni, il 22 giugno e il 31 agosto, ciascuna nel suo tratto.
+    expect(passaggi.map((p) => p.local.slice(0, 10))).toEqual(['2026-06-22', '2026-08-31']);
+    expect(attivi).toHaveLength(2);
+    attivi.forEach((tratto, k) => {
+      expect(tratto.perfections.map((p) => p.local)).toEqual([passaggi[k]?.local]);
+      // Le due ricerche dimezzano intervalli diversi e si fermano al minuto
+      // (`PRECISION_DAYS`): i bordi coincidono a meno di quello.
+      expect(minuti(tratto.enters, passaggi[k]?.window?.start)).toBeLessThanOrEqual(2);
+      expect(minuti(tratto.leaves, passaggi[k]?.window?.end)).toBeLessThanOrEqual(2);
+      // Con una perfezione la distanza minima è zero, e non si ripete.
+      expect(tratto.closest).toBeUndefined();
+    });
+  });
+
+  it('riproduce le finestre di un orbita più larga, se la si chiede', () => {
+    // Con 2° invece di 1°, Saturno quadrato Venere torna in orbita per tutto
+    // luglio: dal 26 maggio al 29 settembre. Il risultato dichiara che
+    // l'orbita è stata sostituita.
+    const { transits, orbConvention } = findActiveTransits(PALERMO, LUGLIO, {
+      bodies: ['saturno'],
+      targets: ['venere'],
+      orbs: { quadrato: 2 },
+    });
+    const quadrato = transits.find((t) => t.aspect === 'quadrato');
+    expect(quadrato).toMatchObject({ throughout: true, orb: 2 });
+    expect(quadrato?.enters?.slice(0, 10)).toBe('2026-05-26');
+    expect(quadrato?.leaves?.slice(0, 10)).toBe('2026-09-29');
+    expect(orbConvention.overridden).toEqual(['quadrato']);
   });
 
   it('vede un transito che entra in orbita e torna indietro senza perfezionarsi', () => {
     // Costruito apposta, perché nessun tema reale garantisce il caso: un
-    // punto natale messo un grado oltre il punto in cui Giove si ferma.
-    // Giove ci arriva a un grado, si ferma e torna indietro: in orbita per
-    // settimane, esatto mai.
+    // punto natale messo mezzo grado oltre il punto in cui Giove si ferma.
+    // Giove ci arriva a mezzo grado, si ferma e torna indietro: in orbita
+    // (1°, Hand) per settimane, esatto mai.
     const { stations } = findStations(
       { from: '2026-01-01', to: '2026-12-31', timezone: 'UTC' },
       { bodies: ['giove'] },
@@ -85,7 +110,7 @@ describe('findActiveTransits', () => {
     const stazione = stations.find((s) => s.direction === 'retrograda');
     expect(stazione).toBeDefined();
 
-    const punto = (stazione!.longitude + 1) % 360;
+    const punto = (stazione!.longitude + 0.5) % 360;
     const tema: NatalChart = {
       ...PALERMO,
       bodies: PALERMO.bodies.map((b) => (b.id === 'marte' ? { ...b, longitude: punto } : b)),
@@ -100,7 +125,7 @@ describe('findActiveTransits', () => {
     const congiunzione = transits.filter((t) => t.aspect === 'congiunzione');
     expect(congiunzione).toHaveLength(1);
     expect(congiunzione[0]?.perfections).toEqual([]);
-    expect(congiunzione[0]?.closest?.orb).toBeCloseTo(1, 2);
+    expect(congiunzione[0]?.closest?.orb).toBeCloseTo(0.5, 2);
     // L'avvicinamento massimo è la stazione, al giorno.
     expect(congiunzione[0]?.closest?.local.slice(0, 10)).toBe(stazione!.local.slice(0, 10));
     expect(congiunzione[0]?.enters! < stazione!.local).toBe(true);

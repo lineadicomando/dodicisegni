@@ -69,7 +69,16 @@ export {
   parasharaSignLord,
 } from './dignita-parashara.js';
 export { computeJyotisha } from './jyotisha.js';
-export { computeAspects, computeCrossAspects, type AspectOptions } from './aspects.js';
+export { aspectsOf, computeAspects, computeCrossAspects, type AspectOptions } from './aspects.js';
+export {
+  DEFAULT_NATAL_ORB_CONVENTION,
+  DEFAULT_TRANSIT_ORB_CONVENTION,
+  NATAL_ORB_CONVENTIONS,
+  natalOrbConvention,
+  TRANSIT_ORB_CONVENTIONS,
+  transitOrbConvention,
+  type OrbConventionDefinition,
+} from './orbite.js';
 export { computeDistribution, type DistributionInput } from './distribution.js';
 export { computeHouses, houseOf, type HouseResult } from './houses.js';
 export {
@@ -144,8 +153,6 @@ export {
   SIGN_ELEMENT,
   SIGN_MODALITY,
   WEEKDAY_RULERS,
-  TRANSIT_ORB_BONUS,
-  TRANSIT_ORBS,
   ZODIAC_SIGNS,
   type AspectDefinition,
   type BodyDefinition,
@@ -219,6 +226,9 @@ export type {
   TransitMoment,
   TransitPassage,
   ActiveTransit,
+  NatalOrbConvention,
+  OrbConventionInfo,
+  TransitOrbConvention,
   TransitOptions,
   Vara,
   VargaChart,

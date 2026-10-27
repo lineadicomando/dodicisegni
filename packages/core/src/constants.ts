@@ -277,63 +277,34 @@ export const DIGNITY_SCHOOL_NAMES: Readonly<Record<DignitySchool, string>> = { l
 export interface AspectDefinition {
   id: AspectId;
   angle: number;
-  /** Orbita di base in gradi, allargata per Sole e Luna. */
-  orb: number;
+  /**
+   * Fra i maggiori o fra i minori: decide solo se l'aspetto si calcola senza
+   * `minorAspects`. Le orbite non stanno qui, ma nelle convenzioni di
+   * `orbite.ts`, perché non sono dell'aspetto ma di una scuola.
+   */
   major: boolean;
 }
 
+/**
+ * Gli aspetti che il motore sa riconoscere. Quali se ne calcolino lo decide la
+ * convenzione delle orbite: Leo non ha il quintile, Greene sì.
+ *
+ * L'ordine conta: al primo aspetto che cade nell'orbita ci si ferma. Con le
+ * orbite delle convenzioni esposte due aspetti non si sovrappongono mai.
+ */
 export const ASPECTS: readonly AspectDefinition[] = [
-  { id: 'congiunzione', angle: 0, orb: 8, major: true },
-  { id: 'opposizione', angle: 180, orb: 8, major: true },
-  { id: 'trigono', angle: 120, orb: 7, major: true },
-  { id: 'quadrato', angle: 90, orb: 7, major: true },
-  { id: 'sestile', angle: 60, orb: 5, major: true },
-  { id: 'semisestile', angle: 30, orb: 2, major: false },
-  { id: 'quinconce', angle: 150, orb: 3, major: false },
-  { id: 'semiquadrato', angle: 45, orb: 2, major: false },
-  { id: 'sesquiquadrato', angle: 135, orb: 2, major: false },
+  { id: 'congiunzione', angle: 0, major: true },
+  { id: 'opposizione', angle: 180, major: true },
+  { id: 'trigono', angle: 120, major: true },
+  { id: 'quadrato', angle: 90, major: true },
+  { id: 'sestile', angle: 60, major: true },
+  { id: 'semisestile', angle: 30, major: false },
+  { id: 'quinconce', angle: 150, major: false },
+  { id: 'semiquadrato', angle: 45, major: false },
+  { id: 'sesquiquadrato', angle: 135, major: false },
+  { id: 'quintile', angle: 72, major: false },
+  { id: 'biquintile', angle: 144, major: false },
 ];
-
-/**
- * I luminari ricevono un'orbita più ampia, secondo la prassi corrente.
- * Il bonus vale per ciascun corpo della coppia: un aspetto fra Sole e Luna
- * ne somma due, cioè +4°.
- */
-export const LUMINARIES: readonly BodyId[] = ['sole', 'luna'];
-export const LUMINARY_ORB_BONUS = 2;
-
-/**
- * Orbite dei transiti, molto più strette di quelle natali.
- *
- * Non è una preferenza: con l'orbita natale di 8° un transito di Saturno
- * resterebbe «in aspetto» per mesi di fila, e il quadro del momento
- * diventerebbe un elenco di contatti permanenti che non distingue il giorno
- * in cui l'aspetto si perfeziona da quello prima e da quello dopo.
- */
-export const TRANSIT_ORBS: Readonly<Record<AspectId, number>> = {
-  congiunzione: 2,
-  opposizione: 2,
-  trigono: 2,
-  quadrato: 2,
-  sestile: 1.5,
-  semisestile: 1,
-  quinconce: 1,
-  semiquadrato: 1,
-  sesquiquadrato: 1,
-};
-
-/**
- * Gradi aggiuntivi per i luminari nei transiti, sommati per ciascun lato
- * della coppia.
- *
- * Vale in entrambi i versi, non solo per il corpo in movimento: un contatto
- * che tocca il Sole o la Luna natali conta di più, e gli si concede più
- * spazio tanto quanto se ne concede alla Luna che passa.
- */
-export const TRANSIT_ORB_BONUS: Readonly<Record<string, number>> = {
-  luna: 1,
-  sole: 0.5,
-};
 
 /**
  * Punti calcolati (non corpi fisici) per i quali non ha senso parlare di
