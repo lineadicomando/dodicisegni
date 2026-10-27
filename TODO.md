@@ -930,8 +930,6 @@ Verifica: ogni fonte citata in un commento di `packages/` ha una riga in
 
 ## Deciso, e da non riaprire
 
-- **Niente riscrittura della storia di git.** Il rinomino da undicesimacasa a
-  dodicisegni l'ha lasciata com'era, ed è pericolosa per un guadagno estetico.
 - **Il dominio non entra nel codice.** `Meta.svelte` compone gli indirizzi da
   `page.url.origin`, e in produzione è `ORIGIN` a dirlo: il cambio di dominio è
   configurazione. Da SvelteKit 3 è configurazione della build e non
