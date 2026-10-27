@@ -22,6 +22,7 @@
   import ChartSettings from '#lib/components/ChartSettings.svelte';
   import ChartWheel from '#lib/components/ChartWheel.svelte';
   import CampiMancanti from '#lib/components/CampiMancanti.svelte';
+  import DignityTable from '#lib/components/DignityTable.svelte';
   import DistributionTable from '#lib/components/DistributionTable.svelte';
   import LegendaElementi from '#lib/components/LegendaElementi.svelte';
   import Meta from '#lib/components/Meta.svelte';
@@ -37,6 +38,7 @@
   let minorAspects = $state(false);
   let zodiac = $state<Zodiac>('tropicale');
   let ayanamsa = $state<AyanamsaId>('lahiri');
+  let lilly = $state(false);
 
   /**
    * Le condizioni con cui questa pagina chiede il tema.
@@ -46,7 +48,15 @@
    * condiviso che ricalcolasse un tema diverso da quello a schermo sarebbe il
    * peggiore dei difetti, perché non si vede.
    */
-  const opzioniTema = $derived({ houseSystem, minorAspects, zodiac, ayanamsa });
+  const opzioniTema = $derived({
+    houseSystem,
+    minorAspects,
+    zodiac,
+    ayanamsa,
+    // Solo nel tropicale: nel siderale la rotta rifiuterebbe la scuola, e la
+    // casella lì non compare.
+    ...(lilly && zodiac === 'tropicale' ? { dignitySchool: 'lilly' as const } : {}),
+  });
 
   let chart = $state<NatalChart | null>(null);
   let placeLabel = $state<string | null>(null);
@@ -158,6 +168,7 @@
       minorAspects = parametri.get('minorAspects') === 'true';
       zodiac = zodiacOrDefault(parametri.get('zodiac'));
       ayanamsa = ayanamsaOrDefault(parametri.get('ayanamsa'));
+      lilly = parametri.get('dignitySchool') === 'lilly';
 
       if (await calcola()) aperto = false;
     })();
@@ -215,6 +226,7 @@
     bind:minorAspects
     bind:zodiac
     bind:ayanamsa
+    bind:lilly
     housesDisabled={birth.timeUnknown}
     onchange={calcola}
     compact
@@ -236,6 +248,7 @@
           bind:minorAspects
           bind:zodiac
           bind:ayanamsa
+          bind:lilly
           housesDisabled={birth.timeUnknown}
         />
       {/snippet}
@@ -304,6 +317,17 @@
         {/if}
 
         <AspectTable aspects={chart.aspects} {evidenza} />
+
+        <!-- Con la stessa guardia della distribuzione, e una ragione in più:
+             nel tema siderale le dignità occidentali non ci sono. -->
+        {#if chart.dignities}
+          <DignityTable
+            dignities={chart.dignities}
+            houses={chart.houses}
+            sect={chart.sect}
+            {evidenza}
+          />
+        {/if}
       </div>
     </div>
   </Risultato>

@@ -10,7 +10,10 @@ import { validatePlace } from './place.js';
 import { chartSect, computePartOfFortune } from './points.js';
 import { localSiderealTime } from './sidereal.js';
 import { resolveTime } from './time.js';
-import type { BirthData, ChartOptions, NatalChart } from './types.js';
+import type { BirthData, ChartOptions, DignitySchool, NatalChart } from './types.js';
+
+/** Il nome dell'autore di ciascuna scuola, per i messaggi. */
+const DIGNITY_SCHOOL_NAMES: Readonly<Record<DignitySchool, string>> = { lilly: 'Lilly' };
 
 /**
  * Calcola un tema natale completo.
@@ -42,7 +45,7 @@ export function computeNatalChart(birth: BirthData, options: ChartOptions = {}):
   if (options.dignitySchool && zodiac !== 'tropicale') {
     throw new ChartError(
       'ZODIACO_NON_TROPICALE',
-      `Le dignità di ${options.dignitySchool} sono costruite sullo zodiaco tropicale: ` +
+      `Le dignità di ${DIGNITY_SCHOOL_NAMES[options.dignitySchool]} sono costruite sullo zodiaco tropicale: ` +
         'nel siderale non si calcolano.',
     );
   }

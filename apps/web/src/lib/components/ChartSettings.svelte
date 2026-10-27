@@ -17,6 +17,12 @@
     zodiac?: Zodiac;
     /** Mostrato solo accanto allo zodiaco siderale. */
     ayanamsa?: AyanamsaId;
+    /**
+     * Se aggiungere la tavola delle dignità di Lilly. Facoltativo come lo
+     * zodiaco: le dignità stanno solo nel tema natale, e altrove la casella
+     * non compare. Nel siderale nemmeno, perché le tavole sono tropicali.
+     */
+    lilly?: boolean;
     /** Senza ora di nascita non ci sono case: il sistema non ha nulla da scegliere. */
     housesDisabled?: boolean;
     /**
@@ -51,6 +57,7 @@
     minorAspects = $bindable(),
     zodiac = $bindable(),
     ayanamsa = $bindable(),
+    lilly = $bindable(),
     housesDisabled = false,
     id = 'case',
     onchange,
@@ -93,6 +100,13 @@
     <input type="checkbox" bind:checked={minorAspects} onchange={() => onchange?.()} />
     <span>Aspetti minori</span>
   </label>
+
+  {#if lilly !== undefined && zodiac !== 'siderale'}
+    <label class="interruttore">
+      <input type="checkbox" bind:checked={lilly} onchange={() => onchange?.()} />
+      <span>Dignità di Lilly</span>
+    </label>
+  {/if}
 </div>
 
 <style>

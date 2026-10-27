@@ -9,6 +9,7 @@
 
 import type {
   AyanamsaId,
+  DignitySchool,
   BodyId,
   DashaYear,
   HouseSystem,
@@ -79,6 +80,11 @@ export interface ChartOptionsInput {
   zodiac?: Zodiac;
   /** Vale solo con `zodiac: 'siderale'`. Omesso vale Lahiri. */
   ayanamsa?: AyanamsaId;
+  /**
+   * La scuola delle dignità da aggiungere alle comuni. Omessa, non finisce
+   * nell'indirizzo, come lo zodiaco tropicale. Vale solo nel tropicale.
+   */
+  dignitySchool?: DignitySchool;
 }
 
 /**
@@ -115,6 +121,7 @@ export function chartParameters(
   });
 
   setZodiac(parameters, options);
+  if (options.dignitySchool) parameters.set('dignitySchool', options.dignitySchool);
 
   if (!birth.timeUnknown && birth.time) parameters.set('time', birth.time);
 

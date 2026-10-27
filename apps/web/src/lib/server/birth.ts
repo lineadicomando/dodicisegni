@@ -164,6 +164,20 @@ export function readChartOptions(parameters: URLSearchParams): ChartOptions {
     options.partOfFortuneFormula = fortuneFormula;
   }
 
+  // Lo zodiaco lo controlla il motore, che nel siderale rifiuta la scuola con
+  // ZODIACO_NON_TROPICALE: qui si controlla solo il nome.
+  const dignitySchool = parameters.get('dignitySchool');
+  if (dignitySchool) {
+    if (dignitySchool !== 'lilly') {
+      throw error(
+        400,
+        `Scuola delle dignità "${dignitySchool}" non riconosciuta: attesa "lilly".`,
+        { code: 'SCUOLA_DIGNITA_NON_VALIDA' },
+      );
+    }
+    options.dignitySchool = dignitySchool;
+  }
+
   return options;
 }
 

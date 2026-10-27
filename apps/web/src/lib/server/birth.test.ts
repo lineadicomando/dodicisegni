@@ -193,6 +193,14 @@ describe('readChartOptions', () => {
     expect(result.body.code).toBe('FORMULA_FORTUNA_NON_VALIDA');
   });
 
+  it('legge la scuola delle dignità e rifiuta quelle che non conosce', () => {
+    expect(readChartOptions(params('dignitySchool=lilly')).dignitySchool).toBe('lilly');
+    expect('dignitySchool' in readChartOptions(params(''))).toBe(false);
+    const result = capture(() => readChartOptions(params('dignitySchool=bonatti')));
+    expect(result.status).toBe(400);
+    expect(result.body.code).toBe('SCUOLA_DIGNITA_NON_VALIDA');
+  });
+
   it('porta con sé lo zodiaco, che non è un’opzione a parte', () => {
     expect(readChartOptions(params('zodiac=siderale&ayanamsa=raman&houseSystem=koch'))).toEqual({
       minorAspects: false,

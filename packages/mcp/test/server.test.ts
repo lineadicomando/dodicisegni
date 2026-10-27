@@ -533,6 +533,35 @@ describe('compute_natal_chart', () => {
     );
   });
 
+  it('aggiunge la tavola di Lilly solo se la si chiede per nome', async () => {
+    const args = { date: '1968-03-12', time: '14:30', location_id: ROMA_ID };
+    const senza = textOf(await client.callTool({ name: 'compute_natal_chart', arguments: args }));
+    const con = textOf(
+      await client.callTool({
+        name: 'compute_natal_chart',
+        arguments: { ...args, dignity_school: 'lilly' },
+      }),
+    );
+    expect(senza).not.toContain('Lilly (a richiesta)');
+    expect(con).toContain('Lilly (a richiesta)');
+    expect(con).toMatch(/^Corpo\s+domic\.\s+esalt\.\s+tripl\.\s+termine\s+faccia/m);
+  });
+
+  it('rifiuta Lilly nello zodiaco siderale invece di ignorarlo', async () => {
+    const result = await client.callTool({
+      name: 'compute_natal_chart',
+      arguments: {
+        date: '1968-03-12',
+        time: '14:30',
+        location_id: ROMA_ID,
+        zodiac: 'siderale',
+        dignity_school: 'lilly',
+      },
+    });
+    expect(result.isError).toBe(true);
+    expect(textOf(result)).toMatch(/tropicale/);
+  });
+
   it('calcola nello zodiaco siderale, e lo dichiara nella tabella', async () => {
     const compact = textOf(
       await client.callTool({

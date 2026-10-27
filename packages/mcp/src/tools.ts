@@ -277,6 +277,17 @@ export function registerComputeNatalChart(server: McpServer, context: ToolContex
               'secondo la tradizione. diurna: sempre ASC + Luna − Sole, da usare solo per ' +
               'riprodurre il risultato di un programma che ignora il settore.',
           ),
+        dignity_school: z
+          .enum(['lilly'])
+          .optional()
+          .describe(
+            'Aggiunge alle dignità comuni (domicili tradizionali e moderni, esaltazioni, esili, ' +
+              'cadute, ricezioni) la tavola di una scuola nominata. lilly: Christian Astrology ' +
+              '(1647), con triplicità, termini e facce e le ricezioni contate su tutte e cinque. ' +
+              'Ometti se chi scrive non chiede l\'astrologia tradizionale: non è un default ' +
+              'migliore, è una scuola. Solo nello zodiaco tropicale; con zodiac siderale è un ' +
+              'errore. Le dignità sono tavole di una tradizione, non giudizi sul tema.',
+          ),
         format: z
           .enum(['compact', 'json'])
           .optional()
@@ -307,6 +318,7 @@ export function registerComputeNatalChart(server: McpServer, context: ToolContex
         if (args.part_of_fortune_formula) {
           options.partOfFortuneFormula = args.part_of_fortune_formula;
         }
+        if (args.dignity_school) options.dignitySchool = args.dignity_school;
         if (context.ephemerisPath) options.ephemerisPath = context.ephemerisPath;
 
         const chart = computeNatalChart(birth, options);

@@ -419,6 +419,12 @@ describe('l’indirizzo condiviso ricalcola lo stesso tema', () => {
     });
   });
 
+  it('rilegge la scuola delle dignità, e la tace quando non c\'è', () => {
+    const conLilly = chartParameters(nascita(), { ...OPZIONI, dignitySchool: 'lilly' });
+    expect(readChartOptions(conLilly).dignitySchool).toBe('lilly');
+    expect(chartParameters(nascita(), OPZIONI).has('dignitySchool')).toBe(false);
+  });
+
   it.each(HOUSE_SYSTEMS.map((sistema) => sistema.value))(
     'la rotta riconosce il sistema %s che il modulo propone',
     (houseSystem) => {
