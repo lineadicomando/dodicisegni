@@ -1009,9 +1009,9 @@ export interface SkyChart {
   siderealTime?: SiderealTime;
   /** Diurno se il Sole è sopra l'orizzonte. Richiede gli assi. */
   sect?: Sect;
-  /** Aspetti reciproci fra i corpi, con le orbite di un tema. */
   /** La convenzione delle orbite con cui sono stati trovati gli aspetti. */
   orbConvention: OrbConventionInfo;
+  /** Aspetti reciproci fra i corpi, con le orbite di una convenzione natale. */
   aspects: Aspect[];
   /** Come nel tema. Il gruppo degli assi resta vuoto senza luogo o senza ora. */
   distribution: Distribution;

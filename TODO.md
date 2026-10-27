@@ -9,11 +9,18 @@ le voci si citano così. Una voce chiusa esce dal file e il suo numero non si
 riusa; quello che aveva da dire o è finito nel codice, nei commenti e nei test,
 o sta in uno dei due elenchi in fondo. L'ultima versione che le contiene tutte,
 chiuse comprese, è `cf5219a`, quando il file si chiamava ancora `ROADMAP.md`.
-Le voci dalla 20 alla 23 sono nate e si sono chiuse dopo: la 20 per intero sta
-in `3314553`, la 21 e la 22 in `819ce59`, la 23 in `db332a6`. La 11, aperta
-prima e chiusa dopo, sta per intero in `e194d45`, la 13 in `e532f2f`, la 7 in
-`955977b`, la 9 in `8a04cfb`, la 18 in
-`2b8937d`.
+Le voci chiuse dopo, con il commit in cui si leggono ancora per intero:
+
+| Voci | Commit |
+|---|---|
+| 20 | `3314553` |
+| 21 e 22 | `819ce59` |
+| 23 | `db332a6` |
+| 11 | `e194d45` |
+| 13 | `e532f2f` |
+| 7 | `955977b` |
+| 9 | `8a04cfb` |
+| 18 | `2b8937d` |
 
 Le fonti citate qui stanno in copia locale in `texts/`, fuori dal repo: la
 cartella, le schede `FONTE.md` e l'elenco `texts/INDICE.md` si mantengono come
@@ -22,10 +29,10 @@ esserci, se il clone è un altro: le schede dicono da dove riscaricare ogni
 fonte, e la voce 24 quelle che mancano ancora.
 
 I riferimenti `file:riga` sono stati ricontrollati tutti contro il codice il
-27 ottobre 2026, dopo i commit delle dignità di Lilly. Le righe si spostano:
-se una non torna, il nome della funzione o della costante accanto è quello
-che fa fede. Prima di cominciare conviene che `npm test` e `npm run
-typecheck` siano verdi; se il typecheck di `apps/web` cade su
+27 ottobre 2026, dopo i commit delle orbite nominate (`555e33b`). Le righe si
+spostano: se una non torna, il nome della funzione o della costante accanto
+è quello che fa fede. Prima di cominciare conviene che `npm test`, `npm run
+typecheck` e `npm run lint` siano verdi; se il typecheck di `apps/web` cade su
 `config.kit.paths.origin`, `node_modules` è indietro rispetto al lockfile e
 serve un `npm install`.
 
@@ -39,14 +46,16 @@ volta e ricominciare da capo.
 |---|---|---|---|
 | 8. Il glossario e /metodo | media | grande | si incrocia col punto 6 |
 | 6. La prosa che invecchia | bassa | piccola | farla insieme al punto 8 |
-| 5. I varga che mancano | non dichiarata | tre lotti | per il D-2, la convenzione |
+| 5. I varga che mancano | non dichiarata | tre lotti | niente: il D-2 è deciso, gli altri hanno la fonte |
 | 19. Le dignità, per scuola | bassa | media | il Jyotisha: i varga del BPHS, cap. 6-7 |
 | 17. L'astrologia oraria | bassa | la più grande | le tavole ci sono; il punteggio no |
 | 24. Le fonti da scaricare in `texts/` | bassa | piccola | niente |
 
-L'ordine consigliato è quello della tabella: le voci piccole che tolgono
-copie e righe morte prima che il lavoro grande ci passi sopra. Quel che resta
-della 19 sta col Jyotisha, accanto ai varga della 5.
+L'ordine consigliato è quello della tabella. La 8 e la 6 toccano la stessa
+pagina, `/metodo`, e conviene farle insieme. Della 19 resta soprattutto il
+Jyotisha, che sta accanto ai varga della 5: il D-2 deciso lì cambia anche il
+modo di dire la dignità nella hora. La 17 usa le tavole di Lilly della 19 e
+aggiunge le *moieties* come terza convenzione delle orbite.
 
 ## 5. I nove varga che mancano
 
@@ -77,10 +86,11 @@ aggiunto lì a mano col suo nome.
 Restano da aggiornare a mano i testi che li elencano, che nessun test vede: il
 commento delle due rotte (`api/jyotish/+server.ts`, parametro `vargas`;
 `quadro/+server.ts`, parametro `varga`), l'aiuto della CLI
-(`packages/core/src/cli.ts:101-102`), la pagina del metodo alle righe
-346-347 e il commento in testa a quella pagina («le sei divisionali»,
-`metodo/+page.svelte:12`). I tipi: `VargaId` a `types.ts:359`, `VargaChart`
-poco sotto, l'opzione `vargas` a :597.
+(`--varga <lista>`, `packages/core/src/cli.ts:109`), la pagina del metodo
+(«Il sito ne calcola sette», sezione `#varga`, `metodo/+page.svelte:358`) e
+il commento in testa a quella pagina («le sette divisionali», riga 12). I
+tipi, in `packages/core/src/types.ts`: `VargaId` a :359, `VargaChart` a :369,
+l'opzione `vargas` a :597.
 
 ### Lotto A: quelli che si biforcano su pari e dispari
 
@@ -89,31 +99,58 @@ fatto: si guarda se il segno è pari o dispari e si parte da due punti diversi.
 Il D-2 divide in due (Sole e Luna); il D-4 in quattro, sui kendra; il D-7 in
 sette, dal segno stesso nei dispari e dal settimo nei pari.
 
-Da decidere una cosa sola, ed è il D-2. La ricerca è fatta (27 ottobre 2026),
-e la scelta spetta al proprietario. In breve:
+**Il D-2 è deciso (27 ottobre 2026): più convenzioni nominate, affiancate,
+con Parashara come predefinita.** La ricerca che ha portato alla scelta:
 
 - **I testi classici danno solo «hora del Sole» e «hora della Luna»**, senza
-  un segno: BPHS 6.5-6 (Santhanam pp. 68-69), Brihat Jataka I.11, Saravali
-  III.14, Horasara II.2, Jataka Parijata I.30, Phaladeepika III.4, tutti
-  scaricati in `texts/jyotisha/`. Segno dispari: prima metà al Sole, seconda
-  alla Luna; pari al contrario. Non entra in `VargaChart.positions`, che
-  porta un `ZodiacSign`, senza cambiare il tipo (e con lui `ruota`, il quadro,
-  le tabelle).
+  un segno: BPHS 6.5-6 (Santhanam, vol. I, pp. 68-69, tavola «Speculum of
+  Horas» a p. 69), Brihat Jataka I.11, Saravali III.14, Horasara II.2,
+  Jataka Parijata I.30, Phaladeepika III.4, tutti scaricati in
+  `texts/jyotisha/`. Segno dispari: 0-15° al Sole, 15-30° alla Luna; pari al
+  contrario. È la sola con una fonte primaria, e basta agli usi che BPHS ne fa
+  (7.13-19, pp. 91-95: frutti nella hora del Sole o della Luna, peso 2 nel
+  vimshopaka). Trascrizioni in
+  `texts/jyotisha/bphs-santhanam-1992-vol1/trascrizioni.md`, sezione «6.5-6».
 - **Leone e Cancro** (hora del Sole al Leone, della Luna al Cancro) è la
   lettura corrente, ma nessun classico letto la enuncia: la presuppone
-  Santhanam (p. 90) e la chiama comune P.V.R. Narasimha Rao (2003).
-- **Le varianti moderne con un segno**, ciascuna con un autore: la
-  *parivritti-dvaya* ciclica (lettura letterale di BPHS 6.6), la Uma-Shambhu
-  di Narasimha Rao (2012), la Kashinatha (scuola SJC), quella attribuita a
-  «Raman» (in realtà di Raman Suprajarama, 2005), la «Somanatha» senza fonte
-  primaria.
+  Santhanam (p. 90, «Jupiter is in exaltation Varga if in Moon's Hora») e la
+  dice quella che gli astrologi «normally use» P.V.R. Narasimha Rao (2003,
+  `texts/jyotisha/narasimha-rao-personal-finances-hora-chart-2003`).
+- **Le varianti moderne con un segno**, ciascuna con un autore, restano fuori
+  per ora e si possono aggiungere come convenzioni a sé: la *parivritti-dvaya*
+  ciclica (lettura letterale di BPHS 6.6), la Uma-Shambhu di Narasimha Rao
+  (2012), la Kashinatha (scuola SJC), quella attribuita a «Raman» (in realtà
+  di Raman Suprajarama, 2005), la «Somanatha» senza fonte primaria. Le regole
+  e i casi di controllo stanno nelle schede `FONTE.md` delle cartelle
+  `texts/jyotisha/narasimha-rao-*`, `suprajarama-*` e `texts/tecnica/pyjhora`.
 - La regola di Garga/Yavana (signore del segno e dell'undicesimo) è riportata
-  e scartata da Varahamihira (BJ I.12).
+  e scartata da Varahamihira (BJ I.12). Non entra.
 
-Le tre strade per il motore: una regola sola col tipo invariato; la regola di
-Parashara col tipo cambiato; più convenzioni nominate affiancate, come le
-orbite. Il rapporto completo, con i quattro casi di controllo per ogni
-variante, sta nelle schede `FONTE.md` delle cartelle nuove.
+Casi di controllo per i test, Sole a 10° e 20° dell'Ariete, 10° e 20° del
+Toro: Parashara Sole / Luna / Luna / Sole; Leone-Cancro Leone / Cancro /
+Cancro / Leone.
+
+Come farlo, sul modello delle orbite (`packages/core/src/orbite.ts`): una
+convenzione della hora con nome, fonte e regola, che il risultato porta;
+`parashara` predefinita, `leone-cancro` accanto, dichiarata nella sua regola
+come lettura corrente e non come testo. Che cosa tocca, e va deciso
+scrivendo:
+
+- **Il tipo.** Con Parashara il D-2 non ha un segno: `VargaChart.positions`
+  (`types.ts`, `sign: ZodiacSign`) deve poter portare un signore,
+  `hora: 'sole' | 'luna'`, al posto del segno. La forma che rompe meno è
+  `sign` facoltativo più `hora` facoltativo, con la regola che uno dei due
+  c'è sempre. Il tipo è ridichiarato in `packages/ruota/src/types.ts` e
+  confrontato da `packages/ruota/test/tipi.test.ts`.
+- **Il disegno.** Il quadro vedico (`packages/ruota/src/quadro.ts`) colloca i
+  corpi nei segni: un D-2 di Parashara non ha dove metterli. O si rifiuta con
+  un errore che dice di scegliere `leone-cancro`, o lo si disegna diverso.
+  Lo stesso vale per `draw_jyotisha_chart` e `/api/jyotish/quadro`.
+- **Le tabelle e i testi**: `formatVargaCompact` in `format.ts`, la tabella
+  dei varga nell'interfaccia, le istruzioni di lettura in
+  `packages/lettura/src/jyotisha.ts` se nominano i varga.
+- **Le superfici**: l'opzione della convenzione su CLI, `/api/jyotish`, MCP;
+  il D-2 in `apps/web/src/lib/varghe.ts`.
 
 ### Lotto B: i multipli con partenza fissa
 
@@ -148,14 +185,33 @@ minuti di scarto valgano una divisione. Senza, sarebbe il caso peggiore di
 tutti: un dato che sembra preciso perché ha molte cifre.
 
 Fonte: BPHS cap. 6-7, nella traduzione di Santhanam, vol. I, che sta in
-`texts/jyotisha/bphs-santhanam-1992-vol1`. Nell'`ocr.txt` il cap. 6 comincia
-alla riga 4370 e le regole dei varga stanno fra 4472 («Rasi and Hora») e
-circa 5700: Drekkana 4521, Chaturvimsamsa 5066, Nakshatramsa 5108-5160,
-Khavedamsa 5217, Akshavedamsa 5276, Shashtiamsa 5437-5660. Poi i gruppi di
-varga (5884) e il cap. 7 da 6005, con gli usi a 6061-6112. Le pagine si
-leggono sull'immagine, vedi la scheda. Le regole dei
-varga già calcolati vengono da una sessione precedente e non portano la
-pagina: conviene ricontrollarle lì quando si apre il primo lotto.
+`texts/jyotisha/bphs-santhanam-1992-vol1`. Il cap. 6 comincia a riga 4370
+dell'`ocr.txt`. Dove comincia la regola di ciascun varga, con la pagina
+stampata ricavata dalle intestazioni dell'OCR (da confermare sull'immagine,
+che si scarica come dice la scheda: pagina stampata = immagine `n` meno 4):
+
+| Varga | Versi | Riga dell'OCR | Pagina circa | Stato |
+|---|---|---|---|---|
+| D-2 Hora | 6.5-6 | 4472 | 68-69 | deciso, da fare (lotto A) |
+| D-3 Drekkana | 6.1-8 | 4521 | 69-70 | fatto, pagina da annotare |
+| D-4 Chaturthamsa | 6.9 | 4582 | 70-71 | lotto A |
+| D-7 Saptamsa | 6.10-11 | 4637 | 71-72 | lotto A |
+| D-9 Navamsa | 6.12 | 4689 | 72 | fatto, pagina da annotare |
+| D-10 Dasamsa | 6.13-14 | 4742 | 73 | fatto, pagina da annotare |
+| D-16 Shodasamsa | 6.16 | 4847 | 74-75 | lotto B |
+| D-20 Vimsamsa | 6.17-21 | 4939 | 76 | lotto B |
+| D-24 Siddhamsa (Chaturvimsamsa) | 6.22-23 | 5053 | 77-78 | lotto B |
+| D-27 Bhamsa | 6.24-26 | 5108 | 78-79 | fatto, p. 79 in `varga.ts` |
+| D-30 Trimsamsa | 6.27-28 | 5181 | 80 | fatto, pagina da annotare |
+| D-40 Khavedamsa (Chatvarimsamsa) | 6.29-30 | 5210 | 80-81 | lotto C |
+| D-45 Akshavedamsa | 6.31-32 | 5269 | 81-82 | lotto C |
+| D-60 Shashtiamsa | 6.33-41 | 5437 | 83-86 | lotto C |
+
+Il D-12 Dwadasamsa (6.15) sta fra 4742 e 4847. Poi i gruppi di varga (riga
+5884) e il cap. 7 da 6005, con gli usi a 6061-6112. Le regole dei varga già
+calcolati, tranne il D-27, vengono da una sessione precedente e non portano
+la pagina: conviene ricontrollarle sulle immagini quando si apre il primo
+lotto, e scrivere la pagina nel commento come per il D-27.
 
 Verifica per tutti i lotti: `packages/core/test/varga.test.ts` ha già la forma:
 confini noti calcolati a mano per un segno pari e uno dispari, più la prova
@@ -186,17 +242,18 @@ La documentazione di Swiss Ephemeris è in `texts/tecnica/swiss-ephemeris`
 the planets and a few arc seconds with the Moon», e 0,5″ per la Luna di
 Chapront rispetto a DE404. Da dove vengano 0,1″ e 0,4″ non si sa.
 
-Altre due frasi dicono la stessa cosa e vanno allineate con le prime:
-`packages/core/src/dasha.ts:115` («un paio di secondi d'arco» per la Luna) e
-`metodo/+page.svelte:330-331`. La Luna va misurata anche lei, perché è
-quella che sposta le dasha.
+Una terza frase dice la stessa cosa per la Luna e va allineata con le prime:
+l'avvertenza delle dasha in `packages/core/src/dasha.ts:115` («un paio di
+secondi d'arco»). La Luna va misurata anche lei, perché è quella che sposta
+le dasha: la pagina del metodo (righe 340-344) dice che un secondo d'arco
+vale circa tre ore e mezza di dasha.
 
 La via per chiuderla non è scegliere il numero che suona meglio: è
 **misurarlo**. Il motore sa calcolare in tutt'e due i modi, anche se la
-modalità non si sceglie: `initEphemeris` (`ephemeris.ts:41-80`) passa a
+modalità non si sceglie: `initEphemeris` (`ephemeris.ts:41-82`) passa a
 Moshier quando nel percorso mancano i file `.se1`. Lo schema c'è già in
 `packages/core/test/ephemeris.test.ts`: `EPHE_DIR` e `NO_EPHE_DIR`,
-`describe.skipIf(!hasEphemerisFiles)`, `resetEphemerisCache` fra una
+`describe.skipIf(!hasEphemerisFiles)` (riga 54), `resetEphemerisCache` fra una
 modalità e l'altra perché la cache è per percorso. In `packages/core/ephe/`
 ci sono `sepl_18`, `semo_18` e `seas_18`, che coprono il 1800-2400. Bastano
 gli stessi corpi allo stesso istante nelle due modalità e la differenza in
@@ -204,8 +261,8 @@ secondi d'arco, su qualche data sparsa nell'arco. Diventa un test, e il
 numero diventa verificabile invece che riportato.
 
 Finché non è deciso, `apps/web/src/routes/(informativa)/metodo/+page.svelte`,
-riga 77, dice «una frazione di secondo d'arco» senza cifra, di proposito, e va
-aggiornata insieme alle altre due.
+righe 77-78, dice «una frazione di secondo d'arco» senza cifra, di proposito, e
+va aggiornata insieme alle altre.
 
 Verifica: un test in `packages/core/test/` che confronti le due modalità e
 fallisca se lo scarto esce dall'ordine di grandezza dichiarato. A quel punto le
@@ -297,20 +354,20 @@ mano in `PAGINE_PUBBLICHE`, come `/metodo` e `/privacy`, e
 `lib/seo.test.ts` va esteso di conseguenza. Nel menù non entrano.
 
 `seo.ts` porta conteggi scritti a mano nei commenti, da rifare con le pagine
-nuove: «le altre sei» (riga 28, giusto oggi), «undici endpoint» (riga 105,
-giusto oggi) e «sei indirizzi» per la sitemap (riga 71), **già sbagliato**:
-`PAGINE_PUBBLICHE` ne ha sette.
+nuove: «le altre sei» (riga 28), «sette indirizzi» per la sitemap (riga 71) e
+«dodici endpoint» (riga 105), tutti giusti al 27 ottobre 2026. Anche il README
+conta a mano le sezioni e gli endpoint («Cinque sezioni e dodici endpoint»).
 
 ### La revisione di /metodo
 
-La pagina non è povera: 478 righe e diciassette sezioni, ciascuna con il suo
+La pagina non è povera: 490 righe e diciassette sezioni, ciascuna con il suo
 `id`. Il problema è che è **una pagina sola**. Le diciassette ancore non sono
 diciassette risultati: `#dasha` non è mai un indirizzo per sé, e chi cerca
 «dasha vimshottari» trova al più la pagina intera, che parla di altre sedici
 cose.
 
 Va quindi valutato (non è deciso) se le cinque parti dell'astrologia indiana
-(`#nakshatra`, `#dasha`, `#varga`, `#drishti`, `#panchanga`, righe 300-390)
+(`#nakshatra`, `#dasha`, `#varga`, `#drishti`, `#panchanga`, righe 312-400)
 debbano staccarsi in pagine proprie. Contro: spezzare una pagina che si legge
 bene di seguito, e che è l'unica cosa che risponda a «perché la stessa nascita
 dà carte diverse altrove». A favore: sono già cinque capitoli con un titolo e
@@ -322,15 +379,16 @@ Due cose invece vanno fatte comunque:
   La descrizione a `metodo/+page.svelte:24` è buona ed elenca già i termini
   giusti; il titolo li butta via tutti.
 - **Il coordinamento con il punto 6**, che tocca questa stessa pagina in due
-  modi: la precisione di Moshier senza cifra alla riga 77, e il legame mancante
-  con `constants.ts`. Se la pagina si riscrive, i due lavori si incrociano:
+  modi: la precisione di Moshier senza cifra alle righe 77-78, e il legame
+  mancante con la tavola delle orbite di `orbite.ts`. Se la pagina si riscrive, i due lavori si incrociano:
   farli in ordine sparso significa riscrivere due volte gli stessi paragrafi.
 
 ### Deciso, per non ridiscuterlo
 
 - **Niente marcature FAQ.** Le domande frequenti vanno riempite di
   affermazioni, che è la merce che questo progetto non produce: la ragione sta
-  già scritta per esteso nel commento a `strutturati` in `Meta.svelte`.
+  già scritta per esteso nel commento sopra `strutturati` in `Meta.svelte`
+  (righe 60-75).
 - **I cappelli delle cinque sezioni restano come sono.** Allungarli metterebbe
   prosa fra chi arriva e il modulo che è venuto a compilare, e il guadagno
   sarebbe comunque il più piccolo dei tre.
@@ -402,29 +460,39 @@ questa voce riportava è di al-Biruni (§436, trad. Wright 1934, in
 `texts/occidentale/biruni-elements-of-astrology-wright-1934`), non di Lilly.
 Implementarle vuol dire scegliere una colonna e dirla: la convenzione entra
 in `NATAL_ORB_CONVENTIONS` (`packages/core/src/orbite.ts`) come una terza,
-accanto a Greene e Leo.
+accanto a Greene e Leo, e `NatalOrbConvention` (`types.ts:677`) prende il
+nome nuovo. La firma `orbOf(aspect, a, b)` regge già un'orbita per pianeta:
+la coppia è la somma delle due metà. Due cose vanno decise e scritte nella
+`rule`, come fanno Greene e Leo per i corpi che non nominano: la tavola copre
+solo i sette pianeti, e va detto che cosa valga per Urano, Nettuno, Plutone,
+Chirone, i nodi e gli assi; e copre solo i cinque aspetti tolemaici (Lilly i
+minori non li tratta, `trascrizioni.md` a p. 110), quindi `aspects` va
+ristretto a quelli.
 
 ### Che cosa c'è già
 
 Il tema orario è un tema dell'istante in un luogo: `computeSky` con luogo e ora
 lo fa già, e il Regiomontano è fra i nove sistemi
-(`packages/mcp/src/server.ts:159` lo descrive già come «tradizionale
+(`packages/mcp/src/server.ts:199` lo descrive già come «tradizionale
 nell'astrologia oraria»). Ci sono anche:
 
-- `applying` sugli aspetti (`isApplying`, privata, `aspects.ts:170`), gli
-  istanti esatti in `findSkyPassages` (`sky-passages.ts:58`), le stazioni in
+- `applying` sugli aspetti (`isApplying`, privata, `aspects.ts:167`), gli
+  istanti esatti in `findSkyPassages` (`sky-passages.ts:63`), le stazioni in
   `findStations`, gli ingressi in `findSignIngresses`;
-- `speed` e `retrograde` (`CelestialBody`, `types.ts:773-774`);
+- `speed` e `retrograde` (`CelestialBody`, `types.ts:811-812`);
 - la setta (`chartSect`, `points.ts:13`);
 - la Luna vuota di corso, alba, tramonto e ore planetarie in `election.ts`
   (il criterio moderno sta in `findVoidsOfCourse`, `election.ts:285`);
 - dal punto 19, la tavola di Lilly intera: `lillyRulersAt`,
   `lillyDignitiesOf` e le funzioni per ogni dignità
-  (`dignita-lilly.ts:152-214`), le ricezioni per tutte e cinque
-  (`lillyReceptionsOf`, :243), che serviranno ai significatori, e
+  (`dignita-lilly.ts:151-226`), le ricezioni per tutte e cinque
+  (`lillyReceptionsOf`, :242), che serviranno ai significatori, e
   `NatalChart.dignities` con `dignitySchool: 'lilly'`. Il tema dell'istante
-  (`computeSky`) le dignità non le porta ancora: vanno aggiunte lì, o
-  calcolate dai corpi con `computeWesternDignities` (`dignita-tema.ts`).
+  (`computeSky`) le dignità non le porta ancora: vanno aggiunte lì. La
+  strada è corta, perché `SkyChart` ha già la setta (`sect?`, `types.ts:1011`)
+  e `computeWesternDignities(sky.bodies, sky.sect, 'lilly')`
+  (`dignita-tema.ts:46`) funziona così com'è; serve un `dignitySchool` in
+  `SkyOptions`, come in `ChartOptions`.
 
 Manca:
 
@@ -432,15 +500,21 @@ Manca:
   (`election.ts:364` e `:379`) sono privati, e l'ora si ottiene solo dentro un
   calendario. Va estratta, e serve per prima: è la prima considerazione di
   Lilly;
-- combustione, sotto i raggi, cazimi; la velocità rispetto a
-  `MEAN_DAILY_MOTION`, che esiste ma serve solo al campionamento;
+- combustione, sotto i raggi, cazimi;
+- la velocità «swift» o «slow», rispetto al moto medio **di Lilly** (libro I,
+  una cifra per pianeta: nell'`ocr.txt` la Luna a riga 15508, il Sole a
+  15231, la regola a 22237-22245 con rimando a «page 65»; da leggere sulle
+  immagini). Non rispetto a `MEAN_DAILY_MOTION` (`constants.ts:238`, letta da
+  `meanDailyMotion`, `roots.ts:49`), che non ha un autore e serve solo al
+  campionamento e ai margini delle ricerche: usarla qui mescolerebbe una
+  costante nostra con la scuola di Lilly;
 - angolare, succedente, cadente;
 - le *moieties*, come terza convenzione di `orbite.ts` (vedi sopra la colonna
   da scegliere);
 - antiscia e Via Combusta;
 - **il peregrino**, definito da Lilly a p. 112 (nessuna dignità essenziale
   nel grado). `lillyDignitiesOf` restituisce un elenco vuoto e il commento
-  (`dignita-lilly.ts:211-212`) dice apposta che non vuol dire «peregrino»:
+  (`dignita-lilly.ts:210-211`) dice apposta che non vuol dire «peregrino»:
   la definizione entra qui, e `LillyDignity` (`types.ts:509`) non ha ancora
   la voce;
 - **il punteggio delle dignità essenziali.** Metà dei pesi è già letta: in
@@ -635,7 +709,7 @@ cinque le dignità, sugli esempi di Lilly a p. 112. La tavola è trascritta
 riga per riga in `texts/occidentale/lilly-christian-astrology-1647/trascrizioni.md`,
 con la lettura di p. 105 (che dice come si leggono le celle), e il test la
 ricopia coi glifi della stampa (`packages/core/test/dignita-lilly.test.ts`).
-Si accende con `ChartOptions.dignitySchool: 'lilly'` (`types.ts:744`, letto
+Si accende con `ChartOptions.dignitySchool: 'lilly'` (`types.ts:782`, letto
 in `chart.ts`) e con `--dignita lilly` nella CLI, solo sul tema natale
 tropicale: la sezione DIGNITÀ aggiunge, sotto le righe comuni,
 una riga per corpo con i signori del suo grado e le sue dignità, e le
@@ -672,13 +746,30 @@ descrizioni dicono «circa un quarto».
 
 1. **Le dignità nei varga del Jyotisha**, che il BPHS tratta a parte (cap.
    6-7), e la pagina `/vedica`, che non mostra le dignità di Parashara anche
-   se il JSON le porta.
+   se il JSON le porta. I dati: `JyotishaChart.dignities` (`types.ts:649`),
+   riempito da `computeParasharaDignities` (`jyotisha.ts:89`) ed esposto su
+   `/api/jyotish`; in `apps/web/src/routes/vedica/+page.svelte` non c'è
+   niente che le mostri, e non esiste un componente per loro (quello
+   occidentale è `DignityTable.svelte`, legato a `WesternDignities`). I varga
+   portano solo segni (`VargaChart`, `types.ts:369`). Il materiale già letto:
+   la nota di Santhanam a p. 90 e 7.13-19 (pp. 91-95), trascritti in
+   `bphs-santhanam-1992-vol1/trascrizioni.md` per il D-2; il resto del cap. 7
+   comincia alla riga 6005 dell'`ocr.txt`. Il D-2 di Parashara non ha un
+   segno, quindi la dignità nella hora va definita col signore (vedi voce
+   5).
 2. **Le altre scuole occidentali**, quando le loro fonti sono state lette
    (vedi *Da verificare* qui sotto): ciascuna come valore nuovo di
    `DignitySchool`, intera. Il compilatore pretende il nome in
    `DIGNITY_SCHOOL_NAMES` (`packages/core/src/constants.ts`), e da lì CLI,
-   MCP e `/api/chart` imparano il valore da soli. L'interfaccia no: oggi è
-   una casella sola, `lilly` in `ChartSettings.svelte` e in
+   MCP e `/api/chart` imparano il valore da soli, ma solo a validarlo: il
+   risultato porta ancora un campo per scuola (`WesternDignities.lilly`,
+   `types.ts:568`), e una scuola nuova chiede il suo campo, il suo ramo in
+   `computeWesternDignities` (`dignita-tema.ts:58`), le sue righe in
+   `format.ts` (come `lillyLines`, :670) e in `DignityTable.svelte`, e i
+   testi che oggi nominano solo Lilly: l'aiuto di `--dignita` (`cli.ts:123`),
+   la descrizione di `dignity_school` (`packages/mcp/src/tools.ts:308`) e il
+   commento di `apps/web/src/routes/api/chart/+server.ts:26-28`.
+   L'interfaccia è una casella sola, `lilly` in `ChartSettings.svelte` e in
    `routes/+page.svelte`, e con due scuole diventa una scelta da disegnare.
 
 ### Le scuole, e il default deciso il 18 ottobre 2026
@@ -690,12 +781,14 @@ Per il tema tropicale le scuole possibili sono cinque, ciascuna come pacchetto:
 | Ellenistica (Doroteo, Valente) | tradizionali | da verificare: Valente I.2 non ha la tavola | tre reggenti, uno partecipe | egizi | sì | nessuno | Doroteo sopravvive in arabo, e la traduzione di Pingree è protetta; Valente in greco è libero |
 | Tolomeo, *Tetrabiblos* | tradizionali | per segno, senza gradi (I.19) | due reggenti, acqua da verificare | tolemaici | da verificare | nessuno | greco e Ashmand (1822) liberi |
 | Medievale araba (Abū Maʿshar, al-Bīrūnī, Bonatti) | tradizionali | col grado | doroteiche | egizi | caldee | 5-4-3-2-1, almuten | Bonatti latino (1491) libero |
-| Lilly, 1647 | tradizionali | col grado, e i Nodi | due reggenti, Marte sull'acqua | tolemaici, nella sua versione | caldee | p. 104: esaltazione 4, triplicità 3, termine 2, faccia 1, esilio 5, caduta 4; domicilio illeggibile; peregrino da leggere (p. 115) | scansioni libere; tavole lette il 27 ottobre 2026 |
+| Lilly, 1647 | tradizionali | col grado, e i Nodi | due reggenti, Marte sull'acqua | tolemaici, nella sua versione | caldee | p. 104: esaltazione 4, triplicità 3, termine 2, faccia 1, esilio 5, caduta 4; domicilio illeggibile; peregrino definito a p. 112; tavola delle fortezze a p. 115, non letta | scansioni libere; tavole lette il 27 ottobre 2026 |
 | Moderna, XX secolo | con Urano, Nettuno, Plutone | segni, i pianeti esterni senza autore | nessuna | nessuno | decani per triplicità (Alan Leo) | nessuno | senza un autore unico |
 
 Le righe medievale e moderna, fuori da quanto verificato qui sotto, vengono
 da fonti secondarie e vanno lette sulle primarie prima di diventare tavole.
-La riga di Lilly è stata letta sulla scansione, tranne il punteggio.
+La riga di Lilly è stata letta sulla scansione, punti in calce compresi
+(tranne quello del domicilio, illeggibile); la tavola delle fortezze di p.
+115 no.
 
 Il default nel tema tropicale sono **due colonne affiancate, mai mescolate**,
 ed è quello che la sezione DIGNITÀ porta oggi:
@@ -722,7 +815,10 @@ intera di Lilly il 27 ottobre, in `dignita-lilly.ts`):
 - **Domicili.** Tolomeo I.17 (ed. Robbins, Loeb 1940, pp. 79-83, su
   LacusCurtius) e Lilly, *Christian Astrology* (1647), p. 104 (archive.org,
   `b30338724`) coincidono. Valente I.2 (ed. Kroll 1908, pp. 5-13) scrive
-  «οἶκος» per nove segni, concordi; per Toro, Acquario e Pesci no.
+  «οἶκος» per nove segni, concordi; per Toro, Acquario e Pesci no. La copia
+  letta allora non è annotata: che sia la stessa scansione di
+  `valente-anthologiae-kroll-1908` va verificato (voce 24), e la cartella
+  non ha ancora né `pagine/` né `trascrizioni.md`.
 - **Domicili moderni.** Alan Leo, *The Art of Synthesis* (1912), p. 117,
   riferisce Urano all'Acquario e Nettuno ai Pesci come un uso, senza esserne
   il primo: Urano all'Acquario circolava già nell'Ottocento (Varley 1828,
@@ -752,7 +848,8 @@ intera di Lilly il 27 ottobre, in `dignita-lilly.ts`):
 - **BPHS, per il Jyotisha.** Santhanam, vol. I (Ranjan, 1992), su
   archive.org (`heag_brihat-parasara-hora-sastra-vol-1-…`): 3.49-50 a pp.
   38-39 (immagini n42 e n43 contando da zero), 3.51-54 a p. 39, i signori dei
-  segni in 4.6-24 a pp. 50-53, questi ultimi solo sull'OCR. I numeri
+  segni in 4.6-24 a pp. 50-53, letti sull'OCR e la p. 50 anche a vista
+  (immagini in `pagine/`). I numeri
   combaciano anche col sanscrito stampato accanto. La scansione porta la
   dicitura «CC-0. In Public Domain. Gurukul Kangri Collection», ma vale per la
   copia digitale e non dice niente dei diritti sulla traduzione: se ne
@@ -762,7 +859,9 @@ Da verificare:
 
 - **Bonatti**, per domicili ed esaltazioni: non è stato letto. L'edizione
   Ratdolt 1491 è in `texts/occidentale/bonatti-decem-tractatus-1491`, e l'OCR
-  dell'incunabolo non serve: si legge sulle immagini. Un'altra copia, senza
+  dell'incunabolo non serve: si legge sulle immagini. Non c'è ancora una
+  mappa dei fogli: quali contengano domicili ed esaltazioni va trovato
+  sfogliando, e scritto nella `FONTE.md`. Un'altra copia, senza
   OCR, è `ita-bnc-in1-00000968-001` (Biblioteca Nazionale Centrale di
   Firenze); quella della Bayerische Staatsbibliothek non si è trovata.
 - **Le esaltazioni nella scuola ellenistica**: altrove in Valente, o in Doroteo.
@@ -770,7 +869,9 @@ Da verificare:
   giorno e di notte come Lilly, un'altra un reggente diverso per setta. Lilly
   a p. 105 dice «according to Ptolomy and Naibod», che è un indizio e non
   Tolomeo letto. I.18 si legge senza scaricare niente: Robbins e Ashmand sono
-  già in `texts/occidentale/tolomeo-tetrabiblos-*`.
+  già in `texts/occidentale/tolomeo-tetrabiblos-*` (Ashmand traduce la
+  parafrasi di Proclo: vale come confronto, Robbins come testo; in Robbins il
+  libro I sta in `html/1A`, `html/1B` e `testo/`).
 - **Le facce in Tolomeo**, nelle stesse due edizioni.
 - **I punti 5-4-3-2-1 medievali**: a chi vanno attribuiti. I siti li danno
   come «medievali» senza un testo.
@@ -779,8 +880,9 @@ Da verificare:
   p. 20, che su archive.org non si è trovata (`texts/INDICE.md`, «Non
   libere»). C'è un'altra traduzione, Subrahmanya Sastri (1949), in
   `texts/jyotisha/horasara-subrahmanya-sastri-1949`: la pagina citata da
-  Santhanam lì non vale, i diritti vanno trattati come protetti, e non è
-  ancora stata letta. Finché non c'è, i nodi restano senza.
+  Santhanam lì non vale, i diritti vanno trattati come protetti, e per i
+  nodi non è ancora stata letta (lo è solo per il D-2, 2.2 e 8.11; vedi la
+  sua `FONTE.md`). Finché non c'è, i nodi restano senza.
 
 ### Verifica
 
@@ -809,7 +911,11 @@ ciascuna con la pagina da salvare in `pagine/` e da trascrivere:
   21:17:30 UT): la pagina web con le cifre intermedie su cui sta
   `houses.test.ts`. In `tecnica/radixpro-esempio-case`, `html/` e `testo/`.
 - **Astrolog 8.00, i sorgenti**, almeno `matrix.cpp` e `calc.cpp`: l'altra
-  metà dell'ancoraggio di `houses.test.ts`. In `tecnica/astrolog-8.00`.
+  metà dell'ancoraggio di `houses.test.ts`. La cartella c'è già,
+  `tecnica/astrolog-pullen-800`, creata per le orbite con `astrolog.as`,
+  `data.cpp` e `general.cpp` del commit `5bf172e`: i due file vanno presi
+  dallo stesso commit e aggiunti a `sorgenti/`, e la riga «da scaricare» di
+  `texts/INDICE.md` va tolta.
 - **Valente, I.2, pp. 5-13**: lo scan c'è (`valente-anthologiae-kroll-1908`,
   archive.org `bub_gb_OQ_gAAAAMAAJ`), e per questo `texts/INDICE.md` lo dà
   fra le scaricate; mancano però la cartella `pagine/` con le immagini delle
@@ -855,11 +961,16 @@ Verifica: ogni fonte citata in un commento di `packages/` ha una riga in
   18, scegliendo come predefinita la più diffusa. Le orbite senza autore che
   c'erano prima (8/7/5 con +2° ai luminari; 2/1,5/1 nei transiti) sono
   uscite: erano un ibrido di Leo e Astrolog.
+- **Il D-2 si fa con più convenzioni nominate, Parashara predefinita.** Hora
+  del Sole e della Luna come nei testi, e Leone-Cancro accanto, dichiarata
+  come lettura corrente senza un classico che la enunci. Scelto dal
+  proprietario il 27 ottobre 2026 fra quattro strade; il resto sta nella
+  voce 5.
 - **Il server MCP non ha un pool, e non gli serve**: è un processo per client,
   sul trasporto stdio, e non c'è nessun'altra richiesta da tenere in attesa.
 - **I thread del pool web sono al massimo quattro, e la quinta richiesta
   pesante aspetta.** Sono uno meno dei nuclei, fino a quattro
-  (`apps/web/src/lib/server/pool.ts:133`). Le due ragioni stanno nel
+  (`OPERAI`, `apps/web/src/lib/server/pool.ts:142`). Le due ragioni stanno nel
   commento lì sopra: uno meno dei nuclei perché il lavoro è tutto CPU e un
   nucleo resta al filo principale, che serve le richieste leggere; il tetto
   di quattro per la memoria, perché ogni thread carica la sua copia del

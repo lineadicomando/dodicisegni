@@ -68,7 +68,7 @@ function xml(testo: string): string {
 }
 
 /**
- * La sitemap: sei indirizzi assoluti e nient'altro.
+ * La sitemap: sette indirizzi assoluti e nient'altro.
  *
  * **Niente `lastmod`.** L'unica data che il programma potrebbe metterci è
  * quella della compilazione, e cambierebbe a ogni ricostruzione anche quando
@@ -102,7 +102,7 @@ export function sitemapXml(origin: string): string {
 /**
  * `robots.txt`: una sola porta chiusa, e l'indirizzo della sitemap.
  *
- * **`/api` fuori.** Sono undici endpoint che rispondono JSON: non hanno niente
+ * **`/api` fuori.** Sono dodici endpoint che rispondono JSON: non hanno niente
  * da fare in un indice, e un crawler che li segue spende su di essi i passaggi
  * che avrebbe dato alle pagine. Non è una misura di riservatezza — quelle
  * chiamate portano data, ora e luogo di nascita, ma `robots.txt` è un file
