@@ -23,6 +23,7 @@ import {
   formatJyotishaCompact,
   formatNakshatraCompact,
   formatPanchangaCompact,
+  formatActiveTransitsCompact,
   formatPassagesCompact,
   formatSkyCompact,
   formatSkyEventsCompact,
@@ -37,6 +38,7 @@ import { computeVarga, VARGAS } from './varga.js';
 import { computeJyotisha } from './jyotisha.js';
 import { computeDrishti } from './drishti.js';
 import { findTransitPassages } from './passages.js';
+import { findActiveTransits } from './attivi.js';
 import { findSignIngresses, findStations } from './sky-events.js';
 import { findSkyPassages } from './sky-passages.js';
 import { DEFAULT_PASSAGE_BODIES, DIGNITY_SCHOOL_NAMES } from './constants.js';
@@ -151,6 +153,11 @@ Passaggi
   --from <YYYY-MM-DD>   Inizio dell'arco. Se omesso, oggi
   --to <YYYY-MM-DD>     Fine dell'arco. Se omessa, un anno dopo l'inizio
   --moon                Includi la Luna, esclusa perché ne perfeziona a migliaia
+  --attivi              Al posto degli istanti esatti, i transiti in orbita in
+                        qualche momento dell'arco: da quando a quando, quanto
+                        stretti ai bordi, e le perfezioni che ci cadono dentro.
+                        Anche quelli che non si perfezionano mai. Con --from,
+                        --to e --moon come sopra
 
 Cielo
   --sky                 Il cielo di un istante, senza nessun tema natale.
@@ -322,6 +329,7 @@ function main(argv: string[]): number {
       help: { type: 'boolean', default: false },
       transits: { type: 'boolean', default: false },
       passages: { type: 'boolean', default: false },
+      attivi: { type: 'boolean', default: false },
       sky: { type: 'boolean', default: false },
       events: { type: 'boolean', default: false },
       elezione: { type: 'boolean', default: false },
@@ -355,7 +363,7 @@ function main(argv: string[]): number {
       );
       return 2;
     }
-    const altrove = (['transits', 'passages', 'sky', 'events', 'elezione'] as const).filter(
+    const altrove = (['transits', 'passages', 'attivi', 'sky', 'events', 'elezione'] as const).filter(
       (key) => values[key],
     );
     if (altrove.length > 0) {
@@ -390,7 +398,7 @@ function main(argv: string[]): number {
       );
       return 2;
     }
-    const altrove = (['transits', 'passages', 'sky', 'events', 'elezione', 'panchanga'] as const).filter(
+    const altrove = (['transits', 'passages', 'attivi', 'sky', 'events', 'elezione', 'panchanga'] as const).filter(
       (key) => values[key],
     );
     if (altrove.length > 0) {
@@ -419,7 +427,7 @@ function main(argv: string[]): number {
       process.stderr.write('--quadro dice come disegnare, non dove: aggiungi --svg o --png.\n');
       return 2;
     }
-    const altrove = (['transits', 'passages', 'sky', 'events', 'elezione'] as const).filter(
+    const altrove = (['transits', 'passages', 'attivi', 'sky', 'events', 'elezione'] as const).filter(
       (key) => values[key],
     );
     if (altrove.length > 0) {
@@ -466,6 +474,10 @@ function main(argv: string[]): number {
   // Il cielo si calcola prima di controllare i dati di nascita: è la sola
   // domanda del programma che non ne ha bisogno.
   if (values.sky) {
+    if (values.attivi) {
+      process.stderr.write('--attivi vuole un tema: senza una nascita non ci sono transiti.\n');
+      return 2;
+    }
     if (values.transits) {
       process.stderr.write('--sky non si combina con --transits: un transito vuole un tema.\n');
       return 2;
@@ -518,6 +530,28 @@ function main(argv: string[]): number {
   }
 
   const chart = computeNatalChart(birth, options);
+
+  if (values.passages && values.attivi) {
+    process.stderr.write(
+      '--passages e --attivi sono due elenchi diversi, quando e che cosa: chiedine uno.\n',
+    );
+    return 2;
+  }
+
+  if (values.attivi) {
+    const range = passageRange(values, birth.timezone);
+    const passageOptions: PassageOptions = { minorAspects: values.minor };
+    if (values.ephe) passageOptions.ephemerisPath = values.ephe;
+    if (values.moon) passageOptions.bodies = [...DEFAULT_PASSAGE_BODIES, 'luna'];
+
+    const { transits, warnings } = findActiveTransits(chart, range, passageOptions);
+    process.stdout.write(
+      values.json
+        ? `${JSON.stringify({ chart, range, transits, warnings }, null, 2)}\n`
+        : `${formatActiveTransitsCompact(chart, transits, range, warnings)}\n`,
+    );
+    return 0;
+  }
 
   if (values.passages) {
     const range = passageRange(values, birth.timezone);

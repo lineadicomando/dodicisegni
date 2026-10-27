@@ -33,6 +33,7 @@ import type {
   TransitingBody,
   TransitingPointId,
   TransitPassage,
+  ActiveTransit,
   VargaChart,
   VimshottariDasha,
   WesternDignities,
@@ -312,6 +313,67 @@ export function formatPassagesCompact(
         `${nameOf(natal, passage.transiting).padEnd(11)} ${passage.aspect.padEnd(15)} ` +
         `${natalPointName(natal, passage.natal).padEnd(11)} ` +
         `${passage.retrograde ? 'R' : 'D'}  ${window}`,
+    );
+  }
+
+  lines.push(...warningLines(warnings));
+
+  return lines.join('\n');
+}
+
+/**
+ * Rende in forma tabellare i transiti attivi in un arco.
+ *
+ * Una riga per tratto in orbita: da quando a quando, quanto stretto ai due
+ * bordi dell'arco, e le perfezioni che ci cadono dentro. Quando non ce n'è
+ * nessuna la riga dice l'avvicinamento massimo, che è la sola misura di un
+ * transito che si ferma prima dell'esatto.
+ */
+export function formatActiveTransitsCompact(
+  natal: NatalChart,
+  transits: readonly ActiveTransit[],
+  range: PassageRange,
+  warnings: readonly string[] = [],
+): string {
+  const birth = natal.time.timeKnown
+    ? `${natal.input.date} ${natal.input.time}`
+    : `${natal.input.date} (ora ignota)`;
+
+  const lines = [
+    `TRANSITI ATTIVI — dal ${range.from} al ${range.to} (${range.timezone})`,
+    `Tema natale: ${birth} — ${formatPlace(natal.input)}`,
+    '',
+  ];
+
+  if (transits.length === 0) {
+    lines.push('(nessun transito in orbita in questo arco di tempo)');
+    lines.push(...warningLines(warnings));
+    return lines.join('\n');
+  }
+
+  lines.push(
+    'In orbita | transitante | aspetto | punto natale | orbita | ai bordi dell\'arco | esatto nell\'arco',
+  );
+  for (const transit of transits) {
+    const enters = transit.enters?.slice(0, 10) ?? 'oltre tre anni prima';
+    const leaves = transit.leaves?.slice(0, 10) ?? 'oltre tre anni dopo';
+    const atFrom = transit.orbAtFrom === undefined ? '—' : formatDegrees(transit.orbAtFrom);
+    const atTo = transit.orbAtTo === undefined ? '—' : formatDegrees(transit.orbAtTo);
+    const edges = `${atFrom} → ${atTo}${transit.throughout ? ' (tutto l\'arco)' : ''}`;
+    const exact =
+      transit.perfections.length > 0
+        ? transit.perfections
+            .map((p) => `${p.local.slice(0, 16).replace('T', ' ')}${p.retrograde ? ' R' : ''}`)
+            .join(', ')
+        : transit.closest
+          ? `mai; al più vicino ${formatDegrees(transit.closest.orb)} il ${transit.closest.local.slice(0, 10)}`
+          : 'mai';
+
+    lines.push(
+      `${enters} → ${leaves}  ` +
+        `${nameOf(natal, transit.transiting).padEnd(11)} ${transit.aspect.padEnd(15)} ` +
+        `${natalPointName(natal, transit.natal).padEnd(11)} ` +
+        `${formatDegrees(transit.orb).padStart(6)}  ${edges}  ${exact}`,
     );
   }
 

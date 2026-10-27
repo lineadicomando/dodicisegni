@@ -22,7 +22,8 @@ import type {
   TransitPassage,
 } from './types.js';
 
-interface Sample {
+/** Una longitudine campionata. Condiviso con `attivi.ts`. */
+export interface Sample {
   julianDay: number;
   longitude: number;
 }
@@ -92,12 +93,13 @@ export function findTransitPassages(
   };
 }
 
-function sampleLongitudes(
+export function sampleLongitudes(
   bodyId: BodyId,
   from: number,
   to: number,
   context: EphemerisContext,
   warnings: string[],
+  missing = 'passaggi non cercati',
 ): Sample[] {
   const step = stepFor(MEAN_DAILY_MOTION[bodyId] ?? 1);
 
@@ -105,7 +107,7 @@ function sampleLongitudes(
   for (let jd = from; jd < to + step; jd += step) {
     const longitude = longitudeAt(bodyId, Math.min(jd, to), context);
     if (longitude === null) {
-      warnings.push(`${bodyId}: posizione non calcolabile, passaggi non cercati.`);
+      warnings.push(`${bodyId}: posizione non calcolabile, ${missing}.`);
       return [];
     }
     samples.push({ julianDay: Math.min(jd, to), longitude });
@@ -127,10 +129,7 @@ function passagesOf(
   const gap = (longitude: number): number =>
     signedDifference(signedDifference(longitude, target.longitude), signedAngle);
 
-  const orbLimit =
-    (options.orbs?.[definition.id] ?? TRANSIT_ORBS[definition.id]) +
-    (TRANSIT_ORB_BONUS[bodyId] ?? 0) +
-    (TRANSIT_ORB_BONUS[target.id] ?? 0);
+  const orbLimit = transitOrbLimit(bodyId, target.id, definition, options);
 
   for (let i = 1; i < samples.length; i += 1) {
     const before = samples[i - 1]!;
@@ -210,8 +209,25 @@ function windowAround(
   return { start: julianDayToISO(start, timezone), end: julianDayToISO(end, timezone) };
 }
 
+/**
+ * L'orbita di un transito: quella dell'aspetto, o quella chiesta, più il
+ * bonus di ciascun luminare della coppia.
+ */
+export function transitOrbLimit(
+  bodyId: BodyId,
+  targetId: NatalPointId,
+  definition: AspectDefinition,
+  options: PassageOptions,
+): number {
+  return (
+    (options.orbs?.[definition.id] ?? TRANSIT_ORBS[definition.id]) +
+    (TRANSIT_ORB_BONUS[bodyId] ?? 0) +
+    (TRANSIT_ORB_BONUS[targetId] ?? 0)
+  );
+}
+
 /** Trasporta nel tempo una funzione della longitudine di un corpo. */
-function atTime(
+export function atTime(
   bodyId: BodyId,
   f: (longitude: number) => number,
   context: EphemerisContext,
@@ -226,7 +242,7 @@ function longitudeAt(bodyId: BodyId, julianDay: number, context: EphemerisContex
   return bodyAt(bodyId, julianDay, context)?.longitude ?? null;
 }
 
-function bodyAt(
+export function bodyAt(
   bodyId: BodyId,
   julianDay: number,
   context: EphemerisContext,

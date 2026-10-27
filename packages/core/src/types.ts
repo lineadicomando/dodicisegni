@@ -1171,6 +1171,52 @@ export interface TransitPassage {
   window?: { start: string; end: string };
 }
 
+/**
+ * Un transito in orbita in qualche momento di un arco di tempo.
+ *
+ * È l'altra metà della domanda di `TransitPassage`: quello dice *quando* un
+ * aspetto si perfeziona, questo *che cosa* è in orbita fra due date, anche se
+ * non si perfeziona mai. Un corpo lento che si ferma a due gradi e mezzo da un
+ * punto natale e torna indietro non ha un istante esatto, ma è in orbita per
+ * mesi. Lo stesso aspetto che entra in orbita due volte nell'arco dà due
+ * righe, una per tratto.
+ *
+ * Porta i componenti e non un giudizio: quanto stretto, da quando a quando,
+ * quante volte esatto. Nessun peso fra un transito e l'altro.
+ */
+export interface ActiveTransit {
+  transiting: BodyId;
+  natal: NatalPointId;
+  aspect: AspectId;
+  /** Angolo esatto dell'aspetto in gradi. */
+  angle: number;
+  /** L'orbita usata, in gradi: quella dell'aspetto più i bonus dei luminari. */
+  orb: number;
+  /**
+   * Ingresso in orbita, nel fuso dell'arco.
+   *
+   * Assente quando era già in orbita tre anni prima dell'inizio dell'arco:
+   * oltre, come per `TransitPassage.window`, il bordo non si cerca.
+   */
+  enters?: string;
+  /** Uscita dall'orbita, nel fuso dell'arco. Assente, allo stesso modo, oltre i tre anni dopo la fine. */
+  leaves?: string;
+  /** In orbita dal primo all'ultimo istante dell'arco. */
+  throughout: boolean;
+  /** Distanza dall'esatto, in gradi, all'inizio dell'arco. Solo se già in orbita allora. */
+  orbAtFrom?: number;
+  /** Distanza dall'esatto, in gradi, alla fine dell'arco. Solo se ancora in orbita allora. */
+  orbAtTo?: number;
+  /** Le perfezioni che cadono dentro l'arco, in ordine di tempo. Spesso nessuna. */
+  perfections: { exact: string; local: string; retrograde: boolean }[];
+  /**
+   * L'avvicinamento massimo dentro l'arco, quando non si perfeziona: la
+   * distanza minima dall'esatto e l'istante, nel fuso dell'arco. Assente
+   * quando `perfections` non è vuoto, perché lì la distanza minima è zero.
+   */
+  closest?: { orb: number; local: string };
+}
+
 export interface SkyPassageOptions {
   /** Corpi da seguire. Default: `DEFAULT_PASSAGE_BODIES`, cioè senza la Luna. */
   bodies?: BodyId[];

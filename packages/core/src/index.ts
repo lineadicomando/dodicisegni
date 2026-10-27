@@ -9,6 +9,7 @@ export { computeNatalChart } from './chart.js';
 export { computeSky } from './sky.js';
 export { computeTransits, natalTargets } from './transits.js';
 export { findTransitPassages } from './passages.js';
+export { findActiveTransits } from './attivi.js';
 export { findSkyPassages } from './sky-passages.js';
 export { findSignIngresses, findStations } from './sky-events.js';
 export { findElectionHours, MAX_ELECTION_DAYS } from './election.js';
@@ -99,6 +100,7 @@ export {
   VIMSHOTTARI_ORDER,
 } from './nakshatra.js';
 export {
+  formatActiveTransitsCompact,
   formatChartCompact,
   formatDashaCompact,
   formatDrishtiCompact,
@@ -216,6 +218,7 @@ export type {
   TransitingPointId,
   TransitMoment,
   TransitPassage,
+  ActiveTransit,
   TransitOptions,
   Vara,
   VargaChart,
