@@ -15,6 +15,7 @@ import type {
   HouseSystem,
   JyotishaChart,
   NatalChart,
+  NatalOrbConvention,
   NodeDrishti,
   PassageRange,
   PlanetaryHour,
@@ -28,6 +29,7 @@ import type {
   VoidOfCourse,
   Zodiac,
 } from '@dodicisegni/core';
+import { DEFAULT_ORB_CONVENTION } from './orbite';
 import type { Location } from '@dodicisegni/geo';
 import type { BirthInput } from './birth';
 import { refinedCoordinates } from './birth';
@@ -85,6 +87,11 @@ export interface ChartOptionsInput {
    * nell'indirizzo, come lo zodiaco tropicale. Vale solo nel tropicale.
    */
   dignitySchool?: DignitySchool;
+  /**
+   * La convenzione delle orbite. Omessa o predefinita, non finisce
+   * nell'indirizzo, come lo zodiaco tropicale.
+   */
+  orbConvention?: NatalOrbConvention;
 }
 
 /**
@@ -95,6 +102,11 @@ export interface ChartOptionsInput {
  * disallineerebbero al primo cambiamento.
  */
 function setZodiac(parameters: URLSearchParams, options: ChartOptionsInput): void {
+  // Le orbite stanno qui perché valgono per gli stessi due indirizzi, tema e
+  // cielo, con la stessa regola: il predefinito non si scrive.
+  if (options.orbConvention && options.orbConvention !== DEFAULT_ORB_CONVENTION) {
+    parameters.set('orbConvention', options.orbConvention);
+  }
   if (options.zodiac !== 'siderale') return;
   parameters.set('zodiac', 'siderale');
   if (options.ayanamsa) parameters.set('ayanamsa', options.ayanamsa);

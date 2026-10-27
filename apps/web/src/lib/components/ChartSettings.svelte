@@ -1,6 +1,7 @@
 <script lang="ts">
-  import type { AyanamsaId, HouseSystem, Zodiac } from '@dodicisegni/core';
+  import type { AyanamsaId, HouseSystem, NatalOrbConvention, Zodiac } from '@dodicisegni/core';
   import { HOUSE_SYSTEMS } from '#lib/house-systems.js';
+  import { ORB_CONVENTIONS } from '#lib/orbite.js';
   import { AYANAMSAS, ZODIACS } from '#lib/zodiacs.js';
 
   interface Props {
@@ -23,6 +24,12 @@
      * non compare. Nel siderale nemmeno, perché le tavole sono tropicali.
      */
     lilly?: boolean;
+    /**
+     * La convenzione delle orbite degli aspetti. Facoltativa come lo zodiaco:
+     * dove gli aspetti sono transiti la convenzione è quella di Hand, una
+     * sola, e il menù non compare.
+     */
+    orbConvention?: NatalOrbConvention;
     /** Senza ora di nascita non ci sono case: il sistema non ha nulla da scegliere. */
     housesDisabled?: boolean;
     /**
@@ -58,6 +65,7 @@
     zodiac = $bindable(),
     ayanamsa = $bindable(),
     lilly = $bindable(),
+    orbConvention = $bindable(),
     housesDisabled = false,
     id = 'case',
     onchange,
@@ -91,6 +99,15 @@
     <label for="{id}-ayanamsa" class:nascosto={compact}>Ayanamsa</label>
     <select id="{id}-ayanamsa" bind:value={ayanamsa} onchange={() => onchange?.()}>
       {#each AYANAMSAS as voce (voce.value)}
+        <option value={voce.value}>{voce.label}</option>
+      {/each}
+    </select>
+  {/if}
+
+  {#if orbConvention !== undefined}
+    <label for="{id}-orbite" class:nascosto={compact}>Orbite degli aspetti</label>
+    <select id="{id}-orbite" bind:value={orbConvention} onchange={() => onchange?.()}>
+      {#each ORB_CONVENTIONS as voce (voce.value)}
         <option value={voce.value}>{voce.label}</option>
       {/each}
     </select>

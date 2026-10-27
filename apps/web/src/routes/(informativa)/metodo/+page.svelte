@@ -8,8 +8,9 @@
   guarda e non solo dentro un `warnings` che nessuno apre.
 
   Ogni numero qui dentro sta anche in `packages/core`, ed è il posto in cui
-  cambia per primo: `constants.ts` per orbite, corpi e sistemi di case,
-  `ayanamsa.ts` per i sei ayanamsa, `varga.ts` per le sette divisionali. Quando
+  cambia per primo: `orbite.ts` per le orbite, `constants.ts` per corpi e
+  sistemi di case, `ayanamsa.ts` per i sei ayanamsa, `varga.ts` per le sette
+  divisionali. Quando
   quelli cambiano, questa pagina è vecchia — non c'è nessun test che la leghi,
   e non è una dimenticanza: legarla vorrebbe dire ridurre la prosa a una tabella
   generata, che è esattamente la cosa che una pagina come questa non deve
@@ -188,8 +189,10 @@
 <p>
   Un aspetto è una distanza angolare fra due punti, ammessa entro una tolleranza
   che si chiama orbita. Le orbite sono la convenzione su cui i programmi
-  divergono di più, perché non discendono da niente: si scelgono. Queste sono
-  quelle usate qui.
+  divergono di più, perché non discendono da niente: si scelgono. Il sito non
+  ne sceglie una sua. Usa tavole che hanno un autore e una fonte, e ogni tema,
+  ogni cielo e ogni elenco di transiti dice sotto gli aspetti con quale li ha
+  trovati.
 </p>
 
 <table>
@@ -197,44 +200,53 @@
     <tr>
       <th>Aspetto</th>
       <th>Angolo</th>
-      <th>Orbita natale</th>
-      <th>Orbita in transito</th>
+      <th>Greene</th>
+      <th>Leo</th>
+      <th>Hand, transiti</th>
     </tr>
   </thead>
   <tbody>
-    <tr><td>Congiunzione</td><td>0°</td><td>8°</td><td>2°</td></tr>
-    <tr><td>Opposizione</td><td>180°</td><td>8°</td><td>2°</td></tr>
-    <tr><td>Trigono</td><td>120°</td><td>7°</td><td>2°</td></tr>
-    <tr><td>Quadrato</td><td>90°</td><td>7°</td><td>2°</td></tr>
-    <tr><td>Sestile</td><td>60°</td><td>5°</td><td>1,5°</td></tr>
-    <tr><td>Semisestile</td><td>30°</td><td>2°</td><td>1°</td></tr>
-    <tr><td>Quinconce</td><td>150°</td><td>3°</td><td>1°</td></tr>
-    <tr><td>Semiquadrato</td><td>45°</td><td>2°</td><td>1°</td></tr>
-    <tr><td>Sesquiquadrato</td><td>135°</td><td>2°</td><td>1°</td></tr>
+    <tr><td>Congiunzione</td><td>0°</td><td>10°</td><td>8°</td><td>1°</td></tr>
+    <tr><td>Opposizione</td><td>180°</td><td>10°</td><td>8°</td><td>1°</td></tr>
+    <tr><td>Trigono</td><td>120°</td><td>10°</td><td>8°</td><td>1°</td></tr>
+    <tr><td>Quadrato</td><td>90°</td><td>10°</td><td>8°</td><td>1°</td></tr>
+    <tr><td>Sestile</td><td>60°</td><td>6°</td><td>7°</td><td>1°</td></tr>
+    <tr><td>Semisestile</td><td>30°</td><td>3°</td><td>2°</td><td>1°</td></tr>
+    <tr><td>Quinconce</td><td>150°</td><td>3°</td><td>2°</td><td>1°</td></tr>
+    <tr><td>Semiquadrato</td><td>45°</td><td>3°</td><td>4°</td><td>1°</td></tr>
+    <tr><td>Sesquiquadrato</td><td>135°</td><td>3°</td><td>4°</td><td>1°</td></tr>
+    <tr><td>Quintile</td><td>72°</td><td>2°</td><td>—</td><td>1°</td></tr>
+    <tr><td>Biquintile</td><td>144°</td><td>2°</td><td>—</td><td>1°</td></tr>
   </tbody>
 </table>
 
 <p>
-  I quattro aspetti minori (semisestile, quinconce, semiquadrato,
-  sesquiquadrato) <strong>sono esclusi finché non si chiedono</strong>: la
-  tabella predefinita porta i cinque maggiori.
+  <strong>Greene</strong> è la predefinita del tema e del cielo: è la tavola che
+  Astrodienst usa sul suo sito e che dichiara di Liz Greene, e quindi quella che
+  più persone si sono viste davanti. È uguale per tutti i pianeti, Chirone
+  compreso. I nodi, Lilith, gli assi e la Parte di Fortuna sono punti senza
+  orbita propria: con un pianeta vale metà della sua, fra loro nessun aspetto.
+  <strong>Leo</strong> è quella di <em>How to Judge a Nativity</em> (1928, p.
+  47): 8° fra pianeti, che diventano 10° con un luminare e 12° fra Sole e Luna,
+  ma solo per congiunzione e opposizione. Il quintile in Leo non c'è, e con le
+  sue orbite il sito non lo calcola: una scuola si prende intera.
 </p>
 
 <p>
-  <strong>I luminari ricevono orbite più larghe</strong>, secondo la prassi
-  corrente: due gradi in più nel tema natale, e il bonus vale per ciascuno dei
-  due lati della coppia, così che un aspetto fra Sole e Luna ne sommi quattro.
-  In transito il supplemento è di un grado per la Luna e mezzo per il Sole, in
-  entrambi i versi: un contatto che tocca il Sole natale ha più spazio tanto
-  quanto ne ha la Luna che passa.
+  Gli aspetti minori (semisestile, quinconce, semiquadrato, sesquiquadrato, e
+  con Greene quintile e biquintile) <strong>sono esclusi finché non si
+  chiedono</strong>: la tabella predefinita porta i cinque maggiori.
 </p>
 
 <p>
-  Le orbite dei transiti sono molto più strette e non per gusto: con gli otto
-  gradi natali un transito di Saturno resterebbe «in aspetto» per mesi di fila,
-  e il quadro del momento diventerebbe un elenco di contatti permanenti che non
+  Le orbite dei transiti sono molto più strette e non per gusto: con le orbite
+  natali un transito di Saturno resterebbe «in aspetto» per mesi di fila, e il
+  quadro del momento diventerebbe un elenco di contatti permanenti che non
   distingue il giorno in cui l'aspetto si perfeziona da quello prima e da quello
-  dopo.
+  dopo. Sono quelle di <strong>Robert Hand</strong>, un grado per ogni transito,
+  come Astrodienst le dichiara per le sue previsioni; valgono anche per le
+  finestre dei passaggi e per gli incontri fra i corpi in cielo, che Hand non
+  nomina. È l'unica tavola dei transiti con un autore che si sia trovata.
 </p>
 
 <p>

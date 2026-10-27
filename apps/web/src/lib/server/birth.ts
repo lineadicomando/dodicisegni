@@ -10,11 +10,13 @@ import {
   AYANAMSAS as AYANAMSA_DEFINITIONS,
   DIGNITY_SCHOOL_NAMES,
   HOUSE_SYSTEM_CODES,
+  NATAL_ORB_CONVENTIONS,
   type AyanamsaId,
   type BirthData,
   type ChartOptions,
   type DignitySchool,
   type HouseSystem,
+  type NatalOrbConvention,
   type ZodiacOptions,
 } from '@dodicisegni/core';
 import { error } from '@sveltejs/kit';
@@ -31,6 +33,7 @@ import { resolvePlace, type ResolvedPlace } from './place';
 const AYANAMSAS = new Set<string>(AYANAMSA_DEFINITIONS.map((ayanamsa) => ayanamsa.id));
 const HOUSE_SYSTEMS = new Set<string>(Object.keys(HOUSE_SYSTEM_CODES));
 const DIGNITY_SCHOOLS = new Set<string>(Object.keys(DIGNITY_SCHOOL_NAMES));
+const ORB_CONVENTIONS = new Set<string>(NATAL_ORB_CONVENTIONS.map((convention) => convention.id));
 
 /** La nascita e il luogo da cui viene, che serve anche a intestare la risposta. */
 export interface RequestedBirth {
@@ -125,6 +128,18 @@ export function readChartOptions(parameters: URLSearchParams): ChartOptions {
     minorAspects: parameters.get('minorAspects') === 'true',
     ...readZodiacOptions(parameters),
   };
+
+  const orbConvention = parameters.get('orbConvention');
+  if (orbConvention) {
+    if (!ORB_CONVENTIONS.has(orbConvention)) {
+      throw error(
+        400,
+        `Convenzione delle orbite "${orbConvention}" non riconosciuta. Ammesse: ${[...ORB_CONVENTIONS].join(', ')}.`,
+        { code: 'ORBITE_NON_VALIDE' },
+      );
+    }
+    options.orbConvention = orbConvention as NatalOrbConvention;
+  }
 
   const houseSystem = parameters.get('houseSystem');
   if (houseSystem) {

@@ -1,5 +1,5 @@
 <script lang="ts">
-  import type { AyanamsaId, HouseSystem, NatalChart, Zodiac } from '@dodicisegni/core';
+  import type { AyanamsaId, HouseSystem, NatalChart, NatalOrbConvention, Zodiac } from '@dodicisegni/core';
   import { onMount } from 'svelte';
   import { page } from '$app/state';
   import {
@@ -12,6 +12,7 @@
   import { birthFromParameters, isComplete, missingBirthFields } from '#lib/birth.js';
   import { Evidenza } from '#lib/evidenza.svelte.js';
   import { houseSystemOrDefault } from '#lib/house-systems.js';
+  import { orbConventionOrDefault } from '#lib/orbite.js';
   import { ayanamsaOrDefault, zodiacOrDefault } from '#lib/zodiacs.js';
   import { birthStore } from '#lib/birth-store.svelte.js';
   import { SITE_TAGLINE } from '#lib/project.js';
@@ -39,6 +40,7 @@
   let zodiac = $state<Zodiac>('tropicale');
   let ayanamsa = $state<AyanamsaId>('lahiri');
   let lilly = $state(false);
+  let orbConvention = $state<NatalOrbConvention>('greene');
 
   /**
    * Le condizioni con cui questa pagina chiede il tema.
@@ -53,6 +55,7 @@
     minorAspects,
     zodiac,
     ayanamsa,
+    orbConvention,
     // Solo nel tropicale: nel siderale la rotta rifiuterebbe la scuola, e la
     // casella lì non compare.
     ...(lilly && zodiac === 'tropicale' ? { dignitySchool: 'lilly' as const } : {}),
@@ -169,6 +172,7 @@
       zodiac = zodiacOrDefault(parametri.get('zodiac'));
       ayanamsa = ayanamsaOrDefault(parametri.get('ayanamsa'));
       lilly = parametri.get('dignitySchool') === 'lilly';
+      orbConvention = orbConventionOrDefault(parametri.get('orbConvention'));
 
       if (await calcola()) aperto = false;
     })();
@@ -227,6 +231,7 @@
     bind:zodiac
     bind:ayanamsa
     bind:lilly
+    bind:orbConvention
     housesDisabled={birth.timeUnknown}
     onchange={calcola}
     compact
@@ -249,6 +254,7 @@
           bind:zodiac
           bind:ayanamsa
           bind:lilly
+          bind:orbConvention
           housesDisabled={birth.timeUnknown}
         />
       {/snippet}
@@ -316,7 +322,7 @@
           <DistributionTable distribution={chart.distribution} />
         {/if}
 
-        <AspectTable aspects={chart.aspects} {evidenza} />
+        <AspectTable aspects={chart.aspects} {evidenza} orbite={chart.orbConvention} />
 
         <!-- Con la stessa guardia della distribuzione, e una ragione in più:
              nel tema siderale le dignità occidentali non ci sono. -->

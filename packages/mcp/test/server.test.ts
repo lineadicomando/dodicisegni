@@ -1092,9 +1092,34 @@ describe('find_transit_passages', () => {
   });
 });
 
+describe('le orbite', () => {
+  const NASCITA = { date: '1968-03-12', time: '14:30', location_id: ROMA_ID };
+
+  it('compute_natal_chart dice la convenzione e accetta leo', async () => {
+    const greene = await client.callTool({ name: 'compute_natal_chart', arguments: NASCITA });
+    expect(textOf(greene)).toMatch(/Orbite: Liz Greene/);
+
+    const leo = await client.callTool({
+      name: 'compute_natal_chart',
+      arguments: { ...NASCITA, orb_convention: 'leo', format: 'json' },
+    });
+    expect(JSON.parse(textOf(leo)).orbConvention.id).toBe('leo');
+  });
+
+  it('la risorsa degli aspetti nomina le convenzioni con la fonte', async () => {
+    const { contents } = await client.readResource({ uri: 'dodicisegni://riferimento/aspetti' });
+    const testo = String(contents[0]?.text ?? '');
+    expect(testo).toMatch(/greene \(predefinita\)/);
+    expect(testo).toMatch(/p\. 47/);
+    expect(testo).toMatch(/hand \(predefinita\)/);
+    expect(testo).toMatch(/\| quintile \| 72° \| minore \| 2° \| — \|/);
+  });
+});
+
 describe('find_active_transits', () => {
-  // Il caso di TODO.md, voce 7: in luglio 2026 Saturno è in orbita su Venere
-  // per tutto il mese, esatto a giugno e ad agosto, cioè fuori.
+  // Il caso della voce 7, con le orbite di Hand (1°): in luglio 2026 Saturno è
+  // in opposizione a Plutone per tutto il mese, esatto a giugno e ad agosto,
+  // cioè fuori.
   const PALERMO = {
     date: '1978-06-02',
     time: '15:15',
@@ -1110,11 +1135,12 @@ describe('find_active_transits', () => {
 
     expect(JSON.parse(textOf(passaggi)).passages).toEqual([]);
     const { transits } = JSON.parse(textOf(attivi));
-    const venere = transits.find(
-      (t: { natal: string; aspect: string }) => t.natal === 'venere' && t.aspect === 'quadrato',
+    const plutone = transits.find(
+      (t: { natal: string; aspect: string }) => t.natal === 'plutone' && t.aspect === 'opposizione',
     );
-    expect(venere).toMatchObject({ throughout: true, perfections: [] });
-    expect(venere.enters.slice(0, 10)).toBe('2026-05-26');
+    expect(plutone).toMatchObject({ throughout: true, perfections: [] });
+    expect(plutone.enters.slice(0, 10)).toBe('2026-06-11');
+    expect(JSON.parse(textOf(attivi)).orbConvention.id).toBe('hand');
   });
 
   it('nella forma compatta dice da quando a quando, e che non è esatto', async () => {
@@ -1124,7 +1150,8 @@ describe('find_active_transits', () => {
     });
 
     expect(textOf(result)).toMatch(/TRANSITI ATTIVI/);
-    expect(textOf(result)).toMatch(/2026-05-26 → 2026-09-29\s+Saturno\s+quadrato\s+Venere/);
+    expect(textOf(result)).toMatch(/2026-06-11 → 2026-09-11\s+Saturno\s+opposizione\s+Plutone/);
+    expect(textOf(result)).toMatch(/Orbite: Robert Hand/);
     expect(textOf(result)).toMatch(/tutto l'arco/);
   });
 

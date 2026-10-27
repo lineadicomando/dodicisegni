@@ -470,7 +470,7 @@
       </div>
 
       <div class="tabelle">
-        <TransitAspectTable aspects={transits.aspects} {evidenza} />
+        <TransitAspectTable aspects={transits.aspects} {evidenza} orbite={transits.orbConvention} />
 
         <BodyTable
           bodies={transits.transiting}

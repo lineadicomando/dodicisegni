@@ -1,5 +1,5 @@
 <script lang="ts">
-  import type { Aspect } from '@dodicisegni/core';
+  import type { Aspect, OrbConventionInfo } from '@dodicisegni/core';
   import type { Evidenza } from '#lib/evidenza.svelte.js';
   import { formatDegrees } from '#lib/format.js';
   import { ASPECT_GLYPH, ASPECT_MAJOR, BODY_GLYPH, BODY_LABEL } from '@dodicisegni/ruota';
@@ -9,9 +9,15 @@
     /** Il corpo isolato, condiviso con la ruota e con la tabella dei corpi. */
     evidenza: Evidenza;
     title?: string;
+    /**
+     * Con quali orbite gli aspetti sono stati trovati. Un elenco di aspetti
+     * senza la convenzione non si ricontrolla: fra due scuole un trigono a 9°
+     * c'è o non c'è.
+     */
+    orbite: OrbConventionInfo;
   }
 
-  let { aspects, evidenza, title = 'Aspetti' }: Props = $props();
+  let { aspects, evidenza, title = 'Aspetti', orbite }: Props = $props();
 </script>
 
 <section>
@@ -87,9 +93,18 @@
       </tbody>
     </table>
   {/if}
+  <p class="fonti" title={orbite.rule}>Orbite: {orbite.name}. {orbite.source}</p>
 </section>
 
 <style>
+  /* La fonte delle orbite sta sotto la tabella che giustifica, come quelle
+     delle dignità: in piccolo, ma in un colore che si legge. */
+  .fonti {
+    margin: 0.5rem 0 0;
+    font-size: 0.8rem;
+    color: var(--testo-tenue);
+  }
+
   /* Il numero accanto al nome della sezione. Prendeva `--linea-forte`, che è
      il colore di un bordo: 1,89:1 sulla superficie chiara, illeggibile. Sta già
      dentro un titolo tenue, quindi non c'è un colore più debole da dargli — la

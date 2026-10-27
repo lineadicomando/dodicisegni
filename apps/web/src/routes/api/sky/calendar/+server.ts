@@ -22,6 +22,9 @@ import type { RequestHandler } from './$types';
  * `zodiac=siderale` sposta i soli **ingressi**, che sono attraversamenti di un
  * confine. Gli incontri fra due corpi restano dove sono: sono differenze fra
  * longitudini dello stesso istante, e l'ayanamsa le sposta entrambe.
+ *
+ * Le finestre degli incontri si misurano con le orbite dei transiti di
+ * Robert Hand, 1°, dichiarate in `orbConvention`.
  */
 export const GET: RequestHandler = async ({ url, setHeaders }) => {
   try {
@@ -67,6 +70,7 @@ export const GET: RequestHandler = async ({ url, setHeaders }) => {
 
     return Response.json({
       range,
+      orbConvention: incontri.orbConvention,
       passages: incontri.passages,
       ingresses: ingressi.ingresses,
       stations: stazioni.stations,

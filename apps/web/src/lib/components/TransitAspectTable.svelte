@@ -1,5 +1,5 @@
 <script lang="ts">
-  import type { TransitAspect } from '@dodicisegni/core';
+  import type { OrbConventionInfo, TransitAspect } from '@dodicisegni/core';
   import type { Evidenza } from '#lib/evidenza.svelte.js';
   import { formatDegrees } from '#lib/format.js';
   import {
@@ -20,9 +20,11 @@
     /** Il corpo isolato, condiviso con la ruota e con le altre tabelle. */
     evidenza: Evidenza;
     title?: string;
+    /** Con quali orbite: vedi `AspectTable`. */
+    orbite: OrbConventionInfo;
   }
 
-  let { aspects, evidenza, title = 'Aspetti al tema' }: Props = $props();
+  let { aspects, evidenza, title = 'Aspetti al tema', orbite }: Props = $props();
 
   // I due nodi sono opposti per definizione: ogni loro contatto arriva in
   // coppia e descrive un fatto solo. Vedi `lib/nodal-axis.ts`.
@@ -101,9 +103,18 @@
       </p>
     {/if}
   {/if}
+  <p class="fonti" title={orbite.rule}>Orbite: {orbite.name}. {orbite.source}</p>
 </section>
 
 <style>
+  /* La fonte delle orbite sta sotto la tabella che giustifica, come quelle
+     delle dignità: in piccolo, ma in un colore che si legge. */
+  .fonti {
+    margin: 0.5rem 0 0;
+    font-size: 0.8rem;
+    color: var(--testo-tenue);
+  }
+
   /* Il numero accanto al nome della sezione. Prendeva `--linea-forte`, che è
      il colore di un bordo: 1,89:1 sulla superficie chiara, illeggibile. Sta già
      dentro un titolo tenue, quindi non c'è un colore più debole da dargli — la

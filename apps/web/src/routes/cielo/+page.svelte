@@ -1,5 +1,5 @@
 <script lang="ts">
-  import type { AyanamsaId, HouseSystem, SkyChart, Zodiac } from '@dodicisegni/core';
+  import type { AyanamsaId, HouseSystem, NatalOrbConvention, SkyChart, Zodiac } from '@dodicisegni/core';
   import type { Location } from '@dodicisegni/geo';
   import { onMount } from 'svelte';
   import { goto } from '$app/navigation';
@@ -30,6 +30,7 @@
   import SkyMotionTable from '#lib/components/SkyMotionTable.svelte';
   import SkyPassageTable from '#lib/components/SkyPassageTable.svelte';
   import { houseSystemOrDefault } from '#lib/house-systems.js';
+  import { orbConventionOrDefault } from '#lib/orbite.js';
   import { ayanamsaOrDefault, zodiacOrDefault } from '#lib/zodiacs.js';
   import { isCompleteMoment, nowMoment } from '#lib/moment.js';
   import { Evidenza } from '#lib/evidenza.svelte.js';
@@ -42,7 +43,8 @@
   let ayanamsa = $state<AyanamsaId>('lahiri');
 
   /** Le condizioni con cui si chiede il cielo, uguali in ogni punto che lo chiede. */
-  const opzioniCielo = $derived({ houseSystem, minorAspects, zodiac, ayanamsa });
+  let orbConvention = $state<NatalOrbConvention>('greene');
+  const opzioniCielo = $derived({ houseSystem, minorAspects, zodiac, ayanamsa, orbConvention });
 
   let sky = $state<SkyChart | null>(null);
   let placeLabel = $state<string | null>(null);
@@ -97,6 +99,7 @@
     };
     houseSystem = houseSystemOrDefault(parametri.get('houseSystem'));
     minorAspects = parametri.get('minorAspects') === 'true';
+    orbConvention = orbConventionOrDefault(parametri.get('orbConvention'));
     zodiac = zodiacOrDefault(parametri.get('zodiac'));
     ayanamsa = ayanamsaOrDefault(parametri.get('ayanamsa'));
 
@@ -254,6 +257,7 @@
         bind:minorAspects
         bind:zodiac
         bind:ayanamsa
+        bind:orbConvention
         {housesDisabled}
       />
     </div>
@@ -312,7 +316,7 @@
           <DistributionTable distribution={sky.distribution} />
         {/if}
 
-        <AspectTable aspects={sky.aspects} {evidenza} />
+        <AspectTable aspects={sky.aspects} {evidenza} orbite={sky.orbConvention} />
       </div>
     </div>
 

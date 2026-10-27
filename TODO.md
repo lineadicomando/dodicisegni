@@ -12,7 +12,8 @@ chiuse comprese, è `cf5219a`, quando il file si chiamava ancora `ROADMAP.md`.
 Le voci dalla 20 alla 23 sono nate e si sono chiuse dopo: la 20 per intero sta
 in `3314553`, la 21 e la 22 in `819ce59`, la 23 in `db332a6`. La 11, aperta
 prima e chiusa dopo, sta per intero in `e194d45`, la 13 in `e532f2f`, la 7 in
-`955977b`, la 9 in `8a04cfb`.
+`955977b`, la 9 in `8a04cfb`, la 18 in
+`2b8937d`.
 
 Le fonti citate qui stanno in copia locale in `texts/`, fuori dal repo: la
 cartella, le schede `FONTE.md` e l'elenco `texts/INDICE.md` si mantengono come
@@ -36,7 +37,6 @@ volta e ricominciare da capo.
 
 | Voce | Priorità | Taglia | Prima di cominciare |
 |---|---|---|---|
-| 18. Le orbite senza autore | media | media | deciso: più convenzioni nominate, la più diffusa come predefinita |
 | 8. Il glossario e /metodo | media | grande | si incrocia col punto 6 |
 | 6. La prosa che invecchia | bassa | piccola | farla insieme al punto 8 |
 | 5. I varga che mancano | non dichiarata | tre lotti | per il D-2, la convenzione |
@@ -89,11 +89,31 @@ fatto: si guarda se il segno è pari o dispari e si parte da due punti diversi.
 Il D-2 divide in due (Sole e Luna); il D-4 in quattro, sui kendra; il D-7 in
 sette, dal segno stesso nei dispari e dal settimo nei pari.
 
-Da decidere una cosa sola, ed è il D-2: alcune scuole assegnano le due metà ai
-segni del Leone e del Cancro, altre parlano di «hora del Sole» e «hora della
-Luna» senza un segno. `VargaChart.positions` porta un `ZodiacSign`, quindi la
-seconda convenzione non ci sta dentro senza cambiare il tipo. Va deciso prima
-di scrivere, non dopo.
+Da decidere una cosa sola, ed è il D-2. La ricerca è fatta (27 ottobre 2026),
+e la scelta spetta al proprietario. In breve:
+
+- **I testi classici danno solo «hora del Sole» e «hora della Luna»**, senza
+  un segno: BPHS 6.5-6 (Santhanam pp. 68-69), Brihat Jataka I.11, Saravali
+  III.14, Horasara II.2, Jataka Parijata I.30, Phaladeepika III.4, tutti
+  scaricati in `texts/jyotisha/`. Segno dispari: prima metà al Sole, seconda
+  alla Luna; pari al contrario. Non entra in `VargaChart.positions`, che
+  porta un `ZodiacSign`, senza cambiare il tipo (e con lui `ruota`, il quadro,
+  le tabelle).
+- **Leone e Cancro** (hora del Sole al Leone, della Luna al Cancro) è la
+  lettura corrente, ma nessun classico letto la enuncia: la presuppone
+  Santhanam (p. 90) e la chiama comune P.V.R. Narasimha Rao (2003).
+- **Le varianti moderne con un segno**, ciascuna con un autore: la
+  *parivritti-dvaya* ciclica (lettura letterale di BPHS 6.6), la Uma-Shambhu
+  di Narasimha Rao (2012), la Kashinatha (scuola SJC), quella attribuita a
+  «Raman» (in realtà di Raman Suprajarama, 2005), la «Somanatha» senza fonte
+  primaria.
+- La regola di Garga/Yavana (signore del segno e dell'undicesimo) è riportata
+  e scartata da Varahamihira (BJ I.12).
+
+Le tre strade per il motore: una regola sola col tipo invariato; la regola di
+Parashara col tipo cambiato; più convenzioni nominate affiancate, come le
+orbite. Il rapporto completo, con i quattro casi di controllo per ogni
+variante, sta nelle schede `FONTE.md` delle cartelle nuove.
 
 ### Lotto B: i multipli con partenza fissa
 
@@ -191,38 +211,35 @@ Verifica: un test in `packages/core/test/` che confronti le due modalità e
 fallisca se lo scarto esce dall'ordine di grandezza dichiarato. A quel punto le
 tre righe di prosa possono portare la stessa cifra.
 
-### La pagina del metodo non è legata a `constants.ts`
+### La pagina del metodo non è legata al motore
 
 `apps/web/src/routes/(informativa)/metodo/+page.svelte` ricopia in prosa valori
-che vivono nel motore: le nove orbite e i nove aspetti da `ASPECTS`
-(`packages/core/src/constants.ts:275`), che la pagina ricopia nella tabella a
-riga 195; i nove sistemi di case da `HOUSE_SYSTEM_CODES`, il bonus dei
-luminari, le orbite dei transiti da `TRANSIT_ORBS`; i sei ayanamsa da
-`AYANAMSAS` (`ayanamsa.ts:44`) e i sei varga da `VARGAS` (`varga.ts:75`), che
-la pagina elenca alle righe 346-347.
+che vivono nel motore: la tavola delle orbite (sezione `#aspetti`, undici
+righe per tre colonne: Greene, Leo, Hand) da `packages/core/src/orbite.ts`; i
+nove sistemi di case da `HOUSE_SYSTEM_CODES`; i sei ayanamsa da `AYANAMSAS`
+(`ayanamsa.ts`) e le sette divisionali da `VARGAS` (`varga.ts`), che la pagina
+elenca nella sezione `#varga`.
 
 Cambiando un'orbita, la pagina resta vecchia in silenzio. Non c'è nessun test
 che colleghi le due cose, ed è la scelta scritta nel commento in testa al file:
 legare la pagina ai valori vorrebbe dire generarla, e una tabella generata non
 può dire *perché* le orbite dei transiti sono strette, che è l'unica ragione
-per cui la pagina esiste.
+per cui la pagina esiste. La risorsa MCP `riferimento/aspetti` invece è
+generata dalle convenzioni (`packages/mcp/src/server.ts`, `aspectReference`),
+e non ha il problema.
 
 La forma che risolve senza generare la prosa esiste, ed è quella che il progetto
 usa già altrove: **un test che fallisce a voce alta quando i due divergono**, sul
-modello di `packages/ruota/test/tipi.test.ts`, che verifica che i tipi
-ridichiarati combacino con quelli di `core` senza importarli. Qui vorrebbe dire
-leggere il file `.svelte` e cercarci i valori di `ASPECTS` (nove righe di
-tabella, non tutta la pagina) e fallire se un'orbita non compare più. Ogni
-riga della tabella (righe 205-213) porta due numeri, l'orbita del tema e
-quella dei transiti di `TRANSIT_ORBS`; il bonus dei luminari è in prosa a
-224-225, contro `LUMINARY_ORB_BONUS` (`constants.ts:293`).
+modello di `apps/web/src/lib/elenchi.test.ts`. Qui vorrebbe dire leggere il
+file `.svelte`, trovare le righe della tavola delle orbite e confrontarne i
+numeri con `orbOf` di ciascuna convenzione fra due pianeti.
 
 Un test così è brutto e va tenuto stretto: se comincia a cercare frasi invece
 che numeri diventa un impedimento a riscrivere la prosa, che è il contrario di
 quello che serve. Da fare solo per i valori tabellari, e solo se la pagina
 sopravvive abbastanza da giustificarlo.
 
-Verifica: cambiare un'orbita in `ASPECTS` e vedere il test cadere.
+Verifica: cambiare un'orbita in `orbite.ts` e vedere il test cadere.
 
 ## 8. Il glossario, e /metodo da rivedere
 
@@ -371,10 +388,21 @@ fonti secondarie non concordano su cose che qui diventano costanti:
 - **La tavola delle fortezze e debilità**, p. 115, quella che va da +38 a −38.
   Nessuna fonte trovata la riporta per intero.
 
-Sul resto le fonti convergono: le orbite per pianeta (*moieties*: Sole 15°,
-Luna 12°, Saturno e Giove 9°, Marte 8°, Venere e Mercurio 7°, l'orbita di un
-aspetto è la media delle due), l'ordine caldeo delle ore, le considerazioni
+Sul resto le fonti convergono: l'ordine caldeo delle ore, le considerazioni
 prima del giudizio alle pp. 121-123.
+
+Le orbite per pianeta (*moieties*) **non** convergono, e Lilly ne dà due
+colonne. *Christian Astrology* p. 107 (`pagine/p107.jpg`, trascritta):
+colonna 1 Saturno 10°, Giove 12°, Marte 7°30', Sole 17°, Venere 8°, Mercurio
+7°, Luna 12°30'; colonna 2 Saturno 9°, Giove 9°, Marte 7°, Sole 15°, Venere
+7°, Mercurio 7°, Luna 12°. Lilly dice di usare l'una o l'altra «as my Memory
+best Remembereth»; l'esempio di p. 107 usa la prima, quello di p. 110 la
+seconda, con la regola della metà di ciascuno sommate. Il «Marte 8°» che
+questa voce riportava è di al-Biruni (§436, trad. Wright 1934, in
+`texts/occidentale/biruni-elements-of-astrology-wright-1934`), non di Lilly.
+Implementarle vuol dire scegliere una colonna e dirla: la convenzione entra
+in `NATAL_ORB_CONVENTIONS` (`packages/core/src/orbite.ts`) come una terza,
+accanto a Greene e Leo.
 
 ### Che cosa c'è già
 
@@ -407,7 +435,8 @@ Manca:
 - combustione, sotto i raggi, cazimi; la velocità rispetto a
   `MEAN_DAILY_MOTION`, che esiste ma serve solo al campionamento;
 - angolare, succedente, cadente;
-- le *moieties* (oggi le orbite sono per aspetto, punto 18);
+- le *moieties*, come terza convenzione di `orbite.ts` (vedi sopra la colonna
+  da scegliere);
 - antiscia e Via Combusta;
 - **il peregrino**, definito da Lilly a p. 112 (nessuna dignità essenziale
   nel grado). `lillyDignitiesOf` restituisce un elenco vuoto e il commento
@@ -491,8 +520,8 @@ chiede le tavole del punto 19 e queste condizioni insieme. Serve anche al natale
 alla maniera tradizionale.
 
 **Lotto B: la sequenza degli eventi.** Il substrato neutro, e le due Lune vuote
-come primi classificatori. Le *moieties* come seconda convenzione di orbita,
-che il punto 18 chiede comunque. È il lotto che regge tutto il resto, ed è il
+come primi classificatori. Le *moieties* come terza convenzione di orbita.
+È il lotto che regge tutto il resto, ed è il
 meno dottrinale.
 
 **Lotto C: la scuola di Lilly.** I modi della perfezione e del suo impedimento,
@@ -538,46 +567,6 @@ confrontare ciò che Lilly dichiara, scegliendo i casi lontani dai confini,
 perché le sue effemeridi sbagliavano di qualche primo e un confine li
 ribalta. Per il lotto B la verifica non chiede Lilly: una sequenza di eventi si
 controlla con `findSkyPassages` sullo stesso arco.
-
-## 18. Le orbite senza autore
-
-**Priorità media.** È la prima cosa che il vincolo riscritto in `CLAUDE.md`
-trova già nel codice. Il vincolo dice che nessuna scuola è un default taciuto e
-che non entra un peso senza un autore fuori da questo repo. Le orbite degli
-aspetti sono tutte e due le cose.
-
-`ASPECTS` (`packages/core/src/constants.ts:275`) dà 8° a congiunzione e
-opposizione, 7° a trigono e quadrato, 5° al sestile, da 2° a 3° ai minori;
-`LUMINARY_ORB_BONUS` aggiunge 2° per ciascun luminare, e il commento lo
-giustifica con «la prassi corrente». `TRANSIT_ORBS` (riga 303) ha valori
-propri, anche loro senza fonte, e così `TRANSIT_ORB_BONUS` (riga 323, Luna
-+1, Sole +0,5). Decidono quali aspetti esistono in un tema, e quindi che cosa
-un agente legge. Le orbite dei transiti si usano in `transits.ts:176`,
-`passages.ts:131` e `sky-passages.ts:178`, e si possono sostituire con le
-`orbs` delle opzioni (`types.ts`, in `TransitOptions`, `PassageOptions` e
-`SkyPassageOptions`).
-
-Non sono nascoste: la risorsa MCP `aspetti` (`packages/mcp/src/server.ts:82-83`)
-e la tabella di `/metodo` (`metodo/+page.svelte:186`) le dichiarano, e `AspectOptions.orbs` permette di cambiarle. Ma dichiarare un
-numero non è nominarne la scuola, e il risultato non dice quale convenzione di
-orbite ha prodotto i suoi aspetti.
-
-Due strade, da scegliere prima di scrivere:
-
-- **Trovare un autore.** Valori di questo ordine si trovano in molti manuali
-  moderni, ma la ricerca va fatta su un testo preciso, e se nessuno li dà
-  identici la tavola va sostituita con quella di un autore, non attribuita a
-  uno che le somiglia.
-- **Più convenzioni nominate, una per default.** Le *moieties* di Lilly (punto
-  17, lotto B) sono la seconda tavola già prevista, ed è la forma che le orbite
-  per aspetto e quelle per pianeta chiedono comunque: un identificatore della
-  convenzione nel risultato, come il sistema di case.
-
-In tutti e due i casi il risultato degli aspetti deve portare il nome della
-convenzione, e la risorsa MCP e `/metodo` devono dire da dove viene.
-
-Verifica: un tema calcolato con due convenzioni produce due elenchi di aspetti
-diversi, e ciascuno dice quale l'ha prodotto.
 
 ## 19. Le dignità, per scuola
 
@@ -859,6 +848,13 @@ Verifica: ogni fonte citata in un commento di `packages/` ha una riga in
   blocco (`eslint.config.js` dice perché ciascuna). Un formattatore
   rifluirebbe la prosa dei commenti, che è mandata a capo a mano. Deciso il
   27 ottobre 2026, con la voce 9.
+- **Le orbite degli aspetti sono convenzioni nominate.** Greene (la
+  predefinita di Astrodienst) per il tema e il cielo, con Leo (1928) in
+  alternativa; Hand, 1°, per transiti, passaggi e incontri in cielo, l'unica
+  tavola dei transiti con un autore. Deciso il 27 ottobre 2026 con la voce
+  18, scegliendo come predefinita la più diffusa. Le orbite senza autore che
+  c'erano prima (8/7/5 con +2° ai luminari; 2/1,5/1 nei transiti) sono
+  uscite: erano un ibrido di Leo e Astrolog.
 - **Il server MCP non ha un pool, e non gli serve**: è un processo per client,
   sul trasporto stdio, e non c'è nessun'altra richiesta da tenere in attesa.
 - **I thread del pool web sono al massimo quattro, e la quinta richiesta

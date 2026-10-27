@@ -48,5 +48,7 @@ export const PALETTE_PAGINA: Palette = {
     quinconce: 'var(--aspetto-minore)',
     semiquadrato: 'var(--aspetto-minore)',
     sesquiquadrato: 'var(--aspetto-minore)',
+    quintile: 'var(--aspetto-minore)',
+    biquintile: 'var(--aspetto-minore)',
   },
 };

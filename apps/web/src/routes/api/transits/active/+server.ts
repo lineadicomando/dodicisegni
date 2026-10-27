@@ -26,7 +26,8 @@ import type { RequestHandler } from './$types';
  * `/api/transits/passages`: quelli della nascita come `/api/chart`, `from`
  * (default oggi), `to` (default un anno dopo, al massimo tre anni),
  * `transitTimezone`, `minorAspects`, e `moon=true` per includere la Luna, che
- * da sola fa qualche migliaio di righe l'anno.
+ * da sola fa qualche migliaio di righe l'anno. «In orbita» vuol dire entro
+ * le orbite dei transiti di Robert Hand, 1°, dichiarate in `orbConvention`.
  */
 export const GET: RequestHandler = async ({ url, setHeaders }) => {
   try {
@@ -47,10 +48,22 @@ export const GET: RequestHandler = async ({ url, setHeaders }) => {
 
     // Costa quanto i passaggi, fino a due secondi: va nel pool per la stessa
     // ragione, scritta in `lib/server/pool.ts`.
-    const { transits, warnings } = await nelPool('attivi', chart, range, passageOptions);
+    const { transits, warnings, orbConvention } = await nelPool(
+      'attivi',
+      chart,
+      range,
+      passageOptions,
+    );
 
     setHeaders({ 'cache-control': explicit ? 'private, max-age=86400' : 'no-store' });
-    return Response.json({ chart, range, transits, warnings, place: placeLabel(place) });
+    return Response.json({
+      chart,
+      range,
+      orbConvention,
+      transits,
+      warnings,
+      place: placeLabel(place),
+    });
   } catch (cause) {
     if (isHttpError(cause)) throw cause;
     toHttpError(cause);

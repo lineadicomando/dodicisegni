@@ -3,6 +3,7 @@ import {
   ChartError,
   DIGNITY_SCHOOL_NAMES,
   HOUSE_SYSTEM_CODES,
+  NATAL_ORB_CONVENTIONS,
   VARGAS,
   computeNatalChart,
   computeSky,
@@ -29,6 +30,7 @@ import {
   type AyanamsaId,
   type ChartOptions,
   type DignitySchool,
+  type NatalOrbConvention,
   type JyotishaOptions,
   type VargaId,
   type VimshottariOptions,
@@ -134,6 +136,30 @@ const VARGA_IDS = nonEmpty<VargaId>(VARGAS.map((varga) => varga.id));
 const HOUSE_SYSTEMS = nonEmpty(Object.keys(HOUSE_SYSTEM_CODES) as HouseSystem[]);
 
 const DIGNITY_SCHOOLS = nonEmpty(Object.keys(DIGNITY_SCHOOL_NAMES) as DignitySchool[]);
+
+const ORB_CONVENTIONS = nonEmpty<NatalOrbConvention>(NATAL_ORB_CONVENTIONS.map((c) => c.id));
+
+/**
+ * La convenzione delle orbite, per i tool che calcolano gli aspetti di un
+ * tema o del cielo. I transiti non la prendono: hanno la loro, più stretta.
+ */
+const ORB_CONVENTION_SCHEMA = {
+  orb_convention: z
+    .enum(ORB_CONVENTIONS)
+    .optional()
+    .describe(
+      'Convenzione delle orbite, cioè quanto largo può essere un aspetto. greene (default): la ' +
+        'tavola predefinita di Astrodienst, di Liz Greene, 10° ai maggiori e 6° al sestile, con ' +
+        'quintile e biquintile fra i minori. leo: Alan Leo (1928), 8° ai maggiori, 10-12° con i ' +
+        'luminari solo per congiunzione e opposizione, niente quintili. Non sceglierla tu: è una ' +
+        'convenzione di scuola, da usare solo se chi scrive la chiede. Il risultato dice quale ' +
+        'è stata usata, in orbConvention.',
+    ),
+} as const;
+
+const MINOR_ASPECTS_TEXT =
+  'Includi gli aspetti minori: semisestile, quinconce, semiquadrato, sesquiquadrato, e quintile ' +
+  'e biquintile se la convenzione delle orbite li tratta. Default: false.';
 
 /**
  * Lo zodiaco chiesto, tradotto in opzioni del motore.
@@ -269,7 +295,8 @@ export function registerComputeNatalChart(server: McpServer, context: ToolContex
         minor_aspects: z
           .boolean()
           .optional()
-          .describe('Includi semisestile, quinconce, semiquadrato, sesquiquadrato. Default: false.'),
+          .describe(MINOR_ASPECTS_TEXT),
+        ...ORB_CONVENTION_SCHEMA,
         part_of_fortune_formula: z
           .enum(['settore', 'diurna'])
           .optional()
@@ -315,6 +342,7 @@ export function registerComputeNatalChart(server: McpServer, context: ToolContex
         if ('error' in zodiaco) return fail(zodiaco.error);
 
         const options: ChartOptions = { minorAspects: args.minor_aspects ?? false, ...zodiaco };
+        if (args.orb_convention) options.orbConvention = args.orb_convention;
         if (args.house_system) options.houseSystem = args.house_system;
         if (args.part_of_fortune_formula) {
           options.partOfFortuneFormula = args.part_of_fortune_formula;
@@ -566,7 +594,7 @@ export function registerComputeTransits(server: McpServer, context: ToolContext 
         minor_aspects: z
           .boolean()
           .optional()
-          .describe('Includi semisestile, quinconce, semiquadrato, sesquiquadrato. Default: false.'),
+          .describe(MINOR_ASPECTS_TEXT),
         format: z
           .enum(['compact', 'json'])
           .optional()
@@ -716,7 +744,8 @@ export function registerComputeSky(server: McpServer, context: ToolContext = {})
         minor_aspects: z
           .boolean()
           .optional()
-          .describe('Includi semisestile, quinconce, semiquadrato, sesquiquadrato. Default: false.'),
+          .describe(MINOR_ASPECTS_TEXT),
+        ...ORB_CONVENTION_SCHEMA,
         format: z
           .enum(['compact', 'json'])
           .optional()
@@ -735,6 +764,7 @@ export function registerComputeSky(server: McpServer, context: ToolContext = {})
         if ('error' in zodiaco) return fail(zodiaco.error);
 
         const options: SkyOptions = { minorAspects: args.minor_aspects ?? false, ...zodiaco };
+        if (args.orb_convention) options.orbConvention = args.orb_convention;
         if (args.house_system) options.houseSystem = args.house_system;
         if (context.ephemerisPath) options.ephemerisPath = context.ephemerisPath;
         if (observation.place) options.place = observation.place;
@@ -923,7 +953,7 @@ export function registerFindSkyEvents(server: McpServer, context: ToolContext = 
 
         const incontri = kinds.has('incontri')
           ? findSkyPassages(range, passageOptions)
-          : { passages: [], warnings: [] };
+          : { passages: [], warnings: [], orbConvention: undefined };
         const ingressi = kinds.has('ingressi')
           ? findSignIngresses(range, eventOptions)
           : { ingresses: [], warnings: [] };
@@ -942,6 +972,7 @@ export function registerFindSkyEvents(server: McpServer, context: ToolContext = 
             JSON.stringify(
               {
                 range,
+                orbConvention: incontri.orbConvention,
                 passages: incontri.passages,
                 ingresses: ingressi.ingresses,
                 stations: stazioni.stations,
@@ -954,8 +985,11 @@ export function registerFindSkyEvents(server: McpServer, context: ToolContext = 
         }
 
         const parti: string[] = [];
-        if (kinds.has('incontri')) {
-          parti.push(formatSkyPassagesCompact(incontri.passages, range, warnings));
+        // C'è solo se gli incontri sono stati chiesti, cioè quando servono.
+        if (incontri.orbConvention) {
+          parti.push(
+            formatSkyPassagesCompact(incontri.passages, range, incontri.orbConvention, warnings),
+          );
         }
         if (kinds.has('ingressi') || kinds.has('stazioni')) {
           parti.push(
@@ -1161,10 +1195,12 @@ export function registerDrawChartWheel(server: McpServer, context: ToolContext =
           .boolean()
           .optional()
           .describe(
-            'Disegna anche semisestile, quinconce, semiquadrato e sesquiquadrato. Default: false. ' +
-              'Non è solo una questione di calcolo: nove specie di linea sullo stesso cerchio ' +
+            'Disegna anche semisestile, quinconce, semiquadrato, sesquiquadrato e, con greene, ' +
+              'quintile e biquintile. Default: false. ' +
+              'Non è solo una questione di calcolo: undici specie di linea sullo stesso cerchio ' +
               'smettono di essere una trama leggibile.',
           ),
+        ...ORB_CONVENTION_SCHEMA,
         with_transits: z
           .boolean()
           .optional()
@@ -1227,6 +1263,7 @@ export function registerDrawChartWheel(server: McpServer, context: ToolContext =
         if ('error' in zodiaco) return fail(zodiaco.error);
 
         const options: ChartOptions = { minorAspects: args.minor_aspects ?? false, ...zodiaco };
+        if (args.orb_convention) options.orbConvention = args.orb_convention;
         if (args.house_system) options.houseSystem = args.house_system;
         if (context.ephemerisPath) options.ephemerisPath = context.ephemerisPath;
 
@@ -1493,14 +1530,18 @@ export function registerFindTransitPassages(server: McpServer, context: ToolCont
         if (args.bodies) passageOptions.bodies = args.bodies as PassageOptions['bodies'];
         if (args.targets) passageOptions.targets = args.targets as PassageOptions['targets'];
 
-        const { passages, warnings } = findTransitPassages(chart, range, passageOptions);
+        const { passages, warnings, orbConvention } = findTransitPassages(
+          chart,
+          range,
+          passageOptions,
+        );
 
         if (args.format === 'json') {
-          return ok(JSON.stringify({ range, passages, warnings }, null, 2));
+          return ok(JSON.stringify({ range, orbConvention, passages, warnings }, null, 2));
         }
 
         const header = place.label ? `Luogo di nascita: ${place.label}\n` : '';
-        return ok(header + formatPassagesCompact(chart, passages, range, warnings));
+        return ok(header + formatPassagesCompact(chart, passages, range, orbConvention, warnings));
       } catch (error) {
         return fail(describeError(error));
       }
@@ -1601,14 +1642,20 @@ export function registerFindActiveTransits(server: McpServer, context: ToolConte
         if (args.bodies) passageOptions.bodies = args.bodies as PassageOptions['bodies'];
         if (args.targets) passageOptions.targets = args.targets as PassageOptions['targets'];
 
-        const { transits, warnings } = findActiveTransits(chart, range, passageOptions);
+        const { transits, warnings, orbConvention } = findActiveTransits(
+          chart,
+          range,
+          passageOptions,
+        );
 
         if (args.format === 'json') {
-          return ok(JSON.stringify({ range, transits, warnings }, null, 2));
+          return ok(JSON.stringify({ range, orbConvention, transits, warnings }, null, 2));
         }
 
         const header = place.label ? `Luogo di nascita: ${place.label}\n` : '';
-        return ok(header + formatActiveTransitsCompact(chart, transits, range, warnings));
+        return ok(
+          header + formatActiveTransitsCompact(chart, transits, range, orbConvention, warnings),
+        );
       } catch (error) {
         return fail(describeError(error));
       }

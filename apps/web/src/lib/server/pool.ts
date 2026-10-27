@@ -32,6 +32,7 @@ import type {
   ElectionOptions,
   ElectionResult,
   NatalChart,
+  OrbConventionInfo,
   PassageOptions,
   PassageRange,
   Place,
@@ -63,19 +64,19 @@ interface Lavori {
     natal: NatalChart,
     range: PassageRange,
     options: PassageOptions,
-  ) => { passages: TransitPassage[]; warnings: string[] };
+  ) => { passages: TransitPassage[]; warnings: string[]; orbConvention: OrbConventionInfo };
   attivi: (
     natal: NatalChart,
     range: PassageRange,
     options: PassageOptions,
-  ) => { transits: ActiveTransit[]; warnings: string[] };
+  ) => { transits: ActiveTransit[]; warnings: string[]; orbConvention: OrbConventionInfo };
   elezione: (range: PassageRange, place: Place, options: ElectionOptions) => ElectionResult;
   calendario: (
     range: PassageRange,
     perPassaggi: SkyPassageOptions,
     perEventi: SkyEventOptions,
   ) => {
-    incontri: { passages: SkyPassage[]; warnings: string[] };
+    incontri: { passages: SkyPassage[]; warnings: string[]; orbConvention: OrbConventionInfo };
     ingressi: { ingresses: SignIngress[]; warnings: string[] };
     stazioni: { stations: Station[]; warnings: string[] };
   };

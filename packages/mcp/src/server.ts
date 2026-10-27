@@ -1,6 +1,14 @@
 import { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
 import { registerLetturaDelTema } from './prompts.js';
-import { ASPECTS, HOUSE_SYSTEM_CODES, TRANSIT_ORB_BONUS, TRANSIT_ORBS } from '@dodicisegni/core';
+import {
+  ASPECTS,
+  DEFAULT_NATAL_ORB_CONVENTION,
+  DEFAULT_TRANSIT_ORB_CONVENTION,
+  HOUSE_SYSTEM_CODES,
+  NATAL_ORB_CONVENTIONS,
+  TRANSIT_ORB_CONVENTIONS,
+  type OrbConventionDefinition,
+} from '@dodicisegni/core';
 import {
   registerComputeJyotishaChart,
   registerComputeNatalChart,
@@ -124,29 +132,57 @@ function registerReferenceResources(server: McpServer): void {
   );
 }
 
+/**
+ * La tavola delle orbite, generata dalle convenzioni del motore e non
+ * ricopiata: una risorsa che descrive i numeri non deve poterne dire altri.
+ * Per ogni convenzione l'orbita fra due pianeti, e la regola per esteso che
+ * dice i casi particolari (luminari, punti senza orbita).
+ */
 function aspectReference(): string {
-  const rows = ASPECTS.map(
-    (aspect) =>
-      `| ${aspect.id} | ${aspect.angle}° | ${aspect.orb}° | ${TRANSIT_ORBS[aspect.id]}° | ${aspect.major ? 'maggiore' : 'minore'} |`,
-  );
+  const tavola = (convenzioni: readonly OrbConventionDefinition[], predefinita: string): string[] => {
+    const intestazione = convenzioni.map((c) => (c.id === predefinita ? `${c.id} (predefinita)` : c.id));
+    const righe = ASPECTS.map((aspect) => {
+      const celle = convenzioni.map((c) =>
+        c.aspects.includes(aspect.id) ? `${c.orbOf(aspect.id, 'marte', 'giove')}°` : '—',
+      );
+      return `| ${aspect.id} | ${aspect.angle}° | ${aspect.major ? 'maggiore' : 'minore'} | ${celle.join(' | ')} |`;
+    });
+    const regole = convenzioni.flatMap((c) => [
+      `**${c.id}: ${c.name}.** ${c.rule} Fonte: ${c.source}`,
+      '',
+    ]);
+    return [
+      `| Aspetto | Angolo | Classe | ${intestazione.join(' | ')} |`,
+      `|---|---|---|${convenzioni.map(() => '---').join('|')}|`,
+      ...righe,
+      '',
+      ...regole,
+    ];
+  };
 
   return [
     '# Aspetti e orbite',
     '',
     "Un aspetto esiste quando la separazione angolare fra due corpi si avvicina a un valore",
-    "notevole entro una tolleranza detta orbita. Sole e Luna ricevono ciascuno 2° di orbita",
-    'in più, secondo la prassi corrente: un aspetto fra i due luminari ne somma quindi 4.',
+    "notevole entro una tolleranza detta orbita. L'orbita non è un fatto ma una regola di",
+    'scuola: il motore non ne ha una sua, e ogni risultato porta in `orbConvention` il nome,',
+    'la fonte e la regola di quella che ha usato. «—» vuol dire che la scuola non tratta',
+    "quell'aspetto, e il motore con quella scuola non lo calcola.",
     '',
-    '| Aspetto | Angolo | Orbita natale | Orbita nei transiti | Classe |',
-    '|---|---|---|---|---|',
-    ...rows,
+    '## Il tema e il cielo di un istante',
     '',
-    'Gli aspetti minori sono calcolati solo con `minor_aspects: true`.',
+    "Orbita fra due pianeti; i casi particolari sono nella regola. Si sceglie con",
+    '`orb_convention` su compute_natal_chart e compute_sky.',
+    '',
+    ...tavola(NATAL_ORB_CONVENTIONS, DEFAULT_NATAL_ORB_CONVENTION),
+    '## Transiti, passaggi, transiti attivi, incontri in cielo',
     '',
     '**Le orbite dei transiti sono più strette** perché un transito va collocato nel tempo:',
-    `con gli 8° della congiunzione natale, Saturno resterebbe «in aspetto» per mesi di fila.`,
-    `Nei transiti il bonus dei luminari vale ${TRANSIT_ORB_BONUS['luna']}° per la Luna e`,
-    `${TRANSIT_ORB_BONUS['sole']}° per il Sole, su entrambi i lati della coppia.`,
+    'con le orbite natali Saturno resterebbe «in aspetto» per mesi di fila. Qui decidono anche',
+    'quanto dura la finestra di un passaggio.',
+    '',
+    ...tavola(TRANSIT_ORB_CONVENTIONS, DEFAULT_TRANSIT_ORB_CONVENTION),
+    'Gli aspetti minori sono calcolati solo con `minor_aspects: true`.',
     '',
     'Un aspetto è **applicativo** quando si sta perfezionando (lo scarto diminuisce nel tempo),',
     '**separativo** quando si sta sciogliendo. La distinzione dipende dalla velocità relativa',

@@ -20,6 +20,9 @@ import type { RequestHandler } from './$types';
  * I parametri della nascita sono quelli di `/api/chart`. Senza `from` si parte
  * da oggi, senza `to` si arriva a un anno dopo. La Luna è esclusa: da sola
  * perfeziona qualche migliaio di aspetti all'anno, e si chiede con `moon=true`.
+ *
+ * Le finestre si misurano con le orbite dei transiti di Robert Hand, 1°, che
+ * la risposta dichiara in `orbConvention`.
  */
 export const GET: RequestHandler = async ({ url, setHeaders }) => {
   try {
@@ -41,12 +44,24 @@ export const GET: RequestHandler = async ({ url, setHeaders }) => {
     // Il calcolo va in un altro thread: su tre anni con la Luna sono circa
     // due secondi, e qui terrebbero fermo il server per tutti. Il perché e
     // il perché sia sicuro stanno in `lib/server/pool.ts`.
-    const { passages, warnings } = await nelPool('passaggi', chart, range, passageOptions);
+    const { passages, warnings, orbConvention } = await nelPool(
+      'passaggi',
+      chart,
+      range,
+      passageOptions,
+    );
 
     // Stessa regola dei transiti: un arco indicato è una funzione pura dei
     // parametri, un arco che comincia «oggi» scade a mezzanotte.
     setHeaders({ 'cache-control': explicit ? 'private, max-age=86400' : 'no-store' });
-    return Response.json({ chart, range, passages, warnings, place: placeLabel(place) });
+    return Response.json({
+      chart,
+      range,
+      orbConvention,
+      passages,
+      warnings,
+      place: placeLabel(place),
+    });
   } catch (cause) {
     if (isHttpError(cause)) throw cause;
     toHttpError(cause);

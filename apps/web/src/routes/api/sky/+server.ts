@@ -14,7 +14,8 @@ import type { RequestHandler } from './$types';
  * tutto. Senza luogo la risposta non ha assi né case, che è la differenza
  * fra un'effemeride e una carta.
  *
- * `zodiac` e `ayanamsa` valgono come su `/api/chart`.
+ * `zodiac`, `ayanamsa`, `orbConvention` e `minorAspects` valgono come su
+ * `/api/chart`, e il cielo porta la convenzione in `sky.orbConvention`.
  */
 export const GET: RequestHandler = ({ url, setHeaders }) => {
   try {
@@ -22,8 +23,10 @@ export const GET: RequestHandler = ({ url, setHeaders }) => {
     const place = resolveOptionalPlace(parameters);
     const { moment, explicit } = resolveSkyMoment(parameters, place?.timezone);
 
-    const { houseSystem, minorAspects, zodiac, ayanamsa } = readChartOptions(parameters);
+    const { houseSystem, minorAspects, zodiac, ayanamsa, orbConvention } =
+      readChartOptions(parameters);
     const options: SkyOptions = { minorAspects: minorAspects ?? false };
+    if (orbConvention) options.orbConvention = orbConvention;
     if (houseSystem) options.houseSystem = houseSystem;
     if (zodiac) options.zodiac = zodiac;
     if (ayanamsa) options.ayanamsa = ayanamsa;

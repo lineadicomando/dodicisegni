@@ -1,9 +1,10 @@
 /**
  * Gli elenchi del client contro quelli del motore.
  *
- * `zodiacs.ts`, `house-systems.ts` e `varghe.ts` ricopiano valori che vivono
- * in `@dodicisegni/core`, perché il client ne importa solo i tipi: un import
- * di valore trascinerebbe le effemeridi nel bundle del browser. Il tipo però
+ * `zodiacs.ts`, `house-systems.ts`, `varghe.ts` e `orbite.ts` ricopiano
+ * valori che vivono in `@dodicisegni/core`, perché il client ne importa solo
+ * i tipi: un import di valore trascinerebbe le effemeridi nel bundle del
+ * browser. Il tipo però
  * non basta a tenerli allineati: un ayanamsa nuovo nel motore resta fuori dal
  * menu senza nessun errore di compilazione, e la pagina che lo riceve in un
  * indirizzo ripiega su Lahiri in silenzio.
@@ -14,9 +15,16 @@
  * menu.
  */
 
-import { AYANAMSAS as AYANAMSA_DEFINITIONS, HOUSE_SYSTEM_CODES, VARGAS } from '@dodicisegni/core';
+import {
+  AYANAMSAS as AYANAMSA_DEFINITIONS,
+  DEFAULT_NATAL_ORB_CONVENTION,
+  HOUSE_SYSTEM_CODES,
+  NATAL_ORB_CONVENTIONS,
+  VARGAS,
+} from '@dodicisegni/core';
 import { describe, expect, it } from 'vitest';
 import { HOUSE_SYSTEMS } from './house-systems';
+import { DEFAULT_ORB_CONVENTION, ORB_CONVENTIONS } from './orbite';
 import { VARGHE } from './varghe';
 import { AYANAMSAS } from './zodiacs';
 
@@ -33,6 +41,14 @@ describe('gli elenchi del client combaciano con il motore', () => {
       HOUSE_SYSTEMS.map((system) => system.value),
       'lib/house-systems.ts è rimasto indietro rispetto a HOUSE_SYSTEM_CODES in packages/core/src/constants.ts',
     ).toEqual(Object.keys(HOUSE_SYSTEM_CODES));
+  });
+
+  it('le convenzioni di orbite.ts sono quelle di NATAL_ORB_CONVENTIONS', () => {
+    expect(
+      ORB_CONVENTIONS.map((convention) => convention.value),
+      'lib/orbite.ts è rimasto indietro rispetto a NATAL_ORB_CONVENTIONS in packages/core/src/orbite.ts',
+    ).toEqual(NATAL_ORB_CONVENTIONS.map((convention) => convention.id));
+    expect(DEFAULT_ORB_CONVENTION).toBe(DEFAULT_NATAL_ORB_CONVENTION);
   });
 
   it('i varga di varghe.ts sono quelli di VARGAS, tranne la D-1', () => {

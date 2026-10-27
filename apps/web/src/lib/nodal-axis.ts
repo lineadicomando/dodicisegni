@@ -48,6 +48,8 @@ const PREFERENZA: readonly AspectId[] = [
   'semisestile',
   'sesquiquadrato',
   'semiquadrato',
+  'quintile',
+  'biquintile',
 ];
 
 /** Chiave di un aspetto istantaneo: l'orbita, arrotondata al secondo d'arco. */
