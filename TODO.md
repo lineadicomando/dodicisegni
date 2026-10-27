@@ -35,7 +35,7 @@ volta e ricominciare da capo.
 
 | Voce | Priorità | Taglia | Prima di cominciare |
 |---|---|---|---|
-| 9. Il linter | media | piccola | decidere lo strumento |
+| 9. Il linter | media | piccola | decidere lo strumento; il resto è fatto |
 | 18. Le orbite senza autore | media | media | decidere fra le due strade |
 | 7. I transiti attivi in un arco | non dichiarata | media | niente, è pronta |
 | 8. Il glossario e /metodo | media | grande | si incrocia col punto 6 |
@@ -456,14 +456,10 @@ import e variabili morte, anche nei `.svelte`, oggi cadono. Accendendoli è
 saltato fuori un terzo import morto, `ASPECT_GLYPH` in
 `TransitAspectTable.svelte`.
 
-Resta scoperto il service worker. Da SvelteKit 3 è un progetto TypeScript a sé,
-`apps/web/src/service-worker/tsconfig.json`, che estende
-`$app/tsconfig/service-worker` e non porta i due flag: lo script `typecheck` di
-`web` lo controlla con `tsc`, ma un import morto lì non cade. Sono due righe in
-`compilerOptions`, da aggiungere con questa voce o prima: oggi il file ha
-solo `extends` e `include`, e basta
-`"compilerOptions": { "noUnusedLocals": true, "noUnusedParameters": true }`.
-Lo script `typecheck` è in `apps/web/package.json:14`.
+Il service worker, che da SvelteKit 3 è un progetto TypeScript a sé
+(`apps/web/src/service-worker/tsconfig.json`, controllato con `tsc` dallo
+script `typecheck` di `web`), porta i due flag nel suo `compilerOptions`:
+anche lì un import morto oggi cade.
 
 ### Il linter vero è una decisione a parte
 
