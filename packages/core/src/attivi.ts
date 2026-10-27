@@ -17,7 +17,7 @@
  * Nessun peso fra un transito e l'altro: vedi `ActiveTransit`.
  */
 
-import { ASPECTS, DEFAULT_PASSAGE_BODIES, MEAN_DAILY_MOTION } from './constants.js';
+import { ASPECTS, DEFAULT_PASSAGE_BODIES } from './constants.js';
 import type { AspectDefinition } from './constants.js';
 import { zodiacContext } from './ayanamsa.js';
 import { initEphemeris, type EphemerisContext } from './ephemeris.js';
@@ -35,6 +35,7 @@ import {
   WIDEST_ORB,
   bisect,
   julianDayToISO,
+  meanDailyMotion,
   resolveRange,
   signedAngles,
 } from './roots.js';
@@ -92,7 +93,7 @@ export function findActiveTransits(
     // un tratto arriva al primo o all'ultimo campione: vicino a una stazione
     // un corpo lento resta in orbita molto più a lungo. Il tetto è quello
     // delle finestre, tre anni.
-    let margin = Math.min(MAX_WINDOW_DAYS, WIDEST_ORB / (MEAN_DAILY_MOTION[bodyId] ?? 1));
+    let margin = Math.min(MAX_WINDOW_DAYS, WIDEST_ORB / meanDailyMotion(bodyId));
     for (;;) {
       const samples = sampleLongitudes(
         bodyId, start - margin, end + margin, context, warnings, 'transiti attivi non cercati',

@@ -155,18 +155,18 @@
   {#each ZODIAC_ORDER as sign, index (sign)}
     {@const start = index * 30}
     {@const mid = toXY(start + 15, (R.zodiacOuter + R.zodiacInner) / 2)}
-    {@const corners = [
+    {@const [c0, c1, c2, c3] = [
       toXY(start, R.zodiacInner),
       toXY(start, R.zodiacOuter),
       toXY(start + 30, R.zodiacOuter),
       toXY(start + 30, R.zodiacInner),
     ]}
     <path
-      d="M {corners[0].x} {corners[0].y}
-         L {corners[1].x} {corners[1].y}
-         A {R.zodiacOuter} {R.zodiacOuter} 0 0 0 {corners[2].x} {corners[2].y}
-         L {corners[3].x} {corners[3].y}
-         A {R.zodiacInner} {R.zodiacInner} 0 0 1 {corners[0].x} {corners[0].y} Z"
+      d="M {c0.x} {c0.y}
+         L {c1.x} {c1.y}
+         A {R.zodiacOuter} {R.zodiacOuter} 0 0 0 {c2.x} {c2.y}
+         L {c3.x} {c3.y}
+         A {R.zodiacInner} {R.zodiacInner} 0 0 1 {c0.x} {c0.y} Z"
       style:fill={ELEMENT_COLOR[SIGN_ELEMENT[sign]]}
       fill-opacity="0.12"
       stroke="var(--quadrante)"

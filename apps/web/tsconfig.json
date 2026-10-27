@@ -3,6 +3,7 @@
   "compilerOptions": {
     "sourceMap": true,
     "strict": true,
+    "noUncheckedIndexedAccess": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true
   },

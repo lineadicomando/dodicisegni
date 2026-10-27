@@ -87,9 +87,7 @@
       description: SITE_DESCRIPTION,
       inLanguage: 'it-IT',
       license: LICENSE_URL,
-      // Finché `REPOSITORY_URL` è vuoto la voce non c'è: `sameAs: ['']` non
-      // dichiara nessun altrove, dichiara un indirizzo rotto.
-      ...(REPOSITORY_URL ? { sameAs: [REPOSITORY_URL] } : {}),
+      sameAs: [REPOSITORY_URL],
     })
       // Un `<` dentro il JSON chiuderebbe il tag che lo contiene, e quello che
       // segue lo leggerebbe il browser come marcatura. Nessuno di questi campi
@@ -131,5 +129,6 @@
   <!-- `{@html}` e non un `<script>` scritto qui: dentro un componente Svelte
        un tag `script` nel corpo è il blocco del componente, non un elemento da
        rendere. -->
+  <!-- eslint-disable-next-line svelte/no-at-html-tags -- JSON nostro, coi `<` già sostituiti -->
   {@html '<script type="application/ld+json">' + strutturati + '</script>'}
 </svelte:head>

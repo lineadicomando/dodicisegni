@@ -1,4 +1,4 @@
-import { ASPECTS, DEFAULT_PASSAGE_BODIES, MEAN_DAILY_MOTION, TRANSIT_ORB_BONUS, TRANSIT_ORBS } from './constants.js';
+import { ASPECTS, DEFAULT_PASSAGE_BODIES, TRANSIT_ORB_BONUS, TRANSIT_ORBS } from './constants.js';
 import { zodiacContext } from './ayanamsa.js';
 import { computeBodies, initEphemeris, type EphemerisContext } from './ephemeris.js';
 import { signedDifference } from './math.js';
@@ -7,6 +7,7 @@ import {
   WIDEST_ORB,
   bisect,
   julianDayToISO,
+  meanDailyMotion,
   resolveRange,
   signedAngles,
   stepFor,
@@ -63,7 +64,7 @@ export function findTransitPassages(
     // Si campiona oltre gli estremi: un aspetto esatto il primo giorno era in
     // orbita già prima, e senza quel margine la sua finestra risulterebbe
     // aperta soltanto perché non è stata guardata.
-    const margin = Math.min(MAX_WINDOW_DAYS, WIDEST_ORB / (MEAN_DAILY_MOTION[bodyId] ?? 1));
+    const margin = Math.min(MAX_WINDOW_DAYS, WIDEST_ORB / meanDailyMotion(bodyId));
     const samples = sampleLongitudes(bodyId, start - margin, end + margin, context, warnings);
     if (samples.length < 2) continue;
 
@@ -101,7 +102,7 @@ export function sampleLongitudes(
   warnings: string[],
   missing = 'passaggi non cercati',
 ): Sample[] {
-  const step = stepFor(MEAN_DAILY_MOTION[bodyId] ?? 1);
+  const step = stepFor(meanDailyMotion(bodyId));
 
   const samples: Sample[] = [];
   for (let jd = from; jd < to + step; jd += step) {

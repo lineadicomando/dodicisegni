@@ -105,6 +105,9 @@ async function attendiServer(url: string, processo: UtilityProcess): Promise<voi
   });
   const scadenza = Date.now() + 20_000;
   while (Date.now() < scadenza) {
+    // `uscito` lo scrive il callback di 'exit', che il compilatore non segue:
+    // per lui resta null, e la regola lo crede sempre falso.
+    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
     if (uscito !== null) {
       throw new Error(`Il server interno si è chiuso subito (codice ${uscito}).`);
     }
@@ -183,7 +186,7 @@ async function importaDatabase({ finestra: splash, pronta }: Avanzamento): Promi
     if (!splash.isDestroyed()) splash.webContents.send('riga', riga);
   };
   for (const flusso of [processo.stdout, processo.stderr]) {
-    if (flusso) createInterface({ input: flusso }).on('line', scrivi);
+    createInterface({ input: flusso }).on('line', scrivi);
   }
 
   // `null` quando il processo muore di segnale, cioè quando la finestra chiusa

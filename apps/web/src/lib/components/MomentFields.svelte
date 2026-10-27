@@ -51,7 +51,10 @@
   const zona = $derived(value.timezone.replace('_', ' '));
 
   /** Le ampiezze del passo, dalla più fine: è anche l'ordine del menù. */
-  const PASSI: { unit: StepUnit; label: string; uno: string }[] = [
+  type Passo = { unit: StepUnit; label: string; uno: string };
+  // Una tupla e non un elenco: il ripiego qui sotto vuole un primo elemento
+  // che ci sia di sicuro.
+  const PASSI: readonly [Passo, ...Passo[]] = [
     { unit: 'day', label: 'giorno', uno: 'Un giorno' },
     { unit: 'week', label: 'settimana', uno: 'Una settimana' },
     { unit: 'month', label: 'mese', uno: 'Un mese' },

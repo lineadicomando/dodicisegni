@@ -10,11 +10,11 @@
  * segno per gli ingressi, la velocità stessa per le stazioni.
  */
 
-import { DEFAULT_PASSAGE_BODIES, MEAN_DAILY_MOTION, ZODIAC_SIGNS } from './constants.js';
+import { DEFAULT_PASSAGE_BODIES, ZODIAC_SIGNS } from './constants.js';
 import { zodiacContext } from './ayanamsa.js';
 import { computeBodies, initEphemeris, type EphemerisContext } from './ephemeris.js';
 import { degreeInSign, normalize360, signOf, signedDifference } from './math.js';
-import { bisect, julianDayToISO, resolveRange, stepFor } from './roots.js';
+import { bisect, julianDayToISO, meanDailyMotion, resolveRange, stepFor } from './roots.js';
 import type { BodyId, PassageRange, SignIngress, SkyEventOptions, Station } from './types.js';
 
 interface Sample {
@@ -139,7 +139,7 @@ function sample(
   context: EphemerisContext,
   warnings: string[],
 ): Sample[] {
-  const step = stepFor(MEAN_DAILY_MOTION[bodyId] ?? 1);
+  const step = stepFor(meanDailyMotion(bodyId));
   const samples: Sample[] = [];
 
   for (let jd = from; jd < to + step; jd += step) {

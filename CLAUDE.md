@@ -29,6 +29,7 @@ Monorepo npm workspaces, Node ≥ 22.17, ESM, TypeScript.
 npm test                                   # tutti i workspace (vitest)
 npm run test:watch -w @dodicisegni/core
 npm run typecheck                          # ricompila ruota, lettura, core e geo, poi controlla il resto
+npm run lint                               # regole, non formattazione: vedi eslint.config.js
 npm run build
 npm run dev -w @dodicisegni/web         # http://localhost:5173 (Vite)
 npm start -w @dodicisegni/web           # http://localhost:3000, dopo build

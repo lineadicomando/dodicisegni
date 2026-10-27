@@ -93,7 +93,7 @@ describe('lo zodiaco siderale è isolato per thread', () => {
       raman: core.computeNatalChart(NASCITA, { zodiac: 'siderale', ayanamsa: 'raman' }),
     };
     // I due ayanamsa devono davvero differire, altrimenti il confronto è vuoto.
-    expect(soli.lahiri.bodies[0].longitude).not.toBeCloseTo(soli.raman.bodies[0].longitude, 3);
+    expect(soli.lahiri.bodies[0]!.longitude).not.toBeCloseTo(soli.raman.bodies[0]!.longitude, 3);
 
     // Ogni tema è il bersaglio di una ricerca di passaggi: il lavoro lungo
     // serve a tenere i due thread dentro il calcolo nello stesso momento, che
@@ -138,7 +138,7 @@ describe('la coda', () => {
     const core = await import('@dodicisegni/core');
     insieme.forEach((esito, indice) => {
       expect(esito.passages).toEqual(
-        core.findTransitPassages(tema, archi[indice], { minorAspects: false }).passages,
+        core.findTransitPassages(tema, archi[indice]!, { minorAspects: false }).passages,
       );
     });
   });

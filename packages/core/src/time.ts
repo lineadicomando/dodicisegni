@@ -52,7 +52,7 @@ export function resolveTime(moment: LocalMoment): TimeResolution {
   if (!local.isValid) {
     throw new ChartError(
       'DATA_NON_VALIDA',
-      `Impossibile interpretare "${wallClock}" nel fuso ${moment.timezone}: ${local.invalidReason ?? 'motivo sconosciuto'}.`,
+      `Impossibile interpretare "${wallClock}" nel fuso ${moment.timezone}: ${local.invalidReason}.`,
     );
   }
 
@@ -82,8 +82,8 @@ export function resolveTime(moment: LocalMoment): TimeResolution {
         utc.day,
         utc.hour + utc.minute / 60 + utc.second / 3600 + utc.millisecond / 3_600_000,
       ),
-      utc: utc.toISO({ suppressMilliseconds: true }) ?? '',
-      local: local.toISO({ suppressMilliseconds: true }) ?? '',
+      utc: utc.toISO({ suppressMilliseconds: true }),
+      local: local.toISO({ suppressMilliseconds: true }),
       offsetMinutes: local.offset,
       timeKnown,
     },
@@ -124,7 +124,7 @@ export function currentMoment(timezone: string): LocalMoment {
  * adesso non debba costringere a dichiarare anche dove si è.
  */
 export function systemTimezone(): string {
-  return DateTime.local().zoneName ?? 'UTC';
+  return DateTime.local().zoneName;
 }
 
 function normalizeTime(time: string): string {

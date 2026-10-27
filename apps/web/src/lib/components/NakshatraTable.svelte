@@ -45,7 +45,7 @@
           onmouseleave={() => evidenza.sorvola(null)}
           class:evidenziato={evidenza.attivo === voce.id}
         >
-          <td class="glifo">{BODY_GLYPH[voce.id as keyof typeof BODY_GLYPH]}</td>
+          <td class="glifo">{BODY_GLYPH[voce.id]}</td>
           <td>{voce.name}</td>
           <td>
             {#if corpo}

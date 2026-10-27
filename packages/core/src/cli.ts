@@ -585,7 +585,7 @@ function main(argv: string[]): number {
     // Il quadro prende il posto della ruota, non le si aggiunge: `--svg` è un
     // nome di file solo.
     if (values.quadro !== undefined) {
-      return scriviQuadro(chart, values.quadro as StileQuadro, values);
+      return scriviQuadro(chart, values.quadro, values);
     }
 
     const disegno = scriviDisegno(chart, values);

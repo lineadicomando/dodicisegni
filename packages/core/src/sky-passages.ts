@@ -1,7 +1,6 @@
 import {
   ASPECTS,
   DEFAULT_PASSAGE_BODIES,
-  MEAN_DAILY_MOTION,
   TRANSIT_ORB_BONUS,
   TRANSIT_ORBS,
 } from './constants.js';
@@ -15,6 +14,7 @@ import {
   resolveRange,
   signedAngles,
   stepFor,
+  meanDailyMotion,
 } from './roots.js';
 import type { AspectDefinition } from './constants.js';
 import type { BodyId, PassageRange, SkyPassage, SkyPassageOptions } from './types.js';
@@ -124,7 +124,7 @@ function pairsBySpeed(bodies: readonly BodyId[]): [BodyId, BodyId][] {
 }
 
 function motion(bodyId: BodyId): number {
-  return MEAN_DAILY_MOTION[bodyId] ?? 1;
+  return meanDailyMotion(bodyId);
 }
 
 function samplePair(

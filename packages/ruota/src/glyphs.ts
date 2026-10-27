@@ -115,13 +115,22 @@ const POINT_LABEL: Readonly<Partial<Record<NatalPointId, string>>> = {
 /** La stessa mappa vista come parziale su tutti i bersagli possibili. */
 const SIGLE: Readonly<Partial<Record<NatalPointId, string>>> = ANGLE_SIGLA;
 
+/*
+ * I corpi visti come parziali sui bersagli: un punto natale può essere
+ * l'Ascendente, che corpo non è. Un cast a `BodyId` qui direbbe al
+ * compilatore che il glifo c'è sempre, e il ripiego su `id` sembrerebbe
+ * superfluo mentre è quello che regge gli angoli.
+ */
+const GLIFI_DEI_CORPI: Readonly<Partial<Record<NatalPointId, string>>> = BODY_GLYPH;
+const NOMI_DEI_CORPI: Readonly<Partial<Record<NatalPointId, string>>> = BODY_LABEL;
+
 export function natalPointGlyph(id: NatalPointId): string {
   if (id === 'fortuna') return POINT_GLYPH.fortuna;
-  return SIGLE[id] ?? BODY_GLYPH[id as BodyId] ?? id;
+  return SIGLE[id] ?? GLIFI_DEI_CORPI[id] ?? id;
 }
 
 export function natalPointLabel(id: NatalPointId): string {
-  return POINT_LABEL[id] ?? BODY_LABEL[id as BodyId] ?? id;
+  return POINT_LABEL[id] ?? NOMI_DEI_CORPI[id] ?? id;
 }
 
 /** `true` quando al posto del glifo c'è una sigla di lettere. */

@@ -74,6 +74,8 @@ export function shiftMoment(input: MomentInput, unit: StepUnit, amount: number):
  */
 export function shiftDate(date: string, unit: StepUnit, amount: number): string {
   const [year, month, day] = date.split('-').map(Number);
+  // Una data che non ha tre parti non ha niente da spostare.
+  if (year === undefined || month === undefined || day === undefined) return date;
 
   if (unit === 'day' || unit === 'week') {
     return iso(utc(year, month - 1, day + amount * (unit === 'week' ? 7 : 1)));

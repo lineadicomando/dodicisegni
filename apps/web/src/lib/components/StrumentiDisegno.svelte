@@ -98,7 +98,7 @@
     errore = null;
     try {
       await conCartaIntera(() =>
-        scarica(new Blob([serializza(svg!)], { type: 'image/svg+xml' }), `${base}.svg`),
+        scarica(new Blob([serializza(svg)], { type: 'image/svg+xml' }), `${base}.svg`),
       );
     } catch {
       errore = 'Il disegno non si è lasciato salvare.';
@@ -110,7 +110,7 @@
     errore = null;
     inCorso = true;
     try {
-      scarica(await conCartaIntera(() => comePng(svg!)), `${base}.png`);
+      scarica(await conCartaIntera(() => comePng(svg)), `${base}.png`);
     } catch {
       errore = 'Il disegno non si è lasciato convertire in immagine.';
     } finally {

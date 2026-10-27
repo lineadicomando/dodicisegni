@@ -15,9 +15,10 @@
  */
 
 import { DateTime } from 'luxon';
+import { MEAN_DAILY_MOTION } from './constants.js';
 import { ChartError } from './errors.js';
 import { resolveTime } from './time.js';
-import type { PassageRange } from './types.js';
+import type { BodyId, PassageRange } from './types.js';
 
 /** Gradi di moto per passo di campionamento: più fitto di così è sprecato. */
 export const STEP_DEGREES = 2;
@@ -30,6 +31,23 @@ export const PRECISION_DAYS = 1 / 1440;
 export const MAX_WINDOW_DAYS = 1095;
 /** L'orbita più larga concessa a un aspetto: congiunzione più i due luminari. */
 export const WIDEST_ORB = 4;
+
+/**
+ * Il moto medio di un corpo, in gradi al giorno, o un errore se il corpo non
+ * esiste.
+ *
+ * Per il tipo la tabella è completa, ma gli identificativi arrivano anche da
+ * fuori con un cast (gli elenchi `bodies` dell'MCP sono stringhe): un corpo
+ * sconosciuto qui darebbe un passo non numerico, nessun campione e un elenco
+ * vuoto in silenzio. Lo si dice invece, con lo stesso codice del motore.
+ */
+export function meanDailyMotion(bodyId: BodyId): number {
+  const motion = (MEAN_DAILY_MOTION as Readonly<Partial<Record<string, number>>>)[bodyId];
+  if (motion === undefined) {
+    throw new ChartError('CORPO_SCONOSCIUTO', `Corpo celeste "${bodyId}" non riconosciuto.`);
+  }
+  return motion;
+}
 
 /** Il passo di campionamento per una velocità in gradi al giorno. */
 export function stepFor(degreesPerDay: number): number {

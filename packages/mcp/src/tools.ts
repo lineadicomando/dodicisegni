@@ -46,12 +46,7 @@ import {
   type TransitOptions,
 } from '@dodicisegni/core';
 import { GeoError, getLocation, searchLocations, type Location } from '@dodicisegni/geo';
-import {
-  paletteDi,
-  type OpzioniDisegno,
-  type StileQuadro,
-  type WheelChart,
-} from '@dodicisegni/ruota';
+import { paletteDi, type OpzioniDisegno } from '@dodicisegni/ruota';
 import { quadroPng, ruotaPng } from '@dodicisegni/ruota/png';
 import type { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
 import type { CallToolResult } from '@modelcontextprotocol/sdk/types.js';
@@ -320,7 +315,7 @@ export function registerComputeNatalChart(server: McpServer, context: ToolContex
         if ('error' in zodiaco) return fail(zodiaco.error);
 
         const options: ChartOptions = { minorAspects: args.minor_aspects ?? false, ...zodiaco };
-        if (args.house_system) options.houseSystem = args.house_system as HouseSystem;
+        if (args.house_system) options.houseSystem = args.house_system;
         if (args.part_of_fortune_formula) {
           options.partOfFortuneFormula = args.part_of_fortune_formula;
         }
@@ -452,7 +447,7 @@ export function registerComputeJyotishaChart(server: McpServer, context: ToolCon
         // cambiare: sono ciò che rende vedico questo tema. Chi vuole altro
         // usa compute_natal_chart, che le opzioni ce le ha.
         const chartOptions: ChartOptions = { zodiac: 'siderale', houseSystem: 'segni-interi' };
-        if (args.ayanamsa) chartOptions.ayanamsa = args.ayanamsa as AyanamsaId;
+        if (args.ayanamsa) chartOptions.ayanamsa = args.ayanamsa;
         if (context.ephemerisPath) chartOptions.ephemerisPath = context.ephemerisPath;
 
         const options: JyotishaOptions = {};
@@ -460,7 +455,7 @@ export function registerComputeJyotishaChart(server: McpServer, context: ToolCon
         if (args.dasha_levels) dasha.levels = args.dasha_levels as 1 | 2 | 3;
         if (args.dasha_year) dasha.yearLength = args.dasha_year;
         if (Object.keys(dasha).length > 0) options.dasha = dasha;
-        if (args.vargas) options.vargas = args.vargas as VargaId[];
+        if (args.vargas) options.vargas = args.vargas;
         if (args.drishti_nodes) options.drishti = { nodes: args.drishti_nodes };
 
         const jyotisha = computeJyotisha(computeNatalChart(birth, chartOptions), options);
@@ -598,7 +593,7 @@ export function registerComputeTransits(server: McpServer, context: ToolContext 
         if ('error' in zodiaco) return fail(zodiaco.error);
 
         const options: ChartOptions = { minorAspects: args.minor_aspects ?? false, ...zodiaco };
-        if (args.house_system) options.houseSystem = args.house_system as HouseSystem;
+        if (args.house_system) options.houseSystem = args.house_system;
         if (context.ephemerisPath) options.ephemerisPath = context.ephemerisPath;
 
         const chart = computeNatalChart(birth, options);
@@ -621,7 +616,7 @@ export function registerComputeTransits(server: McpServer, context: ToolContext 
         const moment = transitMoment(args, daDove.timezone ?? place.timezone);
 
         const transitOptions: TransitOptions = { minorAspects: args.minor_aspects ?? false };
-        if (args.house_system) transitOptions.houseSystem = args.house_system as HouseSystem;
+        if (args.house_system) transitOptions.houseSystem = args.house_system;
         if (context.ephemerisPath) transitOptions.ephemerisPath = context.ephemerisPath;
         if (daDove.place) transitOptions.place = daDove.place;
 
@@ -740,7 +735,7 @@ export function registerComputeSky(server: McpServer, context: ToolContext = {})
         if ('error' in zodiaco) return fail(zodiaco.error);
 
         const options: SkyOptions = { minorAspects: args.minor_aspects ?? false, ...zodiaco };
-        if (args.house_system) options.houseSystem = args.house_system as HouseSystem;
+        if (args.house_system) options.houseSystem = args.house_system;
         if (context.ephemerisPath) options.ephemerisPath = context.ephemerisPath;
         if (observation.place) options.place = observation.place;
 
@@ -1232,7 +1227,7 @@ export function registerDrawChartWheel(server: McpServer, context: ToolContext =
         if ('error' in zodiaco) return fail(zodiaco.error);
 
         const options: ChartOptions = { minorAspects: args.minor_aspects ?? false, ...zodiaco };
-        if (args.house_system) options.houseSystem = args.house_system as HouseSystem;
+        if (args.house_system) options.houseSystem = args.house_system;
         if (context.ephemerisPath) options.ephemerisPath = context.ephemerisPath;
 
         const chart = computeNatalChart(birth, options);
@@ -1247,7 +1242,7 @@ export function registerDrawChartWheel(server: McpServer, context: ToolContext =
         if (args.with_transits) {
           const moment = transitMoment(args, place.timezone);
           const transitOptions: TransitOptions = { minorAspects: args.minor_aspects ?? false };
-          if (args.house_system) transitOptions.houseSystem = args.house_system as HouseSystem;
+          if (args.house_system) transitOptions.houseSystem = args.house_system;
           if (context.ephemerisPath) transitOptions.ephemerisPath = context.ephemerisPath;
 
           const transits = computeTransits(chart, moment, transitOptions);
@@ -1256,7 +1251,7 @@ export function registerDrawChartWheel(server: McpServer, context: ToolContext =
           didascalia += `\nTransiti al ${transits.time.utc.slice(0, 16).replace('T', ' ')} UT.`;
         }
 
-        const png = ruotaPng(chart as WheelChart, {
+        const png = ruotaPng(chart, {
           ...disegno,
           larghezza: args.width ?? LARGHEZZA_MCP,
         });
@@ -1367,12 +1362,12 @@ export function registerDrawJyotishaChart(server: McpServer, context: ToolContex
         if (args.time !== undefined) birth.time = args.time;
 
         const options: ChartOptions = { zodiac: 'siderale', houseSystem: 'segni-interi' };
-        if (args.ayanamsa) options.ayanamsa = args.ayanamsa as AyanamsaId;
+        if (args.ayanamsa) options.ayanamsa = args.ayanamsa;
         if (context.ephemerisPath) options.ephemerisPath = context.ephemerisPath;
 
-        const id = (args.varga ?? 'd1') as VargaId;
+        const id = (args.varga ?? 'd1');
         const varga = computeVarga(computeNatalChart(birth, options), id);
-        const stile = (args.stile ?? 'sud') as StileQuadro;
+        const stile = (args.stile ?? 'sud');
 
         // Il rifiuto prima del disegno: la geometria solleverebbe lo stesso,
         // ma con un messaggio che parla di poligoni invece che di che cosa fare.

@@ -240,8 +240,8 @@ export function nelPool<L extends keyof Lavori>(
   return new Promise((risolvi, rifiuta) => {
     const incarico: Incarico = {
       lavoro,
-      argomenti: argomenti as unknown[],
-      risolvi: risolvi as (esito: never) => void,
+      argomenti: argomenti,
+      risolvi: risolvi,
       rifiuta,
     };
 

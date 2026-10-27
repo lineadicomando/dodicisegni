@@ -30,7 +30,6 @@ import type {
   ReceptionDignity,
   Sect,
   WesternDignities,
-  ZodiacSign,
 } from './types.js';
 
 /** Le dignità per cui le ricezioni si contano, con e senza la scuola. */
@@ -69,7 +68,7 @@ export function computeWesternDignities(
     bodies: bodies.map((body) => ({
       id: body.id,
       name: body.name,
-      sign: body.sign as ZodiacSign,
+      sign: body.sign,
       dignities: {
         tradizionale: dignitiesOf(body.id, body.sign, 'tradizionale'),
         moderno: dignitiesOf(body.id, body.sign, 'moderno'),

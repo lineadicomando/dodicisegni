@@ -12,7 +12,7 @@ chiuse comprese, è `cf5219a`, quando il file si chiamava ancora `ROADMAP.md`.
 Le voci dalla 20 alla 23 sono nate e si sono chiuse dopo: la 20 per intero sta
 in `3314553`, la 21 e la 22 in `819ce59`, la 23 in `db332a6`. La 11, aperta
 prima e chiusa dopo, sta per intero in `e194d45`, la 13 in `e532f2f`, la 7 in
-`955977b`.
+`955977b`, la 9 in `8a04cfb`.
 
 Le fonti citate qui stanno in copia locale in `texts/`, fuori dal repo: la
 cartella, le schede `FONTE.md` e l'elenco `texts/INDICE.md` si mantengono come
@@ -36,8 +36,7 @@ volta e ricominciare da capo.
 
 | Voce | Priorità | Taglia | Prima di cominciare |
 |---|---|---|---|
-| 9. Il linter | media | piccola | decidere lo strumento; il resto è fatto |
-| 18. Le orbite senza autore | media | media | decidere fra le due strade |
+| 18. Le orbite senza autore | media | media | deciso: più convenzioni nominate, la più diffusa come predefinita |
 | 8. Il glossario e /metodo | media | grande | si incrocia col punto 6 |
 | 6. La prosa che invecchia | bassa | piccola | farla insieme al punto 8 |
 | 5. I varga che mancano | non dichiarata | tre lotti | per il D-2, la convenzione |
@@ -321,55 +320,6 @@ Due cose invece vanno fatte comunque:
 - **Il payoff nel titolo non fa parte di questo lavoro.** Quello che
   dell'esame era rimasto in piedi, il titolo della home e uno `slogan` nei dati
   strutturati, è già fatto (`f7696e8`).
-
-## 9. Il codice morto non lo vede nessuno
-
-**Priorità media.** Restano il linter vero e la decisione che porta con
-sé. Il progetto non ha alcuna configurazione di lint o
-di formattazione: nessun ESLint, nessun Prettier, nessun Biome, nessun oxlint,
-e in `package.json` nessuno script che li chiami.
-
-Non è un'ipotesi: due difetti reali sono entrati e nessuno se n'è accorto.
-`api/chart/wheel/+server.ts` importava `ruotaSvg` e `ruotaPng` senza usarli, e
-il secondo apriva una seconda porta su `ruota/png`, il punto d'ingresso col
-modulo nativo che deve entrare solo da `lib/server`, cioè una regola di
-`CLAUDE.md` aggirata da un import dimenticato. L'altro era un parametro
-`context` che `findVoidsOfCourse` in `election.ts` riceveva senza usarlo.
-Tutti e due sono corretti, ma allora non li vedevano né `typecheck` né i test,
-che giravano verdi lo stesso.
-
-### Quello che c'è già
-
-`noUnusedLocals` e `noUnusedParameters` stanno in `tsconfig.base.json` e anche
-in `apps/web/tsconfig.json`, che non estende la base ma `$app/tsconfig`, quello
-generato da SvelteKit, quindi i flag della radice non lo raggiungono.
-`svelte-check` li legge come errori e li applica ai componenti come ai `.ts`:
-import e variabili morte, anche nei `.svelte`, oggi cadono. Accendendoli è
-saltato fuori un terzo import morto, `ASPECT_GLYPH` in
-`TransitAspectTable.svelte`.
-
-Il service worker, che da SvelteKit 3 è un progetto TypeScript a sé
-(`apps/web/src/service-worker/tsconfig.json`, controllato con `tsc` dallo
-script `typecheck` di `web`), porta i due flag nel suo `compilerOptions`:
-anche lì un import morto oggi cade.
-
-### Il linter vero è una decisione a parte
-
-Va deciso, e non è ovvio:
-
-- **Quale strumento**, e con quale licenza: ogni dipendenza nuova deve essere
-  compatibile con l'AGPL-3.0-or-later.
-- **Se la formattazione entri o no.** Qui la cautela è concreta: i commenti di
-  questo repo sono prosa italiana mandata a capo a mano, spesso su misura del
-  ragionamento che portano. Un formattatore che li riflua non rompe niente e
-  peggiora tutto, e il diff che ne esce non si rilegge. Il lint delle regole e
-  la formattazione del testo sono due decisioni, e conviene prendere solo la
-  prima.
-- **Che cosa aggiunge, ora che i `.svelte` sono coperti.** Il primo passo li
-  prende già, import e variabili morte comprese. Quello che un linter porta in
-  più sono le regole che il compilatore non ha (le promesse non attese, i
-  confronti che non possono essere veri), e vanno guardate una per una prima di
-  accenderle tutte.
 
 ## 17. L'astrologia oraria
 
@@ -904,6 +854,11 @@ Verifica: ogni fonte citata in un commento di `packages/` ha una riga in
   indice di intensità del periodo, che sarebbe un peso senza autore: si
   espongono i componenti (bordi, orbita ai bordi, perfezioni, avvicinamento
   massimo). Deciso con la voce 7.
+- **Il linter ha regole e nessun formattatore.** ESLint con typescript-eslint
+  e eslint-plugin-svelte, regole scelte una per una e nessun preset acceso in
+  blocco (`eslint.config.js` dice perché ciascuna). Un formattatore
+  rifluirebbe la prosa dei commenti, che è mandata a capo a mano. Deciso il
+  27 ottobre 2026, con la voce 9.
 - **Il server MCP non ha un pool, e non gli serve**: è un processo per client,
   sul trasporto stdio, e non c'è nessun'altra richiesta da tenere in attesa.
 - **I thread del pool web sono al massimo quattro, e la quinta richiesta

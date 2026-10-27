@@ -36,7 +36,6 @@ import type {
   LillyRulers,
   MutualReception,
   Reception,
-  ReceptionDignity,
   Sect,
   ZodiacSign,
 } from './types.js';
@@ -191,7 +190,7 @@ export function lillyRulersAt(longitude: number, sect: Sect | undefined): LillyR
   );
   const triplicita = lillyTriplicityRuler(sign, sect);
   return {
-    domicilio: DOMICILES.tradizionale[sign] as LillyPlanet,
+    domicilio: DOMICILES.tradizionale[sign],
     ...(esaltato ? { esaltazione: esaltato } : {}),
     ...(triplicita ? { triplicita } : {}),
     termine: lillyTermRuler(longitude),
@@ -247,6 +246,6 @@ export function lillyReceptionsOf(
   const voci = ['domicilio', 'esaltazione', 'triplicita', 'termine', 'faccia'] as const;
   return collectReceptions(bodies, (receiver, received) => {
     const signori = lillyRulersAt(received.longitude, sect);
-    return voci.filter((voce) => signori[voce] === receiver) as ReceptionDignity[];
+    return voci.filter((voce) => signori[voce] === receiver);
   });
 }
