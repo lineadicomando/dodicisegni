@@ -98,7 +98,14 @@ manca o è difficile. Quelle per triplicità, termine e faccia ci sono solo se
 la sezione porta la tavola di Lilly, che si chiede a parte; se la riga Lilly
 non c'è, non sono calcolate: non dedurle. Quando c'è, dà per ogni corpo i
 signori del suo grado e le dignità che ha lì; esaltazione e caduta valgono per
-tutto il segno, anche se la tavola nomina il grado. Due pianeti personali di tempra opposta sono un
+tutto il segno, anche se la tavola nomina il grado. Con la tavola di Lilly
+viene anche la sezione CONDIZIONI (LILLY): casa, rapporto col Sole, moto e
+orientalità di ciascun pianeta, e il conto della sua tavola delle fortezze
+(p. 115) scritto voce per voce, con le fortezze, le debilità e la
+differenza. È il conteggio di una scuola: attribuiscilo a Lilly, non
+ricalcolarlo con pesi tuoi, e non farne un voto sulla persona. Le righe
+«Lettura» dicono dove il testo lascia una scelta; se ne citi il conto, dì
+anche quelle. Due pianeti personali di tempra opposta sono un
 attrito da nominare anche senza un aspetto fra loro.
 
 Le forze in conflitto, e come si compongono. Un quadrato o un'opposizione non è

@@ -23,6 +23,7 @@
   import ChartSettings from '#lib/components/ChartSettings.svelte';
   import ChartWheel from '#lib/components/ChartWheel.svelte';
   import CampiMancanti from '#lib/components/CampiMancanti.svelte';
+  import LillyConditionsTable from '#lib/components/LillyConditionsTable.svelte';
   import DignityTable from '#lib/components/DignityTable.svelte';
   import DistributionTable from '#lib/components/DistributionTable.svelte';
   import LegendaElementi from '#lib/components/LegendaElementi.svelte';
@@ -333,6 +334,9 @@
             sect={chart.sect}
             {evidenza}
           />
+        {/if}
+        {#if chart.dignities?.lilly}
+          <LillyConditionsTable conditions={chart.dignities.lilly.conditions} {evidenza} />
         {/if}
       </div>
     </div>

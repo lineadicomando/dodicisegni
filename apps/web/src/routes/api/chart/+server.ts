@@ -24,8 +24,10 @@ import type { RequestHandler } from './$types';
  * Nel tropicale il tema porta le dignità occidentali (`chart.dignities`):
  * domicili nelle due convenzioni, esaltazioni, esili, cadute e ricezioni,
  * ciascuna con la sua fonte. `dignitySchool=lilly` aggiunge la tavola di Lilly
- * (1647) con triplicità, termini e facce, e conta le ricezioni su tutte e
- * cinque le dignità. Una scuola diversa da `lilly` è `SCUOLA_DIGNITA_NON_VALIDA`;
+ * (1647) con triplicità, termini e facce, conta le ricezioni su tutte e
+ * cinque le dignità, e porta in `chart.dignities.lilly.conditions` le
+ * condizioni dell'istante e il conto della sua tavola delle fortezze (p. 115),
+ * riga per riga. Una scuola diversa da `lilly` è `SCUOLA_DIGNITA_NON_VALIDA`;
  * chiesta insieme a `zodiac=siderale` è `ZODIACO_NON_TROPICALE`, perché le
  * sue tavole sono costruite sullo zodiaco tropicale. Nel siderale le dignità
  * non ci sono: quelle di Parashara stanno in `/api/jyotish`.

@@ -311,7 +311,11 @@ export function registerComputeNatalChart(server: McpServer, context: ToolContex
           .describe(
             'Aggiunge alle dignità comuni (domicili tradizionali e moderni, esaltazioni, esili, ' +
               'cadute, ricezioni) la tavola di una scuola nominata. lilly: Christian Astrology ' +
-              '(1647), con triplicità, termini e facce e le ricezioni contate su tutte e cinque. ' +
+              '(1647), con triplicità, termini e facce e le ricezioni contate su tutte e cinque, ' +
+              'e la sezione CONDIZIONI (LILLY): ora planetaria, casa con la regola dei cinque gradi, ' +
+              'combustione e raggi, moto, orientalità, partili, stelle, e il conto della sua tavola ' +
+              'delle fortezze (p. 115) voce per voce, con fortezze, debilità e differenza. Le case, ' +
+              "l'ora planetaria e le righe che ne dipendono vogliono l'ora di nascita. " +
               'Ometti se chi scrive non chiede l\'astrologia tradizionale: non è un default ' +
               'migliore, è una scuola. Solo nello zodiaco tropicale; con zodiac siderale è un ' +
               'errore. Le dignità sono tavole di una tradizione, non giudizi sul tema.',
