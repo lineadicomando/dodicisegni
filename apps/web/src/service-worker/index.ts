@@ -46,7 +46,11 @@ const CACHE = `${SITE_NAME}-${version}`;
  * `url.pathname` con cui `NELLA_SCORTA` li confronta. I chunk passano da
  * `asset` come i file statici, perché SvelteKit li serve dallo stesso
  * prefisso; il tipo di `asset` conosce solo quelli di `static/`, da cui il
- * cast.
+ * cast. Anche `resolve` ha il suo: il percorso arriva come unione di tutte le
+ * rotte, e TypeScript confronta un'unione con le firme di `resolve` solo fino
+ * a venticinque membri. Con le pagine del glossario e del metodo le rotte
+ * sono di più, e un percorso che a runtime va benissimo non passa più il
+ * controllo dei tipi.
  *
  * Meno l'anteprima dei collegamenti condivisi, che sta in `static/` ma non è
  * roba da browser: il perché è in `lib/cache-policy.ts`, insieme alle altre
@@ -55,7 +59,7 @@ const CACHE = `${SITE_NAME}-${version}`;
 const PRECARICATI = [
   ...immutable.map(({ path }) => asset(path as AssetPath)),
   ...assets.map(({ path }) => asset(path)).filter((file) => !isCrawlerAsset(file)),
-  ...prerendered.map(({ path }) => resolve(path)),
+  ...prerendered.map(({ path }) => (resolve as (pathname: string) => string)(path)),
 ];
 
 /** Per sapere in fretta se una richiesta è di quelle precaricate. */

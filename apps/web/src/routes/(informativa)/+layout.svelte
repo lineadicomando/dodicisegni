@@ -31,8 +31,8 @@
     margin: 2.25rem 0 0.5rem;
   }
 
-  /* Il terzo livello, che serve dove un capitolo ha delle parti — l'astrologia
-     indiana ne ha cinque. Nel serif come gli altri due, ma della misura del
+  /* Il terzo livello, che serve dove un capitolo ha delle parti, come le
+     voci del glossario dentro le loro famiglie. Nel serif come gli altri due, ma della misura del
      testo: a distinguerlo basta lo stacco sopra, che è la metà di quello di un
      `h2` perché una parte non apre un capitolo, lo divide. */
   .prosa :global(h3) {
@@ -74,5 +74,35 @@
 
   .prosa :global(.sintesi ul) {
     margin: 0;
+  }
+  .prosa :global(code) {
+    font-size: 0.9em;
+    background: var(--accento-tenue);
+    padding: 0.05em 0.3em;
+    border-radius: 0.25rem;
+    word-break: break-word;
+  }
+
+  /* Le tavole prendono lo stile globale dei risultati: sono le stesse
+     tabelle, e devono leggersi allo stesso modo. Qui però stanno in mezzo a
+     un testo corrente, e hanno bisogno dell'aria che nell'interfaccia dà loro
+     il riquadro che le contiene. */
+  .prosa :global(table) {
+    margin: 0.4rem 0 1.4rem;
+  }
+
+  /* Le colonne di numeri si confrontano leggendo in verticale, e con
+     l'allineamento a sinistra «1,5°» e «2°» non cominciano nello stesso
+     punto. Le tavole di parole lo chiedono con `class="testo"`. */
+  .prosa :global(table:not(.testo) td:not(:first-child)),
+  .prosa :global(table:not(.testo) th:not(:first-child)) {
+    text-align: right;
+    padding-right: 0;
+  }
+
+  /* Il rimando in testa alle pagine che stanno sotto un'altra. */
+  .prosa :global(.sopra) {
+    font-size: 0.85rem;
+    margin: 0 0 0.6rem;
   }
 </style>

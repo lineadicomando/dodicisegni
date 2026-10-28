@@ -9,14 +9,15 @@
 
   Ogni numero qui dentro sta anche in `packages/core`, ed è il posto in cui
   cambia per primo: `orbite.ts` per le orbite, `constants.ts` per corpi e
-  sistemi di case, `ayanamsa.ts` per i sei ayanamsa, `varga.ts` per le sette
-  divisionali. Quando
+  sistemi di case, `ayanamsa.ts` per i sei ayanamsa. Le cinque parti
+  dell'astrologia indiana hanno ciascuna una pagina qui sotto, con le tavole
+  di `nakshatra.ts`, `dasha.ts`, `varga.ts` e `drishti.ts`, che
+  `jyotisha.test.ts` guarda come `orbite.test.ts` guarda le orbite. Quando
   quelli cambiano, questa pagina è vecchia. Generarla dai valori vorrebbe dire
   ridurre la prosa a una tabella, che è esattamente la cosa che una pagina come
   questa non deve essere; un test però guarda le due tavole delle orbite,
   cella per cella, e cade se `orbite.ts` cambia (`orbite.test.ts`, qui
-  accanto). Il resto, i sistemi di case, gli ayanamsa e i varga, nessun test
-  lo vede.
+  accanto). I sistemi di case e gli ayanamsa nessun test li vede.
 -->
 <script lang="ts">
   import Meta from '#lib/components/Meta.svelte';
@@ -48,7 +49,8 @@
   l'inizio dell'Ariete da due punti diversi, dividono le case con due formule
   diverse, chiamano aspetto due angoli diversi. Questa pagina elenca le scelte
   fatte qui, così che chi trova un risultato diverso altrove possa vedere dove
-  le due strade si separano invece di chiedersi chi ha ragione.
+  le due strade si separano invece di chiedersi chi ha ragione. Che cosa
+  vogliano dire i termini, in breve, lo dice il <a href="/glossario">glossario</a>.
 </p>
 
 <h2 id="predicati">Che cosa il motore dice e che cosa tace</h2>
@@ -343,96 +345,36 @@
   Tutto quello che segue vale <strong>nello zodiaco siderale</strong>.
 </p>
 
-<h3 id="nakshatra">I nakshatra</h3>
-
 <p>
-  Lo zodiaco diviso in ventisette parti invece che in dodici: sono le tappe di
-  un giro della Luna, non del Sole, e ciascuna misura 13°20'. Nell'astrologia
-  indiana pesano quanto i segni e in più d'un caso di più; il nakshatra della
-  Luna alla nascita è quello che si intende quando si chiede sotto quale stella
-  qualcuno è nato. Ognuno si divide in quattro <em>pada</em> di 3°20'.
+  Ciascuna delle cinque parti ha una pagina sua, con le tavole e un esempio da
+  rifare a mano:
 </p>
 
-<p>
-  Chiederne uno su una longitudine tropicale è una domanda malposta: un
-  nakshatra è un tratto di cielo fra stelle fisse, e contarlo dal punto vernale
-  lo staccherebbe dalle stelle che lo nominano. Il motore lo dice invece di
-  rispondere con un numero.
-</p>
-
-<h3 id="dasha">Le dasha vimshottari</h3>
-
-<p>
-  Il tempo diviso in periodi retti da un graha. <em>Vimshottari</em> vuol dire
-  centoventi, e tanti sono gli anni del ciclo intero; i nove graha se li
-  dividono in parti fisse e disuguali che sommano a centoventi esatti. Ogni
-  periodo si suddivide nei nove secondo le stesse proporzioni: qui la
-  suddivisione si ferma al terzo ordine.
-</p>
-
-<p>
-  Dove la catena cominci lo dice il nakshatra della Luna alla nascita; quanto ne
-  resti lo dice il punto esatto dentro quel nakshatra. È l'unico calcolo del
-  sito in cui un secondo d'arco vale ore di calendario: 13°20' valgono fino a
-  vent'anni di dasha, quindi un secondo d'arco vale circa tre ore e mezza. Su
-  un'ora di nascita incerta, le date che ne escono lo sono altrettanto.
-</p>
-
-<p>
-  È la cosa più simile a una previsione che il sito emetta, e resta aritmetica:
-  dice quando un periodo comincia, non che cosa ci accadrà dentro.
-</p>
-
-<h3 id="varga">I varga</h3>
-
-<p>
-  Un varga divide ogni segno in <em>n</em> parti e assegna a ciascuna un segno,
-  secondo una regola che cambia da varga a varga. Ne esce una carta nuova, con
-  gli stessi corpi in posti diversi: il D-9 di una nascita è una seconda carta,
-  non una colonna della prima. Il sito ne calcola sette: <strong>D-1, D-3, D-9,
-  D-10, D-12, D-27 e D-30</strong>.
-</p>
-
-<p>
-  Fra le sedici divisioni classiche le scuole divergono su più d'una, e un segno
-  consegnato senza la regola che l'ha prodotto non si può ricontrollare: per
-  questo <strong>la regola viaggia col risultato</strong>, scritta per esteso
-  accanto alla carta. A che cosa serva ciascun varga è interpretazione e sta a
-  chi legge; che cosa ciascuno sia è aritmetica, ed è dichiarata.
-</p>
-
-<h3 id="drishti">Le drishti</h3>
-
-<p>
-  Non sono gli aspetti occidentali con un altro nome, e differiscono in tutto.
-  <strong>Si contano a segni interi</strong>: non c'è orbita, un graha guarda un
-  segno intero e tutto ciò che vi si trova. <strong>Sono direzionali</strong>: si
-  contano sempre in avanti nello zodiaco, quindi che A guardi B non implica che
-  B guardi A. E <strong>cadono anche sul vuoto</strong>, perché un graha che
-  guarda una casa disabitata la guarda lo stesso; per questo i segni
-  bersagliati si riportano tutti, non solo quelli occupati.
-</p>
-
-<p>
-  La regola di base è che ognuno guarda il settimo da sé, cioè il segno opposto.
-  Tre ne hanno altre due ciascuno: Marte la quarta e l'ottava, Giove la quinta e
-  la nona, Saturno la terza e la decima.
-</p>
-
-<h3 id="panchanga">Il panchanga</h3>
-
-<p>
-  Le cinque membra del calendario indiano: tithi, vara, nakshatra, yoga e
-  karana. Non è un tema: è la qualità di un istante in un luogo. Tutto discende
-  da due sole longitudini, quella del Sole e quella della Luna, e da un'alba.
-</p>
-
-<p>
-  Da lì discende anche una distinzione che vale la pena tenere a mente:
-  <strong>tithi e karana non dipendono dall'ayanamsa</strong>, perché una
-  differenza fra due longitudini non cambia se si spostano entrambe. Nakshatra e
-  yoga sì, e lo yoga il doppio degli altri, perché usa la somma.
-</p>
+<ul>
+  <li id="nakshatra">
+    <a href="/metodo/nakshatra"><strong>I nakshatra</strong></a>: lo zodiaco in
+    ventisette parti da 13°20', ciascuna divisa in quattro pada, e il graha che
+    regge ognuna.
+  </li>
+  <li id="dasha">
+    <a href="/metodo/dasha"><strong>Le dasha vimshottari</strong></a>: il ciclo
+    di centoventi anni diviso fra i nove graha, il saldo alla nascita e le
+    suddivisioni; l'unico calcolo in cui un secondo d'arco vale ore.
+  </li>
+  <li id="varga">
+    <a href="/metodo/varga"><strong>I varga</strong></a>: le carte
+    divisionali. Il sito ne calcola sette, e la regola di ciascuna viaggia col
+    risultato.
+  </li>
+  <li id="drishti">
+    <a href="/metodo/drishti"><strong>Le drishti</strong></a>: gli sguardi dei
+    graha, a segni interi e in un verso solo.
+  </li>
+  <li id="panchanga">
+    <a href="/metodo/panchanga"><strong>Il panchanga</strong></a>: tithi, vara,
+    nakshatra, yoga e karana, da due longitudini e un'alba.
+  </li>
+</ul>
 
 <h2 id="elezione">L'elezione: le ore planetarie</h2>
 
@@ -563,29 +505,3 @@
   come ciascuno di questi numeri viene fuori, e correggerlo se è sbagliato. È il
   senso di questa pagina: non chiedere fiducia, ma dire dove guardare.
 </p>
-
-<style>
-  code {
-    font-size: 0.9em;
-    background: var(--accento-tenue);
-    padding: 0.05em 0.3em;
-    border-radius: 0.25rem;
-    word-break: break-word;
-  }
-
-  /* La tabella delle orbite prende lo stile globale dei risultati — è la stessa
-     tabella, e deve leggersi allo stesso modo — ma qui sta in mezzo a un testo
-     corrente e ha bisogno dell'aria che nell'interfaccia le dà il riquadro che
-     la contiene. */
-  table {
-    margin: 0.4rem 0 1.4rem;
-  }
-
-  /* I gradi in colonna si confrontano leggendo in verticale, e con
-     l'allineamento a sinistra «1,5°» e «2°» non cominciano nello stesso punto. */
-  td:not(:first-child),
-  th:not(:first-child) {
-    text-align: right;
-    padding-right: 0;
-  }
-</style>

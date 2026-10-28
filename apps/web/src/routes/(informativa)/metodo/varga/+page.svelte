@@ -1,0 +1,117 @@
+<!--
+  I varga, staccati da /metodo perché il termine si cerca da solo.
+
+  La tavola ricopia `VARGAS` in `packages/core/src/varga.ts`: sigla, nome e
+  numero delle parti li guarda `../jyotisha.test.ts`; le regole sono la
+  `rule` di ciascuno, che il test non confronta per non legare la prosa. Un
+  varga nuovo va aggiunto qui a mano, e il test cade finché manca.
+-->
+<script lang="ts">
+  import Meta from '#lib/components/Meta.svelte';
+</script>
+
+<Meta
+  titolo="I varga: come si calcolano le divisionali"
+  descrizione="Le carte divisionali del Jyotisha (D-3, navamsa D-9, D-10, D-12, D-27, D-30): la regola di ciascuna, un esempio svolto, e perché la regola viaggia col risultato."
+/>
+
+<p class="sopra"><a href="/metodo#jyotisha">Metodo</a> · astrologia indiana</p>
+
+<h1>I varga</h1>
+<p class="aggiornamento">
+  Le carte divisionali, e la regola con cui il sito ricava ciascuna.
+</p>
+
+<p>
+  Un varga divide ogni segno in <em>n</em> parti e assegna a ciascuna un segno,
+  secondo una regola che cambia da varga a varga. Ne esce una carta nuova, con
+  gli stessi corpi in posti diversi: il D-9 di una nascita è una seconda carta,
+  non una colonna della prima. Il numero dopo la D dice in quante parti si
+  divide il segno.
+</p>
+
+<p>
+  Fra le sedici divisioni classiche le scuole divergono su più d'una, e un segno
+  consegnato senza la regola che l'ha prodotto non si può ricontrollare: per
+  questo <strong>la regola viaggia col risultato</strong>, scritta per esteso
+  accanto alla carta. A che cosa serva ciascun varga è interpretazione e sta a
+  chi legge; che cosa ciascuno sia è aritmetica, ed è dichiarata.
+</p>
+
+<h2 id="regole">I sette che il sito calcola</h2>
+
+<table class="testo">
+  <thead>
+    <tr>
+      <th>Varga</th>
+      <th>Nome</th>
+      <th>Parti</th>
+      <th>Regola</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr><td>D-1</td><td>Rashi</td><td>1</td><td>Il segno stesso: è la carta di partenza.</td></tr>
+    <tr><td>D-3</td><td>Drekkana</td><td>3</td><td>Tre parti da 10°: la prima al segno stesso, la seconda al quinto da lui, la terza al nono.</td></tr>
+    <tr><td>D-9</td><td>Navamsa</td><td>9</td><td>Nove parti da 3°20'. Si parte dal segno stesso se è cardinale, dal nono se è fisso, dal quinto se è mobile.</td></tr>
+    <tr><td>D-10</td><td>Dasamsa</td><td>10</td><td>Dieci parti da 3°. Nei segni dispari si parte dal segno stesso, nei pari dal nono.</td></tr>
+    <tr><td>D-12</td><td>Dwadasamsa</td><td>12</td><td>Dodici parti da 2°30'. Si parte sempre dal segno stesso.</td></tr>
+    <tr><td>D-27</td><td>Nakshatramsa</td><td>27</td><td>Ventisette parti da 1°06'40", contate di seguito dall'Ariete lungo tutto lo zodiaco.</td></tr>
+    <tr><td>D-30</td><td>Trimsamsa</td><td>30</td><td>Cinque tratti disuguali, retti da Marte, Saturno, Giove, Mercurio e Venere; rovesciati nei segni pari.</td></tr>
+  </tbody>
+</table>
+
+<p>
+  Le altre nove divisioni classiche non sono ancora calcolate. Le regole si
+  biforcano in modi diversi, ed è il motivo per cui la tavola non è una formula
+  sola: il D-3 procede per trigoni, il D-9 parte da dove dice la modalità del
+  segno, il D-10 da dove dice la sua parità, il D-12 riparte sempre dal segno
+  stesso.
+</p>
+
+<h2 id="navamsa">Un esempio: la navamsa</h2>
+
+<p>
+  Il Sole a 5° del Toro siderale. Il Toro è un segno fisso, quindi la prima
+  delle nove parti va al nono segno da lui, il Capricorno, e le altre seguono
+  in ordine. 5° cadono nella seconda parte, fra 3°20' e 6°40': il Sole è nella
+  navamsa dell'Acquario.
+</p>
+
+<p>
+  La stessa regola si può dire per elemento: si parte dall'Ariete nei segni di
+  fuoco, dal Capricorno nella terra, dalla Bilancia nell'aria, dal Cancro
+  nell'acqua. Ed equivale a contare le parti di seguito dall'Ariete lungo tutto
+  lo zodiaco, senza ripartire a ogni segno: per questo le parti della navamsa
+  coincidono con i <a href="/metodo/nakshatra#pada">pada</a> dei nakshatra.
+</p>
+
+<h2 id="disuguali">Il trimsamsa, che non divide in parti uguali</h2>
+
+<p>
+  Il D-30 si chiama così ma non ha trenta parti: ne ha cinque, di ampiezza
+  diversa, ciascuna retta da un pianeta. Nei segni dispari 5° a Marte, 5° a
+  Saturno, 8° a Giove, 7° a Mercurio e 5° a Venere, e ogni tratto va al segno
+  dispari del suo pianeta (Ariete, Acquario, Sagittario, Gemelli, Bilancia).
+  Nei segni pari lo stesso ordine si rovescia, con i segni pari degli stessi
+  pianeti.
+</p>
+
+<h2 id="fonte">Le tavole stampate</h2>
+
+<p>
+  La regola del D-27 viene dal <em>Brihat Parashara Hora Shastra</em>, 6.24-26,
+  nella traduzione di R. Santhanam (vol. I, 1992, pp. 78-79). La tavola che
+  Santhanam stampa accanto ha un refuso, nella colonna dei Gemelli, che la
+  regola e la colonna della Bilancia smentiscono: il motore segue la regola.
+  È il genere di errore che si propaga quando le tavole si copiano invece di
+  ricalcolarle, ed è un'altra ragione per cui il sito consegna la regola e non
+  solo il segno.
+</p>
+
+<p>
+  I varga si calcolano nella sezione <a href="/vedica">Vedica</a>.
+</p>
+
+<p class="aggiornamento">
+  Il termine in breve sta nel <a href="/glossario/jyotisha#varga">glossario</a>.
+</p>

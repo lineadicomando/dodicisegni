@@ -1,9 +1,18 @@
+import { readdirSync, readFileSync } from 'node:fs';
 import { describe, expect, it } from 'vitest';
 import { SECTIONS } from './navigation';
 import { SITE_NAME, SITE_TAGLINE } from './project';
 import { PAGINE_PUBBLICHE, robotsTxt, sitemapXml, TITOLO_MASSIMO, titoloCompleto } from './seo';
 
 const ORIGINE = 'https://esempio.it';
+
+/** Gli indirizzi delle pagine sotto `routes/(informativa)`, dal disco. */
+function pagineDiProsa(): string[] {
+  const radice = new URL('../routes/(informativa)/', import.meta.url);
+  return readdirSync(radice, { recursive: true, encoding: 'utf8' })
+    .filter((file) => file.endsWith('+page.svelte'))
+    .map((file) => `/${file.replace(/\/?\+page\.svelte$/, '')}`.replace(/\\/g, '/'));
+}
 
 describe('titoloCompleto', () => {
   it('mette la sezione prima e il sito dopo', () => {
@@ -23,6 +32,17 @@ describe('titoloCompleto', () => {
   it('tiene la pagina d\'ingresso dentro il troncamento', () => {
     expect(titoloCompleto(SITE_TAGLINE).length).toBeLessThanOrEqual(TITOLO_MASSIMO);
   });
+
+  // Le pagine di prosa scrivono il titolo dentro il file, e lì sono lunghi
+  // apposta: portano i termini che si cercano.
+  it('tiene ogni pagina di prosa dentro il troncamento', () => {
+    for (const percorso of pagineDiProsa()) {
+      const sorgente = readFileSync(new URL(`../routes/(informativa)${percorso}/+page.svelte`, import.meta.url), 'utf8');
+      const titolo = /titolo="([^"]+)"/.exec(sorgente)?.[1];
+      expect(titolo, `${percorso} non passa un titolo a Meta`).toBeDefined();
+      expect(titoloCompleto(titolo!).length, percorso).toBeLessThanOrEqual(TITOLO_MASSIMO);
+    }
+  });
 });
 
 describe('PAGINE_PUBBLICHE', () => {
@@ -35,6 +55,16 @@ describe('PAGINE_PUBBLICHE', () => {
   it('contiene le pagine di prosa, che sezioni non sono', () => {
     expect(PAGINE_PUBBLICHE).toContain('/metodo');
     expect(PAGINE_PUBBLICHE).toContain('/privacy');
+  });
+
+  // Le pagine di prosa si elencano a mano, e sono quelle che crescono: il
+  // metodo ha messo figlie, il glossario ne ha tre. Una pagina nuova sotto
+  // `(informativa)` che non entra nell'elenco non entra nella sitemap, e
+  // nessuno se ne accorge leggendo il sito.
+  it('contiene ogni pagina sotto routes/(informativa)', () => {
+    for (const percorso of pagineDiProsa()) {
+      expect(PAGINE_PUBBLICHE, `${percorso} manca da PAGINE_PUBBLICHE in lib/seo.ts`).toContain(percorso);
+    }
   });
 
   it('non elenca niente due volte', () => {

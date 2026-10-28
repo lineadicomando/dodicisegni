@@ -282,13 +282,3 @@
   pagina. La cronologia delle revisioni è pubblica, come tutto il resto del
   codice.
 </p>
-
-<style>
-  code {
-    font-size: 0.9em;
-    background: var(--accento-tenue);
-    padding: 0.05em 0.3em;
-    border-radius: 0.25rem;
-    word-break: break-word;
-  }
-</style>

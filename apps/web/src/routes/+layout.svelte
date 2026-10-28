@@ -106,6 +106,7 @@
     </p>
     <p>
       <a href="/metodo">Metodo</a> ·
+      <a href="/glossario">Glossario</a> ·
       <a href="/privacy">Privacy e cookie</a> ·
       {#if REPOSITORY_URL}
         <a href={REPOSITORY_URL} target="_blank" rel="noopener">codice sorgente</a>

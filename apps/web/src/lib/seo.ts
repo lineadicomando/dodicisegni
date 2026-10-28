@@ -25,7 +25,7 @@ export const TITOLO_MASSIMO = 60;
  *
  * In quest'ordine e non nell'altro, perché è la prima metà quella che
  * sopravvive al troncamento, e la parola che distingue questa pagina dalle
- * altre sei sta lì. Il nome del sito in coda serve a chi legge un elenco di
+ * altre sta lì. Il nome del sito in coda serve a chi legge un elenco di
  * risultati e vuole sapere da dove vengono.
  *
  * Sta qui e non dentro `components/Meta.svelte` per la ragione di sempre in
@@ -41,10 +41,12 @@ export function titoloCompleto(titolo: string): string {
  *
  * Le cinque sezioni vengono da `SECTIONS`, che è già dichiarato «un elenco
  * solo»: una sezione nuova entra nella sitemap senza che nessuno se ne ricordi.
- * Il metodo e l'informativa non sono sezioni — non stanno nel menù e non stanno
- * nel manifesto — ma sono le due pagine del sito fatte di prosa, e le uniche
- * che si possano cercare per quello che dicono invece che per quello che
- * calcolano.
+ * Le pagine di prosa invece no — non stanno nel menù e non stanno nel
+ * manifesto — e sono le uniche che si possano cercare per quello che dicono
+ * invece che per quello che calcolano: il metodo con le sue cinque pagine
+ * dell'astrologia indiana, il glossario con le sue tre famiglie, e
+ * l'informativa. Vanno elencate a mano, e `seo.test.ts` cade se una pagina
+ * sotto `routes/(informativa)` resta fuori.
  *
  * Non c'è nient'altro da elencare, e in particolare non ci sono i temi: un
  * tema non è una pagina, è una query su una pagina che c'è già. Elencarne
@@ -54,6 +56,15 @@ export function titoloCompleto(titolo: string): string {
 export const PAGINE_PUBBLICHE: readonly string[] = [
   ...SECTIONS.map((section) => section.href),
   '/metodo',
+  '/metodo/nakshatra',
+  '/metodo/dasha',
+  '/metodo/varga',
+  '/metodo/drishti',
+  '/metodo/panchanga',
+  '/glossario',
+  '/glossario/tema',
+  '/glossario/tempo',
+  '/glossario/jyotisha',
   '/privacy',
 ];
 
@@ -68,7 +79,7 @@ function xml(testo: string): string {
 }
 
 /**
- * La sitemap: sette indirizzi assoluti e nient'altro.
+ * La sitemap: gli indirizzi assoluti di `PAGINE_PUBBLICHE`, e nient'altro.
  *
  * **Niente `lastmod`.** L'unica data che il programma potrebbe metterci è
  * quella della compilazione, e cambierebbe a ogni ricostruzione anche quando
