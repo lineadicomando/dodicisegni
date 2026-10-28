@@ -23,8 +23,8 @@
 </script>
 
 <Meta
-  titolo="Metodo"
-  descrizione="Le convenzioni con cui il sito calcola: effemeridi, ayanamsa, sistemi di case, orbite degli aspetti, Parte di Fortuna, nakshatra, dasha e varga."
+  titolo="Metodo: case, ayanamsa, orbite e dasha"
+  descrizione="Le convenzioni con cui il sito calcola: effemeridi, ayanamsa, sistemi di case, orbite degli aspetti, Parte di Fortuna, nakshatra, dasha, varga e le dignità di Lilly."
 />
 
 <h1>Metodo</h1>
@@ -468,8 +468,9 @@
 <p>
   Accanto alle ore compare il <strong>vuoto di corso</strong> della Luna: il
   tratto in cui non perfeziona più alcun aspetto maggiore prima di lasciare il
-  segno, e che dura da pochi minuti a un giorno e mezzo. Il sito dice quando
-  comincia e quando finisce. Che la tradizione sconsigli di cominciare qualcosa
+  segno, e che dura da pochi minuti a un giorno e mezzo. È il criterio moderno;
+  quello di Lilly, più stretto, è detto <a href="#lilly">qui sotto</a>. Il sito
+  dice quando comincia e quando finisce. Che la tradizione sconsigli di cominciare qualcosa
   mentre è in corso è interpretazione, e sta a chi legge.
 </p>
 
@@ -477,6 +478,72 @@
   Nessuna di queste pagine dice quale ora sia propizia. Il risultato è un
   calendario, non una classifica, ed è una scelta di fondo: una graduatoria
   sarebbe un giudizio travestito da numero.
+</p>
+
+<h2 id="lilly">La scuola di Lilly: dignità, Luna vuota, astrologia oraria</h2>
+
+<p>
+  William Lilly, <em>Christian Astrology</em> (Londra 1647), è l'unico testo
+  della tradizione occidentale che il sito segua per intero, con le sue tavole,
+  le sue soglie e i suoi pesi, e ogni regola porta la pagina del libro. La
+  ragione è pratica: il metodo vi è svolto su esempi abbastanza minuti da
+  poterli ricalcolare, e il test del motore lo fa. Le pagine si leggono sulla
+  scansione della prima edizione, che è di pubblico dominio, non sulle
+  trascrizioni che circolano in rete.
+</p>
+
+<p>
+  <strong>Le dignità.</strong> Senza chiedere niente, il tema tropicale porta
+  due colonne affiancate e mai fuse: i domicili tradizionali, con esilio,
+  esaltazione e caduta, che sono la parte su cui Tolomeo, Firmico e Lilly
+  concordano; e i domicili moderni, con Urano, Nettuno e Plutone, che un autore
+  unico non hanno. Triplicità, termini e facce non compaiono finché non si
+  nomina una scuola, perché lì le scuole divergono davvero. Nominando Lilly
+  entra la sua tavola di p. 104 intera: le esaltazioni col grado e quelle dei
+  nodi, le triplicità di giorno e di notte con Marte signore dell'acqua, i suoi
+  termini e le facce. Le ricezioni sono quelle di p. 112, per qualunque delle
+  cinque dignità. Nello zodiaco siderale le dignità occidentali non ci sono, e
+  chiederle è un errore: la tavola è scritta per i segni tropicali.
+</p>
+
+<p>
+  <strong>Il conto delle fortezze.</strong> A p. 115 Lilly stampa una tavola che
+  assegna punti a ogni condizione di un pianeta: le dignità, la casa (con la
+  regola dei cinque gradi di p. 33), la distanza dal Sole (cazimi, combusto
+  entro 8°30', sotto i raggi entro 17°), il moto rispetto al suo moto medio,
+  l'essere orientale o occidentale, l'assedio fra Saturno e Marte, la vicinanza
+  a Regolo, Spica e Algol. Il sito dà i punti uno per uno, le fortezze, le
+  debilità e la differenza, come Lilly li somma nell'esempio di pp. 177-181.
+  Non dice la seconda metà della sua frase, che il pianeta «is therefore
+  unfortunate». Dove l'esempio svolto non segue la sua stessa tavola, il sito
+  segue la tavola, e lo dice.
+</p>
+
+<p>
+  <strong>La Luna vuota di corso, due volte.</strong> Il criterio moderno, quello
+  del calendario elettivo, la vuole vuota dall'ultimo aspetto esatto al cambio
+  di segno. Quello di Lilly (p. 112) guarda anche gli aspetti che la Luna sta
+  ancora formando quando esce dal segno: se è già in orbita con un pianeta,
+  secondo le metà delle orbite di p. 107, quella è un'applicazione e la Luna non
+  è vuota. Le due definizioni danno tratti diversi. Il calendario elettivo usa
+  la moderna; il corso di un pianeta fino al cambio di segno, che sta sotto il
+  tema orario, le porta tutte e due col loro nome invece di sceglierne una.
+</p>
+
+<p>
+  <strong>Il tema orario.</strong> L'astrologia oraria legge una domanda, non
+  una nascita: la figura è eretta per l'istante e il luogo in cui la domanda è
+  posta, col sistema di case Regiomontano, come le figure del secondo libro.
+  La casa della cosa domandata è un dato che si fornisce, anche derivata (la
+  seconda dalla settima, per esempio): il sito non la ricava dalla domanda.
+  Il calcolo dice chi sono i significatori (pp. 123-124) e come la figura porta
+  al loro incontro secondo le definizioni di Lilly: per aspetto, per
+  traslazione o per collezione di luce (pp. 125-126), o come lo impedisce, per
+  proibizione, frustrazione o refranazione (pp. 110-113). Le considerazioni
+  prima del giudizio di pp. 121-123 sono riportate come fatti, mai come un
+  rifiuto di calcolare. Il sì o il no, e quando, restano a chi legge. Il tema
+  orario non ha ancora una pagina sua: lo calcolano l'interfaccia REST, la riga
+  di comando e il server MCP.
 </p>
 
 <h2 id="rifare-i-conti">Rifare i conti</h2>
