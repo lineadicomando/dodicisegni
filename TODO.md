@@ -21,6 +21,7 @@ Le voci chiuse dopo, con il commit in cui si leggono ancora per intero:
 | 7 | `955977b` |
 | 9 | `8a04cfb` |
 | 18 | `2b8937d` |
+| 6 | `8aa31a9` |
 
 Le fonti citate qui stanno in copia locale in `texts/`, fuori dal repo: la
 cartella, le schede `FONTE.md` e l'elenco `texts/INDICE.md` si mantengono come
@@ -29,9 +30,10 @@ esserci, se il clone è un altro: le schede dicono da dove riscaricare ogni
 fonte, e la voce 24 quelle che mancano ancora.
 
 I riferimenti `file:riga` sono stati ricontrollati tutti contro il codice il
-27 ottobre 2026, dopo i quattro lotti della voce 17 (`cd05e72`). Le righe si
-spostano: se una non torna, il nome della funzione o della costante accanto è
-quello che fa fede.
+27 ottobre 2026, dopo i quattro lotti della voce 17 (`cd05e72`), e quelli di
+`/metodo` e di `dasha.ts` il 28, dopo la voce 6. Le righe si spostano: se
+una non torna, il nome della funzione o della costante accanto è quello che fa
+fede.
 
 Prima di cominciare conviene che `npm test`, `npm run typecheck` e `npm run
 lint` siano verdi. Tre cose che fanno perdere tempo:
@@ -53,18 +55,18 @@ volta e ricominciare da capo.
 
 | Voce | Priorità | Taglia | Prima di cominciare |
 |---|---|---|---|
-| 8. Il glossario e /metodo | media | grande | si incrocia col punto 6 |
-| 6. La prosa che invecchia | bassa | piccola | farla insieme al punto 8 |
+| 8. Il glossario e /metodo | media | grande | una decisione del proprietario: la forma del glossario |
 | 5. I varga che mancano | non dichiarata | tre lotti | niente: il D-2 è deciso, gli altri hanno la fonte |
 | 19. Le dignità, per scuola | bassa | media | il Jyotisha: i varga del BPHS, cap. 6-7 |
 | 17. L'astrologia oraria | bassa | piccola, ormai | i quattro lotti sono fatti; restano rifiniture indipendenti, una per riga |
 | 24. Le fonti da scaricare in `texts/` | bassa | piccola | niente |
 
-L'ordine consigliato è quello della tabella. La 8 e la 6 toccano la stessa
-pagina, `/metodo`, e conviene farle insieme. Della 19 resta soprattutto il
-Jyotisha, che sta accanto ai varga della 5: il D-2 deciso lì cambia anche il
-modo di dire la dignità nella hora. La 17 usa le tavole di Lilly della 19 e
-ha già le *moieties* come terza convenzione delle orbite.
+L'ordine consigliato è quello della tabella. Della 8 resta solo ciò che chiede
+una scelta: la forma del glossario e se staccare le parti indiane di `/metodo`.
+Della 19 resta soprattutto il Jyotisha, che sta accanto ai varga della 5: il
+D-2 deciso lì cambia anche il modo di dire la dignità nella hora. La 17 usa le
+tavole di Lilly della 19 e ha già le *moieties* come terza convenzione delle
+orbite.
 
 ## 5. I nove varga che mancano
 
@@ -97,7 +99,7 @@ commento delle due rotte (`api/jyotish/+server.ts`, parametro `vargas`;
 `quadro/+server.ts`, parametro `varga`), l'aiuto della CLI
 (`--varga <lista>`, `packages/core/src/cli.ts:117`), la pagina del metodo
 («Il sito ne calcola sette», sezione `#varga`,
-`apps/web/src/routes/(informativa)/metodo/+page.svelte:358`) e il commento in
+`apps/web/src/routes/(informativa)/metodo/+page.svelte:392`) e il commento in
 testa a quella pagina («le sette divisionali», righe 12-13). I tipi, in
 `packages/core/src/types.ts`: `VargaId` a :359, `VargaChart` a :369, l'opzione
 `vargas` di `JyotishaOptions` a :724.
@@ -190,7 +192,7 @@ al quarto d'ora produce un D-60 sbagliato, e non se ne accorge nessuno.
 
 Questo lotto vuole quindi una cosa che gli altri non chiedono: **un'avvertenza
 propria**, sul modello di quelle delle dasha (l'array `warnings` in
-`dasha.ts:99-120`, per l'ora ignota e per Moshier), che dica quanti
+`dasha.ts:99-121`, per l'ora ignota e per Moshier), che dica quanti
 minuti di scarto valgano una divisione. Senza, sarebbe il caso peggiore di
 tutti: un dato che sembra preciso perché ha molte cifre.
 
@@ -226,92 +228,6 @@ lotto, e scrivere la pagina nel commento come per il D-27.
 Verifica per tutti i lotti: `packages/core/test/varga.test.ts` ha già la forma:
 confini noti calcolati a mano per un segno pari e uno dispari, più la prova
 che la regola viaggi col risultato.
-
-## 6. La prosa che può invecchiare senza dirlo
-
-**Bassa priorità.** Nessuna delle due rompe niente: producono testo che dice il
-falso, e nessun test le vede. Stanno qui perché è il genere di cosa che si
-ritrova per caso due anni dopo, e allora non si sa più quale delle due versioni
-fosse quella giusta.
-
-### La precisione di Moshier, dichiarata due volte e in due modi
-
-`packages/core/src/ephemeris.ts`, riga 22, dice «0,1 secondi d'arco per i
-pianeti maggiori». `README.md`, riga 46, dice «~0,4 secondi d'arco sui pianeti
-principali». Sono la stessa affermazione sullo stesso ripiego, e differiscono di
-un fattore quattro.
-
-Una delle due è sbagliata e non si sa quale: il numero non viene da una misura
-fatta qui, ma dalla documentazione di Swiss Ephemeris, dove la cifra dipende da
-quali corpi e da quale epoca si guardano: Moshier degrada allontanandosi dal
-presente, e i pianeti esterni non si comportano come i lunari.
-
-La documentazione di Swiss Ephemeris è in `texts/tecnica/swiss-ephemeris`
-(`swisseph.txt`, sezione «The Moshier Ephemeris», righe 1215-1240), ma
-**nessuna delle due cifre sta lì**: la sezione dice «below 1 arc second with
-the planets and a few arc seconds with the Moon», e 0,5″ per la Luna di
-Chapront rispetto a DE404. Da dove vengano 0,1″ e 0,4″ non si sa.
-
-Una terza frase dice la stessa cosa per la Luna e va allineata con le prime:
-l'avvertenza delle dasha in `packages/core/src/dasha.ts:115` («un paio di
-secondi d'arco»). La Luna va misurata anche lei, perché è quella che sposta
-le dasha: la pagina del metodo (righe 340-344) dice che un secondo d'arco
-vale circa tre ore e mezza di dasha.
-
-La via per chiuderla non è scegliere il numero che suona meglio: è
-**misurarlo**. Il motore sa calcolare in tutt'e due i modi, anche se la
-modalità non si sceglie: `initEphemeris` (`ephemeris.ts:49-96`) passa a
-Moshier quando nel percorso mancano i file `.se1`. Lo schema c'è già in
-`packages/core/test/ephemeris.test.ts`: `EPHE_DIR` e `NO_EPHE_DIR`,
-`describe.skipIf(!hasEphemerisFiles)` (riga 54), `resetEphemerisCache` fra una
-modalità e l'altra perché la cache è per percorso. In `packages/core/ephe/`
-ci sono `sepl_18`, `semo_18` e `seas_18`, che coprono il 1800-2400, e il
-catalogo delle stelle `sefstars.txt`. Bastano
-gli stessi corpi allo stesso istante nelle due modalità e la differenza in
-secondi d'arco, su qualche data sparsa nell'arco. Diventa un test, e il
-numero diventa verificabile invece che riportato.
-
-Finché non è deciso, `apps/web/src/routes/(informativa)/metodo/+page.svelte`,
-righe 77-78, dice «una frazione di secondo d'arco» senza cifra, di proposito, e
-va aggiornata insieme alle altre.
-
-Verifica: un test in `packages/core/test/` che confronti le due modalità e
-fallisca se lo scarto esce dall'ordine di grandezza dichiarato. A quel punto le
-tre righe di prosa possono portare la stessa cifra.
-
-### La pagina del metodo non è legata al motore
-
-`apps/web/src/routes/(informativa)/metodo/+page.svelte` ricopia in prosa valori
-che vivono nel motore: la tavola delle orbite (sezione `#aspetti`, undici
-righe per tre colonne: Greene, Leo, Hand) da `packages/core/src/orbite.ts`; i
-nove sistemi di case da `HOUSE_SYSTEM_CODES`; i sei ayanamsa da `AYANAMSAS`
-(`ayanamsa.ts`) e le sette divisionali da `VARGAS` (`varga.ts`), che la pagina
-elenca nella sezione `#varga`.
-
-Cambiando un'orbita, la pagina resta vecchia in silenzio, ed è già successo:
-dal lotto B della voce 17 c'è una terza convenzione natale, `lilly`, e la
-pagina non la nomina. Non entra come quarta colonna, perché è un'orbita per
-pianeta e non per aspetto: va detta in prosa, con la regola delle metà
-(pp. 107 e 110). Non c'è nessun test
-che colleghi le due cose, ed è la scelta scritta nel commento in testa al file:
-legare la pagina ai valori vorrebbe dire generarla, e una tabella generata non
-può dire *perché* le orbite dei transiti sono strette, che è l'unica ragione
-per cui la pagina esiste. La risorsa MCP `riferimento/aspetti` invece è
-generata dalle convenzioni (`packages/mcp/src/server.ts`, `aspectReference`),
-e non ha il problema.
-
-La forma che risolve senza generare la prosa esiste, ed è quella che il progetto
-usa già altrove: **un test che fallisce a voce alta quando i due divergono**, sul
-modello di `apps/web/src/lib/elenchi.test.ts`. Qui vorrebbe dire leggere il
-file `.svelte`, trovare le righe della tavola delle orbite e confrontarne i
-numeri con `orbOf` di ciascuna convenzione fra due pianeti.
-
-Un test così è brutto e va tenuto stretto: se comincia a cercare frasi invece
-che numeri diventa un impedimento a riscrivere la prosa, che è il contrario di
-quello che serve. Da fare solo per i valori tabellari, e solo se la pagina
-sopravvive abbastanza da giustificarlo.
-
-Verifica: cambiare un'orbita in `orbite.ts` e vedere il test cadere.
 
 ## 8. Il glossario, e /metodo da rivedere
 
@@ -377,35 +293,29 @@ nuove: «le altre sei» (riga 28), «sette indirizzi» per la sitemap (riga 71) 
 
 ### La revisione di /metodo
 
-La pagina non è povera: 490 righe e diciassette sezioni, ciascuna con il suo
-`id`. Il problema è che è **una pagina sola**. Le diciassette ancore non sono
-diciassette risultati: `#dasha` non è mai un indirizzo per sé, e chi cerca
-«dasha vimshottari» trova al più la pagina intera, che parla di altre sedici
-cose.
+La pagina non è povera: 591 righe e diciotto sezioni, ciascuna con il suo
+`id`. Il problema è che è **una pagina sola**. Le diciotto ancore non sono
+diciotto risultati: `#dasha` non è mai un indirizzo per sé, e chi cerca
+«dasha vimshottari» trova al più la pagina intera, che parla di altre
+diciassette cose.
 
 Va quindi valutato (non è deciso) se le cinque parti dell'astrologia indiana
-(`#nakshatra`, `#dasha`, `#varga`, `#drishti`, `#panchanga`, righe 312-400)
+(`#nakshatra`, `#dasha`, `#varga`, `#drishti`, `#panchanga`, righe 336-436)
 debbano staccarsi in pagine proprie. Contro: spezzare una pagina che si legge
 bene di seguito, e che è l'unica cosa che risponda a «perché la stessa nascita
 dà carte diverse altrove». A favore: sono già cinque capitoli con un titolo e
 un `id`, e il testo di ognuno regge da solo.
 
-Due cose invece vanno fatte comunque:
-
-- **Il titolo e la descrizione.** «Metodo» è una parola che non cerca nessuno.
-  La descrizione a `metodo/+page.svelte:25` è buona ed elenca già i termini
-  giusti; il titolo, a :24, li butta via tutti.
-- **Lilly non c'è.** La pagina è stata scritta prima della voce 17: non dice
-  niente delle dignità di Lilly, del conto di p. 115, delle orbite `lilly`, del
-  corso fino al cambio di segno, delle due Lune vuote né del tema orario. Sono
-  convenzioni nominate con pagine e letture dichiarate, cioè esattamente il
-  genere di cosa che `/metodo` esiste per dire; e le letture stanno già nel
-  codice (`LILLY_CONDITIONS_READINGS`, `HORARY_LILLY_READINGS`), da cui la
-  prosa può partire.
-- **Il coordinamento con il punto 6**, che tocca questa stessa pagina in due
-  modi: la precisione di Moshier senza cifra alle righe 77-78, e il legame
-  mancante con la tavola delle orbite di `orbite.ts`. Se la pagina si riscrive, i due lavori si incrociano:
-  farli in ordine sparso significa riscrivere due volte gli stessi paragrafi.
+Fatto il 28 ottobre 2026, in `8aa31a9` e `850ef55`: il titolo nomina i
+termini («Metodo: case, ayanamsa, orbite e dasha», col nome del sito 52
+caratteri su 60) e la descrizione aggiunge le dignità di Lilly; la sezione
+`#lilly` dice dignità, conto di p. 115, le due Lune vuote e il tema orario;
+le *moieties* stanno in `#aspetti` con una tavoletta per pianeta; e le due
+tavole delle orbite sono legate a `orbite.ts` da `metodo/orbite.test.ts`,
+che guarda solo i numeri. La precisione di Moshier ha la cifra, misurata in
+`packages/core/test/ephemeris.test.ts` (fasce per gruppo di corpi,
+1800-2400). Sistemi di case, ayanamsa e varga restano ricopiati in prosa
+senza un test: se un giorno servisse, il modello è quel file.
 
 ### Deciso, per non ridiscuterlo
 
