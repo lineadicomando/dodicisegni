@@ -30,11 +30,10 @@ dice `CLAUDE.md` (*Le fonti testuali*). In una sessione nuova `texts/` può non
 esserci, se il clone è un altro: le schede dicono da dove riscaricare ogni
 fonte, e la voce 24 quelle che mancano ancora.
 
-I riferimenti `file:riga` sono stati ricontrollati tutti contro il codice il
-27 ottobre 2026, dopo i quattro lotti della voce 17 (`cd05e72`), e quelli di
-`/metodo` e di `dasha.ts` il 28, dopo le voci 6 e 8. Le righe si spostano: se
-una non torna, il nome della funzione o della costante accanto è quello che fa
-fede.
+I riferimenti `file:riga` e i nomi citati sono stati ricontrollati tutti
+contro il codice il 28 ottobre 2026, dopo il lotto A della voce 5 (`78c83ef`).
+Le righe si spostano: se una non torna, il nome della funzione o della
+costante accanto è quello che fa fede.
 
 Prima di cominciare conviene che `npm test`, `npm run typecheck` e `npm run
 lint` siano verdi. Tre cose che fanno perdere tempo:
@@ -56,15 +55,17 @@ volta e ricominciare da capo.
 
 | Voce | Priorità | Taglia | Prima di cominciare |
 |---|---|---|---|
-| 5. I varga che mancano | non dichiarata | due lotti | niente: hanno la fonte, e le pagine si estraggono come dice la voce |
+| 5. I varga che mancano | non dichiarata | due lotti | lotto B: confermare le tre regole sulle immagini; lotto C: far scegliere la lettura del D-60 |
 | 19. Le dignità, per scuola | bassa | media | il Jyotisha: i varga del BPHS, cap. 6-7 |
 | 17. L'astrologia oraria | bassa | piccola, ormai | i quattro lotti sono fatti; restano rifiniture indipendenti, una per riga |
 | 24. Le fonti da scaricare in `texts/` | bassa | piccola | niente |
 
-L'ordine consigliato è quello della tabella. Della 19 resta soprattutto il
-Jyotisha, che sta accanto ai varga della 5: il D-2 di Parashara, fatto senza
-segni, cambia anche il modo di dire la dignità nella hora. La 17 usa le tavole di Lilly della 19 e ha
-già le *moieties* come terza convenzione delle orbite.
+L'ordine consigliato è quello della tabella. Il lotto B della 5 è pronto da
+fare; il C ha una scelta da far prendere al proprietario prima di scrivere
+codice (la lettura del D-60, vedi lì). Della 19 resta soprattutto il Jyotisha,
+che sta accanto ai varga della 5: il D-2 di Parashara, fatto senza segni,
+cambia anche il modo di dire la dignità nella hora. La 17 usa le tavole di
+Lilly della 19 e ha già le *moieties* come terza convenzione delle orbite.
 
 ## 5. I sei varga che mancano
 
@@ -98,7 +99,7 @@ nuova va scritta lì, con la regola in parole.
 Restano da aggiornare a mano i testi che li elencano, che nessun test vede: il
 commento delle due rotte (`api/jyotish/+server.ts`, parametro `vargas`;
 `quadro/+server.ts`, parametro `varga`), l'aiuto della CLI
-(`--varga <lista>`, `packages/core/src/cli.ts:117`), il rimando in
+(`--varga <lista>`, `packages/core/src/cli.ts:119`), il rimando in
 `/metodo` («Il sito ne calcola dieci», voce `#varga` dell'elenco,
 `apps/web/src/routes/(informativa)/metodo/+page.svelte:366`), la pagina
 `/metodo/varga` («I dieci che il sito calcola», «Le altre sei divisioni
@@ -134,10 +135,26 @@ perché è la sola eccezione alla regola «un varga dà un segno»:
 
 ### Lotto B: i multipli con partenza fissa
 
-**D-16 Shodashamsa, D-20 Vimshamsa, D-24 Chaturvimshamsa.** Qui la partenza non dipende dal segno di arrivo ma da un segno
-fisso deciso dalla natura del segno di partenza (cardinale, fisso o mobile per
-alcuni; pari o dispari per altri). Il meccanismo è quello del D-9, applicato a
-divisioni più fini.
+**D-16 Shodasamsa, D-20 Vimsamsa, D-24 Siddhamsa (Chaturvimsamsa).** Qui il
+segno da cui si comincia non è il segno stesso: è uno di pochi segni fissi,
+scelto dalla modalità o dalla parità del segno di partenza, e da lì si conta
+di seguito. È il meccanismo del D-9 (che parte da Ariete, Capricorno,
+Bilancia o Cancro), applicato a divisioni più fini, quindi `signIndex` ha la
+stessa forma.
+
+Le regole, lette sull'OCR il 28 ottobre 2026 e **da confermare sulle
+immagini** prima di scriverle nel codice (pp. 74-78, da estrarre come detto
+sotto), con le tavole di Santhanam da controllare contro la regola:
+
+- **D-16** (6.16, pp. 74-75): sedici parti da 1°52'30"; dall'Ariete per i
+  segni cardinali («movable»), dal Leone per i fissi, dal Sagittario per i
+  mobili («dual»). Il resto del verso riguarda le divinità, che si
+  rovesciano nei segni pari: i segni no.
+- **D-20** (6.17-21, p. 76): venti parti da 1°30'; dall'Ariete per i
+  cardinali, dal Sagittario per i fissi, dal Leone per i mobili. Attenzione:
+  fissi e mobili sono **scambiati** rispetto al D-16.
+- **D-24** (6.22-23, pp. 77-78): ventiquattro parti da 1°15'; dal Leone nei
+  segni dispari, dal Cancro nei pari.
 
 Il D-27, che stava qui, è fatto: BPHS 6.24-26, pp. 78-79, trascritto in
 `texts/jyotisha/bphs-santhanam-1992-vol1/trascrizioni.md`. La voce lo
@@ -147,11 +164,33 @@ dall'Ariete in ogni segno, si conta di seguito dall'Ariete lungo tutto lo
 zodiaco (fuoco dall'Ariete, terra dal Cancro, aria dalla Bilancia, acqua
 dal Capricorno). La tavola di Santhanam a p. 79 ha un refuso (Gemelli,
 undicesima parte): le tavole stampate vanno controllate contro la regola,
-non copiate.
+non copiate. Il modello di prova è `controllaTavola` in
+`packages/core/test/varga.test.ts`, usato per D-4 e D-7.
 
 ### Lotto C: i fini, che vogliono un'ora di nascita esatta
 
 **D-40 Khavedamsa, D-45 Akshavedamsa, D-60 Shashtiamsa.**
+
+Le regole:
+
+- **D-40** (6.29-30, p. 80, letto sull'immagine): quaranta parti da 45';
+  dall'Ariete nei segni dispari, dalla Bilancia nei pari.
+- **D-45** (6.31-32, pp. 81-82, dall'OCR): quarantacinque parti da 40';
+  dall'Ariete per i cardinali, dal Leone per i fissi, dal Sagittario per i
+  mobili (la forma del D-16).
+- **D-60** (6.33-41, pp. 83-86, dall'OCR): sessanta parti da 30'. Il verso
+  dice di ignorare il segno, raddoppiare i gradi percorsi, dividere per 12 e
+  aggiungere 1 al resto. **Da dove si conta quel numero è la divergenza da
+  decidere**: Santhanam, nell'esempio di p. 84 (Venere a 13°25' del
+  Capricorno: 26 diviso 12 dà resto 2, più 1 fa 3), conta dal segno stesso e
+  arriva ai Pesci. Il verso letto da solo («ignore the sign position») si
+  presta anche a contare dall'Ariete, che darebbe i Gemelli: se qualcuno lo
+  legge così, con un nome e un testo, va trovato; finora non è stato
+  cercato. Va letta l'immagine, e la scelta presentata al proprietario come
+  per il D-2: una convenzione predefinita e, se l'altra ha un autore,
+  accanto. I sessanta nomi (Ghora, Rakshasa…) si
+  rovesciano nei segni pari e sono qualità, benefiche o malefiche: entrano
+  solo come nome, se entrano, e mai col giudizio accanto.
 
 Il D-60 è, in Parashara, il più importante di tutti, e insieme quello che il
 motore può garantire di meno: una divisione dura **30 primi d'arco**, che
@@ -406,8 +445,8 @@ cinque le dignità, sugli esempi di Lilly a p. 112. La tavola è trascritta
 riga per riga in `texts/occidentale/lilly-christian-astrology-1647/trascrizioni.md`,
 con la lettura di p. 105 (che dice come si leggono le celle), e il test la
 ricopia coi glifi della stampa (`packages/core/test/dignita-lilly.test.ts`).
-Si accende con `ChartOptions.dignitySchool: 'lilly'` (`types.ts:909`, letto
-in `chart.ts`), con `SkyOptions.dignitySchool` (`types.ts:1106`, in
+Si accende con `ChartOptions.dignitySchool: 'lilly'` (`types.ts:962`, letto
+in `chart.ts`), con `SkyOptions.dignitySchool` (`types.ts:1159`, in
 `sky.ts`) e con `--dignita lilly` nella CLI, solo nello zodiaco tropicale: la
 sezione DIGNITÀ aggiunge, sotto le righe comuni,
 una riga per corpo con i signori del suo grado e le sue dignità, e le
@@ -445,30 +484,32 @@ descrizioni dicono «circa un quarto».
 
 1. **Le dignità nei varga del Jyotisha**, che il BPHS tratta a parte (cap.
    6-7), e la pagina `/vedica`, che non mostra le dignità di Parashara anche
-   se il JSON le porta. I dati: `JyotishaChart.dignities` (`types.ts:776`),
-   riempito da `computeParasharaDignities` (`jyotisha.ts:89`) ed esposto su
+   se il JSON le porta. I dati: `JyotishaChart.dignities` (`types.ts:829`),
+   riempito da `computeParasharaDignities` (`jyotisha.ts:91`) ed esposto su
    `/api/jyotish`; in `apps/web/src/routes/vedica/+page.svelte` non c'è
    niente che le mostri, e non esiste un componente per loro (quello
    occidentale è `DignityTable.svelte`, legato a `WesternDignities`). I varga
-   portano solo segni (`VargaChart`, `types.ts:369`). Il materiale già letto:
+   portano segni (`SignVargaChart`, `types.ts:406`), tranne il D-2 di
+   Parashara, che porta la hora di un luminare (`HoraVargaChart`, :437):
+   lì la dignità non si può dire per segno. Il materiale già letto:
    la nota di Santhanam a p. 90 e 7.13-19 (pp. 91-95), trascritti in
    `bphs-santhanam-1992-vol1/trascrizioni.md` per il D-2; il resto del cap. 7
-   comincia alla riga 6005 dell'`ocr.txt`. Il D-2 di Parashara non ha un
-   segno, quindi la dignità nella hora va definita col signore (vedi voce
-   5).
+   comincia alla riga 6005 dell'`ocr.txt`. Per la hora, 7.13-16 (p. 94)
+   dice già quali graha danno frutto nella hora del Sole e quali in quella
+   della Luna: è la forma che la dignità nel D-2 può prendere.
 2. **Le altre scuole occidentali**, quando le loro fonti sono state lette
    (vedi *Da verificare* qui sotto): ciascuna come valore nuovo di
    `DignitySchool`, intera. Il compilatore pretende il nome in
    `DIGNITY_SCHOOL_NAMES` (`packages/core/src/constants.ts`), e da lì CLI,
    MCP e `/api/chart` imparano il valore da soli, ma solo a validarlo: il
    risultato porta ancora un campo per scuola (`WesternDignities.lilly`,
-   `types.ts:690`), e una scuola nuova chiede il suo campo, il suo ramo in
+   `types.ts:741`), e una scuola nuova chiede il suo campo, il suo ramo in
    `computeWesternDignities` (`dignita-tema.ts:51`), le sue righe in
-   `format.ts` (come `lillyLines`, :808, e `lillyConditionLines`) e in
+   `format.ts` (come `lillyLines`, :809, e `lillyConditionLines`) e in
    `DignityTable.svelte`, e i testi che oggi nominano solo Lilly: l'aiuto di
-   `--dignita` (`cli.ts:131`), la descrizione di `dignity_school`
-   (`packages/mcp/src/tools.ts:314`) e il commento di
-   `apps/web/src/routes/api/chart/+server.ts:26-30`. Il conto delle fortezze
+   `--dignita` (`cli.ts:138`), la descrizione di `dignity_school`
+   (`packages/mcp/src/tools.ts:317`) e il commento di
+   `apps/web/src/routes/api/chart/+server.ts:24-32`. Il conto delle fortezze
    e le condizioni accidentali sono di Lilly e restano suoi: una scuola nuova
    porta il proprio, o nessuno, e `LillyConditions` non si generalizza.
    L'interfaccia è una casella sola, `lilly` in `ChartSettings.svelte` e in
@@ -612,7 +653,8 @@ ciascuna con la pagina da salvare in `pagine/` e da trascrivere:
   ricontrollata e il commento corretto.
 - **RadixPro, l'esempio di Jan Kampherbeek** (Enschede, 2 novembre 2016,
   21:17:30 UT): la pagina web con le cifre intermedie su cui sta
-  `houses.test.ts`. In `tecnica/radixpro-esempio-case`, `html/` e `testo/`.
+  `houses.test.ts`. Da salvare in `tecnica/radixpro-esempio-case` (la
+  cartella non c'è ancora), con `html/` e `testo/`.
 - **Astrolog 8.00, i sorgenti**, almeno `matrix.cpp` e `calc.cpp`: l'altra
   metà dell'ancoraggio di `houses.test.ts`. La cartella c'è già,
   `tecnica/astrolog-pullen-800`, creata per le orbite con `astrolog.as`,
