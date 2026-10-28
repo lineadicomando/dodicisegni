@@ -11,10 +11,12 @@
   cambia per primo: `orbite.ts` per le orbite, `constants.ts` per corpi e
   sistemi di case, `ayanamsa.ts` per i sei ayanamsa, `varga.ts` per le sette
   divisionali. Quando
-  quelli cambiano, questa pagina è vecchia — non c'è nessun test che la leghi,
-  e non è una dimenticanza: legarla vorrebbe dire ridurre la prosa a una tabella
-  generata, che è esattamente la cosa che una pagina come questa non deve
-  essere.
+  quelli cambiano, questa pagina è vecchia. Generarla dai valori vorrebbe dire
+  ridurre la prosa a una tabella, che è esattamente la cosa che una pagina come
+  questa non deve essere; un test però guarda le due tavole delle orbite,
+  cella per cella, e cade se `orbite.ts` cambia (`orbite.test.ts`, qui
+  accanto). Il resto, i sistemi di case, gli ayanamsa e i varga, nessun test
+  lo vede.
 -->
 <script lang="ts">
   import Meta from '#lib/components/Meta.svelte';
@@ -233,6 +235,36 @@
   ma solo per congiunzione e opposizione. Il quintile in Leo non c'è, e con le
   sue orbite il sito non lo calcola: una scuola si prende intera.
 </p>
+
+<p>
+  La terza è di <strong>William Lilly</strong>, <em>Christian Astrology</em>
+  (1647), e non entra nella tavola come quarta colonna perché funziona in un
+  altro modo: l'orbita non è dell'aspetto ma <strong>del pianeta</strong>
+  (p. 107), e due pianeti sono in aspetto entro la metà dell'orbita dell'uno
+  più la metà di quella dell'altro (p. 110). Sole e Luna, per esempio, entro
+  8°30' più 6°15', cioè 14°45', per qualunque dei cinque aspetti che Lilly
+  tratta; i minori non li considera. Lilly stampa due colonne e dice sua la
+  prima, che è quella usata qui. Urano, Nettuno, Plutone, Chirone, i nodi e gli
+  assi non stanno nella sua tavola, e con queste orbite non fanno aspetti.
+</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Pianeta</th>
+      <th>Orbita di Lilly</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr><td>Sole</td><td>17°</td></tr>
+    <tr><td>Luna</td><td>12°30'</td></tr>
+    <tr><td>Mercurio</td><td>7°</td></tr>
+    <tr><td>Venere</td><td>8°</td></tr>
+    <tr><td>Marte</td><td>7°30'</td></tr>
+    <tr><td>Giove</td><td>12°</td></tr>
+    <tr><td>Saturno</td><td>10°</td></tr>
+  </tbody>
+</table>
 
 <p>
   Gli aspetti minori (semisestile, quinconce, semiquadrato, sesquiquadrato, e
