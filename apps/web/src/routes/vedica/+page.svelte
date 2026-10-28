@@ -32,6 +32,7 @@
   import ModuloPieghevole from '#lib/components/ModuloPieghevole.svelte';
   import NakshatraTable from '#lib/components/NakshatraTable.svelte';
   import ParasharaDignityTable from '#lib/components/ParasharaDignityTable.svelte';
+  import GoodVargaTable from '#lib/components/GoodVargaTable.svelte';
   import Risultato from '#lib/components/Risultato.svelte';
   import StrumentiLettura from '#lib/components/StrumentiLettura.svelte';
   import VargaTable from '#lib/components/VargaTable.svelte';
@@ -340,6 +341,12 @@
         {#each divisionali as varga (varga.varga)}
           <VargaTable {varga} {stile} {evidenza} />
         {/each}
+
+        <!-- Dopo le divisionali, perché le conta tutte e sedici, anche quelle
+             non mostrate. Assente senza ora: lo dice un'avvertenza. -->
+        {#if jyotisha.goodVargas}
+          <GoodVargaTable buoni={jyotisha.goodVargas} {evidenza} />
+        {/if}
 
         <DrishtiTable drishti={jyotisha.drishti} {evidenza} />
       </div>

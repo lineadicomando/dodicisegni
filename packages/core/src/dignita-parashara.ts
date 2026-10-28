@@ -211,8 +211,8 @@ export function parasharaDignityOf(body: BodyId, siderealLongitude: number): Par
  * È la parte di BPHS 6.52 che si dice per segno (trad. Santhanam, vol. I,
  * p. 88: «the divisions falling in the planet's exaltation sign,
  * Moolatrikona sign, own sign»), con la neecha di 3.49-50 accanto. Non è il
- * conto dei varga buoni: quello chiede anche la regola dell'arudha e le
- * esclusioni di 6.53, che il motore non ha (TODO.md, voce 19).
+ * conto dei varga buoni: quello aggiunge la regola dell'arudha e sta in
+ * `varga-buoni.ts`.
  */
 export function parasharaSignDignities(body: BodyId, sign: ZodiacSign): ParasharaDignity[] {
   if (!isGraha(body)) return [];
@@ -229,8 +229,8 @@ export const VARGA_DIGNITY_SOURCE =
   'Per segno, senza gradi: il segno del varga confrontato coi segni di uccha, moolatrikona, ' +
   'proprio e neecha di ciascuno dei sette graha (BPHS 3.49-54 e 4.6-24; 6.52, trad. Santhanam, ' +
   'vol. I, p. 88, per i primi tre come varga buoni). Tutte le corrispondenze, non una sola. ' +
-  'Il conto dei varga buoni di 6.42-53 non è calcolato: chiede la regola dell\'arudha e le ' +
-  'esclusioni di 6.53.';
+  'Il conto dei varga buoni di 6.42-53, che aggiunge la regola dell\'arudha, sta a parte nel ' +
+  'tema vedico, con l\'ora di nascita.';
 
 /**
  * Le dignità dei sette graha di una carta siderale.

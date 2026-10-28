@@ -385,34 +385,28 @@ descrizioni dicono «circa un quarto».
    dice già quali graha danno frutto nella hora del Sole e quali in quella
    della Luna: è la forma che la dignità nel D-2 può prendere.
 
-   **La regola del testo**, letta il 28 ottobre 2026 sulle immagini (BPHS
-   6.42-53, pp. 87-90, trascritta in `trascrizioni.md`, sezione «6.42-53»):
-   un varga è «buono» per un graha se cade nel suo segno di esaltazione, di
-   moolatrikona o proprio, o in un segno dei signori dei kendra
-   dall'arudha (6.52); i varga buoni si contano per schema (shadvarga,
-   saptavarga, dashavarga, shodashavarga) e il conto ha un nome (Parijata,
-   Uttama… 6.43-51); un graha combusto, sconfitto, in neecha, debole o in
-   avastha come shayana li rovescia (6.53). **Da decidere col proprietario
-   prima di scrivere codice**:
-   - *adhipateḥ* in 6.52: i segni di esaltazione e moolatrikona (Santhanam)
-     o i segni del loro signore? Coincidono solo per il segno proprio;
-   - la regola dell'arudha: richiede l'arudha lagna, che il motore non
-     calcola, e Santhanam stesso la dice troppo larga;
-   - 6.53 chiede combustione, guerra planetaria e avastha, che per il
-     Jyotisha il motore non ha;
-   - il D-2 di Parashara non ha segni: Santhanam propone una lettura sua da
-     7.13, che è sua e non del verso.
-   La parte che si fa senza scegliere è fatta, il 28 ottobre 2026, col
-   consenso del proprietario: **il segno di ciascun graha in ciascun varga
-   confrontato con i suoi segni di uccha, moolatrikona, proprio e neecha**,
-   per segno e senza gradi, con tutte le corrispondenze e non una sola
-   (`parasharaSignDignities` in `dignita-parashara.ts`, il campo
-   `dignitySigns` delle posizioni di `SignVargaChart`, con
-   `dignitySource`; la colonna «Dignità del segno» di `VargaTable.svelte`,
-   le parentesi in `formatVargaCompact`). Il conto dei varga buoni e i
-   nomi restano fuori finché le quattro scelte qui sopra non sono prese: un
-   conto senza l'arudha e senza 6.53 sarebbe un numero diverso da quello
-   del testo, e il documento di lettura vieta al modello di ricavarlo.
+   **Fatto il 28 ottobre 2026**, con le quattro scelte prese dal
+   proprietario (vedi *Deciso*): le corrispondenze per segno in ogni varga
+   (`parasharaSignDignities`, campo `dignitySigns`) e il conto dei varga
+   buoni nei quattro schemi col nome di 6.43-51 (`varga-buoni.ts`,
+   `JyotishaChart.goodVargas`, sezione VARGA BUONI della tabella compatta,
+   `GoodVargaTable.svelte` su `/vedica`, sezione `#buoni` di
+   `/metodo/varga`). L'arudha lagna è calcolato (`arudhaOf`, BPHS 29.1-5,
+   pp. 295-296); il secondo esempio delle note di Santhanam a p. 296
+   contraddice il verso e la sua traduzione, e il motore segue il verso.
+   Testo e scelte in `trascrizioni.md`, sezioni «6.42-53» e «29.1-5, 7.17-25».
+   Restano, ciascuna una riga:
+   - **6.53 per intero**: combustione, guerra planetaria, debolezza e
+     avastha (shayana e le altre, BPHS cap. 45) per il Jyotisha. Ognuna è
+     un calcolo con le sue fonti; oggi la riga del conto dice la sola neecha.
+   - **Il vimshopaka** (7.17-27, pp. 95-96): i pesi per schema e la scala
+     di 7.24-25 (20 nei varga propri, 18 nei grandi amici, giù fino a 5),
+     che vuole le amicizie naturali e temporanee di 3.55 e seguenti, non
+     ancora calcolate. È un punteggio con un autore, quindi ammesso, ma
+     non va fatto con le amicizie a metà.
+   - **Gli arudha degli altri bhava e dei graha** (29.1-7): `arudhaOf` vale
+     per ogni bhava, ma il motore espone solo quello del lagna.
+
 2. **Le altre scuole occidentali**, quando le loro fonti sono state lette
    (vedi *Da verificare* qui sotto): ciascuna come valore nuovo di
    `DignitySchool`, intera. Il compilatore pretende il nome in
@@ -643,6 +637,14 @@ Verifica: ogni fonte citata in un commento di `packages/` ha una riga in
   Confermato dal proprietario il 28 ottobre 2026. Le ragioni nella
   trascrizione di 6.33 (`texts/jyotisha/bphs-santhanam-1992-vol1`) e in
   `texts/tecnica/d60-letture-in-rete-2026`. Entra una seconda convenzione solo con un autore e un testo.
+- **I varga buoni si contano secondo Santhanam, con l'arudha, la hora che
+  segue la convenzione e il 6.53 come nota.** Quattro scelte prese dal
+  proprietario il 28 ottobre 2026, voce 19: in 6.52 i *segni* di uccha,
+  moolatrikona e propri, come traduce Santhanam (l'altra lettura di
+  *adhipateḥ* non ha un autore); l'arudha lagna calcolato secondo 29.1-5, e
+  non un conto senza; il 6.53 come giudizio sull'effetto, che non toglie
+  varga dal conto; la hora per segno con `leone-cancro`, con la nota di
+  Santhanam a p. 90 con `parashara`, dichiarata come sua.
 - **Il server MCP non ha un pool, e non gli serve**: è un processo per client,
   sul trasporto stdio, e non c'è nessun'altra richiesta da tenere in attesa.
 - **I thread del pool web sono al massimo quattro, e la quinta richiesta

@@ -191,7 +191,8 @@ describe('il documento vedico', () => {
     // deve dire che non sono la dignità del tema e che il conto dei varga
     // buoni non va ricavato.
     expect(testo).toContain('è un confronto per segno, senza gradi');
-    expect(testo).toContain('non ricavarli tu');
+    expect(testo).toContain('VARGA BUONI');
+    expect(testo.replace(/\s+/g, ' ')).toContain('non rifare il conto con regole tue');
   });
 
   it('mette al centro la Luna e il lagna, non il Sole', () => {

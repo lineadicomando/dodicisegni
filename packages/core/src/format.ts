@@ -20,6 +20,7 @@ import type {
   JyotishaChart,
   NatalChart,
   ParasharaDignities,
+  GoodVargas,
   NatalPointId,
   Panchanga,
   PassageRange,
@@ -1168,6 +1169,7 @@ export function formatJyotishaCompact(jyotisha: JyotishaChart): string {
   }
 
   parti.push(formatParasharaDignitiesCompact(jyotisha.dignities));
+  if (jyotisha.goodVargas) parti.push(formatGoodVargasCompact(jyotisha.goodVargas));
   parti.push(formatNakshatraCompact(jyotisha.chart));
   parti.push(formatDashaCompact(jyotisha.dasha));
   for (const varga of jyotisha.vargas) parti.push(formatVargaCompact(varga));
@@ -1215,6 +1217,38 @@ function formatParasharaDignitiesCompact(dignities: ParasharaDignities): string 
     );
   }
 
+  return lines.join('\n');
+}
+
+/**
+ * I varga buoni: le scelte di lettura in testa, poi due righe per graha, il
+ * conto per schema col suo nome e i varga buoni con la ragione.
+ *
+ * Le scelte stanno in testa e non in coda perché cambiano il numero: chi
+ * conta con un'altra lettura deve saperlo prima di confrontare.
+ */
+function formatGoodVargasCompact(buoni: GoodVargas): string {
+  const lines = [
+    'VARGA BUONI (BPHS 6.42-53)',
+    `Fonte: ${buoni.source}`,
+    `Arudha lagna: ${buoni.arudhaLagna}. ${buoni.arudhaRule}`,
+    `Signori dei kendra dall'arudha: ${buoni.kendraLords.map(bodyName).join(', ')}; i loro segni, ` +
+      `buoni per tutti: ${buoni.arudhaSigns.map((s) => SIGN_ABBR[s]).join(', ')}`,
+    `Hora: ${buoni.hora.rule}`,
+    buoni.verse53,
+    '',
+  ];
+  for (const graha of buoni.grahas) {
+    const conti = graha.schemes
+      .map((s) => `${s.scheme} ${s.good}/${s.vargas}${s.name ? ` ${s.name}` : ''}`)
+      .join(' · ');
+    lines.push(`${graha.name.padEnd(11)} ${conti}${graha.neecha ? ' · in neecha nella rashi' : ''}`);
+    const elenco = graha.vargas
+      .filter((v) => v.good.length > 0)
+      .map((v) => `${v.varga.toUpperCase()} ${v.good.join('+')}`)
+      .join(', ');
+    lines.push(`${''.padEnd(11)} buoni: ${elenco || 'nessuno'}`);
+  }
   return lines.join('\n');
 }
 

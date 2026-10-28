@@ -828,6 +828,71 @@ export interface ParasharaDignities {
   }[];
 }
 
+/** I quattro schemi di BPHS 6.42 e 7.17-20, dal più breve al completo. */
+export type VargaScheme = 'shadvarga' | 'saptavarga' | 'dashavarga' | 'shodashavarga';
+
+/**
+ * Perché un varga è buono per un graha, secondo BPHS 6.52 letto da
+ * Santhanam: il segno di uccha, di moolatrikona, proprio, un segno dei
+ * signori dei kendra dall'arudha lagna; `hora` per il D-2 di Parashara, che
+ * non ha segni e segue la nota di Santhanam a p. 90.
+ */
+export type GoodVargaReason = 'uccha' | 'moolatrikona' | 'swakshetra' | 'arudha' | 'hora';
+
+/**
+ * I varga buoni dei sette graha e il loro conto per schema, con il nome che
+ * BPHS 6.43-51 dà a ciascun conto.
+ *
+ * Il motore conta e nomina; che cosa il nome prometta non lo dice. Ogni
+ * scelta di lettura sta in `source`, e quelle del testo che il motore non sa
+ * verificare (6.53) sono dichiarate, non taciute.
+ */
+export interface GoodVargas {
+  /** Versi, pagine e scelte di lettura, in una riga. */
+  source: string;
+  /** L'arudha lagna (pada lagna) di BPHS 29.1-5, e la regola che l'ha dato. */
+  arudhaLagna: ZodiacSign;
+  arudhaRule: string;
+  /** I signori dei quattro kendra contati dall'arudha lagna, senza ripetizioni. */
+  kendraLords: BodyId[];
+  /** I segni di quei signori: buoni per ogni graha. */
+  arudhaSigns: ZodiacSign[];
+  /** Come è stata contata la hora: la convenzione e la regola che ne segue. */
+  hora: { convention: HoraConvention; rule: string };
+  /**
+   * BPHS 6.53: i varga buoni di un graha combusto, sconfitto, in neecha,
+   * debole o in avastha come shayana «distruggono gli yoga». Letto come un
+   * giudizio sull'effetto e non come una regola di conto: il conto resta, e
+   * questa riga dice che cosa il motore sa verificare e che cosa no.
+   */
+  verse53: string;
+  grahas: {
+    id: BodyId;
+    name: string;
+    /** Un elemento per ciascuno dei sedici varga, nell'ordine di `VARGAS`. */
+    vargas: {
+      varga: VargaId;
+      /** Il segno; assente solo nel D-2 di Parashara. */
+      sign?: ZodiacSign;
+      /** Solo nel D-2 di Parashara. */
+      hora?: Hora;
+      /** Vuoto se il varga non è buono. */
+      good: GoodVargaReason[];
+    }[];
+    schemes: {
+      scheme: VargaScheme;
+      /** Quanti varga lo schema considera. */
+      vargas: number;
+      /** Quanti di quelli sono buoni. */
+      good: number;
+      /** Il nome del conto (6.43-51), o `null` sotto i due. */
+      name: string | null;
+    }[];
+    /** Se il graha è in neecha nella rashi: la sola condizione di 6.53 che il motore sa dire. */
+    neecha: boolean;
+  }[];
+}
+
 /**
  * Il tema vedico: la carta più ciò che il Jyotisha ci legge sopra.
  *
@@ -845,6 +910,12 @@ export interface JyotishaChart {
   vargas: VargaChart[];
   drishti: DrishtiChart;
   dignities: ParasharaDignities;
+  /**
+   * I varga buoni e il loro conto (BPHS 6.42-53). Assente senza ora di
+   * nascita: la regola dell'arudha vuole il lagna, e un conto senza sarebbe
+   * un altro numero. L'assenza la dice un'avvertenza.
+   */
+  goodVargas?: GoodVargas;
   /**
    * Le avvertenze dei pezzi, raccolte qui.
    *

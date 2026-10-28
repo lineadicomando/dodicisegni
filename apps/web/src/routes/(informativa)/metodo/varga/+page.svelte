@@ -166,6 +166,33 @@
   calcola le carte, non i giudizi.
 </p>
 
+<h2 id="buoni">I varga buoni, e il loro conto</h2>
+
+<p>
+  Il testo (6.42-53) chiama «buono» per un graha il varga che cade nel suo
+  segno di esaltazione, di moolatrikona o proprio, oppure in un segno dei
+  signori dei kendra contati dall'<em>arudha lagna</em>. I varga buoni si
+  contano in quattro schemi, di sei, sette, dieci e sedici divisioni, e a
+  ogni conto il testo dà un nome: nel dashavarga, per esempio, due fanno
+  Parijata, tre Uttama, dieci Sridhama. Il sito conta e riporta il nome; che
+  cosa il nome prometta non lo dice.
+</p>
+
+<p>
+  Dove il testo lascia due strade, la scelta è dichiarata accanto al conto.
+  I segni di dignità sono quelli della traduzione di Santhanam. L'arudha
+  lagna si ricava come in 29.1-5: si conta dal lagna al segno del suo
+  signore e altrettanto oltre, e se si ricade nel lagna o nel settimo si
+  prende il decimo o il quarto. È una regola larga, che Santhanam stesso
+  segnala: può rendere buoni fino a otto segni su dodici, e per questo ogni
+  varga buono porta la sua ragione. La hora di Parashara, che non ha segni,
+  si conta con la nota di Santhanam (p. 90). Il verso 53, che dice che cosa
+  producono i varga buoni di un graha combusto, sconfitto o debole, non
+  cambia il conto: il sito dice se il graha è in neecha e dichiara le altre
+  condizioni come non verificate. Senza ora di nascita il conto non c'è,
+  perché l'arudha vuole il lagna.
+</p>
+
 <h2 id="fonte">La fonte, e le tavole stampate</h2>
 
 <p>

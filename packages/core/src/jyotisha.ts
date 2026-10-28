@@ -35,6 +35,7 @@ import { computeParasharaDignities } from './dignita-parashara.js';
 import { computeDrishti } from './drishti.js';
 import { grahaName, nakshatraOf, requireSidereal } from './nakshatra.js';
 import { computeVarga } from './varga.js';
+import { computeGoodVargas } from './varga-buoni.js';
 import type { JyotishaChart, JyotishaOptions, NatalChart } from './types.js';
 
 /**
@@ -78,6 +79,13 @@ export function computeJyotisha(
   const vargas = (options.vargas ?? ['d9']).map((id) =>
     computeVarga(chart, id, options.hora ? { hora: options.hora } : {}),
   );
+  const goodVargas = computeGoodVargas(chart, options.hora);
+  if (!goodVargas) {
+    warnings.push(
+      'I varga buoni (BPHS 6.42-53) non sono contati: la regola dell\'arudha vuole il lagna, ' +
+        'e senza ora di nascita il lagna non c\'è.',
+    );
+  }
 
   return {
     chart,
@@ -90,6 +98,7 @@ export function computeJyotisha(
     vargas,
     drishti,
     dignities: computeParasharaDignities(chart),
+    ...(goodVargas ? { goodVargas } : {}),
     // Le avvertenze dei pezzi salgono qui: chi legge il tema vedico non deve
     // andarle a cercare dentro la catena delle dasha.
     warnings: [
