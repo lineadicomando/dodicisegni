@@ -56,21 +56,21 @@ volta e ricominciare da capo.
 
 | Voce | Priorità | Taglia | Prima di cominciare |
 |---|---|---|---|
-| 5. I varga che mancano | non dichiarata | tre lotti | niente: il D-2 è deciso, gli altri hanno la fonte |
+| 5. I varga che mancano | non dichiarata | due lotti | niente: hanno la fonte, e le pagine si estraggono come dice la voce |
 | 19. Le dignità, per scuola | bassa | media | il Jyotisha: i varga del BPHS, cap. 6-7 |
 | 17. L'astrologia oraria | bassa | piccola, ormai | i quattro lotti sono fatti; restano rifiniture indipendenti, una per riga |
 | 24. Le fonti da scaricare in `texts/` | bassa | piccola | niente |
 
 L'ordine consigliato è quello della tabella. Della 19 resta soprattutto il
-Jyotisha, che sta accanto ai varga della 5: il D-2 deciso lì cambia anche il
-modo di dire la dignità nella hora. La 17 usa le tavole di Lilly della 19 e ha
+Jyotisha, che sta accanto ai varga della 5: il D-2 di Parashara, fatto senza
+segni, cambia anche il modo di dire la dignità nella hora. La 17 usa le tavole di Lilly della 19 e ha
 già le *moieties* come terza convenzione delle orbite.
 
-## 5. I nove varga che mancano
+## 5. I sei varga che mancano
 
-Calcolati: D-1, D-3, D-9, D-10, D-12, D-27, D-30, in `packages/core/src/varga.ts`.
-Sono i più usati, ed è la ragione per cui vengono per primi, non la
-completezza. Dei sedici classici ne restano nove.
+Calcolati: D-1, D-2, D-3, D-4, D-7, D-9, D-10, D-12, D-27, D-30, in
+`packages/core/src/varga.ts` (il D-2 con le sue convenzioni in `hora.ts`).
+Dei sedici classici ne restano sei, nei lotti B e C.
 
 **Non vanno fatti in un colpo solo.** Ogni varga è una regola a sé, e le regole
 divergono fra scuole più che nel resto del Jyotisha: farne dieci in un
@@ -99,74 +99,38 @@ Restano da aggiornare a mano i testi che li elencano, che nessun test vede: il
 commento delle due rotte (`api/jyotish/+server.ts`, parametro `vargas`;
 `quadro/+server.ts`, parametro `varga`), l'aiuto della CLI
 (`--varga <lista>`, `packages/core/src/cli.ts:117`), il rimando in
-`/metodo` («Il sito ne calcola sette», voce `#varga` dell'elenco,
+`/metodo` («Il sito ne calcola dieci», voce `#varga` dell'elenco,
 `apps/web/src/routes/(informativa)/metodo/+page.svelte:366`), la pagina
-`/metodo/varga` («I sette che il sito calcola», «Le altre nove divisioni
-classiche non sono ancora calcolate») e la sua descrizione in `Meta`, che
-elenca le sigle; nel glossario la voce `#varga` di `/glossario/jyotisha` cita
-D-9, D-10 e D-30 come esempi e non va toccata. I tipi, in
-`packages/core/src/types.ts`: `VargaId` a :359, `VargaChart` a :369, l'opzione
-`vargas` di `JyotishaOptions` a :724.
+`/metodo/varga` («I dieci che il sito calcola», «Le altre sei divisioni
+classiche non sono ancora calcolate», e la frase sotto che elenca le forme
+delle regole) e la sua descrizione in `Meta`, che elenca le sigle; nel
+glossario la voce `#varga` di `/glossario/jyotisha` cita D-9, D-10 e D-30 come
+esempi e non va toccata. I tipi, in `packages/core/src/types.ts`: `VargaId` a
+:359, `SignVargaChart` a :406, l'opzione `vargas` di `JyotishaOptions` a
+:775. Il commento sopra `VargaId` conta i varga («Dieci dei sedici»).
 
-### Lotto A: quelli che si biforcano su pari e dispari
+### Lotto A, fatto il 28 ottobre 2026
 
-**D-2 Hora, D-4 Chaturthamsa, D-7 Saptamsa.** Stessa forma del D-10 già
-fatto: si guarda se il segno è pari o dispari e si parte da due punti diversi.
-Il D-2 divide in due (Sole e Luna); il D-4 in quattro, sui kendra; il D-7 in
-sette, dal segno stesso nei dispari e dal settimo nei pari.
+D-4 e D-7 in `097ae59`, letti sulle pp. 70-71 e provati contro le due tavole
+di Santhanam; il D-2 in `a828b3f`. Del D-2 vale la pena ricordare la forma,
+perché è la sola eccezione alla regola «un varga dà un segno»:
 
-**Il D-2 è deciso (27 ottobre 2026): più convenzioni nominate, affiancate,
-con Parashara come predefinita.** La ricerca che ha portato alla scelta:
-
-- **I testi classici danno solo «hora del Sole» e «hora della Luna»**, senza
-  un segno: BPHS 6.5-6 (Santhanam, vol. I, pp. 68-69, tavola «Speculum of
-  Horas» a p. 69), Brihat Jataka I.11, Saravali III.14, Horasara II.2,
-  Jataka Parijata I.30, Phaladeepika III.4, tutti scaricati in
-  `texts/jyotisha/`. Segno dispari: 0-15° al Sole, 15-30° alla Luna; pari al
-  contrario. È la sola con una fonte primaria, e basta agli usi che BPHS ne fa
-  (7.13-19, pp. 91-95: frutti nella hora del Sole o della Luna, peso 2 nel
-  vimshopaka). Trascrizioni in
-  `texts/jyotisha/bphs-santhanam-1992-vol1/trascrizioni.md`, sezione «6.5-6».
-- **Leone e Cancro** (hora del Sole al Leone, della Luna al Cancro) è la
-  lettura corrente, ma nessun classico letto la enuncia: la presuppone
-  Santhanam (p. 90, «Jupiter is in exaltation Varga if in Moon's Hora») e la
-  dice quella che gli astrologi «normally use» P.V.R. Narasimha Rao (2003,
-  `texts/jyotisha/narasimha-rao-personal-finances-hora-chart-2003`).
-- **Le varianti moderne con un segno**, ciascuna con un autore, restano fuori
-  per ora e si possono aggiungere come convenzioni a sé: la *parivritti-dvaya*
-  ciclica (lettura letterale di BPHS 6.6), la Uma-Shambhu di Narasimha Rao
-  (2012), la Kashinatha (scuola SJC), quella attribuita a «Raman» (in realtà
-  di Raman Suprajarama, 2005), la «Somanatha» senza fonte primaria. Le regole
-  e i casi di controllo stanno nelle schede `FONTE.md` delle cartelle
-  `texts/jyotisha/narasimha-rao-*`, `suprajarama-*` e `texts/tecnica/pyjhora`.
-- La regola di Garga/Yavana (signore del segno e dell'undicesimo) è riportata
-  e scartata da Varahamihira (BJ I.12). Non entra.
-
-Casi di controllo per i test, Sole a 10° e 20° dell'Ariete, 10° e 20° del
-Toro: Parashara Sole / Luna / Luna / Sole; Leone-Cancro Leone / Cancro /
-Cancro / Leone.
-
-Come farlo, sul modello delle orbite (`packages/core/src/orbite.ts`): una
-convenzione della hora con nome, fonte e regola, che il risultato porta;
-`parashara` predefinita, `leone-cancro` accanto, dichiarata nella sua regola
-come lettura corrente e non come testo. Che cosa tocca, e va deciso
-scrivendo:
-
-- **Il tipo.** Con Parashara il D-2 non ha un segno: `VargaChart.positions`
-  (`types.ts`, `sign: ZodiacSign`) deve poter portare un signore,
-  `hora: 'sole' | 'luna'`, al posto del segno. La forma che rompe meno è
-  `sign` facoltativo più `hora` facoltativo, con la regola che uno dei due
-  c'è sempre. Il tipo è ridichiarato in `packages/ruota/src/types.ts` e
-  confrontato da `packages/ruota/test/tipi.test.ts`.
-- **Il disegno.** Il quadro vedico (`packages/ruota/src/quadro.ts`) colloca i
-  corpi nei segni: un D-2 di Parashara non ha dove metterli. O si rifiuta con
-  un errore che dice di scegliere `leone-cancro`, o lo si disegna diverso.
-  Lo stesso vale per `draw_jyotisha_chart` e `/api/jyotish/quadro`.
-- **Le tabelle e i testi**: `formatVargaCompact` in `format.ts`, la tabella
-  dei varga nell'interfaccia, le istruzioni di lettura in
-  `packages/lettura/src/jyotisha.ts` se nominano i varga.
-- **Le superfici**: l'opzione della convenzione su CLI, `/api/jyotish`, MCP;
-  il D-2 in `apps/web/src/lib/varghe.ts`.
+- `VargaChart` è un'unione con il discriminante `kind`: `SignVargaChart`
+  (`'segni'`, tutti i varga) e `HoraVargaChart` (`'signori'`, il solo D-2 di
+  Parashara, con `hora: 'sole' | 'luna'` al posto del segno). Il D-2 porta
+  anche `convention`, con il nome e la fonte.
+- Il quadro disegna solo `SignVargaChart`: un D-2 di Parashara è rifiutato
+  con `VARGA_SENZA_SEGNI` dalla CLI, da `/api/jyotish/quadro` e da
+  `draw_jyotisha_chart`, che dicono di chiedere `leone-cancro`.
+- Una convenzione nuova della hora (la parivritti-dvaya, la Kashinatha, la
+  Uma-Shambhu, quella di Raman Suprajarama; regole e casi di controllo nelle
+  schede `FONTE.md` di `texts/jyotisha/narasimha-rao-*`, `suprajarama-*` e
+  `texts/tecnica/pyjhora`) è una voce di `HORA_CONVENTIONS` con `signOf`, se
+  dà un segno fisso per luminare. Quelle che danno un segno diverso per segno
+  di partenza (la Kashinatha, la parivritti-dvaya) non stanno in `signOf`:
+  vogliono una funzione al suo posto. Le liste di CLI, API e MCP derivano da
+  `HORA_CONVENTIONS`; il menù di `JyotishaSettings.svelte` no, ed è scritto
+  a mano.
 
 ### Lotto B: i multipli con partenza fissa
 
@@ -203,31 +167,31 @@ tutti: un dato che sembra preciso perché ha molte cifre.
 Fonte: BPHS cap. 6-7, nella traduzione di Santhanam, vol. I, che sta in
 `texts/jyotisha/bphs-santhanam-1992-vol1`. Il cap. 6 comincia a riga 4370
 dell'`ocr.txt`. Dove comincia la regola di ciascun varga, con la pagina
-stampata ricavata dalle intestazioni dell'OCR (da confermare sull'immagine,
-che si scarica come dice la scheda: pagina stampata = immagine `n` meno 4):
+stampata ricavata dalle intestazioni dell'OCR, da confermare sull'immagine.
+La pagina stampata p è la pagina p + 5 del PDF locale: `pdftoppm -f $((p+5))
+-l $((p+5)) -r 150 -jpeg -singlefile scansione.pdf pagine/p0NN`.
 
 | Varga | Versi | Riga dell'OCR | Pagina circa | Stato |
 |---|---|---|---|---|
-| D-2 Hora | 6.5-6 | 4472 | 68-69 | deciso, da fare (lotto A) |
-| D-3 Drekkana | 6.1-8 | 4521 | 69-70 | fatto, pagina da annotare |
-| D-4 Chaturthamsa | 6.9 | 4582 | 70-71 | lotto A |
-| D-7 Saptamsa | 6.10-11 | 4637 | 71-72 | lotto A |
-| D-9 Navamsa | 6.12 | 4689 | 72 | fatto, pagina da annotare |
-| D-10 Dasamsa | 6.13-14 | 4742 | 73 | fatto, pagina da annotare |
+| D-2 Hora | 6.5-6 | 4472 | 68-69 | fatto, `hora.ts` |
+| D-3 Drekkana | 6.7-8 | 4521 | 69-70 | fatto, p. 69 in `varga.ts` |
+| D-4 Chaturthamsa | 6.9 | 4582 | 70-71 | fatto, p. 70 |
+| D-7 Saptamsa | 6.10-11 | 4637 | 71 | fatto, p. 71 |
+| D-9 Navamsa | 6.12 | 4689 | 72 | fatto, p. 72 |
+| D-10 Dasamsa | 6.13-14 | 4742 | 73 | fatto, p. 73 |
 | D-16 Shodasamsa | 6.16 | 4847 | 74-75 | lotto B |
 | D-20 Vimsamsa | 6.17-21 | 4939 | 76 | lotto B |
 | D-24 Siddhamsa (Chaturvimsamsa) | 6.22-23 | 5053 | 77-78 | lotto B |
 | D-27 Bhamsa | 6.24-26 | 5108 | 78-79 | fatto, p. 79 in `varga.ts` |
-| D-30 Trimsamsa | 6.27-28 | 5181 | 80 | fatto, pagina da annotare |
+| D-30 Trimsamsa | 6.27-28 | 5181 | 80 | fatto, p. 80 |
 | D-40 Khavedamsa (Chatvarimsamsa) | 6.29-30 | 5210 | 80-81 | lotto C |
 | D-45 Akshavedamsa | 6.31-32 | 5269 | 81-82 | lotto C |
 | D-60 Shashtiamsa | 6.33-41 | 5437 | 83-86 | lotto C |
 
-Il D-12 Dwadasamsa (6.15) sta fra 4742 e 4847. Poi i gruppi di varga (riga
-5884) e il cap. 7 da 6005, con gli usi a 6061-6112. Le regole dei varga già
-calcolati, tranne il D-27, vengono da una sessione precedente e non portano
-la pagina: conviene ricontrollarle sulle immagini quando si apre il primo
-lotto, e scrivere la pagina nel commento come per il D-27.
+Il D-12 Dwadasamsa (6.15) sta a p. 73, fra le righe 4742 e 4847. Poi i
+gruppi di varga (riga 5884) e il cap. 7 da 6005, con gli usi a 6061-6112.
+Tutti i varga calcolati portano ora il verso nella regola e la pagina nel
+commento, letti sulle immagini (`trascrizioni.md`, sezione «6.7-15»).
 
 Verifica per tutti i lotti: `packages/core/test/varga.test.ts` ha già la forma:
 confini noti calcolati a mano per un segno pari e uno dispari, più la prova
@@ -711,8 +675,8 @@ Verifica: ogni fonte citata in un commento di `packages/` ha una riga in
 - **Il D-2 si fa con più convenzioni nominate, Parashara predefinita.** Hora
   del Sole e della Luna come nei testi, e Leone-Cancro accanto, dichiarata
   come lettura corrente senza un classico che la enunci. Scelto dal
-  proprietario il 27 ottobre 2026 fra quattro strade; il resto sta nella
-  voce 5.
+  proprietario il 27 ottobre 2026 fra quattro strade, fatto il 28 in
+  `a828b3f`; la forma del risultato sta nella voce 5, lotto A.
 - **Il server MCP non ha un pool, e non gli serve**: è un processo per client,
   sul trasporto stdio, e non c'è nessun'altra richiesta da tenere in attesa.
 - **I thread del pool web sono al massimo quattro, e la quinta richiesta

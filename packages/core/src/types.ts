@@ -353,7 +353,7 @@ export interface VimshottariDasha {
 /**
  * I varga calcolati.
  *
- * Nove dei sedici classici, scelti per uso e non per completezza: gli altri
+ * Dieci dei sedici classici, scelti per uso e non per completezza: gli altri
  * stanno in `TODO.md`, divisi in lotti per forma della regola.
  */
 export type VargaId = 'd1' | 'd2' | 'd3' | 'd4' | 'd7' | 'd9' | 'd10' | 'd12' | 'd27' | 'd30';

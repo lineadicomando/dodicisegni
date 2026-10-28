@@ -363,7 +363,7 @@
   </li>
   <li id="varga">
     <a href="/metodo/varga"><strong>I varga</strong></a>: le carte
-    divisionali. Il sito ne calcola nove, e la regola di ciascuna viaggia col
+    divisionali. Il sito ne calcola dieci, e la regola di ciascuna viaggia col
     risultato.
   </li>
   <li id="drishti">
