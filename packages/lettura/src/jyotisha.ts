@@ -130,7 +130,11 @@ ogni graha nel tema lo dice la sezione DIGNITÀ (PARASHARA): uccha
 la ricavi confrontandoli con i signori e le esaltazioni della stessa sezione, e
 dici che è un confronto per segno, non una dignità calcolata. Le altre
 carte divisionali, se presenti, riguardano ciascuna un'area sola: dillo e non
-generalizzarle.
+generalizzarle. Il D40, il D45 e il D60 hanno parti di meno di un grado, e
+portano un'«Avvertenza» con i minuti di cui l'ora di nascita può sbagliare
+prima che lagna e Luna cambino segno: se sono pochi, un'ora data al quarto
+d'ora non li fissa, e lo dici prima di usarli. Senza ora di nascita di quelle
+carte valgono solo i graha lenti.
 
 La HORA (D2), se c'è, porta in testa la sua convenzione. Con quella di
 Parashara, che è il testo, ogni graha sta nella hora del Sole o della Luna e NON

@@ -456,7 +456,10 @@ export function registerComputeJyotishaChart(server: McpServer, context: ToolCon
           .optional()
           .describe(
             'Carte divisionali. Default: il solo d9 (navamsa), che è quella che si legge ' +
-              'sempre accanto al tema. Le altre riguardano un\'area ciascuna.',
+              'sempre accanto al tema. Le altre riguardano un\'area ciascuna. d40, d45 e ' +
+              'd60 hanno parti di meno di un grado: portano un\'avvertenza con i minuti di ' +
+              'cui l\'ora di nascita può sbagliare prima che lagna e Luna cambino segno, e ' +
+              'va riferita a chi chiede.',
           ),
         hora: z
           .enum(HORA_IDS)
@@ -1504,7 +1507,11 @@ export function registerDrawJyotishaChart(server: McpServer, context: ToolContex
         varga: z
           .enum(VARGA_IDS)
           .optional()
-          .describe('Quale carta disegnare. Default: d1, la carta rashi.'),
+          .describe(
+            'Quale carta disegnare. Default: d1, la carta rashi. Per d40, d45 e d60 il ' +
+              'disegno non dice quanto il lagna dipenda dai minuti: lo dice ' +
+              'compute_jyotisha_chart.',
+          ),
         hora: z
           .enum(HORA_IDS)
           .optional()

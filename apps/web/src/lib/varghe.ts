@@ -28,4 +28,7 @@ export const VARGHE: readonly { value: VargaId; label: string }[] = [
   { value: 'd24', label: 'D24 Siddhamsa' },
   { value: 'd27', label: 'D27 Nakshatramsa' },
   { value: 'd30', label: 'D30 Trimsamsa' },
+  { value: 'd40', label: 'D40 Khavedamsa' },
+  { value: 'd45', label: 'D45 Akshavedamsa' },
+  { value: 'd60', label: 'D60 Shashtiamsa' },
 ];

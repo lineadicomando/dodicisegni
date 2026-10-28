@@ -377,6 +377,149 @@ describe('D-30, che abbandona le parti uguali', () => {
   });
 });
 
+describe('D-40, che parte dall Ariete o dalla Bilancia secondo la parità', () => {
+  // BPHS 6.29-30, trad. Santhanam, vol. I, pp. 80-81.
+  const parte = 30 / 40;
+
+  it('apre i dispari dall Ariete e i pari dalla Bilancia', () => {
+    const aperture = Array.from({ length: 12 }, (_, i) => vargaSignOf(inizioSegno(i), 'd40'));
+    expect(aperture).toEqual(Array.from({ length: 12 }, (_, i) => (i % 2 === 0 ? 'ariete' : 'bilancia')));
+  });
+
+  it("cambia parte ogni 45'", () => {
+    expect(vargaSignOf(parte - 1e-6, 'd40')).toBe('ariete');
+    expect(vargaSignOf(parte + 1e-6, 'd40')).toBe('toro');
+    // La quarantesima è la quarta dall'apertura: il Cancro per l'Ariete, il
+    // Capricorno per il Toro, che parte dalla Bilancia.
+    expect(vargaSignOf(29.99, 'd40')).toBe('cancro');
+    expect(vargaSignOf(59.99, 'd40')).toBe('capricorno');
+  });
+
+  it('coincide con la tavola di Santhanam, p. 81', () => {
+    // «Speculum of Chatvarimsamsa»: una colonna per segno, righe «1st, 13th,
+    // 25th, 37th»…; i dispari stampano 1-12, i pari 7-12 e 1-6.
+    controllaTavola('d40', 40, tavolaPerGruppi([
+      { segni: [1, 3, 5, 7, 9, 11], colonna: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12] },
+      { segni: [2, 4, 6, 8, 10, 12], colonna: [7, 8, 9, 10, 11, 12, 1, 2, 3, 4, 5, 6] },
+    ], 40));
+  });
+});
+
+describe('D-45, con la forma del D-16', () => {
+  // BPHS 6.31-32, trad. Santhanam, vol. I, pp. 81-82.
+  const parte = 30 / 45;
+
+  it('apre i cardinali dall Ariete, i fissi dal Leone, i mobili dal Sagittario', () => {
+    const aperture = Array.from({ length: 12 }, (_, i) => vargaSignOf(inizioSegno(i), 'd45'));
+    expect(aperture).toEqual([
+      'ariete', 'leone', 'sagittario', 'ariete', 'leone', 'sagittario',
+      'ariete', 'leone', 'sagittario', 'ariete', 'leone', 'sagittario',
+    ]);
+  });
+
+  it("cambia parte ogni 40'", () => {
+    expect(vargaSignOf(parte - 1e-6, 'd45')).toBe('ariete');
+    expect(vargaSignOf(parte + 1e-6, 'd45')).toBe('toro');
+    // La quarantacinquesima è la nona dall'apertura.
+    expect(vargaSignOf(29.99, 'd45')).toBe('sagittario');
+    expect(vargaSignOf(59.99, 'd45')).toBe('ariete');
+  });
+
+  it('coincide con la tavola di Santhanam, p. 82', () => {
+    // «Speculum of Akshavedamsa»: le colonne dei segni 1, 2 e 3; le altre
+    // le ripetono ogni tre.
+    controllaTavola('d45', 45, tavolaPerGruppi([
+      { segni: CARDINALI, colonna: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12] },
+      { segni: FISSI, colonna: [5, 6, 7, 8, 9, 10, 11, 12, 1, 2, 3, 4] },
+      { segni: MOBILI, colonna: [9, 10, 11, 12, 1, 2, 3, 4, 5, 6, 7, 8] },
+    ], 45));
+  });
+});
+
+describe('D-60, che conta dal segno stesso', () => {
+  // BPHS 6.33, trad. Santhanam, vol. I, pp. 82-83.
+  it("rifà l'esempio di Santhanam: Venere a 13°25' del Capricorno è nei Pesci", () => {
+    // 13°25' per 2 fa 26°50'; 26 diviso 12 dà resto 2, più 1 fa 3: il
+    // terzo segno contando dal Capricorno. Dall'Ariete sarebbero i Gemelli.
+    expect(vargaSignOf(inizioSegno(9) + 13 + 25 / 60, 'd60')).toBe('pesci');
+  });
+
+  it('cambia segno ogni mezzo grado, dal segno stesso anche nei pari', () => {
+    expect(vargaSignOf(0.5 - 1e-6, 'd60')).toBe('ariete');
+    expect(vargaSignOf(0.5 + 1e-6, 'd60')).toBe('toro');
+    // Il Toro comincia dal Toro: il rovesciamento nei pari riguarda i nomi.
+    expect(vargaSignOf(inizioSegno(1) + 0.25, 'd60')).toBe('toro');
+    expect(vargaSignOf(inizioSegno(1) + 0.75, 'd60')).toBe('gemelli');
+    // Sessanta parti fanno cinque giri: l'ultima è il segno prima di sé.
+    expect(vargaSignOf(inizioSegno(1) + 29.9, 'd60')).toBe('ariete');
+  });
+});
+
+/** Sposta un'ora `HH:mm` di un numero di secondi, e la scrive `HH:mm:ss`. */
+function spostaOra(ora: string, secondi: number): string {
+  const [h, m] = ora.split(':').map(Number) as [number, number];
+  const totale = Math.round(h * 3600 + m * 60 + secondi);
+  const pad = (n: number) => String(n).padStart(2, '0');
+  return `${pad(Math.floor(totale / 3600))}:${pad(Math.floor((totale % 3600) / 60))}:${pad(totale % 60)}`;
+}
+
+/** I minuti di una durata scritta dall'avvertenza, «1,3 minuti» o «40 secondi». */
+function minutiDi(testo: string): number {
+  const [numero, unita] = testo.split(' ') as [string, string];
+  const valore = Number(numero.replace(',', '.'));
+  return unita.startsWith('second') ? valore / 60 : valore;
+}
+
+describe('i varga fini, che vogliono l ora al minuto', () => {
+  it('portano un avvertenza solo loro, e il tema vedico la riporta', () => {
+    const carta = tema();
+    for (const id of ['d40', 'd45', 'd60'] as const) {
+      expect(computeVarga(carta, id).warnings, id).toHaveLength(1);
+    }
+    expect(computeVarga(carta, 'd30').warnings).toBeUndefined();
+    expect(formatVargaCompact(computeVarga(carta, 'd60'))).toContain('Avvertenza: Il D60');
+  });
+
+  it("dice di quanto l'ora può sbagliare, e il lagna cambia davvero lì", () => {
+    const carta = tema();
+    const [avviso] = computeVarga(carta, 'd60').warnings!;
+    const durate = /anticipata di ([\d,]+ \w+) o posticipata di ([\d,]+ \w+)/.exec(avviso!);
+    expect(durate, avviso).not.toBeNull();
+    const [prima, dopo] = [minutiDi(durate![1]!), minutiDi(durate![2]!)];
+    const lagnaAlle = (secondi: number) =>
+      computeVarga(computeNatalChart({ ...NASCITA, time: spostaOra(NASCITA.time!, secondi) }, { zodiac: 'siderale' }), 'd60')
+        .ascendant;
+    const qui = computeVarga(carta, 'd60').ascendant;
+
+    // Un po' prima del confine il lagna è ancora quello, un po' oltre no. Il
+    // margine del 15% copre l'arrotondamento a un decimale e la velocità
+    // presa come costante.
+    expect(lagnaAlle(-prima * 60 * 0.85)).toBe(qui);
+    expect(lagnaAlle(-prima * 60 * 1.15 - 2)).not.toBe(qui);
+    expect(lagnaAlle(dopo * 60 * 0.85)).toBe(qui);
+    expect(lagnaAlle(dopo * 60 * 1.15 + 2)).not.toBe(qui);
+  });
+
+  it("dà all'Ascendente la velocità che ha davvero", () => {
+    const carta = tema();
+    const [avviso] = computeVarga(carta, 'd60').warnings!;
+    const parte = minutiDi(/ne percorre una in circa ([\d,]+ \w+)/.exec(avviso!)![1]!);
+    const dopo = computeNatalChart({ ...NASCITA, time: '14:40' }, { zodiac: 'siderale' });
+    const gradiAlMinuto = (dopo.angles!.ascendant - carta.angles!.ascendant) / 10;
+    // La cifra è scritta a un decimale e la velocità vera è una media su dieci
+    // minuti: basta che stiano entro il tre per cento.
+    expect(Math.abs(parte - 0.5 / gradiAlMinuto) / parte).toBeLessThan(0.03);
+  });
+
+  it("senza ora di nascita dice che il segno della Luna non è determinato", () => {
+    const { time: _ora, ...senzaOra } = NASCITA;
+    const carta = computeNatalChart(senzaOra, { zodiac: 'siderale' });
+    const [avviso] = computeVarga(carta, 'd60').warnings!;
+    expect(avviso).toContain('non ha lagna');
+    expect(avviso).toMatch(/circa 2\d parti/);
+  });
+});
+
 describe('D-2, la hora, con due convenzioni', () => {
   // BPHS 6.5-6, trad. Santhanam, vol. I, pp. 68-69; la lettura Leone-Cancro
   // è quella corrente, che nessun classico enuncia. Vedi `hora.ts`.
@@ -538,6 +681,6 @@ describe('computeVarga', () => {
 
   it('rifiuta un tema tropicale e un varga che non calcola', () => {
     expect(() => computeVarga(computeNatalChart(NASCITA), 'd9')).toThrow(ChartError);
-    expect(() => vargaSignOf(0, 'd60' as VargaId)).toThrow(ChartError);
+    expect(() => vargaSignOf(0, 'd81' as VargaId)).toThrow(ChartError);
   });
 });

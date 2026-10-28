@@ -363,8 +363,8 @@
   </li>
   <li id="varga">
     <a href="/metodo/varga"><strong>I varga</strong></a>: le carte
-    divisionali. Il sito ne calcola tredici, e la regola di ciascuna viaggia col
-    risultato.
+    divisionali. Il sito calcola le sedici del testo, e la regola di ciascuna
+    viaggia col risultato.
   </li>
   <li id="drishti">
     <a href="/metodo/drishti"><strong>Le drishti</strong></a>: gli sguardi dei

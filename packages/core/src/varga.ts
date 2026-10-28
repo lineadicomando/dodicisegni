@@ -34,6 +34,9 @@
  *   scambiati fra i due), dal Leone o dal Cancro secondo la parità (D-24).
  * - **D-30** abbandona le parti uguali: cinque tratti di ampiezza diversa,
  *   rovesciati fra segni pari e dispari.
+ * - **D-40** parte dall'Ariete nei segni dispari e dalla Bilancia nei pari;
+ *   **D-45** ha la forma del D-16.
+ * - **D-60** conta dal segno stesso una parte ogni mezzo grado.
  * - **D-27** non riparte a ogni segno: conta di seguito dall'Ariete lungo
  *   tutto lo zodiaco, e il segno da cui comincia ciascun segno ne è la
  *   conseguenza.
@@ -66,6 +69,12 @@ interface VargaDefinition {
    * Manca nel D-2, dove il segno, se c'è, lo dà la convenzione della hora.
    */
   signIndex?: (sign: number, degree: number) => number;
+  /**
+   * Se il varga è **fine**: parti più strette di un grado, che l'Ascendente
+   * attraversa in pochi minuti di orologio. Questi portano un'avvertenza
+   * calcolata sulla carta (`fineWarning`).
+   */
+  fine?: boolean;
 }
 
 /** Il segno all'indice dato, con il giro chiuso. */
@@ -265,6 +274,57 @@ export const VARGAS: readonly VargaDefinition[] = [
       return (tratto as { sign: number }).sign;
     },
   },
+  {
+    // BPHS 6.29-30, p. 80, con la tavola a p. 81. «Viṣame kriyāt … samabhe
+    // tulataḥ»: dall'Ariete nel dispari, dalla Bilancia nel pari. Santhanam
+    // lo intitola Chatvarimsamsa e nelle note lo chiama Khavedamsa.
+    id: 'd40',
+    name: 'Khavedamsa',
+    divisions: 40,
+    rule:
+      "Quaranta parti da 45'. Nei segni dispari si parte dall'Ariete, nei pari dalla Bilancia, " +
+      'e si prosegue in ordine (BPHS 6.29-30).',
+    signIndex: (sign, degree) => {
+      const inizio = sign % 2 === 0 ? 0 : 6;
+      return inizio + Math.floor((degree * 40) / 30);
+    },
+    fine: true,
+  },
+  {
+    // BPHS 6.31-32, p. 81, con la tavola a p. 82. «Carabhe kriyāt | sthire
+    // siṃhād dvibhe cāpāt»: la forma del D-16.
+    id: 'd45',
+    name: 'Akshavedamsa',
+    divisions: 45,
+    rule:
+      "Quarantacinque parti da 40'. Si parte dall'Ariete se il segno è cardinale, dal Leone " +
+      'se è fisso, dal Sagittario se è mobile, e si prosegue in ordine (BPHS 6.31-32).',
+    signIndex: (sign, degree) => {
+      const inizio = [0, 4, 8][sign % 3] as number;
+      return inizio + Math.floor((degree * 45) / 30);
+    },
+    fine: true,
+  },
+  {
+    // BPHS 6.33, p. 82; la traduzione e l'esempio a p. 83. «Śeṣaṃ saikaṃ ca
+    // tad-rāśeḥ»: il resto più uno, da quel segno. Santhanam conta così
+    // (Venere a 13°25' del Capricorno: 26 diviso 12 dà resto 2, più 1 fa 3,
+    // contati dal Capricorno: Pesci), e la sua traduzione omette «da quel
+    // segno»: è da lì che viene la lettura dall'Ariete, che non ha trovato un
+    // autore e non è calcolata. P.V.R. Narasimha Rao legge il verso come qui
+    // (un'email del 2009 riportata su un forum, in `texts/tecnica/
+    // d60-letture-in-rete-2026`). La decisione sta in TODO.md, *Deciso*. I sessanta nomi (6.34-40)
+    // si rovesciano nei segni pari; i segni no.
+    id: 'd60',
+    name: 'Shashtiamsa',
+    divisions: 60,
+    rule:
+      "Sessanta parti da 30'. Si raddoppiano i gradi percorsi nel segno, si divide per 12 e " +
+      "si aggiunge 1 al resto: è il segno, contato dal segno stesso (BPHS 6.33, «tad-rāśeḥ»). " +
+      "Chi conta dall'Ariete segue un'altra lettura, che qui non è calcolata.",
+    signIndex: (sign, degree) => sign + Math.floor(degree * 2),
+    fine: true,
+  },
 ];
 
 /** La definizione di un varga, o un errore che elenca quelli che ci sono. */
@@ -308,6 +368,100 @@ export function vargaSignOf(
   }
 
   return at(definition.signIndex(Math.floor(longitude / 30), degreeInSign(longitude)));
+}
+
+/**
+ * Quanti gradi di Ascendente passano in un minuto di orologio, sulla carta.
+ *
+ * Dall'Ascendente come funzione del tempo siderale locale, della latitudine e
+ * dell'obliquità (tan λ = −cos θ / (sin ε tan φ + cos ε sin θ)), derivato a
+ * differenze centrate su un minuto. Il tempo siderale avanza di 360,9856° al
+ * giorno. L'obliquità è quella media della IAU 1980: per una velocità, e per
+ * un'avvertenza espressa in minuti, la nutazione non cambia la cifra.
+ *
+ * La derivata non dipende da quale delle due soluzioni sia l'Ascendente e
+ * quale il Discendente, ed è la ragione per cui qui basta l'arcotangente
+ * senza scegliere il ramo. Alle latitudini polari, dove l'Ascendente salta,
+ * la cifra non ha senso e la funzione restituisce `undefined`.
+ */
+function ascendantDegreesPerMinute(chart: NatalChart): number | undefined {
+  const rad = Math.PI / 180;
+  const secoli = (chart.time.julianDayUT - 2451545) / 36525;
+  const eps = (23.439291 - 0.0130042 * secoli) * rad;
+  const phi = chart.input.latitude * rad;
+  const ascendente = (theta: number): number =>
+    Math.atan2(-Math.cos(theta), Math.sin(eps) * Math.tan(phi) + Math.cos(eps) * Math.sin(theta)) / rad;
+
+  const passo = 360.98564736629 / 1440; // gradi di tempo siderale in un minuto
+  const theta = chart.siderealTime.hours * 15;
+  const avanti = ascendente((theta + passo) * rad);
+  const indietro = ascendente((theta - passo) * rad);
+  const velocita = normalize360(avanti - indietro + 180) - 180;
+  const perMinuto = velocita / 2;
+  return Number.isFinite(perMinuto) && perMinuto > 0 && Math.abs(chart.input.latitude) < 66 ? perMinuto : undefined;
+}
+
+/** Una durata in minuti, a parole: i secondi sotto il minuto. */
+function durata(minuti: number): string {
+  if (minuti < 1) return `${Math.round(minuti * 60)} secondi`;
+  return `${minuti.toFixed(1).replace('.', ',')} minuti`;
+}
+
+/** Quanto manca, all'indietro e in avanti, al confine della parte in cui cade la longitudine. */
+function distanzeDalConfine(longitude: number, divisions: number): [number, number] {
+  const ampiezza = 30 / divisions;
+  const grado = degreeInSign(longitude);
+  const dentro = grado - Math.floor(grado / ampiezza) * ampiezza;
+  return [dentro, ampiezza - dentro];
+}
+
+/**
+ * L'avvertenza di un varga fine, calcolata sulla carta e non a memoria.
+ *
+ * La cifra che circola, «due minuti per parte del D-60», è una media: quanto
+ * valga per una nascita dipende dal segno che sorge e dalla latitudine, e
+ * dove cada l'Ascendente dentro la sua parte conta più della larghezza della
+ * parte. Per questo si dice di quanto l'ora dovrebbe sbagliare, prima o
+ * dopo, perché lagna e Luna cambino segno in questo varga. Senza ora di
+ * nascita il lagna non c'è, e si dice quante parti la Luna attraversa in un
+ * giorno.
+ */
+function fineWarning(chart: NatalChart, definition: VargaDefinition): string {
+  const n = definition.divisions;
+  const nome = `Il ${definition.id.toUpperCase()}`;
+  const ampiezza = `${Math.round((30 / n) * 60)}'`;
+  const luna = chart.bodies.find((body) => body.id === 'luna');
+
+  if (!chart.time.timeKnown || !chart.angles) {
+    const parti = luna ? Math.round((Math.abs(luna.speed) * n) / 30) : undefined;
+    return (
+      `${nome} senza ora di nascita non ha lagna, e i suoi segni valgono solo per i graha lenti. ` +
+      (parti
+        ? `La Luna in un giorno attraversa circa ${parti} parti da ${ampiezza}: il suo segno qui non è determinato.`
+        : `Una parte è di ${ampiezza} d'arco.`)
+    );
+  }
+
+  const velocita = ascendantDegreesPerMinute(chart);
+  const righe = [`${nome} vuole l'ora di nascita al minuto: una parte è di ${ampiezza} d'arco.`];
+  if (velocita) {
+    const [prima, dopo] = distanzeDalConfine(chart.angles.ascendant, n);
+    righe.push(
+      `Qui l'Ascendente ne percorre una in circa ${durata(30 / n / velocita)}, e il lagna cambia segno ` +
+        `se l'ora di nascita è anticipata di ${durata(prima / velocita)} o posticipata di ` +
+        `${durata(dopo / velocita)}.`,
+    );
+  }
+  if (luna && luna.speed > 0) {
+    const perMinuto = luna.speed / 1440;
+    const [prima, dopo] = distanzeDalConfine(luna.longitude, n);
+    righe.push(
+      `La Luna cambia segno con un anticipo di ${durata(prima / perMinuto)} o un ritardo di ` +
+        `${durata(dopo / perMinuto)}.`,
+    );
+  }
+  righe.push('Un\'ora arrotondata al quarto d\'ora non basta a dire quale segno sia quello giusto.');
+  return righe.join(' ');
 }
 
 /** Le opzioni di una carta divisionale: per ora, la sola lettura del D-2. */
@@ -375,5 +529,6 @@ export function computeVarga(chart: NatalChart, id: VargaId, options: VargaOptio
       retrograde: body.retrograde,
     })),
     ...(chart.angles ? { ascendant: vargaSignOf(chart.angles.ascendant, id) } : {}),
+    ...(definition.fine ? { warnings: [fineWarning(chart, definition)] } : {}),
   };
 }

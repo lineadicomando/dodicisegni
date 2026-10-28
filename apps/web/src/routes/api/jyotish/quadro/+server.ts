@@ -37,7 +37,7 @@ const VARGHE_CALCOLATE = new Set<string>(VARGAS.map((varga) => varga.id));
  *   nel sud i segni stanno fermi e le case si spostano, nel nord il contrario.
  *   Dicono la stessa cosa in due disposizioni diverse.
  * - `varga` — uno fra `d1` (default), `d3`, `d4`, `d7`, `d9`, `d10`, `d12`, `d16`,
- *   `d20`, `d24`, `d27`, `d30`.
+ *   `d20`, `d24`, `d27`, `d30`, `d40`, `d45`, `d60`.
  *   **Uno solo**: un'immagine è un quadro solo.
  * - `hora` — solo con `varga=d2`: `parashara` (default) o `leone-cancro`. Con
  *   Parashara il D-2 non ha segni e il quadro risponde 400

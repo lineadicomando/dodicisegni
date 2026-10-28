@@ -12,7 +12,7 @@
 
 <Meta
   titolo="I varga: come si calcolano le divisionali"
-  descrizione="Le carte divisionali del Jyotisha (hora D-2, D-3, D-4, D-7, navamsa D-9, D-10, D-12, D-16, D-20, D-24, D-27, D-30): la regola di ciascuna, un esempio svolto, e perché la regola viaggia col risultato."
+  descrizione="Le carte divisionali del Jyotisha (hora D-2, D-3, D-4, D-7, navamsa D-9, D-10, D-12, D-16, D-20, D-24, D-27, D-30, D-40, D-45, D-60): la regola di ciascuna, un esempio svolto, e perché la regola viaggia col risultato."
 />
 
 <p class="sopra"><a href="/metodo#jyotisha">Metodo</a> · astrologia indiana</p>
@@ -38,7 +38,7 @@
   chi legge; che cosa ciascuno sia è aritmetica, ed è dichiarata.
 </p>
 
-<h2 id="regole">I tredici che il sito calcola</h2>
+<h2 id="regole">I sedici che il sito calcola</h2>
 
 <table class="testo">
   <thead>
@@ -63,18 +63,21 @@
     <tr><td>D-24</td><td>Siddhamsa</td><td>24</td><td>Ventiquattro parti da 1°15'. Nei segni dispari si parte dal Leone, nei pari dal Cancro.</td></tr>
     <tr><td>D-27</td><td>Nakshatramsa</td><td>27</td><td>Ventisette parti da 1°06'40", contate di seguito dall'Ariete lungo tutto lo zodiaco.</td></tr>
     <tr><td>D-30</td><td>Trimsamsa</td><td>30</td><td>Cinque tratti disuguali, retti da Marte, Saturno, Giove, Mercurio e Venere; rovesciati nei segni pari.</td></tr>
+    <tr><td>D-40</td><td>Khavedamsa</td><td>40</td><td>Quaranta parti da 45'. Nei segni dispari si parte dall'Ariete, nei pari dalla Bilancia.</td></tr>
+    <tr><td>D-45</td><td>Akshavedamsa</td><td>45</td><td>Quarantacinque parti da 40'. Si parte dall'Ariete se il segno è cardinale, dal Leone se è fisso, dal Sagittario se è mobile.</td></tr>
+    <tr><td>D-60</td><td>Shashtiamsa</td><td>60</td><td>Sessanta parti da 30', contate dal segno stesso: vedi <a href="#d60">sotto</a>.</td></tr>
   </tbody>
 </table>
 
 <p>
-  Le altre tre divisioni classiche, le più fini (D-40, D-45, D-60), non sono
-  ancora calcolate. Le regole si biforcano in modi diversi, ed è il motivo per
-  cui la tavola non è una formula sola: il D-3 procede per trigoni, il D-4 per
+  Sono le sedici divisioni del <em>Brihat Parashara Hora Shastra</em>. Le
+  regole si biforcano in modi diversi, ed è il motivo per cui la tavola non è
+  una formula sola: il D-3 procede per trigoni, il D-4 per
   kendra, il D-9 parte da dove dice la modalità del segno, il D-7 e il D-10 da
   dove dice la sua parità, il D-12 riparte sempre dal segno stesso. Il D-16, il
   D-20 e il D-24 partono invece da pochi segni fissi, scelti dalla modalità o
   dalla parità: il D-16 e il D-20 usano gli stessi tre, ma con fissi e mobili
-  scambiati.
+  scambiati. Il D-40 e il D-45 ripetono quelle forme su parti più strette.
 </p>
 
 <h2 id="navamsa">Un esempio: la navamsa</h2>
@@ -133,11 +136,41 @@
   pianeti.
 </p>
 
+<h2 id="d60">Lo shashtiamsa, e l'ora al minuto</h2>
+
+<p>
+  Il D-60 divide il segno in sessanta parti da mezzo grado. Il verso (6.33)
+  dice di raddoppiare i gradi percorsi nel segno, dividere per dodici e
+  aggiungere uno al resto: si ottiene un numero di segni, contato <strong>dal
+  segno stesso</strong>. Il sanscrito lo scrive (<em>tad-rāśeḥ</em>, «da quel
+  segno»), così lo legge P.V.R. Narasimha Rao, e così fa l'esempio di
+  Santhanam: Venere a 13°25' del Capricorno, 26 diviso 12 dà resto 2, più uno
+  fa 3, e il terzo segno dal Capricorno sono i Pesci. La traduzione inglese omette quelle due parole, e c'è chi conta
+  dall'Ariete, che darebbe i Gemelli. Quella lettura non ha un autore che la
+  sostenga per iscritto, e il sito non la calcola.
+</p>
+
+<p>
+  Mezzo grado è poco. L'Ascendente lo attraversa in pochi minuti di orologio,
+  più o meno secondo il segno che sorge e la latitudine, e un'ora di nascita
+  data al quarto d'ora non basta a dire in quale parte cada. Per questo il
+  D-40, il D-45 e il D-60 escono con un'avvertenza calcolata su quel tema:
+  di quanti minuti l'ora dovrebbe sbagliare, prima o dopo, perché il lagna e
+  la Luna cambino segno. Un segno con molte cifre sembra preciso anche quando
+  non lo è; l'avvertenza serve a dire quando lo è.
+</p>
+
+<p>
+  I sessanta nomi delle parti (Ghora, Rakshasa, Deva…), che il testo dà come
+  benigni o maligni e rovescia nei segni pari, non sono riportati: il sito
+  calcola le carte, non i giudizi.
+</p>
+
 <h2 id="fonte">La fonte, e le tavole stampate</h2>
 
 <p>
   Le regole vengono dal <em>Brihat Parashara Hora Shastra</em>, capitolo 6,
-  nella traduzione di R. Santhanam (vol. I, 1992, pp. 68-80), e ciascuna porta
+  nella traduzione di R. Santhanam (vol. I, 1992, pp. 68-86), e ciascuna porta
   il suo verso accanto al risultato. Quella del D-27 è 6.24-26, alle pp.
   78-79, e la tavola che Santhanam stampa accanto ha un refuso, nella colonna
   dei Gemelli, che la regola e la colonna della Bilancia smentiscono: il

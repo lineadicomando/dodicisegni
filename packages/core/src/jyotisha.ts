@@ -75,6 +75,9 @@ export function computeJyotisha(
 
   const dasha = computeVimshottari(chart, options.dasha ?? { levels: 2 });
   const drishti = computeDrishti(chart, options.drishti ?? {});
+  const vargas = (options.vargas ?? ['d9']).map((id) =>
+    computeVarga(chart, id, options.hora ? { hora: options.hora } : {}),
+  );
 
   return {
     chart,
@@ -84,13 +87,16 @@ export function computeJyotisha(
       nakshatra: nakshatraOf(body.longitude),
     })),
     dasha,
-    vargas: (options.vargas ?? ['d9']).map((id) =>
-      computeVarga(chart, id, options.hora ? { hora: options.hora } : {}),
-    ),
+    vargas,
     drishti,
     dignities: computeParasharaDignities(chart),
     // Le avvertenze dei pezzi salgono qui: chi legge il tema vedico non deve
     // andarle a cercare dentro la catena delle dasha.
-    warnings: [...warnings, ...dasha.warnings, ...drishti.warnings],
+    warnings: [
+      ...warnings,
+      ...dasha.warnings,
+      ...vargas.flatMap((varga) => varga.warnings ?? []),
+      ...drishti.warnings,
+    ],
   };
 }

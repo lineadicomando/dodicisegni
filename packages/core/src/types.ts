@@ -353,12 +353,11 @@ export interface VimshottariDasha {
 /**
  * I varga calcolati.
  *
- * Tredici dei sedici classici: gli altri tre stanno in `TODO.md`, nel lotto
- * dei varga fini.
+ * I sedici classici del BPHS, cap. 6.
  */
 export type VargaId =
   | 'd1' | 'd2' | 'd3' | 'd4' | 'd7' | 'd9' | 'd10' | 'd12'
-  | 'd16' | 'd20' | 'd24' | 'd27' | 'd30';
+  | 'd16' | 'd20' | 'd24' | 'd27' | 'd30' | 'd40' | 'd45' | 'd60';
 
 /** Le due metà di un segno nel D-2: la hora del Sole e quella della Luna. */
 export type Hora = 'sole' | 'luna';
@@ -395,6 +394,13 @@ interface VargaChartBase {
   rule: string;
   /** Solo nel D-2: la convenzione con cui è stato letto. */
   convention?: HoraConventionInfo;
+  /**
+   * Solo nei varga fini (D-40, D-45, D-60): di quanti minuti l'ora di nascita
+   * dovrebbe sbagliare perché lagna e Luna cambino segno, calcolato su questa
+   * carta. Un segno di una parte da mezzo grado sembra preciso quanto gli
+   * altri, e non lo è.
+   */
+  warnings?: string[];
 }
 
 /**

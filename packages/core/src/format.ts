@@ -1085,6 +1085,7 @@ export function formatVargaCompact(varga: VargaChart): string {
       ? [`Convenzione: ${varga.convention.name}. Fonte: ${varga.convention.source}`]
       : []),
     `Regola: ${varga.rule}`,
+    ...(varga.warnings ?? []).map((w) => `Avvertenza: ${w}`),
     '',
   ];
 
