@@ -28,6 +28,10 @@
  * - **D-7** e **D-10** si biforcano su **pari e dispari**: si parte dal
  *   segno stesso nei dispari, dal settimo (D-7) o dal nono (D-10) nei pari.
  * - **D-12** parte sempre dal segno stesso e prosegue.
+ * - **D-16**, **D-20** e **D-24** partono da pochi segni fissi, come il D-9
+ *   ma senza riferirsi al segno di partenza: dall'Ariete, dal Leone o dal
+ *   Sagittario secondo la modalità (D-16 e D-20, con fissi e mobili
+ *   scambiati fra i due), dal Leone o dal Cancro secondo la parità (D-24).
  * - **D-30** abbandona le parti uguali: cinque tratti di ampiezza diversa,
  *   rovesciati fra segni pari e dispari.
  * - **D-27** non riparte a ogni segno: conta di seguito dall'Ariete lungo
@@ -180,6 +184,53 @@ export const VARGAS: readonly VargaDefinition[] = [
     divisions: 12,
     rule: "Dodici parti da 2°30'. Si parte sempre dal segno stesso e si prosegue in ordine (BPHS 6.15).",
     signIndex: (sign, degree) => sign + Math.floor(degree / 2.5),
+  },
+  {
+    // BPHS 6.16, pp. 74-75, con la tavola a p. 75. «Aja-siṃha-aśvito … cara-
+    // ādiṣu»: dall'Ariete, dal Leone e dal Sagittario (l'«aśvin», il cavallo)
+    // per cardinali, fissi e mobili. Il verso rovescia nei segni pari le
+    // divinità, non i segni.
+    id: 'd16',
+    name: 'Shodasamsa',
+    divisions: 16,
+    rule:
+      "Sedici parti da 1°52'30\". Si parte dall'Ariete se il segno è cardinale, dal Leone se " +
+      'è fisso, dal Sagittario se è mobile, e si prosegue in ordine (BPHS 6.16).',
+    signIndex: (sign, degree) => {
+      const inizio = [0, 4, 8][sign % 3] as number;
+      return inizio + Math.floor((degree * 16) / 30);
+    },
+  },
+  {
+    // BPHS 6.17-21, p. 76, con la tavola a pp. 76-77. «Kriyāc care sthire
+    // cāpān mṛgendrād dvisvabhāvake»: dall'Ariete nel cardinale, dall'arco
+    // (Sagittario) nel fisso, dal leone nel mobile. Fissi e mobili sono
+    // scambiati rispetto al D-16, e il sanscrito lo conferma.
+    id: 'd20',
+    name: 'Vimsamsa',
+    divisions: 20,
+    rule:
+      "Venti parti da 1°30'. Si parte dall'Ariete se il segno è cardinale, dal Sagittario se " +
+      'è fisso, dal Leone se è mobile, e si prosegue in ordine (BPHS 6.17-21).',
+    signIndex: (sign, degree) => {
+      const inizio = [0, 8, 4][sign % 3] as number;
+      return inizio + Math.floor((degree * 20) / 30);
+    },
+  },
+  {
+    // BPHS 6.22-23, p. 77, con la tavola a p. 78. «Siṃhād oja-bhage …
+    // karkād yugma-bhage»: dal Leone nel segno dispari, dal Cancro nel pari.
+    // Santhanam lo chiama anche Chaturvimsamsa.
+    id: 'd24',
+    name: 'Siddhamsa',
+    divisions: 24,
+    rule:
+      "Ventiquattro parti da 1°15'. Nei segni dispari si parte dal Leone, nei pari dal Cancro, " +
+      'e si prosegue in ordine (BPHS 6.22-23).',
+    signIndex: (sign, degree) => {
+      const inizio = sign % 2 === 0 ? 4 : 3;
+      return inizio + Math.floor((degree * 24) / 30);
+    },
   },
   {
     // BPHS 6.24-26, trad. Santhanam, vol. I, pp. 78-79: «meṣādi-cara-bha-

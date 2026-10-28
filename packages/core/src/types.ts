@@ -353,10 +353,12 @@ export interface VimshottariDasha {
 /**
  * I varga calcolati.
  *
- * Dieci dei sedici classici, scelti per uso e non per completezza: gli altri
- * stanno in `TODO.md`, divisi in lotti per forma della regola.
+ * Tredici dei sedici classici: gli altri tre stanno in `TODO.md`, nel lotto
+ * dei varga fini.
  */
-export type VargaId = 'd1' | 'd2' | 'd3' | 'd4' | 'd7' | 'd9' | 'd10' | 'd12' | 'd27' | 'd30';
+export type VargaId =
+  | 'd1' | 'd2' | 'd3' | 'd4' | 'd7' | 'd9' | 'd10' | 'd12'
+  | 'd16' | 'd20' | 'd24' | 'd27' | 'd30';
 
 /** Le due metà di un segno nel D-2: la hora del Sole e quella della Luna. */
 export type Hora = 'sole' | 'luna';

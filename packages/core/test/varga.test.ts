@@ -178,6 +178,117 @@ describe('D-12, che parte sempre dal segno stesso', () => {
   });
 });
 
+/**
+ * Una tavola di Santhanam per i varga che partono da segni fissi.
+ *
+ * Le tavole del D-16, del D-20 e del D-24 hanno dodici righe («1st/13th»,
+ * «2nd/14th»…) e una colonna per gruppo di segni: la parte k prende la riga
+ * k modulo 12. Qui le colonne si ricopiano come stampate, numeri 1-12, e si
+ * stendono sui segni del gruppo.
+ */
+function tavolaPerGruppi(gruppi: { segni: number[]; colonna: number[] }[], parti: number) {
+  const tavola: Record<number, number[]> = {};
+  for (const { segni, colonna } of gruppi) {
+    expect(colonna).toHaveLength(12);
+    for (const segno of segni) {
+      tavola[segno] = Array.from({ length: parti }, (_, k) => colonna[k % 12] as number);
+    }
+  }
+  return tavola;
+}
+
+const CARDINALI = [1, 4, 7, 10];
+const FISSI = [2, 5, 8, 11];
+const MOBILI = [3, 6, 9, 12];
+
+describe('D-16, che parte da tre segni secondo la modalità', () => {
+  // BPHS 6.16, trad. Santhanam, vol. I, pp. 74-75.
+  const parte = 30 / 16;
+
+  it('apre i cardinali dall Ariete, i fissi dal Leone, i mobili dal Sagittario', () => {
+    const aperture = Array.from({ length: 12 }, (_, i) => vargaSignOf(inizioSegno(i), 'd16'));
+    expect(aperture).toEqual([
+      'ariete', 'leone', 'sagittario', 'ariete', 'leone', 'sagittario',
+      'ariete', 'leone', 'sagittario', 'ariete', 'leone', 'sagittario',
+    ]);
+  });
+
+  it("cambia parte ogni 1°52'30\", e la sedicesima chiude quattro segni dopo l'apertura", () => {
+    expect(vargaSignOf(parte - 1e-6, 'd16')).toBe('ariete');
+    expect(vargaSignOf(parte + 1e-6, 'd16')).toBe('toro');
+    expect(vargaSignOf(29.99, 'd16')).toBe('cancro');
+    // Toro, pari e fisso: dal Leone allo Scorpione. La parità non conta.
+    expect(vargaSignOf(30 + 1e-6, 'd16')).toBe('leone');
+    expect(vargaSignOf(59.99, 'd16')).toBe('scorpione');
+  });
+
+  it('coincide con la tavola di Santhanam, p. 75', () => {
+    // «Speculum of Shodasamsas (or Kalamsas)», le tre colonne.
+    controllaTavola('d16', 16, tavolaPerGruppi([
+      { segni: CARDINALI, colonna: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12] },
+      { segni: FISSI, colonna: [5, 6, 7, 8, 9, 10, 11, 12, 1, 2, 3, 4] },
+      { segni: MOBILI, colonna: [9, 10, 11, 12, 1, 2, 3, 4, 5, 6, 7, 8] },
+    ], 16));
+  });
+});
+
+describe('D-20, con fissi e mobili scambiati rispetto al D-16', () => {
+  // BPHS 6.17-21, trad. Santhanam, vol. I, pp. 76-77.
+  const parte = 30 / 20;
+
+  it('apre i cardinali dall Ariete, i fissi dal Sagittario, i mobili dal Leone', () => {
+    const aperture = Array.from({ length: 12 }, (_, i) => vargaSignOf(inizioSegno(i), 'd20'));
+    expect(aperture).toEqual([
+      'ariete', 'sagittario', 'leone', 'ariete', 'sagittario', 'leone',
+      'ariete', 'sagittario', 'leone', 'ariete', 'sagittario', 'leone',
+    ]);
+  });
+
+  it("cambia parte ogni 1°30'", () => {
+    expect(vargaSignOf(parte - 1e-6, 'd20')).toBe('ariete');
+    expect(vargaSignOf(parte + 1e-6, 'd20')).toBe('toro');
+    // La ventesima è l'ottava dall'apertura: lo Scorpione per l'Ariete, il
+    // Cancro per il Toro, che parte dal Sagittario.
+    expect(vargaSignOf(29.99, 'd20')).toBe('scorpione');
+    expect(vargaSignOf(59.99, 'd20')).toBe('cancro');
+  });
+
+  it('coincide con la tavola di Santhanam, pp. 76-77', () => {
+    // «Speculum of Vimsamsas», le tre colonne.
+    controllaTavola('d20', 20, tavolaPerGruppi([
+      { segni: CARDINALI, colonna: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12] },
+      { segni: FISSI, colonna: [9, 10, 11, 12, 1, 2, 3, 4, 5, 6, 7, 8] },
+      { segni: MOBILI, colonna: [5, 6, 7, 8, 9, 10, 11, 12, 1, 2, 3, 4] },
+    ], 20));
+  });
+});
+
+describe('D-24, che parte dal Leone o dal Cancro secondo la parità', () => {
+  // BPHS 6.22-23, trad. Santhanam, vol. I, pp. 77-78.
+  const parte = 30 / 24;
+
+  it('apre i dispari dal Leone e i pari dal Cancro', () => {
+    const aperture = Array.from({ length: 12 }, (_, i) => vargaSignOf(inizioSegno(i), 'd24'));
+    expect(aperture).toEqual(Array.from({ length: 12 }, (_, i) => (i % 2 === 0 ? 'leone' : 'cancro')));
+  });
+
+  it("cambia parte ogni 1°15'", () => {
+    expect(vargaSignOf(parte - 1e-6, 'd24')).toBe('leone');
+    expect(vargaSignOf(parte + 1e-6, 'd24')).toBe('vergine');
+    // La ventiquattresima chiude il secondo giro un segno prima dell'apertura.
+    expect(vargaSignOf(29.99, 'd24')).toBe('cancro');
+    expect(vargaSignOf(59.99, 'd24')).toBe('gemelli');
+  });
+
+  it('coincide con la tavola di Santhanam, p. 78', () => {
+    // «Speculum of Siddhamsa», le colonne «Odd» ed «Even».
+    controllaTavola('d24', 24, tavolaPerGruppi([
+      { segni: [1, 3, 5, 7, 9, 11], colonna: [5, 6, 7, 8, 9, 10, 11, 12, 1, 2, 3, 4] },
+      { segni: [2, 4, 6, 8, 10, 12], colonna: [4, 5, 6, 7, 8, 9, 10, 11, 12, 1, 2, 3] },
+    ], 24));
+  });
+});
+
 describe('D-27, che conta di seguito dall Ariete', () => {
   // BPHS 6.24-26, trad. Santhanam, vol. I, pp. 78-79.
   const parte = 30 / 27;
