@@ -31,7 +31,7 @@ esserci, se il clone è un altro: le schede dicono da dove riscaricare ogni
 fonte, e la voce 24 quelle che mancano ancora.
 
 I riferimenti `file:riga` e i nomi citati sono stati ricontrollati tutti
-contro il codice il 28 ottobre 2026, dopo il lotto A della voce 5 (`78c83ef`).
+contro il codice il 28 ottobre 2026, dopo il lotto B della voce 5.
 Le righe si spostano: se una non torna, il nome della funzione o della
 costante accanto è quello che fa fede.
 
@@ -55,23 +55,22 @@ volta e ricominciare da capo.
 
 | Voce | Priorità | Taglia | Prima di cominciare |
 |---|---|---|---|
-| 5. I varga che mancano | non dichiarata | due lotti | lotto B: confermare le tre regole sulle immagini; lotto C: far scegliere la lettura del D-60 |
+| 5. I varga che mancano | non dichiarata | un lotto | lotto C: pronto, il D-60 si conta dal segno (deciso) |
 | 19. Le dignità, per scuola | bassa | media | il Jyotisha: i varga del BPHS, cap. 6-7 |
 | 17. L'astrologia oraria | bassa | piccola, ormai | i quattro lotti sono fatti; restano rifiniture indipendenti, una per riga |
 | 24. Le fonti da scaricare in `texts/` | bassa | piccola | niente |
 
-L'ordine consigliato è quello della tabella. Il lotto B della 5 è pronto da
-fare; il C ha una scelta da far prendere al proprietario prima di scrivere
-codice (la lettura del D-60, vedi lì). Della 19 resta soprattutto il Jyotisha,
+L'ordine consigliato è quello della tabella. Il lotto C della 5 è pronto da
+fare: la lettura del D-60 è decisa, e il D-45 va ancora letto sull'immagine. Della 19 resta soprattutto il Jyotisha,
 che sta accanto ai varga della 5: il D-2 di Parashara, fatto senza segni,
 cambia anche il modo di dire la dignità nella hora. La 17 usa le tavole di
 Lilly della 19 e ha già le *moieties* come terza convenzione delle orbite.
 
-## 5. I sei varga che mancano
+## 5. I tre varga che mancano
 
-Calcolati: D-1, D-2, D-3, D-4, D-7, D-9, D-10, D-12, D-27, D-30, in
-`packages/core/src/varga.ts` (il D-2 con le sue convenzioni in `hora.ts`).
-Dei sedici classici ne restano sei, nei lotti B e C.
+Calcolati: D-1, D-2, D-3, D-4, D-7, D-9, D-10, D-12, D-16, D-20, D-24, D-27,
+D-30, in `packages/core/src/varga.ts` (il D-2 con le sue convenzioni in
+`hora.ts`). Dei sedici classici ne restano tre, nel lotto C.
 
 **Non vanno fatti in un colpo solo.** Ogni varga è una regola a sé, e le regole
 divergono fra scuole più che nel resto del Jyotisha: farne dieci in un
@@ -100,15 +99,16 @@ Restano da aggiornare a mano i testi che li elencano, che nessun test vede: il
 commento delle due rotte (`api/jyotish/+server.ts`, parametro `vargas`;
 `quadro/+server.ts`, parametro `varga`), l'aiuto della CLI
 (`--varga <lista>`, `packages/core/src/cli.ts:119`), il rimando in
-`/metodo` («Il sito ne calcola dieci», voce `#varga` dell'elenco,
+`/metodo` («Il sito ne calcola tredici», voce `#varga` dell'elenco,
 `apps/web/src/routes/(informativa)/metodo/+page.svelte:366`), la pagina
-`/metodo/varga` («I dieci che il sito calcola», «Le altre sei divisioni
-classiche non sono ancora calcolate», e la frase sotto che elenca le forme
-delle regole) e la sua descrizione in `Meta`, che elenca le sigle; nel
+`/metodo/varga` («I tredici che il sito calcola», «Le altre tre divisioni
+classiche, le più fini (D-40, D-45, D-60), non sono ancora calcolate», e la
+frase sotto che elenca le forme delle regole) e la sua descrizione in `Meta`, che elenca le sigle; nel
 glossario la voce `#varga` di `/glossario/jyotisha` cita D-9, D-10 e D-30 come
 esempi e non va toccata. I tipi, in `packages/core/src/types.ts`: `VargaId` a
-:359, `SignVargaChart` a :406, l'opzione `vargas` di `JyotishaOptions` a
-:775. Il commento sopra `VargaId` conta i varga («Dieci dei sedici»).
+:359, `SignVargaChart` a :408, l'opzione `vargas` di `JyotishaOptions` a
+:777. Il commento sopra `VargaId` conta i varga («Tredici dei sedici») e
+rimanda qui.
 
 ### Lotto A, fatto il 28 ottobre 2026
 
@@ -133,39 +133,21 @@ perché è la sola eccezione alla regola «un varga dà un segno»:
   `HORA_CONVENTIONS`; il menù di `JyotishaSettings.svelte` no, ed è scritto
   a mano.
 
-### Lotto B: i multipli con partenza fissa
+### Lotto B, fatto il 28 ottobre 2026
 
-**D-16 Shodasamsa, D-20 Vimsamsa, D-24 Siddhamsa (Chaturvimsamsa).** Qui il
-segno da cui si comincia non è il segno stesso: è uno di pochi segni fissi,
-scelto dalla modalità o dalla parità del segno di partenza, e da lì si conta
-di seguito. È il meccanismo del D-9 (che parte da Ariete, Capricorno,
-Bilancia o Cancro), applicato a divisioni più fini, quindi `signIndex` ha la
-stessa forma.
+D-16, D-20 e D-24, con le regole lette sulle immagini (pp. 74-78, sanscrito
+compreso, in `trascrizioni.md`, sezione «6.16-23») e provate contro le tre
+tavole di Santhanam, che qui non hanno refusi. Da ricordare per il lotto C:
+il D-20 scambia fissi e mobili rispetto al D-16, e lo fa il verso
+(*cāpān mṛgendrād*), non la traduzione.
 
-Le regole, lette sull'OCR il 28 ottobre 2026 e **da confermare sulle
-immagini** prima di scriverle nel codice (pp. 74-78, da estrarre come detto
-sotto), con le tavole di Santhanam da controllare contro la regola:
-
-- **D-16** (6.16, pp. 74-75): sedici parti da 1°52'30"; dall'Ariete per i
-  segni cardinali («movable»), dal Leone per i fissi, dal Sagittario per i
-  mobili («dual»). Il resto del verso riguarda le divinità, che si
-  rovesciano nei segni pari: i segni no.
-- **D-20** (6.17-21, p. 76): venti parti da 1°30'; dall'Ariete per i
-  cardinali, dal Sagittario per i fissi, dal Leone per i mobili. Attenzione:
-  fissi e mobili sono **scambiati** rispetto al D-16.
-- **D-24** (6.22-23, pp. 77-78): ventiquattro parti da 1°15'; dal Leone nei
-  segni dispari, dal Cancro nei pari.
-
-Il D-27, che stava qui, è fatto: BPHS 6.24-26, pp. 78-79, trascritto in
-`texts/jyotisha/bphs-santhanam-1992-vol1/trascrizioni.md`. La voce lo
-descriveva male in due punti, e vale la pena ricordarlo per gli altri del
-lotto: 1°6'40" è un quarto di pada, non un pada; e non si riparte
-dall'Ariete in ogni segno, si conta di seguito dall'Ariete lungo tutto lo
-zodiaco (fuoco dall'Ariete, terra dal Cancro, aria dalla Bilancia, acqua
-dal Capricorno). La tavola di Santhanam a p. 79 ha un refuso (Gemelli,
-undicesima parte): le tavole stampate vanno controllate contro la regola,
-non copiate. Il modello di prova è `controllaTavola` in
-`packages/core/test/varga.test.ts`, usato per D-4 e D-7.
+Il D-27, che stava nel lotto B, è fatto anch'esso. La voce lo descriveva male
+in due punti, e vale la pena ricordarlo: 1°6'40" è un quarto di pada, non un
+pada; e non si riparte dall'Ariete in ogni segno, si conta di seguito
+dall'Ariete lungo tutto lo zodiaco. La tavola di Santhanam a p. 79 ha un
+refuso (Gemelli, undicesima parte): le tavole stampate vanno controllate
+contro la regola, non copiate. I modelli di prova sono `controllaTavola` e
+`tavolaPerGruppi` in `packages/core/test/varga.test.ts`.
 
 ### Lotto C: i fini, che vogliono un'ora di nascita esatta
 
@@ -178,19 +160,35 @@ Le regole:
 - **D-45** (6.31-32, pp. 81-82, dall'OCR): quarantacinque parti da 40';
   dall'Ariete per i cardinali, dal Leone per i fissi, dal Sagittario per i
   mobili (la forma del D-16).
-- **D-60** (6.33-41, pp. 83-86, dall'OCR): sessanta parti da 30'. Il verso
-  dice di ignorare il segno, raddoppiare i gradi percorsi, dividere per 12 e
-  aggiungere 1 al resto. **Da dove si conta quel numero è la divergenza da
-  decidere**: Santhanam, nell'esempio di p. 84 (Venere a 13°25' del
-  Capricorno: 26 diviso 12 dà resto 2, più 1 fa 3), conta dal segno stesso e
-  arriva ai Pesci. Il verso letto da solo («ignore the sign position») si
-  presta anche a contare dall'Ariete, che darebbe i Gemelli: se qualcuno lo
-  legge così, con un nome e un testo, va trovato; finora non è stato
-  cercato. Va letta l'immagine, e la scelta presentata al proprietario come
-  per il D-2: una convenzione predefinita e, se l'altra ha un autore,
-  accanto. I sessanta nomi (Ghora, Rakshasa…) si
-  rovesciano nei segni pari e sono qualità, benefiche o malefiche: entrano
-  solo come nome, se entrano, e mai col giudizio accanto.
+- **D-60** (6.33-41, pp. 82-86, letto sulle immagini il 28 ottobre 2026,
+  trascritto in `trascrizioni.md`, sezione «6.33-41»): sessanta parti da
+  30'. Si raddoppiano i gradi percorsi nel segno, si divide per 12, si
+  aggiunge 1 al resto, e si conta **dal segno stesso**: in formula, segno +
+  ⌊2·gradi⌋, modulo 12. Il verso stampato a p. 82 lo dice (*śeṣaṃ saikaṃ ca
+  tad-rāśeḥ*, «da quel segno»), e l'esempio di Santhanam a p. 83 lo applica
+  (Venere a 13°25' del Capricorno: resto 2, più 1 fa 3, contati dal
+  Capricorno, Pesci). La traduzione inglese omette *tad-rāśeḥ* («ignore the
+  sign position»), ed è da lì che viene l'altra lettura, **dall'Ariete**
+  (che darebbe i Gemelli).
+
+  **La lettura dall'Ariete non ha un autore**, almeno nella ricerca del 28
+  ottobre 2026: la si trova in siti senza firma (paramarsh.app la usa,
+  desiutils.in la mostra accanto chiamandola «literal») e come opzione di
+  PyJHora (`PARASARA_CYCLIC_FROM_ARIES`), che ha anche due varianti col
+  conteggio rovesciato nei segni pari, pure senza autore. Le copie stanno in
+  `texts/tecnica/d60-letture-in-rete-2026` e `texts/tecnica/pyjhora`; il
+  forum LightOnVedicAstrology, che fa la stessa osservazione su
+  *tad-rāśeḥ*, non è scaricabile. Per la regola di `CLAUDE.md` («non entra un
+  peso che non abbia un autore»), la proposta è **una convenzione sola, dal
+  segno**, con il verso nella regola, confermata dal proprietario il 28
+  ottobre 2026 (vedi *Deciso*). Se un giorno la lettura
+  dall'Ariete trovasse un autore con un testo (una traduzione del BPHS che
+  la dica, o un commento), entrerebbe accanto, come la `leone-cancro` del
+  D-2.
+
+  I sessanta nomi (Ghora, Rakshasa…, tavola alle pp. 84-86) si rovesciano
+  nei segni pari, i segni no; sono qualità, benefiche (B) o malefiche (M):
+  entrano solo come nome, se entrano, e mai col giudizio accanto.
 
 Il D-60 è, in Parashara, il più importante di tutti, e insieme quello che il
 motore può garantire di meno: una divisione dura **30 primi d'arco**, che
@@ -218,14 +216,14 @@ La pagina stampata p è la pagina p + 5 del PDF locale: `pdftoppm -f $((p+5))
 | D-7 Saptamsa | 6.10-11 | 4637 | 71 | fatto, p. 71 |
 | D-9 Navamsa | 6.12 | 4689 | 72 | fatto, p. 72 |
 | D-10 Dasamsa | 6.13-14 | 4742 | 73 | fatto, p. 73 |
-| D-16 Shodasamsa | 6.16 | 4847 | 74-75 | lotto B |
-| D-20 Vimsamsa | 6.17-21 | 4939 | 76 | lotto B |
-| D-24 Siddhamsa (Chaturvimsamsa) | 6.22-23 | 5053 | 77-78 | lotto B |
+| D-16 Shodasamsa | 6.16 | 4847 | 74-75 | fatto, p. 74 |
+| D-20 Vimsamsa | 6.17-21 | 4939 | 75-77 | fatto, p. 76 |
+| D-24 Siddhamsa (Chaturvimsamsa) | 6.22-23 | 5053 | 77-78 | fatto, p. 77 |
 | D-27 Bhamsa | 6.24-26 | 5108 | 78-79 | fatto, p. 79 in `varga.ts` |
 | D-30 Trimsamsa | 6.27-28 | 5181 | 80 | fatto, p. 80 |
 | D-40 Khavedamsa (Chatvarimsamsa) | 6.29-30 | 5210 | 80-81 | lotto C |
 | D-45 Akshavedamsa | 6.31-32 | 5269 | 81-82 | lotto C |
-| D-60 Shashtiamsa | 6.33-41 | 5437 | 83-86 | lotto C |
+| D-60 Shashtiamsa | 6.33-41 | 5437 | 82-86 | lotto C, letto sulle immagini |
 
 Il D-12 Dwadasamsa (6.15) sta a p. 73, fra le righe 4742 e 4847. Poi i
 gruppi di varga (riga 5884) e il cap. 7 da 6005, con gli usi a 6061-6112.
@@ -445,8 +443,8 @@ cinque le dignità, sugli esempi di Lilly a p. 112. La tavola è trascritta
 riga per riga in `texts/occidentale/lilly-christian-astrology-1647/trascrizioni.md`,
 con la lettura di p. 105 (che dice come si leggono le celle), e il test la
 ricopia coi glifi della stampa (`packages/core/test/dignita-lilly.test.ts`).
-Si accende con `ChartOptions.dignitySchool: 'lilly'` (`types.ts:962`, letto
-in `chart.ts`), con `SkyOptions.dignitySchool` (`types.ts:1159`, in
+Si accende con `ChartOptions.dignitySchool: 'lilly'` (`types.ts:964`, letto
+in `chart.ts`), con `SkyOptions.dignitySchool` (`types.ts:1161`, in
 `sky.ts`) e con `--dignita lilly` nella CLI, solo nello zodiaco tropicale: la
 sezione DIGNITÀ aggiunge, sotto le righe comuni,
 una riga per corpo con i signori del suo grado e le sue dignità, e le
@@ -484,13 +482,13 @@ descrizioni dicono «circa un quarto».
 
 1. **Le dignità nei varga del Jyotisha**, che il BPHS tratta a parte (cap.
    6-7), e la pagina `/vedica`, che non mostra le dignità di Parashara anche
-   se il JSON le porta. I dati: `JyotishaChart.dignities` (`types.ts:829`),
+   se il JSON le porta. I dati: `JyotishaChart.dignities` (`types.ts:831`),
    riempito da `computeParasharaDignities` (`jyotisha.ts:91`) ed esposto su
    `/api/jyotish`; in `apps/web/src/routes/vedica/+page.svelte` non c'è
    niente che le mostri, e non esiste un componente per loro (quello
    occidentale è `DignityTable.svelte`, legato a `WesternDignities`). I varga
-   portano segni (`SignVargaChart`, `types.ts:406`), tranne il D-2 di
-   Parashara, che porta la hora di un luminare (`HoraVargaChart`, :437):
+   portano segni (`SignVargaChart`, `types.ts:408`), tranne il D-2 di
+   Parashara, che porta la hora di un luminare (`HoraVargaChart`, :439):
    lì la dignità non si può dire per segno. Il materiale già letto:
    la nota di Santhanam a p. 90 e 7.13-19 (pp. 91-95), trascritti in
    `bphs-santhanam-1992-vol1/trascrizioni.md` per il D-2; il resto del cap. 7
@@ -503,7 +501,7 @@ descrizioni dicono «circa un quarto».
    `DIGNITY_SCHOOL_NAMES` (`packages/core/src/constants.ts`), e da lì CLI,
    MCP e `/api/chart` imparano il valore da soli, ma solo a validarlo: il
    risultato porta ancora un campo per scuola (`WesternDignities.lilly`,
-   `types.ts:741`), e una scuola nuova chiede il suo campo, il suo ramo in
+   `types.ts:743`), e una scuola nuova chiede il suo campo, il suo ramo in
    `computeWesternDignities` (`dignita-tema.ts:51`), le sue righe in
    `format.ts` (come `lillyLines`, :809, e `lillyConditionLines`) e in
    `DignityTable.svelte`, e i testi che oggi nominano solo Lilly: l'aiuto di
@@ -719,6 +717,11 @@ Verifica: ogni fonte citata in un commento di `packages/` ha una riga in
   come lettura corrente senza un classico che la enunci. Scelto dal
   proprietario il 27 ottobre 2026 fra quattro strade, fatto il 28 in
   `a828b3f`; la forma del risultato sta nella voce 5, lotto A.
+- **Il D-60 si conta dal segno stesso, con una convenzione sola.** Il verso
+  6.33 dice *tad-rāśeḥ* e l'esempio di Santhanam lo applica; la lettura
+  dall'Ariete, cercata il 28 ottobre 2026, non ha trovato un autore.
+  Confermato dal proprietario il 28 ottobre 2026; le ragioni nella voce 5,
+  lotto C. Entra una seconda convenzione solo con un autore e un testo.
 - **Il server MCP non ha un pool, e non gli serve**: è un processo per client,
   sul trasporto stdio, e non c'è nessun'altra richiesta da tenere in attesa.
 - **I thread del pool web sono al massimo quattro, e la quinta richiesta
