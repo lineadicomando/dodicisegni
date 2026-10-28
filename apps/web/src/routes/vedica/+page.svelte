@@ -34,6 +34,7 @@
   import ParasharaDignityTable from '#lib/components/ParasharaDignityTable.svelte';
   import GoodVargaTable from '#lib/components/GoodVargaTable.svelte';
   import RelationshipTable from '#lib/components/RelationshipTable.svelte';
+  import VimshopakaTable from '#lib/components/VimshopakaTable.svelte';
   import Risultato from '#lib/components/Risultato.svelte';
   import StrumentiLettura from '#lib/components/StrumentiLettura.svelte';
   import VargaTable from '#lib/components/VargaTable.svelte';
@@ -345,10 +346,15 @@
 
         <!-- Dopo le divisionali, perché le conta tutte e sedici, anche quelle
              non mostrate. Assente senza ora: lo dice un'avvertenza. -->
-        <!-- Prima dei varga buoni, come nella tabella compatta: il vimshopaka,
-             quando ci sarà, le userà. La guardia per le risposte in cache. -->
+        <!-- Relazioni, vimshopaka e varga buoni nell'ordine della tabella
+             compatta: il vimshopaka usa le relazioni. Le guardie per le
+             risposte in cache di prima di questi campi. -->
         {#if jyotisha.relationships}
           <RelationshipTable relazioni={jyotisha.relationships} {evidenza} />
+        {/if}
+
+        {#if jyotisha.vimshopaka}
+          <VimshopakaTable vimshopaka={jyotisha.vimshopaka} {evidenza} />
         {/if}
 
         {#if jyotisha.goodVargas}

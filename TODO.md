@@ -399,15 +399,16 @@ descrizioni dicono «circa un quarto».
    - **6.53 per intero**: combustione, guerra planetaria, debolezza e
      avastha (shayana e le altre, BPHS cap. 45) per il Jyotisha. Ognuna è
      un calcolo con le sue fonti; oggi la riga del conto dice la sola neecha.
-   - **Il vimshopaka** (7.17-27, pp. 95-98): i pesi per schema (la tavola
-     di Santhanam a p. 97) e la scala di 7.24-25 (20 nei varga propri, 18
-     in quelli di un adhimitra, 15 mitra, 10 sama, 7 shatru, 5
-     adhishatru), da moltiplicare e dividere per 20 (7.26). Le note dicono
-     di usare la relazione composta, che ora c'è (`maitri.ts`, sotto). A
-     p. 98 c'è un esempio svolto (New Delhi, 17 febbraio 1984, 22:35 IST)
-     da usare come prova. Da chiarire leggendo: che cosa valga in un varga
-     dove il graha è in esaltazione o moolatrikona e non nel segno proprio,
-     e chi sia il signore nella hora e nel trimsamsa.
+   - Il vimshopaka è fatto, il 28 ottobre 2026: `vimshopaka.ts`,
+     `JyotishaChart.vimshopaka`, sezione VIMSHOPAKA della tabella compatta,
+     `VimshopakaTable.svelte` su `/vedica`, sezione `#vimshopaka` di
+     `/metodo/varga`. Provato sull'esempio di Santhanam (pp. 98-99, New
+     Delhi 1984: Venere, 16,8 nello shadvarga, riga per riga). Nel
+     saptavarga il verso 7.18 non assegna i sette pesi ai varga: il motore
+     segue la tavola di Santhanam a p. 97 (navamsa 2½, dwadasamsa 4½,
+     trimsamsa 2, saptamsa 1), come PyJHora; l'altra assegnazione, col
+     saptamsa al suo posto, non ha trovato un autore. Se lo trova, entra
+     accanto, nominata. Le fasce di 7.26-27 sono un giudizio e non entrano.
    - Le relazioni fra i graha sono fatte, il 28 ottobre 2026: `maitri.ts`
      (naturale per regola da 3.55, ricontrollata contro la tavola di p. 40;
      temporanea 3.56; composta 3.57-58), `JyotishaChart.relationships`,

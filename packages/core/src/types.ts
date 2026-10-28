@@ -864,6 +864,39 @@ export interface GrahaRelationships {
 export type VargaScheme = 'shadvarga' | 'saptavarga' | 'dashavarga' | 'shodashavarga';
 
 /**
+ * Il vimshopaka, la forza su venti punti di BPHS 7.17-27.
+ *
+ * In ogni varga il graha prende un punteggio (*varga viswa*, 7.24-25): 20
+ * se il segno è suo, poi secondo la relazione composta col signore del
+ * segno, da 18 (adhimitra) a 5 (adhishatru). Lo si moltiplica per il peso
+ * del varga nello schema (*swaviswa*, 7.17-23) e si divide per 20 (7.26):
+ * la somma è la forza nello schema, al più 20. Le fasce di 7.26-27 («sotto
+ * 5 non dà buoni risultati»…) sono un giudizio, e non sono riportate.
+ */
+export interface Vimshopaka {
+  /** Versi, pagine e la tavola dei pesi seguita, in una riga. */
+  source: string;
+  /** I pesi di ciascun varga per schema, come nella tavola di Santhanam a p. 97. */
+  weights: Record<VargaScheme, Partial<Record<VargaId, number>>>;
+  grahas: {
+    id: BodyId;
+    name: string;
+    /** Un elemento per ciascuno dei sedici varga, nell'ordine di `VARGAS`. */
+    vargas: {
+      varga: VargaId;
+      /** Il signore del segno del varga, o del luminare nella hora di Parashara. */
+      lord: BodyId;
+      /** `swakshetra` se il graha è lui stesso il signore. */
+      relation: CompoundMaitri | 'swakshetra';
+      /** Il varga viswa: 20, 18, 15, 10, 7 o 5. */
+      viswa: number;
+    }[];
+    /** La forza in ciascuno schema, su 20. */
+    schemes: { scheme: VargaScheme; points: number }[];
+  }[];
+}
+
+/**
  * Perché un varga è buono per un graha, secondo BPHS 6.52 letto da
  * Santhanam: il segno di uccha, di moolatrikona, proprio, un segno dei
  * signori dei kendra dall'arudha lagna; `hora` per il D-2 di Parashara, che
@@ -950,6 +983,8 @@ export interface JyotishaChart {
   goodVargas?: GoodVargas;
   /** Le relazioni fra i sette graha, naturali, temporanee e composte (BPHS 3.55-58). */
   relationships: GrahaRelationships;
+  /** La forza su venti punti nei quattro schemi (BPHS 7.17-27). */
+  vimshopaka: Vimshopaka;
   /**
    * Le avvertenze dei pezzi, raccolte qui.
    *

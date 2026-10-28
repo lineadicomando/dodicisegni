@@ -193,6 +193,22 @@
   perché l'arudha vuole il lagna.
 </p>
 
+<h2 id="vimshopaka">Il vimshopaka, la forza su venti punti</h2>
+
+<p>
+  Lo stesso capitolo (7.17-27) dà a ogni graha una forza su venti punti in
+  ciascuno schema. In ogni varga il graha prende 20 se il segno è suo, e
+  altrimenti 18, 15, 10, 7 o 5 secondo la relazione composta col signore del
+  segno, da adhimitra ad adhishatru; il numero si pesa con l'importanza del
+  varga nello schema. Esaltazione e moolatrikona non danno il pieno: il
+  testo lo riserva al segno proprio. Nel saptavarga il verso elenca sette
+  pesi senza dire a quale varga vada ciascuno, e il sito segue la tavola di
+  Santhanam (p. 97), che dà al navamsa 2½ e al dwadasamsa 4½. Il calcolo è
+  ricontrollato sull'esempio svolto di Santhanam (pp. 98-99): Venere, 16,8
+  punti nello shadvarga. Le fasce che il testo associa ai punteggi («sotto
+  cinque non dà buoni risultati») sono un giudizio, e non sono riportate.
+</p>
+
 <h2 id="fonte">La fonte, e le tavole stampate</h2>
 
 <p>

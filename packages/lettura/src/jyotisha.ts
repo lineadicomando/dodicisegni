@@ -150,6 +150,12 @@ e non va letta al contrario: che il Sole veda Marte come adhimitra non dice
 come Marte veda il Sole. Usala per dire se un graha sta nel segno di un amico
 o di un nemico, citando la relazione, non per giudicare da sola.
 
+La sezione VIMSHOPAKA dà la forza di ogni graha su 20 nei quattro schemi
+(BPHS 7.17-27), dal suo rapporto coi signori dei segni in cui cade nei varga.
+È un numero del testo: riferiscilo con lo schema, e non tradurlo tu in
+«buono» o «cattivo». Le fasce che il testo associa ai punteggi non sono
+riportate, e non le aggiungi.
+
 La HORA (D2), se c'è, porta in testa la sua convenzione. Con quella di
 Parashara, che è il testo, ogni graha sta nella hora del Sole o della Luna e NON
 in un segno: dillo così, e non tradurlo in Leone o Cancro. Con la convenzione

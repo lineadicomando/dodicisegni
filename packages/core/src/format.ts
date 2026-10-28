@@ -21,6 +21,7 @@ import type {
   NatalChart,
   ParasharaDignities,
   GoodVargas,
+  Vimshopaka,
   GrahaRelationships,
   CompoundMaitri,
   NatalPointId,
@@ -1172,6 +1173,7 @@ export function formatJyotishaCompact(jyotisha: JyotishaChart): string {
 
   parti.push(formatParasharaDignitiesCompact(jyotisha.dignities));
   parti.push(formatRelationshipsCompact(jyotisha.relationships));
+  parti.push(formatVimshopakaCompact(jyotisha.vimshopaka));
   if (jyotisha.goodVargas) parti.push(formatGoodVargasCompact(jyotisha.goodVargas));
   parti.push(formatNakshatraCompact(jyotisha.chart));
   parti.push(formatDashaCompact(jyotisha.dasha));
@@ -1240,6 +1242,25 @@ function formatRelationshipsCompact(relazioni: GrahaRelationships): string {
       return nomi.length ? `${grado} ${nomi.join(', ')}` : '';
     }).filter(Boolean);
     lines.push(`${bodyName(da).padEnd(11)} ${gruppi.join('; ')}`);
+  }
+  return lines.join('\n');
+}
+
+/**
+ * Il vimshopaka: una riga per graha coi quattro totali, e una coi varga dove
+ * il graha è nel segno proprio o di un adhimitra o adhishatru, perché chi
+ * legge veda da dove viene il numero senza sedici colonne.
+ */
+function formatVimshopakaCompact(vimshopaka: Vimshopaka): string {
+  const lines = ['VIMSHOPAKA (BPHS 7.17-27), su 20', `Fonte: ${vimshopaka.source}`, ''];
+  for (const graha of vimshopaka.grahas) {
+    const totali = graha.schemes.map((s) => `${s.scheme} ${s.points.toFixed(2)}`).join(' · ');
+    lines.push(`${graha.name.padEnd(11)} ${totali}`);
+    const estremi = graha.vargas
+      .filter((v) => v.relation === 'swakshetra' || v.relation === 'adhimitra' || v.relation === 'adhishatru')
+      .map((v) => `${v.varga.toUpperCase()} ${v.relation}`)
+      .join(', ');
+    if (estremi) lines.push(`${''.padEnd(11)} ${estremi}`);
   }
   return lines.join('\n');
 }

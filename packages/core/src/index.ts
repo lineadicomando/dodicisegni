@@ -40,6 +40,7 @@ export {
 } from './hora.js';
 export { computeDrishti, housesSeenBy } from './drishti.js';
 export { computeRelationships, naisargikaMaitri, panchadhaMaitri, tatkalikaMaitri } from './maitri.js';
+export { computeVimshopaka, VARGA_VISWA, VIMSHOPAKA_WEIGHTS } from './vimshopaka.js';
 export { arudhaOf, computeGoodVargas, GOOD_VARGA_NAMES, VARGA_SCHEMES } from './varga-buoni.js';
 export {
   DETRIMENT_SOURCE,
@@ -237,6 +238,7 @@ export type {
   GoodVargaReason,
   GoodVargas,
   VargaScheme,
+  Vimshopaka,
   PanchangaOptions,
   PanchangaYoga,
   PassageOptions,
