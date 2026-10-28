@@ -183,7 +183,10 @@
   I segni di dignità sono quelli della traduzione di Santhanam. L'arudha
   lagna si ricava come in 29.1-5: si conta dal lagna al segno del suo
   signore e altrettanto oltre, e se si ricade nel lagna o nel settimo si
-  prende il decimo o il quarto. È una regola larga, che Santhanam stesso
+  prende il decimo o il quarto. Lo Scorpione e l'Acquario hanno due signori
+  (Marte e Ketu, Saturno e Rahu), e il testo vuole il più forte: il sito lo
+  sceglie con la regola che il BPHS dà per gli stessi due segni nella chara
+  dasha (46.158-166), e dice quale ha scelto. È una regola larga, che Santhanam stesso
   segnala: può rendere buoni fino a otto segni su dodici, e per questo ogni
   varga buono porta la sua ragione. La hora di Parashara, che non ha segni,
   si conta con la nota di Santhanam (p. 90). Il verso 53, che dice che cosa

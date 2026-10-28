@@ -35,6 +35,7 @@
   import GoodVargaTable from '#lib/components/GoodVargaTable.svelte';
   import RelationshipTable from '#lib/components/RelationshipTable.svelte';
   import VimshopakaTable from '#lib/components/VimshopakaTable.svelte';
+  import ArudhaTable from '#lib/components/ArudhaTable.svelte';
   import Risultato from '#lib/components/Risultato.svelte';
   import StrumentiLettura from '#lib/components/StrumentiLettura.svelte';
   import VargaTable from '#lib/components/VargaTable.svelte';
@@ -355,6 +356,10 @@
 
         {#if jyotisha.vimshopaka}
           <VimshopakaTable vimshopaka={jyotisha.vimshopaka} {evidenza} />
+        {/if}
+
+        {#if jyotisha.arudhas}
+          <ArudhaTable arudhas={jyotisha.arudhas} />
         {/if}
 
         {#if jyotisha.goodVargas}

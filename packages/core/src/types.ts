@@ -860,6 +860,32 @@ export interface GrahaRelationships {
   }[];
 }
 
+/**
+ * Gli arudha (pada) dei dodici bhava, BPHS 29.1-5.
+ *
+ * Per lo Scorpione e l'Acquario, che hanno due signori (46.157: Marte e
+ * Ketu, Saturno e Rahu), si conta dal più forte (29.7), scelto con la
+ * procedura di 46.158-166; `lordChoice` dice quale regola ha deciso.
+ */
+export interface Arudhas {
+  /** Versi, pagine e la lettura seguita per i due signori, in una riga. */
+  source: string;
+  padas: {
+    /** Il bhava, 1-12 dal lagna. */
+    bhava: number;
+    /** Il nome del pada, come in Santhanam a p. 295: Lagna Pada, Dhana Pada… */
+    name: string;
+    /** Il segno del bhava. */
+    sign: ZodiacSign;
+    /** Il signore da cui si è contato. */
+    lord: BodyId;
+    /** Solo per Scorpione e Acquario: perché quel signore e non l'altro. */
+    lordChoice?: string;
+    /** Il segno del pada. */
+    pada: ZodiacSign;
+  }[];
+}
+
 /** I quattro schemi di BPHS 6.42 e 7.17-20, dal più breve al completo. */
 export type VargaScheme = 'shadvarga' | 'saptavarga' | 'dashavarga' | 'shodashavarga';
 
@@ -980,6 +1006,8 @@ export interface JyotishaChart {
    * nascita: la regola dell'arudha vuole il lagna, e un conto senza sarebbe
    * un altro numero. L'assenza la dice un'avvertenza.
    */
+  /** Gli arudha dei dodici bhava (BPHS 29.1-7). Assenti senza ora: vogliono il lagna. */
+  arudhas?: Arudhas;
   goodVargas?: GoodVargas;
   /** Le relazioni fra i sette graha, naturali, temporanee e composte (BPHS 3.55-58). */
   relationships: GrahaRelationships;

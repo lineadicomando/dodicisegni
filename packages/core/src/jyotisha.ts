@@ -38,6 +38,7 @@ import { computeVarga } from './varga.js';
 import { computeGoodVargas } from './varga-buoni.js';
 import { computeRelationships } from './maitri.js';
 import { computeVimshopaka } from './vimshopaka.js';
+import { computeArudhas } from './arudha.js';
 import type { JyotishaChart, JyotishaOptions, NatalChart } from './types.js';
 
 /**
@@ -81,6 +82,7 @@ export function computeJyotisha(
   const vargas = (options.vargas ?? ['d9']).map((id) =>
     computeVarga(chart, id, options.hora ? { hora: options.hora } : {}),
   );
+  const arudhas = computeArudhas(chart);
   const goodVargas = computeGoodVargas(chart, options.hora);
   if (!goodVargas) {
     warnings.push(
@@ -100,6 +102,7 @@ export function computeJyotisha(
     vargas,
     drishti,
     dignities: computeParasharaDignities(chart),
+    ...(arudhas ? { arudhas } : {}),
     ...(goodVargas ? { goodVargas } : {}),
     relationships: computeRelationships(chart),
     vimshopaka: computeVimshopaka(chart, options.hora),

@@ -156,6 +156,11 @@ La sezione VIMSHOPAKA dà la forza di ogni graha su 20 nei quattro schemi
 «buono» o «cattivo». Le fasce che il testo associa ai punteggi non sono
 riportate, e non le aggiungi.
 
+La sezione ARUDHA DEI BHAVA dà il pada di ciascun bhava (BPHS 29), il
+primo dei quali è l'arudha lagna. Per lo Scorpione e l'Acquario, che hanno
+due signori, la riga dice da quale si è contato e perché: è una lettura,
+dillo se lo usi.
+
 La HORA (D2), se c'è, porta in testa la sua convenzione. Con quella di
 Parashara, che è il testo, ogni graha sta nella hora del Sole o della Luna e NON
 in un segno: dillo così, e non tradurlo in Leone o Cancro. Con la convenzione

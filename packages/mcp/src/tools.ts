@@ -389,8 +389,9 @@ export function registerComputeJyotishaChart(server: McpServer, context: ToolCon
         'vimshottari, le carte divisionali, le drishti e le dignità secondo Parashara ' +
         '(uccha, moolatrikona, segno proprio, neecha), le relazioni fra i graha (naturali, ' +
         'temporanee e composte, BPHS 3.55-58, con un verso: come A vede B non è come B vede A) ' +
-        'il vimshopaka (la forza su 20 di BPHS 7.17-27, per schema) e, con l\'ora, i varga ' +
-        'buoni contati per schema, con i versi del BPHS da cui vengono. ' +
+        'il vimshopaka (la forza su 20 di BPHS 7.17-27, per schema) e, con l\'ora, gli arudha ' +
+        'dei dodici bhava e i varga buoni contati per schema, con i versi del BPHS da cui ' +
+        'vengono. ' +
         "NON è compute_natal_chart con un'opzione: i gradi sono contati dalle stelle fisse " +
         'invece che dal punto vernale, e fra i due zodiaci corrono oltre ventiquattro gradi, ' +
         'cioè quasi un segno. Chi qui ha il Sole in Acquario in occidente ce l\'ha in Pesci, e ' +

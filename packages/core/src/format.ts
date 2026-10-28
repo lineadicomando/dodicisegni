@@ -20,6 +20,7 @@ import type {
   JyotishaChart,
   NatalChart,
   ParasharaDignities,
+  Arudhas,
   GoodVargas,
   Vimshopaka,
   GrahaRelationships,
@@ -1174,6 +1175,7 @@ export function formatJyotishaCompact(jyotisha: JyotishaChart): string {
   parti.push(formatParasharaDignitiesCompact(jyotisha.dignities));
   parti.push(formatRelationshipsCompact(jyotisha.relationships));
   parti.push(formatVimshopakaCompact(jyotisha.vimshopaka));
+  if (jyotisha.arudhas) parti.push(formatArudhasCompact(jyotisha.arudhas));
   if (jyotisha.goodVargas) parti.push(formatGoodVargasCompact(jyotisha.goodVargas));
   parti.push(formatNakshatraCompact(jyotisha.chart));
   parti.push(formatDashaCompact(jyotisha.dasha));
@@ -1242,6 +1244,18 @@ function formatRelationshipsCompact(relazioni: GrahaRelationships): string {
       return nomi.length ? `${grado} ${nomi.join(', ')}` : '';
     }).filter(Boolean);
     lines.push(`${bodyName(da).padEnd(11)} ${gruppi.join('; ')}`);
+  }
+  return lines.join('\n');
+}
+
+/** Gli arudha: una riga per bhava, e per Scorpione e Acquario il perché del signore. */
+function formatArudhasCompact(arudhas: Arudhas): string {
+  const lines = ['ARUDHA DEI BHAVA (BPHS 29.1-7)', `Fonte: ${arudhas.source}`, ''];
+  for (const p of arudhas.padas) {
+    lines.push(
+      `${String(p.bhava).padStart(2)} ${p.name.padEnd(13)} ${SIGN_ABBR[p.sign]} → ${p.pada}` +
+        `  (signore ${bodyName(p.lord)})${p.lordChoice ? ` ${p.lordChoice}` : ''}`,
+    );
   }
   return lines.join('\n');
 }

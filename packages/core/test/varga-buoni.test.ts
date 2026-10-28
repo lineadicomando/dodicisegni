@@ -2,7 +2,8 @@ import { describe, expect, it } from 'vitest';
 import { computeNatalChart } from '../src/chart.js';
 import { parasharaSignDignities } from '../src/dignita-parashara.js';
 import { computeJyotisha } from '../src/jyotisha.js';
-import { arudhaOf, computeGoodVargas, GOOD_VARGA_NAMES, VARGA_SCHEMES } from '../src/varga-buoni.js';
+import { arudhaOf } from '../src/arudha.js';
+import { computeGoodVargas, GOOD_VARGA_NAMES, VARGA_SCHEMES } from '../src/varga-buoni.js';
 import { VARGAS } from '../src/varga.js';
 import type { BirthData } from '../src/types.js';
 

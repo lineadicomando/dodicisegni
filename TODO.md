@@ -416,8 +416,14 @@ descrizioni dicono «circa un quarto».
      `RelationshipTable.svelte` su `/vedica`. Rahu e Ketu fuori: la nota
      di Santhanam a p. 41 li dà secondo altri testi, e non entrano senza
      sceglierne uno.
-   - **Gli arudha degli altri bhava e dei graha** (29.1-7): `arudhaOf` vale
-     per ogni bhava, ma il motore espone solo quello del lagna.
+   - Gli arudha dei dodici bhava sono fatti, il 28 ottobre 2026
+     (`arudha.ts`, `JyotishaChart.arudhas`, sezione ARUDHA DEI BHAVA,
+     `ArudhaTable.svelte`). Per Scorpione e Acquario il signore più forte
+     si sceglie con BPHS 46.158-166 (vedi *Deciso*), provato sull'esempio
+     di Santhanam, vol. II, p. 556. Restano **gli arudha dei graha**
+     (29.6-7): chiedono il più forte dei due segni di un graha, e il
+     verso non dice come; Santhanam (vol. I, p. 297) scrive che non ha
+     «authentic information» su come usarli. Da non fare senza una scelta.
 
 2. **Le altre scuole occidentali**, quando le loro fonti sono state lette
    (vedi *Da verificare* qui sotto): ciascuna come valore nuovo di
@@ -657,6 +663,13 @@ Verifica: ogni fonte citata in un commento di `packages/` ha una riga in
   non un conto senza; il 6.53 come giudizio sull'effetto, che non toglie
   varga dal conto; la hora per segno con `leone-cancro`, con la nota di
   Santhanam a p. 90 con `parashara`, dichiarata come sua.
+- **Lo Scorpione e l'Acquario hanno due signori nel calcolo dell'arudha.**
+  BPHS 29.7 vuole il più forte, 46.157 dà Ketu e Rahu accanto a Marte e
+  Saturno, e il più forte si sceglie con la procedura di 46.158-166, che il
+  testo dà per la chara dasha. Scelto dal proprietario il 28 ottobre 2026
+  contro il signore unico di 4.6-24 e contro il riportare entrambi; vale
+  per gli arudha e quindi per i varga buoni. Fuori dall'arudha (dignità,
+  relazioni, vimshopaka) i signori restano quelli di 4.6-24.
 - **Il server MCP non ha un pool, e non gli serve**: è un processo per client,
   sul trasporto stdio, e non c'è nessun'altra richiesta da tenere in attesa.
 - **I thread del pool web sono al massimo quattro, e la quinta richiesta

@@ -14,7 +14,7 @@
  * - **6.52 come lo traduce Santhanam**: i *segni* di uccha, moolatrikona e
  *   propri. Il genitivo *adhipateḥ* si presterebbe anche a «i segni del
  *   signore di quei segni», ma quella lettura non ha un autore;
- * - **l'arudha lagna di BPHS 29.1-5**, calcolato qui (`arudhaOf`);
+ * - **l'arudha lagna di BPHS 29.1-7**, calcolato in `arudha.ts`;
  * - **6.53 come nota e non come filtro**: il verso dice che cosa producono i
  *   varga buoni di un graha combusto, sconfitto, in neecha, debole o in
  *   avastha come shayana, non che non vadano contati;
@@ -28,6 +28,7 @@
  * in `trascrizioni.md`.
  */
 
+import { computeArudhas } from './arudha.js';
 import { ZODIAC_SIGNS } from './constants.js';
 import { parasharaDignityOf, parasharaSignDignities, parasharaSignLord, PARASHARA_GRAHAS } from './dignita-parashara.js';
 import { DEFAULT_HORA_CONVENTION, horaConvention, horaOf } from './hora.js';
@@ -78,35 +79,9 @@ const SCHEMI: readonly VargaScheme[] = ['shadvarga', 'saptavarga', 'dashavarga',
 const segno = (indice: number): ZodiacSign => ZODIAC_SIGNS[((indice % 12) + 12) % 12] as ZodiacSign;
 const indice = (sign: ZodiacSign): number => ZODIAC_SIGNS.indexOf(sign);
 
-/**
- * L'arudha (pada) di un bhava, BPHS 29.1-5, pp. 295-296.
- *
- * Si conta dal bhava al segno del suo signore, e altrettanto oltre il
- * signore. Due eccezioni (29.4-5, *svasthānaṃ saptamaṃ naivaṃ padaṃ
- * bhavitum arhati*): il pada non può essere il bhava stesso né il settimo da
- * lui; se ci cade, nel primo caso si prende il decimo dal bhava, nel secondo
- * il quarto. È quello che dicono il verso e la traduzione di Santhanam («the
- * 10th therefrom … the 4th from the original house»), e il verso 5 lo
- * ripete coi signori: col signore nel quarto il pada è il quarto, col
- * signore nel settimo il decimo.
- *
- * Il secondo esempio delle note di Santhanam a p. 296 (Acquario ascendente,
- * Saturno in Leone: «Taurus») non segue né il verso né la sua traduzione,
- * che danno lo Scorpione. Il motore segue il verso.
- */
-export function arudhaOf(bhava: ZodiacSign, lordSign: ZodiacSign): ZodiacSign {
-  const distanza = (indice(lordSign) - indice(bhava) + 12) % 12;
-  const grezzo = (indice(lordSign) + distanza) % 12;
-  const daBhava = (grezzo - indice(bhava) + 12) % 12;
-  if (daBhava === 0) return segno(indice(bhava) + 9);
-  if (daBhava === 6) return segno(indice(bhava) + 3);
-  return segno(grezzo);
-}
-
 const ARUDHA_RULE =
-  "BPHS 29.1-5 (trad. Santhanam, vol. I, pp. 295-296): dal lagna al segno del suo " +
-  "signore, e altrettanto oltre; se si ricade nel lagna si prende il decimo, se nel settimo il " +
-  "quarto. Il signore del lagna è quello di BPHS 4.6-24, uno per segno.";
+  "L'arudha lagna è il Lagna Pada di BPHS 29.1-7, calcolato in `arudha.ts`: vedi la sezione " +
+  'degli arudha, che dice anche da quale signore si è contato.';
 
 /**
  * La nota di Santhanam a p. 90 per la hora di Parashara, che non ha segni:
@@ -158,11 +133,8 @@ export function computeGoodVargas(
 ): GoodVargas | undefined {
   if (!chart.angles) return undefined;
 
-  const lagna = segno(Math.floor(chart.angles.ascendant / 30));
-  const signoreDelLagna = parasharaSignLord(lagna);
-  const corpoSignore = chart.bodies.find((body) => body.id === signoreDelLagna);
-  if (!corpoSignore) return undefined;
-  const arudhaLagna = arudhaOf(lagna, segno(Math.floor(corpoSignore.longitude / 30)));
+  const arudhaLagna = computeArudhas(chart)?.padas[0]?.pada;
+  if (!arudhaLagna) return undefined;
 
   const kendraLords = [...new Set([0, 3, 6, 9].map((k) => parasharaSignLord(segno(indice(arudhaLagna) + k))))];
   const arudhaSigns = ZODIAC_SIGNS.filter((sign) => kendraLords.includes(parasharaSignLord(sign)));
