@@ -31,12 +31,12 @@ esserci, se il clone è un altro: le schede dicono da dove riscaricare ogni
 fonte, e la voce 24 quelle che mancano ancora.
 
 I riferimenti `file:riga` e i nomi citati sono stati ricontrollati tutti
-contro il codice il 28 ottobre 2026, dopo il lotto C della voce 5.
-Le righe si spostano: se una non torna, il nome della funzione o della
-costante accanto è quello che fa fede.
+contro il codice il 28 ottobre 2026, dopo gli arudha della voce 19
+(`f8c34a2`). Le righe si spostano: se una non torna, il nome della funzione
+o della costante accanto è quello che fa fede.
 
 Prima di cominciare conviene che `npm test`, `npm run typecheck` e `npm run
-lint` siano verdi. Tre cose che fanno perdere tempo:
+lint` siano verdi. Quattro cose che fanno perdere tempo:
 
 - se il typecheck di `apps/web` cade su `config.kit.paths.origin`,
   `node_modules` è indietro rispetto al lockfile e serve un `npm install`;
@@ -45,7 +45,17 @@ lint` siano verdi. Tre cose che fanno perdere tempo:
   sviluppo di Vite va riavviato, o risponde 500 dicendo che l'export non c'è;
 - i test che leggono le stelle fisse vogliono `packages/core/ephe/sefstars.txt`,
   che `npm run ephe:download -w @dodicisegni/core` scarica (133 KB); senza,
-  vengono saltati e non falliscono.
+  vengono saltati e non falliscono;
+- `/api/jyotish` si fa memorizzare dal browser per un giorno
+  (`private, max-age=86400`): provando la pagina `/vedica` dopo aver
+  cambiato il motore, il browser può mostrare la risposta vecchia. Basta
+  cambiare di un minuto l'ora nell'indirizzo. Per la stessa ragione i
+  componenti di `/vedica` mettono una guardia sui campi nuovi
+  (`{#if jyotisha.arudhas}`) anche dove il tipo li dà per presenti.
+
+Per spegnere il server di sviluppo lanciato in sottofondo si usa la porta
+(`fuser -k 5173/tcp`), non `pkill -f` col numero della porta: il comando
+contiene lo stesso numero e chiude anche la shell che lo lancia.
 
 In fondo ci sono due elenchi che non sono lavoro: le decisioni prese, da non
 riaprire, e le cose esaminate e lasciate stare, per non ritrovarle una seconda
@@ -55,24 +65,43 @@ volta e ricominciare da capo.
 
 | Voce | Priorità | Taglia | Prima di cominciare |
 |---|---|---|---|
-| 19. Le dignità, per scuola | bassa | media | il Jyotisha: i varga del BPHS, cap. 6-7 |
+| 24. Le fonti da scaricare in `texts/` | bassa | piccola | niente: solo scaricare e trascrivere |
+| 19. Le dignità, per scuola | bassa | media | Jyotisha: leggere BPHS 47.35-36 (le dignità dei nodi) e le fonti del 6.53; occidente: leggere Tolomeo I.18 e Bonatti |
 | 17. L'astrologia oraria | bassa | piccola, ormai | i quattro lotti sono fatti; restano rifiniture indipendenti, una per riga |
-| 24. Le fonti da scaricare in `texts/` | bassa | piccola | niente |
 | 5. I varga: le convenzioni che restano | bassa | piccola | i sedici sono fatti; restano rifiniture, una per riga |
 
-L'ordine consigliato è quello della tabella. Della 19 resta soprattutto il
-Jyotisha, le dignità nei varga, ora che i sedici varga della 5 ci sono: il D-2 di Parashara, fatto senza segni,
-cambia anche il modo di dire la dignità nella hora. La 17 usa le tavole di
-Lilly della 19 e ha già le *moieties* come terza convenzione delle orbite.
+L'ordine consigliato è quello della tabella. La 24 non chiede scelte e
+prepara la parte occidentale della 19 (Firmico, Valente). Della 19, nel
+Jyotisha, sono fatti dignità, varga buoni, relazioni, vimshopaka e arudha;
+quello che resta vuole prima la lettura di altre pagine del BPHS (la più
+utile è 47.35-36, che dà le dignità dei nodi che il codice oggi dice
+assenti dal testo), e tre scelte del proprietario: se e dove far entrare
+quelle dignità, gli arudha dei graha, il conto dei varga buoni di Narasimha
+Rao come seconda convenzione. La 17 usa le tavole
+di Lilly della 19 e ha già le *moieties* come terza convenzione delle orbite.
+
+**Come si è lavorato nel Jyotisha, e conviene continuare.** Ogni regola si
+legge sull'immagine della pagina (`pdftoppm`, vedi le schede `FONTE.md`), si
+trascrive in `trascrizioni.md` col sanscrito traslitterato e la traduzione,
+e si prova contro una tavola o un esempio svolto della fonte, ricopiati nel
+test. Dove il testo lascia due strade si cerca chi le percorre, con un nome
+e un testo; se l'alternativa non ha un autore resta fuori e lo si scrive; se
+ce l'ha, la scelta si fa fare al proprietario prima del codice, e finisce in
+*Deciso*. Ogni risultato porta la sua fonte e le sue letture in un campo
+`source` o `rule`, e arriva a cinque superfici: la tabella compatta
+(`format.ts`), la pagina `/vedica` (un componente per sezione), la
+descrizione di `compute_jyotisha_chart` (`packages/mcp/src/tools.ts`), il
+documento di lettura (`packages/lettura/src/jyotisha.ts`, con le prove in
+`lettura.test.ts`) e, quando è una convenzione, `/metodo/varga`.
 
 ## 5. I varga: le convenzioni che restano
 
 **Priorità bassa.** I sedici varga del BPHS, cap. 6, sono calcolati tutti, in
 `packages/core/src/varga.ts` (il D-2 con le sue convenzioni in `hora.ts`), in
 quattro passaggi del 28 ottobre 2026: D-4 e D-7 (`097ae59`), il D-2
-(`a828b3f`), D-16, D-20 e D-24 (`87fb824`), D-40, D-45 e D-60 nel commit
-«Calcola il D-40, il D-45 e il D-60…». Ogni regola è stata letta
-sull'immagine di Santhanam, vol. I, pp. 68-86, sanscrito compreso, e ogni
+(`a828b3f`), D-16, D-20 e D-24 (`87fb824`), D-40, D-45 e D-60
+(`178f01d`). Ogni regola è stata letta sull'immagine di Santhanam, vol. I,
+pp. 68-86, sanscrito compreso, e ogni
 tavola stampata è ricopiata in `packages/core/test/varga.test.ts` e
 confrontata con la regola (`controllaTavola`, `tavolaPerGruppi`). Le
 trascrizioni stanno in `texts/jyotisha/bphs-santhanam-1992-vol1/trascrizioni.md`.
@@ -123,7 +152,11 @@ nell'ordine**. Nessun test vede invece i testi che li elencano: il commento
 delle due rotte, l'aiuto di `--varga` (`packages/core/src/cli.ts:119`), la
 descrizione dei parametri `vargas` e `varga` in `packages/mcp/src/tools.ts`,
 il rimando in `/metodo` (voce `#varga`), la pagina `/metodo/varga` con la sua
-descrizione in `Meta`, e il commento sopra `VargaId` in `types.ts`.
+descrizione in `Meta`, e il commento sopra `VargaId` in `types.ts`. Un varga
+fuori dai sedici del BPHS fa cadere anche `varga-buoni.test.ts`, che
+pretende `VARGA_SCHEMES.shodashavarga` uguale a `VARGAS`: gli schemi e i
+pesi del vimshopaka (`VIMSHOPAKA_WEIGHTS`) sono quelli del testo, e un varga
+nuovo non ci entra.
 
 ## 17. L'astrologia oraria
 
@@ -305,10 +338,34 @@ uccha col grado più profondo, neecha nel settimo segno, moolatrikona e segno
 proprio secondo il BPHS, e `computeJyotisha` le mette in `JyotishaChart.dignities`,
 quindi nel JSON del tema vedico, non in `NatalChart`. La sezione DIGNITÀ
 (PARASHARA) di `formatJyotishaCompact` porta la fonte, i signori dei segni, le
-esaltazioni e una riga per graha. `packages/lettura/src/jyotisha.ts` manda lì
-invece di ricopiare i domicili, e per il D9 dice che la forza si ricava per
-segno da quella sezione e va detta come confronto, non come dignità calcolata.
-Prove in `packages/core/test/dignita-parashara.test.ts` e in `lettura.test.ts`.
+esaltazioni e una riga per graha; su `/vedica` le mostra
+`ParasharaDignityTable.svelte` (`c6faa27`), un componente separato da
+`DignityTable.svelte` apposta. `packages/lettura/src/jyotisha.ts` manda lì
+invece di ricopiare i domicili. Prove in
+`packages/core/test/dignita-parashara.test.ts` e in `lettura.test.ts`.
+
+Il resto del Jyotisha, tutto del 28 ottobre 2026 e tutto con le scelte del
+proprietario in *Deciso*:
+
+| Che cosa | Dove | Commit | Fonte, e la prova |
+|---|---|---|---|
+| In ogni varga, in quali segni di uccha, moolatrikona, proprio e neecha cade il graha, per segno e tutte le corrispondenze | `parasharaSignDignities` in `dignita-parashara.ts`, campo `dignitySigns` di `SignVargaChart` con `dignitySource` | `8b09b74` | BPHS 6.52, p. 88; la tavola intera in `dignita-parashara.test.ts` |
+| I varga buoni contati nei quattro schemi, col nome del conto | `varga-buoni.ts`, `JyotishaChart.goodVargas`, `GoodVargaTable.svelte` | `ef95829` | 6.42-53 e 7.17-20, pp. 87-96; `varga-buoni.test.ts` |
+| Le relazioni fra i graha, naturale, temporanea e composta | `maitri.ts`, `JyotishaChart.relationships`, `RelationshipTable.svelte` | `a3840d3` | 3.55-58, pp. 40-42; la regola ridà la tavola di p. 40 in `maitri.test.ts` |
+| Il vimshopaka nei quattro schemi | `vimshopaka.ts`, `JyotishaChart.vimshopaka`, `VimshopakaTable.svelte` | `0f511f3` | 7.17-27, pp. 95-99; l'esempio di Venere (New Delhi 1984, 16,8) in `vimshopaka.test.ts` |
+| Gli arudha dei dodici bhava, coi due signori di Scorpione e Acquario | `arudha.ts` (`arudhaOf`, `bhavaLord`), `JyotishaChart.arudhas`, `ArudhaTable.svelte` | `f8c34a2` | 29.1-7, vol. I pp. 294-297, e 46.157-166, vol. II pp. 553-556; gli esempi di Santhanam in `arudha.test.ts` |
+
+Senza ora di nascita `goodVargas` e `arudhas` mancano (vogliono il lagna) e
+un'avvertenza lo dice; relazioni e vimshopaka ci sono comunque. Le sezioni
+della tabella compatta, nell'ordine: DIGNITÀ (PARASHARA), RELAZIONI FRA I
+GRAHA, VIMSHOPAKA, ARUDHA DEI BHAVA, VARGA BUONI. I testi letti stanno in
+`texts/jyotisha/bphs-santhanam-1992-vol1/trascrizioni.md` (sezioni «3.55-58»,
+«6.42-53», «7.17-27», «29.1-5, 7.17-25») e in
+`texts/jyotisha/bphs-santhanam-1992-vol2/trascrizioni.md`. Tre cose trovate
+leggendo, che il codice tiene scritte: la traduzione di 6.53 omette
+*nīcagā*; il secondo esempio delle note di Santhanam sull'arudha (p. 296)
+contraddice il verso, e il motore segue il verso; nel saptavarga il verso
+7.18 non assegna i pesi ai varga, e il motore segue la tavola di p. 97.
 
 Una scelta di lettura, scritta nel commento a `TRATTI`: nei sette segni che
 3.51-54 divide in tratti decide il tratto, anche contro 3.49 letto da solo.
@@ -334,8 +391,8 @@ cinque le dignità, sugli esempi di Lilly a p. 112. La tavola è trascritta
 riga per riga in `texts/occidentale/lilly-christian-astrology-1647/trascrizioni.md`,
 con la lettura di p. 105 (che dice come si leggono le celle), e il test la
 ricopia coi glifi della stampa (`packages/core/test/dignita-lilly.test.ts`).
-Si accende con `ChartOptions.dignitySchool: 'lilly'` (`types.ts:970`, letto
-in `chart.ts`), con `SkyOptions.dignitySchool` (`types.ts:1167`, in
+Si accende con `ChartOptions.dignitySchool: 'lilly'` (`types.ts:1148`, letto
+in `chart.ts`), con `SkyOptions.dignitySchool` (`types.ts:1345`, in
 `sky.ts`) e con `--dignita lilly` nella CLI, solo nello zodiaco tropicale: la
 sezione DIGNITÀ aggiunge, sotto le righe comuni,
 una riga per corpo con i signori del suo grado e le sue dignità, e le
@@ -371,59 +428,47 @@ descrizioni dicono «circa un quarto».
 
 ### Che cosa resta
 
-1. **Le dignità nei varga del Jyotisha**, che il BPHS tratta a parte (cap.
-   6-7). Le dignità del tema, `JyotishaChart.dignities` (`types.ts:837`,
-   riempito da `computeParasharaDignities`, `jyotisha.ts:92`), si vedono
-   ora anche su `/vedica`, in `ParasharaDignityTable.svelte`, componente
-   separato da quello occidentale (`DignityTable.svelte`) apposta. I varga
-   portano segni (`SignVargaChart`, `types.ts:414`), tranne il D-2 di
-   Parashara, che porta la hora di un luminare (`HoraVargaChart`, :445):
-   lì la dignità non si può dire per segno. Il materiale già letto:
-   la nota di Santhanam a p. 90 e 7.13-19 (pp. 91-95), trascritti in
-   `bphs-santhanam-1992-vol1/trascrizioni.md` per il D-2; il resto del cap. 7
-   comincia alla riga 6005 dell'`ocr.txt`. Per la hora, 7.13-16 (p. 94)
-   dice già quali graha danno frutto nella hora del Sole e quali in quella
-   della Luna: è la forma che la dignità nel D-2 può prendere.
-
-   **Fatto il 28 ottobre 2026**, con le quattro scelte prese dal
-   proprietario (vedi *Deciso*): le corrispondenze per segno in ogni varga
-   (`parasharaSignDignities`, campo `dignitySigns`) e il conto dei varga
-   buoni nei quattro schemi col nome di 6.43-51 (`varga-buoni.ts`,
-   `JyotishaChart.goodVargas`, sezione VARGA BUONI della tabella compatta,
-   `GoodVargaTable.svelte` su `/vedica`, sezione `#buoni` di
-   `/metodo/varga`). L'arudha lagna è calcolato (`arudhaOf`, BPHS 29.1-5,
-   pp. 295-296); il secondo esempio delle note di Santhanam a p. 296
-   contraddice il verso e la sua traduzione, e il motore segue il verso.
-   Testo e scelte in `trascrizioni.md`, sezioni «6.42-53» e «29.1-5, 7.17-25».
-   Restano, ciascuna una riga:
-   - **6.53 per intero**: combustione, guerra planetaria, debolezza e
-     avastha (shayana e le altre, BPHS cap. 45) per il Jyotisha. Ognuna è
-     un calcolo con le sue fonti; oggi la riga del conto dice la sola neecha.
-   - Il vimshopaka è fatto, il 28 ottobre 2026: `vimshopaka.ts`,
-     `JyotishaChart.vimshopaka`, sezione VIMSHOPAKA della tabella compatta,
-     `VimshopakaTable.svelte` su `/vedica`, sezione `#vimshopaka` di
-     `/metodo/varga`. Provato sull'esempio di Santhanam (pp. 98-99, New
-     Delhi 1984: Venere, 16,8 nello shadvarga, riga per riga). Nel
-     saptavarga il verso 7.18 non assegna i sette pesi ai varga: il motore
-     segue la tavola di Santhanam a p. 97 (navamsa 2½, dwadasamsa 4½,
-     trimsamsa 2, saptamsa 1), come PyJHora; l'altra assegnazione, col
-     saptamsa al suo posto, non ha trovato un autore. Se lo trova, entra
-     accanto, nominata. Le fasce di 7.26-27 sono un giudizio e non entrano.
-   - Le relazioni fra i graha sono fatte, il 28 ottobre 2026: `maitri.ts`
-     (naturale per regola da 3.55, ricontrollata contro la tavola di p. 40;
-     temporanea 3.56; composta 3.57-58), `JyotishaChart.relationships`,
-     sezione RELAZIONI FRA I GRAHA della tabella compatta,
-     `RelationshipTable.svelte` su `/vedica`. Rahu e Ketu fuori: la nota
-     di Santhanam a p. 41 li dà secondo altri testi, e non entrano senza
-     sceglierne uno.
-   - Gli arudha dei dodici bhava sono fatti, il 28 ottobre 2026
-     (`arudha.ts`, `JyotishaChart.arudhas`, sezione ARUDHA DEI BHAVA,
-     `ArudhaTable.svelte`). Per Scorpione e Acquario il signore più forte
-     si sceglie con BPHS 46.158-166 (vedi *Deciso*), provato sull'esempio
-     di Santhanam, vol. II, p. 556. Restano **gli arudha dei graha**
-     (29.6-7): chiedono il più forte dei due segni di un graha, e il
-     verso non dice come; Santhanam (vol. I, p. 297) scrive che non ha
-     «authentic information» su come usarli. Da non fare senza una scelta.
+1. **Il Jyotisha: quello che resta dopo il 28 ottobre 2026.** Ciascuna
+   indipendente dalle altre.
+   - **Il 6.53 per intero.** Il verso dice che i varga buoni di un graha
+     combusto, sconfitto in guerra, in neecha, debole o in avastha come
+     shayana «distruggono gli yoga»; oggi la riga del conto dice la sola
+     neecha nella rashi (`neecha` in `GoodVargas.grahas`) e `verse53`
+     dichiara il resto non verificato. Le fonti da leggere prima:
+     la **combustione** ha una tavola di gradi solo in una nota di
+     Santhanam sotto 7.28-29 (vol. I, p. 100, riga 6579 dell'`ocr.txt`;
+     il valore di Marte nell'OCR è illeggibile), senza un autore dichiarato:
+     va cercata la fonte primaria (probabilmente il *Surya Siddhanta*, da
+     scaricare) prima di usarla; la **guerra planetaria** è nel cap. 79 del
+     vol. II, con una nota a p. 124 del vol. I (riga 8124) che riporta
+     C. G. Rajan; le **avastha** (shayana e le altre undici) sono il cap. 45
+     del vol. I, da p. 448 (riga 27909), e sono un calcolo lungo; la
+     **debolezza** non ha una soglia nel verso. Il conto non cambia
+     comunque: il 6.53 è una nota (vedi *Deciso*).
+   - **Gli arudha dei graha** (29.6-7, vol. I, p. 297). Per un graha con due
+     segni il verso dice di contare dal più forte senza dire come, e
+     Santhanam scrive di non avere «authentic information» su come usarli.
+     Da non fare senza una scelta del proprietario.
+   - **Il conto dei varga buoni senza l'arudha**, come seconda convenzione.
+     P.V.R. Narasimha Rao (2000), §6.6, pp. 63-65, conta solo
+     moolatrikona, esaltazione e segno proprio, con un esempio svolto (Bill
+     Cosby, 12 luglio 1937); è in
+     `texts/jyotisha/narasimha-rao-vedic-astrology-integrated-approach-2000`
+     (`testo/originale.txt`, righe 2470-2560). Ha un autore, quindi può entrare
+     accanto, nominata; la scelta di farla è del proprietario.
+   - **Rahu e Ketu: le dignità ci sono nel BPHS, in un capitolo non ancora
+     letto.** `dignita-parashara.ts` e la fonte che viaggia col risultato
+     dicono che il testo sui nodi «non ne sceglie una»: vale per il cap. 3,
+     non per tutto il libro. BPHS 47.34-36 (vol. II, pp. 581-582, righe
+     5915-5950 dell'`ocr.txt`, letto il 28 ottobre 2026 solo nell'OCR), a
+     proposito della dasha di Rahu, dà l'esaltazione di Rahu nel Toro e di
+     Ketu nello Scorpione, i moolatrikona nei Gemelli e nel Sagittario, i
+     segni propri nell'Acquario e nello Scorpione, e riporta (*kenacit*,
+     «secondo alcuni») la Vergine e i Pesci. Va letto sull'immagine, e poi
+     deciso col proprietario se entra, e dove: nelle dignità, nelle
+     corrispondenze dei varga, nei varga buoni. Le relazioni dei nodi sono
+     un'altra cosa: Santhanam a p. 41 del vol. I le dà secondo altri testi,
+     non secondo 3.55, e restano fuori finché non c'è una fonte scelta.
 
 2. **Le altre scuole occidentali**, quando le loro fonti sono state lette
    (vedi *Da verificare* qui sotto): ciascuna come valore nuovo di
@@ -431,13 +476,13 @@ descrizioni dicono «circa un quarto».
    `DIGNITY_SCHOOL_NAMES` (`packages/core/src/constants.ts`), e da lì CLI,
    MCP e `/api/chart` imparano il valore da soli, ma solo a validarlo: il
    risultato porta ancora un campo per scuola (`WesternDignities.lilly`,
-   `types.ts:749`), e una scuola nuova chiede il suo campo, il suo ramo in
+   `types.ts:759`), e una scuola nuova chiede il suo campo, il suo ramo in
    `computeWesternDignities` (`dignita-tema.ts:51`), le sue righe in
-   `format.ts` (come `lillyLines`, :809, e `lillyConditionLines`) e in
+   `format.ts` (come `lillyLines`, :814, e `lillyConditionLines`) e in
    `DignityTable.svelte`, e i testi che oggi nominano solo Lilly: l'aiuto di
    `--dignita` (`cli.ts:140`), la descrizione di `dignity_school`
    (`packages/mcp/src/tools.ts:317`) e il commento di
-   `apps/web/src/routes/api/chart/+server.ts:24-32`. Il conto delle fortezze
+   `apps/web/src/routes/api/chart/+server.ts:24-33`. Il conto delle fortezze
    e le condizioni accidentali sono di Lilly e restano suoi: una scuola nuova
    porta il proprio, o nessuno, e `LillyConditions` non si generalizza.
    L'interfaccia è una casella sola, `lilly` in `ChartSettings.svelte` e in
@@ -547,7 +592,9 @@ Da verificare:
 - **Le facce in Tolomeo**, nelle stesse due edizioni.
 - **I punti 5-4-3-2-1 medievali**: a chi vanno attribuiti. I siti li danno
   come «medievali» senza un testo.
-- **Per il Jyotisha**: una fonte per l'esaltazione dei Nodi, se c'è.
+- **Per il Jyotisha**: una fonte per l'esaltazione dei Nodi. **Trovata
+  nel BPHS stesso**, 47.35-36 (vedi il punto 1 qui sopra), da leggere
+  sull'immagine; le righe che seguono restano per le altre fonti.
   Santhanam in nota a 3.50 rimanda alla sua traduzione dello *Horasara*,
   p. 20, che su archive.org non si è trovata (`texts/INDICE.md`, «Non
   libere»). C'è un'altra traduzione, Subrahmanya Sastri (1949), in
@@ -654,13 +701,15 @@ Verifica: ogni fonte citata in un commento di `packages/` ha una riga in
   dall'Ariete, cercata il 28 ottobre 2026, non ha trovato un autore.
   Confermato dal proprietario il 28 ottobre 2026. Le ragioni nella
   trascrizione di 6.33 (`texts/jyotisha/bphs-santhanam-1992-vol1`) e in
-  `texts/tecnica/d60-letture-in-rete-2026`. Entra una seconda convenzione solo con un autore e un testo.
+  `texts/tecnica/d60-letture-in-rete-2026`. Una seconda convenzione entra
+  solo con un autore e un testo.
 - **I varga buoni si contano secondo Santhanam, con l'arudha, la hora che
   segue la convenzione e il 6.53 come nota.** Quattro scelte prese dal
   proprietario il 28 ottobre 2026, voce 19: in 6.52 i *segni* di uccha,
   moolatrikona e propri, come traduce Santhanam (l'altra lettura di
-  *adhipateḥ* non ha un autore); l'arudha lagna calcolato secondo 29.1-5, e
-  non un conto senza; il 6.53 come giudizio sull'effetto, che non toglie
+  *adhipateḥ* non ha un autore); l'arudha lagna calcolato secondo 29.1-7, e
+  non un conto senza (il conto senza arudha di Narasimha Rao può entrare
+  accanto, se il proprietario lo vuole: voce 19); il 6.53 come giudizio sull'effetto, che non toglie
   varga dal conto; la hora per segno con `leone-cancro`, con la nota di
   Santhanam a p. 90 con `parashara`, dichiarata come sua.
 - **Lo Scorpione e l'Acquario hanno due signori nel calcolo dell'arudha.**
