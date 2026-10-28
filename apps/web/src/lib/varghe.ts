@@ -16,6 +16,7 @@
 import type { VargaId } from '@dodicisegni/core';
 
 export const VARGHE: readonly { value: VargaId; label: string }[] = [
+  { value: 'd2', label: 'D2 Hora' },
   { value: 'd3', label: 'D3 Drekkana' },
   { value: 'd4', label: 'D4 Chaturthamsa' },
   { value: 'd7', label: 'D7 Saptamsa' },

@@ -12,6 +12,7 @@ import type {
   DignitySchool,
   BodyId,
   DashaYear,
+  HoraConvention,
   HouseSystem,
   JyotishaChart,
   NatalChart,
@@ -210,6 +211,8 @@ export interface JyotishaOptionsInput {
   dashaLevels: 1 | 2 | 3;
   dashaYear: DashaYear;
   vargas: VargaId[];
+  /** Come leggere il D-2. Si manda solo se il D-2 è fra i `vargas`. */
+  hora: HoraConvention;
   drishtiNodes: NodeDrishti;
 }
 
@@ -237,6 +240,7 @@ export function jyotishaParameters(
   });
 
   if (!birth.timeUnknown && birth.time) parameters.set('time', birth.time);
+  if (options.vargas.includes('d2')) parameters.set('hora', options.hora);
 
   const refined = refinedCoordinates(birth);
   if (refined) {

@@ -36,6 +36,7 @@ import type {
   ActiveTransit,
   OrbConventionInfo,
   VargaChart,
+  Hora,
   VimshottariDasha,
   WesternDignities,
   SignCourse,
@@ -1060,6 +1061,12 @@ function formatDashaYears(years: number): string {
   return `${years.toFixed(1)} anni`;
 }
 
+/** Le due hora del D-2, dette per esteso. */
+const HORA_LABEL: Readonly<Record<Hora, string>> = {
+  sole: 'hora del Sole',
+  luna: 'hora della Luna',
+};
+
 /**
  * Una carta divisionale: una riga per corpo, e la regola in testa.
  *
@@ -1074,9 +1081,23 @@ export function formatVargaCompact(varga: VargaChart): string {
   // che è l'unica a poterlo dire per tutti.
   const lines = [
     `${varga.name.toUpperCase()} (${varga.varga.toUpperCase()})`,
+    ...(varga.convention
+      ? [`Convenzione: ${varga.convention.name}. Fonte: ${varga.convention.source}`]
+      : []),
     `Regola: ${varga.rule}`,
     '',
   ];
+
+  // Il D-2 di Parashara non ha segni: la riga dice il luminare, per esteso,
+  // perché «sole» da solo in una colonna di segni si leggerebbe come un segno
+  // che non esiste.
+  if (varga.kind === 'signori') {
+    if (varga.ascendant) lines.push(`${'Lagna'.padEnd(11)} ${HORA_LABEL[varga.ascendant]}`);
+    for (const position of varga.positions) {
+      lines.push(`${position.name.padEnd(11)} ${HORA_LABEL[position.hora]}`);
+    }
+    return lines.join('\n');
+  }
 
   if (varga.ascendant) lines.push(`${'Lagna'.padEnd(11)} ${varga.ascendant}`);
   for (const position of varga.positions) {

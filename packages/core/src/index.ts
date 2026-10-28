@@ -30,7 +30,14 @@ export {
   VIMSHOTTARI_TOTAL,
   VIMSHOTTARI_YEARS,
 } from './dasha.js';
-export { computeVarga, findVarga, VARGAS, vargaSignOf } from './varga.js';
+export { computeVarga, findVarga, VARGAS, vargaSignOf, type VargaOptions } from './varga.js';
+export {
+  DEFAULT_HORA_CONVENTION,
+  HORA_CONVENTIONS,
+  horaConvention,
+  horaOf,
+  type HoraConventionDefinition,
+} from './hora.js';
 export { computeDrishti, housesSeenBy } from './drishti.js';
 export {
   DETRIMENT_SOURCE,
@@ -251,6 +258,11 @@ export type {
   TransitOptions,
   Vara,
   VargaChart,
+  SignVargaChart,
+  HoraVargaChart,
+  Hora,
+  HoraConvention,
+  HoraConventionInfo,
   VargaId,
   VimshottariDasha,
   VimshottariOptions,

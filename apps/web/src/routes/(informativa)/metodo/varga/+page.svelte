@@ -12,7 +12,7 @@
 
 <Meta
   titolo="I varga: come si calcolano le divisionali"
-  descrizione="Le carte divisionali del Jyotisha (D-3, D-4, D-7, navamsa D-9, D-10, D-12, D-27, D-30): la regola di ciascuna, un esempio svolto, e perché la regola viaggia col risultato."
+  descrizione="Le carte divisionali del Jyotisha (hora D-2, D-3, D-4, D-7, navamsa D-9, D-10, D-12, D-27, D-30): la regola di ciascuna, un esempio svolto, e perché la regola viaggia col risultato."
 />
 
 <p class="sopra"><a href="/metodo#jyotisha">Metodo</a> · astrologia indiana</p>
@@ -38,7 +38,7 @@
   chi legge; che cosa ciascuno sia è aritmetica, ed è dichiarata.
 </p>
 
-<h2 id="regole">I nove che il sito calcola</h2>
+<h2 id="regole">I dieci che il sito calcola</h2>
 
 <table class="testo">
   <thead>
@@ -51,6 +51,7 @@
   </thead>
   <tbody>
     <tr><td>D-1</td><td>Rashi</td><td>1</td><td>Il segno stesso: è la carta di partenza.</td></tr>
+    <tr><td>D-2</td><td>Hora</td><td>2</td><td>Due parti da 15°, la hora del Sole e quella della Luna, rovesciate fra segni dispari e pari. Se abbiano un segno lo dice la convenzione: vedi <a href="#hora">sotto</a>.</td></tr>
     <tr><td>D-3</td><td>Drekkana</td><td>3</td><td>Tre parti da 10°: la prima al segno stesso, la seconda al quinto da lui, la terza al nono.</td></tr>
     <tr><td>D-4</td><td>Chaturthamsa</td><td>4</td><td>Quattro parti da 7°30': al segno stesso, al quarto, al settimo e al decimo da lui.</td></tr>
     <tr><td>D-7</td><td>Saptamsa</td><td>7</td><td>Sette parti da 4°17'8,57". Nei segni dispari si parte dal segno stesso, nei pari dal settimo.</td></tr>
@@ -63,7 +64,7 @@
 </table>
 
 <p>
-  Le altre sette divisioni classiche non sono ancora calcolate. Le regole si
+  Le altre sei divisioni classiche non sono ancora calcolate. Le regole si
   biforcano in modi diversi, ed è il motivo per cui la tavola non è una formula
   sola: il D-3 procede per trigoni, il D-4 per kendra, il D-9 parte da dove
   dice la modalità del segno, il D-7 e il D-10 da dove dice la sua parità, il
@@ -85,6 +86,34 @@
   nell'acqua. Ed equivale a contare le parti di seguito dall'Ariete lungo tutto
   lo zodiaco, senza ripartire a ogni segno: per questo le parti della navamsa
   coincidono con i <a href="/metodo/nakshatra#pada">pada</a> dei nakshatra.
+</p>
+
+<h2 id="hora">La hora, che nel testo non ha segni</h2>
+
+<p>
+  Il D-2 divide ogni segno in due metà. Nei segni dispari la prima è la
+  <em>hora</em> del Sole e la seconda quella della Luna, nei pari il contrario.
+  Fin qui concordano tutti. Il <em>Brihat Parashara Hora Shastra</em> (6.5-6)
+  però si ferma lì: a ciascuna metà dà un luminare, non un segno, e così fanno
+  i trattati che lo seguono. Agli usi che il testo ne fa basta il luminare.
+</p>
+
+<p>
+  La lettura più diffusa manda la hora del Sole al Leone e quella della Luna al
+  Cancro, i segni dei due luminari, e ne fa una carta in cui tutti i graha
+  stanno in uno di quei due segni. Nessun classico letto qui la enuncia: la
+  presuppone il commento di Santhanam, e la dice d'uso comune P.V.R. Narasimha
+  Rao (2003), che ne dubita.
+</p>
+
+<p>
+  Il sito le tiene tutte e due, col loro nome. La predefinita è quella del
+  testo, <strong>Parashara</strong>: ogni graha nella hora del Sole o della
+  Luna, senza segno, e quindi senza quadro da disegnare. L'altra,
+  <strong>Leone e Cancro</strong>, si chiede, e dà una carta con i segni, che
+  si può disegnare. In entrambi i casi la convenzione e la sua fonte viaggiano
+  col risultato. Le altre varianti moderne con un segno, ciascuna con un
+  autore, non sono calcolate.
 </p>
 
 <h2 id="disuguali">Il trimsamsa, che non divide in parti uguali</h2>

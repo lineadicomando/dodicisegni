@@ -54,8 +54,10 @@ describe('i tipi ridichiarati', () => {
 
     // E un varga deve soddisfare il quadro. È ciò che fa sì che un renderer
     // solo disegni la carta rashi — che è il D-1 — e tutte le divisionali:
-    // `computeVarga(chart, 'd1')` entra qui senza adattamenti.
-    const quadro = (varga: core.VargaChart): SquareChart => varga;
+    // `computeVarga(chart, 'd1')` entra qui senza adattamenti. Tutti i varga
+    // con i segni, cioè tutti tranne il D-2 di Parashara, che ha la hora di un
+    // luminare al posto del segno e non si disegna: `kind` li distingue.
+    const quadro = (varga: core.SignVargaChart): SquareChart => varga;
 
     expect([natale, cuspidi, assi, aspetti, fortuna, transiti, quadro]).toHaveLength(7);
   });

@@ -36,6 +36,7 @@ import {
 import { findElectionHours } from './election.js';
 import { computePanchanga } from './panchanga.js';
 import { computeVimshottari } from './dasha.js';
+import { HORA_CONVENTIONS } from './hora.js';
 import { computeVarga, VARGAS } from './varga.js';
 import { computeJyotisha } from './jyotisha.js';
 import { computeDrishti } from './drishti.js';
@@ -72,6 +73,7 @@ import type {
   TransitOptions,
   VargaChart,
   VargaId,
+  HoraConvention,
   VimshottariDasha,
   VimshottariOptions,
   ZodiacOptions,
@@ -114,10 +116,15 @@ Opzioni
                         antardasha. Tre sono settecentoventinove righe
   --anno-dasha <nome>   solare (default, 365,25 giorni) oppure savana (360). Le
                         scuole divergono, e su ottant'anni è più di un anno
-  --varga <lista>       Carte divisionali, separate da virgola: d1, d3, d4, d7,
-                        d9, d10, d12, d27, d30. Ciascuna stampa la regola che l'ha
-                        prodotta.
+  --varga <lista>       Carte divisionali, separate da virgola: d1, d2, d3, d4,
+                        d7, d9, d10, d12, d27, d30. Ciascuna stampa la regola
+                        che l'ha prodotta.
                         Richiede --zodiaco siderale
+  --hora <convenzione>  Come leggere il D-2: parashara (default, BPHS 6.5-6: la
+                        hora del Sole o della Luna, senza segno) oppure
+                        leone-cancro (l'uso corrente, che nessun classico
+                        enuncia: la hora del Sole al Leone, della Luna al
+                        Cancro). Il quadro del D-2 vuole leone-cancro
   --drishti             Gli sguardi fra i graha, contati a segni interi e con un
                         verso: chi guarda chi non è reciproco
   --drishti-nodi <n>    nessuna (default, forma classica) oppure gioviana, che dà
@@ -300,8 +307,20 @@ function catenaDa(
   return computeVimshottari(chart, options);
 }
 
+/** La convenzione della hora chiesta, o `null` se non esiste. */
+function horaDa(valore: string | undefined): HoraConvention | undefined | null {
+  if (valore === undefined) return undefined;
+  if (!HORA_CONVENTIONS.some((convenzione) => convenzione.id === valore)) {
+    process.stderr.write(
+      `--hora "${valore}" non riconosciuta. Disponibili: ${HORA_CONVENTIONS.map((c) => c.id).join(', ')}.\n`,
+    );
+    return null;
+  }
+  return valore as HoraConvention;
+}
+
 /** Le carte divisionali chieste, o `null` se una non esiste. */
-function vargaDa(chart: NatalChart, lista: string): VargaChart[] | null {
+function vargaDa(chart: NatalChart, lista: string, hora: HoraConvention | undefined): VargaChart[] | null {
   const chiesti = lista
     .split(',')
     .map((voce) => voce.trim().toLowerCase())
@@ -320,7 +339,7 @@ function vargaDa(chart: NatalChart, lista: string): VargaChart[] | null {
       );
       return null;
     }
-    carte.push(computeVarga(chart, id as VargaId));
+    carte.push(computeVarga(chart, id as VargaId, hora ? { hora } : {}));
   }
 
   return carte;
@@ -346,6 +365,7 @@ function main(argv: string[]): number {
       drishti: { type: 'boolean', default: false },
       quadro: { type: 'string' },
       'drishti-nodi': { type: 'string' },
+      hora: { type: 'string' },
       livelli: { type: 'string' },
       'anno-dasha': { type: 'string' },
       fortuna: { type: 'string' },
@@ -682,8 +702,14 @@ function main(argv: string[]): number {
     }
 
     let varga = '';
+    const hora = horaDa(values.hora);
+    if (hora === null) return 2;
+    if (hora && !values.varga?.split(',').some((voce) => voce.trim().toLowerCase() === 'd2')) {
+      process.stderr.write('--hora conta solo nel D-2: aggiungi d2 a --varga.\n');
+      return 2;
+    }
     if (values.varga !== undefined) {
-      const carte = vargaDa(chart, values.varga);
+      const carte = vargaDa(chart, values.varga, hora);
       if (carte === null) return 2;
       varga = carte.map((carta) => `\n${formatVargaCompact(carta)}\n`).join('');
     }
@@ -811,7 +837,7 @@ function scriviDisegno(
 function scriviQuadro(
   chart: NatalChart,
   stile: StileQuadro,
-  values: OpzioniDisegnoCli & { varga?: string | undefined },
+  values: OpzioniDisegnoCli & { varga?: string | undefined; hora?: string | undefined },
 ): number {
   const chiesti = (values.varga ?? 'd1')
     .split(',')
@@ -848,7 +874,19 @@ function scriviQuadro(
     }
   }
 
-  const varga = computeVarga(chart, id as VargaId);
+  const hora = horaDa(values.hora);
+  if (hora === null) return 2;
+  const varga = computeVarga(chart, id as VargaId, hora ? { hora } : {});
+  // Il D-2 di Parashara non ha segni, e un quadro è fatto di segni: non lo si
+  // disegna mettendo tutto nel Leone e nel Cancro alle spalle di chi chiede.
+  if (varga.kind !== 'segni') {
+    process.stderr.write(
+      `Il D-2 secondo ${varga.convention.name} non ha segni, e il quadro non ha dove\n` +
+        'mettere i graha. Aggiungi --hora leone-cancro per disegnarlo con i segni dei\n' +
+        'luminari, oppure togli --quadro per la tabella.\n',
+    );
+    return 2;
+  }
   const disegno = { palette: paletteDi(values.tema as NomeTema | undefined), stile };
 
   // Lo stile del nord ha le case fisse: senza lagna la geometria si rifiuta,

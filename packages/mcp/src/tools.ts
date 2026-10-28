@@ -5,6 +5,7 @@ import {
   HOUSE_SYSTEM_CODES,
   NATAL_ORB_CONVENTIONS,
   VARGAS,
+  HORA_CONVENTIONS,
   computeNatalChart,
   computeHoraryLilly,
   computeSky,
@@ -35,6 +36,7 @@ import {
   type NatalOrbConvention,
   type JyotishaOptions,
   type VargaId,
+  type HoraConvention,
   type VimshottariOptions,
   type ZodiacOptions,
   type ElectionOptions,
@@ -135,6 +137,7 @@ const ZODIAC_SCHEMA = {
 } as const;
 
 const VARGA_IDS = nonEmpty<VargaId>(VARGAS.map((varga) => varga.id));
+const HORA_IDS = nonEmpty<HoraConvention>(HORA_CONVENTIONS.map((convenzione) => convenzione.id));
 
 const HOUSE_SYSTEMS = nonEmpty(Object.keys(HOUSE_SYSTEM_CODES) as HouseSystem[]);
 
@@ -455,6 +458,16 @@ export function registerComputeJyotishaChart(server: McpServer, context: ToolCon
             'Carte divisionali. Default: il solo d9 (navamsa), che è quella che si legge ' +
               'sempre accanto al tema. Le altre riguardano un\'area ciascuna.',
           ),
+        hora: z
+          .enum(HORA_IDS)
+          .optional()
+          .describe(
+            'Come leggere il d2, se è fra i vargas. parashara (default) è il testo, BPHS ' +
+              '6.5-6: ogni graha sta nella hora del Sole o della Luna, e un segno non c\'è. ' +
+              'leone-cancro manda la hora del Sole al Leone e quella della Luna al Cancro: è ' +
+              "la lettura corrente, ma nessun classico la enuncia. Non sceglierla per conto " +
+              "tuo; se l'utente vuole la carta hora coi segni, usala e digli che cos'è.",
+          ),
         drishti_nodes: z
           .enum(['nessuna', 'gioviana'])
           .optional()
@@ -494,6 +507,7 @@ export function registerComputeJyotishaChart(server: McpServer, context: ToolCon
         if (args.dasha_year) dasha.yearLength = args.dasha_year;
         if (Object.keys(dasha).length > 0) options.dasha = dasha;
         if (args.vargas) options.vargas = args.vargas;
+        if (args.hora) options.hora = args.hora;
         if (args.drishti_nodes) options.drishti = { nodes: args.drishti_nodes };
 
         const jyotisha = computeJyotisha(computeNatalChart(birth, chartOptions), options);
@@ -1491,6 +1505,14 @@ export function registerDrawJyotishaChart(server: McpServer, context: ToolContex
           .enum(VARGA_IDS)
           .optional()
           .describe('Quale carta disegnare. Default: d1, la carta rashi.'),
+        hora: z
+          .enum(HORA_IDS)
+          .optional()
+          .describe(
+            'Solo con varga=d2. Con parashara (default) il d2 non ha segni e non si disegna: ' +
+              'serve leone-cancro, la lettura corrente che manda la hora del Sole al Leone e ' +
+              "quella della Luna al Cancro. Dillo all'utente, perché non è il testo.",
+          ),
         theme: z.enum(['chiaro', 'scuro']).optional().describe('Colori. Default: chiaro.'),
         width: z
           .number()
@@ -1519,8 +1541,18 @@ export function registerDrawJyotishaChart(server: McpServer, context: ToolContex
         if (context.ephemerisPath) options.ephemerisPath = context.ephemerisPath;
 
         const id = (args.varga ?? 'd1');
-        const varga = computeVarga(computeNatalChart(birth, options), id);
+        const varga = computeVarga(computeNatalChart(birth, options), id, args.hora ? { hora: args.hora } : {});
         const stile = (args.stile ?? 'sud');
+
+        // Il D-2 di Parashara non ha segni, e un quadro è fatto di segni.
+        if (varga.kind !== 'segni') {
+          return fail(
+            `Il D-2 secondo ${varga.convention.name} non ha segni: ogni graha sta nella hora del Sole o ` +
+              'della Luna, e il quadro non ha dove metterlo. Per disegnarlo serve hora=leone-cancro, ' +
+              "che manda la hora del Sole al Leone e quella della Luna al Cancro; dillo all'utente, " +
+              'perché è una lettura corrente e non il testo. Per la tabella usa compute_jyotisha_chart.',
+          );
+        }
 
         // Il rifiuto prima del disegno: la geometria solleverebbe lo stesso,
         // ma con un messaggio che parla di poligoni invece che di che cosa fare.

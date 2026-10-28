@@ -84,7 +84,9 @@ export function computeJyotisha(
       nakshatra: nakshatraOf(body.longitude),
     })),
     dasha,
-    vargas: (options.vargas ?? ['d9']).map((id) => computeVarga(chart, id)),
+    vargas: (options.vargas ?? ['d9']).map((id) =>
+      computeVarga(chart, id, options.hora ? { hora: options.hora } : {}),
+    ),
     drishti,
     dignities: computeParasharaDignities(chart),
     // Le avvertenze dei pezzi salgono qui: chi legge il tema vedico non deve

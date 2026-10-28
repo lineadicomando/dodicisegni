@@ -1,6 +1,8 @@
 import { describe, expect, it } from 'vitest';
 import { computeNatalChart } from '../src/chart.js';
 import { ChartError } from '../src/errors.js';
+import { formatVargaCompact } from '../src/format.js';
+import { HORA_CONVENTIONS, horaOf } from '../src/hora.js';
 import { computeVarga, VARGAS, vargaSignOf } from '../src/varga.js';
 import type { BirthData, VargaId } from '../src/types.js';
 
@@ -264,13 +266,103 @@ describe('D-30, che abbandona le parti uguali', () => {
   });
 });
 
+describe('D-2, la hora, con due convenzioni', () => {
+  // BPHS 6.5-6, trad. Santhanam, vol. I, pp. 68-69; la lettura Leone-Cancro
+  // è quella corrente, che nessun classico enuncia. Vedi `hora.ts`.
+
+  it('dà Sole, Luna, Luna, Sole a 10° e 20° di Ariete e Toro', () => {
+    // I casi di controllo scelti con la decisione del 27 ottobre 2026.
+    expect([10, 20, 40, 50].map(horaOf)).toEqual(['sole', 'luna', 'luna', 'sole']);
+  });
+
+  it('coincide con la tavola di Santhanam, p. 69', () => {
+    // «Speculum Of Horas»: nei segni dispari 0-15° al Sole e 15-30° alla
+    // Luna, nei pari il contrario, per tutti e dodici.
+    for (let segno = 0; segno < 12; segno += 1) {
+      const dispari = segno % 2 === 0;
+      expect(horaOf(inizioSegno(segno) + 7.5), `segno ${segno + 1}`).toBe(dispari ? 'sole' : 'luna');
+      expect(horaOf(inizioSegno(segno) + 22.5), `segno ${segno + 1}`).toBe(dispari ? 'luna' : 'sole');
+    }
+    // Ai due lati del confine di metà segno.
+    expect(horaOf(15 - 1e-6)).toBe('sole');
+    expect(horaOf(15 + 1e-6)).toBe('luna');
+  });
+
+  it('con Parashara non ha segni, e vargaSignOf lo dice invece di inventarne uno', () => {
+    expect(() => vargaSignOf(10, 'd2')).toThrow(ChartError);
+    try {
+      vargaSignOf(10, 'd2', 'parashara');
+    } catch (errore) {
+      expect((errore as ChartError).code).toBe('VARGA_SENZA_SEGNI');
+    }
+  });
+
+  it('con Leone-Cancro manda la hora del Sole al Leone e quella della Luna al Cancro', () => {
+    expect([10, 20, 40, 50].map((l) => vargaSignOf(l, 'd2', 'leone-cancro'))).toEqual([
+      'leone', 'cancro', 'cancro', 'leone',
+    ]);
+  });
+
+  it('esce senza segni con Parashara, la predefinita, e porta la convenzione', () => {
+    const carta = tema();
+    const d2 = computeVarga(carta, 'd2');
+
+    expect(d2.kind).toBe('signori');
+    if (d2.kind !== 'signori') return;
+    expect(d2.convention.id).toBe('parashara');
+    expect(d2.convention.source).toContain('6.5-6');
+    expect(d2.rule).toContain('non un segno');
+    for (const body of carta.bodies) {
+      expect(d2.positions.find((p) => p.id === body.id)?.hora).toBe(horaOf(body.longitude));
+    }
+    expect(d2.ascendant).toBe(horaOf(carta.angles!.ascendant));
+    expect(d2.positions[0]).not.toHaveProperty('sign');
+  });
+
+  it('esce coi segni con Leone-Cancro, e lo dichiara', () => {
+    const carta = tema();
+    const d2 = computeVarga(carta, 'd2', { hora: 'leone-cancro' });
+
+    expect(d2.kind).toBe('segni');
+    if (d2.kind !== 'segni') return;
+    expect(d2.convention?.id).toBe('leone-cancro');
+    expect(d2.convention?.source).toContain('nessun classico');
+    for (const position of d2.positions) {
+      expect(['leone', 'cancro']).toContain(position.sign);
+    }
+  });
+
+  it('nella resa compatta dice il luminare per esteso, e la convenzione con la fonte', () => {
+    const testo = formatVargaCompact(computeVarga(tema(), 'd2'));
+    expect(testo).toContain('HORA (D2)');
+    expect(testo).toContain('Convenzione: Parashara. Fonte: Brihat Parashara Hora Shastra 6.5-6');
+    expect(testo).toMatch(/^Sole +hora della? (Sole|Luna)$/m);
+    expect(testo).not.toMatch(/ (leone|cancro)$/m);
+
+    const conSegni = formatVargaCompact(computeVarga(tema(), 'd2', { hora: 'leone-cancro' }));
+    expect(conSegni).toContain('Convenzione: Leone e Cancro.');
+    expect(conSegni).toMatch(/^Sole +(leone|cancro)$/m);
+  });
+
+  it('non tocca gli altri varga, qualunque convenzione si chieda', () => {
+    const carta = tema();
+    const d9 = computeVarga(carta, 'd9', { hora: 'leone-cancro' });
+    expect(d9).toEqual(computeVarga(carta, 'd9'));
+    expect(d9).not.toHaveProperty('convention');
+  });
+});
+
 describe('computeVarga', () => {
   it('porta con sé la regola che ha prodotto i segni', () => {
     // Fra le sedici divisioni le scuole divergono su più d'una: un segno
     // senza la sua regola non si può ricontrollare.
     for (const definizione of VARGAS) {
       const carta = computeVarga(tema(), definizione.id);
-      expect(carta.rule).toBe(definizione.rule);
+      // Nel D-2 la regola è quella della convenzione, che porta anche la
+      // fonte: la parte comune sta in `VARGAS` e non basta da sola.
+      expect(carta.rule).toBe(
+        definizione.id === 'd2' ? HORA_CONVENTIONS[0]!.rule : definizione.rule,
+      );
       expect(carta.rule.length).toBeGreaterThan(30);
       expect(carta.divisions).toBe(definizione.divisions);
       expect(carta.name).toBe(definizione.name);
@@ -281,6 +373,7 @@ describe('computeVarga', () => {
     const carta = tema();
     const d9 = computeVarga(carta, 'd9');
 
+    expect(d9.kind).toBe('segni');
     expect(d9.positions).toHaveLength(carta.bodies.length);
     expect(d9.ascendant).toBe(vargaSignOf(carta.angles!.ascendant, 'd9'));
   });
@@ -299,6 +392,7 @@ describe('computeVarga', () => {
     // non da una sua variante.
     const carta = tema();
     const d1 = computeVarga(carta, 'd1');
+    if (d1.kind !== 'segni') throw new Error('il D-1 ha i segni');
 
     for (const body of carta.bodies) {
       expect(d1.positions.find((p) => p.id === body.id)?.sign).toBe(body.sign);

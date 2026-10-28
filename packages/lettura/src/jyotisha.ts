@@ -132,6 +132,12 @@ dici che è un confronto per segno, non una dignità calcolata. Le altre
 carte divisionali, se presenti, riguardano ciascuna un'area sola: dillo e non
 generalizzarle.
 
+La HORA (D2), se c'è, porta in testa la sua convenzione. Con quella di
+Parashara, che è il testo, ogni graha sta nella hora del Sole o della Luna e NON
+in un segno: dillo così, e non tradurlo in Leone o Cancro. Con la convenzione
+Leone e Cancro i segni ci sono, ma è la lettura corrente e non il testo, e
+quando la usi lo dici.
+
 LE DASHA: LA PARTE PIÙ DELICATA
 
 Le dasha vimshottari dividono centoventi anni fra i nove graha, a partire dal

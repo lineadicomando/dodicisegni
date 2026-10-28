@@ -1,5 +1,13 @@
 <script lang="ts">
-  import type { AyanamsaId, DashaYear, JyotishaChart, NodeDrishti, VargaId } from '@dodicisegni/core';
+  import type {
+    AyanamsaId,
+    DashaYear,
+    HoraConvention,
+    JyotishaChart,
+    NodeDrishti,
+    SignVargaChart,
+    VargaId,
+  } from '@dodicisegni/core';
   import type { StileQuadro } from '@dodicisegni/ruota';
   import { onMount } from 'svelte';
   import { page } from '$app/state';
@@ -45,6 +53,8 @@
   let vargas = $state<VargaId[]>(['d9']);
   let stile = $state<StileQuadro>('sud');
   let drishtiNodes = $state<NodeDrishti>('nessuna');
+  /** La lettura del D-2: quella del testo finché non se ne chiede un'altra. */
+  let hora = $state<HoraConvention>('parashara');
 
   /**
    * Le condizioni con cui si chiede il tema, in un posto solo.
@@ -58,6 +68,7 @@
     dashaLevels,
     dashaYear,
     vargas: ['d1' as VargaId, ...vargas],
+    hora,
     drishtiNodes,
   });
 
@@ -70,7 +81,11 @@
   let disegno = $state<SVGSVGElement | null>(null);
 
   /** La carta rashi: il tema, che regge la colonna del disegno. */
-  const rashi = $derived(jyotisha?.vargas.find((varga) => varga.varga === 'd1') ?? null);
+  const rashi = $derived(
+    jyotisha?.vargas.find(
+      (varga): varga is SignVargaChart => varga.varga === 'd1',
+    ) ?? null,
+  );
   /** Le divisionali chieste, che sono le altre. */
   const divisionali = $derived(jyotisha?.vargas.filter((varga) => varga.varga !== 'd1') ?? []);
 
@@ -205,6 +220,7 @@
     bind:dashaYear
     bind:drishtiNodes
     bind:vargas
+    bind:hora
     onchange={calcola}
     compact
   />
@@ -226,6 +242,7 @@
           bind:dashaYear
           bind:drishtiNodes
           bind:vargas
+          bind:hora
         />
       {/snippet}
     </BirthForm>

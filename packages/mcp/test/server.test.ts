@@ -280,6 +280,45 @@ describe('superficie MCP', () => {
     }
   });
 
+  it('non disegna il D-2 di Parashara, che non ha segni, e lo disegna con Leone e Cancro', async () => {
+    const argomenti = { date: '1968-03-12', time: '14:30', location_id: ROMA_ID, varga: 'd2', width: 300 };
+
+    const parashara = await client.callTool({ name: 'draw_jyotisha_chart', arguments: argomenti });
+    expect(parashara.isError).toBe(true);
+    expect(textOf(parashara)).toContain('leone-cancro');
+
+    const conSegni = await client.callTool({
+      name: 'draw_jyotisha_chart',
+      arguments: { ...argomenti, hora: 'leone-cancro' },
+    });
+    expect(imageOf(conSegni)?.mimeType).toBe('image/png');
+  });
+
+  it('dà il D-2 con la convenzione in testa, senza segni se non se ne chiede una', async () => {
+    const parashara = textOf(
+      await client.callTool({
+        name: 'compute_jyotisha_chart',
+        arguments: { date: '1968-03-12', time: '14:30', location_id: ROMA_ID, vargas: ['d2'] },
+      }),
+    );
+    expect(parashara).toContain('Convenzione: Parashara.');
+    expect(parashara).toMatch(/^Sole +hora della? (Sole|Luna)$/m);
+
+    const conSegni = textOf(
+      await client.callTool({
+        name: 'compute_jyotisha_chart',
+        arguments: {
+          date: '1968-03-12',
+          time: '14:30',
+          location_id: ROMA_ID,
+          vargas: ['d2'],
+          hora: 'leone-cancro',
+        },
+      }),
+    );
+    expect(conSegni).toContain('Convenzione: Leone e Cancro.');
+  });
+
   it('disegna il varga chiesto, e la carta rashi se non se ne chiede uno', async () => {
     const rashi = textOf(
       await client.callTool({

@@ -17,7 +17,7 @@
 
 <Meta
   titolo="Jyotisha: glossario dei termini"
-  descrizione="I termini dell'astrologia indiana in breve: graha, Rahu e Ketu, lagna, ayanamsa, nakshatra, pada, dasha, varga, navamsa, drishti, panchanga, tithi, yoga, karana, uccha e neecha."
+  descrizione="I termini dell'astrologia indiana in breve: graha, Rahu e Ketu, lagna, ayanamsa, nakshatra, pada, dasha, varga, hora, navamsa, drishti, panchanga, tithi, yoga, karana, uccha e neecha."
 />
 
 <p class="sopra"><a href="/glossario">Glossario</a></p>
@@ -103,6 +103,14 @@
   ciascuna si assegna un segno, secondo una regola propria di quel varga. Si
   indicano con D seguito dal numero delle parti: D-9, D-10, D-30.
   → <a href="/metodo/varga">Le regole</a>
+</p>
+
+<h3 id="hora">Hora</h3>
+<p>
+  Il D-2, la divisione di ogni segno in due metà rette dal Sole e dalla Luna.
+  Nel testo di Parashara la hora è di un luminare e non ha segno; l'uso
+  corrente la manda al Leone o al Cancro.
+  → <a href="/metodo/varga#hora">Le due letture</a>
 </p>
 
 <h3 id="navamsa">Navamsa</h3>

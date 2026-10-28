@@ -195,6 +195,15 @@ describe('il documento vedico', () => {
     expect(testo).toContain('Il Sole viene dopo');
   });
 
+  it('vieta di dare un segno alla hora di Parashara', () => {
+    // Un modello che ha visto solo carte hora coi segni tradurrebbe «hora del
+    // Sole» in Leone senza dirlo, e attribuirebbe al testo una lettura che il
+    // testo non fa.
+    expect(testo).toContain('HORA (D2)');
+    expect(testo).toContain('non tradurlo in Leone o Cancro');
+    expect(testo).toContain('è la lettura corrente e non il testo');
+  });
+
   it('spiega in che cosa le drishti non sono aspetti', () => {
     expect(testo).toContain('NON gli aspetti occidentali');
     expect(testo).toContain('non esistono orbite');

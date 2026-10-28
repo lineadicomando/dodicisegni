@@ -173,6 +173,7 @@ describe('jyotishaParameters', () => {
     dashaLevels: 2,
     dashaYear: 'solare',
     vargas: ['d1', 'd9', 'd30'],
+    hora: 'parashara',
     drishtiNodes: 'nessuna',
   };
 
@@ -187,6 +188,18 @@ describe('jyotishaParameters', () => {
       vargas: 'd1,d9,d30',
       drishtiNodes: 'nessuna',
     });
+  });
+
+  it('scrive la hora solo se il D-2 è fra le carte', () => {
+    // Senza D-2 la convenzione non cambia niente, e un parametro che non
+    // cambia niente in un indirizzo condiviso si legge come se contasse.
+    expect(jyotishaParameters(nascita(), OPZIONI_VEDICHE).has('hora')).toBe(false);
+    const conHora = jyotishaParameters(nascita(), {
+      ...OPZIONI_VEDICHE,
+      vargas: ['d1', 'd2'],
+      hora: 'leone-cancro',
+    });
+    expect(conHora.get('hora')).toBe('leone-cancro');
   });
 
   it('non scrive zodiaco e case, che qui non si scelgono', () => {

@@ -2,8 +2,10 @@ import {
   computeJyotisha,
   computeNatalChart,
   formatJyotishaCompact,
+  HORA_CONVENTIONS,
   VARGAS,
   type ChartOptions,
+  type HoraConvention,
   type JyotishaOptions,
   type VargaId,
   type VimshottariOptions,
@@ -44,8 +46,12 @@ const VARGHE_CALCOLATE = new Set<string>(VARGAS.map((varga) => varga.id));
  * - `dashaLevels` — 1, 2 (default) o 3. Nove periodi, ottantuno o
  *   settecentoventinove.
  * - `dashaYear` — `solare` (default, 365,25 giorni) o `savana` (360).
- * - `vargas` — elenco separato da virgola fra `d1,d3,d4,d7,d9,d10,d12,d27,d30`.
- *   Default: `d9`.
+ * - `vargas` — elenco separato da virgola fra
+ *   `d1,d2,d3,d4,d7,d9,d10,d12,d27,d30`. Default: `d9`.
+ * - `hora` — come leggere il D-2: `parashara` (default, BPHS 6.5-6: ogni
+ *   graha nella hora del Sole o della Luna, senza segno) o `leone-cancro` (la
+ *   lettura corrente, che nessun classico enuncia: la hora del Sole al Leone,
+ *   della Luna al Cancro). Senza `d2` fra i `vargas` non cambia niente.
  * - `drishtiNodes` — `nessuna` (default, forma classica) o `gioviana`.
  * - `format` — `json` (default) o `compact`.
  *
@@ -149,6 +155,19 @@ function readJyotishaOptions(parameters: URLSearchParams): JyotishaOptions {
       }
     }
     options.vargas = chiesti as VargaId[];
+  }
+
+  const hora = parameters.get('hora');
+  if (hora) {
+    if (!HORA_CONVENTIONS.some((convenzione) => convenzione.id === hora)) {
+      throw error(
+        400,
+        `Convenzione della hora "${hora}" sconosciuta. Disponibili: ` +
+          `${HORA_CONVENTIONS.map((convenzione) => convenzione.id).join(', ')}.`,
+        { code: 'VARGA_NON_VALIDO' },
+      );
+    }
+    options.hora = hora as HoraConvention;
   }
 
   const nodes = parameters.get('drishtiNodes');

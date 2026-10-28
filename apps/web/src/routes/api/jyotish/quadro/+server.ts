@@ -1,8 +1,10 @@
 import {
   computeNatalChart,
   computeVarga,
+  HORA_CONVENTIONS,
   VARGAS,
   type ChartOptions,
+  type HoraConvention,
   type VargaId,
 } from '@dodicisegni/core';
 import type { StileQuadro } from '@dodicisegni/ruota';
@@ -37,6 +39,9 @@ const VARGHE_CALCOLATE = new Set<string>(VARGAS.map((varga) => varga.id));
  * - `varga` — uno fra `d1` (default), `d3`, `d4`, `d7`, `d9`, `d10`, `d12`, `d27`,
  *   `d30`.
  *   **Uno solo**: un'immagine è un quadro solo.
+ * - `hora` — solo con `varga=d2`: `parashara` (default) o `leone-cancro`. Con
+ *   Parashara il D-2 non ha segni e il quadro risponde 400
+ *   (`VARGA_SENZA_SEGNI`): per disegnarlo serve `leone-cancro`.
  * - `ayanamsa` — come su `/api/jyotish`.
  *
  * Lo zodiaco non si sceglie, ed è siderale. Lo `stile` del nord **richiede
@@ -52,8 +57,24 @@ export const GET: RequestHandler = ({ url, setHeaders }) => {
     const ayanamsa = readAyanamsa(parameters);
     if (ayanamsa) chartOptions.ayanamsa = ayanamsa;
 
-    const varga = computeVarga(computeNatalChart(birth, chartOptions), readVarga(parameters));
+    const hora = readHora(parameters);
+    const varga = computeVarga(
+      computeNatalChart(birth, chartOptions),
+      readVarga(parameters),
+      hora ? { hora } : {},
+    );
     const stile = readStile(parameters);
+
+    // Il D-2 di Parashara non ha segni, e un quadro è fatto di segni.
+    if (varga.kind !== 'segni') {
+      throw error(
+        400,
+        `Il D-2 secondo ${varga.convention.name} non ha segni, e il quadro non ha dove mettere ` +
+          'i graha. Con "hora=leone-cancro" la hora del Sole va al Leone e quella della Luna ' +
+          'al Cancro, ed è la lettura corrente; la tabella senza segni sta su /api/jyotish.',
+        { code: 'VARGA_SENZA_SEGNI' },
+      );
+    }
 
     // Il rifiuto arriva prima del disegno, e dice che cosa fare: la geometria
     // solleverebbe lo stesso, ma con un messaggio che parla di poligoni.
@@ -85,6 +106,20 @@ function readStile(parameters: URLSearchParams): StileQuadro {
     );
   }
   return stile;
+}
+
+function readHora(parameters: URLSearchParams): HoraConvention | undefined {
+  const hora = parameters.get('hora');
+  if (hora === null) return undefined;
+  if (!HORA_CONVENTIONS.some((convenzione) => convenzione.id === hora)) {
+    throw error(
+      400,
+      `Convenzione della hora "${hora}" sconosciuta. Disponibili: ` +
+        `${HORA_CONVENTIONS.map((convenzione) => convenzione.id).join(', ')}.`,
+      { code: 'VARGA_NON_VALIDO' },
+    );
+  }
+  return hora as HoraConvention;
 }
 
 function readVarga(parameters: URLSearchParams): VargaId {

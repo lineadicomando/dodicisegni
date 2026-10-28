@@ -356,17 +356,29 @@ export interface VimshottariDasha {
  * Nove dei sedici classici, scelti per uso e non per completezza: gli altri
  * stanno in `TODO.md`, divisi in lotti per forma della regola.
  */
-export type VargaId = 'd1' | 'd3' | 'd4' | 'd7' | 'd9' | 'd10' | 'd12' | 'd27' | 'd30';
+export type VargaId = 'd1' | 'd2' | 'd3' | 'd4' | 'd7' | 'd9' | 'd10' | 'd12' | 'd27' | 'd30';
+
+/** Le due metà di un segno nel D-2: la hora del Sole e quella della Luna. */
+export type Hora = 'sole' | 'luna';
 
 /**
- * Una carta divisionale: gli stessi corpi in segni diversi.
- *
- * Porta con sé **la regola che l'ha prodotta**. Fra le sedici divisioni le
- * scuole divergono su più d'una, e un segno consegnato senza la regola non si
- * può ricontrollare: chi ne segue un'altra deve vederlo subito, invece di
- * scoprirlo confrontando i numeri con un altro programma.
+ * Come si legge il D-2. `parashara` (predefinita) dà a ogni metà un luminare
+ * e nessun segno, come il testo; `leone-cancro` manda la hora del Sole al
+ * Leone e quella della Luna al Cancro, come l'uso corrente. Le fonti in
+ * `hora.ts`.
  */
-export interface VargaChart {
+export type HoraConvention = 'parashara' | 'leone-cancro';
+
+/** La convenzione della hora, come viaggia col risultato. */
+export interface HoraConventionInfo {
+  id: HoraConvention;
+  name: string;
+  /** L'opera e la pagina, o perché una pagina non c'è. */
+  source: string;
+}
+
+/** Quello che ogni carta divisionale porta, abbia segni o no. */
+interface VargaChartBase {
   varga: VargaId;
   /** Il nome sanscrito. */
   name: string;
@@ -377,8 +389,23 @@ export interface VargaChart {
    * tutti.
    */
   divisions: number;
-  /** La regola in una riga. */
+  /** La regola in una riga. Nel D-2 è quella della convenzione. */
   rule: string;
+  /** Solo nel D-2: la convenzione con cui è stato letto. */
+  convention?: HoraConventionInfo;
+}
+
+/**
+ * Una carta divisionale: gli stessi corpi in segni diversi.
+ *
+ * Porta con sé **la regola che l'ha prodotta**. Fra le sedici divisioni le
+ * scuole divergono su più d'una, e un segno consegnato senza la regola non si
+ * può ricontrollare: chi ne segue un'altra deve vederlo subito, invece di
+ * scoprirlo confrontando i numeri con un altro programma.
+ */
+export interface SignVargaChart extends VargaChartBase {
+  /** Ogni corpo ha un segno: è la forma di tutti i varga tranne il D-2 di Parashara. */
+  kind: 'segni';
   positions: {
     id: BodyId;
     name: string;
@@ -399,6 +426,30 @@ export interface VargaChart {
   /** Il segno del lagna. Assente se il tema non ha un Ascendente. */
   ascendant?: ZodiacSign;
 }
+
+/**
+ * Il D-2 secondo Parashara: ogni corpo nella hora di un luminare, senza segno.
+ *
+ * È un altro tipo e non un `SignVargaChart` con il segno facoltativo perché
+ * chi riceve una carta divisionale la deve poter disegnare o impaginare senza
+ * scoprire a metà che un segno manca: il discriminante `kind` lo dice prima.
+ */
+export interface HoraVargaChart extends VargaChartBase {
+  kind: 'signori';
+  varga: 'd2';
+  convention: HoraConventionInfo;
+  positions: {
+    id: BodyId;
+    name: string;
+    hora: Hora;
+    retrograde: boolean;
+  }[];
+  /** La hora del lagna. Assente se il tema non ha un Ascendente. */
+  ascendant?: Hora;
+}
+
+/** Una carta divisionale: con i segni, o il D-2 con i soli luminari. */
+export type VargaChart = SignVargaChart | HoraVargaChart;
 
 /**
  * Se e come i nodi gettino drishti.
@@ -722,6 +773,8 @@ export interface JyotishaOptions {
   dasha?: VimshottariOptions;
   /** Default: il solo `d9`. */
   vargas?: VargaId[];
+  /** Come leggere il D-2, se c'è fra i `vargas`. Default: `parashara`. */
+  hora?: HoraConvention;
   /** Default: la forma classica, senza sguardi dei nodi. */
   drishti?: DrishtiOptions;
 }

@@ -17,6 +17,8 @@
  *
  * Le regole hanno forme diverse, e vale la pena vederle accanto:
  * - **D-1** non divide niente: è il segno stesso.
+ * - **D-2**, la hora, divide in due metà rette dal Sole e dalla Luna, e il
+ *   testo non dà loro un segno: le convenzioni stanno in `hora.ts`.
  * - **D-3** procede per trigoni: primo terzo al segno, secondo al quinto da
  *   lui, terzo al nono.
  * - **D-4** procede per kendra: i quarti al segno, al quarto, al settimo e
@@ -43,8 +45,9 @@
 import { ZODIAC_SIGNS } from './constants.js';
 import { ChartError } from './errors.js';
 import { degreeInSign, normalize360 } from './math.js';
+import { DEFAULT_HORA_CONVENTION, horaConvention, horaOf } from './hora.js';
 import { grahaName, requireSidereal } from './nakshatra.js';
-import type { NatalChart, VargaChart, VargaId, ZodiacSign } from './types.js';
+import type { HoraConvention, NatalChart, VargaChart, VargaId, ZodiacSign } from './types.js';
 
 interface VargaDefinition {
   id: VargaId;
@@ -54,8 +57,11 @@ interface VargaDefinition {
   divisions: number;
   /** La regola in una riga, che viaggia col risultato. */
   rule: string;
-  /** L'indice del segno, 0-11, da indice del segno di partenza e grado dentro. */
-  signIndex: (sign: number, degree: number) => number;
+  /**
+   * L'indice del segno, 0-11, da indice del segno di partenza e grado dentro.
+   * Manca nel D-2, dove il segno, se c'è, lo dà la convenzione della hora.
+   */
+  signIndex?: (sign: number, degree: number) => number;
 }
 
 /** Il segno all'indice dato, con il giro chiuso. */
@@ -92,6 +98,17 @@ export const VARGAS: readonly VargaDefinition[] = [
     divisions: 1,
     rule: 'Il segno stesso: è la carta di partenza, e vale come varga perché la serie comincia da lei.',
     signIndex: (sign) => sign,
+  },
+  {
+    // BPHS 6.5-6, pp. 68-69, con la tavola a p. 69. La regola che viaggia col
+    // risultato è quella della convenzione scelta (`hora.ts`): questa è la
+    // parte comune a tutte.
+    id: 'd2',
+    name: 'Hora',
+    divisions: 2,
+    rule:
+      'Due parti da 15°, la hora del Sole e quella della Luna, rovesciate fra segni dispari e pari. ' +
+      'Se abbiano un segno lo dice la convenzione (BPHS 6.5-6).',
   },
   {
     // BPHS 6.7-8, p. 69; tavola a p. 70.
@@ -215,13 +232,37 @@ export function findVarga(id: VargaId): VargaDefinition {
  * Il segno che una longitudine **siderale** occupa in un varga.
  *
  * Prende una longitudine nuda come `nakshatraOf`: vale per un corpo, per una
- * cuspide o per il lagna allo stesso modo.
+ * cuspide o per il lagna allo stesso modo. Nel D-2 vuole una convenzione che
+ * dia un segno: con quella di Parashara, che non ne dà, è un errore, e la
+ * hora si chiede a `horaOf`.
  */
-export function vargaSignOf(siderealLongitude: number, id: VargaId): ZodiacSign {
+export function vargaSignOf(
+  siderealLongitude: number,
+  id: VargaId,
+  hora: HoraConvention = DEFAULT_HORA_CONVENTION,
+): ZodiacSign {
   const definition = findVarga(id);
   const longitude = normalize360(siderealLongitude);
 
+  if (!definition.signIndex) {
+    const convenzione = horaConvention(hora);
+    if (!convenzione.signOf) {
+      throw new ChartError(
+        'VARGA_SENZA_SEGNI',
+        `Il D-2 secondo ${convenzione.name} non ha segni, solo la hora del Sole o della Luna. ` +
+          'Per avere un segno serve la convenzione leone-cancro.',
+      );
+    }
+    return convenzione.signOf[horaOf(longitude)];
+  }
+
   return at(definition.signIndex(Math.floor(longitude / 30), degreeInSign(longitude)));
+}
+
+/** Le opzioni di una carta divisionale: per ora, la sola lettura del D-2. */
+export interface VargaOptions {
+  /** Default: `parashara`. Conta solo nel D-2. */
+  hora?: HoraConvention;
 }
 
 /**
@@ -231,13 +272,47 @@ export function vargaSignOf(siderealLongitude: number, id: VargaId): ZodiacSign 
  * a segni interi, quindi la casa di un corpo si ricava dal suo segno e da
  * quello del lagna senza altro calcolo: darle qui vorrebbe dire scegliere una
  * domificazione dove il sistema non ne prevede.
+ *
+ * Il D-2 secondo Parashara esce come `HoraVargaChart`, con la hora al posto
+ * del segno; con `leone-cancro` come ogni altro varga. In tutti e due i casi
+ * porta la convenzione e la sua regola.
  */
-export function computeVarga(chart: NatalChart, id: VargaId): VargaChart {
+export function computeVarga(chart: NatalChart, id: VargaId, options: VargaOptions = {}): VargaChart {
   requireSidereal(chart.zodiac, `Il varga ${id.toUpperCase()}`);
 
   const definition = findVarga(id);
 
-  const result: VargaChart = {
+  if (definition.id === 'd2') {
+    const { rule, signOf, ...convention } = horaConvention(options.hora);
+    const comune = { varga: 'd2' as const, name: definition.name, divisions: definition.divisions, rule, convention };
+    if (!signOf) {
+      return {
+        ...comune,
+        kind: 'signori',
+        positions: chart.bodies.map((body) => ({
+          id: body.id,
+          name: grahaName(body.id, body.name),
+          hora: horaOf(body.longitude),
+          retrograde: body.retrograde,
+        })),
+        ...(chart.angles ? { ascendant: horaOf(chart.angles.ascendant) } : {}),
+      };
+    }
+    return {
+      ...comune,
+      kind: 'segni',
+      positions: chart.bodies.map((body) => ({
+        id: body.id,
+        name: grahaName(body.id, body.name),
+        sign: signOf[horaOf(body.longitude)],
+        retrograde: body.retrograde,
+      })),
+      ...(chart.angles ? { ascendant: signOf[horaOf(chart.angles.ascendant)] } : {}),
+    };
+  }
+
+  return {
+    kind: 'segni',
     varga: definition.id,
     name: definition.name,
     divisions: definition.divisions,
@@ -248,9 +323,6 @@ export function computeVarga(chart: NatalChart, id: VargaId): VargaChart {
       sign: vargaSignOf(body.longitude, id),
       retrograde: body.retrograde,
     })),
+    ...(chart.angles ? { ascendant: vargaSignOf(chart.angles.ascendant, id) } : {}),
   };
-
-  if (chart.angles) result.ascendant = vargaSignOf(chart.angles.ascendant, id);
-
-  return result;
 }

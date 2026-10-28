@@ -1,5 +1,5 @@
 <script lang="ts">
-  import type { AyanamsaId, DashaYear, NodeDrishti, VargaId } from '@dodicisegni/core';
+  import type { AyanamsaId, DashaYear, HoraConvention, NodeDrishti, VargaId } from '@dodicisegni/core';
   import { AYANAMSAS } from '#lib/zodiacs.js';
   import { VARGHE } from '#lib/varghe.js';
 
@@ -21,6 +21,12 @@
     drishtiNodes: NodeDrishti;
     /** Le carte divisionali da mostrare, oltre alla rashi che c'è sempre. */
     vargas: VargaId[];
+    /**
+     * Come leggere il D-2. Il menù compare solo quando il D-2 è fra le carte:
+     * altrove non cambia niente, e un menù che non cambia niente si legge come
+     * se cambiasse qualcosa.
+     */
+    hora: HoraConvention;
     /**
      * Che cosa fare quando un'opzione cambia.
      *
@@ -45,6 +51,7 @@
     dashaYear = $bindable(),
     drishtiNodes = $bindable(),
     vargas = $bindable(),
+    hora = $bindable(),
     onchange,
     compact = false,
   }: Props = $props();
@@ -83,6 +90,14 @@
     <option value="nessuna">Nodi senza sguardi</option>
     <option value="gioviana">Nodi come Giove</option>
   </select>
+
+  {#if vargas.includes('d2')}
+    <label for="hora" class:nascosto={compact}>Hora (D2)</label>
+    <select id="hora" bind:value={hora} onchange={() => onchange?.()}>
+      <option value="parashara">Hora di Parashara, senza segni</option>
+      <option value="leone-cancro">Hora in Leone e Cancro</option>
+    </select>
+  {/if}
 
   {#if !compact}
     <fieldset>

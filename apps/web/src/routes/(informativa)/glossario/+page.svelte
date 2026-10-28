@@ -50,6 +50,6 @@
 <h2 id="jyotisha"><a href="/glossario/jyotisha">Il Jyotisha</a></h2>
 <p>
   Jyotisha, graha, Rahu e Ketu, rashi, lagna, ayanamsa; nakshatra, pada,
-  varga, navamsa; dasha, panchanga, tithi, vara, yoga, karana; drishti, uccha
+  varga, hora, navamsa; dasha, panchanga, tithi, vara, yoga, karana; drishti, uccha
   e neecha, moolatrikona, swakshetra.
 </p>
