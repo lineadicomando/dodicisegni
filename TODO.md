@@ -384,6 +384,31 @@ descrizioni dicono «circa un quarto».
    comincia alla riga 6005 dell'`ocr.txt`. Per la hora, 7.13-16 (p. 94)
    dice già quali graha danno frutto nella hora del Sole e quali in quella
    della Luna: è la forma che la dignità nel D-2 può prendere.
+
+   **La regola del testo**, letta il 28 ottobre 2026 sulle immagini (BPHS
+   6.42-53, pp. 87-90, trascritta in `trascrizioni.md`, sezione «6.42-53»):
+   un varga è «buono» per un graha se cade nel suo segno di esaltazione, di
+   moolatrikona o proprio, o in un segno dei signori dei kendra
+   dall'arudha (6.52); i varga buoni si contano per schema (shadvarga,
+   saptavarga, dashavarga, shodashavarga) e il conto ha un nome (Parijata,
+   Uttama… 6.43-51); un graha combusto, sconfitto, in neecha, debole o in
+   avastha come shayana li rovescia (6.53). **Da decidere col proprietario
+   prima di scrivere codice**:
+   - *adhipateḥ* in 6.52: i segni di esaltazione e moolatrikona (Santhanam)
+     o i segni del loro signore? Coincidono solo per il segno proprio;
+   - la regola dell'arudha: richiede l'arudha lagna, che il motore non
+     calcola, e Santhanam stesso la dice troppo larga;
+   - 6.53 chiede combustione, guerra planetaria e avastha, che per il
+     Jyotisha il motore non ha;
+   - il D-2 di Parashara non ha segni: Santhanam propone una lettura sua da
+     7.13, che è sua e non del verso.
+   Senza queste, la parte che si può fare senza scegliere è **il segno di
+   ciascun graha in ciascun varga confrontato con i suoi segni di uccha,
+   moolatrikona, proprio e neecha**, detto per segno e senza gradi, con
+   tutte le corrispondenze e non una sola (il Leone è per il Sole segno
+   proprio e di moolatrikona insieme). Il conto dei varga buoni e i nomi
+   no: un conto senza l'arudha e senza 6.53 sarebbe un numero diverso da
+   quello del testo.
 2. **Le altre scuole occidentali**, quando le loro fonti sono state lette
    (vedi *Da verificare* qui sotto): ciascuna come valore nuovo di
    `DignitySchool`, intera. Il compilatore pretende il nome in
