@@ -74,10 +74,12 @@
   Le posizioni vengono da <a href="https://www.astro.com/swisseph/" target="_blank" rel="noopener">Swiss
   Ephemeris</a>, che è lo standard di fatto anche dei programmi commerciali.
   Quando i suoi file di dati non sono installati il motore ripiega sulle
-  effemeridi analitiche di Moshier: il sito resta utilizzabile, la precisione
-  scende di una frazione di secondo d'arco sui pianeti principali (irrilevante
-  per un tema, dove il grado è già una misura fine), e <strong>Chirone non è
-  più calcolabile</strong>, perché richiede il file degli asteroidi.
+  effemeridi analitiche di Moshier: il sito resta utilizzabile, le posizioni
+  scartano di meno di un secondo d'arco dal Sole a Saturno e di un paio sulla
+  Luna, di più sui pianeti lenti e lontano dal presente (irrilevante per un
+  tema, dove il grado è già una misura fine), e <strong>Chirone non è più
+  calcolabile</strong>, perché richiede il file degli asteroidi. Gli scarti
+  non vengono dalla documentazione: sono misurati da un test del motore.
 </p>
 
 <p>

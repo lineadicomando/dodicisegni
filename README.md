@@ -43,8 +43,8 @@ npm test
 ```
 
 Le effemeridi sono facoltative: senza i file `.se1` il motore ripiega su
-Moshier (~0,4 secondi d'arco sui pianeti principali, niente Chirone) e lo
-dichiara in `warnings`.
+Moshier (meno di un secondo d'arco dal Sole a Saturno, un paio sulla Luna,
+niente Chirone) e lo dichiara in `warnings`.
 
 ## Le superfici
 

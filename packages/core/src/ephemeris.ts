@@ -18,8 +18,11 @@ const STARS_FILE = 'sefstars.txt';
 export interface EphemerisContext {
   /**
    * `swisseph` usa i file `.se1` (precisione al secondo d'arco);
-   * `moshier` è la modalità analitica interna, senza file esterni,
-   * con precisione dell'ordine di 0,1 secondi d'arco per i pianeti maggiori.
+   * `moshier` è la modalità analitica interna, senza file esterni. Fra il
+   * 1800 e il 2400 scarta dalla prima meno di un secondo d'arco dal Sole a
+   * Saturno, fino a due sulla Luna nel 1900-2100 e a quattro verso il 2400,
+   * fino a dieci sui pianeti esterni; niente sui Nodi e su Lilith medi. Sono
+   * le fasce di `test/ephemeris.test.ts`, misurate e non riportate.
    */
   mode: EphemerisMode;
   /** Flag da passare a `calc_ut` / `houses_ex`. */

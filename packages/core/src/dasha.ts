@@ -112,9 +112,10 @@ export function computeVimshottari(
 
   if (chart.ephemerisMode === 'moshier') {
     warnings.push(
-      'Effemeridi Moshier: sulla Luna scartano di un paio di secondi d\'arco dalle ' +
-        'Swiss Ephemeris. Su un tema è invisibile, qui no: 13°20\' di nakshatra valgono ' +
-        'fino a vent\'anni, quindi le date di inizio possono spostarsi di qualche ora. ' +
+      'Effemeridi Moshier: sulla Luna scartano dalle Swiss Ephemeris fino a due ' +
+        'secondi d\'arco fra il 1900 e il 2100, di più fuori da quegli anni. Su un tema ' +
+        'è invisibile, qui no: 13°20\' di nakshatra valgono fino a vent\'anni, quindi ' +
+        'le date di inizio possono spostarsi di qualche ora. ' +
         'Scarica le effemeridi per la precisione piena.',
     );
   }

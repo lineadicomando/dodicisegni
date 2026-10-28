@@ -1,9 +1,10 @@
 import { existsSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
+import sweph from 'sweph';
 import { afterEach, beforeEach, describe, expect, it } from 'vitest';
 import { computeNatalChart } from '../src/chart.js';
-import { initEphemeris, resetEphemerisCache } from '../src/ephemeris.js';
-import type { BirthData } from '../src/types.js';
+import { computeBodies, initEphemeris, resetEphemerisCache } from '../src/ephemeris.js';
+import type { BirthData, BodyId } from '../src/types.js';
 
 const EPHE_DIR = fileURLToPath(new URL('../ephe', import.meta.url));
 const NO_EPHE_DIR = '/tmp/dodicisegni-cartella-inesistente';
@@ -89,5 +90,66 @@ describe.skipIf(!hasEphemerisFiles)('modalità Swiss Ephemeris', () => {
       const arcSeconds = Math.abs(body.longitude - other!.longitude) * 3600;
       expect(arcSeconds).toBeLessThan(5);
     }
+  });
+});
+
+/**
+ * Quanto scarta Moshier dalle Swiss Ephemeris, misurato qui e non riportato.
+ *
+ * La documentazione di Swiss Ephemeris (`swisseph.txt`, «The Moshier
+ * Ephemeris») dice solo «below 1 arc second with the planets and a few arc
+ * seconds with the Moon», e la prosa del progetto portava due cifre diverse
+ * senza una fonte. Le soglie vengono da una misura fitta, il 28 ottobre 2026:
+ * ogni due anni dal 1800 al 2398, quattro date l'anno, longitudine
+ * eclittica. I massimi trovati, in secondi d'arco:
+ *
+ * | | 1900-2100 | 1800-2400 |
+ * |---|---|---|
+ * | Sole, Mercurio | 0,13 | 0,15 |
+ * | Venere, Marte, Giove, Saturno | 1,05 | 1,23 |
+ * | Luna | 2,1 | 3,5 |
+ * | Urano, Nettuno | 2,1 | 4,9 |
+ * | Plutone | 1,5 | 8,5 |
+ * | Nodi medi, Lilith media | 0 | 0 |
+ *
+ * Moshier degrada allontanandosi dal presente, e i pianeti esterni più degli
+ * altri. Il test campiona più rado, ogni venticinque anni, e cade se uno
+ * scarto esce dalla sua fascia: è la fascia, non il massimo, che la prosa
+ * dichiara (`ephemeris.ts`, `dasha.ts`, il README e la pagina del metodo).
+ */
+describe.skipIf(!hasEphemerisFiles)('scarto di Moshier dalle Swiss Ephemeris, 1800-2400', () => {
+  const FASCE: { corpi: BodyId[]; soglia: number }[] = [
+    { corpi: ['sole', 'mercurio'], soglia: 0.2 },
+    { corpi: ['venere', 'marte', 'giove', 'saturno'], soglia: 1.5 },
+    { corpi: ['luna'], soglia: 4 },
+    { corpi: ['urano', 'nettuno'], soglia: 5 },
+    { corpi: ['plutone'], soglia: 10 },
+    { corpi: ['nodo-nord', 'nodo-sud', 'lilith'], soglia: 0.01 },
+  ];
+
+  it.each(FASCE)('$corpi entro $soglia″', ({ corpi, soglia }) => {
+    resetEphemerisCache();
+    const swiss = initEphemeris(EPHE_DIR);
+    resetEphemerisCache();
+    const moshier = initEphemeris(NO_EPHE_DIR);
+    expect(swiss.mode).toBe('swisseph');
+    expect(moshier.mode).toBe('moshier');
+
+    let peggiore = 0;
+    for (let anno = 1800; anno <= 2375; anno += 25) {
+      for (const mese of [1, 4, 7, 10]) {
+        const jd = sweph.julday(anno, mese, 1, 12, sweph.constants.SE_GREG_CAL);
+        const a = computeBodies(jd, corpi, swiss);
+        const b = computeBodies(jd, corpi, moshier);
+        expect(a.bodies).toHaveLength(corpi.length);
+        for (const corpo of a.bodies) {
+          const altro = b.bodies.find((x) => x.id === corpo.id)!;
+          let d = Math.abs(corpo.longitude - altro.longitude);
+          if (d > 180) d = 360 - d;
+          peggiore = Math.max(peggiore, d * 3600);
+        }
+      }
+    }
+    expect(peggiore).toBeLessThan(soglia);
   });
 });
