@@ -31,6 +31,7 @@
   import Meta from '#lib/components/Meta.svelte';
   import ModuloPieghevole from '#lib/components/ModuloPieghevole.svelte';
   import NakshatraTable from '#lib/components/NakshatraTable.svelte';
+  import ParasharaDignityTable from '#lib/components/ParasharaDignityTable.svelte';
   import Risultato from '#lib/components/Risultato.svelte';
   import StrumentiLettura from '#lib/components/StrumentiLettura.svelte';
   import VargaTable from '#lib/components/VargaTable.svelte';
@@ -321,6 +322,16 @@
         />
 
         <BodyTable bodies={graha} {evidenza} title="Graha" houseTitle="Bhava" />
+
+        <!-- La guardia per le risposte in cache di una versione precedente al
+             campo, come in `routes/+page.svelte` per la distribuzione. -->
+        {#if jyotisha.dignities}
+          <ParasharaDignityTable
+            dignities={jyotisha.dignities}
+            houses={jyotisha.chart.houses}
+            {evidenza}
+          />
+        {/if}
 
         <NakshatraTable nakshatras={jyotisha.nakshatras} bodies={jyotisha.chart.bodies} {evidenza} />
 

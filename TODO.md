@@ -372,12 +372,10 @@ descrizioni dicono «circa un quarto».
 ### Che cosa resta
 
 1. **Le dignità nei varga del Jyotisha**, che il BPHS tratta a parte (cap.
-   6-7), e la pagina `/vedica`, che non mostra le dignità di Parashara anche
-   se il JSON le porta. I dati: `JyotishaChart.dignities` (`types.ts:837`),
-   riempito da `computeParasharaDignities` (`jyotisha.ts:92`) ed esposto su
-   `/api/jyotish`; in `apps/web/src/routes/vedica/+page.svelte` non c'è
-   niente che le mostri, e non esiste un componente per loro (quello
-   occidentale è `DignityTable.svelte`, legato a `WesternDignities`). I varga
+   6-7). Le dignità del tema, `JyotishaChart.dignities` (`types.ts:837`,
+   riempito da `computeParasharaDignities`, `jyotisha.ts:92`), si vedono
+   ora anche su `/vedica`, in `ParasharaDignityTable.svelte`, componente
+   separato da quello occidentale (`DignityTable.svelte`) apposta. I varga
    portano segni (`SignVargaChart`, `types.ts:414`), tranne il D-2 di
    Parashara, che porta la hora di un luminare (`HoraVargaChart`, :445):
    lì la dignità non si può dire per segno. Il materiale già letto:
