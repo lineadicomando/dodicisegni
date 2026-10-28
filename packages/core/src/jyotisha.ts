@@ -36,6 +36,7 @@ import { computeDrishti } from './drishti.js';
 import { grahaName, nakshatraOf, requireSidereal } from './nakshatra.js';
 import { computeVarga } from './varga.js';
 import { computeGoodVargas } from './varga-buoni.js';
+import { computeRelationships } from './maitri.js';
 import type { JyotishaChart, JyotishaOptions, NatalChart } from './types.js';
 
 /**
@@ -99,6 +100,7 @@ export function computeJyotisha(
     drishti,
     dignities: computeParasharaDignities(chart),
     ...(goodVargas ? { goodVargas } : {}),
+    relationships: computeRelationships(chart),
     // Le avvertenze dei pezzi salgono qui: chi legge il tema vedico non deve
     // andarle a cercare dentro la catena delle dasha.
     warnings: [

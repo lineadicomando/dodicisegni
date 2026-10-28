@@ -21,6 +21,8 @@ import type {
   NatalChart,
   ParasharaDignities,
   GoodVargas,
+  GrahaRelationships,
+  CompoundMaitri,
   NatalPointId,
   Panchanga,
   PassageRange,
@@ -1169,6 +1171,7 @@ export function formatJyotishaCompact(jyotisha: JyotishaChart): string {
   }
 
   parti.push(formatParasharaDignitiesCompact(jyotisha.dignities));
+  parti.push(formatRelationshipsCompact(jyotisha.relationships));
   if (jyotisha.goodVargas) parti.push(formatGoodVargasCompact(jyotisha.goodVargas));
   parti.push(formatNakshatraCompact(jyotisha.chart));
   parti.push(formatDashaCompact(jyotisha.dasha));
@@ -1217,6 +1220,27 @@ function formatParasharaDignitiesCompact(dignities: ParasharaDignities): string 
     );
   }
 
+  return lines.join('\n');
+}
+
+/**
+ * Le relazioni fra i graha: una riga per graha con la composta, raggruppata
+ * per grado, e la naturale fra parentesi accanto a ogni nome, perché chi
+ * legge veda da dove viene il grado.
+ */
+function formatRelationshipsCompact(relazioni: GrahaRelationships): string {
+  const GRADI: readonly CompoundMaitri[] = ['adhimitra', 'mitra', 'sama', 'shatru', 'adhishatru'];
+  const lines = ['RELAZIONI FRA I GRAHA (BPHS 3.55-58)', `Fonte: ${relazioni.source}`,
+    'Per ogni graha, come vede gli altri: la composta, e fra parentesi la naturale.', ''];
+  const ordine = [...new Set(relazioni.pairs.map((p) => p.from))];
+  for (const da of ordine) {
+    const sue = relazioni.pairs.filter((p) => p.from === da);
+    const gruppi = GRADI.map((grado) => {
+      const nomi = sue.filter((p) => p.panchadha === grado).map((p) => `${bodyName(p.to)} (${p.naisargika})`);
+      return nomi.length ? `${grado} ${nomi.join(', ')}` : '';
+    }).filter(Boolean);
+    lines.push(`${bodyName(da).padEnd(11)} ${gruppi.join('; ')}`);
+  }
   return lines.join('\n');
 }
 

@@ -399,11 +399,22 @@ descrizioni dicono «circa un quarto».
    - **6.53 per intero**: combustione, guerra planetaria, debolezza e
      avastha (shayana e le altre, BPHS cap. 45) per il Jyotisha. Ognuna è
      un calcolo con le sue fonti; oggi la riga del conto dice la sola neecha.
-   - **Il vimshopaka** (7.17-27, pp. 95-96): i pesi per schema e la scala
-     di 7.24-25 (20 nei varga propri, 18 nei grandi amici, giù fino a 5),
-     che vuole le amicizie naturali e temporanee di 3.55 e seguenti, non
-     ancora calcolate. È un punteggio con un autore, quindi ammesso, ma
-     non va fatto con le amicizie a metà.
+   - **Il vimshopaka** (7.17-27, pp. 95-98): i pesi per schema (la tavola
+     di Santhanam a p. 97) e la scala di 7.24-25 (20 nei varga propri, 18
+     in quelli di un adhimitra, 15 mitra, 10 sama, 7 shatru, 5
+     adhishatru), da moltiplicare e dividere per 20 (7.26). Le note dicono
+     di usare la relazione composta, che ora c'è (`maitri.ts`, sotto). A
+     p. 98 c'è un esempio svolto (New Delhi, 17 febbraio 1984, 22:35 IST)
+     da usare come prova. Da chiarire leggendo: che cosa valga in un varga
+     dove il graha è in esaltazione o moolatrikona e non nel segno proprio,
+     e chi sia il signore nella hora e nel trimsamsa.
+   - Le relazioni fra i graha sono fatte, il 28 ottobre 2026: `maitri.ts`
+     (naturale per regola da 3.55, ricontrollata contro la tavola di p. 40;
+     temporanea 3.56; composta 3.57-58), `JyotishaChart.relationships`,
+     sezione RELAZIONI FRA I GRAHA della tabella compatta,
+     `RelationshipTable.svelte` su `/vedica`. Rahu e Ketu fuori: la nota
+     di Santhanam a p. 41 li dà secondo altri testi, e non entrano senza
+     sceglierne uno.
    - **Gli arudha degli altri bhava e dei graha** (29.1-7): `arudhaOf` vale
      per ogni bhava, ma il motore espone solo quello del lagna.
 

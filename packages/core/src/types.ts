@@ -828,6 +828,38 @@ export interface ParasharaDignities {
   }[];
 }
 
+/**
+ * La relazione fra due graha secondo BPHS 3.55-58, coi nomi sanscriti.
+ *
+ * `Maitri` è quella naturale (*naisargika*, 3.55) e temporanea
+ * (*tatkalika*, 3.56); `CompoundMaitri` la composta (*panchadha*, 3.57-58),
+ * che ha cinque gradi.
+ */
+export type Maitri = 'mitra' | 'sama' | 'shatru';
+export type CompoundMaitri = 'adhimitra' | 'mitra' | 'sama' | 'shatru' | 'adhishatru';
+
+/**
+ * Le relazioni fra i sette graha di un tema, BPHS 3.55-58.
+ *
+ * **Hanno un verso**: che il Sole sia amico della Luna non dice niente di
+ * come la Luna stia col Sole. La naturale non cambia da un tema all'altro e
+ * si ricava dalla regola di 3.55, non da una tavola; la temporanea dipende
+ * dai segni che i due occupano nella rashi. Rahu e Ketu non ci sono: il
+ * verso non li nomina.
+ */
+export interface GrahaRelationships {
+  /** Versi, pagine e regole, in una riga. */
+  source: string;
+  pairs: {
+    from: BodyId;
+    to: BodyId;
+    naisargika: Maitri;
+    /** `mitra` o `shatru`: la temporanea non ha il grado di mezzo. */
+    tatkalika: Exclude<Maitri, 'sama'>;
+    panchadha: CompoundMaitri;
+  }[];
+}
+
 /** I quattro schemi di BPHS 6.42 e 7.17-20, dal più breve al completo. */
 export type VargaScheme = 'shadvarga' | 'saptavarga' | 'dashavarga' | 'shodashavarga';
 
@@ -916,6 +948,8 @@ export interface JyotishaChart {
    * un altro numero. L'assenza la dice un'avvertenza.
    */
   goodVargas?: GoodVargas;
+  /** Le relazioni fra i sette graha, naturali, temporanee e composte (BPHS 3.55-58). */
+  relationships: GrahaRelationships;
   /**
    * Le avvertenze dei pezzi, raccolte qui.
    *

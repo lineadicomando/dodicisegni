@@ -167,6 +167,11 @@ export function parasharaSignLord(sign: ZodiacSign): BodyId {
   return SEGNI_PROPRI[sign];
 }
 
+/** Il segno di moolatrikona di un graha (BPHS 3.51-54), se è uno dei sette. */
+export function parasharaMoolatrikonaSign(body: BodyId): ZodiacSign | undefined {
+  return isGraha(body) ? TRATTI[body].sign : undefined;
+}
+
 /** Segno e grado dell'esaltazione più profonda, se il graha ne ha una. */
 export function parasharaExaltation(body: BodyId): { sign: ZodiacSign; degree: number } | undefined {
   return isGraha(body) ? UCCHA[body] : undefined;

@@ -39,6 +39,7 @@ export {
   type HoraConventionDefinition,
 } from './hora.js';
 export { computeDrishti, housesSeenBy } from './drishti.js';
+export { computeRelationships, naisargikaMaitri, panchadhaMaitri, tatkalikaMaitri } from './maitri.js';
 export { arudhaOf, computeGoodVargas, GOOD_VARGA_NAMES, VARGA_SCHEMES } from './varga-buoni.js';
 export {
   DETRIMENT_SOURCE,
@@ -91,6 +92,7 @@ export {
   PARASHARA_SOURCE,
   parasharaDignityOf,
   parasharaExaltation,
+  parasharaMoolatrikonaSign,
   parasharaSignDignities,
   parasharaSignLord,
   VARGA_DIGNITY_SOURCE,
@@ -229,6 +231,9 @@ export type {
   Panchanga,
   ParasharaDignities,
   ParasharaDignity,
+  CompoundMaitri,
+  GrahaRelationships,
+  Maitri,
   GoodVargaReason,
   GoodVargas,
   VargaScheme,

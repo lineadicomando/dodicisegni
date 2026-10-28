@@ -144,6 +144,12 @@ prima che lagna e Luna cambino segno: se sono pochi, un'ora data al quarto
 d'ora non li fissa, e lo dici prima di usarli. Senza ora di nascita di quelle
 carte valgono solo i graha lenti.
 
+La sezione RELAZIONI FRA I GRAHA dice come ciascun graha vede gli altri
+secondo BPHS 3.55-58: la composta, e fra parentesi la naturale. Ha un verso,
+e non va letta al contrario: che il Sole veda Marte come adhimitra non dice
+come Marte veda il Sole. Usala per dire se un graha sta nel segno di un amico
+o di un nemico, citando la relazione, non per giudicare da sola.
+
 La HORA (D2), se c'è, porta in testa la sua convenzione. Con quella di
 Parashara, che è il testo, ogni graha sta nella hora del Sole o della Luna e NON
 in un segno: dillo così, e non tradurlo in Leone o Cancro. Con la convenzione
