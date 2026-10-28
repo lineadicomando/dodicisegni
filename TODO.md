@@ -22,6 +22,7 @@ Le voci chiuse dopo, con il commit in cui si leggono ancora per intero:
 | 9 | `8a04cfb` |
 | 18 | `2b8937d` |
 | 6 | `8aa31a9` |
+| 8 | `c4c4820` |
 
 Le fonti citate qui stanno in copia locale in `texts/`, fuori dal repo: la
 cartella, le schede `FONTE.md` e l'elenco `texts/INDICE.md` si mantengono come
@@ -31,7 +32,7 @@ fonte, e la voce 24 quelle che mancano ancora.
 
 I riferimenti `file:riga` sono stati ricontrollati tutti contro il codice il
 27 ottobre 2026, dopo i quattro lotti della voce 17 (`cd05e72`), e quelli di
-`/metodo` e di `dasha.ts` il 28, dopo la voce 6. Le righe si spostano: se
+`/metodo` e di `dasha.ts` il 28, dopo le voci 6 e 8. Le righe si spostano: se
 una non torna, il nome della funzione o della costante accanto è quello che fa
 fede.
 
@@ -55,18 +56,15 @@ volta e ricominciare da capo.
 
 | Voce | Priorità | Taglia | Prima di cominciare |
 |---|---|---|---|
-| 8. Il glossario e /metodo | media | grande | una decisione del proprietario: la forma del glossario |
 | 5. I varga che mancano | non dichiarata | tre lotti | niente: il D-2 è deciso, gli altri hanno la fonte |
 | 19. Le dignità, per scuola | bassa | media | il Jyotisha: i varga del BPHS, cap. 6-7 |
 | 17. L'astrologia oraria | bassa | piccola, ormai | i quattro lotti sono fatti; restano rifiniture indipendenti, una per riga |
 | 24. Le fonti da scaricare in `texts/` | bassa | piccola | niente |
 
-L'ordine consigliato è quello della tabella. Della 8 resta solo ciò che chiede
-una scelta: la forma del glossario e se staccare le parti indiane di `/metodo`.
-Della 19 resta soprattutto il Jyotisha, che sta accanto ai varga della 5: il
-D-2 deciso lì cambia anche il modo di dire la dignità nella hora. La 17 usa le
-tavole di Lilly della 19 e ha già le *moieties* come terza convenzione delle
-orbite.
+L'ordine consigliato è quello della tabella. Della 19 resta soprattutto il
+Jyotisha, che sta accanto ai varga della 5: il D-2 deciso lì cambia anche il
+modo di dire la dignità nella hora. La 17 usa le tavole di Lilly della 19 e ha
+già le *moieties* come terza convenzione delle orbite.
 
 ## 5. I nove varga che mancano
 
@@ -92,15 +90,21 @@ CLI lo valida da lì. L'interfaccia no, perché nel bundle del browser non entra
 un valore del motore: le caselle stanno in `apps/web/src/lib/varghe.ts`, una
 copia che lascia fuori la D-1 apposta, e `apps/web/src/lib/elenchi.test.ts`
 cade se resta indietro. Un varga nuovo fa quindi cadere quel test, e va
-aggiunto lì a mano col suo nome.
+aggiunto lì a mano col suo nome. Fa cadere anche
+`apps/web/src/routes/(informativa)/metodo/jyotisha.test.ts`, che confronta
+con `VARGAS` sigla, nome e parti della tavola di `/metodo/varga`: la riga
+nuova va scritta lì, con la regola in parole.
 
 Restano da aggiornare a mano i testi che li elencano, che nessun test vede: il
 commento delle due rotte (`api/jyotish/+server.ts`, parametro `vargas`;
 `quadro/+server.ts`, parametro `varga`), l'aiuto della CLI
-(`--varga <lista>`, `packages/core/src/cli.ts:117`), la pagina del metodo
-(«Il sito ne calcola sette», sezione `#varga`,
-`apps/web/src/routes/(informativa)/metodo/+page.svelte:392`) e il commento in
-testa a quella pagina («le sette divisionali», righe 12-13). I tipi, in
+(`--varga <lista>`, `packages/core/src/cli.ts:117`), il rimando in
+`/metodo` («Il sito ne calcola sette», voce `#varga` dell'elenco,
+`apps/web/src/routes/(informativa)/metodo/+page.svelte:366`), la pagina
+`/metodo/varga` («I sette che il sito calcola», «Le altre nove divisioni
+classiche non sono ancora calcolate») e la sua descrizione in `Meta`, che
+elenca le sigle; nel glossario la voce `#varga` di `/glossario/jyotisha` cita
+D-9, D-10 e D-30 come esempi e non va toccata. I tipi, in
 `packages/core/src/types.ts`: `VargaId` a :359, `VargaChart` a :369, l'opzione
 `vargas` di `JyotishaOptions` a :724.
 
@@ -228,107 +232,6 @@ lotto, e scrivere la pagina nel commento come per il D-27.
 Verifica per tutti i lotti: `packages/core/test/varga.test.ts` ha già la forma:
 confini noti calcolati a mano per un segno pari e uno dispari, più la prova
 che la regola viaggi col risultato.
-
-## 8. Il glossario, e /metodo da rivedere
-
-**Priorità media.** Viene da un esame del SEO organico, dove l'ipotesi di
-partenza era un payoff da mettere nel titolo. Il payoff non sposta niente: è
-del marchio, quindi si ripete su ogni pagina, e un titolo ripetuto è la cosa
-che i motori riscrivono per prima. Quello che sposta è il testo, e di testo qui
-ce n'è pochissimo.
-
-Il conto è in `apps/web/src/lib/seo.ts`: sette indirizzi in
-`PAGINE_PUBBLICHE`, e cinque sono strumenti: `h1` nascosto, un cappello di due
-paragrafi e sotto il modulo. Le pagine fatte di prosa sono `/metodo` e
-`/privacy`, e la seconda la cerca soltanto chi la deve controllare. Un sito con
-due pagine di testo non si posiziona su niente, per quanto bene siano scritti i
-suoi `<title>`.
-
-Il vincolo del progetto, qui, non è un impedimento: è il filtro che sceglie il
-contenuto. Che cos'è un nakshatra è un fatto verificabile; che cosa prometta
-Saturno in settima no. **Il glossario è la prosa che questo progetto può
-scrivere senza tradirsi**, ed è anche quella che intercetta le ricerche più
-precise: in italiano, su questi termini, non copre bene nessuno.
-
-### Il glossario
-
-I termini ci sono già tutti, sparsi: quelli del Jyotisha che la regola di stile
-tiene in sanscrito (`nakshatra`, `tithi`, `karana`, `yoga`, `dasha`, `varga`,
-`drishti`, `pada`, più `ayanamsa` e `panchanga`) e quelli che il motore
-occidentale calcola e nomina: Parte di Fortuna, Luna vuota di corso, ore
-planetarie, cuspidi, orbita, retrogradazione, stazione, ingresso, distribuzione
-fra elementi e modalità, i nove sistemi di case.
-
-Non c'è niente da inventare e non si deve: la fonte è scritta due volte, nei
-commenti di `packages/core` (`VoidOfCourse` in `types.ts`, `dasha.ts`,
-`varga.ts`, `constants.ts`) e nella pagina del metodo, che quasi tutti li
-spiega già.
-
-Ed è esattamente lì il rischio. **Due pagine che dicono la stessa cosa si
-tolgono i lettori a vicenda**, e un motore che deve scegliere fra le due
-sceglie male. Il taglio va deciso prima di scrivere una riga, e la forma che
-regge è questa: il glossario dice *che cos'è* il termine, in tre righe, e
-rimanda; `/metodo` dice *con quale convenzione questo sito lo calcola*. Il
-primo definisce, il secondo dichiara, che è poi la differenza fra i due
-vincoli del progetto.
-
-**Da decidere, e non è una scelta di stile.** Una pagina per termine è la forma
-che intercetta le ricerche, ma sono trenta indirizzi da poche righe l'uno, che
-è la definizione di pagina magra, e la sitemap li porterebbe tutti. Una pagina
-sola con le ancore è un indirizzo solo e trenta ricerche perse. La via di mezzo
-(una pagina per famiglia, il Jyotisha da una parte, il tempo e i moti
-dall'altra) è probabilmente quella giusta, ma va scelta guardando quanto testo
-regge davvero ogni termine, non prima.
-
-Qualunque sia la forma, le pagine nuove **non sono sezioni**: vanno aggiunte a
-mano in `PAGINE_PUBBLICHE`, come `/metodo` e `/privacy`, e
-`lib/seo.test.ts` va esteso di conseguenza. Nel menù non entrano.
-
-`seo.ts` porta conteggi scritti a mano nei commenti, da rifare con le pagine
-nuove: «le altre sei» (riga 28), «sette indirizzi» per la sitemap (riga 71) e
-«tredici endpoint» (riga 105), tutti giusti al 27 ottobre 2026, con
-`/api/horary`. Anche il README conta a mano le sezioni e gli endpoint
-(«Cinque sezioni e tredici endpoint»), e `CLAUDE.md` e il README i tool MCP
-(dodici) e i prompt (due).
-
-### La revisione di /metodo
-
-La pagina non è povera: 591 righe e diciotto sezioni, ciascuna con il suo
-`id`. Il problema è che è **una pagina sola**. Le diciotto ancore non sono
-diciotto risultati: `#dasha` non è mai un indirizzo per sé, e chi cerca
-«dasha vimshottari» trova al più la pagina intera, che parla di altre
-diciassette cose.
-
-Va quindi valutato (non è deciso) se le cinque parti dell'astrologia indiana
-(`#nakshatra`, `#dasha`, `#varga`, `#drishti`, `#panchanga`, righe 336-436)
-debbano staccarsi in pagine proprie. Contro: spezzare una pagina che si legge
-bene di seguito, e che è l'unica cosa che risponda a «perché la stessa nascita
-dà carte diverse altrove». A favore: sono già cinque capitoli con un titolo e
-un `id`, e il testo di ognuno regge da solo.
-
-Fatto il 28 ottobre 2026, in `8aa31a9` e `850ef55`: il titolo nomina i
-termini («Metodo: case, ayanamsa, orbite e dasha», col nome del sito 52
-caratteri su 60) e la descrizione aggiunge le dignità di Lilly; la sezione
-`#lilly` dice dignità, conto di p. 115, le due Lune vuote e il tema orario;
-le *moieties* stanno in `#aspetti` con una tavoletta per pianeta; e le due
-tavole delle orbite sono legate a `orbite.ts` da `metodo/orbite.test.ts`,
-che guarda solo i numeri. La precisione di Moshier ha la cifra, misurata in
-`packages/core/test/ephemeris.test.ts` (fasce per gruppo di corpi,
-1800-2400). Sistemi di case, ayanamsa e varga restano ricopiati in prosa
-senza un test: se un giorno servisse, il modello è quel file.
-
-### Deciso, per non ridiscuterlo
-
-- **Niente marcature FAQ.** Le domande frequenti vanno riempite di
-  affermazioni, che è la merce che questo progetto non produce: la ragione sta
-  già scritta per esteso nel commento sopra `strutturati` in `Meta.svelte`
-  (righe 60-75).
-- **I cappelli delle cinque sezioni restano come sono.** Allungarli metterebbe
-  prosa fra chi arriva e il modulo che è venuto a compilare, e il guadagno
-  sarebbe comunque il più piccolo dei tre.
-- **Il payoff nel titolo non fa parte di questo lavoro.** Quello che
-  dell'esame era rimasto in piedi, il titolo della home e uno `slogan` nei dati
-  strutturati, è già fatto (`f7696e8`).
 
 ## 17. L'astrologia oraria
 
@@ -765,6 +668,15 @@ Verifica: ogni fonte citata in un commento di `packages/` ha una riga in
 `texts/INDICE.md` che non sia «da scaricare».
 
 ## Deciso, e da non riaprire
+
+- **Il glossario è una pagina per famiglia, e le parti indiane di `/metodo`
+  sono pagine proprie.** Scelto dal proprietario il 28 ottobre 2026, con la
+  voce 8: `/glossario` più `tema`, `tempo` e `jyotisha`; `/metodo/nakshatra`,
+  `dasha`, `varga`, `drishti` e `panchanga`. Il glossario dice che cos'è un
+  termine e rimanda, `/metodo` dichiara con quale convenzione lo si calcola: il
+  taglio è scritto in testa a `glossario/jyotisha/+page.svelte`. Niente
+  marcature FAQ, per la ragione scritta sopra `strutturati` in `Meta.svelte`;
+  i cappelli delle cinque sezioni restano come sono.
 
 - **Il dominio non entra nel codice.** `Meta.svelte` compone gli indirizzi da
   `page.url.origin`, e in produzione è `ORIGIN` a dirlo: il cambio di dominio è
