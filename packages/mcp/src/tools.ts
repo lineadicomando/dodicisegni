@@ -456,7 +456,9 @@ export function registerComputeJyotishaChart(server: McpServer, context: ToolCon
           .optional()
           .describe(
             'Carte divisionali. Default: il solo d9 (navamsa), che è quella che si legge ' +
-              'sempre accanto al tema. Le altre riguardano un\'area ciascuna. d40, d45 e ' +
+              'sempre accanto al tema. Le altre riguardano un\'area ciascuna. Per i sette ' +
+              'graha ogni varga dice in quali loro segni di uccha, moolatrikona, proprio o ' +
+              'neecha cade, per segno e senza gradi; il conto dei varga buoni non c\'è. d40, d45 e ' +
               'd60 hanno parti di meno di un grado: portano un\'avvertenza con i minuti di ' +
               'cui l\'ora di nascita può sbagliare prima che lagna e Luna cambino segno, e ' +
               'va riferita a chi chiede.',

@@ -187,7 +187,11 @@ describe('il documento vedico', () => {
   it('dice da dove si legge la forza, invece di chiederla a memoria', () => {
     expect(testo).toContain('uccha');
     expect(testo).toContain('neecha');
-    expect(testo).toContain('non una dignità calcolata');
+    // Nei varga la tabella dà le corrispondenze per segno, e il documento
+    // deve dire che non sono la dignità del tema e che il conto dei varga
+    // buoni non va ricavato.
+    expect(testo).toContain('è un confronto per segno, senza gradi');
+    expect(testo).toContain('non ricavarli tu');
   });
 
   it('mette al centro la Luna e il lagna, non il Sole', () => {

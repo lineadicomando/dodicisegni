@@ -430,9 +430,19 @@ export interface SignVargaChart extends VargaChartBase {
      * esiste in nessun senso che si possa ricalcolare.
      */
     retrograde: boolean;
+    /**
+     * Solo per i sette graha dal Sole a Saturno: in quali dei loro segni di
+     * uccha, moolatrikona, proprio e neecha cade il segno del varga, **per
+     * segno e tutte insieme** (vuoto se nessuno). Non è la dignità della
+     * rashi, che il grado decide: qui il grado non c'è. Vedi
+     * `parasharaSignDignities` e `dignitySource`.
+     */
+    dignitySigns?: ParasharaDignity[];
   }[];
   /** Il segno del lagna. Assente se il tema non ha un Ascendente. */
   ascendant?: ZodiacSign;
+  /** Da dove vengono `dignitySigns`, e che cosa non sono. */
+  dignitySource: string;
 }
 
 /**

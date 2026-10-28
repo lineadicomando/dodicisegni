@@ -3,6 +3,7 @@ import { computeNatalChart } from '../src/chart.js';
 import { ChartError } from '../src/errors.js';
 import { formatVargaCompact } from '../src/format.js';
 import { HORA_CONVENTIONS, horaOf } from '../src/hora.js';
+import { parasharaSignDignities } from '../src/dignita-parashara.js';
 import { computeVarga, VARGAS, vargaSignOf } from '../src/varga.js';
 import type { BirthData, VargaId } from '../src/types.js';
 
@@ -607,6 +608,25 @@ describe('D-2, la hora, con due convenzioni', () => {
 });
 
 describe('computeVarga', () => {
+  it('dice per i sette graha in quali loro segni di dignità cade il varga, e da dove lo prende', () => {
+    const carta = tema();
+    for (const id of ['d9', 'd30', 'd60'] as const) {
+      const varga = computeVarga(carta, id);
+      if (varga.kind !== 'segni') throw new Error(id);
+      expect(varga.dignitySource).toContain('6.52');
+      for (const posizione of varga.positions) {
+        const grahaDelTesto = ['sole', 'luna', 'marte', 'mercurio', 'giove', 'venere', 'saturno'];
+        if (grahaDelTesto.includes(posizione.id)) {
+          expect(posizione.dignitySigns, `${id}, ${posizione.id}`).toEqual(
+            parasharaSignDignities(posizione.id, posizione.sign),
+          );
+        } else {
+          expect(posizione).not.toHaveProperty('dignitySigns');
+        }
+      }
+    }
+  });
+
   it('porta con sé la regola che ha prodotto i segni', () => {
     // Fra le sedici divisioni le scuole divergono su più d'una: un segno
     // senza la sua regola non si può ricontrollare.

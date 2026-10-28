@@ -4,6 +4,7 @@ import {
   computeParasharaDignities,
   parasharaDignityOf,
   parasharaExaltation,
+  parasharaSignDignities,
   parasharaSignLord,
 } from '../src/dignita-parashara.js';
 import { formatJyotishaCompact } from '../src/format.js';
@@ -141,6 +142,49 @@ describe('i segni propri, da BPHS 4.6-24', () => {
 
   it('non danno niente dove non c\'è niente', () => {
     expect(parasharaDignityOf('giove', a('gemelli', 5))).toBeNull();
+  });
+});
+
+describe('le corrispondenze per segno, che servono ai varga', () => {
+  // Ricopiate qui dalle tavole di 3.49-54 e 4.6-24 e non ricavate dal
+  // modulo: per ciascun graha, il segno di uccha, quello di moolatrikona, i
+  // segni propri. La neecha è il settimo dall'uccha.
+  const TAVOLA: Record<string, { uccha: ZodiacSign; moolatrikona: ZodiacSign; propri: ZodiacSign[] }> = {
+    sole: { uccha: 'ariete', moolatrikona: 'leone', propri: ['leone'] },
+    luna: { uccha: 'toro', moolatrikona: 'toro', propri: ['cancro'] },
+    marte: { uccha: 'capricorno', moolatrikona: 'ariete', propri: ['ariete', 'scorpione'] },
+    mercurio: { uccha: 'vergine', moolatrikona: 'vergine', propri: ['gemelli', 'vergine'] },
+    giove: { uccha: 'cancro', moolatrikona: 'sagittario', propri: ['sagittario', 'pesci'] },
+    venere: { uccha: 'pesci', moolatrikona: 'bilancia', propri: ['toro', 'bilancia'] },
+    saturno: { uccha: 'bilancia', moolatrikona: 'acquario', propri: ['capricorno', 'acquario'] },
+  };
+  const SEGNI: ZodiacSign[] = ['ariete', 'toro', 'gemelli', 'cancro', 'leone', 'vergine',
+    'bilancia', 'scorpione', 'sagittario', 'capricorno', 'acquario', 'pesci'];
+
+  it('coincidono con le tavole, segno per segno e graha per graha', () => {
+    for (const [graha, riga] of Object.entries(TAVOLA)) {
+      const neecha = SEGNI[(SEGNI.indexOf(riga.uccha) + 6) % 12];
+      for (const segno of SEGNI) {
+        const attese = [
+          ...(segno === riga.uccha ? ['uccha'] : []),
+          ...(segno === riga.moolatrikona ? ['moolatrikona'] : []),
+          ...(riga.propri.includes(segno) ? ['swakshetra'] : []),
+          ...(segno === neecha ? ['neecha'] : []),
+        ];
+        expect(parasharaSignDignities(graha as BodyId, segno), `${graha} in ${segno}`).toEqual(attese);
+      }
+    }
+  });
+
+  it('le dà tutte, dove un segno ne ha più d una', () => {
+    expect(parasharaSignDignities('sole', 'leone')).toEqual(['moolatrikona', 'swakshetra']);
+    expect(parasharaSignDignities('luna', 'toro')).toEqual(['uccha', 'moolatrikona']);
+    expect(parasharaSignDignities('mercurio', 'vergine')).toEqual(['uccha', 'moolatrikona', 'swakshetra']);
+  });
+
+  it('non ne dà ai nodi né ai pianeti esterni', () => {
+    expect(parasharaSignDignities('nodo-nord', 'toro')).toEqual([]);
+    expect(parasharaSignDignities('urano', 'acquario')).toEqual([]);
   });
 });
 

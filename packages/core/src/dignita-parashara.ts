@@ -198,6 +198,41 @@ export function parasharaDignityOf(body: BodyId, siderealLongitude: number): Par
 }
 
 /**
+ * In quali dei suoi segni di dignità cade un graha, guardando **il solo
+ * segno**: uccha, moolatrikona, segno proprio, neecha, nell'ordine.
+ *
+ * Serve ai varga, dove il grado dentro il segno non è definito (vedi
+ * `SignVargaChart`): lì i tratti di 3.51-54 non si possono applicare, e
+ * scegliere un solo nome per un segno che ne ha due sarebbe decidere al
+ * posto del testo. Per questo restituisce **tutte** le corrispondenze: il
+ * Leone è per il Sole segno proprio e di moolatrikona, il Toro per la Luna
+ * di uccha e di moolatrikona, la Vergine per Mercurio tutte e tre.
+ *
+ * È la parte di BPHS 6.52 che si dice per segno (trad. Santhanam, vol. I,
+ * p. 88: «the divisions falling in the planet's exaltation sign,
+ * Moolatrikona sign, own sign»), con la neecha di 3.49-50 accanto. Non è il
+ * conto dei varga buoni: quello chiede anche la regola dell'arudha e le
+ * esclusioni di 6.53, che il motore non ha (TODO.md, voce 19).
+ */
+export function parasharaSignDignities(body: BodyId, sign: ZodiacSign): ParasharaDignity[] {
+  if (!isGraha(body)) return [];
+  const corrispondenze: ParasharaDignity[] = [];
+  if (UCCHA[body].sign === sign) corrispondenze.push('uccha');
+  if (TRATTI[body].sign === sign) corrispondenze.push('moolatrikona');
+  if (SEGNI_PROPRI[sign] === body) corrispondenze.push('swakshetra');
+  if (opposite(UCCHA[body].sign) === sign) corrispondenze.push('neecha');
+  return corrispondenze;
+}
+
+/** Da dove vengono le corrispondenze per segno dei varga, in una riga. */
+export const VARGA_DIGNITY_SOURCE =
+  'Per segno, senza gradi: il segno del varga confrontato coi segni di uccha, moolatrikona, ' +
+  'proprio e neecha di ciascuno dei sette graha (BPHS 3.49-54 e 4.6-24; 6.52, trad. Santhanam, ' +
+  'vol. I, p. 88, per i primi tre come varga buoni). Tutte le corrispondenze, non una sola. ' +
+  'Il conto dei varga buoni di 6.42-53 non è calcolato: chiede la regola dell\'arudha e le ' +
+  'esclusioni di 6.53.';
+
+/**
  * Le dignità dei sette graha di una carta siderale.
  *
  * Accanto a uccha e neecha c'è il grado del punto più profondo, che è nello

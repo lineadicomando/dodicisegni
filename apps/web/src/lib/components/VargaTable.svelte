@@ -61,6 +61,7 @@
         <th></th>
         <th>Graha</th>
         <th>{varga.kind === 'segni' ? 'Segno' : 'Hora'}</th>
+        {#if varga.kind === 'segni'}<th>Dignità del segno</th>{/if}
       </tr>
     </thead>
     <tbody>
@@ -100,6 +101,7 @@
             </span>
             {SIGN_LABEL[varga.ascendant]}
           </td>
+          <td></td>
         </tr>
       {/if}
       {#each varga.positions as position (position.id)}
@@ -116,11 +118,18 @@
             </span>
             {SIGN_LABEL[position.sign]}
           </td>
+          <td class:tenue={!position.dignitySigns?.length}>
+            {position.dignitySigns?.join(', ') || (position.dignitySigns ? '—' : '')}
+          </td>
         </tr>
       {/each}
       {/if}
     </tbody>
   </table>
+  <!-- La guardia per le risposte in cache di prima del campo. -->
+  {#if varga.kind === 'segni' && varga.dignitySource}
+    <p class="fonti">{varga.dignitySource}</p>
+  {/if}
 </section>
 
 <style>
@@ -129,6 +138,16 @@
   .disegno {
     max-width: 30rem;
     margin: 0 0 1rem;
+  }
+
+  .fonti {
+    margin: 0.5rem 0 0;
+    font-size: 0.8rem;
+    color: var(--testo-tenue);
+  }
+
+  .tenue {
+    color: var(--testo-tenue);
   }
 
   .regola {

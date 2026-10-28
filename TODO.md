@@ -402,13 +402,17 @@ descrizioni dicono «circa un quarto».
      Jyotisha il motore non ha;
    - il D-2 di Parashara non ha segni: Santhanam propone una lettura sua da
      7.13, che è sua e non del verso.
-   Senza queste, la parte che si può fare senza scegliere è **il segno di
-   ciascun graha in ciascun varga confrontato con i suoi segni di uccha,
-   moolatrikona, proprio e neecha**, detto per segno e senza gradi, con
-   tutte le corrispondenze e non una sola (il Leone è per il Sole segno
-   proprio e di moolatrikona insieme). Il conto dei varga buoni e i nomi
-   no: un conto senza l'arudha e senza 6.53 sarebbe un numero diverso da
-   quello del testo.
+   La parte che si fa senza scegliere è fatta, il 28 ottobre 2026, col
+   consenso del proprietario: **il segno di ciascun graha in ciascun varga
+   confrontato con i suoi segni di uccha, moolatrikona, proprio e neecha**,
+   per segno e senza gradi, con tutte le corrispondenze e non una sola
+   (`parasharaSignDignities` in `dignita-parashara.ts`, il campo
+   `dignitySigns` delle posizioni di `SignVargaChart`, con
+   `dignitySource`; la colonna «Dignità del segno» di `VargaTable.svelte`,
+   le parentesi in `formatVargaCompact`). Il conto dei varga buoni e i
+   nomi restano fuori finché le quattro scelte qui sopra non sono prese: un
+   conto senza l'arudha e senza 6.53 sarebbe un numero diverso da quello
+   del testo, e il documento di lettura vieta al modello di ricavarlo.
 2. **Le altre scuole occidentali**, quando le loro fonti sono state lette
    (vedi *Da verificare* qui sotto): ciascuna come valore nuovo di
    `DignitySchool`, intera. Il compilatore pretende il nome in

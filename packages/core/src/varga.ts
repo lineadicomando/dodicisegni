@@ -54,7 +54,17 @@ import { ChartError } from './errors.js';
 import { degreeInSign, normalize360 } from './math.js';
 import { DEFAULT_HORA_CONVENTION, horaConvention, horaOf } from './hora.js';
 import { grahaName, requireSidereal } from './nakshatra.js';
-import type { HoraConvention, NatalChart, VargaChart, VargaId, ZodiacSign } from './types.js';
+import { PARASHARA_GRAHAS, parasharaSignDignities, VARGA_DIGNITY_SOURCE } from './dignita-parashara.js';
+import type {
+  BodyId,
+  CelestialBody,
+  HoraConvention,
+  NatalChart,
+  SignVargaChart,
+  VargaChart,
+  VargaId,
+  ZodiacSign,
+} from './types.js';
 
 interface VargaDefinition {
   id: VargaId;
@@ -464,6 +474,22 @@ function fineWarning(chart: NatalChart, definition: VargaDefinition): string {
   return righe.join(' ');
 }
 
+/**
+ * Un corpo in un varga a segni: il segno, il moto e, per i sette graha, i
+ * loro segni di dignità in cui il segno cade.
+ */
+function posizione(body: CelestialBody, sign: ZodiacSign): SignVargaChart['positions'][number] {
+  return {
+    id: body.id,
+    name: grahaName(body.id, body.name),
+    sign,
+    retrograde: body.retrograde,
+    ...((PARASHARA_GRAHAS as readonly BodyId[]).includes(body.id)
+      ? { dignitySigns: parasharaSignDignities(body.id, sign) }
+      : {}),
+  };
+}
+
 /** Le opzioni di una carta divisionale: per ora, la sola lettura del D-2. */
 export interface VargaOptions {
   /** Default: `parashara`. Conta solo nel D-2. */
@@ -506,13 +532,9 @@ export function computeVarga(chart: NatalChart, id: VargaId, options: VargaOptio
     return {
       ...comune,
       kind: 'segni',
-      positions: chart.bodies.map((body) => ({
-        id: body.id,
-        name: grahaName(body.id, body.name),
-        sign: signOf[horaOf(body.longitude)],
-        retrograde: body.retrograde,
-      })),
+      positions: chart.bodies.map((body) => posizione(body, signOf[horaOf(body.longitude)])),
       ...(chart.angles ? { ascendant: signOf[horaOf(chart.angles.ascendant)] } : {}),
+      dignitySource: VARGA_DIGNITY_SOURCE,
     };
   }
 
@@ -522,13 +544,9 @@ export function computeVarga(chart: NatalChart, id: VargaId, options: VargaOptio
     name: definition.name,
     divisions: definition.divisions,
     rule: definition.rule,
-    positions: chart.bodies.map((body) => ({
-      id: body.id,
-      name: grahaName(body.id, body.name),
-      sign: vargaSignOf(body.longitude, id),
-      retrograde: body.retrograde,
-    })),
+    positions: chart.bodies.map((body) => posizione(body, vargaSignOf(body.longitude, id))),
     ...(chart.angles ? { ascendant: vargaSignOf(chart.angles.ascendant, id) } : {}),
+    dignitySource: VARGA_DIGNITY_SOURCE,
     ...(definition.fine ? { warnings: [fineWarning(chart, definition)] } : {}),
   };
 }

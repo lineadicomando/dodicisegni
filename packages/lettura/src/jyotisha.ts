@@ -126,9 +126,11 @@ Luna, il signore del lagna e i pianeti che hai già nominato: un pianeta forte
 nel tema e debole nel D9 è una cosa diversa da uno forte in entrambi. Come sta
 ogni graha nel tema lo dice la sezione DIGNITÀ (PARASHARA): uccha
 (esaltazione), moolatrikona, swakshetra (segno proprio), neecha
-(debilitazione), oppure niente. Nel D9 la tabella dà solo i segni: lì la forza
-la ricavi confrontandoli con i signori e le esaltazioni della stessa sezione, e
-dici che è un confronto per segno, non una dignità calcolata. Le altre
+(debilitazione), oppure niente. Nel D9 e negli altri varga la riga di ogni
+graha porta fra parentesi in quali suoi segni di uccha, moolatrikona, segno
+proprio o neecha cade il varga: è un confronto per segno, senza gradi, e lo
+dici così, non come la dignità del tema. Il conto dei «varga buoni» e i loro
+nomi (Parijata, Uttama…) non ci sono: non ricavarli tu. Le altre
 carte divisionali, se presenti, riguardano ciascuna un'area sola: dillo e non
 generalizzarle. Il D40, il D45 e il D60 hanno parti di meno di un grado, e
 portano un'«Avvertenza» con i minuti di cui l'ora di nascita può sbagliare

@@ -1100,9 +1100,14 @@ export function formatVargaCompact(varga: VargaChart): string {
     return lines.join('\n');
   }
 
+  // Le corrispondenze stanno sulla riga del graha, dopo il segno, e la loro
+  // fonte una volta sola in testa: è la stessa per tutti i varga, ma chi
+  // legge un varga solo deve trovarla lì.
+  lines.splice(lines.length - 1, 0, `Dignità: ${varga.dignitySource}`);
   if (varga.ascendant) lines.push(`${'Lagna'.padEnd(11)} ${varga.ascendant}`);
   for (const position of varga.positions) {
-    lines.push(`${position.name.padEnd(11)} ${position.sign}`);
+    const dignita = position.dignitySigns?.length ? `  (${position.dignitySigns.join(', ')})` : '';
+    lines.push(`${position.name.padEnd(11)} ${position.sign}${dignita}`);
   }
 
   return lines.join('\n');
