@@ -40,6 +40,82 @@ describe('D-3, che procede per trigoni', () => {
   });
 });
 
+const SEGNI = ['ariete', 'toro', 'gemelli', 'cancro', 'leone', 'vergine', 'bilancia',
+  'scorpione', 'sagittario', 'capricorno', 'acquario', 'pesci'];
+
+/**
+ * Confronta un varga con una tavola stampata: per ogni segno (la chiave, 1-12)
+ * i segni delle sue parti, dalla prima all'ultima, come numeri 1-12. Prende il
+ * punto di mezzo di ciascuna parte, lontano dai confini.
+ */
+function controllaTavola(id: VargaId, parti: number, tavola: Record<number, number[]>): void {
+  const ampiezza = 30 / parti;
+  for (const [segno, colonna] of Object.entries(tavola)) {
+    expect(colonna).toHaveLength(parti);
+    colonna.forEach((atteso, k) => {
+      const longitudine = inizioSegno(Number(segno) - 1) + (k + 0.5) * ampiezza;
+      expect(vargaSignOf(longitudine, id), `${id}, segno ${segno}, parte ${k + 1}`).toBe(SEGNI[atteso - 1]);
+    });
+  }
+}
+
+describe('D-4, che procede per kendra', () => {
+  // BPHS 6.9, trad. Santhanam, vol. I, p. 70; tavola a p. 71.
+  it('manda i quarti al segno, al quarto, al settimo e al decimo', () => {
+    expect([0, 7.5, 15, 22.5].map((d) => vargaSignOf(d + 1, 'd4'))).toEqual([
+      'ariete', 'cancro', 'bilancia', 'capricorno',
+    ]);
+    // Da un segno pari la regola è la stessa: niente biforcazione.
+    expect([0, 7.5, 15, 22.5].map((d) => vargaSignOf(30 + d + 1, 'd4'))).toEqual([
+      'toro', 'leone', 'scorpione', 'acquario',
+    ]);
+  });
+
+  it("cambia parte a 7°30'", () => {
+    expect(vargaSignOf(7.5 - 1e-6, 'd4')).toBe('ariete');
+    expect(vargaSignOf(7.5 + 1e-6, 'd4')).toBe('cancro');
+  });
+
+  it('coincide con la tavola di Santhanam, p. 71', () => {
+    // «Speculum Of Chaturthamsas», le dodici colonne.
+    controllaTavola('d4', 4, {
+      1: [1, 4, 7, 10], 2: [2, 5, 8, 11], 3: [3, 6, 9, 12], 4: [4, 7, 10, 1],
+      5: [5, 8, 11, 2], 6: [6, 9, 12, 3], 7: [7, 10, 1, 4], 8: [8, 11, 2, 5],
+      9: [9, 12, 3, 6], 10: [10, 1, 4, 7], 11: [11, 2, 5, 8], 12: [12, 3, 6, 9],
+    });
+  });
+});
+
+describe('D-7, che si biforca su pari e dispari', () => {
+  // BPHS 6.10-11, trad. Santhanam, vol. I, p. 71, con la tavola.
+  const parte = 30 / 7;
+
+  it('parte dal segno nei dispari e dal settimo nei pari', () => {
+    expect(vargaSignOf(inizioSegno(0), 'd7')).toBe('ariete'); // Ariete, dispari
+    expect(vargaSignOf(inizioSegno(1), 'd7')).toBe('scorpione'); // Toro, pari
+    expect(vargaSignOf(inizioSegno(11), 'd7')).toBe('vergine'); // Pesci, pari
+  });
+
+  it("cambia parte ogni 4°17'8,57\"", () => {
+    expect(vargaSignOf(parte - 1e-6, 'd7')).toBe('ariete');
+    expect(vargaSignOf(parte + 1e-6, 'd7')).toBe('toro');
+    expect(vargaSignOf(29.99, 'd7')).toBe('bilancia');
+    expect(vargaSignOf(59.99, 'd7')).toBe('toro');
+  });
+
+  it('coincide con la tavola di Santhanam, p. 71', () => {
+    // «Speculum Of Sapthamamsas», le dodici colonne.
+    controllaTavola('d7', 7, {
+      1: [1, 2, 3, 4, 5, 6, 7], 2: [8, 9, 10, 11, 12, 1, 2],
+      3: [3, 4, 5, 6, 7, 8, 9], 4: [10, 11, 12, 1, 2, 3, 4],
+      5: [5, 6, 7, 8, 9, 10, 11], 6: [12, 1, 2, 3, 4, 5, 6],
+      7: [7, 8, 9, 10, 11, 12, 1], 8: [2, 3, 4, 5, 6, 7, 8],
+      9: [9, 10, 11, 12, 1, 2, 3], 10: [4, 5, 6, 7, 8, 9, 10],
+      11: [11, 12, 1, 2, 3, 4, 5], 12: [6, 7, 8, 9, 10, 11, 12],
+    });
+  });
+});
+
 describe('D-9, che parte da dove dice la modalità', () => {
   it('apre ogni segno dove la regola vuole', () => {
     // Cardinali dal segno stesso, fissi dal nono, mobili dal quinto: detto
@@ -257,6 +333,6 @@ describe('computeVarga', () => {
 
   it('rifiuta un tema tropicale e un varga che non calcola', () => {
     expect(() => computeVarga(computeNatalChart(NASCITA), 'd9')).toThrow(ChartError);
-    expect(() => vargaSignOf(0, 'd7' as VargaId)).toThrow(ChartError);
+    expect(() => vargaSignOf(0, 'd60' as VargaId)).toThrow(ChartError);
   });
 });

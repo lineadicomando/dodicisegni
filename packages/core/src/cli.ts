@@ -114,8 +114,8 @@ Opzioni
                         antardasha. Tre sono settecentoventinove righe
   --anno-dasha <nome>   solare (default, 365,25 giorni) oppure savana (360). Le
                         scuole divergono, e su ottant'anni è più di un anno
-  --varga <lista>       Carte divisionali, separate da virgola: d1, d3, d9, d10,
-                        d12, d27, d30. Ciascuna stampa la regola che l'ha
+  --varga <lista>       Carte divisionali, separate da virgola: d1, d3, d4, d7,
+                        d9, d10, d12, d27, d30. Ciascuna stampa la regola che l'ha
                         prodotta.
                         Richiede --zodiaco siderale
   --drishti             Gli sguardi fra i graha, contati a segni interi e con un

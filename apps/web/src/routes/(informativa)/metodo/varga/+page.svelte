@@ -12,7 +12,7 @@
 
 <Meta
   titolo="I varga: come si calcolano le divisionali"
-  descrizione="Le carte divisionali del Jyotisha (D-3, navamsa D-9, D-10, D-12, D-27, D-30): la regola di ciascuna, un esempio svolto, e perché la regola viaggia col risultato."
+  descrizione="Le carte divisionali del Jyotisha (D-3, D-4, D-7, navamsa D-9, D-10, D-12, D-27, D-30): la regola di ciascuna, un esempio svolto, e perché la regola viaggia col risultato."
 />
 
 <p class="sopra"><a href="/metodo#jyotisha">Metodo</a> · astrologia indiana</p>
@@ -38,7 +38,7 @@
   chi legge; che cosa ciascuno sia è aritmetica, ed è dichiarata.
 </p>
 
-<h2 id="regole">I sette che il sito calcola</h2>
+<h2 id="regole">I nove che il sito calcola</h2>
 
 <table class="testo">
   <thead>
@@ -52,6 +52,8 @@
   <tbody>
     <tr><td>D-1</td><td>Rashi</td><td>1</td><td>Il segno stesso: è la carta di partenza.</td></tr>
     <tr><td>D-3</td><td>Drekkana</td><td>3</td><td>Tre parti da 10°: la prima al segno stesso, la seconda al quinto da lui, la terza al nono.</td></tr>
+    <tr><td>D-4</td><td>Chaturthamsa</td><td>4</td><td>Quattro parti da 7°30': al segno stesso, al quarto, al settimo e al decimo da lui.</td></tr>
+    <tr><td>D-7</td><td>Saptamsa</td><td>7</td><td>Sette parti da 4°17'8,57". Nei segni dispari si parte dal segno stesso, nei pari dal settimo.</td></tr>
     <tr><td>D-9</td><td>Navamsa</td><td>9</td><td>Nove parti da 3°20'. Si parte dal segno stesso se è cardinale, dal nono se è fisso, dal quinto se è mobile.</td></tr>
     <tr><td>D-10</td><td>Dasamsa</td><td>10</td><td>Dieci parti da 3°. Nei segni dispari si parte dal segno stesso, nei pari dal nono.</td></tr>
     <tr><td>D-12</td><td>Dwadasamsa</td><td>12</td><td>Dodici parti da 2°30'. Si parte sempre dal segno stesso.</td></tr>
@@ -61,11 +63,11 @@
 </table>
 
 <p>
-  Le altre nove divisioni classiche non sono ancora calcolate. Le regole si
+  Le altre sette divisioni classiche non sono ancora calcolate. Le regole si
   biforcano in modi diversi, ed è il motivo per cui la tavola non è una formula
-  sola: il D-3 procede per trigoni, il D-9 parte da dove dice la modalità del
-  segno, il D-10 da dove dice la sua parità, il D-12 riparte sempre dal segno
-  stesso.
+  sola: il D-3 procede per trigoni, il D-4 per kendra, il D-9 parte da dove
+  dice la modalità del segno, il D-7 e il D-10 da dove dice la sua parità, il
+  D-12 riparte sempre dal segno stesso.
 </p>
 
 <h2 id="navamsa">Un esempio: la navamsa</h2>
@@ -96,16 +98,17 @@
   pianeti.
 </p>
 
-<h2 id="fonte">Le tavole stampate</h2>
+<h2 id="fonte">La fonte, e le tavole stampate</h2>
 
 <p>
-  La regola del D-27 viene dal <em>Brihat Parashara Hora Shastra</em>, 6.24-26,
-  nella traduzione di R. Santhanam (vol. I, 1992, pp. 78-79). La tavola che
-  Santhanam stampa accanto ha un refuso, nella colonna dei Gemelli, che la
-  regola e la colonna della Bilancia smentiscono: il motore segue la regola.
-  È il genere di errore che si propaga quando le tavole si copiano invece di
-  ricalcolarle, ed è un'altra ragione per cui il sito consegna la regola e non
-  solo il segno.
+  Le regole vengono dal <em>Brihat Parashara Hora Shastra</em>, capitolo 6,
+  nella traduzione di R. Santhanam (vol. I, 1992, pp. 69-80), e ciascuna porta
+  il suo verso accanto al risultato. Quella del D-27 è 6.24-26, alle pp.
+  78-79, e la tavola che Santhanam stampa accanto ha un refuso, nella colonna
+  dei Gemelli, che la regola e la colonna della Bilancia smentiscono: il
+  motore segue la regola. È il genere di errore che si propaga quando le
+  tavole si copiano invece di ricalcolarle, ed è un'altra ragione per cui il
+  sito consegna la regola e non solo il segno.
 </p>
 
 <p>

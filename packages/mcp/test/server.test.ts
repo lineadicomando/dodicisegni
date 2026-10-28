@@ -256,7 +256,7 @@ describe('superficie MCP', () => {
   it('rifiuta un varga che non calcola invece di ignorarlo', async () => {
     const result = await client.callTool({
       name: 'compute_jyotisha_chart',
-      arguments: { date: '1968-03-12', location_id: ROMA_ID, vargas: ['d7'] },
+      arguments: { date: '1968-03-12', location_id: ROMA_ID, vargas: ['d60'] },
     });
 
     expect(result.isError).toBe(true);

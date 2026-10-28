@@ -19,15 +19,25 @@
  * - **D-1** non divide niente: è il segno stesso.
  * - **D-3** procede per trigoni: primo terzo al segno, secondo al quinto da
  *   lui, terzo al nono.
+ * - **D-4** procede per kendra: i quarti al segno, al quarto, al settimo e
+ *   al decimo.
  * - **D-9** parte da dove dice la **modalità**: dal segno stesso se cardinale,
  *   dal nono se fisso, dal quinto se mobile.
- * - **D-10** e i suoi parenti si biforcano su **pari e dispari**.
+ * - **D-7** e **D-10** si biforcano su **pari e dispari**: si parte dal
+ *   segno stesso nei dispari, dal settimo (D-7) o dal nono (D-10) nei pari.
  * - **D-12** parte sempre dal segno stesso e prosegue.
  * - **D-30** abbandona le parti uguali: cinque tratti di ampiezza diversa,
  *   rovesciati fra segni pari e dispari.
  * - **D-27** non riparte a ogni segno: conta di seguito dall'Ariete lungo
  *   tutto lo zodiaco, e il segno da cui comincia ciascun segno ne è la
  *   conseguenza.
+ *
+ * Le regole sono quelle del *Brihat Parashara Hora Shastra*, cap. 6, nella
+ * traduzione di R. Santhanam, vol. I (Ranjan, 1992), lette sulla scansione in
+ * `texts/jyotisha/bphs-santhanam-1992-vol1` (trascrizioni in
+ * `trascrizioni.md`). Il verso viaggia nella regola, la pagina sta accanto a
+ * ciascuna. Le tavole che Santhanam stampa sotto i versi sono state
+ * controllate contro la regola, non copiate: quella del D-27 ha un refuso.
  */
 
 import { ZODIAC_SIGNS } from './constants.js';
@@ -84,20 +94,49 @@ export const VARGAS: readonly VargaDefinition[] = [
     signIndex: (sign) => sign,
   },
   {
+    // BPHS 6.7-8, p. 69; tavola a p. 70.
     id: 'd3',
     name: 'Drekkana',
     divisions: 3,
-    rule: 'Tre parti da 10°. La prima al segno stesso, la seconda al quinto da lui, la terza al nono: i suoi trigoni.',
+    rule:
+      'Tre parti da 10°. La prima al segno stesso, la seconda al quinto da lui, la terza al nono: ' +
+      'i suoi trigoni (BPHS 6.7-8).',
     signIndex: (sign, degree) => sign + Math.floor(degree / 10) * 4,
   },
   {
+    // BPHS 6.9, p. 70; tavola a p. 71. «Svarkṣādi-kendra-patayaḥ»: i signori
+    // dei kendra a partire dal segno stesso.
+    id: 'd4',
+    name: 'Chaturthamsa',
+    divisions: 4,
+    rule:
+      "Quattro parti da 7°30'. La prima al segno stesso, poi al quarto, al settimo e al decimo " +
+      'da lui: i suoi kendra (BPHS 6.9).',
+    signIndex: (sign, degree) => sign + Math.floor(degree / 7.5) * 3,
+  },
+  {
+    // BPHS 6.10-11, p. 71, con la tavola sotto i versi.
+    id: 'd7',
+    name: 'Saptamsa',
+    divisions: 7,
+    rule:
+      'Sette parti da 4°17\'8,57". Nei segni dispari si parte dal segno stesso, nei pari dal ' +
+      'settimo da lui (BPHS 6.10-11).',
+    signIndex: (sign, degree) => {
+      const inizio = sign % 2 === 0 ? sign : sign + 6;
+      return inizio + Math.floor((degree * 7) / 30);
+    },
+  },
+  {
+    // BPHS 6.12, p. 72. Il «movable» di Santhanam è il cardinale, il «dual»
+    // il mobile.
     id: 'd9',
     name: 'Navamsa',
     divisions: 9,
     rule:
       "Nove parti da 3°20'. Si parte dal segno stesso se è cardinale, dal nono se è fisso, " +
       'dal quinto se è mobile; cioè, detto altrimenti, da Ariete per i segni di fuoco, ' +
-      'Capricorno per la terra, Bilancia per l\'aria, Cancro per l\'acqua.',
+      'Capricorno per la terra, Bilancia per l\'aria, Cancro per l\'acqua (BPHS 6.12).',
     signIndex: (sign, degree) => {
       // 0 cardinale, 1 fisso, 2 mobile: la modalità si legge dall'indice.
       const salto = [0, 8, 4][sign % 3] as number;
@@ -105,20 +144,24 @@ export const VARGAS: readonly VargaDefinition[] = [
     },
   },
   {
+    // BPHS 6.13-14, p. 73, con la tavola.
     id: 'd10',
     name: 'Dasamsa',
     divisions: 10,
-    rule: 'Dieci parti da 3°. Nei segni dispari si parte dal segno stesso, nei pari dal nono da lui.',
+    rule:
+      'Dieci parti da 3°. Nei segni dispari si parte dal segno stesso, nei pari dal nono da lui ' +
+      '(BPHS 6.13-14).',
     signIndex: (sign, degree) => {
       const inizio = sign % 2 === 0 ? sign : sign + 8;
       return inizio + Math.floor(degree / 3);
     },
   },
   {
+    // BPHS 6.15, p. 73.
     id: 'd12',
     name: 'Dwadasamsa',
     divisions: 12,
-    rule: "Dodici parti da 2°30'. Si parte sempre dal segno stesso e si prosegue in ordine.",
+    rule: "Dodici parti da 2°30'. Si parte sempre dal segno stesso e si prosegue in ordine (BPHS 6.15).",
     signIndex: (sign, degree) => sign + Math.floor(degree / 2.5),
   },
   {
@@ -139,6 +182,7 @@ export const VARGAS: readonly VargaDefinition[] = [
     signIndex: (sign, degree) => sign * 3 + Math.floor((degree * 27) / 30),
   },
   {
+    // BPHS 6.27-28, p. 80, con la tavola.
     id: 'd30',
     name: 'Trimsamsa',
     divisions: 30,
@@ -146,7 +190,7 @@ export const VARGAS: readonly VargaDefinition[] = [
       'Cinque tratti di ampiezza disuguale, non trenta parti. Nei segni dispari 5° a Marte ' +
       "(Ariete), 5° a Saturno (Acquario), 8° a Giove (Sagittario), 7° a Mercurio (Gemelli), " +
       '5° a Venere (Bilancia); nei pari lo stesso ordine rovesciato, coi segni pari dei ' +
-      'medesimi pianeti.',
+      'medesimi pianeti (BPHS 6.27-28).',
     signIndex: (sign, degree) => {
       const tratti = sign % 2 === 0 ? TRIMSAMSA_ODD : TRIMSAMSA_EVEN;
       const tratto = tratti.find((parte) => degree < parte.until) ?? tratti[tratti.length - 1];
