@@ -33,6 +33,7 @@
   import NakshatraTable from '#lib/components/NakshatraTable.svelte';
   import ParasharaDignityTable from '#lib/components/ParasharaDignityTable.svelte';
   import GoodVargaTable from '#lib/components/GoodVargaTable.svelte';
+  import GrahaStatesTable from '#lib/components/GrahaStatesTable.svelte';
   import RelationshipTable from '#lib/components/RelationshipTable.svelte';
   import VimshopakaTable from '#lib/components/VimshopakaTable.svelte';
   import ArudhaTable from '#lib/components/ArudhaTable.svelte';
@@ -364,6 +365,10 @@
 
         {#if jyotisha.goodVargas}
           <GoodVargaTable buoni={jyotisha.goodVargas} {evidenza} />
+        {/if}
+
+        {#if jyotisha.states}
+          <GrahaStatesTable stati={jyotisha.states} {evidenza} />
         {/if}
 
         <DrishtiTable drishti={jyotisha.drishti} {evidenza} />

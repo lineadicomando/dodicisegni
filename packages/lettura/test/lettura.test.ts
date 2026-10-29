@@ -194,6 +194,9 @@ describe('il documento vedico', () => {
     // I nodi hanno le dignità per segno e nessuna neecha: senza la riga il
     // modello la metterebbe nel settimo segno, come per i sette.
     expect(testo.replace(/\s+/g, ' ')).toContain('una neecha dei nodi non la dai tu');
+    // Il 6.53: le avastha ci sono, ma quali guastino il testo non lo dice.
+    expect(testo).toContain('STATI DEI GRAHA');
+    expect(testo.replace(/\s+/g, ' ')).toContain('quali guastino i varga buoni il testo non lo dice');
     expect(testo).toContain('VARGA BUONI');
     expect(testo.replace(/\s+/g, ' ')).toContain('non rifare il conto con regole tue');
   });

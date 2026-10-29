@@ -44,6 +44,8 @@
           <td>
             {graha.name}
             {#if graha.neecha}<span class="tenue">· neecha</span>{/if}
+            {#if graha.combust}<span class="tenue">· combusto</span>{/if}
+            {#if graha.defeated}<span class="tenue">· vinto in guerra</span>{/if}
           </td>
           {#each graha.schemes as conto (conto.scheme)}
             <td>

@@ -738,6 +738,16 @@ scuola nuova.
   calcolata e mostrata come dato, col navamsa per l'*aṃśa* e la ghati in
   corso come nell'esempio di Santhanam, senza dire quali avastha annullino i
   varga buoni. Il conto dei varga buoni non cambia: il 6.53 resta una nota.
+- **I varga buoni si contano anche secondo Narasimha Rao, e gli arudha dei
+  graha sono i suoi.** Scelto dal proprietario il 29 ottobre 2026, voce 19.
+  Il conto di Rao (2000, §6.6: uccha, moolatrikona e segno proprio, senza
+  l'arudha) sta accanto a quello di Santhanam, sempre tutti e due e col
+  nome. Gli arudha dei graha entrano secondo Rao per intero (§9.5 e le
+  regole del segno più forte di §15.5.2, con le rasi drishti che
+  richiedono), non col BPHS completato da noi: 29.7 non dice come si sceglie
+  il segno più forte, e 46.158-166 confronta due signori, non due segni. Gli
+  arudha dei bhava restano del BPHS. In 46.164 conta anche l'uccha di Rahu
+  e Ketu di 47.35: è lo stesso libro.
 - **Il server MCP non ha un pool, e non gli serve**: è un processo per client,
   sul trasporto stdio, e non c'è nessun'altra richiesta da tenere in attesa.
 - **I thread del pool web sono al massimo quattro, e la quinta richiesta

@@ -136,9 +136,13 @@ per ogni graha i varga buoni nei quattro schemi del testo e dà il nome del
 conto (Parijata, Uttama…): usala come dato del testo, citando lo schema, e non
 rifare il conto con regole tue. In testa dice le scelte di lettura: la regola
 dell'arudha da sola rende buoni molti segni, e quando un conto alto viene
-quasi tutto da lì, dillo. Il verso 6.53 non è applicato: se il graha è in
-neecha nella rashi la riga lo dice, combustione e avastha non sono
-verificate. Le altre
+quasi tutto da lì, dillo. Il verso 6.53 non è applicato al conto: la riga
+dice se il graha è in neecha nella rashi, combusto o vinto in guerra, e la
+sezione STATI DEI GRAHA dà le definizioni con le loro fonti. La combustione
+lì è in longitudine, mentre il testo la misura in gradi di tempo: vicino al
+limite dillo come incerto. Le avastha (Sayana e le altre) sono calcolate,
+ma quali guastino i varga buoni il testo non lo dice: non deciderlo tu. Le
+altre
 carte divisionali, se presenti, riguardano ciascuna un'area sola: dillo e non
 generalizzarle. Il D40, il D45 e il D60 hanno parti di meno di un grado, e
 portano un'«Avvertenza» con i minuti di cui l'ora di nascita può sbagliare
