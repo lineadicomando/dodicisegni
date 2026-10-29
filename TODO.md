@@ -353,7 +353,7 @@ proprietario in *Deciso*:
 | Le relazioni fra i graha, naturale, temporanea e composta | `maitri.ts`, `JyotishaChart.relationships`, `RelationshipTable.svelte` | `a3840d3` | 3.55-58, pp. 40-42; la regola ridà la tavola di p. 40 in `maitri.test.ts` |
 | Il vimshopaka nei quattro schemi | `vimshopaka.ts`, `JyotishaChart.vimshopaka`, `VimshopakaTable.svelte` | `0f511f3` | 7.17-27, pp. 95-99; l'esempio di Venere (New Delhi 1984, 16,8) in `vimshopaka.test.ts` |
 | Gli arudha dei dodici bhava, coi due signori di Scorpione e Acquario | `arudha.ts` (`arudhaOf`, `bhavaLord`), `JyotishaChart.arudhas`, `ArudhaTable.svelte` | `f8c34a2` | 29.1-7, vol. I pp. 294-297, e 46.157-166, vol. II pp. 553-556; gli esempi di Santhanam in `arudha.test.ts` |
-| Le dignità di Rahu e Ketu, per segno e senza neecha | `parasharaNodeDignities` in `dignita-parashara.ts`, campo `signDignities` dei nodi in `ParasharaDignities.grahas`, `ParasharaDignityTable.svelte` | questo | 47.34-36, vol. II pp. 581-582; il verso ricopiato in `dignita-parashara.test.ts` |
+| Le dignità di Rahu e Ketu, per segno e senza neecha | `parasharaNodeDignities` in `dignita-parashara.ts`, campo `signDignities` dei nodi in `ParasharaDignities.grahas`, `ParasharaDignityTable.svelte` | `a38314c` | 47.34-36, vol. II pp. 581-582; il verso ricopiato in `dignita-parashara.test.ts` |
 
 Senza ora di nascita `goodVargas` e `arudhas` mancano (vogliono il lagna) e
 un'avvertenza lo dice; relazioni e vimshopaka ci sono comunque. Le sezioni
