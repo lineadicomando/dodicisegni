@@ -21,7 +21,7 @@
  */
 
 import { ZODIAC_SIGNS } from './constants.js';
-import { parasharaExaltation, parasharaSignLord } from './dignita-parashara.js';
+import { parasharaExaltation, parasharaNodeSigns, parasharaSignLord } from './dignita-parashara.js';
 import type { Arudhas, BodyId, NatalChart, ZodiacSign } from './types.js';
 
 const indice = (sign: ZodiacSign): number => ZODIAC_SIGNS.indexOf(sign);
@@ -79,9 +79,12 @@ export function bhavaLord(
   if (nel(sa)) return scegli(b, 'Uno nel segno e l\'altro fuori: si prende quello fuori (46.159-160).');
   if (nel(sb)) return scegli(a, 'Uno nel segno e l\'altro fuori: si prende quello fuori (46.159-160).');
 
-  // 46.164: un signore nella sua esaltazione e l'altro no. Rahu e Ketu non ne
-  // hanno nel motore (dignita-parashara.ts), quindi qui vince solo Marte o Saturno.
-  const esaltato = (lord: BodyId, s: ZodiacSign) => parasharaExaltation(lord)?.sign === s;
+  // 46.164: un signore nella sua esaltazione e l'altro no. Per Rahu e Ketu
+  // l'uccha è quella di 47.35 (Toro e Scorpione), dello stesso libro: scelto
+  // dal proprietario il 29 ottobre 2026. Ketu nello Scorpione è già «nel
+  // segno» (46.159-160), quindi in pratica conta solo Rahu nel Toro.
+  const esaltato = (lord: BodyId, s: ZodiacSign) =>
+    (parasharaExaltation(lord)?.sign ?? parasharaNodeSigns(lord)?.uccha) === s;
   if (esaltato(a, sa) !== esaltato(b, sb)) {
     return scegli(esaltato(a, sa) ? a : b, 'Uno dei due nel segno di esaltazione: si prende quello (46.164).');
   }
@@ -115,7 +118,8 @@ const SOURCE =
   'BPHS 29.1-7 (trad. Santhanam, vol. I, pp. 294-297): dal bhava al segno del signore, e ' +
   'altrettanto oltre; se si ricade nel bhava il decimo, se nel settimo il quarto. Signori di ' +
   '4.6-24; per Scorpione e Acquario, che 46.157 dà anche a Ketu e Rahu, il più forte secondo ' +
-  '46.158-166 (vol. II, pp. 554-555), letto per il pada come per la chara dasha. Gli arudha dei ' +
+  '46.158-166 (vol. II, pp. 554-555), letto per il pada come per la chara dasha; in 46.164 vale ' +
+  'anche l\'uccha di Rahu e Ketu di 47.35. Gli arudha dei ' +
   'graha (29.6-7) non sono calcolati.';
 
 /** Gli arudha dei dodici bhava di una carta con l'ora; `undefined` senza lagna. */

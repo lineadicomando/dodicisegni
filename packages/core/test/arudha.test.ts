@@ -28,6 +28,16 @@ describe('il signore dei bhava con due signori, BPHS 29.7 e 46.157-166', () => {
     expect(bhavaLord('scorpione', segni).lord).toBe('marte');
   });
 
+  it("conta l'uccha di Rahu nel Toro, da 47.35", () => {
+    // Rahu nel Toro da solo, Saturno nei Gemelli con due graha: senza l'uccha
+    // dei nodi vincerebbe Saturno per 46.161-162.
+    const segni: Segni = { 'nodo-nord': 'toro', saturno: 'gemelli', sole: 'gemelli', luna: 'gemelli' };
+    expect(bhavaLord('acquario', segni)).toEqual({
+      lord: 'nodo-nord',
+      lordChoice: 'Uno dei due nel segno di esaltazione: si prende quello (46.164).',
+    });
+  });
+
   it('a pari graha guarda la natura del segno, poi la distanza', () => {
     // Saturno nel Cancro (cardinale), Rahu nella Vergine (mobile): vince il mobile.
     expect(bhavaLord('acquario', { saturno: 'cancro', 'nodo-nord': 'vergine' }).lord).toBe('nodo-nord');
