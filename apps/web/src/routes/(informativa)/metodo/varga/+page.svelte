@@ -189,11 +189,31 @@
   dasha (46.158-166), e dice quale ha scelto. È una regola larga, che Santhanam stesso
   segnala: può rendere buoni fino a otto segni su dodici, e per questo ogni
   varga buono porta la sua ragione. La hora di Parashara, che non ha segni,
-  si conta con la nota di Santhanam (p. 90). Il verso 53, che dice che cosa
-  producono i varga buoni di un graha combusto, sconfitto o debole, non
-  cambia il conto: il sito dice se il graha è in neecha e dichiara le altre
-  condizioni come non verificate. Senza ora di nascita il conto non c'è,
-  perché l'arudha vuole il lagna.
+  si conta con la nota di Santhanam (p. 90). Senza ora di nascita il conto
+  non c'è, perché l'arudha vuole il lagna.
+</p>
+
+<p>
+  Accanto c'è sempre un secondo conto, di un altro autore: P.V.R. Narasimha
+  Rao (<em>Vedic Astrology: An Integrated Approach</em>, 2000, §6.6) conta
+  solo i segni di esaltazione, di moolatrikona e propri, senza la regola
+  dell'arudha, e la hora con i segni Leone e Cancro, come nel suo esempio. I
+  due conti possono dare nomi molto diversi, e il sito li riporta tutti e due
+  col nome di chi li fa, senza sceglierne uno.
+</p>
+
+<p>
+  Il verso 53 dice che i varga buoni di un graha combusto, sconfitto in
+  guerra, in neecha, debole o in un'avastha come <em>śayana</em> «distruggono
+  gli yoga». Non cambia il conto, ma il sito calcola le condizioni che nomina,
+  ciascuna con la sua fonte, perché il BPHS le nomina senza definirle. La
+  combustione usa le distanze dal Sole del <em>Surya Siddhanta</em> (IX.6-9),
+  che il testo dà in gradi di tempo e il sito applica alla longitudine,
+  dicendolo. La guerra è fra due dei cinque pianeti a meno di un grado (VII.19),
+  e vince Venere comunque, degli altri chi sta a nord (BPHS 79.9). Le dodici
+  avastha si contano con la formula di 45.30-33 e le letture di Santhanam, che
+  la prova su un esempio. Quali avastha guastino i varga buoni il testo non lo
+  dice, e il sito nemmeno; la debolezza non ha una soglia, e non c'è.
 </p>
 
 <h2 id="vimshopaka">Il vimshopaka, la forza su venti punti</h2>

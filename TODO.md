@@ -32,12 +32,12 @@ esserci, se il clone è un altro: le schede dicono da dove riscaricare ogni
 fonte.
 
 I riferimenti `file:riga` e i nomi citati sono stati ricontrollati tutti
-contro il codice il 28 ottobre 2026, dopo gli arudha della voce 19
-(`f8c34a2`). Le righe si spostano: se una non torna, il nome della funzione
+contro il codice il 29 ottobre 2026, dopo gli arudha dei graha della voce 19
+(`f18f6b5`). Le righe si spostano: se una non torna, il nome della funzione
 o della costante accanto è quello che fa fede.
 
 Prima di cominciare conviene che `npm test`, `npm run typecheck` e `npm run
-lint` siano verdi. Quattro cose che fanno perdere tempo:
+lint` siano verdi. Le cose che fanno perdere tempo:
 
 - se il typecheck di `apps/web` cade su `config.kit.paths.origin`,
   `node_modules` è indietro rispetto al lockfile e serve un `npm install`;
@@ -52,7 +52,15 @@ lint` siano verdi. Quattro cose che fanno perdere tempo:
   cambiato il motore, il browser può mostrare la risposta vecchia. Basta
   cambiare di un minuto l'ora nell'indirizzo. Per la stessa ragione i
   componenti di `/vedica` mettono una guardia sui campi nuovi
-  (`{#if jyotisha.arudhas}`) anche dove il tipo li dà per presenti.
+  (`{#if jyotisha.arudhas}`) anche dove il tipo li dà per presenti;
+- la pagina `/vedica` legge il luogo solo da `locationId`
+  (`/vedica?date=1968-03-12&time=14:30&locationId=3172394` è Napoli): con
+  `latitude` e `longitude` mostra il modulo vuoto, mentre `/api/jyotish` li
+  accetta tutti e due;
+- `computeJyotisha` non è più una funzione della sola carta: per l'alba delle
+  avastha (`stati.ts`) chiama `initEphemeris` e `lastSunrise` di
+  `panchanga.ts`, con `JyotishaOptions.ephemerisPath` se c'è. Resta
+  sincrona, e l'alba non usa i flag siderali.
 
 Per spegnere il server di sviluppo lanciato in sottofondo si usa la porta
 (`fuser -k 5173/tcp`), non `pkill -f` col numero della porta: il comando
@@ -66,7 +74,7 @@ volta e ricominciare da capo.
 
 | Voce | Priorità | Taglia | Prima di cominciare |
 |---|---|---|---|
-| 19. Le dignità, per scuola | bassa | media | Jyotisha: fatto, restano rifiniture; occidente: leggere Tolomeo I.21 (i termini tolemaici) e Bonatti |
+| 19. Le dignità, per scuola | bassa | media | Jyotisha: fatto, restano rifiniture; occidente: leggere i termini di Tolomeo (I.20-21) e proporre la sua scuola; poi Bonatti |
 | 17. L'astrologia oraria | bassa | piccola, ormai | i quattro lotti sono fatti; restano rifiniture indipendenti, una per riga |
 | 5. I varga: le convenzioni che restano | bassa | piccola | i sedici sono fatti; restano rifiniture, una per riga |
 
@@ -75,7 +83,7 @@ in `texts/` con le pagine lette (voce 24, chiusa): la parte occidentale
 della 19 parte da lì. Della 19, nel Jyotisha, sono fatti dignità (anche dei
 nodi), varga buoni (nei due conti, Santhanam e Narasimha Rao), relazioni,
 vimshopaka, arudha dei bhava e dei graha, e gli stati di 6.53; restano
-rifiniture senza urgenza. L'occidente aspetta i termini di Tolomeo (I.21)
+rifiniture senza urgenza. L'occidente aspetta i termini di Tolomeo (I.20-21)
 e Bonatti. La 17 usa le tavole di Lilly della 19 e ha
 già le *moieties* come terza convenzione delle orbite.
 
@@ -92,6 +100,10 @@ ce l'ha, la scelta si fa fare al proprietario prima del codice, e finisce in
 descrizione di `compute_jyotisha_chart` (`packages/mcp/src/tools.ts`), il
 documento di lettura (`packages/lettura/src/jyotisha.ts`, con le prove in
 `lettura.test.ts`) e, quando è una convenzione, `/metodo/varga`.
+Quest'ultima nessun test la confronta con la prosa, ed è quella che si
+dimentica: il 29 ottobre 2026 diceva ancora il 6.53 «non verificato». Dalla
+riga di comando la tabella compatta si vede con `--zodiaco siderale
+--lettura --sistema jyotisha`.
 
 ## 5. I varga: le convenzioni che restano
 
@@ -303,8 +315,9 @@ un pacchetto di tavole nel punto 19.
 
 **Priorità bassa**, ora che il tropicale è fatto per intero. Viene dal punto
 17, che ne ha bisogno, ma vale da sola: le dignità servono al natale letto
-alla maniera tradizionale e al Jyotisha. Resta il Jyotisha (i varga) e le
-scuole occidentali le cui fonti non sono ancora state lette.
+alla maniera tradizionale e al Jyotisha. Il Jyotisha è fatto, salvo
+rifiniture; restano le scuole occidentali le cui fonti non sono ancora state
+lette per intero, e la prima candidata è Tolomeo (sotto, *Che cosa resta*).
 
 ### A che punto è
 
@@ -343,7 +356,7 @@ esaltazioni e una riga per graha; su `/vedica` le mostra
 invece di ricopiare i domicili. Prove in
 `packages/core/test/dignita-parashara.test.ts` e in `lettura.test.ts`.
 
-Il resto del Jyotisha, tutto del 28 ottobre 2026 e tutto con le scelte del
+Il resto del Jyotisha, del 28 e del 29 ottobre 2026, tutto con le scelte del
 proprietario in *Deciso*:
 
 | Che cosa | Dove | Commit | Fonte, e la prova |
@@ -359,17 +372,43 @@ proprietario in *Deciso*:
 | L'uccha dei nodi di 47.35 nella scelta del signore dell'arudha (46.164) | `bhavaLord` in `arudha.ts` | `b35e20e` | `arudha.test.ts` |
 | Gli arudha dei nove graha secondo Narasimha Rao, con rasi drishti, segno più forte e co-signore più forte | `arudha-graha.ts`, `JyotishaChart.grahaArudhas`, `GrahaArudhaTable.svelte` | `277c300`, `f18f6b5` | Rao (2000), §9.5, 10.3, 15.5.1-2 e tavola 6; l'esempio 30 per tutti e nove i graha in `arudha-graha.test.ts` |
 
-Senza ora di nascita `goodVargas` e `arudhas` mancano (vogliono il lagna) e
-un'avvertenza lo dice; relazioni e vimshopaka ci sono comunque. Le sezioni
-della tabella compatta, nell'ordine: DIGNITÀ (PARASHARA), RELAZIONI FRA I
-GRAHA, VIMSHOPAKA, ARUDHA DEI BHAVA, VARGA BUONI. I testi letti stanno in
-`texts/jyotisha/bphs-santhanam-1992-vol1/trascrizioni.md` (sezioni «3.55-58»,
-«6.42-53», «7.17-27», «29.1-5, 7.17-25») e in
-`texts/jyotisha/bphs-santhanam-1992-vol2/trascrizioni.md`. Tre cose trovate
-leggendo, che il codice tiene scritte: la traduzione di 6.53 omette
-*nīcagā*; il secondo esempio delle note di Santhanam sull'arudha (p. 296)
-contraddice il verso, e il motore segue il verso; nel saptavarga il verso
-7.18 non assegna i pesi ai varga, e il motore segue la tavola di p. 97.
+Senza ora di nascita `goodVargas` (e con lui il conto di Rao), `arudhas` e
+`states.avasthas` mancano, e un'avvertenza lo dice per ciascuno; relazioni,
+vimshopaka, combustione, guerra e arudha dei graha ci sono comunque. Le
+sezioni della tabella compatta, nell'ordine: DIGNITÀ (PARASHARA), RELAZIONI
+FRA I GRAHA, VIMSHOPAKA, ARUDHA DEI BHAVA, ARUDHA DEI GRAHA (NARASIMHA RAO),
+VARGA BUONI, STATI DEI GRAHA (BPHS 6.53); sulla pagina `/vedica` un
+componente per ciascuna (`GrahaArudhaTable.svelte` e `GrahaStatesTable.svelte`
+sono gli ultimi). `/metodo/varga` (`#buoni`) racconta i due conti e il 6.53;
+gli arudha e le dignità di Parashara in `/metodo` non ci sono, né prima né
+ora.
+
+I testi letti stanno in `texts/jyotisha/bphs-santhanam-1992-vol1/trascrizioni.md`
+(sezioni «3.55-58», «6.42-53», «7.17-27», «29.1-5, 7.17-25», «La combustione
+e la guerra nelle note di Santhanam», «45.30-37»),
+`texts/jyotisha/bphs-santhanam-1992-vol2/trascrizioni.md` («46.157-166»,
+«47.34-36 e 41», «79.9»), `texts/jyotisha/surya-siddhanta-burgess-1860/trascrizioni.md`
+e `texts/jyotisha/narasimha-rao-vedic-astrology-integrated-approach-2000/trascrizioni.md`.
+Le cose trovate leggendo, che il codice tiene scritte:
+
+- la traduzione di 6.53 omette *nīcagā*;
+- il secondo esempio delle note di Santhanam sull'arudha (p. 296) contraddice
+  il verso, e il motore segue il verso;
+- nel saptavarga il verso 7.18 non assegna i pesi ai varga, e il motore segue
+  la tavola di p. 97;
+- in 47.41 «(Scorpio)», la neecha di Rahu, è di Santhanam, non del verso;
+- la tavola di combustione di Santhanam (vol. I, p. 100) non ha fonte e non
+  è il *Surya Siddhanta* (Saturno 16 invece di 15, valori retrogradi per i
+  pianeti esterni);
+- in 79.9 «within one degree» è di Santhanam: il verso dice solo
+  «congiunti», il grado è del *Surya Siddhanta* VII.19;
+- in 45.33 il verso dice *yātadaṇḍa*, le ghati trascorse, e l'esempio di
+  Santhanam conta quella in corso: il motore segue l'esempio, e lo dice;
+- Narasimha Rao dà ai nodi esaltazioni diverse dal BPHS (Rahu Gemelli, Ketu
+  Sagittario, tavola 6): valgono solo dentro `arudha-graha.ts`;
+- negli esempi di Rao per le regole 1 e 2 dei due «più forte» (§15.5.1-2)
+  la regola 1 decide già: illustrano la regola, non la catena, e i test non
+  li usano come catena.
 
 Una scelta di lettura, scritta nel commento a `TRATTI`: nei sette segni che
 3.51-54 divide in tratti decide il tratto, anche contro 3.49 letto da solo.
@@ -395,8 +434,8 @@ cinque le dignità, sugli esempi di Lilly a p. 112. La tavola è trascritta
 riga per riga in `texts/occidentale/lilly-christian-astrology-1647/trascrizioni.md`,
 con la lettura di p. 105 (che dice come si leggono le celle), e il test la
 ricopia coi glifi della stampa (`packages/core/test/dignita-lilly.test.ts`).
-Si accende con `ChartOptions.dignitySchool: 'lilly'` (`types.ts:1148`, letto
-in `chart.ts`), con `SkyOptions.dignitySchool` (`types.ts:1345`, in
+Si accende con `ChartOptions.dignitySchool: 'lilly'` (`types.ts:1305`, letto
+in `chart.ts`), con `SkyOptions.dignitySchool` (`types.ts:1502`, in
 `sky.ts`) e con `--dignita lilly` nella CLI, solo nello zodiaco tropicale: la
 sezione DIGNITÀ aggiunge, sotto le righe comuni,
 una riga per corpo con i signori del suo grado e le sue dignità, e le
@@ -449,13 +488,20 @@ descrizioni dicono «circa un quarto».
 
 2. **Le altre scuole occidentali**, quando le loro fonti sono state lette
    (vedi *Da verificare* qui sotto): ciascuna come valore nuovo di
-   `DignitySchool`, intera. Il compilatore pretende il nome in
+   `DignitySchool`, intera. La più vicina è Tolomeo: letti I.17 (domicili),
+   I.18 (triplicità), I.19 (esaltazioni) e I.22-23 (niente facce
+   decaniche); mancano i termini. In `texts/occidentale/tolomeo-tetrabiblos-robbins-1940/testo/1B.txt`:
+   I.20, i termini egizi che Tolomeo critica (Loeb pp. 91-99, righe
+   239-398); I.21, i caldei e poi i suoi, dall'«ancient manuscript» (pp.
+   99-109, righe 399-558; i tolemaici da p. 103, riga 407), con la tavola.
+   Sono testo HTML di LacusCurtius, non una scansione: la tavola va
+   ricopiata e confrontata con Ashmand. Con quelli la scuola si può proporre al proprietario. Il compilatore pretende il nome in
    `DIGNITY_SCHOOL_NAMES` (`packages/core/src/constants.ts`), e da lì CLI,
    MCP e `/api/chart` imparano il valore da soli, ma solo a validarlo: il
    risultato porta ancora un campo per scuola (`WesternDignities.lilly`,
    `types.ts:759`), e una scuola nuova chiede il suo campo, il suo ramo in
    `computeWesternDignities` (`dignita-tema.ts:51`), le sue righe in
-   `format.ts` (come `lillyLines`, :814, e `lillyConditionLines`) e in
+   `format.ts` (come `lillyLines`, :816, e `lillyConditionLines`) e in
    `DignityTable.svelte`, e i testi che oggi nominano solo Lilly: l'aiuto di
    `--dignita` (`cli.ts:140`), la descrizione di `dignity_school`
    (`packages/mcp/src/tools.ts:317`) e il commento di
@@ -471,7 +517,7 @@ Per il tema tropicale le scuole possibili sono cinque, ciascuna come pacchetto:
 
 | | Domicili | Esaltazioni | Triplicità | Termini | Facce | Punteggio | Fonte primaria |
 |---|---|---|---|---|---|---|---|
-| Ellenistica (Doroteo, Valente) | tradizionali | da verificare: Valente I.2 non ha la tavola | tre reggenti, uno partecipe | egizi | sì | nessuno | Doroteo sopravvive in arabo, e la traduzione di Pingree è protetta; Valente in greco è libero |
+| Ellenistica (Doroteo, Valente) | tradizionali | da trovare: non in Valente I.2, ma Valente dà gradi altrove (apparato di Kroll-Skutsch a Firmico II.3.5) | tre reggenti, uno partecipe | egizi | sì | nessuno | Doroteo sopravvive in arabo, e la traduzione di Pingree è protetta; Valente in greco è libero |
 | Tolomeo, *Tetrabiblos* | tradizionali | per segno, senza gradi (I.19) | due reggenti per setta; l'acqua a Marte, con Venere di giorno e la Luna di notte (I.18, p. 87) | tolemaici | no: la sua «faccia» è un aspetto ai luminari (I.23) | nessuno | greco e Ashmand (1822) liberi |
 | Medievale araba (Abū Maʿshar, al-Bīrūnī, Bonatti) | tradizionali | col grado | doroteiche | egizi | caldee | 5-4-3-2-1, almuten | Bonatti latino (1491) libero |
 | Lilly, 1647 | tradizionali | col grado, e i Nodi | due reggenti, Marte sull'acqua | tolemaici, nella sua versione | caldee | p. 104: esaltazione 4, triplicità 3, termine 2, faccia 1, esilio 5, caduta 4; domicilio illeggibile; peregrino definito a p. 112; tavola delle fortezze a p. 115, letta, domicilio 5 | scansioni libere; tavole lette il 27 ottobre 2026 |
@@ -498,7 +544,9 @@ comunque; le altre entrano quando le loro fonti sono state lette. Il
 punteggio c'è per Lilly, in `condizioni-lilly.ts`; una scuola nuova porta il
 suo, o nessuno.
 Nel Jyotisha la scelta è più semplice, perché Parashara è il riferimento che i
-documenti di lettura già presuppongono.
+documenti di lettura già presuppongono; dove il BPHS lascia un buco senza
+procedura (gli arudha dei graha) o un autore moderno conta altrimenti (i
+varga buoni), entra Narasimha Rao, nominato e accanto, mai al posto.
 
 ### Le fonti: verificato e da verificare
 
@@ -582,16 +630,13 @@ Da verificare:
   `texts/occidentale/tolomeo-tetrabiblos-robbins-1940/trascrizioni.md`.
 - **I punti 5-4-3-2-1 medievali**: a chi vanno attribuiti. I siti li danno
   come «medievali» senza un testo.
-- **Per il Jyotisha**: una fonte per l'esaltazione dei Nodi. **Trovata
-  nel BPHS stesso**, 47.34-36, letto sull'immagine (vedi il punto 1 qui
-  sopra); le righe che seguono restano per le altre fonti.
-  Santhanam in nota a 3.50 rimanda alla sua traduzione dello *Horasara*,
-  p. 20, che su archive.org non si è trovata (`texts/INDICE.md`, «Non
-  libere»). C'è un'altra traduzione, Subrahmanya Sastri (1949), in
-  `texts/jyotisha/horasara-subrahmanya-sastri-1949`: la pagina citata da
-  Santhanam lì non vale, i diritti vanno trattati come protetti, e per i
-  nodi non è ancora stata letta (lo è solo per il D-2, 2.2 e 8.11; vedi la
-  sua `FONTE.md`). Finché non c'è, i nodi restano senza.
+- **Per il Jyotisha, l'esaltazione dei nodi**: chiusa col BPHS stesso,
+  47.34-36, nel codice dal 29 ottobre 2026 (vedi *Deciso*). Se un giorno
+  servisse una seconda fonte: Santhanam in nota a 3.50 rimanda alla sua
+  traduzione dello *Horasara*, p. 20, che su archive.org non si è trovata
+  (`texts/INDICE.md`, «Non libere»); l'altra traduzione, Subrahmanya Sastri
+  (1949), è in `texts/jyotisha/horasara-subrahmanya-sastri-1949`, protetta,
+  e per i nodi non è stata letta (lo è solo per il D-2, 2.2 e 8.11).
 
 ### Verifica
 
@@ -661,8 +706,8 @@ scuola nuova.
   proprietario il 28 ottobre 2026, voce 19: in 6.52 i *segni* di uccha,
   moolatrikona e propri, come traduce Santhanam (l'altra lettura di
   *adhipateḥ* non ha un autore); l'arudha lagna calcolato secondo 29.1-7, e
-  non un conto senza (il conto senza arudha di Narasimha Rao può entrare
-  accanto, se il proprietario lo vuole: voce 19); il 6.53 come giudizio sull'effetto, che non toglie
+  non un conto senza (quello di Narasimha Rao è entrato accanto il 29
+  ottobre, qui sotto); il 6.53 come giudizio sull'effetto, che non toglie
   varga dal conto; la hora per segno con `leone-cancro`, con la nota di
   Santhanam a p. 90 con `parashara`, dichiarata come sua.
 - **Lo Scorpione e l'Acquario hanno due signori nel calcolo dell'arudha.**
