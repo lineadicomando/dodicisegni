@@ -3,9 +3,9 @@ import { computeNatalChart } from '../src/chart.js';
 import { parasharaSignDignities } from '../src/dignita-parashara.js';
 import { computeJyotisha } from '../src/jyotisha.js';
 import { arudhaOf } from '../src/arudha.js';
-import { computeGoodVargas, GOOD_VARGA_NAMES, VARGA_SCHEMES } from '../src/varga-buoni.js';
+import { computeGoodVargas, GOOD_VARGA_NAMES, narasimhaRaoGoodVargas, VARGA_SCHEMES } from '../src/varga-buoni.js';
 import { VARGAS } from '../src/varga.js';
-import type { BirthData } from '../src/types.js';
+import type { BirthData, VargaId, ZodiacSign } from '../src/types.js';
 
 const NASCITA: BirthData = {
   date: '1968-03-12',
@@ -136,5 +136,45 @@ describe('i varga buoni di un tema', () => {
     const vedico = computeJyotisha(carta);
     expect(vedico.goodVargas).toBeUndefined();
     expect(vedico.warnings.join(' ')).toContain('arudha');
+  });
+});
+
+describe('il conto di Narasimha Rao', () => {
+  /**
+   * L'esempio 27 del libro (2000, p. 65): Giove di Bill Cosby a 29°49' del
+   * Sagittario, coi segni dei sedici varga come li stampa, ricopiati qui.
+   */
+  const GIOVE_COSBY: Record<VargaId, ZodiacSign> = {
+    d1: 'sagittario', d2: 'cancro', d3: 'bilancia', d4: 'vergine', d7: 'gemelli', d9: 'sagittario',
+    d10: 'vergine', d12: 'scorpione', d16: 'pesci', d20: 'pesci', d24: 'cancro', d27: 'gemelli',
+    d30: 'bilancia', d40: 'cancro', d45: 'leone', d60: 'scorpione',
+  };
+
+  it('rifà l\'esempio di Bill Cosby: Vyanjana, Vyanjana, Gopura, Kalpavriksha', () => {
+    const conto = narasimhaRaoGoodVargas('giove', GIOVE_COSBY);
+    // «Rasi, D-2 and D-9»; «Rasi, D-2, D-9 and D-16»; «Rasi, D-2, D-9, D-16,
+    // D-20, D-24 and D-40».
+    expect(conto.goodVargas).toEqual(['d1', 'd2', 'd9', 'd16', 'd20', 'd24', 'd40']);
+    expect(conto.schemes.map((s) => [s.scheme, s.good, s.name])).toEqual([
+      ['shadvarga', 3, 'Vyanjana'],
+      ['saptavarga', 3, 'Vyanjana'],
+      ['dashavarga', 4, 'Gopura'],
+      ['shodashavarga', 7, 'Kalpavriksha'],
+    ]);
+  });
+
+  it('sta accanto a quello di Santhanam, che con l\'arudha non conta mai di meno', () => {
+    const buoni = computeGoodVargas(tema(), 'leone-cancro')!;
+    expect(buoni.narasimhaRaoSource).toContain('Narasimha Rao');
+    for (const graha of buoni.grahas) {
+      graha.narasimhaRao.schemes.forEach((rao, i) => {
+        expect(rao.good).toBeLessThanOrEqual(graha.schemes[i]!.good);
+      });
+    }
+  });
+
+  it('conta il D-2 Leone-Cancro anche quando il tema usa la hora di Parashara', () => {
+    const buoni = computeGoodVargas(tema(), 'parashara')!;
+    for (const graha of buoni.grahas) expect(['leone', 'cancro']).toContain(graha.narasimhaRao.d2Sign);
   });
 });

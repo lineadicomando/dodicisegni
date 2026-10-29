@@ -53,7 +53,7 @@ export {
   TARAGRAHAS,
 } from './stati.js';
 export { arudhaOf, bhavaLord, computeArudhas, PADA_NAMES } from './arudha.js';
-export { computeGoodVargas, GOOD_VARGA_NAMES, VARGA_SCHEMES } from './varga-buoni.js';
+export { computeGoodVargas, GOOD_VARGA_NAMES, narasimhaRaoGoodVargas, VARGA_SCHEMES } from './varga-buoni.js';
 export {
   DETRIMENT_SOURCE,
   detrimentsOf,

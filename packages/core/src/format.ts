@@ -1305,6 +1305,7 @@ function formatGoodVargasCompact(buoni: GoodVargas): string {
       `buoni per tutti: ${buoni.arudhaSigns.map((s) => SIGN_ABBR[s]).join(', ')}`,
     `Hora: ${buoni.hora.rule}`,
     buoni.verse53,
+    buoni.narasimhaRaoSource,
     '',
   ];
   for (const graha of buoni.grahas) {
@@ -1322,6 +1323,12 @@ function formatGoodVargasCompact(buoni: GoodVargas): string {
       .map((v) => `${v.varga.toUpperCase()} ${v.good.join('+')}`)
       .join(', ');
     lines.push(`${''.padEnd(11)} buoni: ${elenco || 'nessuno'}`);
+    const rao = graha.narasimhaRao;
+    lines.push(
+      `${''.padEnd(11)} Narasimha Rao: ` +
+        rao.schemes.map((s) => `${s.scheme} ${s.good}/${s.vargas}${s.name ? ` ${s.name}` : ''}`).join(' · ') +
+        ` (D2 ${SIGN_ABBR[rao.d2Sign]})`,
+    );
   }
   return lines.join('\n');
 }

@@ -116,6 +116,33 @@ const SOURCE =
   '6.52, o in un segno dei signori dei kendra dall\'arudha lagna. Il conto è per schema; il ' +
   'nome del conto è quello di 6.43-51.';
 
+const RAO_SOURCE =
+  'Secondo conto: P.V.R. Narasimha Rao, Vedic Astrology: An Integrated Approach (2000), §6.6, ' +
+  'pp. 63-65. Buono il varga nel segno di uccha, di moolatrikona o proprio, senza la regola ' +
+  'dell\'arudha. Il D-2 è contato coi segni Leone e Cancro, come nel suo esempio (Giove D-2 in ' +
+  'Cancro), qualunque sia la convenzione scelta per il D-2 del tema; il libro non dà altre ' +
+  'regole per il D-2. Stessi schemi e stessi nomi di BPHS 6.43-51.';
+
+/**
+ * Il conto di Narasimha Rao dai segni dei sedici varga: prende i segni e non
+ * la carta, perché l'esempio del libro (Bill Cosby, p. 65) si possa rifare
+ * dai segni stampati, senza effemeridi.
+ */
+export function narasimhaRaoGoodVargas(
+  body: BodyId,
+  signs: Readonly<Record<VargaId, ZodiacSign>>,
+): { goodVargas: VargaId[]; schemes: { scheme: VargaScheme; vargas: number; good: number; name: string | null }[] } {
+  const goodVargas = VARGAS.map(({ id }) => id).filter((id) =>
+    parasharaSignDignities(body, signs[id]).some((d) => d !== 'neecha'),
+  );
+  const schemes = SCHEMI.map((scheme) => {
+    const membri = VARGA_SCHEMES[scheme];
+    const good = membri.filter((id) => goodVargas.includes(id)).length;
+    return { scheme, vargas: membri.length, good, name: GOOD_VARGA_NAMES[scheme][good] ?? null };
+  });
+  return { goodVargas, schemes };
+}
+
 const VERSE_53 =
   'BPHS 6.53: i varga buoni di un graha combusto, sconfitto in guerra planetaria, in neecha, ' +
   'debole o in avastha come shayana «distruggono gli yoga» (il sanscrito dice anche nīcagā, ' +
@@ -169,11 +196,16 @@ export function computeGoodVargas(
         return { scheme, vargas: membri.length, good: buoni, name: GOOD_VARGA_NAMES[scheme][buoni] ?? null };
       });
 
+      const segniRao = Object.fromEntries(
+        VARGAS.map(({ id }) => [id, vargaSignOf(body.longitude, id, id === 'd2' ? 'leone-cancro' : hora)]),
+      ) as Record<VargaId, ZodiacSign>;
+
       return {
         id: body.id,
         name: grahaName(body.id, body.name),
         vargas,
         schemes,
+        narasimhaRao: { d2Sign: segniRao.d2, ...narasimhaRaoGoodVargas(body.id, segniRao) },
         neecha: parasharaDignityOf(body.id, body.longitude) === 'neecha',
         combust: combusti.includes(body.id),
         defeated: vinti.includes(body.id),
@@ -188,6 +220,7 @@ export function computeGoodVargas(
     arudhaSigns,
     hora: { convention: hora, rule: HORA_RULE[hora] },
     verse53: VERSE_53,
+    narasimhaRaoSource: RAO_SOURCE,
     grahas,
   };
 }

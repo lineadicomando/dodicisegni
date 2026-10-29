@@ -1069,6 +1069,12 @@ export interface GoodVargas {
    * questa riga dice che cosa il motore sa verificare e che cosa no.
    */
   verse53: string;
+  /**
+   * Il secondo conto, di P.V.R. Narasimha Rao (2000), §6.6: solo uccha,
+   * moolatrikona e segno proprio, senza l'arudha, col D-2 Leone-Cancro del
+   * suo esempio. Sta accanto a quello di Santhanam e non lo sostituisce.
+   */
+  narasimhaRaoSource: string;
   grahas: {
     id: BodyId;
     name: string;
@@ -1091,6 +1097,16 @@ export interface GoodVargas {
       /** Il nome del conto (6.43-51), o `null` sotto i due. */
       name: string | null;
     }[];
+    /**
+     * Il conto di Narasimha Rao: i varga buoni (dignità per segno, D-2
+     * Leone-Cancro) e, per schema, quanti e il nome.
+     */
+    narasimhaRao: {
+      /** Il segno del D-2 con la convenzione Leone-Cancro, quella del suo esempio. */
+      d2Sign: ZodiacSign;
+      goodVargas: VargaId[];
+      schemes: { scheme: VargaScheme; vargas: number; good: number; name: string | null }[];
+    };
     /** Se il graha è in neecha nella rashi (6.53, *nīcagā*). */
     neecha: boolean;
     /** Se è combusto secondo `GrahaStates.combustion` (6.53, *astaṃgatā*). */
