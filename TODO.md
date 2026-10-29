@@ -66,7 +66,7 @@ volta e ricominciare da capo.
 
 | Voce | Priorità | Taglia | Prima di cominciare |
 |---|---|---|---|
-| 19. Le dignità, per scuola | bassa | media | Jyotisha: le scelte sul 6.53 (le fonti sono lette); occidente: leggere Tolomeo I.18 e Bonatti |
+| 19. Le dignità, per scuola | bassa | media | Jyotisha: le scelte sul 6.53 (le fonti sono lette); occidente: leggere Tolomeo I.21 (i termini tolemaici) e Bonatti |
 | 17. L'astrologia oraria | bassa | piccola, ormai | i quattro lotti sono fatti; restano rifiniture indipendenti, una per riga |
 | 5. I varga: le convenzioni che restano | bassa | piccola | i sedici sono fatti; restano rifiniture, una per riga |
 
@@ -517,7 +517,7 @@ Per il tema tropicale le scuole possibili sono cinque, ciascuna come pacchetto:
 | | Domicili | Esaltazioni | Triplicità | Termini | Facce | Punteggio | Fonte primaria |
 |---|---|---|---|---|---|---|---|
 | Ellenistica (Doroteo, Valente) | tradizionali | da verificare: Valente I.2 non ha la tavola | tre reggenti, uno partecipe | egizi | sì | nessuno | Doroteo sopravvive in arabo, e la traduzione di Pingree è protetta; Valente in greco è libero |
-| Tolomeo, *Tetrabiblos* | tradizionali | per segno, senza gradi (I.19) | due reggenti, acqua da verificare | tolemaici | da verificare | nessuno | greco e Ashmand (1822) liberi |
+| Tolomeo, *Tetrabiblos* | tradizionali | per segno, senza gradi (I.19) | due reggenti per setta; l'acqua a Marte, con Venere di giorno e la Luna di notte (I.18, p. 87) | tolemaici | no: la sua «faccia» è un aspetto ai luminari (I.23) | nessuno | greco e Ashmand (1822) liberi |
 | Medievale araba (Abū Maʿshar, al-Bīrūnī, Bonatti) | tradizionali | col grado | doroteiche | egizi | caldee | 5-4-3-2-1, almuten | Bonatti latino (1491) libero |
 | Lilly, 1647 | tradizionali | col grado, e i Nodi | due reggenti, Marte sull'acqua | tolemaici, nella sua versione | caldee | p. 104: esaltazione 4, triplicità 3, termine 2, faccia 1, esilio 5, caduta 4; domicilio illeggibile; peregrino definito a p. 112; tavola delle fortezze a p. 115, letta, domicilio 5 | scansioni libere; tavole lette il 27 ottobre 2026 |
 | Moderna, XX secolo | con Urano, Nettuno, Plutone | segni, i pianeti esterni senza autore | nessuna | nessuno | decani per triplicità (Alan Leo) | nessuno | senza un autore unico |
@@ -613,14 +613,18 @@ Da verificare:
   gradi di `dignita-lilly.ts` sono il testo critico di Firmico, non la
   lezione dei codici; vedi
   `texts/occidentale/firmico-mathesis-kroll-skutsch-1897/trascrizioni.md`.
-- **La triplicità d'acqua in Tolomeo.** Una fonte gli attribuisce Marte di
-  giorno e di notte come Lilly, un'altra un reggente diverso per setta. Lilly
-  a p. 105 dice «according to Ptolomy and Naibod», che è un indizio e non
-  Tolomeo letto. I.18 si legge senza scaricare niente: Robbins e Ashmand sono
-  già in `texts/occidentale/tolomeo-tetrabiblos-*` (Ashmand traduce la
-  parafrasi di Proclo: vale come confronto, Robbins come testo; in Robbins il
-  libro I sta in `html/1A`, `html/1B` e `testo/`).
-- **Le facce in Tolomeo**, nelle stesse due edizioni.
+- **La triplicità d'acqua in Tolomeo**: letta il 29 ottobre 2026, I.18,
+  Loeb p. 87 (`texts/occidentale/tolomeo-tetrabiblos-robbins-1940/trascrizioni.md`).
+  Marte la regge, e «the moon by night and Venus by day are co‑rulers»:
+  due reggenti per setta, come scrive la seconda fonte. Le altre tre
+  triplicità coincidono con Lilly. Il «according to Ptolomy» di Lilly a
+  p. 105 vale per Marte, non per tutta la riga: una scuola di Tolomeo
+  avrebbe la sua triplicità d'acqua, non quella di Lilly.
+- **Le facce in Tolomeo**: lette il 29 ottobre 2026, I.22-23, Loeb
+  pp. 109-111. Non ci sono facce decaniche: la «proper face» di I.23 è il
+  pianeta che tiene coi luminari lo stesso aspetto del suo domicilio coi
+  loro, e le divisioni più fini (I.22) Tolomeo le rifiuta. Vedi
+  `texts/occidentale/tolomeo-tetrabiblos-robbins-1940/trascrizioni.md`.
 - **I punti 5-4-3-2-1 medievali**: a chi vanno attribuiti. I siti li danno
   come «medievali» senza un testo.
 - **Per il Jyotisha**: una fonte per l'esaltazione dei Nodi. **Trovata
