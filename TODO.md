@@ -726,6 +726,18 @@ scuola nuova.
   riferiti nella fonte e non usati. Restano ai sette graha le corrispondenze
   dei varga, i varga buoni, il vimshopaka, le relazioni e i signori dei
   segni di 4.6-24.
+- **Il 6.53: combustione, guerra e avastha come dati, con letture
+  dichiarate.** Scelto dal proprietario il 29 ottobre 2026, voce 19.
+  Combustione in longitudine con i limiti del *Surya Siddhanta* IX.6-9 e
+  X.1, dichiarando che il testo li dà in gradi di tempo e che la longitudine
+  li approssima; la tavola di Santhanam resta fuori. Guerra planetaria fra i
+  cinque *tārāgraha*, in longitudine geocentrica, sotto un grado di
+  differenza in latitudine (*Surya Siddhanta* VII.12 e 19), con le sole
+  regole di Venere e del nord (BPHS 79.9, SS VII.21 e 23), dichiarando che
+  le qualità osservative restano fuori. Avastha *śayanādi* di 45.30-37
+  calcolata e mostrata come dato, col navamsa per l'*aṃśa* e la ghati in
+  corso come nell'esempio di Santhanam, senza dire quali avastha annullino i
+  varga buoni. Il conto dei varga buoni non cambia: il 6.53 resta una nota.
 - **Il server MCP non ha un pool, e non gli serve**: è un processo per client,
   sul trasporto stdio, e non c'è nessun'altra richiesta da tenere in attesa.
 - **I thread del pool web sono al massimo quattro, e la quinta richiesta
