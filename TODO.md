@@ -66,7 +66,7 @@ volta e ricominciare da capo.
 
 | Voce | Priorità | Taglia | Prima di cominciare |
 |---|---|---|---|
-| 19. Le dignità, per scuola | bassa | media | Jyotisha: leggere BPHS 47.35-36 (le dignità dei nodi) e le fonti del 6.53; occidente: leggere Tolomeo I.18 e Bonatti |
+| 19. Le dignità, per scuola | bassa | media | Jyotisha: le scelte del proprietario sulle dignità dei nodi (47.34-36, letto) e le fonti del 6.53; occidente: leggere Tolomeo I.18 e Bonatti |
 | 17. L'astrologia oraria | bassa | piccola, ormai | i quattro lotti sono fatti; restano rifiniture indipendenti, una per riga |
 | 5. I varga: le convenzioni che restano | bassa | piccola | i sedici sono fatti; restano rifiniture, una per riga |
 
@@ -74,10 +74,9 @@ L'ordine consigliato è quello della tabella. Firmico, Valente e Leo sono
 in `texts/` con le pagine lette (voce 24, chiusa): la parte occidentale
 della 19 parte da lì. Della 19, nel
 Jyotisha, sono fatti dignità, varga buoni, relazioni, vimshopaka e arudha;
-quello che resta vuole prima la lettura di altre pagine del BPHS (la più
-utile è 47.35-36, che dà le dignità dei nodi che il codice oggi dice
-assenti dal testo), e tre scelte del proprietario: se e dove far entrare
-quelle dignità, gli arudha dei graha, il conto dei varga buoni di Narasimha
+quello che resta vuole la lettura di altre pagine del BPHS per il 6.53, e
+tre scelte del proprietario: se e dove far entrare le dignità dei nodi di
+47.34-36 (letto il 29 ottobre 2026), gli arudha dei graha, il conto dei varga buoni di Narasimha
 Rao come seconda convenzione. La 17 usa le tavole
 di Lilly della 19 e ha già le *moieties* come terza convenzione delle orbite.
 
@@ -457,19 +456,27 @@ descrizioni dicono «circa un quarto».
      `texts/jyotisha/narasimha-rao-vedic-astrology-integrated-approach-2000`
      (`testo/originale.txt`, righe 2470-2560). Ha un autore, quindi può entrare
      accanto, nominata; la scelta di farla è del proprietario.
-   - **Rahu e Ketu: le dignità ci sono nel BPHS, in un capitolo non ancora
-     letto.** `dignita-parashara.ts` e la fonte che viaggia col risultato
-     dicono che il testo sui nodi «non ne sceglie una»: vale per il cap. 3,
-     non per tutto il libro. BPHS 47.34-36 (vol. II, pp. 581-582, righe
-     5915-5950 dell'`ocr.txt`, letto il 28 ottobre 2026 solo nell'OCR), a
-     proposito della dasha di Rahu, dà l'esaltazione di Rahu nel Toro e di
-     Ketu nello Scorpione, i moolatrikona nei Gemelli e nel Sagittario, i
-     segni propri nell'Acquario e nello Scorpione, e riporta (*kenacit*,
-     «secondo alcuni») la Vergine e i Pesci. Va letto sull'immagine, e poi
-     deciso col proprietario se entra, e dove: nelle dignità, nelle
-     corrispondenze dei varga, nei varga buoni. Le relazioni dei nodi sono
-     un'altra cosa: Santhanam a p. 41 del vol. I le dà secondo altri testi,
-     non secondo 3.55, e restano fuori finché non c'è una fonte scelta.
+   - **Rahu e Ketu: le dignità ci sono nel BPHS, nel cap. 47.**
+     `dignita-parashara.ts` (commento in testa e `PARASHARA_DIGNITY_SOURCE`)
+     dice che il testo sui nodi «non ne sceglie una»: vale per il cap. 3,
+     non per tutto il libro. BPHS 47.34-36 (vol. II, pp. 581-582), letto
+     sull'immagine il 29 ottobre 2026 e trascritto in
+     `texts/jyotisha/bphs-santhanam-1992-vol2/trascrizioni.md`, a proposito
+     della dasha di Rahu dà: uccha di Rahu il Toro e di Ketu lo Scorpione;
+     moolatrikona i Gemelli e il Sagittario; segni propri l'Acquario e lo
+     Scorpione (gli stessi di 46.157, che `arudha.ts` usa già), e «secondo
+     alcuni» (*kenacit*, senza nome) la Vergine e i Pesci. Tre cose che la
+     traduzione non fa vedere: **niente gradi**; **la neecha il verso non la
+     dà**, la nomina solo in 47.41 senza dire il segno, e «(Scorpio)» lì è
+     di Santhanam; per Ketu lo **Scorpione è insieme uccha e segno proprio**.
+     Le scelte del proprietario, prima del codice: se entra; con la neecha
+     nel settimo segno (la regola di 3.49 per i sette, applicata da
+     Santhanam) o senza; dove (le dignità della rashi, le corrispondenze dei
+     varga di 6.52, i varga buoni e quindi il vimshopaka, che oggi contano i
+     sette). Se non entra, la frase del codice va comunque corretta: il
+     BPHS una scelta la fa, al cap. 47. Le relazioni dei nodi sono un'altra
+     cosa: Santhanam a p. 41 del vol. I le dà secondo altri testi, non
+     secondo 3.55, e restano fuori finché non c'è una fonte scelta.
 
 2. **Le altre scuole occidentali**, quando le loro fonti sono state lette
    (vedi *Da verificare* qui sotto): ciascuna come valore nuovo di
@@ -603,8 +610,8 @@ Da verificare:
 - **I punti 5-4-3-2-1 medievali**: a chi vanno attribuiti. I siti li danno
   come «medievali» senza un testo.
 - **Per il Jyotisha**: una fonte per l'esaltazione dei Nodi. **Trovata
-  nel BPHS stesso**, 47.35-36 (vedi il punto 1 qui sopra), da leggere
-  sull'immagine; le righe che seguono restano per le altre fonti.
+  nel BPHS stesso**, 47.34-36, letto sull'immagine (vedi il punto 1 qui
+  sopra); le righe che seguono restano per le altre fonti.
   Santhanam in nota a 3.50 rimanda alla sua traduzione dello *Horasara*,
   p. 20, che su archive.org non si è trovata (`texts/INDICE.md`, «Non
   libere»). C'è un'altra traduzione, Subrahmanya Sastri (1949), in
