@@ -78,14 +78,15 @@ volta e ricominciare da capo.
 | 17. L'astrologia oraria | bassa | piccola, ormai | i quattro lotti sono fatti; restano rifiniture indipendenti, una per riga |
 | 5. I varga: le convenzioni che restano | bassa | piccola | i sedici sono fatti; restano rifiniture, una per riga |
 
-L'ordine consigliato è quello della tabella. Firmico, Valente e Leo sono
-in `texts/` con le pagine lette (voce 24, chiusa): la parte occidentale
-della 19 parte da lì. Della 19, nel Jyotisha, sono fatti dignità (anche dei
-nodi), varga buoni (nei due conti, Santhanam e Narasimha Rao), relazioni,
-vimshopaka, arudha dei bhava e dei graha, e gli stati di 6.53; restano
-rifiniture senza urgenza. Nell'occidente ci sono Lilly e, dal 29 ottobre
-2026, Tolomeo; la prossima scuola è Bonatti. La 17 usa le tavole di Lilly della 19 e ha
-già le *moieties* come terza convenzione delle orbite.
+L'ordine consigliato è quello della tabella. Della 19, nel Jyotisha, sono
+fatti dignità (anche dei nodi), varga buoni (nei due conti, Santhanam e
+Narasimha Rao), relazioni, vimshopaka, arudha dei bhava e dei graha, e gli
+stati di 6.53; restano rifiniture senza urgenza. Nell'occidente ci sono Lilly e, dal 29 ottobre
+2026, Tolomeo; la prossima scuola è Bonatti, e il primo passo è trovare nella
+scansione i fogli delle dignità (voce 19, *Da verificare*). Firmico, Valente
+e Leo sono in `texts/` con le pagine lette (voce 24, chiusa). La 17 usa le
+tavole di Lilly della 19 e ha già le *moieties* come terza convenzione delle
+orbite.
 
 **Come si è lavorato nel Jyotisha, e conviene continuare.** Ogni regola si
 legge sull'immagine della pagina (`pdftoppm`, vedi le schede `FONTE.md`), si
@@ -104,6 +105,17 @@ Quest'ultima nessun test la confronta con la prosa, ed è quella che si
 dimentica: il 29 ottobre 2026 diceva ancora il 6.53 «non verificato». Dalla
 riga di comando la tabella compatta si vede con `--zodiaco siderale
 --lettura --sistema jyotisha`.
+
+**Come si lavora su una scuola occidentale.** Lo stesso metodo, con le
+superfici del tema tropicale: il modulo `dignita-<scuola>.ts` con la sua
+riga `source`, il campo in `WesternDignities`, le righe in `format.ts`, il
+blocco in `DignityTable.svelte`, la voce del menù in `lib/scuole-dignita.ts`,
+la descrizione di `dignity_school` in `packages/mcp/src/tools.ts`, il
+documento `packages/lettura/src/tropicale.ts` e `/metodo`. L'elenco preciso,
+con quello che nessun test controlla, è alla voce 19, *Che cosa resta*, 2.
+L'ultima fatta, Tolomeo, è il modello: `14df446` il calcolo, `75cc895` le
+superfici. Dalla riga di comando la sezione si vede con `--dignita <scuola>`
+e una nascita qualunque, con l'ora perché ci sia la setta.
 
 ## 5. I varga: le convenzioni che restano
 
@@ -316,8 +328,9 @@ un pacchetto di tavole nel punto 19.
 **Priorità bassa**, ora che il tropicale è fatto per intero. Viene dal punto
 17, che ne ha bisogno, ma vale da sola: le dignità servono al natale letto
 alla maniera tradizionale e al Jyotisha. Il Jyotisha è fatto, salvo
-rifiniture; restano le scuole occidentali le cui fonti non sono ancora state
-lette per intero, e la prima candidata è Tolomeo (sotto, *Che cosa resta*).
+rifiniture. Nell'occidente ci sono Lilly e Tolomeo; restano le scuole le cui
+fonti non sono ancora state lette, e la prossima è Bonatti (sotto, *Da
+verificare*).
 
 ### A che punto è
 
@@ -434,8 +447,8 @@ cinque le dignità, sugli esempi di Lilly a p. 112. La tavola è trascritta
 riga per riga in `texts/occidentale/lilly-christian-astrology-1647/trascrizioni.md`,
 con la lettura di p. 105 (che dice come si leggono le celle), e il test la
 ricopia coi glifi della stampa (`packages/core/test/dignita-lilly.test.ts`).
-Si accende con `ChartOptions.dignitySchool: 'lilly'` (`types.ts:1305`, letto
-in `chart.ts`), con `SkyOptions.dignitySchool` (`types.ts:1502`, in
+Si accende con `ChartOptions.dignitySchool: 'lilly'` (`types.ts:1349`, letto
+in `chart.ts`), con `SkyOptions.dignitySchool` (`types.ts:1546`, in
 `sky.ts`) e con `--dignita lilly` nella CLI, solo nello zodiaco tropicale: la
 sezione DIGNITÀ aggiunge, sotto le righe comuni,
 una riga per corpo con i signori del suo grado e le sue dignità, e le
@@ -465,8 +478,9 @@ compatta impagina il JSON e non ricalcola, e i test che confrontavano le due
 rese non tolgono più la sezione. Le ricezioni portano `counted`, come la
 distribuzione. Superfici: `--dignita lilly` (anche con `--json`),
 `dignitySchool=lilly` su `/api/chart`, `dignity_school` su
-`compute_natal_chart`, la casella «Dignità di Lilly» e `DignityTable.svelte`
-nella pagina del tema. Il compatto ora pesa circa il 25% del JSON, e le
+`compute_natal_chart`, la voce «Dignità di Lilly» del menù «Scuola delle
+dignità» (era una casella fino a `75cc895`) e `DignityTable.svelte` nella
+pagina del tema. Il compatto ora pesa circa il 25% del JSON, e le
 descrizioni dicono «circa un quarto».
 
 Fatta anche la scuola di Tolomeo, il 29 ottobre 2026, in `14df446` e
@@ -554,10 +568,10 @@ ed è quello che la sezione DIGNITÀ porta oggi:
   mettendo Plutone nel tema: qui la si dichiara.
 
 Triplicità, termini e facce **non compaiono per default**: si chiedono
-nominando la scuola. La prima disponibile è Lilly, che l'oraria richiede
-comunque; le altre entrano quando le loro fonti sono state lette. Il
-punteggio c'è per Lilly, in `condizioni-lilly.ts`; una scuola nuova porta il
-suo, o nessuno.
+nominando la scuola. Le disponibili sono Lilly, che l'oraria richiede
+comunque, e Tolomeo; le altre entrano quando le loro fonti sono state lette.
+Il punteggio c'è per Lilly, in `condizioni-lilly.ts`; Tolomeo non ne ha, e
+una scuola nuova porta il suo, o nessuno.
 Nel Jyotisha la scelta è più semplice, perché Parashara è il riferimento che i
 documenti di lettura già presuppongono; dove il BPHS lascia un buco senza
 procedura (gli arudha dei graha) o un autore moderno conta altrimenti (i
@@ -613,13 +627,35 @@ intera di Lilly il 27 ottobre, in `dignita-lilly.ts`):
   copia digitale e non dice niente dei diritti sulla traduzione: se ne
   prendono i valori, non il testo.
 
+- **Tolomeo, triplicità, termini e facce**: letti il 29 ottobre 2026,
+  I.18 e I.20-23, e nel codice in `dignita-tolomeo.ts`. Le triplicità (Loeb
+  pp. 83-87) danno due signori per triangolo, uno per setta, e nell'acqua
+  Marte con Venere di giorno e la Luna di notte: il «according to Ptolomy»
+  di Lilly a p. 105 vale per Marte, non per tutta la riga. I termini si
+  leggono sulla **scansione** della Loeb (pp. 96 e 106, greco, con
+  l'apparato a pp. 106-107), scaricata apposta in
+  `texts/occidentale/tolomeo-tetrabiblos-robbins-1940`: l'HTML di
+  LacusCurtius non ha il greco né l'apparato, e nella Bilancia tolemaica ha
+  ♄ al posto di ♂. Confrontati con Ashmand p. 53 e con Lilly: i termini di
+  Lilly differiscono in sette segni, e le sue somme per pianeta non tornano.
+  Facce decaniche in Tolomeo non ce ne sono (I.22-23). Tutto nelle
+  trascrizioni della fonte.
+- **I termini egizi** sono trascritti anche loro, dal greco di Robbins
+  p. 96 e controllati con le somme per pianeta dell'apparato (Saturno 57,
+  Giove 79, Marte 66, Venere 82, Mercurio 76), nella stessa
+  `trascrizioni.md`: servono alla scuola medievale e all'ellenistica, che
+  li usano, e vanno confrontati con la tavola di Bonatti quando la si legge.
+
 Da verificare:
 
 - **Bonatti**, per domicili ed esaltazioni: non è stato letto. L'edizione
   Ratdolt 1491 è in `texts/occidentale/bonatti-decem-tractatus-1491`, e l'OCR
   dell'incunabolo non serve: si legge sulle immagini. Non c'è ancora una
   mappa dei fogli: quali contengano domicili ed esaltazioni va trovato
-  sfogliando, e scritto nella `FONTE.md`. Un'altra copia, senza
+  sfogliando, e scritto nella `FONTE.md`: la pista da provare per prima è il
+  secondo trattato, quello sui segni, ma non è stata verificata. Bonatti
+  dovrebbe dare anche triplicità, termini e facce, e la riga medievale della
+  tavola qui sopra è di fonti secondarie. Un'altra copia, senza
   OCR, è `ita-bnc-in1-00000968-001` (Biblioteca Nazionale Centrale di
   Firenze); quella della Bayerische Staatsbibliothek non si è trovata.
 - **Le esaltazioni nella scuola ellenistica**: altrove in Valente, o in
@@ -631,23 +667,6 @@ Da verificare:
   gradi di `dignita-lilly.ts` sono il testo critico di Firmico, non la
   lezione dei codici; vedi
   `texts/occidentale/firmico-mathesis-kroll-skutsch-1897/trascrizioni.md`.
-- **La triplicità d'acqua in Tolomeo**: letta il 29 ottobre 2026, I.18,
-  Loeb p. 87 (`texts/occidentale/tolomeo-tetrabiblos-robbins-1940/trascrizioni.md`).
-  Marte la regge, e «the moon by night and Venus by day are co‑rulers»:
-  due reggenti per setta, come scrive la seconda fonte. Le altre tre
-  triplicità coincidono con Lilly. Il «according to Ptolomy» di Lilly a
-  p. 105 vale per Marte, non per tutta la riga: una scuola di Tolomeo
-  avrebbe la sua triplicità d'acqua, non quella di Lilly.
-- **I termini in Tolomeo**: letti il 29 ottobre 2026, I.20-21, sulla
-  scansione della Loeb (pp. 96 e 106, greco, con l'apparato a pp. 106-107)
-  e confrontati con Ashmand p. 53 e con Lilly; nel codice in
-  `dignita-tolomeo.ts`. Il confronto sta nelle trascrizioni della fonte: i
-  termini di Lilly differiscono in sette segni, e le sue somme non tornano.
-- **Le facce in Tolomeo**: lette il 29 ottobre 2026, I.22-23, Loeb
-  pp. 109-111. Non ci sono facce decaniche: la «proper face» di I.23 è il
-  pianeta che tiene coi luminari lo stesso aspetto del suo domicilio coi
-  loro, e le divisioni più fini (I.22) Tolomeo le rifiuta. Vedi
-  `texts/occidentale/tolomeo-tetrabiblos-robbins-1940/trascrizioni.md`.
 - **I punti 5-4-3-2-1 medievali**: a chi vanno attribuiti. I siti li danno
   come «medievali» senza un testo.
 - **Per il Jyotisha, l'esaltazione dei nodi**: chiusa col BPHS stesso,
@@ -721,7 +740,8 @@ scuola nuova.
   del Sole e della Luna come nei testi, e Leone-Cancro accanto, dichiarata
   come lettura corrente senza un classico che la enunci. Scelto dal
   proprietario il 27 ottobre 2026 fra quattro strade, fatto il 28 in
-  `a828b3f`; la forma del risultato sta nella voce 5, lotto A.
+  `a828b3f`; la forma del risultato sta nella voce 5, *Che cosa resta*, nella
+  riga sulle altre convenzioni della hora.
 - **Il D-60 si conta dal segno stesso, con una convenzione sola.** Il verso
   6.33 dice *tad-rāśeḥ* e l'esempio di Santhanam lo applica, e P.V.R.
   Narasimha Rao lo legge allo stesso modo (in un'email del 2009 riportata su
