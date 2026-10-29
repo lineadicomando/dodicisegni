@@ -137,6 +137,7 @@ describe('superficie MCP', () => {
     // E che le avastha del 6.53 non dicono quali varga buoni si annullino.
     expect(jyotishaTool?.description).toMatch(/Quali avastha annullino i varga buoni/);
     expect(jyotishaTool?.description).toMatch(/Narasimha Rao/);
+    expect(jyotishaTool?.description).toMatch(/arudha dei nove graha/);
     expect(jyotishaTool?.inputSchema.required).toEqual(['date']);
 
     const wheelTool = tools.find((tool) => tool.name === 'draw_chart_wheel');

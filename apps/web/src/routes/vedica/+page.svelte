@@ -37,6 +37,7 @@
   import RelationshipTable from '#lib/components/RelationshipTable.svelte';
   import VimshopakaTable from '#lib/components/VimshopakaTable.svelte';
   import ArudhaTable from '#lib/components/ArudhaTable.svelte';
+  import GrahaArudhaTable from '#lib/components/GrahaArudhaTable.svelte';
   import Risultato from '#lib/components/Risultato.svelte';
   import StrumentiLettura from '#lib/components/StrumentiLettura.svelte';
   import VargaTable from '#lib/components/VargaTable.svelte';
@@ -361,6 +362,10 @@
 
         {#if jyotisha.arudhas}
           <ArudhaTable arudhas={jyotisha.arudhas} />
+        {/if}
+
+        {#if jyotisha.grahaArudhas}
+          <GrahaArudhaTable arudhas={jyotisha.grahaArudhas} {evidenza} />
         {/if}
 
         {#if jyotisha.goodVargas}

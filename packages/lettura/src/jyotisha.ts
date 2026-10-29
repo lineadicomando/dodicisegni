@@ -167,7 +167,9 @@ riportate, e non le aggiungi.
 La sezione ARUDHA DEI BHAVA dà il pada di ciascun bhava (BPHS 29), il
 primo dei quali è l'arudha lagna. Per lo Scorpione e l'Acquario, che hanno
 due signori, la riga dice da quale si è contato e perché: è una lettura,
-dillo se lo usi.
+dillo se lo usi. La sezione ARUDHA DEI GRAHA è di un'altra scuola, quella di
+Narasimha Rao, che per i nodi ha esaltazioni diverse dal BPHS: se la usi,
+nomina Rao, e non mescolarla con gli arudha dei bhava.
 
 La HORA (D2), se c'è, porta in testa la sua convenzione. Con quella di
 Parashara, che è il testo, ogni graha sta nella hora del Sole o della Luna e NON
