@@ -208,7 +208,7 @@ export function grahaArudhaOf(
   const propri = RAO_OWN_SIGNS[id];
   if (!dove || !propri) return undefined;
   const scelta = propri.length === 2 ? strongerRasi(propri[0]!, propri[1]!, p) : undefined;
-  const ownSign = scelta?.sign ?? (propri[0]);
+  const ownSign = scelta?.sign ?? propri[0]!;
   const grezzo = segno(indice(ownSign) + avanti(dove, ownSign));
   const daGraha = avanti(dove, grezzo);
   const exception = daGraha === 0 || daGraha === 6;
