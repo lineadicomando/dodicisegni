@@ -141,7 +141,10 @@ Opzioni
                         lilly (Christian Astrology, 1647), con triplicità,
                         termini, facce e le ricezioni per tutte e cinque, e la
                         sezione CONDIZIONI (LILLY): ora planetaria, Sole, moto,
-                        orientalità, partili, stelle e il conto di p. 115.
+                        orientalità, partili, stelle e il conto di p. 115;
+                        oppure tolomeo (Tetrabiblos I.17-21, ed. Robbins),
+                        con i signori dei triangoli e i termini tolemaici,
+                        senza facce, esilio, punteggio né ricezioni sue.
                         Solo nello zodiaco tropicale, col tema natale o con
                         --sky, in tabella e in --json
   --json                Stampa il JSON completo invece della tabella compatta

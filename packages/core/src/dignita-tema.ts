@@ -2,8 +2,9 @@
  * Le dignità occidentali di un tema, raccolte nel blocco che `NatalChart`
  * porta: le tavole comuni sempre, quelle di una scuola solo se chiesta.
  *
- * Sta in un file suo perché tiene insieme `dignita.ts` e `dignita-lilly.ts`,
- * e il secondo dipende dal primo: messo in uno dei due farebbe un ciclo.
+ * Sta in un file suo perché tiene insieme `dignita.ts` e i pacchetti delle
+ * scuole (`dignita-lilly.ts`, `dignita-tolomeo.ts`), che dipendono dal primo:
+ * messo in uno di loro farebbe un ciclo.
  * Non aggiunge regole, le applica ai corpi di un tema.
  */
 
@@ -24,6 +25,13 @@ import {
   lillyReceptionsOf,
   lillyRulersAt,
 } from './dignita-lilly.js';
+import {
+  PTOLEMY_RECEPTION_SOURCE,
+  PTOLEMY_SOURCE,
+  PTOLEMY_TERMS_SOURCE,
+  ptolemyDignitiesOf,
+  ptolemyRulersAt,
+} from './dignita-tolomeo.js';
 import { computeLillyConditions, type LillyConditionsInput } from './condizioni-lilly.js';
 import type {
   CelestialBody,
@@ -33,16 +41,28 @@ import type {
   WesternDignities,
 } from './types.js';
 
-/** Le dignità per cui le ricezioni si contano, con e senza la scuola. */
+/**
+ * Le dignità per cui le ricezioni si contano, con e senza la scuola. Con
+ * Tolomeo restano le comuni: la ricezione è una definizione di Lilly, e
+ * contarla sulle tavole di Tolomeo mescolerebbe le due scuole.
+ */
 const CONTATE: Readonly<Record<'comune' | DignitySchool, readonly ReceptionDignity[]>> = {
   comune: ['domicilio', 'esaltazione'],
   lilly: ['domicilio', 'esaltazione', 'triplicita', 'termine', 'faccia'],
+  tolomeo: ['domicilio', 'esaltazione'],
+};
+
+/** La riga delle ricezioni per ciascun caso. */
+const FONTE_RICEZIONI: Readonly<Record<'comune' | DignitySchool, string>> = {
+  comune: RECEPTION_SOURCE,
+  lilly: LILLY_RECEPTION_SOURCE,
+  tolomeo: PTOLEMY_RECEPTION_SOURCE,
 };
 
 /**
  * Il blocco delle dignità per i corpi di un tema tropicale. La setta serve
- * solo alla triplicità di Lilly; senza, quella resta dov'è la stessa di
- * giorno e di notte.
+ * alla triplicità di Lilly, che senza resta dov'è la stessa di giorno e di
+ * notte, e a dire chi governa il triangolo di Tolomeo.
  *
  * `instant` serve alle condizioni di Lilly, che oltre ai corpi chiedono le
  * case, le stelle e l'ora planetaria: chi lo omette le ha senza case e senza
@@ -63,6 +83,7 @@ export function computeWesternDignities(
 
   const conLilly = school === 'lilly';
   const { single, mutual } = conLilly ? lillyReceptionsOf(bodies, sect) : receptionsOf(bodies);
+  const caso = school ?? 'comune';
 
   const dignities: WesternDignities = {
     sources: {
@@ -81,8 +102,8 @@ export function computeWesternDignities(
       },
     })),
     receptions: {
-      source: conLilly ? LILLY_RECEPTION_SOURCE : RECEPTION_SOURCE,
-      counted: [...CONTATE[conLilly ? 'lilly' : 'comune']],
+      source: FONTE_RICEZIONI[caso],
+      counted: [...CONTATE[caso]],
       single,
       mutual,
     },
@@ -103,6 +124,20 @@ export function computeWesternDignities(
         sect,
         ...(instant ?? { houses: [], stars: { missing: 'non richieste' } }),
       }),
+    };
+  }
+
+  if (school === 'tolomeo') {
+    dignities.tolomeo = {
+      school: 'tolomeo',
+      source: PTOLEMY_SOURCE,
+      termsSource: PTOLEMY_TERMS_SOURCE,
+      bodies: bodies.map((body) => ({
+        id: body.id,
+        name: body.name,
+        rulers: ptolemyRulersAt(body.longitude, sect),
+        dignities: ptolemyDignitiesOf(body.id, body.longitude),
+      })),
     };
   }
 

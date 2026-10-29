@@ -109,6 +109,21 @@ export {
   type LillyRulers,
 } from './dignita-lilly.js';
 export {
+  PTOLEMY_PLANETS,
+  PTOLEMY_RECEPTION_SOURCE,
+  PTOLEMY_SOURCE,
+  PTOLEMY_TERMS_SOURCE,
+  ptolemyDignitiesOf,
+  ptolemyRulersAt,
+  ptolemyTermRuler,
+  ptolemyTerms,
+  ptolemyTriplicityGovernors,
+  ptolemyTriplicityLords,
+  type PtolemyDignity,
+  type PtolemyPlanet,
+  type PtolemyRulers,
+} from './dignita-tolomeo.js';
+export {
   computeParasharaDignities,
   PARASHARA_GRAHAS,
   PARASHARA_SOURCE,

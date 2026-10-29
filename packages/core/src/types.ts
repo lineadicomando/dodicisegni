@@ -543,7 +543,7 @@ export interface ChartFormatOptions {
 }
 
 /** Le scuole delle dignità che si possono chiedere per nome. */
-export type DignitySchool = 'lilly';
+export type DignitySchool = 'lilly' | 'tolomeo';
 
 /** Le due convenzioni dei domicili, che il tema porta affiancate. */
 export type DomicileScheme = 'tradizionale' | 'moderno';
@@ -593,6 +593,31 @@ export interface LillyRulers {
   triplicita?: BodyId;
   termine: BodyId;
   faccia: BodyId;
+}
+
+/**
+ * Le voci di Tolomeo, *Tetrabiblos* I.17-21: quattro dignità e una debilità.
+ * Niente faccia ed esilio, che Tolomeo non ha.
+ */
+export type PtolemyDignity = 'domicilio' | 'esaltazione' | 'triplicita' | 'termine' | 'caduta';
+
+/** Chi ha autorità su un grado dello zodiaco secondo Tolomeo. */
+export interface PtolemyRulers {
+  domicilio: BodyId;
+  /** Il pianeta esaltato nel segno, se ce n'è uno: in Leone, Scorpione e Acquario nessuno. */
+  esaltazione?: BodyId;
+  /**
+   * I signori del triangolo, tutti, nell'ordine di I.18: due, e tre
+   * nell'acqua (Marte, la Luna e Venere). Sono signori a prescindere dalla
+   * setta.
+   */
+  triplicita: BodyId[];
+  /**
+   * Chi governa il triangolo nella setta del tema: uno, e nell'acqua Marte
+   * col co-reggente della setta. Assente senza la setta.
+   */
+  triplicitaDiSetta?: BodyId[];
+  termine: BodyId;
 }
 
 /** Le tre stelle fisse della tavola di Lilly, p. 115. */
@@ -717,8 +742,8 @@ export interface LillyConditions {
 }
 
 /**
- * Le dignità occidentali di un tema tropicale. Vedi `dignita.ts` e
- * `dignita-lilly.ts`.
+ * Le dignità occidentali di un tema tropicale. Vedi `dignita.ts`,
+ * `dignita-lilly.ts` e `dignita-tolomeo.ts`.
  *
  * Come per le altre dottrine, ogni blocco porta la sua fonte, e dove le scuole
  * divergono ci sono tutte e due: i domicili in due colonne mai fuse, e le
@@ -746,8 +771,9 @@ export interface WesternDignities {
   }[];
   /**
    * Le ricezioni fra i sette pianeti, secondo Lilly. `counted` dice per quali
-   * dignità sono state contate, come `Distribution.counted`: senza la scuola,
-   * domicilio ed esaltazione; con Lilly, tutte e cinque.
+   * dignità sono state contate, come `Distribution.counted`: senza la scuola
+   * e con Tolomeo, che la ricezione non la definisce, domicilio ed
+   * esaltazione; con Lilly, tutte e cinque.
    */
   receptions: {
     source: string;
@@ -776,6 +802,23 @@ export interface WesternDignities {
      * `missing`.
      */
     conditions: LillyConditions;
+  };
+  /** Il pacchetto di Tolomeo, solo se chiesto con `dignitySchool: 'tolomeo'`. */
+  tolomeo?: {
+    school: 'tolomeo';
+    source: string;
+    /** La tavola dei termini seguita, e le sue varianti. */
+    termsSource: string;
+    /**
+     * Per ogni corpo, i signori del grado in cui sta e le dignità che ha lì.
+     * I signori ci sono per tutti; le dignità solo per i sette pianeti.
+     */
+    bodies: {
+      id: BodyId;
+      name: string;
+      rulers: PtolemyRulers;
+      dignities: PtolemyDignity[];
+    }[];
   };
 }
 
@@ -1298,9 +1341,10 @@ export interface ChartOptions extends ZodiacOptions {
   /**
    * La scuola delle dignità da aggiungere a quelle comuni, in
    * `NatalChart.dignities`. Omessa, nessuna: triplicità, termini e facce non
-   * hanno una forma sola, e si chiedono nominando chi le ha scritte. Oggi c'è
-   * Lilly (1647), vedi `dignita-lilly.ts`. Solo nello zodiaco tropicale, su
-   * cui le sue tavole sono costruite: nel siderale è un `ChartError`.
+   * hanno una forma sola, e si chiedono nominando chi le ha scritte. Oggi ci
+   * sono Lilly (1647), vedi `dignita-lilly.ts`, e Tolomeo, vedi
+   * `dignita-tolomeo.ts`. Solo nello zodiaco tropicale, su cui le loro
+   * tavole sono costruite: nel siderale è un `ChartError`.
    */
   dignitySchool?: DignitySchool;
   /** Percorso della cartella con i file `.se1`. Default: variabile d'ambiente o `<pkg>/ephe`. */
@@ -1494,10 +1538,10 @@ export interface SkyOptions extends ZodiacOptions {
   /** Corpi da calcolare. Default: tutti tranne Chirone e Lilith. */
   bodies?: BodyId[];
   /**
-   * Le dignità di una scuola, con le condizioni dell'istante: oggi Lilly.
-   * Omessa, il cielo non porta dignità. Solo nel tropicale, come nel tema.
-   * Le case, l'ora planetaria e i gradi dell'Ascendente chiedono il luogo e
-   * l'ora.
+   * Le dignità di una scuola: Lilly, con le condizioni dell'istante, o
+   * Tolomeo. Omessa, il cielo non porta dignità. Solo nel tropicale, come nel
+   * tema. Per Lilly le case, l'ora planetaria e i gradi dell'Ascendente
+   * chiedono il luogo e l'ora.
    */
   dignitySchool?: DignitySchool;
   /** Percorso della cartella con i file `.se1`. */
@@ -1545,7 +1589,7 @@ export interface SkyChart {
   aspects: Aspect[];
   /** Come nel tema. Il gruppo degli assi resta vuoto senza luogo o senza ora. */
   distribution: Distribution;
-  /** Le dignità e le condizioni di Lilly, solo con `dignitySchool`. */
+  /** Le dignità di una scuola, solo con `dignitySchool`: con Lilly anche le condizioni. */
   dignities?: WesternDignities;
   /**
    * Avvertimenti non bloccanti: ora non indicata, luogo senza ora, ripiego

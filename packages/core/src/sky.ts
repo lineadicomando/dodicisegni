@@ -95,14 +95,22 @@ export function computeSky(moment: SkyMoment, options: SkyOptions = {}): SkyChar
     sky.distribution = computeDistribution(sky);
     // Le dignità per ultime, come nel tema: le condizioni di Lilly vogliono
     // le case e l'ora planetaria, che arrivano solo col luogo e con l'ora.
+    // Tolomeo non ha condizioni, e l'istante non gli serve.
     if (options.dignitySchool) {
       const conOra = place !== undefined && time.timeKnown;
-      sky.dignities = computeWesternDignities(sky.bodies, sky.sect, options.dignitySchool, {
-        houses: sky.houses,
-        ...(sky.angles ? { ascendant: sky.angles.ascendant } : {}),
-        stars: lillyStarsAt(time.julianDayUT, context),
-        ...(conOra ? { hour: planetaryHourAt(time.julianDayUT, place, moment.timezone, context) } : {}),
-      });
+      sky.dignities = computeWesternDignities(
+        sky.bodies,
+        sky.sect,
+        options.dignitySchool,
+        options.dignitySchool === 'lilly'
+          ? {
+              houses: sky.houses,
+              ...(sky.angles ? { ascendant: sky.angles.ascendant } : {}),
+              stars: lillyStarsAt(time.julianDayUT, context),
+              ...(conOra ? { hour: planetaryHourAt(time.julianDayUT, place, moment.timezone, context) } : {}),
+            }
+          : undefined,
+      );
     }
     return sky;
   };

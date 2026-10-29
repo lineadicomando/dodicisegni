@@ -272,7 +272,10 @@ export const HOUSE_SYSTEM_CODES: Readonly<Record<HouseSystem, string>> = {
  * di una scuola nuova: le superfici leggono le chiavi da qui, e una scuola
  * aggiunta all'unione `DignitySchool` senza nome non compila.
  */
-export const DIGNITY_SCHOOL_NAMES: Readonly<Record<DignitySchool, string>> = { lilly: 'Lilly' };
+export const DIGNITY_SCHOOL_NAMES: Readonly<Record<DignitySchool, string>> = {
+  lilly: 'Lilly',
+  tolomeo: 'Tolomeo',
+};
 
 export interface AspectDefinition {
   id: AspectId;

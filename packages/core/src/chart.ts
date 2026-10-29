@@ -50,7 +50,7 @@ export function computeNatalChart(birth: BirthData, options: ChartOptions = {}):
   const orbs = natalOrbConvention(options.orbConvention);
 
   const zodiac = options.zodiac ?? 'tropicale';
-  // Rifiutata e non ignorata: chi chiede Lilly e non lo trova penserebbe che
+  // Rifiutata e non ignorata: chi chiede una scuola e non la trova penserebbe che
   // il tema non abbia dignità da mostrare.
   if (options.dignitySchool && zodiac !== 'tropicale') {
     throw new ChartError(
@@ -152,8 +152,8 @@ export function computeNatalChart(birth: BirthData, options: ChartOptions = {}):
   if (sect) chart.sect = sect;
   if (partOfFortune) chart.partOfFortune = partOfFortune;
 
-  // Solo nel tropicale: vedi `NatalChart.dignities`. La setta serve alla
-  // triplicità di Lilly, e c'è solo con l'ora.
+  // Solo nel tropicale: vedi `NatalChart.dignities`. La setta serve alle
+  // triplicità delle scuole, e c'è solo con l'ora.
   if (zodiac === 'tropicale') {
     const lilly = options.dignitySchool === 'lilly';
     chart.dignities = computeWesternDignities(

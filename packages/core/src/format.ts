@@ -773,6 +773,7 @@ function dignityLines(
   }
 
   if (dignities.lilly) lines.push(...lillyLines(dignities.lilly, chart.sect));
+  if (dignities.tolomeo) lines.push(...ptolemyLines(dignities.tolomeo, chart.sect));
 
   const { source, single, mutual } = dignities.receptions;
   const nome = (id: BodyId): string => nameOf(chart, id);
@@ -829,6 +830,40 @@ function lillyLines(lilly: NonNullable<WesternDignities['lilly']>, sect: Sect | 
       .join(' ');
     const dignita = body.dignities.map(dignityLabel);
     lines.push(`${body.name.padEnd(11)} ${colonne} | ${dignita.join(', ') || '—'}`);
+  }
+  return lines;
+}
+
+/**
+ * Il pacchetto di Tolomeo: per ogni corpo i signori del grado in cui sta, e
+ * le dignità che ha lì. Come in Lilly, i signori si danno per tutti e le
+ * dignità solo per i sette.
+ *
+ * Il triangolo ha due colonne perché in Tolomeo sono due fatti: chi ne è
+ * signore (sempre, i due o i tre di I.18) e chi lo governa nella setta del
+ * tema, che senza l'ora non si sa. Niente faccia ed esilio: Tolomeo non li
+ * ha, e una colonna vuota sembrerebbe un dato.
+ */
+function ptolemyLines(
+  tolomeo: NonNullable<WesternDignities['tolomeo']>,
+  sect: Sect | undefined,
+): string[] {
+  const nome = (id: BodyId | undefined): string => (id ? bodyName(id) : '—');
+  const elenco = (ids: readonly BodyId[] | undefined): string => (ids ? ids.map(bodyName).join('+') : '—');
+  const lines = [
+    `Tolomeo (a richiesta): ${tolomeo.source}`,
+    tolomeo.termsSource,
+    sect
+      ? `Triangolo: i signori di I.18, e chi lo governa di ${sect === 'diurna' ? 'giorno' : 'notte'}, dalla setta del tema.`
+      : "Triangolo: i signori di I.18; senza l'ora la setta manca, e chi lo governa non si dice.",
+    `${'Corpo'.padEnd(11)} ${['domic.', 'esalt.'].map((t) => t.padEnd(9)).join(' ')} ${'triangolo'.padEnd(20)} ${'governa'.padEnd(14)} ${'termine'.padEnd(9)} | dignità`,
+  ];
+  for (const body of tolomeo.bodies) {
+    const { domicilio, esaltazione, triplicita, triplicitaDiSetta, termine } = body.rulers;
+    const riga =
+      `${body.name.padEnd(11)} ${nome(domicilio).padEnd(9)} ${nome(esaltazione).padEnd(9)} ` +
+      `${elenco(triplicita).padEnd(20)} ${elenco(triplicitaDiSetta).padEnd(14)} ${nome(termine).padEnd(9)}`;
+    lines.push(`${riga} | ${body.dignities.map(dignityLabel).join(', ') || '—'}`);
   }
   return lines;
 }
