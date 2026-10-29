@@ -32,8 +32,8 @@ esserci, se il clone è un altro: le schede dicono da dove riscaricare ogni
 fonte.
 
 I riferimenti `file:riga` e i nomi citati sono stati ricontrollati tutti
-contro il codice il 29 ottobre 2026, dopo gli arudha dei graha della voce 19
-(`f18f6b5`). Le righe si spostano: se una non torna, il nome della funzione
+contro il codice il 29 ottobre 2026, dopo la scuola di Tolomeo della voce 19
+(`75cc895`). Le righe si spostano: se una non torna, il nome della funzione
 o della costante accanto è quello che fa fede.
 
 Prima di cominciare conviene che `npm test`, `npm run typecheck` e `npm run
@@ -74,7 +74,7 @@ volta e ricominciare da capo.
 
 | Voce | Priorità | Taglia | Prima di cominciare |
 |---|---|---|---|
-| 19. Le dignità, per scuola | bassa | media | Jyotisha: fatto, restano rifiniture; occidente: leggere i termini di Tolomeo (I.20-21) e proporre la sua scuola; poi Bonatti |
+| 19. Le dignità, per scuola | bassa | media | Jyotisha: fatto, restano rifiniture; occidente: Lilly e Tolomeo fatti; la prossima è Bonatti, da leggere sulle immagini |
 | 17. L'astrologia oraria | bassa | piccola, ormai | i quattro lotti sono fatti; restano rifiniture indipendenti, una per riga |
 | 5. I varga: le convenzioni che restano | bassa | piccola | i sedici sono fatti; restano rifiniture, una per riga |
 
@@ -83,8 +83,8 @@ in `texts/` con le pagine lette (voce 24, chiusa): la parte occidentale
 della 19 parte da lì. Della 19, nel Jyotisha, sono fatti dignità (anche dei
 nodi), varga buoni (nei due conti, Santhanam e Narasimha Rao), relazioni,
 vimshopaka, arudha dei bhava e dei graha, e gli stati di 6.53; restano
-rifiniture senza urgenza. L'occidente aspetta i termini di Tolomeo (I.20-21)
-e Bonatti. La 17 usa le tavole di Lilly della 19 e ha
+rifiniture senza urgenza. Nell'occidente ci sono Lilly e, dal 29 ottobre
+2026, Tolomeo; la prossima scuola è Bonatti. La 17 usa le tavole di Lilly della 19 e ha
 già le *moieties* come terza convenzione delle orbite.
 
 **Come si è lavorato nel Jyotisha, e conviene continuare.** Ogni regola si
@@ -469,6 +469,25 @@ distribuzione. Superfici: `--dignita lilly` (anche con `--json`),
 nella pagina del tema. Il compatto ora pesa circa il 25% del JSON, e le
 descrizioni dicono «circa un quarto».
 
+Fatta anche la scuola di Tolomeo, il 29 ottobre 2026, in `14df446` e
+`75cc895`, con le scelte del proprietario in *Deciso*.
+`packages/core/src/dignita-tolomeo.ts` tiene i triangoli di I.18 (i signori
+tutti, e chi governa nella setta, nell'acqua Marte col co-reggente) e i
+termini della tavola greca di Robbins, p. 106; domicili ed esaltazioni per
+segno li prende da `dignita.ts`, che sono già di Tolomeo. Niente facce,
+esilio, punteggio, e niente ricezioni sue: Tolomeo la ricezione non la
+definisce, e con la sua scuola restano quelle comuni, con una riga che lo
+dice (`PTOLEMY_RECEPTION_SOURCE`). Si chiede con `dignitySchool: 'tolomeo'`
+e arriva in `WesternDignities.tolomeo`, anche nel cielo, senza condizioni.
+Superfici: `--dignita tolomeo`, `dignitySchool=tolomeo` su `/api/chart`,
+`dignity_school` su `compute_natal_chart`, il menù «Scuola delle dignità»
+che ha preso il posto della casella di Lilly (`ChartSettings.svelte`, con la
+copia `lib/scuole-dignita.ts` provata da `elenchi.test.ts`), il blocco
+«Secondo Tolomeo» di `DignityTable.svelte`, il documento di lettura
+tropicale e `/metodo#tolomeo`. Prove in
+`packages/core/test/dignita-tolomeo.test.ts`, con la tavola ricopiata coi
+glifi e il controllo delle somme di p. 103.
+
 ### Che cosa resta
 
 1. **Il Jyotisha: quello che resta dopo il 29 ottobre 2026.** Ciascuna
@@ -488,28 +507,24 @@ descrizioni dicono «circa un quarto».
 
 2. **Le altre scuole occidentali**, quando le loro fonti sono state lette
    (vedi *Da verificare* qui sotto): ciascuna come valore nuovo di
-   `DignitySchool`, intera. La più vicina è Tolomeo: letti I.17 (domicili),
-   I.18 (triplicità), I.19 (esaltazioni) e I.22-23 (niente facce
-   decaniche); mancano i termini. In `texts/occidentale/tolomeo-tetrabiblos-robbins-1940/testo/1B.txt`:
-   I.20, i termini egizi che Tolomeo critica (Loeb pp. 91-99, righe
-   239-398); I.21, i caldei e poi i suoi, dall'«ancient manuscript» (pp.
-   99-109, righe 399-558; i tolemaici da p. 103, riga 407), con la tavola.
-   Sono testo HTML di LacusCurtius, non una scansione: la tavola va
-   ricopiata e confrontata con Ashmand. Con quelli la scuola si può proporre al proprietario. Il compilatore pretende il nome in
+   `DignitySchool`, intera. Lilly e Tolomeo ci sono; la prossima è Bonatti.
+   Tolomeo è il modello più recente da seguire: `dignita-tolomeo.ts`, un
+   campo in `WesternDignities`, un ramo in `computeWesternDignities`, una
+   funzione di righe in `format.ts` (`ptolemyLines`), un blocco in
+   `DignityTable.svelte`, una voce in `lib/scuole-dignita.ts`.
+
+   Il compilatore pretende il nome in
    `DIGNITY_SCHOOL_NAMES` (`packages/core/src/constants.ts`), e da lì CLI,
-   MCP e `/api/chart` imparano il valore da soli, ma solo a validarlo: il
-   risultato porta ancora un campo per scuola (`WesternDignities.lilly`,
-   `types.ts:759`), e una scuola nuova chiede il suo campo, il suo ramo in
-   `computeWesternDignities` (`dignita-tema.ts:51`), le sue righe in
-   `format.ts` (come `lillyLines`, :816, e `lillyConditionLines`) e in
-   `DignityTable.svelte`, e i testi che oggi nominano solo Lilly: l'aiuto di
-   `--dignita` (`cli.ts:140`), la descrizione di `dignity_school`
-   (`packages/mcp/src/tools.ts:317`) e il commento di
-   `apps/web/src/routes/api/chart/+server.ts:24-33`. Il conto delle fortezze
-   e le condizioni accidentali sono di Lilly e restano suoi: una scuola nuova
-   porta il proprio, o nessuno, e `LillyConditions` non si generalizza.
-   L'interfaccia è una casella sola, `lilly` in `ChartSettings.svelte` e in
-   `routes/+page.svelte`, e con due scuole diventa una scelta da disegnare.
+   MCP e `/api/chart` imparano il valore da soli, ma solo a validarlo. I
+   testi che elencano le scuole vanno aggiornati a mano: l'aiuto di
+   `--dignita` (`cli.ts`), la descrizione di `dignity_school`
+   (`packages/mcp/src/tools.ts`), il commento di
+   `apps/web/src/routes/api/chart/+server.ts`, il documento di lettura
+   tropicale e `/metodo`. Il conto delle fortezze e le condizioni
+   accidentali sono di Lilly e restano suoi: una scuola nuova porta il
+   proprio, o nessuno, e `LillyConditions` non si generalizza. Le ricezioni
+   sono una definizione di Lilly: una scuola che non ne ha una sua le lascia
+   comuni, come Tolomeo.
 
 ### Le scuole, e il default deciso il 18 ottobre 2026
 
@@ -518,7 +533,7 @@ Per il tema tropicale le scuole possibili sono cinque, ciascuna come pacchetto:
 | | Domicili | Esaltazioni | Triplicità | Termini | Facce | Punteggio | Fonte primaria |
 |---|---|---|---|---|---|---|---|
 | Ellenistica (Doroteo, Valente) | tradizionali | da trovare: non in Valente I.2, ma Valente dà gradi altrove (apparato di Kroll-Skutsch a Firmico II.3.5) | tre reggenti, uno partecipe | egizi | sì | nessuno | Doroteo sopravvive in arabo, e la traduzione di Pingree è protetta; Valente in greco è libero |
-| Tolomeo, *Tetrabiblos* | tradizionali | per segno, senza gradi (I.19) | due reggenti per setta; l'acqua a Marte, con Venere di giorno e la Luna di notte (I.18, p. 87) | tolemaici | no: la sua «faccia» è un aspetto ai luminari (I.23) | nessuno | greco e Ashmand (1822) liberi |
+| Tolomeo, *Tetrabiblos* | tradizionali | per segno, senza gradi (I.19) | due reggenti per setta; l'acqua a Marte, con Venere di giorno e la Luna di notte (I.18, p. 87) | tolemaici, dalla tavola greca di Robbins (p. 106) | no: la sua «faccia» è un aspetto ai luminari (I.23) | nessuno | greco e Ashmand (1822) liberi; nel codice dal 29 ottobre 2026 (`dignita-tolomeo.ts`) |
 | Medievale araba (Abū Maʿshar, al-Bīrūnī, Bonatti) | tradizionali | col grado | doroteiche | egizi | caldee | 5-4-3-2-1, almuten | Bonatti latino (1491) libero |
 | Lilly, 1647 | tradizionali | col grado, e i Nodi | due reggenti, Marte sull'acqua | tolemaici, nella sua versione | caldee | p. 104: esaltazione 4, triplicità 3, termine 2, faccia 1, esilio 5, caduta 4; domicilio illeggibile; peregrino definito a p. 112; tavola delle fortezze a p. 115, letta, domicilio 5 | scansioni libere; tavole lette il 27 ottobre 2026 |
 | Moderna, XX secolo | con Urano, Nettuno, Plutone | segni, i pianeti esterni senza autore | nessuna | nessuno | decani per triplicità (Alan Leo) | nessuno | senza un autore unico |
@@ -623,6 +638,11 @@ Da verificare:
   triplicità coincidono con Lilly. Il «according to Ptolomy» di Lilly a
   p. 105 vale per Marte, non per tutta la riga: una scuola di Tolomeo
   avrebbe la sua triplicità d'acqua, non quella di Lilly.
+- **I termini in Tolomeo**: letti il 29 ottobre 2026, I.20-21, sulla
+  scansione della Loeb (pp. 96 e 106, greco, con l'apparato a pp. 106-107)
+  e confrontati con Ashmand p. 53 e con Lilly; nel codice in
+  `dignita-tolomeo.ts`. Il confronto sta nelle trascrizioni della fonte: i
+  termini di Lilly differiscono in sette segni, e le sue somme non tornano.
 - **Le facce in Tolomeo**: lette il 29 ottobre 2026, I.22-23, Loeb
   pp. 109-111. Non ci sono facce decaniche: la «proper face» di I.23 è il
   pianeta che tiene coi luminari lo stesso aspetto del suo domicilio coi
@@ -647,6 +667,16 @@ righe della tavola coi glifi della stampa e le rilegge: è il modello per una
 scuola nuova.
 
 ## Deciso, e da non riaprire
+
+- **La scuola di Tolomeo segue la tavola greca di Robbins com'è stampata.**
+  Scelto dal proprietario il 29 ottobre 2026, con la voce 19. I termini
+  sono quelli di p. 106 (cod. Vat. gr. 1453), non le seconde lezioni di
+  Proclo né i termini di Lilly; nel Leone Giove primo, come la tavola,
+  anche se il testo di p. 105 dà il segno a Saturno: correggerla col testo
+  sarebbe una lezione nostra, e la riga della fonte lo dice. La scuola porta
+  domicili, esaltazioni per segno, triangoli e termini; niente facce, esilio
+  e punteggio. Le ricezioni restano quelle comuni: la definizione è di
+  Lilly, e contarla sulle tavole di Tolomeo mescolerebbe le scuole.
 
 - **Il glossario è una pagina per famiglia, e le parti indiane di `/metodo`
   sono pagine proprie.** Scelto dal proprietario il 28 ottobre 2026, con la
