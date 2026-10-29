@@ -23,12 +23,13 @@ Le voci chiuse dopo, con il commit in cui si leggono ancora per intero:
 | 18 | `2b8937d` |
 | 6 | `8aa31a9` |
 | 8 | `c4c4820` |
+| 24 | `bd489c8` |
 
 Le fonti citate qui stanno in copia locale in `texts/`, fuori dal repo: la
 cartella, le schede `FONTE.md` e l'elenco `texts/INDICE.md` si mantengono come
 dice `CLAUDE.md` (*Le fonti testuali*). In una sessione nuova `texts/` può non
 esserci, se il clone è un altro: le schede dicono da dove riscaricare ogni
-fonte, e la voce 24 quelle che mancano ancora.
+fonte.
 
 I riferimenti `file:riga` e i nomi citati sono stati ricontrollati tutti
 contro il codice il 28 ottobre 2026, dopo gli arudha della voce 19
@@ -65,13 +66,13 @@ volta e ricominciare da capo.
 
 | Voce | Priorità | Taglia | Prima di cominciare |
 |---|---|---|---|
-| 24. Le fonti da scaricare in `texts/` | bassa | piccola | niente: solo scaricare e trascrivere |
 | 19. Le dignità, per scuola | bassa | media | Jyotisha: leggere BPHS 47.35-36 (le dignità dei nodi) e le fonti del 6.53; occidente: leggere Tolomeo I.18 e Bonatti |
 | 17. L'astrologia oraria | bassa | piccola, ormai | i quattro lotti sono fatti; restano rifiniture indipendenti, una per riga |
 | 5. I varga: le convenzioni che restano | bassa | piccola | i sedici sono fatti; restano rifiniture, una per riga |
 
-L'ordine consigliato è quello della tabella. La 24 non chiede scelte e
-prepara la parte occidentale della 19 (Firmico, Valente). Della 19, nel
+L'ordine consigliato è quello della tabella. Firmico, Valente e Leo sono
+in `texts/` con le pagine lette (voce 24, chiusa): la parte occidentale
+della 19 parte da lì. Della 19, nel
 Jyotisha, sono fatti dignità, varga buoni, relazioni, vimshopaka e arudha;
 quello che resta vuole prima la lettura di altre pagine del BPHS (la più
 utile è 47.35-36, che dà le dignità dei nodi che il codice oggi dice
@@ -532,11 +533,12 @@ intera di Lilly il 27 ottobre, in `dignita-lilly.ts`):
 - **Domicili.** Tolomeo I.17 (ed. Robbins, Loeb 1940, pp. 79-83, su
   LacusCurtius) e Lilly, *Christian Astrology* (1647), p. 104 (archive.org,
   `b30338724`) coincidono. Valente I.2 (ed. Kroll 1908, pp. 5-13) scrive
-  «οἶκος» per nove segni, concordi; per Toro, Acquario e Pesci no. La copia
-  letta allora non è annotata: che sia la stessa scansione di
-  `valente-anthologiae-kroll-1908` va verificato (voce 24), e la cartella
-  non ha ancora né `pagine/` né `trascrizioni.md`.
-- **Domicili moderni.** Alan Leo, *The Art of Synthesis* (1912), p. 117,
+  «οἶκος» per nove segni, concordi; per Toro, Acquario e Pesci no.
+  Riletto il 29 ottobre 2026 sulle immagini di
+  `valente-anthologiae-kroll-1908` (`pagine/`, `trascrizioni.md`).
+- **Domicili moderni.** Alan Leo, *The Art of Synthesis* (3ª ed., 1912,
+  in `texts/` come `leo-art-of-synthesis-1912`: archive.org la data 1926,
+  il frontespizio dice 1912), p. 117,
   riferisce Urano all'Acquario e Nettuno ai Pesci come un uso, senza esserne
   il primo: Urano all'Acquario circolava già nell'Ottocento (Varley 1828,
   secondo Skyscript, pagina non vista). Per Plutone allo Scorpione nessun
@@ -581,7 +583,15 @@ Da verificare:
   sfogliando, e scritto nella `FONTE.md`. Un'altra copia, senza
   OCR, è `ita-bnc-in1-00000968-001` (Biblioteca Nazionale Centrale di
   Firenze); quella della Bayerische Staatsbibliothek non si è trovata.
-- **Le esaltazioni nella scuola ellenistica**: altrove in Valente, o in Doroteo.
+- **Le esaltazioni nella scuola ellenistica**: altrove in Valente, o in
+  Doroteo. Valente i gradi li dà: l'apparato di Kroll-Skutsch a Firmico
+  II.3.5 (p. 44) corregge Saturno a 21 e Giove a 15 «e Val. Doroth.»,
+  contro i manoscritti (XX e XIX per Saturno, XXI e XVIII per Giove; per
+  la caduta di Marte i codici hanno XXV e XXVI). Il luogo di Valente non è
+  indicato: si cerca nell'indice dell'ed. Kroll. Vuol dire anche che i
+  gradi di `dignita-lilly.ts` sono il testo critico di Firmico, non la
+  lezione dei codici; vedi
+  `texts/occidentale/firmico-mathesis-kroll-skutsch-1897/trascrizioni.md`.
 - **La triplicità d'acqua in Tolomeo.** Una fonte gli attribuisce Marte di
   giorno e di notte come Lilly, un'altra un reggente diverso per setta. Lilly
   a p. 105 dice «according to Ptolomy and Naibod», che è un indizio e non
@@ -610,43 +620,6 @@ tabella e non chiede effemeridi, come in `dignita.test.ts`,
 `dignita-parashara.test.ts` e `dignita-lilly.test.ts`. L'ultimo ricopia le
 righe della tavola coi glifi della stampa e le rilegge: è il modello per una
 scuola nuova.
-
-## 24. Le fonti già usate che non stanno ancora in `texts/`
-
-**Priorità bassa.** Le regole sono in `CLAUDE.md` (*Le fonti testuali*),
-l'elenco in `texts/INDICE.md`. Le fonti citate nel codice prima che la
-cartella esistesse sono quasi tutte scaricate; restano queste, una per riga,
-ciascuna con la pagina da salvare in `pagine/` e da trascrivere:
-
-- **Firmico, *Mathesis*, ed. Kroll-Skutsch, vol. I (1897)**, p. 44, rr.
-  7-17: i gradi delle esaltazioni in `dignita.ts`. archive.org
-  `matheseoslibrivi01firmuoft`, in `occidentale/firmico-mathesis-kroll-skutsch-1897`.
-- **Alan Leo, *The Art of Synthesis*, 3ª ed. (1912)**, p. 117: Urano e
-  Nettuno in `dignita.ts`. La 1912 su archive.org non si è trovata (ci sono
-  la 1926, `artofsynthesis00leoa`, e la 1936): va cercata su HathiTrust o
-  Google Books, e se si trova solo un'altra edizione la pagina va
-  ricontrollata e il commento corretto.
-- **RadixPro, l'esempio di Jan Kampherbeek** (Enschede, 2 novembre 2016,
-  21:17:30 UT): la pagina web con le cifre intermedie su cui sta
-  `houses.test.ts`. Da salvare in `tecnica/radixpro-esempio-case` (la
-  cartella non c'è ancora), con `html/` e `testo/`.
-- **Astrolog 8.00, i sorgenti**, almeno `matrix.cpp` e `calc.cpp`: l'altra
-  metà dell'ancoraggio di `houses.test.ts`. La cartella c'è già,
-  `tecnica/astrolog-pullen-800`, creata per le orbite con `astrolog.as`,
-  `data.cpp` e `general.cpp` del commit `5bf172e`: i due file vanno presi
-  dallo stesso commit e aggiunti a `sorgenti/`, e la riga «da scaricare» di
-  `texts/INDICE.md` va tolta.
-- **Valente, I.2, pp. 5-13**: lo scan c'è (`valente-anthologiae-kroll-1908`,
-  archive.org `bub_gb_OQ_gAAAAMAAJ`), e per questo `texts/INDICE.md` lo dà
-  fra le scaricate; mancano però la cartella `pagine/` con le immagini delle
-  pagine e la conferma che sia la stessa copia letta per `dignita.ts`. La
-  verifica qui sotto non lo vede: va controllato a mano.
-
-Non si scaricano, perché protette: Meeus (`time.ts`), Dean e Munkasey
-(attraverso RadixPro), Zain. Stanno in `texts/INDICE.md` con lo stato.
-
-Verifica: ogni fonte citata in un commento di `packages/` ha una riga in
-`texts/INDICE.md` che non sia «da scaricare».
 
 ## Deciso, e da non riaprire
 
