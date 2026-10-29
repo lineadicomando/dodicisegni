@@ -41,6 +41,17 @@ export {
 export { computeDrishti, housesSeenBy } from './drishti.js';
 export { computeRelationships, naisargikaMaitri, panchadhaMaitri, tatkalikaMaitri } from './maitri.js';
 export { computeVimshopaka, VARGA_VISWA, VIMSHOPAKA_WEIGHTS } from './vimshopaka.js';
+export {
+  AVASTHA_GRAHA_NUMBER,
+  COMBUSTION_LIMITS,
+  computeAvasthas,
+  computeCombustion,
+  computeGrahaStates,
+  computeWars,
+  SHAYANADI_AVASTHAS,
+  shayanadiAvasthaOf,
+  TARAGRAHAS,
+} from './stati.js';
 export { arudhaOf, bhavaLord, computeArudhas, PADA_NAMES } from './arudha.js';
 export { computeGoodVargas, GOOD_VARGA_NAMES, VARGA_SCHEMES } from './varga-buoni.js';
 export {
@@ -242,6 +253,11 @@ export type {
   GoodVargaReason,
   Arudhas,
   GoodVargas,
+  GrahaStates,
+  CombustionState,
+  PlanetaryWar,
+  ShayanadiAvastha,
+  ShayanadiAvasthas,
   VargaScheme,
   Vimshopaka,
   PanchangaOptions,

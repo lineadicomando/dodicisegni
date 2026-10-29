@@ -17,7 +17,8 @@
  * - **l'arudha lagna di BPHS 29.1-7**, calcolato in `arudha.ts`;
  * - **6.53 come nota e non come filtro**: il verso dice che cosa producono i
  *   varga buoni di un graha combusto, sconfitto, in neecha, debole o in
- *   avastha come shayana, non che non vadano contati;
+ *   avastha come shayana, non che non vadano contati. La riga di ogni graha
+ *   porta neecha, combustione e sconfitta, definite in `stati.ts`;
  * - **la hora segue la convenzione del D-2**: con `leone-cancro` si conta per
  *   segno come ogni altro varga, con `parashara`, che non ha segni, secondo
  *   la nota di Santhanam a p. 90, dichiarata come sua.
@@ -33,6 +34,7 @@ import { ZODIAC_SIGNS } from './constants.js';
 import { parasharaDignityOf, parasharaSignDignities, parasharaSignLord, PARASHARA_GRAHAS } from './dignita-parashara.js';
 import { DEFAULT_HORA_CONVENTION, horaConvention, horaOf } from './hora.js';
 import { grahaName } from './nakshatra.js';
+import { computeCombustion, computeWars } from './stati.js';
 import { VARGAS, vargaSignOf } from './varga.js';
 import type {
   BodyId,
@@ -117,8 +119,10 @@ const SOURCE =
 const VERSE_53 =
   'BPHS 6.53: i varga buoni di un graha combusto, sconfitto in guerra planetaria, in neecha, ' +
   'debole o in avastha come shayana «distruggono gli yoga» (il sanscrito dice anche nīcagā, ' +
-  'che la traduzione omette). Il conto non cambia; il motore dice la neecha nella rashi, e non ' +
-  'verifica combustione, guerra planetaria, debolezza né avastha.';
+  'che la traduzione omette). Il conto non cambia: la riga di ogni graha dice se è in neecha ' +
+  'nella rashi, combusto o vinto in guerra, con le definizioni della sezione degli stati; le ' +
+  'avastha sono calcolate là, ma quali guastino il verso non lo dice; la debolezza non ha una ' +
+  'soglia e non è verificata.';
 
 /**
  * I varga buoni dei sette graha di una carta **siderale con l'ora**, e il
@@ -139,6 +143,8 @@ export function computeGoodVargas(
   const kendraLords = [...new Set([0, 3, 6, 9].map((k) => parasharaSignLord(segno(indice(arudhaLagna) + k))))];
   const arudhaSigns = ZODIAC_SIGNS.filter((sign) => kendraLords.includes(parasharaSignLord(sign)));
   const conSegniLaHora = horaConvention(hora).signOf !== undefined;
+  const combusti = computeCombustion(chart.bodies).filter((c) => c.combust).map((c) => c.id);
+  const vinti = computeWars(chart.bodies).flatMap((w) => (w.defeated ? [w.defeated] : []));
 
   const grahas = chart.bodies
     .filter((body) => (PARASHARA_GRAHAS as readonly BodyId[]).includes(body.id))
@@ -169,6 +175,8 @@ export function computeGoodVargas(
         vargas,
         schemes,
         neecha: parasharaDignityOf(body.id, body.longitude) === 'neecha',
+        combust: combusti.includes(body.id),
+        defeated: vinti.includes(body.id),
       };
     });
 

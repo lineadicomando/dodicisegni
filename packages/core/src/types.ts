@@ -795,6 +795,11 @@ export interface JyotishaOptions {
   hora?: HoraConvention;
   /** Default: la forma classica, senza sguardi dei nodi. */
   drishti?: DrishtiOptions;
+  /**
+   * Dove cercare le effemeridi per l'alba delle avastha. Default: quello di
+   * `initEphemeris`.
+   */
+  ephemerisPath?: string;
 }
 
 /**
@@ -946,6 +951,98 @@ export interface Vimshopaka {
 export type GoodVargaReason = 'uccha' | 'moolatrikona' | 'swakshetra' | 'arudha' | 'hora';
 
 /**
+ * Un graha vicino al Sole secondo il *Surya Siddhanta* IX.6-9 e X.1: la
+ * distanza in longitudine e il limite sotto cui il testo lo dice invisibile.
+ */
+export interface CombustionState {
+  id: BodyId;
+  name: string;
+  /** Distanza dal Sole in longitudine, gradi, [0, 180]. */
+  distance: number;
+  /** Il limite del testo per questo graha, nel suo moto. */
+  limit: number;
+  /** Il moto che ha deciso il limite: conta solo per Mercurio e Venere. */
+  retrograde: boolean;
+  /** `distance < limit`. */
+  combust: boolean;
+}
+
+/**
+ * Due dei cinque *tārāgraha* a meno di un grado l'uno dall'altro: la guerra
+ * del *Surya Siddhanta* VII.19, col vincitore di BPHS 79.9.
+ */
+export interface PlanetaryWar {
+  between: [BodyId, BodyId];
+  /** Distanza angolare fra i due sulla sfera, in gradi. */
+  separation: number;
+  /** Le latitudini eclittiche dei due, nello stesso ordine di `between`. */
+  latitudes: [number, number];
+  /** `null` quando la regola non decide (latitudini uguali). */
+  victor: BodyId | null;
+  defeated: BodyId | null;
+  /** Quale delle due regole ha deciso. */
+  rule: string;
+}
+
+/** Le dodici avastha di BPHS 45.30-31, nell'ordine del verso e con la grafia di Santhanam. */
+export type ShayanadiAvastha =
+  | 'Sayana'
+  | 'Upavesana'
+  | 'Netrapani'
+  | 'Prakasana'
+  | 'Gamana'
+  | 'Aagamana'
+  | 'Sabha'
+  | 'Agama'
+  | 'Bhojana'
+  | 'Nrityalipsa'
+  | 'Kautuka'
+  | 'Nidra';
+
+/**
+ * Le avastha *śayanādi* dei nove graha, BPHS 45.30-33 con la formula e le
+ * letture di Santhanam (vol. I, pp. 454-455). I fattori comuni stanno qui,
+ * quelli di ciascun graha nella sua riga: chi conta diversamente rifà la
+ * somma.
+ */
+export interface ShayanadiAvasthas {
+  source: string;
+  /** L'alba da cui si contano le ghati, ISO UTC: lembo superiore e rifrazione. */
+  sunrise: string;
+  /** Ghati trascorse dall'alba, decimali (una ghati = 24 minuti). */
+  ghatisSinceSunrise: number;
+  /** g: la ghati in corso, come nell'esempio di Santhanam (30;33 → 31). */
+  ghati: number;
+  /** a: il nakshatra della Luna, 1-27. */
+  moonNakshatra: number;
+  /** r: il segno del lagna da Ariete, 1-12. */
+  lagnaSign: number;
+  grahas: {
+    id: BodyId;
+    name: string;
+    /** s, il nakshatra del graha (1-27); p, il suo numero (Sole 1 … Ketu 9); n, il navamsa nel segno (1-9). */
+    factors: { s: number; p: number; n: number };
+    /** s × p × n + a + g + r. */
+    total: number;
+    /** Il resto della divisione per dodici, con lo zero letto come dodici. */
+    index: number;
+    avastha: ShayanadiAvastha;
+  }[];
+}
+
+/**
+ * Le condizioni che BPHS 6.53 nomina, calcolate come dati: combustione,
+ * guerra planetaria, avastha. Il motore non dice che cosa annullino: il
+ * conto dei varga buoni resta quello che è.
+ */
+export interface GrahaStates {
+  combustion: { source: string; grahas: CombustionState[] };
+  wars: { source: string; pairs: PlanetaryWar[] };
+  /** Assente senza ora di nascita, o dove quel giorno il Sole non sorge. */
+  avasthas?: ShayanadiAvasthas;
+}
+
+/**
  * I varga buoni dei sette graha e il loro conto per schema, con il nome che
  * BPHS 6.43-51 dà a ciascun conto.
  *
@@ -994,8 +1091,12 @@ export interface GoodVargas {
       /** Il nome del conto (6.43-51), o `null` sotto i due. */
       name: string | null;
     }[];
-    /** Se il graha è in neecha nella rashi: la sola condizione di 6.53 che il motore sa dire. */
+    /** Se il graha è in neecha nella rashi (6.53, *nīcagā*). */
     neecha: boolean;
+    /** Se è combusto secondo `GrahaStates.combustion` (6.53, *astaṃgatā*). */
+    combust: boolean;
+    /** Se è vinto in una guerra di `GrahaStates.wars` (6.53, *grahajitā*). */
+    defeated: boolean;
   }[];
 }
 
@@ -1028,6 +1129,8 @@ export interface JyotishaChart {
   relationships: GrahaRelationships;
   /** La forza su venti punti nei quattro schemi (BPHS 7.17-27). */
   vimshopaka: Vimshopaka;
+  /** Combustione, guerra planetaria e avastha: le condizioni di BPHS 6.53. */
+  states: GrahaStates;
   /**
    * Le avvertenze dei pezzi, raccolte qui.
    *

@@ -303,7 +303,7 @@ function varaAt(
 }
 
 /** L'ultima alba non successiva all'istante, o `null` se in due giorni non ce n'è. */
-function lastSunrise(
+export function lastSunrise(
   julianDayUT: number,
   place: Place,
   context: EphemerisContext,

@@ -39,6 +39,9 @@ import { computeGoodVargas } from './varga-buoni.js';
 import { computeRelationships } from './maitri.js';
 import { computeVimshopaka } from './vimshopaka.js';
 import { computeArudhas } from './arudha.js';
+import { initEphemeris } from './ephemeris.js';
+import { lastSunrise } from './panchanga.js';
+import { computeGrahaStates } from './stati.js';
 import type { JyotishaChart, JyotishaOptions, NatalChart } from './types.js';
 
 /**
@@ -91,6 +94,23 @@ export function computeJyotisha(
     );
   }
 
+  // L'alba delle avastha: sincrona, come il resto della catena, e senza flag
+  // siderali, perché l'istante di un'alba non dipende dallo zodiaco.
+  const sunrise =
+    chart.time.timeKnown && chart.angles
+      ? lastSunrise(chart.time.julianDayUT, chart.input, initEphemeris(options.ephemerisPath))
+      : null;
+  const states = computeGrahaStates(chart, sunrise);
+  if (!states.avasthas) {
+    warnings.push(
+      chart.time.timeKnown
+        ? 'Le avastha (BPHS 45.30-33) non sono calcolate: quel giorno, a questa latitudine, il ' +
+            'Sole non sorge, e le ghati si contano dall\'alba.'
+        : 'Le avastha (BPHS 45.30-33) non sono calcolate: vogliono le ghati dall\'alba e il ' +
+            'lagna, e senza ora di nascita non ci sono.',
+    );
+  }
+
   return {
     chart,
     nakshatras: chart.bodies.map((body) => ({
@@ -106,6 +126,7 @@ export function computeJyotisha(
     ...(goodVargas ? { goodVargas } : {}),
     relationships: computeRelationships(chart),
     vimshopaka: computeVimshopaka(chart, options.hora),
+    states,
     // Le avvertenze dei pezzi salgono qui: chi legge il tema vedico non deve
     // andarle a cercare dentro la catena delle dasha.
     warnings: [

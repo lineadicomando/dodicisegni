@@ -122,8 +122,11 @@ describe('i varga buoni di un tema', () => {
 
   it('dichiara il 6.53 invece di applicarlo', () => {
     const buoni = computeGoodVargas(tema())!;
-    expect(buoni.verse53).toContain('non verifica');
-    expect(buoni.grahas.every((g) => typeof g.neecha === 'boolean')).toBe(true);
+    expect(buoni.verse53).toContain('Il conto non cambia');
+    expect(buoni.verse53).toContain('la debolezza non ha una soglia');
+    expect(
+      buoni.grahas.every((g) => [g.neecha, g.combust, g.defeated].every((x) => typeof x === 'boolean')),
+    ).toBe(true);
   });
 
   it("senza ora non conta, e il tema vedico dice perché", () => {

@@ -53,6 +53,7 @@ import type {
   LillySolarState,
   LillyStar,
   Zodiac,
+  GrahaStates,
 } from './types.js';
 
 /**
@@ -1177,6 +1178,7 @@ export function formatJyotishaCompact(jyotisha: JyotishaChart): string {
   parti.push(formatVimshopakaCompact(jyotisha.vimshopaka));
   if (jyotisha.arudhas) parti.push(formatArudhasCompact(jyotisha.arudhas));
   if (jyotisha.goodVargas) parti.push(formatGoodVargasCompact(jyotisha.goodVargas));
+  parti.push(formatGrahaStatesCompact(jyotisha.states));
   parti.push(formatNakshatraCompact(jyotisha.chart));
   parti.push(formatDashaCompact(jyotisha.dasha));
   for (const varga of jyotisha.vargas) parti.push(formatVargaCompact(varga));
@@ -1309,12 +1311,58 @@ function formatGoodVargasCompact(buoni: GoodVargas): string {
     const conti = graha.schemes
       .map((s) => `${s.scheme} ${s.good}/${s.vargas}${s.name ? ` ${s.name}` : ''}`)
       .join(' · ');
-    lines.push(`${graha.name.padEnd(11)} ${conti}${graha.neecha ? ' · in neecha nella rashi' : ''}`);
+    const stati = [
+      ...(graha.neecha ? ['in neecha nella rashi'] : []),
+      ...(graha.combust ? ['combusto'] : []),
+      ...(graha.defeated ? ['vinto in guerra'] : []),
+    ];
+    lines.push(`${graha.name.padEnd(11)} ${conti}${stati.map((s) => ` · ${s}`).join('')}`);
     const elenco = graha.vargas
       .filter((v) => v.good.length > 0)
       .map((v) => `${v.varga.toUpperCase()} ${v.good.join('+')}`)
       .join(', ');
     lines.push(`${''.padEnd(11)} buoni: ${elenco || 'nessuno'}`);
+  }
+  return lines.join('\n');
+}
+
+/**
+ * Le condizioni di BPHS 6.53, ciascuna con la sua fonte: combustione e
+ * guerra sempre, le avastha con l'ora. I fattori dell'avastha stanno nella
+ * riga, perché chi conta con un'altra lettura rifaccia la somma.
+ */
+function formatGrahaStatesCompact(stati: GrahaStates): string {
+  const lines = ['STATI DEI GRAHA (BPHS 6.53)', '', `Combustione. ${stati.combustion.source}`];
+  for (const c of stati.combustion.grahas) {
+    lines.push(
+      `${c.name.padEnd(11)} ${formatDegrees(c.distance).padEnd(9)} dal Sole, limite ${c.limit}°` +
+        `${c.retrograde && (c.id === 'mercurio' || c.id === 'venere') ? ' (retrogrado)' : ''}` +
+        `${c.combust ? ' · combusto' : ''}`,
+    );
+  }
+  lines.push('', `Guerra planetaria. ${stati.wars.source}`);
+  if (stati.wars.pairs.length === 0) lines.push('Nessuna coppia a meno di un grado.');
+  for (const w of stati.wars.pairs) {
+    lines.push(
+      `${bodyName(w.between[0])} e ${bodyName(w.between[1])} a ${formatDegrees(w.separation)}` +
+        ` (latitudini ${w.latitudes.map((l) => l.toFixed(2)).join(' e ')}): ` +
+        `${w.victor ? `vince ${bodyName(w.victor)}` : 'nessun vincitore'}. ${w.rule}`,
+    );
+  }
+  if (stati.avasthas) {
+    const a = stati.avasthas;
+    lines.push(
+      '',
+      `Avastha. ${a.source}`,
+      `Alba ${a.sunrise}, ${a.ghatisSinceSunrise.toFixed(2)} ghati dopo: g ${a.ghati}; ` +
+        `a ${a.moonNakshatra} (nakshatra della Luna); r ${a.lagnaSign} (lagna).`,
+    );
+    for (const g of a.grahas) {
+      lines.push(
+        `${g.name.padEnd(11)} ${g.avastha.padEnd(12)} (s ${g.factors.s} × p ${g.factors.p} × n ${g.factors.n}` +
+          ` + a + g + r = ${g.total}, resto ${g.index % 12})`,
+      );
+    }
   }
   return lines.join('\n');
 }
