@@ -1,7 +1,8 @@
 /**
  * Gli elenchi del client contro quelli del motore.
  *
- * `zodiacs.ts`, `house-systems.ts`, `varghe.ts` e `orbite.ts` ricopiano
+ * `zodiacs.ts`, `house-systems.ts`, `varghe.ts`, `orbite.ts` e
+ * `scuole-dignita.ts` ricopiano
  * valori che vivono in `@dodicisegni/core`, perché il client ne importa solo
  * i tipi: un import di valore trascinerebbe le effemeridi nel bundle del
  * browser. Il tipo però
@@ -18,6 +19,7 @@
 import {
   AYANAMSAS as AYANAMSA_DEFINITIONS,
   DEFAULT_NATAL_ORB_CONVENTION,
+  DIGNITY_SCHOOL_NAMES,
   HOUSE_SYSTEM_CODES,
   NATAL_ORB_CONVENTIONS,
   VARGAS,
@@ -25,6 +27,7 @@ import {
 import { describe, expect, it } from 'vitest';
 import { HOUSE_SYSTEMS } from './house-systems';
 import { DEFAULT_ORB_CONVENTION, ORB_CONVENTIONS } from './orbite';
+import { DIGNITY_SCHOOLS } from './scuole-dignita';
 import { VARGHE } from './varghe';
 import { AYANAMSAS } from './zodiacs';
 
@@ -49,6 +52,13 @@ describe('gli elenchi del client combaciano con il motore', () => {
       'lib/orbite.ts è rimasto indietro rispetto a NATAL_ORB_CONVENTIONS in packages/core/src/orbite.ts',
     ).toEqual(NATAL_ORB_CONVENTIONS.map((convention) => convention.id));
     expect(DEFAULT_ORB_CONVENTION).toBe(DEFAULT_NATAL_ORB_CONVENTION);
+  });
+
+  it('le scuole di scuole-dignita.ts sono quelle di DIGNITY_SCHOOL_NAMES', () => {
+    expect(
+      DIGNITY_SCHOOLS.map((school) => school.value),
+      'lib/scuole-dignita.ts è rimasto indietro rispetto a DIGNITY_SCHOOL_NAMES in packages/core/src/constants.ts',
+    ).toEqual(Object.keys(DIGNITY_SCHOOL_NAMES));
   });
 
   it('i varga di varghe.ts sono quelli di VARGAS, tranne la D-1', () => {

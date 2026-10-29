@@ -325,6 +325,12 @@ export function registerComputeNatalChart(server: McpServer, context: ToolContex
               'combustione e raggi, moto, orientalità, partili, stelle, e il conto della sua tavola ' +
               'delle fortezze (p. 115) voce per voce, con fortezze, debilità e differenza. Le case, ' +
               "l'ora planetaria e le righe che ne dipendono vogliono l'ora di nascita. " +
+              'tolomeo: Tetrabiblos I.17-21 (ed. Robbins, Loeb 1940), con domicilio, esaltazione per ' +
+              'segno, i signori del triangolo e chi lo governa nella setta, e i termini tolemaici della ' +
+              'tavola greca; niente facce, esilio né punteggio, che Tolomeo non ha, e le ricezioni restano ' +
+              'quelle comuni, perché la ricezione è una definizione di Lilly. Non chiedere tolomeo per ' +
+              'avere i termini di Lilly, né lilly per quelli di Tolomeo: le due tavole differiscono in sette ' +
+              'segni. ' +
               'Ometti se chi scrive non chiede l\'astrologia tradizionale: non è un default ' +
               'migliore, è una scuola. Solo nello zodiaco tropicale; con zodiac siderale è un ' +
               'errore. Le dignità sono tavole di una tradizione, non giudizi sul tema.',

@@ -27,9 +27,15 @@ import type { RequestHandler } from './$types';
  * (1647) con triplicità, termini e facce, conta le ricezioni su tutte e
  * cinque le dignità, e porta in `chart.dignities.lilly.conditions` le
  * condizioni dell'istante e il conto della sua tavola delle fortezze (p. 115),
- * riga per riga. Una scuola diversa da `lilly` è `SCUOLA_DIGNITA_NON_VALIDA`;
- * chiesta insieme a `zodiac=siderale` è `ZODIACO_NON_TROPICALE`, perché le
- * sue tavole sono costruite sullo zodiaco tropicale. Nel siderale le dignità
+ * riga per riga. `dignitySchool=tolomeo` aggiunge invece le tavole del
+ * *Tetrabiblos* (I.17-21, ed. Robbins) in `chart.dignities.tolomeo`: per ogni
+ * corpo domicilio, esaltazione, i signori del triangolo e chi lo governa
+ * nella setta, il termine della tavola greca di p. 106; niente facce, esilio
+ * o punteggio, che Tolomeo non ha, e ricezioni solo per domicilio ed
+ * esaltazione, perché la ricezione è di Lilly. Un'altra scuola è
+ * `SCUOLA_DIGNITA_NON_VALIDA`; chiesta insieme a `zodiac=siderale` è
+ * `ZODIACO_NON_TROPICALE`, perché le tavole sono costruite sullo zodiaco
+ * tropicale. Nel siderale le dignità
  * non ci sono: quelle di Parashara stanno in `/api/jyotish`.
  *
  * Gli aspetti si trovano con le orbite di una scuola nominata, che il tema

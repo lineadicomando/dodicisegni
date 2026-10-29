@@ -1,6 +1,7 @@
 <script lang="ts">
   import type { AyanamsaId, HouseSystem, NatalOrbConvention, Zodiac } from '@dodicisegni/core';
   import { HOUSE_SYSTEMS } from '#lib/house-systems.js';
+  import { DIGNITY_SCHOOLS, type DignitySchoolChoice } from '#lib/scuole-dignita.js';
   import { ORB_CONVENTIONS } from '#lib/orbite.js';
   import { AYANAMSAS, ZODIACS } from '#lib/zodiacs.js';
 
@@ -19,11 +20,12 @@
     /** Mostrato solo accanto allo zodiaco siderale. */
     ayanamsa?: AyanamsaId;
     /**
-     * Se aggiungere la tavola delle dignità di Lilly. Facoltativo come lo
-     * zodiaco: le dignità stanno solo nel tema natale, e altrove la casella
-     * non compare. Nel siderale nemmeno, perché le tavole sono tropicali.
+     * La scuola delle dignità da aggiungere a quelle comuni, o nessuna (la
+     * stringa vuota). Facoltativa come lo zodiaco: le dignità stanno solo nel
+     * tema natale, e altrove il menù non compare. Nel siderale nemmeno,
+     * perché le tavole sono tropicali.
      */
-    lilly?: boolean;
+    dignitySchool?: DignitySchoolChoice;
     /**
      * La convenzione delle orbite degli aspetti. Facoltativa come lo zodiaco:
      * dove gli aspetti sono transiti la convenzione è quella di Hand, una
@@ -64,7 +66,7 @@
     minorAspects = $bindable(),
     zodiac = $bindable(),
     ayanamsa = $bindable(),
-    lilly = $bindable(),
+    dignitySchool = $bindable(),
     orbConvention = $bindable(),
     housesDisabled = false,
     id = 'case',
@@ -118,11 +120,16 @@
     <span>Aspetti minori</span>
   </label>
 
-  {#if lilly !== undefined && zodiac !== 'siderale'}
-    <label class="interruttore">
-      <input type="checkbox" bind:checked={lilly} onchange={() => onchange?.()} />
-      <span>Dignità di Lilly</span>
-    </label>
+  <!-- Una scelta e non una casella: le scuole sono più d'una e non si
+       sommano, e la voce vuota dice che senza scuola restano le dignità comuni. -->
+  {#if dignitySchool !== undefined && zodiac !== 'siderale'}
+    <label for="{id}-dignita" class:nascosto={compact}>Scuola delle dignità</label>
+    <select id="{id}-dignita" bind:value={dignitySchool} onchange={() => onchange?.()}>
+      <option value="">Dignità comuni</option>
+      {#each DIGNITY_SCHOOLS as voce (voce.value)}
+        <option value={voce.value}>{voce.label}</option>
+      {/each}
+    </select>
   {/if}
 </div>
 

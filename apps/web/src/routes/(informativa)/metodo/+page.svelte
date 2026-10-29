@@ -448,6 +448,24 @@
   chiederle è un errore: la tavola è scritta per i segni tropicali.
 </p>
 
+<p id="tolomeo">
+  <strong>Le dignità di Tolomeo.</strong> Al posto di Lilly si può nominare
+  Tolomeo, <em>Tetrabiblos</em> I.17-21, nell'edizione di Robbins (Loeb, 1940).
+  Entra quello che Tolomeo dà: i domicili, le esaltazioni per segno senza
+  gradi, i signori dei quattro triangoli, con chi li governa di giorno e di
+  notte e nell'acqua Marte con Venere o la Luna, e i suoi termini. Non entra
+  quello che non ha: le facce di dieci gradi, l'esilio, un punteggio. Nemmeno
+  la ricezione, che è una definizione di Lilly: contarla sui termini di
+  Tolomeo farebbe una dottrina che nessuno dei due ha scritto, e con Tolomeo le
+  ricezioni restano per domicilio ed esaltazione. I termini sono quelli della
+  tavola greca di Robbins, letta sulla scansione, che dà a ogni pianeta la
+  stessa somma di gradi dei termini egizi, come Tolomeo dice che deve essere.
+  Non sono i termini che Lilly chiama «secondo Tolomeo»: differiscono in sette
+  segni, quasi tutti per varianti dei manoscritti che la parafrasi di Proclo
+  riporta. Nel Leone la tavola mette primo Giove, mentre il testo assegna il
+  segno a Saturno: il sito segue la tavola, e lo dice.
+</p>
+
 <p>
   <strong>Il conto delle fortezze.</strong> A p. 115 Lilly stampa una tavola che
   assegna punti a ogni condizione di un pianeta: le dignità, la casa (con la

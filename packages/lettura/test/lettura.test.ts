@@ -81,6 +81,8 @@ describe('letturaDaIncollare', () => {
     expect(testo).toContain('non sono calcolate: non dedurle');
     expect(testo).toContain('solo se la sezione porta la tavola di Lilly');
     expect(testo).toContain('CONDIZIONI (LILLY)');
+    expect(testo).toContain('Tolomeo (a richiesta)');
+    expect(testo).toContain('non contare punti che lui non dà');
     expect(testo).toContain('non farne un voto sulla persona');
   });
 

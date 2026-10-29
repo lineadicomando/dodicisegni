@@ -1,6 +1,6 @@
 <!--
   Le dignità occidentali di un tema: signori dei segni, dignità dei corpi,
-  ricezioni e, se chiesta, la tavola di Lilly.
+  ricezioni e, se chiesta, la tavola di una scuola: Lilly o Tolomeo.
 
   Prende le dignità e le case, non il tema: è la regola delle altre tabelle, e
   le dignità hanno già tutto ciò che serve, nomi compresi.
@@ -26,7 +26,10 @@
     dignities: WesternDignities;
     /** Le cuspidi, per dire quali case governa ciascun signore. Vuote senza ora. */
     houses?: House[];
-    /** La setta del tema, da cui dipende la triplicità di Lilly. Assente senza ora. */
+    /**
+     * La setta del tema, da cui dipendono la triplicità di Lilly e chi governa
+     * il triangolo di Tolomeo. Assente senza ora.
+     */
     sect?: Sect | undefined;
     /** Il corpo isolato, condiviso con la ruota e con gli aspetti. */
     evidenza?: Evidenza;
@@ -45,6 +48,10 @@
     return id ? BODY_LABEL[id] : '—';
   }
 
+  function nomi(ids: readonly BodyId[] | undefined): string {
+    return ids ? ids.map((id) => BODY_LABEL[id]).join(', ') : '—';
+  }
+
   function per(by: readonly ReceptionDignity[]): string {
     return by.map(voce).join(', ');
   }
@@ -56,6 +63,7 @@
 
   const conCase = $derived(houses.length > 0);
   const lilly = $derived(dignities.lilly);
+  const tolomeo = $derived(dignities.tolomeo);
 </script>
 
 <section>
@@ -175,6 +183,56 @@
         lo stesso di giorno e di notte.
       {/if}
     </p>
+  {/if}
+
+  <!-- Niente colonne per faccia ed esilio: Tolomeo non li ha, e una colonna
+       di trattini sembrerebbe un dato. Il triangolo ha due colonne perché
+       sono due fatti: chi ne è signore, e chi lo governa nella setta. -->
+  {#if tolomeo}
+    <h4>Secondo Tolomeo</h4>
+    <table>
+      <thead>
+        <tr>
+          <th></th>
+          <th>Corpo</th>
+          <th>Domicilio</th>
+          <th>Esaltaz.</th>
+          <th>Triangolo</th>
+          <th>Governa</th>
+          <th>Termine</th>
+          <th>Dignità del corpo</th>
+        </tr>
+      </thead>
+      <tbody>
+        {#each tolomeo.bodies as body (body.id)}
+          <tr
+            onmouseenter={() => evidenza?.sorvola(body.id)}
+            onmouseleave={() => evidenza?.sorvola(null)}
+            class:evidenziato={evidenza?.attivo === body.id}
+          >
+            <td class="glifo">{BODY_GLYPH[body.id]}</td>
+            <td>{body.name}</td>
+            <td>{nome(body.rulers.domicilio)}</td>
+            <td>{nome(body.rulers.esaltazione)}</td>
+            <td>{nomi(body.rulers.triplicita)}</td>
+            <td>{nomi(body.rulers.triplicitaDiSetta)}</td>
+            <td>{nome(body.rulers.termine)}</td>
+            <td class:tenue={body.dignities.length === 0}>
+              {body.dignities.map(voce).join(', ') || '—'}
+            </td>
+          </tr>
+        {/each}
+      </tbody>
+    </table>
+    <p class="fonti">
+      {tolomeo.source} Le colonne dicono chi governa il grado in cui sta ciascun corpo.
+      {#if sect}
+        Il triangolo è governato {sect === 'diurna' ? 'di giorno' : 'di notte'}, dalla setta del tema.
+      {:else}
+        Senza l'ora la setta manca, e chi governa il triangolo non si dice.
+      {/if}
+    </p>
+    <p class="fonti">{tolomeo.termsSource}</p>
   {/if}
 
   <h4>Ricezioni</h4>

@@ -105,7 +105,13 @@ orientalità di ciascun pianeta, e il conto della sua tavola delle fortezze
 differenza. È il conteggio di una scuola: attribuiscilo a Lilly, non
 ricalcolarlo con pesi tuoi, e non farne un voto sulla persona. Le righe
 «Lettura» dicono dove il testo lascia una scelta; se ne citi il conto, dì
-anche quelle. Due pianeti personali di tempra opposta sono un
+anche quelle. Al posto di Lilly la sezione può portare la tavola di Tolomeo
+(riga «Tolomeo (a richiesta)»): domicilio, esaltazione, i signori del
+triangolo e chi lo governa nella setta, e i termini della sua tavola, che
+non sono quelli di Lilly. Tolomeo non ha facce, esilio né un punteggio, e
+la ricezione non la definisce: con la sua tavola le ricezioni restano per
+domicilio ed esaltazione. Non aggiungere a Tolomeo ciò che è di Lilly, e
+non contare punti che lui non dà. Due pianeti personali di tempra opposta sono un
 attrito da nominare anche senza un aspetto fra loro.
 
 Le forze in conflitto, e come si compongono. Un quadrato o un'opposizione non è

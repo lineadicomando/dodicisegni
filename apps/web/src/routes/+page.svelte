@@ -13,6 +13,7 @@
   import { Evidenza } from '#lib/evidenza.svelte.js';
   import { houseSystemOrDefault } from '#lib/house-systems.js';
   import { orbConventionOrDefault } from '#lib/orbite.js';
+  import { dignitySchoolOrNone, type DignitySchoolChoice } from '#lib/scuole-dignita.js';
   import { ayanamsaOrDefault, zodiacOrDefault } from '#lib/zodiacs.js';
   import { birthStore } from '#lib/birth-store.svelte.js';
   import { SITE_TAGLINE } from '#lib/project.js';
@@ -40,7 +41,7 @@
   let minorAspects = $state(false);
   let zodiac = $state<Zodiac>('tropicale');
   let ayanamsa = $state<AyanamsaId>('lahiri');
-  let lilly = $state(false);
+  let dignitySchool = $state<DignitySchoolChoice>('');
   let orbConvention = $state<NatalOrbConvention>('greene');
 
   /**
@@ -57,9 +58,9 @@
     zodiac,
     ayanamsa,
     orbConvention,
-    // Solo nel tropicale: nel siderale la rotta rifiuterebbe la scuola, e la
-    // casella lì non compare.
-    ...(lilly && zodiac === 'tropicale' ? { dignitySchool: 'lilly' as const } : {}),
+    // Solo nel tropicale: nel siderale la rotta rifiuterebbe la scuola, e il
+    // menù lì non compare.
+    ...(dignitySchool && zodiac === 'tropicale' ? { dignitySchool } : {}),
   });
 
   let chart = $state<NatalChart | null>(null);
@@ -172,7 +173,7 @@
       minorAspects = parametri.get('minorAspects') === 'true';
       zodiac = zodiacOrDefault(parametri.get('zodiac'));
       ayanamsa = ayanamsaOrDefault(parametri.get('ayanamsa'));
-      lilly = parametri.get('dignitySchool') === 'lilly';
+      dignitySchool = dignitySchoolOrNone(parametri.get('dignitySchool'));
       orbConvention = orbConventionOrDefault(parametri.get('orbConvention'));
 
       if (await calcola()) aperto = false;
@@ -231,7 +232,7 @@
     bind:minorAspects
     bind:zodiac
     bind:ayanamsa
-    bind:lilly
+    bind:dignitySchool
     bind:orbConvention
     housesDisabled={birth.timeUnknown}
     onchange={calcola}
@@ -254,7 +255,7 @@
           bind:minorAspects
           bind:zodiac
           bind:ayanamsa
-          bind:lilly
+          bind:dignitySchool
           bind:orbConvention
           housesDisabled={birth.timeUnknown}
         />
