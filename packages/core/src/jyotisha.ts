@@ -39,6 +39,7 @@ import { computeGoodVargas } from './varga-buoni.js';
 import { computeRelationships } from './maitri.js';
 import { computeVimshopaka } from './vimshopaka.js';
 import { computeArudhas } from './arudha.js';
+import { computeGrahaArudhas } from './arudha-graha.js';
 import { initEphemeris } from './ephemeris.js';
 import { lastSunrise } from './panchanga.js';
 import { computeGrahaStates } from './stati.js';
@@ -127,6 +128,7 @@ export function computeJyotisha(
     relationships: computeRelationships(chart),
     vimshopaka: computeVimshopaka(chart, options.hora),
     states,
+    grahaArudhas: computeGrahaArudhas(chart),
     // Le avvertenze dei pezzi salgono qui: chi legge il tema vedico non deve
     // andarle a cercare dentro la catena delle dasha.
     warnings: [

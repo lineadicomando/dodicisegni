@@ -42,6 +42,15 @@ export { computeDrishti, housesSeenBy } from './drishti.js';
 export { computeRelationships, naisargikaMaitri, panchadhaMaitri, tatkalikaMaitri } from './maitri.js';
 export { computeVimshopaka, VARGA_VISWA, VIMSHOPAKA_WEIGHTS } from './vimshopaka.js';
 export {
+  computeGrahaArudhas,
+  grahaArudhaOf,
+  RAO_EXALTATION,
+  RAO_OWN_SIGNS,
+  rasiDrishti,
+  strongerCoLord,
+  strongerRasi,
+} from './arudha-graha.js';
+export {
   AVASTHA_GRAHA_NUMBER,
   COMBUSTION_LIMITS,
   computeAvasthas,
@@ -254,6 +263,7 @@ export type {
   Arudhas,
   GoodVargas,
   GrahaStates,
+  GrahaArudhas,
   CombustionState,
   PlanetaryWar,
   ShayanadiAvastha,

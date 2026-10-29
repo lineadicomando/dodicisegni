@@ -54,6 +54,7 @@ import type {
   LillyStar,
   Zodiac,
   GrahaStates,
+  GrahaArudhas,
 } from './types.js';
 
 /**
@@ -1177,6 +1178,7 @@ export function formatJyotishaCompact(jyotisha: JyotishaChart): string {
   parti.push(formatRelationshipsCompact(jyotisha.relationships));
   parti.push(formatVimshopakaCompact(jyotisha.vimshopaka));
   if (jyotisha.arudhas) parti.push(formatArudhasCompact(jyotisha.arudhas));
+  parti.push(formatGrahaArudhasCompact(jyotisha.grahaArudhas));
   if (jyotisha.goodVargas) parti.push(formatGoodVargasCompact(jyotisha.goodVargas));
   parti.push(formatGrahaStatesCompact(jyotisha.states));
   parti.push(formatNakshatraCompact(jyotisha.chart));
@@ -1265,6 +1267,21 @@ function formatArudhasCompact(arudhas: Arudhas): string {
     lines.push(
       `${String(p.bhava).padStart(2)} ${p.name.padEnd(13)} ${SIGN_ABBR[p.sign]} → ${p.pada}` +
         `  (signore ${bodyName(p.lord)})${p.lordChoice ? ` ${p.lordChoice}` : ''}`,
+    );
+  }
+  return lines.join('\n');
+}
+
+/**
+ * Gli arudha dei graha, di un'altra scuola rispetto a quelli dei bhava: il
+ * titolo lo dice, perché i due non si leggano come una tavola sola.
+ */
+function formatGrahaArudhasCompact(arudhas: GrahaArudhas): string {
+  const lines = ['ARUDHA DEI GRAHA (NARASIMHA RAO)', `Fonte: ${arudhas.source}`, ''];
+  for (const g of arudhas.grahas) {
+    lines.push(
+      `${g.name.padEnd(11)} ${SIGN_ABBR[g.sign]} → proprio ${SIGN_ABBR[g.ownSign]} → ${g.pada}` +
+        `${g.exception ? ' (eccezione del 1°/7°: il 10°)' : ''}${g.ownSignRule ? ` · ${g.ownSignRule}` : ''}`,
     );
   }
   return lines.join('\n');

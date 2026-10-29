@@ -1031,6 +1031,27 @@ export interface ShayanadiAvasthas {
 }
 
 /**
+ * Gli arudha dei nove graha secondo Narasimha Rao (2000), §9.5: un'altra
+ * scuola rispetto agli arudha dei bhava, che sono del BPHS. Vedi
+ * `arudha-graha.ts`.
+ */
+export interface GrahaArudhas {
+  source: string;
+  grahas: {
+    id: BodyId;
+    name: string;
+    sign: ZodiacSign;
+    /** Il segno proprio da cui si conta: per i graha con due segni, il più forte. */
+    ownSign: ZodiacSign;
+    /** Solo per i graha con due segni: la regola di §15.5.2 che ha scelto. */
+    ownSignRule?: string;
+    pada: ZodiacSign;
+    /** Se è scattata l'eccezione del 1° o del 7°, e si è preso il 10°. */
+    exception: boolean;
+  }[];
+}
+
+/**
  * Le condizioni che BPHS 6.53 nomina, calcolate come dati: combustione,
  * guerra planetaria, avastha. Il motore non dice che cosa annullino: il
  * conto dei varga buoni resta quello che è.
@@ -1147,6 +1168,8 @@ export interface JyotishaChart {
   vimshopaka: Vimshopaka;
   /** Combustione, guerra planetaria e avastha: le condizioni di BPHS 6.53. */
   states: GrahaStates;
+  /** Gli arudha dei nove graha, secondo Narasimha Rao. Non vogliono l'ora. */
+  grahaArudhas: GrahaArudhas;
   /**
    * Le avvertenze dei pezzi, raccolte qui.
    *
