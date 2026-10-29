@@ -191,6 +191,9 @@ describe('il documento vedico', () => {
     // deve dire che non sono la dignità del tema e che il conto dei varga
     // buoni non va ricavato.
     expect(testo).toContain('è un confronto per segno, senza gradi');
+    // I nodi hanno le dignità per segno e nessuna neecha: senza la riga il
+    // modello la metterebbe nel settimo segno, come per i sette.
+    expect(testo.replace(/\s+/g, ' ')).toContain('una neecha dei nodi non la dai tu');
     expect(testo).toContain('VARGA BUONI');
     expect(testo.replace(/\s+/g, ' ')).toContain('non rifare il conto con regole tue');
   });

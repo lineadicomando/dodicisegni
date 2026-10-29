@@ -25,9 +25,9 @@
  *   annullano), senza le quali un Kemadruma «presente» è un dato monco. Le
  *   forze, lo shadbala (le sei forze di Parashara), con tutte le componenti e
  *   non il solo totale.
- * - Le dignità dei nodi. Le altre ci sono, secondo Parashara
- *   (`dignita-parashara.ts`); sull'esaltazione di Rahu e Ketu il testo non
- *   sceglie, e il motore nemmeno.
+ * - La neecha dei nodi. Le loro altre dignità ci sono, per segno, da BPHS
+ *   47.35-36 (`dignita-parashara.ts`); il segno della neecha il verso non lo
+ *   dice, e il motore non lo ricava.
  */
 
 import { computeVimshottari } from './dasha.js';

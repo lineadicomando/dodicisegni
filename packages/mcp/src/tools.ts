@@ -387,7 +387,8 @@ export function registerComputeJyotishaChart(server: McpServer, context: ToolCon
         "Calcola un tema secondo l'astrologia indiana (Jyotisha): zodiaco siderale, case a " +
         'segni interi dal lagna, e in più i nakshatra dei graha, la catena delle dasha ' +
         'vimshottari, le carte divisionali, le drishti e le dignità secondo Parashara ' +
-        '(uccha, moolatrikona, segno proprio, neecha), le relazioni fra i graha (naturali, ' +
+        '(uccha, moolatrikona, segno proprio, neecha; per Rahu e Ketu solo per segno e senza ' +
+        'neecha, BPHS 47.35-36), le relazioni fra i graha (naturali, ' +
         'temporanee e composte, BPHS 3.55-58, con un verso: come A vede B non è come B vede A) ' +
         'il vimshopaka (la forza su 20 di BPHS 7.17-27, per schema) e, con l\'ora, gli arudha ' +
         'dei dodici bhava e i varga buoni contati per schema, con i versi del BPHS da cui ' +

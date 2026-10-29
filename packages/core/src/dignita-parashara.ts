@@ -24,10 +24,28 @@
  * - 4.6-24, pp. 50-53: il signore di ciascun segno, nella descrizione dei
  *   segni. Coincide con i domicili di Tolomeo, ma qui la fonte è questa.
  *
- * **Rahu e Ketu non hanno dignità qui.** Santhanam, in nota a 3.50, scrive che
- * sull'esaltazione dei nodi le opinioni divergono e rimanda a un altro testo:
- * il BPHS non sceglie, e il motore nemmeno. Urano, Nettuno e Plutone non sono
- * graha e non ne hanno.
+ * **Rahu e Ketu le hanno da un altro capitolo, e solo per segno.** Il cap. 3
+ * non li nomina, e Santhanam in nota a 3.50 scrive che sull'esaltazione dei
+ * nodi le opinioni divergono. Il BPHS però una scelta la fa, al cap. 47,
+ * aprendo gli effetti della dasha di Rahu (trad. Santhanam, vol. II, pp.
+ * 581-582, letto sull'immagine col sanscrito):
+ *
+ * - 47.35: uccha (*tuṅga*) di Rahu il Toro, di Ketu lo Scorpione;
+ *   moolatrikona, nell'ordine, i Gemelli e il Sagittario;
+ * - 47.36: segni propri l'Acquario e lo Scorpione (*kumbhālī*), gli stessi
+ *   che 46.157 dà come secondi signori in `arudha.ts`; «secondo alcuni»
+ *   (*kenacit*) la Vergine e i Pesci, un'opinione senza nome che il motore
+ *   riferisce e non usa.
+ *
+ * Non ci sono gradi né tratti, e **la neecha il verso non la dà**: 47.41 la
+ * nomina («nīcarāśigate») senza dire il segno, e lo Scorpione che si legge
+ * nella traduzione è di Santhanam. Il motore non la ricava dalla regola di
+ * 3.49, che è detta dei sette. Per la stessa ragione i nodi restano fuori
+ * dai conti costruiti sui sette (le corrispondenze dei varga, i varga buoni,
+ * il vimshopaka, le relazioni), che il testo dà per loro: stanno solo nella
+ * tabella delle dignità del tema.
+ *
+ * Urano, Nettuno e Plutone non sono graha e non ne hanno.
  */
 
 import type { BodyId, NatalChart, ParasharaDignities, ParasharaDignity, ZodiacSign } from './types.js';
@@ -47,6 +65,20 @@ export const PARASHARA_GRAHAS = [
 ] as const satisfies readonly BodyId[];
 
 type Graha = (typeof PARASHARA_GRAHAS)[number];
+
+/** Rahu e Ketu, nell'ordine di BPHS 47.35-36. */
+export const PARASHARA_NODES = ['nodo-nord', 'nodo-sud'] as const satisfies readonly BodyId[];
+
+type Nodo = (typeof PARASHARA_NODES)[number];
+
+/**
+ * I segni di dignità dei nodi, BPHS 47.35-36: senza gradi e senza neecha.
+ * Le chiavi sono nell'ordine in cui il verso le dice.
+ */
+const NODI: Readonly<Record<Nodo, { uccha: ZodiacSign; moolatrikona: ZodiacSign; swakshetra: ZodiacSign }>> = {
+  'nodo-nord': { uccha: 'toro', moolatrikona: 'gemelli', swakshetra: 'acquario' },
+  'nodo-sud': { uccha: 'scorpione', moolatrikona: 'sagittario', swakshetra: 'scorpione' },
+};
 
 /**
  * L'esaltazione: il segno e il grado più profondo, BPHS 3.49-50. Il sanscrito
@@ -151,8 +183,10 @@ const TRATTI: Readonly<
 export const PARASHARA_SOURCE =
   'Parashara, BPHS 3.49-54 (trad. Santhanam, vol. I, pp. 38-39) per uccha, neecha e ' +
   'moolatrikona; 4.6-24 (pp. 50-53) per i segni propri. Nei sette segni che 3.51-54 ' +
-  'divide in tratti decide il tratto; Rahu e Ketu senza dignità, perché il testo non ne ' +
-  'sceglie una.';
+  'divide in tratti decide il tratto. Rahu e Ketu da 47.35-36 (vol. II, pp. 581-582), solo ' +
+  'per segno: uccha Toro e Scorpione, moolatrikona Gemelli e Sagittario, segno proprio ' +
+  'Acquario e Scorpione; neecha non data dal verso, e non ricavata. «Secondo alcuni» ' +
+  '(kenacit, senza nome) Vergine e Pesci come segni propri: riferito, non usato.';
 
 function isGraha(body: BodyId): body is Graha {
   return (PARASHARA_GRAHAS as readonly BodyId[]).includes(body);
@@ -160,6 +194,27 @@ function isGraha(body: BodyId): body is Graha {
 
 function opposite(sign: ZodiacSign): ZodiacSign {
   return ZODIAC_SIGNS[(ZODIAC_SIGNS.indexOf(sign) + 6) % 12] as ZodiacSign;
+}
+
+function isNodo(body: BodyId): body is Nodo {
+  return (PARASHARA_NODES as readonly BodyId[]).includes(body);
+}
+
+/**
+ * In quali dei segni di BPHS 47.35-36 cade un nodo: tutte le corrispondenze,
+ * nell'ordine del verso. Vuoto per gli altri corpi e fuori da quei segni.
+ */
+export function parasharaNodeDignities(body: BodyId, sign: ZodiacSign): ParasharaDignity[] {
+  if (!isNodo(body)) return [];
+  const segni = NODI[body];
+  return (['uccha', 'moolatrikona', 'swakshetra'] as const).filter((dignita) => segni[dignita] === sign);
+}
+
+/** I segni di uccha, moolatrikona e segno proprio di un nodo, BPHS 47.35-36. */
+export function parasharaNodeSigns(
+  body: BodyId,
+): { uccha: ZodiacSign; moolatrikona: ZodiacSign; swakshetra: ZodiacSign } | undefined {
+  return isNodo(body) ? NODI[body] : undefined;
 }
 
 /** Il signore di un segno secondo BPHS 4.6-24. */
@@ -238,12 +293,13 @@ export const VARGA_DIGNITY_SOURCE =
   'tema vedico, con l\'ora di nascita.';
 
 /**
- * Le dignità dei sette graha di una carta siderale.
+ * Le dignità dei sette graha di una carta siderale, poi quelle dei nodi.
  *
  * Accanto a uccha e neecha c'è il grado del punto più profondo, che è nello
  * stesso segno: chi legge vede a colpo d'occhio quanto il graha ne sia
  * lontano, senza che il motore ne ricavi una forza. Quella è lo shadbala, e
- * ha regole sue.
+ * ha regole sue. Rahu e Ketu portano `signDignities` e `dignity` nullo:
+ * vedi il commento in testa.
  */
 export function computeParasharaDignities(chart: NatalChart): ParasharaDignities {
   return {
@@ -265,6 +321,22 @@ export function computeParasharaDignities(chart: NatalChart): ParasharaDignities
           dignity,
           ...(dignity === 'uccha' || dignity === 'neecha' ? { deepestDegree: uccha.degree } : {}),
         };
-      }),
+      })
+      .concat(
+        PARASHARA_NODES.flatMap((id) => {
+          const body = chart.bodies.find((b) => b.id === id);
+          if (!body) return [];
+          return [
+            {
+              id: body.id,
+              name: grahaName(body.id, body.name),
+              sign: body.sign,
+              signDegree: body.signDegree,
+              dignity: null,
+              signDignities: parasharaNodeDignities(body.id, body.sign),
+            },
+          ];
+        }),
+      ),
   };
 }

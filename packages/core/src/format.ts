@@ -1,5 +1,5 @@
 import { BODIES, NATAL_POINT_NAMES, SIGN_ABBR, ZODIAC_SIGNS } from './constants.js';
-import { PARASHARA_GRAHAS, parasharaExaltation } from './dignita-parashara.js';
+import { PARASHARA_GRAHAS, PARASHARA_NODES, parasharaExaltation, parasharaNodeSigns } from './dignita-parashara.js';
 import { formatDegrees, formatZodiacal } from './math.js';
 import { grahaName, nakshatraOf, requireSidereal } from './nakshatra.js';
 import type {
@@ -1209,6 +1209,11 @@ function formatParasharaDignitiesCompact(dignities: ParasharaDignities): string 
       const uccha = parasharaExaltation(graha)!;
       return `${bodyName(graha)} ${uccha.degree}° ${SIGN_ABBR[uccha.sign]}`;
     }).join(', ')}`,
+    `Rahu e Ketu (47.35-36), per segno, senza gradi né neecha: ${PARASHARA_NODES.map((nodo) => {
+      const segni = parasharaNodeSigns(nodo)!;
+      return `${grahaName(nodo, nodo)} uccha ${SIGN_ABBR[segni.uccha]}, moolatrikona ` +
+        `${SIGN_ABBR[segni.moolatrikona]}, proprio ${SIGN_ABBR[segni.swakshetra]}`;
+    }).join('; ')}`,
     '',
   ];
 
@@ -1219,9 +1224,12 @@ function formatParasharaDignitiesCompact(dignities: ParasharaDignities): string 
         ? `, ${graha.dignity === 'uccha' ? 'esaltazione' : 'debilitazione'} più profonda a ` +
           `${graha.deepestDegree}° ${SIGN_ABBR[graha.sign]}`
         : '';
-    lines.push(
-      `${graha.name.padEnd(11)} ${formatZodiacal(longitudine).padEnd(11)} ${graha.dignity ?? '—'}${profondo}`,
-    );
+    const dignita = graha.signDignities
+      ? graha.signDignities.length
+        ? `${graha.signDignities.join(', ')} (per segno)`
+        : '—'
+      : (graha.dignity ?? '—');
+    lines.push(`${graha.name.padEnd(11)} ${formatZodiacal(longitudine).padEnd(11)} ${dignita}${profondo}`);
   }
 
   return lines.join('\n');

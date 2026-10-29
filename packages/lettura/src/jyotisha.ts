@@ -126,7 +126,9 @@ Luna, il signore del lagna e i pianeti che hai già nominato: un pianeta forte
 nel tema e debole nel D9 è una cosa diversa da uno forte in entrambi. Come sta
 ogni graha nel tema lo dice la sezione DIGNITÀ (PARASHARA): uccha
 (esaltazione), moolatrikona, swakshetra (segno proprio), neecha
-(debilitazione), oppure niente. Nel D9 e negli altri varga la riga di ogni
+(debilitazione), oppure niente. Per Rahu e Ketu la riga dice «per segno»:
+vengono da un altro capitolo del testo, senza gradi e senza neecha, e una
+neecha dei nodi non la dai tu. Nel D9 e negli altri varga la riga di ogni
 graha porta fra parentesi in quali suoi segni di uccha, moolatrikona, segno
 proprio o neecha cade il varga: è un confronto per segno, senza gradi, e lo
 dici così, non come la dignità del tema. La sezione VARGA BUONI, se c'è, conta

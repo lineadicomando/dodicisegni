@@ -1,11 +1,12 @@
 <!--
   Le dignità di un tema vedico secondo Parashara: una riga per ciascuno dei
-  sette graha, e i signori dei segni.
+  sette graha, una per Rahu e Ketu, e i signori dei segni.
 
   Non è `DignityTable.svelte` con un'altra fonte. Le dignità occidentali
   stanno in due colonne di domicili e in scuole che si chiedono per nome;
   queste sono una tradizione sola, con quattro stati che l'altra non ha
-  (moolatrikona, per dirne uno) e senza i nodi, su cui il testo non sceglie.
+  (moolatrikona, per dirne uno), e con i nodi, che il BPHS tratta a parte
+  (47.35-36): per loro la dignità è per segno e può essere più d'una.
   Fonderle in un componente vorrebbe dire mescolare due dottrine nella stessa
   tabella.
 
@@ -70,12 +71,19 @@
           <td>{graha.name}</td>
           <td>{SIGN_GLYPH[graha.sign]} {SIGN_LABEL[graha.sign]}</td>
           <td class="numerico">{formatSignDegree(graha.signDegree)}</td>
-          <td class:tenue={graha.dignity === null}>
-            {graha.dignity ? VOCE[graha.dignity] : '—'}
-            {#if graha.deepestDegree !== undefined}
-              <span class="tenue">· più profonda a {graha.deepestDegree}°</span>
-            {/if}
-          </td>
+          {#if graha.signDignities}
+            <td class:tenue={graha.signDignities.length === 0}>
+              {graha.signDignities.map((dignita) => VOCE[dignita]).join(', ') || '—'}
+              {#if graha.signDignities.length}<span class="tenue">· per segno</span>{/if}
+            </td>
+          {:else}
+            <td class:tenue={graha.dignity === null}>
+              {graha.dignity ? VOCE[graha.dignity] : '—'}
+              {#if graha.deepestDegree !== undefined}
+                <span class="tenue">· più profonda a {graha.deepestDegree}°</span>
+              {/if}
+            </td>
+          {/if}
         </tr>
       {/each}
     </tbody>

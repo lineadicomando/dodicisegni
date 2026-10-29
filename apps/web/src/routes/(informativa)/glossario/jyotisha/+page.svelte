@@ -184,7 +184,9 @@
   L'esaltazione e la debilitazione di un graha. Uccha è il segno in cui il
   graha è esaltato, con un grado di esaltazione più profonda; neecha è il
   segno opposto, allo stesso grado. Sul sito vengono dal <em>Brihat Parashara
-  Hora Shastra</em>, 3.49-50.
+  Hora Shastra</em>, 3.49-50. Per Rahu e Ketu lo stesso testo dà l'uccha in un
+  altro capitolo (47.35), senza grado e senza dire il segno della neecha, che
+  il sito quindi non indica.
 </p>
 
 <h3 id="moolatrikona">Moolatrikona</h3>

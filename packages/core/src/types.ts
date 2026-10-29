@@ -811,14 +811,29 @@ export interface ParasharaDignities {
   source: string;
   /** Il signore di ciascun segno, dalla stessa fonte. */
   signLords: Record<ZodiacSign, BodyId>;
-  /** I sette graha dal Sole a Saturno che la carta contiene. I nodi no. */
+  /**
+   * I sette graha dal Sole a Saturno che la carta contiene, poi Rahu e Ketu.
+   * Per i sette vale 3.49-54, col grado; per i nodi 47.34-36, solo per segno.
+   */
   grahas: {
     id: BodyId;
     name: string;
     sign: ZodiacSign;
     signDegree: number;
-    /** `null` quando il graha non ha nessuna delle quattro nel suo segno. */
+    /**
+     * `null` quando il graha non ha nessuna delle quattro nel suo segno, e
+     * sempre per Rahu e Ketu: per loro vedi `signDignities`.
+     */
     dignity: ParasharaDignity | null;
+    /**
+     * Solo per Rahu e Ketu: in quali dei loro segni di BPHS 47.34-36 cade il
+     * nodo, tutte le corrispondenze nell'ordine del verso (uccha,
+     * moolatrikona, segno proprio). Il testo non dà gradi né tratti, quindi
+     * una sola dignità non si può scegliere: per Ketu lo Scorpione è insieme
+     * uccha e segno proprio. Neecha non c'è, perché il verso non la dà.
+     * Vuoto fuori da quei segni.
+     */
+    signDignities?: ParasharaDignity[];
     /**
      * Solo con uccha e neecha: il grado del segno dove l'esaltazione, o la
      * debilitazione, è più profonda. Il testo lo dà come numero intero e non

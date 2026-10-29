@@ -66,19 +66,18 @@ volta e ricominciare da capo.
 
 | Voce | Priorità | Taglia | Prima di cominciare |
 |---|---|---|---|
-| 19. Le dignità, per scuola | bassa | media | Jyotisha: le scelte del proprietario sulle dignità dei nodi (47.34-36, letto) e le fonti del 6.53; occidente: leggere Tolomeo I.18 e Bonatti |
+| 19. Le dignità, per scuola | bassa | media | Jyotisha: le fonti del 6.53; occidente: leggere Tolomeo I.18 e Bonatti |
 | 17. L'astrologia oraria | bassa | piccola, ormai | i quattro lotti sono fatti; restano rifiniture indipendenti, una per riga |
 | 5. I varga: le convenzioni che restano | bassa | piccola | i sedici sono fatti; restano rifiniture, una per riga |
 
 L'ordine consigliato è quello della tabella. Firmico, Valente e Leo sono
 in `texts/` con le pagine lette (voce 24, chiusa): la parte occidentale
-della 19 parte da lì. Della 19, nel
-Jyotisha, sono fatti dignità, varga buoni, relazioni, vimshopaka e arudha;
-quello che resta vuole la lettura di altre pagine del BPHS per il 6.53, e
-tre scelte del proprietario: se e dove far entrare le dignità dei nodi di
-47.34-36 (letto il 29 ottobre 2026), gli arudha dei graha, il conto dei varga buoni di Narasimha
-Rao come seconda convenzione. La 17 usa le tavole
-di Lilly della 19 e ha già le *moieties* come terza convenzione delle orbite.
+della 19 parte da lì. Della 19, nel Jyotisha, sono fatti dignità (anche dei
+nodi), varga buoni, relazioni, vimshopaka e arudha; quello che resta vuole
+la lettura di altre pagine del BPHS per il 6.53, e due scelte del
+proprietario: gli arudha dei graha, il conto dei varga buoni di Narasimha
+Rao come seconda convenzione. La 17 usa le tavole di Lilly della 19 e ha
+già le *moieties* come terza convenzione delle orbite.
 
 **Come si è lavorato nel Jyotisha, e conviene continuare.** Ogni regola si
 legge sull'immagine della pagina (`pdftoppm`, vedi le schede `FONTE.md`), si
@@ -354,6 +353,7 @@ proprietario in *Deciso*:
 | Le relazioni fra i graha, naturale, temporanea e composta | `maitri.ts`, `JyotishaChart.relationships`, `RelationshipTable.svelte` | `a3840d3` | 3.55-58, pp. 40-42; la regola ridà la tavola di p. 40 in `maitri.test.ts` |
 | Il vimshopaka nei quattro schemi | `vimshopaka.ts`, `JyotishaChart.vimshopaka`, `VimshopakaTable.svelte` | `0f511f3` | 7.17-27, pp. 95-99; l'esempio di Venere (New Delhi 1984, 16,8) in `vimshopaka.test.ts` |
 | Gli arudha dei dodici bhava, coi due signori di Scorpione e Acquario | `arudha.ts` (`arudhaOf`, `bhavaLord`), `JyotishaChart.arudhas`, `ArudhaTable.svelte` | `f8c34a2` | 29.1-7, vol. I pp. 294-297, e 46.157-166, vol. II pp. 553-556; gli esempi di Santhanam in `arudha.test.ts` |
+| Le dignità di Rahu e Ketu, per segno e senza neecha | `parasharaNodeDignities` in `dignita-parashara.ts`, campo `signDignities` dei nodi in `ParasharaDignities.grahas`, `ParasharaDignityTable.svelte` | questo | 47.34-36, vol. II pp. 581-582; il verso ricopiato in `dignita-parashara.test.ts` |
 
 Senza ora di nascita `goodVargas` e `arudhas` mancano (vogliono il lagna) e
 un'avvertenza lo dice; relazioni e vimshopaka ci sono comunque. Le sezioni
@@ -456,27 +456,9 @@ descrizioni dicono «circa un quarto».
      `texts/jyotisha/narasimha-rao-vedic-astrology-integrated-approach-2000`
      (`testo/originale.txt`, righe 2470-2560). Ha un autore, quindi può entrare
      accanto, nominata; la scelta di farla è del proprietario.
-   - **Rahu e Ketu: le dignità ci sono nel BPHS, nel cap. 47.**
-     `dignita-parashara.ts` (commento in testa e `PARASHARA_DIGNITY_SOURCE`)
-     dice che il testo sui nodi «non ne sceglie una»: vale per il cap. 3,
-     non per tutto il libro. BPHS 47.34-36 (vol. II, pp. 581-582), letto
-     sull'immagine il 29 ottobre 2026 e trascritto in
-     `texts/jyotisha/bphs-santhanam-1992-vol2/trascrizioni.md`, a proposito
-     della dasha di Rahu dà: uccha di Rahu il Toro e di Ketu lo Scorpione;
-     moolatrikona i Gemelli e il Sagittario; segni propri l'Acquario e lo
-     Scorpione (gli stessi di 46.157, che `arudha.ts` usa già), e «secondo
-     alcuni» (*kenacit*, senza nome) la Vergine e i Pesci. Tre cose che la
-     traduzione non fa vedere: **niente gradi**; **la neecha il verso non la
-     dà**, la nomina solo in 47.41 senza dire il segno, e «(Scorpio)» lì è
-     di Santhanam; per Ketu lo **Scorpione è insieme uccha e segno proprio**.
-     Le scelte del proprietario, prima del codice: se entra; con la neecha
-     nel settimo segno (la regola di 3.49 per i sette, applicata da
-     Santhanam) o senza; dove (le dignità della rashi, le corrispondenze dei
-     varga di 6.52, i varga buoni e quindi il vimshopaka, che oggi contano i
-     sette). Se non entra, la frase del codice va comunque corretta: il
-     BPHS una scelta la fa, al cap. 47. Le relazioni dei nodi sono un'altra
-     cosa: Santhanam a p. 41 del vol. I le dà secondo altri testi, non
-     secondo 3.55, e restano fuori finché non c'è una fonte scelta.
+   - **Le relazioni dei nodi.** Santhanam a p. 41 del vol. I le dà
+     secondo altri testi, non secondo 3.55, e restano fuori finché non c'è
+     una fonte scelta.
 
 2. **Le altre scuole occidentali**, quando le loro fonti sono state lette
    (vedi *Da verificare* qui sotto): ciascuna come valore nuovo di
@@ -699,6 +681,15 @@ scuola nuova.
   contro il signore unico di 4.6-24 e contro il riportare entrambi; vale
   per gli arudha e quindi per i varga buoni. Fuori dall'arudha (dignità,
   relazioni, vimshopaka) i signori restano quelli di 4.6-24.
+- **Rahu e Ketu hanno le dignità di BPHS 47.35-36, solo nella tabella del
+  tema, per segno e senza neecha.** Scelto dal proprietario il 29 ottobre
+  2026, voce 19. Uccha, moolatrikona e segno proprio come li dà il verso,
+  tutte le corrispondenze (per Ketu lo Scorpione è uccha e segno proprio
+  insieme); la neecha no, perché il verso non dice il segno e la regola del
+  settimo di 3.49 è detta dei sette; Vergine e Pesci, «secondo alcuni»,
+  riferiti nella fonte e non usati. Restano ai sette graha le corrispondenze
+  dei varga, i varga buoni, il vimshopaka, le relazioni e i signori dei
+  segni di 4.6-24.
 - **Il server MCP non ha un pool, e non gli serve**: è un processo per client,
   sul trasporto stdio, e non c'è nessun'altra richiesta da tenere in attesa.
 - **I thread del pool web sono al massimo quattro, e la quinta richiesta

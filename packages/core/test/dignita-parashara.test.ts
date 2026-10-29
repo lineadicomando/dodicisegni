@@ -4,6 +4,7 @@ import {
   computeParasharaDignities,
   parasharaDignityOf,
   parasharaExaltation,
+  parasharaNodeDignities,
   parasharaSignDignities,
   parasharaSignLord,
 } from '../src/dignita-parashara.js';
@@ -66,9 +67,9 @@ describe('uccha e neecha secondo Parashara', () => {
     expect(parasharaDignityOf('venere', a('pesci', 1))).toBe('uccha');
   });
 
-  it('non ne danno ai nodi né ai pianeti moderni', () => {
-    // Il traduttore scrive che sull'esaltazione dei nodi le opinioni
-    // divergono: il testo non sceglie, e il motore nemmeno.
+  it('col grado non ne danno ai nodi né ai pianeti moderni', () => {
+    // 3.49-54 non nomina i nodi: le loro dignità sono di 47.35-36, solo per
+    // segno, e stanno in `parasharaNodeDignities` (qui sotto).
     for (const corpo of ['nodo-nord', 'nodo-sud', 'urano', 'nettuno', 'plutone'] as const) {
       expect(parasharaExaltation(corpo)).toBeUndefined();
       for (let segno = 0; segno < 12; segno++) {
@@ -188,19 +189,76 @@ describe('le corrispondenze per segno, che servono ai varga', () => {
   });
 });
 
+/**
+ * BPHS 47.35-36, Santhanam vol. II pp. 581-582, ricopiato dal verso:
+ * «rāhos tu vṛṣabhaṃ ketor vṛścikaṃ tuṅgasaṃjñakam | mūlatrikoṇakaṃ jñeyaṃ
+ * yugmaṃ cāpaṃ krameṇa ca || kumbhālī ca gṛhau proktau».
+ */
+const VERSO_47_35_36: [BodyId, ZodiacSign, ZodiacSign, ZodiacSign][] = [
+  // nodo, uccha, moolatrikona, segno proprio
+  ['nodo-nord', 'toro', 'gemelli', 'acquario'],
+  ['nodo-sud', 'scorpione', 'sagittario', 'scorpione'],
+];
+
+describe('Rahu e Ketu secondo 47.35-36', () => {
+  it('coincidono col verso, segno per segno, su tutto lo zodiaco', () => {
+    for (const [nodo, uccha, moolatrikona, proprio] of VERSO_47_35_36) {
+      for (const segno of SEGNI) {
+        const attese = [
+          ...(segno === uccha ? ['uccha'] : []),
+          ...(segno === moolatrikona ? ['moolatrikona'] : []),
+          ...(segno === proprio ? ['swakshetra'] : []),
+        ];
+        expect(parasharaNodeDignities(nodo, segno)).toEqual(attese);
+      }
+    }
+  });
+
+  it('per Ketu lo Scorpione è due cose insieme, e il motore non ne sceglie una', () => {
+    expect(parasharaNodeDignities('nodo-sud', 'scorpione')).toEqual(['uccha', 'swakshetra']);
+  });
+
+  it('non danno neecha: il verso non dice il segno', () => {
+    for (const [nodo] of VERSO_47_35_36) {
+      for (const segno of SEGNI) expect(parasharaNodeDignities(nodo, segno)).not.toContain('neecha');
+    }
+  });
+
+  it('non usano Vergine e Pesci, che il verso riferisce «secondo alcuni»', () => {
+    expect(parasharaNodeDignities('nodo-nord', 'vergine')).toEqual([]);
+    expect(parasharaNodeDignities('nodo-sud', 'pesci')).toEqual([]);
+  });
+
+  it('restano fuori dalle corrispondenze dei varga, che sono dei sette', () => {
+    expect(parasharaSignDignities('nodo-nord', 'toro')).toEqual([]);
+    expect(parasharaNodeDignities('sole', 'ariete')).toEqual([]);
+  });
+});
+
 describe('nel tema vedico', () => {
   const carta = computeNatalChart(NAPOLI, { zodiac: 'siderale', houseSystem: 'segni-interi' });
 
-  it('porta i sette graha con la dignità calcolata dalla loro longitudine', () => {
+  it('porta i sette graha con la dignità calcolata dalla loro longitudine, poi i nodi', () => {
     const dignita = computeParasharaDignities(carta);
     expect(dignita.school).toBe('parashara');
     expect(dignita.source).toContain('BPHS 3.49-54');
-    expect(dignita.grahas.map((graha) => graha.id)).toEqual(
-      carta.bodies.map((body) => body.id).filter((id) =>
+    expect(dignita.source).toContain('47.35-36');
+    expect(dignita.grahas.map((graha) => graha.id)).toEqual([
+      ...carta.bodies.map((body) => body.id).filter((id) =>
         ['sole', 'luna', 'mercurio', 'venere', 'marte', 'giove', 'saturno'].includes(id),
       ),
-    );
-    for (const graha of dignita.grahas) {
+      'nodo-nord',
+      'nodo-sud',
+    ]);
+    for (const graha of dignita.grahas.filter((g) => g.id === 'nodo-nord' || g.id === 'nodo-sud')) {
+      const corpo = carta.bodies.find((body) => body.id === graha.id)!;
+      expect(graha.name).toBe(graha.id === 'nodo-nord' ? 'Rahu' : 'Ketu');
+      expect(graha.dignity).toBeNull();
+      expect(graha.deepestDegree).toBeUndefined();
+      expect(graha.signDignities).toEqual(parasharaNodeDignities(corpo.id, corpo.sign));
+    }
+    for (const graha of dignita.grahas.filter((g) => g.id !== 'nodo-nord' && g.id !== 'nodo-sud')) {
+      expect(graha.signDignities).toBeUndefined();
       const corpo = carta.bodies.find((body) => body.id === graha.id)!;
       expect(graha.dignity).toBe(parasharaDignityOf(corpo.id, corpo.longitude));
       expect(graha.deepestDegree !== undefined).toBe(
@@ -217,6 +275,12 @@ describe('nel tema vedico', () => {
     expect(testo).toContain('DIGNITÀ (PARASHARA)');
     expect(testo).toContain('Fonte: Parashara, BPHS');
     expect(testo).toContain('Signori dei segni: Ari Marte, Tor Venere');
+    expect(testo).toContain(
+      'Rahu e Ketu (47.35-36), per segno, senza gradi né neecha: Rahu uccha Tor, ' +
+        'moolatrikona Gem, proprio Acq; Ketu uccha Sco, moolatrikona Sag, proprio Sco',
+    );
+    expect(testo).toMatch(/^Rahu {7}/m);
+    expect(testo).toMatch(/^Ketu {7}/m);
     // La sezione occidentale non c'è: sarebbe un'altra scuola sugli stessi gradi.
     expect(testo).not.toContain('Domicili moderni');
   });
