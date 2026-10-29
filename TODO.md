@@ -66,17 +66,17 @@ volta e ricominciare da capo.
 
 | Voce | Priorità | Taglia | Prima di cominciare |
 |---|---|---|---|
-| 19. Le dignità, per scuola | bassa | media | Jyotisha: le scelte sul 6.53 (le fonti sono lette); occidente: leggere Tolomeo I.21 (i termini tolemaici) e Bonatti |
+| 19. Le dignità, per scuola | bassa | media | Jyotisha: fatto, restano rifiniture; occidente: leggere Tolomeo I.21 (i termini tolemaici) e Bonatti |
 | 17. L'astrologia oraria | bassa | piccola, ormai | i quattro lotti sono fatti; restano rifiniture indipendenti, una per riga |
 | 5. I varga: le convenzioni che restano | bassa | piccola | i sedici sono fatti; restano rifiniture, una per riga |
 
 L'ordine consigliato è quello della tabella. Firmico, Valente e Leo sono
 in `texts/` con le pagine lette (voce 24, chiusa): la parte occidentale
 della 19 parte da lì. Della 19, nel Jyotisha, sono fatti dignità (anche dei
-nodi), varga buoni, relazioni, vimshopaka e arudha; quello che resta sono
-scelte del proprietario: come calcolare combustione, guerra e avastha del
-6.53 (le fonti sono lette), gli arudha dei graha, il conto dei varga buoni
-di Narasimha Rao come seconda convenzione. La 17 usa le tavole di Lilly della 19 e ha
+nodi), varga buoni (nei due conti, Santhanam e Narasimha Rao), relazioni,
+vimshopaka, arudha dei bhava e dei graha, e gli stati di 6.53; restano
+rifiniture senza urgenza. L'occidente aspetta i termini di Tolomeo (I.21)
+e Bonatti. La 17 usa le tavole di Lilly della 19 e ha
 già le *moieties* come terza convenzione delle orbite.
 
 **Come si è lavorato nel Jyotisha, e conviene continuare.** Ogni regola si
@@ -354,6 +354,10 @@ proprietario in *Deciso*:
 | Il vimshopaka nei quattro schemi | `vimshopaka.ts`, `JyotishaChart.vimshopaka`, `VimshopakaTable.svelte` | `0f511f3` | 7.17-27, pp. 95-99; l'esempio di Venere (New Delhi 1984, 16,8) in `vimshopaka.test.ts` |
 | Gli arudha dei dodici bhava, coi due signori di Scorpione e Acquario | `arudha.ts` (`arudhaOf`, `bhavaLord`), `JyotishaChart.arudhas`, `ArudhaTable.svelte` | `f8c34a2` | 29.1-7, vol. I pp. 294-297, e 46.157-166, vol. II pp. 553-556; gli esempi di Santhanam in `arudha.test.ts` |
 | Le dignità di Rahu e Ketu, per segno e senza neecha | `parasharaNodeDignities` in `dignita-parashara.ts`, campo `signDignities` dei nodi in `ParasharaDignities.grahas`, `ParasharaDignityTable.svelte` | `a38314c` | 47.34-36, vol. II pp. 581-582; il verso ricopiato in `dignita-parashara.test.ts` |
+| Combustione, guerra planetaria e avastha, le condizioni di 6.53 | `stati.ts`, `JyotishaChart.states`, i campi `combust` e `defeated` di `GoodVargas.grahas`, `GrahaStatesTable.svelte` | `2a17fa6`, `294f6b3` | *Surya Siddhanta* IX.6-9, X.1, VII.12 e 19-23 (Burgess 1860); BPHS 79.9 e 45.30-33; l'esempio delle avastha di Santhanam (p. 455) in `stati.test.ts` |
+| Il conto dei varga buoni di Narasimha Rao, accanto a quello di Santhanam | `narasimhaRaoGoodVargas` in `varga-buoni.ts`, campo `narasimhaRao` di `GoodVargas.grahas` | `a75189e`, `5bb3807` | Rao (2000), §6.6, pp. 63-65; il Giove di Bill Cosby in `varga-buoni.test.ts` |
+| L'uccha dei nodi di 47.35 nella scelta del signore dell'arudha (46.164) | `bhavaLord` in `arudha.ts` | `b35e20e` | `arudha.test.ts` |
+| Gli arudha dei nove graha secondo Narasimha Rao, con rasi drishti, segno più forte e co-signore più forte | `arudha-graha.ts`, `JyotishaChart.grahaArudhas`, `GrahaArudhaTable.svelte` | `277c300`, `f18f6b5` | Rao (2000), §9.5, 10.3, 15.5.1-2 e tavola 6; l'esempio 30 per tutti e nove i graha in `arudha-graha.test.ts` |
 
 Senza ora di nascita `goodVargas` e `arudhas` mancano (vogliono il lagna) e
 un'avvertenza lo dice; relazioni e vimshopaka ci sono comunque. Le sezioni
@@ -428,69 +432,20 @@ descrizioni dicono «circa un quarto».
 
 ### Che cosa resta
 
-1. **Il Jyotisha: quello che resta dopo il 28 ottobre 2026.** Ciascuna
-   indipendente dalle altre.
-   - **Il 6.53 per intero.** Il verso dice che i varga buoni di un graha
-     combusto, sconfitto in guerra, in neecha, debole o in avastha come
-     shayana «distruggono gli yoga»; oggi la riga del conto dice la sola
-     neecha nella rashi (`neecha` in `GoodVargas.grahas`) e `verse53`
-     dichiara il resto non verificato. Il conto non cambia comunque: il 6.53
-     è una nota (vedi *Deciso*). Le fonti sono lette (29 ottobre 2026,
-     trascrizioni in `texts/`), e ogni pezzo vuole una scelta del
-     proprietario prima del codice:
-     - **Combustione.** Il BPHS non dà gradi: la tavola di Santhanam (vol. I,
-       p. 100, in nota a 7.28-29, che parla d'altro) non ha fonte e non è il
-       *Surya Siddhanta*. La fonte primaria è il *Surya Siddhanta* IX.6-9 e
-       X.1 (trad. Burgess 1860, pp. 367 e 370, in
-       `texts/jyotisha/surya-siddhanta-burgess-1860`): Luna 12, Marte 17,
-       Mercurio 14 (12 retrogrado), Giove 11, Venere 10 (8 verso la
-       congiunzione inferiore), Saturno 15. **Sono gradi di tempo**, la
-       distanza in ascensione obliqua fra i punti dell'eclittica del Sole e
-       del pianeta (corretto per la latitudine) all'orizzonte: dipende dal
-       luogo, non è la distanza in longitudine. Le scelte: farla così (un
-       calcolo nuovo, con l'ascensione obliqua che il motore non ha), o in
-       longitudine con i numeri del *Surya Siddhanta* dichiarando
-       l'approssimazione, o non farla. La tavola di Santhanam (Saturno 16,
-       valori retrogradi per i pianeti esterni) non ha un autore e resta
-       fuori.
-     - **Guerra planetaria.** BPHS 79.9 (vol. II, p. 950): fra Marte,
-       Mercurio, Giove, Venere e Saturno congiunti, vince Venere comunque,
-       degli altri chi sta a nord. «Within one degree» è di Santhanam. Il
-       *Surya Siddhanta* VII.12, 19-23 (pp. 309, 317) dice come: alla
-       congiunzione in longitudine (apparente, VII.7-11) l'intervallo è la
-       differenza delle latitudini, e sotto un grado è guerra; vince chi sta
-       a nord, Venere di solito comunque, ma anche lo splendore e la
-       grandezza contano (VII.20-21), e quelli un'effemeride non li dà. Le
-       scelte: in longitudine geocentrica o con la correzione apparente;
-       se la regola del nord basta senza le qualità osservative. Le altre
-       regole che circolano (la longitudine minore vince, «normally»;
-       C. G. Rajan allo stesso minuto, vince la latitudine maggiore:
-       Santhanam, vol. I, p. 124, letto solo nell'OCR) non sono del BPHS.
-     - **Avastha *śayanādi*.** BPHS 45.30-37 (vol. I, pp. 453-456), una
-       formula con un esempio svolto di Santhanam (Sole in *netrapāṇi*, p.
-       455), che può fare da prova. Tre letture aperte: la ghati in corso
-       (Santhanam) o quelle trascorse (*yātadaṇḍa*, il verso), contate
-       dall'alba; l'*aṃśa* come navamsa (Santhanam, da Balabhadra, *Hora
-       Ratna*) o come grado («some translators», senza nome: resta fuori);
-       il resto zero come *nidrā*. E una di fondo: il 6.53 dice
-       «*śayanādi-gatāḥ*» senza dire quali delle dodici guastino, e il cap.
-       45 le giudica graha per graha. Calcolare l'avastha è possibile e ha
-       una fonte; dire quale annulla i varga buoni no.
-     - **Debolezza**: nessuna soglia nel verso, resta fuori.
-   - **Gli arudha dei graha** (29.6-7, vol. I, p. 297). Per un graha con due
-     segni il verso dice di contare dal più forte senza dire come, e
-     Santhanam scrive di non avere «authentic information» su come usarli.
-     Da non fare senza una scelta del proprietario.
-   - **Il conto dei varga buoni senza l'arudha**, come seconda convenzione.
-     P.V.R. Narasimha Rao (2000), §6.6, pp. 63-65, conta solo
-     moolatrikona, esaltazione e segno proprio, con un esempio svolto (Bill
-     Cosby, 12 luglio 1937); è in
-     `texts/jyotisha/narasimha-rao-vedic-astrology-integrated-approach-2000`
-     (`testo/originale.txt`, righe 2470-2560). Ha un autore, quindi può entrare
-     accanto, nominata; la scelta di farla è del proprietario.
+1. **Il Jyotisha: quello che resta dopo il 29 ottobre 2026.** Ciascuna
+   indipendente dalle altre, nessuna urgente.
    - **Le relazioni dei nodi.** Santhanam a p. 41 del vol. I le dà
      secondo altri testi, non secondo 3.55, e restano fuori finché non c'è
      una fonte scelta.
+   - **La combustione nei gradi di tempo del *Surya Siddhanta*.** Oggi è in
+     longitudine, e lo dice (`COMBUSTION_SOURCE` in `stati.ts`). Il calcolo
+     esatto vuole l'ascensione obliqua all'orizzonte del luogo, col pianeta
+     corretto per la latitudine (SS IX.1-5, pp. 364-366, e VII.8): un
+     calcolo nuovo, da fare solo se servisse.
+   - **Gli arudha dei graha nei varga.** Rao (§9.5) li calcola in ogni
+     divisionale; `arudha-graha.ts` fa solo la rashi.
+   - **La debolezza del 6.53** (*durbalāḥ*): nessuna soglia nel verso. Resta
+     fuori finché una fonte non la dà.
 
 2. **Le altre scuole occidentali**, quando le loro fonti sono state lette
    (vedi *Da verificare* qui sotto): ciascuna come valore nuovo di
@@ -731,8 +686,9 @@ scuola nuova.
   Combustione in longitudine con i limiti del *Surya Siddhanta* IX.6-9 e
   X.1, dichiarando che il testo li dà in gradi di tempo e che la longitudine
   li approssima; la tavola di Santhanam resta fuori. Guerra planetaria fra i
-  cinque *tārāgraha*, in longitudine geocentrica, sotto un grado di
-  differenza in latitudine (*Surya Siddhanta* VII.12 e 19), con le sole
+  cinque *tārāgraha*, in coordinate eclittiche geocentriche, a distanza
+  angolare sotto un grado, che alla congiunzione è la differenza delle
+  latitudini (*Surya Siddhanta* VII.12 e 19), con le sole
   regole di Venere e del nord (BPHS 79.9, SS VII.21 e 23), dichiarando che
   le qualità osservative restano fuori. Avastha *śayanādi* di 45.30-37
   calcolata e mostrata come dato, col navamsa per l'*aṃśa* e la ghati in

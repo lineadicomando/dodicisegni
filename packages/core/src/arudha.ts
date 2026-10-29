@@ -119,8 +119,8 @@ const SOURCE =
   'altrettanto oltre; se si ricade nel bhava il decimo, se nel settimo il quarto. Signori di ' +
   '4.6-24; per Scorpione e Acquario, che 46.157 dà anche a Ketu e Rahu, il più forte secondo ' +
   '46.158-166 (vol. II, pp. 554-555), letto per il pada come per la chara dasha; in 46.164 vale ' +
-  'anche l\'uccha di Rahu e Ketu di 47.35. Gli arudha dei ' +
-  'graha (29.6-7) non sono calcolati.';
+  'anche l\'uccha di Rahu e Ketu di 47.35. Gli arudha dei graha sono a parte, secondo ' +
+  'Narasimha Rao: 29.6-7 non dice come scegliere il più forte dei due segni.';
 
 /** Gli arudha dei dodici bhava di una carta con l'ora; `undefined` senza lagna. */
 export function computeArudhas(chart: NatalChart): Arudhas | undefined {
