@@ -392,7 +392,8 @@ export function registerComputeJyotishaChart(server: McpServer, context: ToolCon
         'temporanee e composte, BPHS 3.55-58, con un verso: come A vede B non è come B vede A) ' +
         'il vimshopaka (la forza su 20 di BPHS 7.17-27, per schema) e, con l\'ora, gli arudha ' +
         'dei dodici bhava e i varga buoni contati per schema, con i versi del BPHS da cui ' +
-        'vengono; e gli stati di BPHS 6.53: combustione e guerra planetaria secondo il Surya ' +
+        'vengono, in due conti nominati: quello di Santhanam con l\'arudha e quello di Narasimha ' +
+        'Rao senza (non sceglierne uno al posto di chi chiede); e gli stati di BPHS 6.53: combustione e guerra planetaria secondo il Surya ' +
         'Siddhanta (la combustione in longitudine, che approssima i suoi gradi di tempo) e, con ' +
         'l\'ora, le avastha śayanādi di BPHS 45.30-33. Quali avastha annullino i varga buoni ' +
         'il testo non lo dice, e il risultato nemmeno: non dedurlo. ' +

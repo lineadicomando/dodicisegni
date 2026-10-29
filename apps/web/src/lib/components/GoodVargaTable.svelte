@@ -47,10 +47,15 @@
             {#if graha.combust}<span class="tenue">· combusto</span>{/if}
             {#if graha.defeated}<span class="tenue">· vinto in guerra</span>{/if}
           </td>
-          {#each graha.schemes as conto (conto.scheme)}
+          {#each graha.schemes as conto, i (conto.scheme)}
+            <!-- La guardia per le risposte in cache di prima del campo. -->
+            {@const rao = 'narasimhaRao' in graha ? graha.narasimhaRao.schemes[i] : undefined}
             <td>
               <span class="numerico">{conto.good}/{conto.vargas}</span>
               <span class:tenue={!conto.name}>{conto.name ?? '—'}</span>
+              {#if rao}
+                <br /><span class="tenue">Rao {rao.good}/{rao.vargas} {rao.name ?? '—'}</span>
+              {/if}
             </td>
           {/each}
         </tr>
@@ -67,6 +72,7 @@
     </li>
     <li>{buoni.hora.rule}</li>
     <li>{buoni.verse53}</li>
+    {#if buoni.narasimhaRaoSource}<li>{buoni.narasimhaRaoSource}</li>{/if}
   </ul>
 
   <!-- Chiuso all'inizio: sono sette righe lunghe, e servono a chi vuole

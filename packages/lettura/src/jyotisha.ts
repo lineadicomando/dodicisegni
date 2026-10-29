@@ -136,7 +136,9 @@ per ogni graha i varga buoni nei quattro schemi del testo e dà il nome del
 conto (Parijata, Uttama…): usala come dato del testo, citando lo schema, e non
 rifare il conto con regole tue. In testa dice le scelte di lettura: la regola
 dell'arudha da sola rende buoni molti segni, e quando un conto alto viene
-quasi tutto da lì, dillo. Il verso 6.53 non è applicato al conto: la riga
+quasi tutto da lì, dillo. Sotto ogni graha c'è anche il conto di Narasimha
+Rao, che l'arudha non la usa: se i due danno nomi diversi, riportali tutti e
+due con l'autore, senza sceglierne uno. Il verso 6.53 non è applicato al conto: la riga
 dice se il graha è in neecha nella rashi, combusto o vinto in guerra, e la
 sezione STATI DEI GRAHA dà le definizioni con le loro fonti. La combustione
 lì è in longitudine, mentre il testo la misura in gradi di tempo: vicino al
