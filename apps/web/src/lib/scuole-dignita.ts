@@ -18,6 +18,7 @@ export type DignitySchoolChoice = DignitySchool | '';
 export const DIGNITY_SCHOOLS: readonly { value: DignitySchool; label: string }[] = [
   { value: 'lilly', label: 'Dignità di Lilly' },
   { value: 'tolomeo', label: 'Dignità di Tolomeo' },
+  { value: 'bonatti', label: 'Dignità di Bonatti' },
 ];
 
 /** La scuola scritta in un indirizzo, se esiste. Altrimenti nessuna. */

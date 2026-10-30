@@ -111,7 +111,13 @@ triangolo e chi lo governa nella setta, e i termini della sua tavola, che
 non sono quelli di Lilly. Tolomeo non ha facce, esilio né un punteggio, e
 la ricezione non la definisce: con la sua tavola le ricezioni restano per
 domicilio ed esaltazione. Non aggiungere a Tolomeo ciò che è di Lilly, e
-non contare punti che lui non dà. Due pianeti personali di tempra opposta sono un
+non contare punti che lui non dà. La sezione può portare invece la tavola
+di Bonatti (riga «Bonatti (a richiesta)»), la scuola medievale: domicilio,
+esaltazione col grado, i tre signori della triplicità (di giorno, di notte e
+il partecipe) e chi la governa nella setta, termine, faccia, esilio e
+caduta. Bonatti non ha un punteggio delle dignità, e la sua ricezione nasce
+da un'applicazione che la tabella non calcola: le ricezioni restano per
+domicilio ed esaltazione, e non vanno dedotte dalle sue tavole. Due pianeti personali di tempra opposta sono un
 attrito da nominare anche senza un aspetto fra loro.
 
 Le forze in conflitto, e come si compongono. Un quadrato o un'opposizione non è

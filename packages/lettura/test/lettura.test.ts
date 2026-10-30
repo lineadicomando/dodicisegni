@@ -83,6 +83,8 @@ describe('letturaDaIncollare', () => {
     expect(testo).toContain('CONDIZIONI (LILLY)');
     expect(testo).toContain('Tolomeo (a richiesta)');
     expect(testo).toContain('non contare punti che lui non dà');
+    expect(testo).toContain('Bonatti (a richiesta)');
+    expect(testo).toContain('non vanno dedotte dalle sue tavole');
     expect(testo).toContain('non farne un voto sulla persona');
   });
 

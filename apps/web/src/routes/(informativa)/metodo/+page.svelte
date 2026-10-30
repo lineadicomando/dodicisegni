@@ -466,6 +466,27 @@
   segno a Saturno: il sito segue la tavola, e lo dice.
 </p>
 
+<p id="bonatti">
+  <strong>Le dignità di Bonatti.</strong> La terza scuola è quella medievale,
+  nel <em>Decem tractatus astronomiae</em> di Guido Bonatti, letto
+  nell'edizione di Augusta del 1491 (secondo trattato, fogli 14v-21r). Bonatti
+  nomina cinque dignità, domicilio, esaltazione, termine, triplicità e faccia,
+  e il sito le porta tutte come le stampa: le esaltazioni col grado, nodi
+  compresi, che dice di Albumasar e Alcabizio; l'esilio e la caduta; le
+  triplicità coi tre signori, uno di giorno, uno di notte e un partecipe che
+  lo è sempre, e nell'acqua Venere di giorno e Marte di notte, che non è né
+  Tolomeo né Lilly; le facce caldee. I termini sono quelli che Bonatti dice di
+  Tolomeo, e coincidono con la tavola greca di Robbins in undici segni: nel
+  Leone Bonatti comincia da Saturno e chiude con Giove, e lo spiega, come fa
+  il testo di Tolomeo e non la sua tavola. Un punteggio delle dignità Bonatti
+  non lo dà: i numeri che si trovano nel suo trattato delle rivoluzioni
+  servono a scegliere il signore dell'anno, e non sono il 5-4-3-2-1 che gli
+  si attribuisce. La sua ricezione nasce da un'applicazione, per corpo o per
+  aspetto, e chiede il domicilio, l'esaltazione o due dignità minori insieme:
+  il sito non la calcola, e con Bonatti le ricezioni restano per domicilio ed
+  esaltazione.
+</p>
+
 <p>
   <strong>Il conto delle fortezze.</strong> A p. 115 Lilly stampa una tavola che
   assegna punti a ogni condizione di un pianeta: le dignità, la casa (con la

@@ -331,6 +331,12 @@ export function registerComputeNatalChart(server: McpServer, context: ToolContex
               'quelle comuni, perché la ricezione è una definizione di Lilly. Non chiedere tolomeo per ' +
               'avere i termini di Lilly, né lilly per quelli di Tolomeo: le due tavole differiscono in sette ' +
               'segni. ' +
+              'bonatti: Decem tractatus astronomiae (Ratdolt 1491), tratt. II, con domicilio, esaltazione ' +
+              'col grado e i Nodi, i tre signori della triplicità (di giorno, di notte e il partecipe) e chi ' +
+              'la governa nella setta, termini tolemaici col Leone che comincia da Saturno, facce caldee, ' +
+              'esilio e caduta; niente punteggio, e le ricezioni restano quelle comuni, perché Bonatti la ' +
+              "ricezione la fa nascere da un'applicazione. È la scuola medievale: non chiederla per avere " +
+              'le triplicità di Lilly o di Tolomeo, che nell\'acqua sono diverse. ' +
               'Ometti se chi scrive non chiede l\'astrologia tradizionale: non è un default ' +
               'migliore, è una scuola. Solo nello zodiaco tropicale; con zodiac siderale è un ' +
               'errore. Le dignità sono tavole di una tradizione, non giudizi sul tema.',

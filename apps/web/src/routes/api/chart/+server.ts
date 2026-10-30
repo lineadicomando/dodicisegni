@@ -32,7 +32,13 @@ import type { RequestHandler } from './$types';
  * corpo domicilio, esaltazione, i signori del triangolo e chi lo governa
  * nella setta, il termine della tavola greca di p. 106; niente facce, esilio
  * o punteggio, che Tolomeo non ha, e ricezioni solo per domicilio ed
- * esaltazione, perché la ricezione è di Lilly. Un'altra scuola è
+ * esaltazione, perché la ricezione è di Lilly. `dignitySchool=bonatti` aggiunge
+ * le tavole del *Decem tractatus* (tratt. II, Ratdolt 1491) in
+ * `chart.dignities.bonatti`: domicilio, esaltazione col grado e i Nodi, i tre
+ * signori della triplicità e chi la governa nella setta, termine tolemaico
+ * col Leone di Saturno, faccia caldea, esilio e caduta; niente punteggio, e
+ * ricezioni solo per domicilio ed esaltazione, perché quella di Bonatti
+ * chiede un'applicazione. Un'altra scuola è
  * `SCUOLA_DIGNITA_NON_VALIDA`; chiesta insieme a `zodiac=siderale` è
  * `ZODIACO_NON_TROPICALE`, perché le tavole sono costruite sullo zodiaco
  * tropicale. Nel siderale le dignità

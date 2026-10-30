@@ -659,6 +659,19 @@ describe('compute_natal_chart', () => {
     expect(con).toMatch(/^Corpo\s+domic\.\s+esalt\.\s+triangolo\s+governa\s+termine\s+\| dignità$/m);
   });
 
+  it('aggiunge la tavola di Bonatti, coi tre signori della triplicità e senza condizioni', async () => {
+    const con = textOf(
+      await client.callTool({
+        name: 'compute_natal_chart',
+        arguments: { date: '1968-03-12', time: '14:30', location_id: ROMA_ID, dignity_school: 'bonatti' },
+      }),
+    );
+    expect(con).toContain('Bonatti (a richiesta)');
+    expect(con).not.toContain('Lilly (a richiesta)');
+    expect(con).not.toContain('CONDIZIONI (LILLY)');
+    expect(con).toMatch(/^Corpo\s+domic\.\s+esalt\.\s+triplicità\s+governa\s+termine\s+faccia\s+\| dignità$/m);
+  });
+
   it('rifiuta Lilly nello zodiaco siderale invece di ignorarlo', async () => {
     const result = await client.callTool({
       name: 'compute_natal_chart',

@@ -1,6 +1,6 @@
 <!--
   Le dignità occidentali di un tema: signori dei segni, dignità dei corpi,
-  ricezioni e, se chiesta, la tavola di una scuola: Lilly o Tolomeo.
+  ricezioni e, se chiesta, la tavola di una scuola: Lilly, Tolomeo o Bonatti.
 
   Prende le dignità e le case, non il tema: è la regola delle altre tabelle, e
   le dignità hanno già tutto ciò che serve, nomi compresi.
@@ -28,7 +28,7 @@
     houses?: House[];
     /**
      * La setta del tema, da cui dipendono la triplicità di Lilly e chi governa
-     * il triangolo di Tolomeo. Assente senza ora.
+     * il triangolo di Tolomeo e la triplicità di Bonatti. Assente senza ora.
      */
     sect?: Sect | undefined;
     /** Il corpo isolato, condiviso con la ruota e con gli aspetti. */
@@ -64,6 +64,7 @@
   const conCase = $derived(houses.length > 0);
   const lilly = $derived(dignities.lilly);
   const tolomeo = $derived(dignities.tolomeo);
+  const bonatti = $derived(dignities.bonatti);
 </script>
 
 <section>
@@ -233,6 +234,64 @@
       {/if}
     </p>
     <p class="fonti">{tolomeo.termsSource}</p>
+  {/if}
+
+  <!-- La triplicità ha due colonne, come il triangolo di Tolomeo: i tre
+       signori del cap. XI, che lo sono sempre, e chi la governa nella setta. -->
+  {#if bonatti}
+    <h4>Secondo Bonatti</h4>
+    <table>
+      <thead>
+        <tr>
+          <th></th>
+          <th>Corpo</th>
+          <th>Domicilio</th>
+          <th>Esaltaz.</th>
+          <th>Triplicità</th>
+          <th>Governa</th>
+          <th>Termine</th>
+          <th>Faccia</th>
+          <th>Dignità del corpo</th>
+        </tr>
+      </thead>
+      <tbody>
+        {#each bonatti.bodies as body (body.id)}
+          <tr
+            onmouseenter={() => evidenza?.sorvola(body.id)}
+            onmouseleave={() => evidenza?.sorvola(null)}
+            class:evidenziato={evidenza?.attivo === body.id}
+          >
+            <td class="glifo">{BODY_GLYPH[body.id]}</td>
+            <td>{body.name}</td>
+            <td>{nome(body.rulers.domicilio)}</td>
+            <td>{nome(body.rulers.esaltazione)}</td>
+            <td>
+              {nomi([
+                body.rulers.triplicita.diurno,
+                body.rulers.triplicita.notturno,
+                body.rulers.triplicita.partecipe,
+              ])}
+            </td>
+            <td>{nome(body.rulers.triplicitaDiSetta)}</td>
+            <td>{nome(body.rulers.termine)}</td>
+            <td>{nome(body.rulers.faccia)}</td>
+            <td class:tenue={body.dignities.length === 0}>
+              {body.dignities.map(voce).join(', ') || '—'}
+            </td>
+          </tr>
+        {/each}
+      </tbody>
+    </table>
+    <p class="fonti">
+      {bonatti.source} Le colonne dicono chi governa il grado in cui sta ciascun corpo; la
+      triplicità elenca i tre signori, di giorno, di notte e il partecipe.
+      {#if sect}
+        La governa {sect === 'diurna' ? 'di giorno' : 'di notte'} il signore della setta del tema.
+      {:else}
+        Senza l'ora la setta manca, e chi governa la triplicità non si dice.
+      {/if}
+    </p>
+    <p class="fonti">{bonatti.termsSource}</p>
   {/if}
 
   <h4>Ricezioni</h4>
