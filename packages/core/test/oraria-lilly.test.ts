@@ -336,3 +336,108 @@ describe('la Luna cosignificatrice, p. 124', () => {
     expect(h.readings.join(' ')).toContain('La Luna no, quando è cosignificatrice di chi chiede');
   });
 });
+
+/**
+ * Altre figure del libro II, per la verifica: ciò che Lilly afferma nel
+ * giudizio, e le posizioni che stampa nella figura entro un grado (le sue
+ * effemeridi sbagliano di qualche primo). Le date sono giuliane nel libro e
+ * gregoriane qui. Le trascrizioni sono nella copia locale della fonte.
+ */
+describe('altre figure del libro II', () => {
+  const LONDRA = { latitude: 51.5074, longitude: -0.1278 };
+  const vicino = (longitudine: number | undefined, segno: number, gradi: number, primi: number) =>
+    expect(Math.abs((longitudine ?? NaN) - (segno * 30 + gradi + primi / 60))).toBeLessThan(1);
+
+  describe('«Where an absent Brother was?», pp. 196-197', () => {
+    // «Friday 7 Novem 1645 hora meridiana»: il 17 novembre gregoriano, al
+    // mezzogiorno vero, che allora cadeva verso le 11:45 di tempo medio.
+    const h = computeHoraryLilly({ date: '1645-11-17', time: '11:45', timezone: 'Europe/London' }, LONDRA, {
+      question: { house: 3 },
+    });
+    const pos = (id: string) => h.chart.bodies.find((b) => b.id === id)?.longitude;
+
+    it('ha le posizioni della figura', () => {
+      vicino(h.chart.angles?.ascendant, 9, 20, 27); // Ascendente 20°27' ♑
+      vicino(pos('luna'), 7, 15, 29);
+      vicino(pos('mercurio'), 7, 8, 28);
+      vicino(pos('venere'), 8, 28, 53);
+      vicino(pos('marte'), 7, 29, 10);
+      vicino(pos('giove'), 3, 4, 55);
+      vicino(pos('saturno'), 0, 29, 13);
+    });
+
+    it('dà a Saturno chi chiede e a Venere il fratello', () => {
+      expect(h.significators.map((s) => [s.role, s.body])).toEqual([
+        ['querente', 'saturno'],
+        ['quesito', 'venere'],
+        ['cosignificatore', 'luna'],
+      ]);
+    });
+
+    it('trova la Luna separata dal trigono di Giove e diretta alla congiunzione del Sole', () => {
+      // «the separation of the ☽ was good, viz. from a △ dexter of ♃, and
+      // her next application to a ☌ of ☉». Fra le due c'è la congiunzione con
+      // Mercurio, che Lilly non nomina.
+      const luna = h.courses.find((c) => c.body === 'luna')!;
+      expect(luna.separations.map((e) => (e.kind === 'aspetto' ? [e.aspect, e.with] : []))).toContainEqual([
+        'trigono',
+        'giove',
+      ]);
+      expect(luna.events[0]).toMatchObject({ kind: 'aspetto', aspect: 'congiunzione', with: 'sole' });
+      // «she neither applyed to one significator or other».
+      const applicazioni = luna.events.filter((e) => e.kind === 'aspetto').map((e) => (e.kind === 'aspetto' ? e.with : ''));
+      expect(applicazioni).not.toContain('saturno');
+      expect(applicazioni).not.toContain('venere');
+    });
+
+    it('non trova aspetti di Mercurio o di Marte a Venere', () => {
+      // «♀ … is no manner of way afflicted either by ☿ … or by ♂».
+      const aVenere = h.chart.aspects.filter(
+        (a) => [a.from, a.to].includes('venere') && (['mercurio', 'marte'] as const).some((x) => [a.from, a.to].includes(x)),
+      );
+      expect(aVenere).toEqual([]);
+    });
+  });
+
+  describe('«A Report that Cambridge was taken by the King\'s Forces», p. 200', () => {
+    // «11. Apr. 1643, 4h 31' P.M.»: il 21 aprile gregoriano.
+    const h = computeHoraryLilly({ date: '1643-04-21', time: '16:31', timezone: 'Europe/London' }, LONDRA, {
+      question: { house: 7 },
+    });
+    const pos = (id: string) => h.chart.bodies.find((b) => b.id === id)?.longitude;
+    const condizioni = h.chart.dignities!.lilly!.conditions;
+
+    it('ha le posizioni della figura', () => {
+      vicino(h.chart.angles?.ascendant, 6, 4, 37); // ♎
+      vicino(h.chart.angles?.midheaven, 3, 6, 10); // ♋
+      vicino(pos('sole'), 1, 1, 23);
+      vicino(pos('luna'), 2, 12, 43);
+      vicino(pos('marte'), 3, 1, 50);
+      vicino(pos('saturno'), 0, 2, 7);
+    });
+
+    it('ha il giorno di Marte e l\'ora di Venere, come stampa la figura', () => {
+      expect(condizioni.hour).toMatchObject({ dayRuler: 'marte', ruler: 'venere' });
+    });
+
+    it('dà Venere esaltata a chi chiede e Marte, signore della settima, al nemico', () => {
+      expect(h.significators.slice(0, 2).map((s) => s.body)).toEqual(['venere', 'marte']);
+      expect(h.chart.dignities!.lilly!.bodies.find((b) => b.id === 'venere')?.dignities).toContain('esaltazione');
+      // «♂ … entring his Fall, viz. ♋, and afflicted by □ of ♄».
+      expect(h.chart.dignities!.lilly!.bodies.find((b) => b.id === 'marte')?.dignities).toContain('caduta');
+      expect(
+        h.chart.aspects.find((a) => [a.from, a.to].includes('marte') && [a.from, a.to].includes('saturno')),
+      ).toMatchObject({ aspect: 'quadrato' });
+    });
+
+    it('trova la Luna cadente, separata dal sestile di Giove e diretta al quadrato di Venere', () => {
+      // «☽ a ✶♃ ad □♀», al centro della figura; «I found the ☽ cadent».
+      const luna = h.courses.find((c) => c.body === 'luna')!;
+      expect(luna.lastPerfected).toMatchObject({ kind: 'aspetto', aspect: 'sestile', with: 'giove' });
+      expect(luna.events[0]).toMatchObject({ kind: 'aspetto', aspect: 'quadrato', with: 'venere' });
+      expect(condizioni.bodies.find((b) => b.id === 'luna')?.angularity).toBe('cadente');
+      // Giove «placed in the seventh».
+      expect(condizioni.bodies.find((b) => b.id === 'giove')?.house).toBe(7);
+    });
+  });
+});

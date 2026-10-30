@@ -245,9 +245,16 @@ Ciascuna indipendente dalle altre.
   dentro `compute_horary`. Un tool suo servirebbe a chi chiede «la Luna è
   vuota di corso?» senza una domanda oraria; `find_election_hours` risponde già
   col criterio moderno.
-- **Altre figure del libro II** per la verifica: finora solo quella del 1634.
-  Ogni figura porta data, ora e luogo; vanno scelti casi lontani dai confini,
-  perché le effemeridi di Lilly sbagliano di qualche primo.
+- **Altre figure del libro II** per la verifica. Oltre a quella del 1634 sono
+  provate, dal 30 ottobre 2026, «Where an absent Brother was?» (pp. 196-197)
+  e la notizia di Cambridge (p. 200), in `oraria-lilly.test.ts`: posizioni
+  entro un grado, significatori, il corso della Luna, l'ora planetaria, tutto
+  come Lilly lo stampa. Le altre figure stanno alle pagine PDF 253, 272, 274,
+  320 e 323 (fin qui la pagina stampata è la PDF − 34), trovate con
+  miniature delle pagine perché l'OCR delle figure non si legge. Due cose da
+  sapere: le date sono giuliane (+10 giorni nel Seicento), e «hora
+  meridiana» è il mezzogiorno vero, che va convertito in tempo medio con
+  l'equazione del tempo (nel novembre 1645, le 11:45).
 
 ### Deciso
 
