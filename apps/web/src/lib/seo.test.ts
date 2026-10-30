@@ -2,7 +2,14 @@ import { readdirSync, readFileSync } from 'node:fs';
 import { describe, expect, it } from 'vitest';
 import { SECTIONS } from './navigation';
 import { SITE_NAME, SITE_TAGLINE } from './project';
-import { PAGINE_PUBBLICHE, robotsTxt, sitemapXml, TITOLO_MASSIMO, titoloCompleto } from './seo';
+import {
+  DESCRIZIONE_MASSIMA,
+  PAGINE_PUBBLICHE,
+  robotsTxt,
+  sitemapXml,
+  TITOLO_MASSIMO,
+  titoloCompleto,
+} from './seo';
 
 const ORIGINE = 'https://esempio.it';
 
@@ -12,6 +19,18 @@ function pagineDiProsa(): string[] {
   return readdirSync(radice, { recursive: true, encoding: 'utf8' })
     .filter((file) => file.endsWith('+page.svelte'))
     .map((file) => `/${file.replace(/\/?\+page\.svelte$/, '')}`.replace(/\\/g, '/'));
+}
+
+/**
+ * Tutte le pagine che passano qualcosa a `Meta`, dal disco: le sezioni e le
+ * pagine di prosa insieme, ciascuna col sorgente.
+ */
+function pagineConMeta(): { file: string; sorgente: string }[] {
+  const radice = new URL('../routes/', import.meta.url);
+  return readdirSync(radice, { recursive: true, encoding: 'utf8' })
+    .filter((file) => file.endsWith('+page.svelte'))
+    .map((file) => ({ file, sorgente: readFileSync(new URL(file, radice), 'utf8') }))
+    .filter(({ sorgente }) => sorgente.includes('<Meta'));
 }
 
 describe('titoloCompleto', () => {
@@ -41,6 +60,27 @@ describe('titoloCompleto', () => {
       const titolo = /titolo="([^"]+)"/.exec(sorgente)?.[1];
       expect(titolo, `${percorso} non passa un titolo a Meta`).toBeDefined();
       expect(titoloCompleto(titolo!).length, percorso).toBeLessThanOrEqual(TITOLO_MASSIMO);
+    }
+  });
+});
+
+// La descrizione la scrive ogni pagina dentro il file, e nessuno la conta
+// rileggendola: dieci pagine su diciassette passavano il taglio quando questo
+// test non c'era. Si leggono dal sorgente come i titoli qui sopra, e la regola
+// vuole la stringa scritta per intero, senza espressioni, perché sia contabile.
+describe('le descrizioni', () => {
+  it('ci sono, una per pagina, e scritte per intero', () => {
+    const pagine = pagineConMeta();
+    expect(pagine.length).toBeGreaterThanOrEqual(PAGINE_PUBBLICHE.length);
+    for (const { file, sorgente } of pagine) {
+      expect(/descrizione="([^"]+)"/.exec(sorgente)?.[1], `${file} non passa una descrizione scritta a Meta`).toBeDefined();
+    }
+  });
+
+  it('stanno dentro il troncamento', () => {
+    for (const { file, sorgente } of pagineConMeta()) {
+      const descrizione = /descrizione="([^"]+)"/.exec(sorgente)?.[1] ?? '';
+      expect([...descrizione].length, file).toBeLessThanOrEqual(DESCRIZIONE_MASSIMA);
     }
   });
 });

@@ -13,7 +13,7 @@
 
 <Meta
   titolo="Dasha vimshottari: come si calcolano"
-  descrizione="Le dasha vimshottari passo per passo: gli anni dei nove graha, il saldo alla nascita dal nakshatra della Luna, antardasha e pratyantardasha, con un esempio da rifare a mano."
+  descrizione="Le dasha vimshottari passo per passo: gli anni dei nove graha, il saldo dal nakshatra della Luna, le antardasha, un esempio da rifare a mano."
 />
 
 <p class="sopra"><a href="/metodo#jyotisha">Metodo</a> · astrologia indiana</p>

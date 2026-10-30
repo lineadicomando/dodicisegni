@@ -13,7 +13,7 @@
 
 <Meta
   titolo="Glossario: tema, moti e Jyotisha"
-  descrizione="Il glossario di dodicisegni: i termini del tema natale, dei transiti e del tempo, e dell'astrologia indiana, definiti in breve e con il rimando a come il sito li calcola."
+  descrizione="Il glossario di dodicisegni: i termini del tema natale, del tempo e dell'astrologia indiana, in breve e col rimando a come il sito li calcola."
 />
 
 <h1>Glossario</h1>

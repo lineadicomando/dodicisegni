@@ -17,7 +17,7 @@
 
 <Meta
   titolo="Jyotisha: glossario dei termini"
-  descrizione="I termini dell'astrologia indiana in breve: graha, Rahu e Ketu, lagna, ayanamsa, nakshatra, pada, dasha, varga, hora, navamsa, drishti, panchanga, tithi, yoga, karana, uccha e neecha."
+  descrizione="I termini dell'astrologia indiana in breve: graha, lagna, ayanamsa, nakshatra, dasha, varga, navamsa, drishti, panchanga, tithi, uccha e neecha."
 />
 
 <p class="sopra"><a href="/glossario">Glossario</a></p>

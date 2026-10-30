@@ -25,7 +25,7 @@
 
 <Meta
   titolo="Metodo: case, ayanamsa, orbite e dasha"
-  descrizione="Le convenzioni con cui il sito calcola: effemeridi, ayanamsa, sistemi di case, orbite degli aspetti, Parte di Fortuna, nakshatra, dasha, varga e le dignità di Lilly."
+  descrizione="Le convenzioni con cui il sito calcola: effemeridi, ayanamsa, case, orbite, Parte di Fortuna, Jyotisha, le quattro scuole delle dignità e l'oraria."
 />
 
 <h1>Metodo</h1>
@@ -422,30 +422,29 @@
   sarebbe un giudizio travestito da numero.
 </p>
 
-<h2 id="lilly">La scuola di Lilly: dignità, Luna vuota, astrologia oraria</h2>
+<h2 id="dignita">Le dignità e le quattro scuole</h2>
 
 <p>
-  William Lilly, <em>Christian Astrology</em> (Londra 1647), è l'unico testo
-  della tradizione occidentale che il sito segua per intero, con le sue tavole,
-  le sue soglie e i suoi pesi, e ogni regola porta la pagina del libro. La
-  ragione è pratica: il metodo vi è svolto su esempi abbastanza minuti da
-  poterli ricalcolare, e il test del motore lo fa. Le pagine si leggono sulla
-  scansione della prima edizione, che è di pubblico dominio, non sulle
-  trascrizioni che circolano in rete.
+  Senza chiedere niente, il tema tropicale porta due colonne affiancate e mai
+  fuse: i domicili tradizionali, con esilio, esaltazione e caduta, che sono la
+  parte su cui Tolomeo, Firmico e Lilly concordano; e i domicili moderni, con
+  Urano, Nettuno e Plutone, che un autore unico non hanno. Triplicità, termini
+  e facce non compaiono finché non si nomina una scuola, perché lì le scuole
+  divergono davvero. Le scuole sono quattro, Lilly, Tolomeo, Bonatti e Valente,
+  e ciascuna entra intera, con le sue tavole e senza pezzi delle altre. La
+  pagina <a href="/cielo">Cielo</a>, che non ha una nascita, non porta dignità
+  finché non se ne nomina una; nominata, porta le stesse tavole del tema. Nello
+  zodiaco siderale le dignità occidentali non ci sono, e chiederle è un errore:
+  le tavole sono scritte per i segni tropicali.
 </p>
 
-<p>
-  <strong>Le dignità.</strong> Senza chiedere niente, il tema tropicale porta
-  due colonne affiancate e mai fuse: i domicili tradizionali, con esilio,
-  esaltazione e caduta, che sono la parte su cui Tolomeo, Firmico e Lilly
-  concordano; e i domicili moderni, con Urano, Nettuno e Plutone, che un autore
-  unico non hanno. Triplicità, termini e facce non compaiono finché non si
-  nomina una scuola, perché lì le scuole divergono davvero. Nominando Lilly
-  entra la sua tavola di p. 104 intera: le esaltazioni col grado e quelle dei
-  nodi, le triplicità di giorno e di notte con Marte signore dell'acqua, i suoi
-  termini e le facce. Le ricezioni sono quelle di p. 112, per qualunque delle
-  cinque dignità. Nello zodiaco siderale le dignità occidentali non ci sono, e
-  chiederle è un errore: la tavola è scritta per i segni tropicali.
+<p id="dignita-lilly">
+  <strong>Le dignità di Lilly.</strong> Nominando Lilly, <em>Christian
+  Astrology</em> (Londra 1647), entra la sua tavola di p. 104 intera: le
+  esaltazioni col grado e quelle dei nodi, le triplicità di giorno e di notte
+  con Marte signore dell'acqua, i suoi termini e le facce. Le ricezioni sono
+  quelle di p. 112, per qualunque delle cinque dignità. Con Lilly, e solo con
+  lui, viene anche il conto delle fortezze, più sotto.
 </p>
 
 <p id="tolomeo">
@@ -500,6 +499,18 @@
   egizia che Tolomeo riferisce, dicendolo. Facce, esilio e un punteggio in
   Valente non si sono trovati, e non ci sono; le ricezioni restano per
   domicilio ed esaltazione.
+</p>
+
+<h2 id="lilly">La scuola di Lilly: fortezze, Luna vuota, astrologia oraria</h2>
+
+<p>
+  William Lilly, <em>Christian Astrology</em> (Londra 1647), è l'unico testo
+  della tradizione occidentale che il sito segua per intero, con le sue tavole,
+  le sue soglie e i suoi pesi, e ogni regola porta la pagina del libro. La
+  ragione è pratica: il metodo vi è svolto su esempi abbastanza minuti da
+  poterli ricalcolare, e il test del motore lo fa. Le pagine si leggono sulla
+  scansione della prima edizione, che è di pubblico dominio, non sulle
+  trascrizioni che circolano in rete.
 </p>
 
 <p>

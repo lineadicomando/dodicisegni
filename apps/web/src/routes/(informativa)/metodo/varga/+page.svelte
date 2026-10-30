@@ -12,7 +12,7 @@
 
 <Meta
   titolo="I varga: come si calcolano le divisionali"
-  descrizione="Le carte divisionali del Jyotisha (hora D-2, D-3, D-4, D-7, navamsa D-9, D-10, D-12, D-16, D-20, D-24, D-27, D-30, D-40, D-45, D-60): la regola di ciascuna, un esempio svolto, e perché la regola viaggia col risultato."
+  descrizione="Le carte divisionali del Jyotisha, dalla hora D-2 alla D-60: la regola di ciascuna, un esempio svolto, e perché la regola viaggia col risultato."
 />
 
 <p class="sopra"><a href="/metodo#jyotisha">Metodo</a> · astrologia indiana</p>

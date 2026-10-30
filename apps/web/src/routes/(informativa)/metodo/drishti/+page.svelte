@@ -11,7 +11,7 @@
 
 <Meta
   titolo="Le drishti: gli sguardi dei graha"
-  descrizione="Le drishti del Jyotisha: quali case guarda ciascun graha, perché si contano a segni interi e in un verso solo, e in che cosa differiscono dagli aspetti occidentali."
+  descrizione="Le drishti del Jyotisha: quali case guarda ogni graha, perché si contano a segni interi e in un verso solo, e come differiscono dagli aspetti."
 />
 
 <p class="sopra"><a href="/metodo#jyotisha">Metodo</a> · astrologia indiana</p>

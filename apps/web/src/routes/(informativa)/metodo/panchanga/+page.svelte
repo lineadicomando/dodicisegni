@@ -12,7 +12,7 @@
 
 <Meta
   titolo="Panchanga: tithi, vara, yoga e karana"
-  descrizione="Le cinque membra del calendario indiano e come si ricavano da due longitudini e un'alba: tithi, vara, nakshatra, yoga e karana, e quali dipendono dall'ayanamsa."
+  descrizione="Le cinque membra del calendario indiano: tithi, vara, nakshatra, yoga e karana, da due longitudini e un'alba, e quali dipendono dall'ayanamsa."
 />
 
 <p class="sopra"><a href="/metodo#jyotisha">Metodo</a> · astrologia indiana</p>

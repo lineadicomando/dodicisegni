@@ -10,7 +10,7 @@
 
 <Meta
   titolo="Glossario del tema natale"
-  descrizione="I termini del tema natale in breve: Ascendente, Medio Cielo, case e cuspidi, aspetti e orbite, Parte di Fortuna, nodi, Lilith, domicilio, esaltazione, triplicità, termini, ricezione."
+  descrizione="I termini del tema natale in breve: Ascendente, Medio Cielo, case, aspetti e orbite, Parte di Fortuna, nodi, domicilio, esaltazione, ricezione."
 />
 
 <p class="sopra"><a href="/glossario">Glossario</a></p>
@@ -169,7 +169,7 @@
   Il segno retto da un pianeta. Nella tradizione i sette pianeti si dividono i
   dodici segni, due ciascuno tranne Sole e Luna; nell'uso moderno lo
   Scorpione, l'Acquario e i Pesci passano a Plutone, Urano e Nettuno.
-  → <a href="/metodo#lilly">Le dignità</a>
+  → <a href="/metodo#dignita">Le dignità</a>
 </p>
 
 <h3 id="esilio">Esilio</h3>

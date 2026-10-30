@@ -333,8 +333,12 @@ sitemap e `robots.txt` in `apps/web/src/lib/seo.ts`, serviti da
 (titoli sotto i sessanta caratteri, ogni pagina di `(informativa)` nella
 sitemap, `/api` chiuso). Le scelte di quei commenti (niente `lastmod`, niente
 `priority`, niente marcature che promettono risultati ricchi, i temi mai
-nella sitemap) non si riaprono qui. Restano le cose trovate controllando il
-sito pubblicato il 30 ottobre 2026, in ordine di peso:
+nella sitemap) non si riaprono qui. Dal 30 ottobre 2026 c'è anche la pagina
+d'errore (`routes/+error.svelte`), e le descrizioni hanno un tetto,
+`DESCRIZIONE_MASSIMA`, che `seo.test.ts` prova su ogni pagina; le dignità di
+`/metodo` stanno in `#dignita`, con le quattro scuole alla pari, e `#lilly`
+tiene fortezze, Luna vuota e oraria. Restano le cose trovate controllando il
+sito pubblicato lo stesso giorno, tutte fuori dal repo, in ordine di peso:
 
 - **Quattro siti invece di uno.** I nomi sono quattro: `dodicisegni.it`,
   `www.dodicisegni.it`, `12segni.it` e `www.12segni.it`; il principale è
@@ -374,29 +378,6 @@ sito pubblicato il 30 ottobre 2026, in ordine di peso:
   https://dodicisegni.it/transiti?x=1`; `curl -s
   https://dodicisegni.it/sitemap.xml` elenca solo indirizzi di
   `dodicisegni.it`.
-- **La pagina d'errore.** Non c'è `routes/+error.svelte`: un indirizzo
-  inesistente risponde 404 (giusto) con la pagina predefinita di SvelteKit,
-  dentro il layout (menù e piè di pagina ci sono) ma senza `<title>`, e col
-  solo `<h1>404</h1>` e «Not Found», in inglese. Un `+error.svelte` con un
-  titolo, una riga in italiano e il rimando alle sezioni; la descrizione e il
-  canonico no, che a una pagina che non esiste non servono. Verifica:
-  `curl -s <origine>/nonesiste | grep '<title>'`.
-- **Le descrizioni non le prova nessuno.** `seo.test.ts` conta i titoli (le
-  sezioni, la pagina d'ingresso, le pagine di `(informativa)`) e non le
-  descrizioni. I motori ne mostrano circa centocinquanta caratteri e
-  tagliano il resto, e dieci pagine li passano: `/metodo/varga` 217,
-  `/glossario/jyotisha` 183, `/glossario/tema` 182, `/glossario/tempo` 179,
-  `/metodo/dasha` 173, `/glossario` 170, `/metodo` 165, `/metodo/drishti`
-  164, `/metodo/panchanga` 160, `/metodo/nakshatra` 152 (contate il 30
-  ottobre 2026). Un tetto come `TITOLO_MASSIMO` e un test che le raccolga
-  dalle pagine. La descrizione di `/metodo` dice ancora «le dignità di
-  Lilly», e le scuole sono quattro; ma il problema è della pagina prima che
-  della riga: Tolomeo, Bonatti e Valente stanno come paragrafi
-  (`#tolomeo`, `#bonatti`, `#valente`) sotto `<h2 id="lilly">La scuola di
-  Lilly…`, e il cielo, che dalla 0.5.1 porta le scuole, non è nominato.
-  Titolo e ancore della sezione vanno ripensati insieme alla descrizione;
-  un'ancora che cambia rompe i rimandi, quindi si cercano prima con `grep
-  -rn 'metodo#lilly'`.
 - **Gli strumenti dei motori**, cosa del proprietario e non del codice:
   registrare il dominio principale in Google Search Console e in Bing
   Webmaster Tools, solo `https://dodicisegni.it` e dopo i redirect, dare loro

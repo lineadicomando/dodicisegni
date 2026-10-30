@@ -11,7 +11,7 @@
 
 <Meta
   titolo="Nakshatra e pada: come si calcolano"
-  descrizione="I ventisette nakshatra dello zodiaco siderale: dove comincia ciascuno, il graha che lo regge, i quattro pada e perché un nakshatra tropicale non esiste."
+  descrizione="I ventisette nakshatra siderali: dove comincia ciascuno, il graha che lo regge, i quattro pada e perché un nakshatra tropicale non esiste."
 />
 
 <p class="sopra"><a href="/metodo#jyotisha">Metodo</a> · astrologia indiana</p>

@@ -11,7 +11,7 @@
 
 <Meta
   titolo="Glossario dei moti e del tempo"
-  descrizione="I termini del tempo in astrologia, in breve: retrogradazione, stazione, ingresso, transito, Luna vuota di corso, ore planetarie, ordine caldeo, elezione, tema orario, combustione."
+  descrizione="I termini del tempo in astrologia: retrogradazione, stazione, ingresso, transito, Luna vuota di corso, ore planetarie, elezione, tema orario."
 />
 
 <p class="sopra"><a href="/glossario">Glossario</a></p>

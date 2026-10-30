@@ -21,6 +21,19 @@ import { SITE_NAME } from '#lib/project.js';
 export const TITOLO_MASSIMO = 60;
 
 /**
+ * Quanti caratteri di descrizione un motore di ricerca mostra prima di
+ * troncare.
+ *
+ * Approssimato come `TITOLO_MASSIMO`, e per la stessa ragione: il taglio è in
+ * pixel, sui centocinquanta-centosessanta caratteri da scrivania e meno dal
+ * telefono. Il numero tondo sta dalla parte bassa apposta. La descrizione non
+ * conta per il posizionamento, ma è la riga che decide se un risultato si
+ * apre: tagliata a metà, finisce coi puntini proprio sull'elenco dei termini
+ * che chi cerca voleva trovarci.
+ */
+export const DESCRIZIONE_MASSIMA = 150;
+
+/**
  * Il titolo di una pagina: quello della sezione, poi il nome del sito.
  *
  * In quest'ordine e non nell'altro, perché è la prima metà quella che
