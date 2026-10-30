@@ -26,6 +26,7 @@ Le voci chiuse dopo, con il commit in cui si leggono ancora per intero:
 | 24 | `bd489c8` |
 | 19 | `91ca295` |
 | 27 | `f6026fa` |
+| 17 | `cd6d0f2` |
 
 Le fonti citate qui stanno in copia locale in `texts/`, fuori dal repo: la
 cartella, le schede `FONTE.md` e l'elenco `texts/INDICE.md` si mantengono come
@@ -76,10 +77,9 @@ volta e ricominciare da capo.
 
 | Voce | Priorità | Taglia | Prima di cominciare |
 |---|---|---|---|
-| 17. L'astrologia oraria | bassa | piccola, ormai | i quattro lotti sono fatti; restano rifiniture indipendenti, una per riga |
 | 5. I varga: le convenzioni che restano | bassa | piccola | i sedici sono fatti; restano rifiniture, una per riga |
 | 25. Le dignità del Jyotisha: le rifiniture | bassa | piccola | due calcoli, da fare solo se servissero |
-| 26. Le scuole occidentali: quello che resta | bassa | piccola | la ricezione di Bonatti va con la 17; Valente aspetta un testo |
+| 26. Le scuole occidentali: quello che resta | bassa | piccola | la ricezione di Bonatti chiede un'applicazione; Valente aspetta un testo |
 
 **Versione 0.5.2**, in ogni manifesto, col tag `v0.5.2`. La prima, la
 0.1.0, cade alla chiusura della voce 19 il 30 ottobre 2026; poi, tutte con la
@@ -97,9 +97,9 @@ chiusa): un file di `test/canonico/` che cambia muove la seconda cifra.
 L'ordine consigliato è quello della tabella. La voce 19, le dignità per
 scuola, è chiusa il 30 ottobre 2026: nell'occidente Lilly, Tolomeo, Bonatti
 e Valente, nel Jyotisha Parashara con Narasimha Rao accanto; quello che
-restava è nelle voci 25 e 26, o in *Esaminato* dove manca una fonte. La 17
-usa le tavole di Lilly e ha già le *moieties* come terza convenzione delle
-orbite.
+restava è nelle voci 25 e 26, o in *Esaminato* dove manca una fonte. Anche
+la 17, l'oraria, è chiusa il 30 ottobre 2026: le sue decisioni sono in
+*Deciso*, le figure di Lilly che il motore non riproduce in *Esaminato*.
 
 **Come si è lavorato nel Jyotisha, e conviene continuare.** Ogni regola si
 legge sull'immagine della pagina (`pdftoppm`, vedi le schede `FONTE.md`), si
@@ -193,135 +193,6 @@ pretende `VARGA_SCHEMES.shodashavarga` uguale a `VARGAS`: gli schemi e i
 pesi del vimshopaka (`VIMSHOPAKA_WEIGHTS`) sono quelli del testo, e un varga
 nuovo non ci entra.
 
-## 17. L'astrologia oraria
-
-**Priorità bassa.** Il lavoro pianificato è fatto, in quattro lotti, il 27
-ottobre 2026; restano rifiniture indipendenti, elencate sotto. Il metodo è
-quello di William Lilly, *Christian Astrology* (1647), e ogni regola nel codice
-porta la pagina del libro.
-
-### Che cosa c'è
-
-| Strato | File | Commit | Che cosa fa | Prova |
-|---|---|---|---|---|
-| A, condizioni di un istante | `packages/core/src/condizioni-lilly.ts` | `da88a36`, `cc80d1e` | per i sette: casa con la regola dei cinque gradi (p. 33), Sole (cazimi, combusto, raggi, p. 113), moto rispetto al moto medio di Lilly (pp. 57-80), orientale e occidentale (p. 114), partili (p. 106), assedio, peregrino, Regolo, Spica e Algol, antiscion (p. 90), e il conto della tavola di p. 115 con fortezze, debilità e differenza; per l'istante, l'ora planetaria (`planetaryHourAt` in `election.ts`), i gradi dell'Ascendente e la Via Combusta (p. 122). Sta in `WesternDignities.lilly.conditions` | `test/condizioni-lilly.test.ts`, sulla figura del 1634 |
-| B, il corso fino al cambio di segno | `packages/core/src/corso.ts` | `916b711`, `dfd9a67` | `findSignCourse`: aspetti tolemaici esatti, stazioni e ingresso di un corpo dall'istante al cambio di segno, le separazioni da quando è nel segno, un limite `until`; sopra, la Luna vuota moderna e quella di Lilly (p. 112). Le *moieties* sono la convenzione `lilly` di `orbite.ts` | `test/corso.test.ts`, `test/aspects.test.ts` |
-| C, la scuola di Lilly | `packages/core/src/oraria-lilly.ts` | `2433924` | `computeHoraryLilly(moment, place, { question: { house, derivedFrom? } })`: figura col Regiomontano, significatori (pp. 123-124), e i classificatori puri di `classifyLilly` (congiunzione e aspetto p. 125, traslazione e collezione p. 126, proibizione e frustrazione pp. 110-113, refranazione p. 111); le considerazioni di pp. 121-123 come predicati, con le nature dei pianeti del libro I | `test/oraria-lilly.test.ts`: gli esempi del libro I scritti a mano, e la traslazione della Luna della domanda del 1634 (p. 182) |
-| D, le superfici | `packages/mcp/src/tools.ts` (`registerComputeHorary`), `prompts.ts` (`registerLetturaOraria`), `packages/lettura/src/oraria.ts`, `apps/web/src/routes/api/horary/+server.ts` | `ec58bdf` | il tool `compute_horary`, il prompt `lettura_oraria`, il documento `ORARIA` (fuori da `SISTEMI`), `GET /api/horary` | `packages/mcp/test/server.test.ts`, `packages/lettura/test/lettura.test.ts` |
-| E, la pagina web | `apps/web/src/routes/oraria/+page.svelte`, i componenti `Horary*` e `SignCourseTable.svelte`, `lib/case-lilly.ts` | v0.1.1 | `/oraria`: istante, luogo, la casa scelta da un elenco delle dodici con le significazioni di Lilly (pp. 50-56), la domanda scritta che resta nel browser e va solo nel prompt (`letturaOrariaDaIncollare`) | `lib/case-lilly.test.ts`, `format.test.ts`; vista nel browser |
-
-Dalla riga di comando: `--dignita lilly` col tema o con `--sky`, `--sky
---corso <corpo>`, `--oraria <casa>` con `--derivata`. Con una longitudine
-negativa va scritta col segno uguale, `--lon=-0.1278`, o `parseArgs` la prende
-per un'opzione.
-
-Le scelte fatte dove il testo lascia due strade non stanno qui: viaggiano col
-risultato e si leggono nel codice, in `LILLY_CONDITIONS_READINGS`, nella
-`rule` dei classificatori di `corso.ts` e in `HORARY_LILLY_READINGS`. Quelle che
-più facilmente si vorranno rivedere:
-
-- dove l'esempio svolto di pp. 177-180 non segue la sua tavola, il motore segue
-  la tavola: Mercurio, Luna e Giove entro 17° dal Sole sono sotto i raggi
-  (Lilly li dà liberi), Giove orientale prende 2 e il Sole diurno la
-  triplicità che Lilly non conta. Il test lo tiene scritto;
-- Regolo entro 5° come Spica e Algol (Lilly scrive «within six degrees», ma
-  allora conterebbe Regolo alla Luna, e non lo fa);
-- le *moieties* sono la prima colonna di p. 107, quella che Lilly dice sua;
-- la Luna vuota di Lilly non pretende «separated from a Planet»;
-- la Luna non proibisce quando è cosignificatrice di chi chiede (p. 124):
-  dal 30 ottobre 2026, vedi *Deciso*;
-- traslazione e collezione si riconoscono anche senza la ricezione di p. 126,
-  che è riportata e la cui mancanza è detta.
-
-### Che cosa resta
-
-Ciascuna indipendente dalle altre.
-
-- **Altre figure del libro II** per la verifica. Oltre a quella del 1634 sono
-  provate, dal 30 ottobre 2026, «Where an absent Brother was?» (pp. 196-197)
-  e la notizia di Cambridge (p. 200), in `oraria-lilly.test.ts`: posizioni
-  entro un grado, significatori, il corso della Luna, l'ora planetaria, tutto
-  come Lilly lo stampa. Le altre figure stanno alle pagine PDF 253, 272, 274,
-  320 e 323 (fin qui la pagina stampata è la PDF − 34), trovate con
-  miniature delle pagine perché l'OCR delle figure non si legge. Due cose da
-  sapere: le date sono giuliane (+10 giorni nel Seicento), e «hora
-  meridiana» è il mezzogiorno vero, che va convertito in tempo medio con
-  l'equazione del tempo (nel novembre 1645, le 11:45).
-
-### Deciso
-
-Il 18 ottobre 2026:
-
-- **Le scuole sono pacchetti, e la prima è Lilly.** Un substrato neutro, il
-  corso di `corso.ts`, con sopra le scuole, ciascuna intera e nominata nel
-  risultato. Una scuola nuova è un file accanto a `oraria-lilly.ts`, non una
-  modifica.
-- **Il documento di lettura ha un registro attribuito**: «secondo il metodo di
-  Lilly la figura indica…». È l'unico che risponde; salute, morte, questioni
-  legali e finanziarie le rifiuta dicendo perché.
-- **Le dignità stanno nel punto 19**, chiuso il 30 ottobre 2026: le tavole
-  sono nei moduli `dignita-*.ts`.
-
-Il 27 ottobre 2026, facendolo:
-
-- **La casa del quesito è un input**, obbligatorio, anche derivata. Il motore
-  non la sceglie, e le descrizioni dicono all'agente di chiederla se la
-  domanda non la indica.
-- **Le considerazioni prima del giudizio sono predicati, mai un rifiuto**;
-  quelle senza una soglia nel testo restano «non calcolate» e lo dicono.
-- **Non entrano il sì o il no né la conversione dei gradi in giorni**: li fa
-  chi legge, e `ORARIA` dice come li faceva Lilly (p. 110 per il tempo).
-- **`ORARIA` non è un valore di `SISTEMI`**: quelli leggono una nascita, e il
-  prompt del tema natale applicherebbe le istruzioni di una domanda a un tema.
-- **Il pool dei worker non serve**: una domanda di oggi costa due decimi di
-  secondo. La figura del 1634 ne costa quasi due, ma gira solo nei test.
-
-### Le fonti
-
-*Christian Astrology* in `texts/occidentale/lilly-christian-astrology-1647`
-(archive.org `b30338724`, pubblico dominio): 41 pagine lette in `pagine/`,
-trascritte in `trascrizioni.md`, l'elenco per lotto in `FONTE.md`. Nel PDF
-locale la pagina stampata N è la N + 34, verificato fino a p. 182: `pdftoppm
--f $((N+34)) -l $((N+34)) -r 250 -jpeg -singlefile scansione.pdf pagine/pNNN`.
-Da p. 182 la numerazione stampata è disordinata (186, 185, 184, 185 di
-seguito): oltre, la pagina si conta sul PDF e si dice. Da leggere: p. 91
-(il contrantiscion, che il codice ricava come punto opposto all'antiscion) e
-p. 145 (la Parte di Fortuna).
-
-**I numeri si leggono sulla scansione, non sui siti**: la trascrizione in rete
-(Houlding, Skyscript) è protetta, e le fonti secondarie non concordano. Il
-«Marte 8°» che circola per Lilly è di al-Biruni (§436, trad. Wright 1934, in
-`texts/occidentale/biruni-elements-of-astrology-wright-1934`).
-
-Il catalogo delle stelle è `sefstars.txt` di Swiss Ephemeris, scaricato da
-`npm run ephe:download -w @dodicisegni/core` in `packages/core/ephe/` e
-copiato in `texts/tecnica/swiss-ephemeris/dati/`. Senza, le righe delle stelle
-mancano dal conto e `missing` lo dice; i test della figura del 1634 vengono
-saltati (`describe.skipIf`), e nel CI il file c'è.
-
-### Le scuole che verranno
-
-Note, non pianificate. Ciascuna è un classificatore sul corso di `corso.ts` e
-un pacchetto di tavole come quelli di `dignita-*.ts`.
-
-- **La linea araba e medievale**: Māshā'allāh e Sahl ibn Bishr, poi Bonatti
-  (*Decem tractatus astronomiae*, Ratdolt 1491, col trattato sulle
-  interrogazioni; scaricato in `texts/occidentale/bonatti-decem-tractatus-1491`,
-  copia della Biblioteca Jagellonica: l'OCR dell'incunabolo è inutile e si
-  legge sulle immagini). I termini di Bonatti non sono gli egizi ma i
-  tolemaici (`dignita-bonatti.ts`); il trattato delle interrogazioni non è ancora stato
-  cercato nella scansione, e la `FONTE.md` dice come orientarsi con l'OCR.
-  Bonatti conta sei negazioni della perfezione (refranazione, evasione,
-  proibizione, abscissione, contrarietà, ritorno della luce), che non
-  coincidono coi nomi di Lilly. Le traduzioni latine medievali
-  sono di pubblico dominio, quelle inglesi moderne (Dykes) no.
-- **Il prashna del Jyotisha.** Il *Prasna Marga* (Kerala, XVII secolo), e
-  soprattutto la Krishnamurti Paddhati (KP), la più calcolabile: il
-  consultante dà un numero da 1 a 249 che fissa il grado dell'Ascendente, e i
-  sotto-signori si ricavano dalle proporzioni vimshottari che il motore ha già
-  in `nakshatra.ts` e `dasha.ts`. Va verificato lo stato dei diritti sui libri
-  di Krishnamurti; la regola si ricalcola dalla definizione.
-
 ## 25. Le dignità del Jyotisha: le rifiniture
 
 **Priorità bassa.** Restano dalla voce 19, chiusa il 30 ottobre 2026; le
@@ -352,8 +223,8 @@ le condizioni e il conto in `condizioni-lilly.ts`), Tolomeo
 - **La ricezione di Bonatti**, se un giorno servisse: nasce da
   un'applicazione in corso (tratt. III, PDF pp. 167-168), quindi vuole una
   convenzione delle orbite di Bonatti (da leggere: non è stata cercata) e il
-  corso di `corso.ts`. È lavoro dell'oraria più che della tavola, da pensare
-  con la voce 17.
+  corso di `corso.ts`. È lavoro dell'oraria (voce 17, chiusa) più che della
+  tavola.
 - **Valente, le cose non cercate.** Esilio e ricezione nelle *Anthologiae*,
   oltre l'indice di Kroll; e un testo critico migliore per I.3, l'ed. Pingree
   (Teubner 1986), protetta, che potrebbe sanare Ariete e Scorpione e dire se
@@ -380,6 +251,18 @@ ogni scuola che non le definisce o che le definisce in un modo che la
 tavola non calcola, e la riga della fonte lo dice.
 
 ## Deciso, e da non riaprire
+
+- **L'oraria: scuole a pacchetti, e Lilly per prima.** Deciso il 18 e il
+  27 ottobre 2026 con la voce 17, chiusa il 30. Un substrato neutro, il
+  corso di `corso.ts`, con sopra le scuole, ciascuna intera e nominata; una
+  scuola nuova è un file accanto a `oraria-lilly.ts`. La casa del quesito è
+  un input obbligatorio, anche derivata: il motore non la sceglie. Le
+  considerazioni prima del giudizio sono predicati, mai un rifiuto. Non
+  entrano il sì o il no né la conversione dei gradi in giorni: li fa chi
+  legge, e `ORARIA` dice come li faceva Lilly. Il documento ha un registro
+  attribuito e rifiuta salute, morte, questioni legali e finanziarie; non è
+  un valore di `SISTEMI`. Il pool dei worker non serve: una domanda costa
+  due decimi di secondo.
 
 - **Nel corso, chi applica lo dice il moto reale.** Scelto dal proprietario
   il 30 ottobre 2026, con la voce 17. Ogni incontro del corso porta
@@ -568,6 +451,30 @@ tavola non calcola, e la riga della fonte lo dice.
   seria, e non da dentro il motore.
 
 ## Esaminato, e lasciato stare
+
+**Le scuole d'oraria che verranno, non pianificate.** Note dalla voce 17.
+Ciascuna sarebbe un classificatore sul corso di `corso.ts` e un pacchetto di
+tavole come quelli di `dignita-*.ts`. La linea araba e medievale
+(Māshā'allāh, Sahl ibn Bishr, Bonatti): il trattato delle interrogazioni di
+Bonatti non è ancora stato cercato nella scansione di
+`texts/occidentale/bonatti-decem-tractatus-1491`, e le sue sei negazioni
+della perfezione (refranazione, evasione, proibizione, abscissione,
+contrarietà, ritorno della luce) non coincidono coi nomi di Lilly; le
+traduzioni inglesi moderne (Dykes) sono protette. Il prashna del Jyotisha:
+il *Prasna Marga* e soprattutto la Krishnamurti Paddhati, in cui un numero
+da 1 a 249 fissa il grado dell'Ascendente e i sotto-signori vengono dalle
+proporzioni vimshottari già in `nakshatra.ts` e `dasha.ts`; i diritti sui
+libri di Krishnamurti sono da verificare.
+
+**Le figure del libro II di Lilly che il motore non riproduce.** Esaminate il
+30 ottobre 2026 con la voce 17, chiusa (le prove in `oraria-lilly.test.ts`,
+le trascrizioni nella copia locale della fonte). La figura di p. 238 (1635)
+è incoerente in sé: case per circa le 12:30, pianeti per quasi un giorno
+dopo. A p. 220 il motore vede una proibizione del Sole che Lilly legge a
+favore. A p. 241 la Luna di Lilly è in quinta per la regola dei cinque gradi
+e quella del motore in quarta per sei primi, e il testo dà «♃ Lord of the
+Houre» contro la figura. Nessuna delle tre chiede un cambio del motore; la
+seconda, se un giorno si volesse, è una lettura da decidere.
 
 **Alan Leo come scuola delle dignità.** Letto il 30 ottobre 2026 (voce 19),
 in `texts/occidentale/leo-how-to-judge-a-nativity-1928/trascrizioni.md`.
