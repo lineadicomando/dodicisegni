@@ -137,6 +137,16 @@ il motore usa Moshier invece delle effemeridi Swiss.
      endpoint, un'opzione, una scuola nuova chiesta per nome)? La **terza**;
   3. non arriva niente (commenti, test, `TODO.md`, `texts/`)? **Niente**.
 
+  **Alla prima domanda risponde la macchina**: il fascicolo canonico,
+  `packages/core/test/canonico.test.ts`, scrive in `test/canonico/` le
+  risposte intere del motore su input fissi, con Moshier. Un file che cambia
+  è un sì; nessun file cambiato, un no, qualunque altra cosa sia cambiata.
+  Quando il cambiamento è voluto si riscrivono con `npx vitest run
+  test/canonico.test.ts -u` (dentro `packages/core`), e il diff entra nel
+  commit che muove la versione. Il fascicolo vede solo le risposte che dà:
+  una tavola cambiata in un grado dove nessun suo corpo cade non lo muove, e
+  lì la domanda torna a chi fa il commit.
+
   La prima cifra è lo stato e non una misura: passa da 0 a 1 quando finisce
   l'alpha, e `ALPHA` in `lib/version.ts` smette di dirlo da sé. Finché è
   zero, `/metodo#versione` dice a chi legge che cosa può cambiare.

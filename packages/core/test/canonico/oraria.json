@@ -1,0 +1,2678 @@
+{
+  "Roma 2026-10-27 22:15, settima casa": {
+    "school": "lilly",
+    "source": "Lilly, Christian Astrology (1647): significatori a pp. 123-124, modi della perfezione a pp. 125-126, applicazione a p. 108, separazione e proibizione a pp. 110-111, refranazione e traslazione a p. 111, frustrazione a pp. 112-113, considerazioni prima del giudizio a pp. 121-123, nature dei pianeti nel libro I.",
+    "readings": [
+      "Il più leggero è il più veloce nel moto medio, nell'ordine caldeo: «ever the lighter to the more ponderous» (p. 108).",
+      "La finestra finisce quando il più leggero dei due significatori cambia segno: fin lì si guardano tutti; oltre, il motore non guarda.",
+      "Proibizione: un terzo pianeta, più leggero del significatore più pesante, perfeziona con lui prima che i due si incontrino (pp. 110-111). La Luna ne fa parte come ogni altro pianeta, perché Lilly non la esclude.",
+      "Frustrazione: il significatore più pesante perfeziona prima con un pianeta ancora più pesante (pp. 112-113).",
+      "Refranazione: il più leggero applica in orbita all'istante e si ferma retrogrado prima di perfezionare (p. 111).",
+      "Traslazione: un pianeta più leggero di tutti e due, separato da uno dei due da quando è nel segno, la cui prima applicazione è all'altro (pp. 111 e 126). La ricezione che p. 126 aggiunge è riportata, non pretesa.",
+      "Collezione: i due non si guardano, né in orbita né prima del cambio di segno, e perfezionano tutti e due con un pianeta più pesante di entrambi (p. 126). Anche qui la ricezione è riportata, e la sua mancanza detta.",
+      "Le case dell'Ascendente e del quesito sono rette dal signore tradizionale del segno della cuspide; la figura è eretta col Regiomontano, come le figure del libro II."
+    ],
+    "chart": {
+      "input": {
+        "date": "2026-10-27",
+        "time": "22:15",
+        "timezone": "Europe/Rome"
+      },
+      "time": {
+        "julianDayUT": 2461341.3854166665,
+        "utc": "2026-10-27T21:15:00Z",
+        "local": "2026-10-27T22:15:00+01:00",
+        "offsetMinutes": 60,
+        "timeKnown": true
+      },
+      "ephemerisMode": "moshier",
+      "zodiac": "tropicale",
+      "bodies": [
+        {
+          "id": "sole",
+          "name": "Sole",
+          "longitude": 214.46736965373037,
+          "latitude": 0.00018721028959377506,
+          "distance": 0.9937479917609767,
+          "speed": 0.9975378951513866,
+          "retrograde": false,
+          "sign": "scorpione",
+          "signDegree": 4.467369653730373,
+          "house": 4
+        },
+        {
+          "id": "luna",
+          "name": "Luna",
+          "longitude": 57.6836144612409,
+          "latitude": 5.037744485027216,
+          "distance": 0.0024391549083943045,
+          "speed": 14.6971008772726,
+          "retrograde": false,
+          "sign": "toro",
+          "signDegree": 27.6836144612409,
+          "house": 11
+        },
+        {
+          "id": "mercurio",
+          "name": "Mercurio",
+          "longitude": 230.06795289179738,
+          "latitude": -2.532320733077141,
+          "distance": 0.7270437913004186,
+          "speed": -0.5217266140512391,
+          "retrograde": true,
+          "sign": "scorpione",
+          "signDegree": 20.067952891797376,
+          "house": 5
+        },
+        {
+          "id": "venere",
+          "name": "Venere",
+          "longitude": 208.49541336851053,
+          "latitude": -5.800828532550083,
+          "distance": 0.27396061764922164,
+          "speed": -0.5869124921610845,
+          "retrograde": true,
+          "sign": "bilancia",
+          "signDegree": 28.495413368510526,
+          "house": 4
+        },
+        {
+          "id": "marte",
+          "name": "Marte",
+          "longitude": 136.52265910394993,
+          "latitude": 1.5157347667369756,
+          "distance": 1.4655902406021535,
+          "speed": 0.5164074703590595,
+          "retrograde": false,
+          "sign": "leone",
+          "signDegree": 16.522659103949934,
+          "house": 1
+        },
+        {
+          "id": "giove",
+          "name": "Giove",
+          "longitude": 143.80379761243535,
+          "latitude": 0.6763466793289866,
+          "distance": 5.561182457248555,
+          "speed": 0.1308068903335788,
+          "retrograde": false,
+          "sign": "leone",
+          "signDegree": 23.803797612435346,
+          "house": 2
+        },
+        {
+          "id": "saturno",
+          "name": "Saturno",
+          "longitude": 9.554110044105848,
+          "latitude": -2.6935266469608004,
+          "distance": 8.516888276601163,
+          "speed": -0.06712452177143502,
+          "retrograde": true,
+          "sign": "ariete",
+          "signDegree": 9.554110044105848,
+          "house": 10
+        },
+        {
+          "id": "urano",
+          "name": "Urano",
+          "longitude": 64.82152462864647,
+          "latitude": -0.1516698570447512,
+          "distance": 18.572325665027808,
+          "speed": -0.03438034456814239,
+          "retrograde": true,
+          "sign": "gemelli",
+          "signDegree": 4.821524628646472,
+          "house": 11
+        },
+        {
+          "id": "nettuno",
+          "name": "Nettuno",
+          "longitude": 2.1729219819120194,
+          "latitude": -1.415904426264409,
+          "distance": 29.033060260053336,
+          "speed": -0.022350587773337423,
+          "retrograde": true,
+          "sign": "ariete",
+          "signDegree": 2.1729219819120194,
+          "house": 9
+        },
+        {
+          "id": "plutone",
+          "name": "Plutone",
+          "longitude": 303.10122414199066,
+          "latitude": -4.2755241925556335,
+          "distance": 35.638608394071966,
+          "speed": 0.005614877650392627,
+          "retrograde": false,
+          "sign": "acquario",
+          "signDegree": 3.101224141990656,
+          "house": 7
+        },
+        {
+          "id": "nodo-nord",
+          "name": "Nodo Nord",
+          "longitude": 326.2913000099908,
+          "latitude": 0,
+          "distance": 0.00256955528979999,
+          "speed": -0.052930150309278064,
+          "retrograde": true,
+          "sign": "acquario",
+          "signDegree": 26.291300009990778,
+          "house": 8
+        },
+        {
+          "id": "nodo-sud",
+          "name": "Nodo Sud",
+          "longitude": 146.29130000999078,
+          "latitude": 0,
+          "distance": 0.00256955528979999,
+          "speed": -0.052930150309278064,
+          "retrograde": true,
+          "sign": "leone",
+          "signDegree": 26.291300009990778,
+          "house": 2
+        }
+      ],
+      "houses": [
+        {
+          "number": 1,
+          "longitude": 115.67023101177277,
+          "sign": "cancro",
+          "signDegree": 25.67023101177277
+        },
+        {
+          "number": 2,
+          "longitude": 137.5530521339916,
+          "sign": "leone",
+          "signDegree": 17.5530521339916
+        },
+        {
+          "number": 3,
+          "longitude": 159.53865367428196,
+          "sign": "vergine",
+          "signDegree": 9.53865367428196
+        },
+        {
+          "number": 4,
+          "longitude": 188.15539241525445,
+          "sign": "bilancia",
+          "signDegree": 8.155392415254454
+        },
+        {
+          "number": 5,
+          "longitude": 227.92134934319523,
+          "sign": "scorpione",
+          "signDegree": 17.92134934319523
+        },
+        {
+          "number": 6,
+          "longitude": 267.38781588245195,
+          "sign": "sagittario",
+          "signDegree": 27.387815882451946
+        },
+        {
+          "number": 7,
+          "longitude": 295.6702310117728,
+          "sign": "capricorno",
+          "signDegree": 25.670231011772785
+        },
+        {
+          "number": 8,
+          "longitude": 317.5530521339916,
+          "sign": "acquario",
+          "signDegree": 17.553052133991628
+        },
+        {
+          "number": 9,
+          "longitude": 339.53865367428193,
+          "sign": "pesci",
+          "signDegree": 9.538653674281932
+        },
+        {
+          "number": 10,
+          "longitude": 8.15539241525445,
+          "sign": "ariete",
+          "signDegree": 8.15539241525445
+        },
+        {
+          "number": 11,
+          "longitude": 47.921349343195224,
+          "sign": "toro",
+          "signDegree": 17.921349343195224
+        },
+        {
+          "number": 12,
+          "longitude": 87.38781588245192,
+          "sign": "gemelli",
+          "signDegree": 27.387815882451918
+        }
+      ],
+      "orbConvention": {
+        "id": "lilly",
+        "name": "William Lilly (moieties)",
+        "source": "William Lilly, Christian Astrology (1647), p. 107 (tavola, prima colonna) e p. 110 (la somma delle metà).",
+        "rule": "Per pianeta: Saturno 10°, Giove 12°, Marte 7°30', Sole 17°, Venere 8°, Mercurio 7°, Luna 12°30'; una coppia è in aspetto entro la metà dell'uno più la metà dell'altro, per ognuno dei cinque aspetti tolemaici. Prima colonna della tavola; la seconda (Saturno e Giove 9°, Marte 7°, Sole 15°, Venere 7°, Luna 12°) Lilly la attribuisce ad altri. Urano, Nettuno, Plutone, Chirone, i Nodi, Lilith e gli assi non sono nella tavola e non hanno orbita: con loro nessun aspetto."
+      },
+      "aspects": [
+        {
+          "aspect": "quadrato",
+          "angle": 90,
+          "from": "mercurio",
+          "to": "marte",
+          "orb": 3.5452937878474415,
+          "applying": true
+        },
+        {
+          "aspect": "quadrato",
+          "angle": 90,
+          "from": "mercurio",
+          "to": "giove",
+          "orb": 3.735844720637971,
+          "applying": false
+        },
+        {
+          "aspect": "quadrato",
+          "angle": 90,
+          "from": "luna",
+          "to": "giove",
+          "orb": 3.8798168488055467,
+          "applying": false
+        },
+        {
+          "aspect": "sestile",
+          "angle": 60,
+          "from": "venere",
+          "to": "giove",
+          "orb": 4.69161575607518,
+          "applying": true
+        },
+        {
+          "aspect": "congiunzione",
+          "angle": 0,
+          "from": "sole",
+          "to": "venere",
+          "orb": 5.9719562852198464,
+          "applying": false
+        },
+        {
+          "aspect": "trigono",
+          "angle": 120,
+          "from": "marte",
+          "to": "saturno",
+          "orb": 6.968549059844094,
+          "applying": false
+        },
+        {
+          "aspect": "congiunzione",
+          "angle": 0,
+          "from": "marte",
+          "to": "giove",
+          "orb": 7.281138508485412,
+          "applying": true
+        },
+        {
+          "aspect": "opposizione",
+          "angle": 180,
+          "from": "luna",
+          "to": "mercurio",
+          "orb": 7.6156615694435175,
+          "applying": false
+        },
+        {
+          "aspect": "sestile",
+          "angle": 60,
+          "from": "sole",
+          "to": "giove",
+          "orb": 10.663572041295026,
+          "applying": false
+        },
+        {
+          "aspect": "quadrato",
+          "angle": 90,
+          "from": "sole",
+          "to": "marte",
+          "orb": 12.055289450219561,
+          "applying": true
+        }
+      ],
+      "distribution": {
+        "planets": {
+          "elements": {
+            "fuoco": 4,
+            "terra": 1,
+            "aria": 3,
+            "acqua": 2
+          },
+          "modalities": {
+            "cardinale": 3,
+            "fisso": 6,
+            "mobile": 1
+          },
+          "counted": [
+            "sole",
+            "luna",
+            "mercurio",
+            "venere",
+            "marte",
+            "giove",
+            "saturno",
+            "urano",
+            "nettuno",
+            "plutone"
+          ]
+        },
+        "points": {
+          "elements": {
+            "fuoco": 1,
+            "terra": 0,
+            "aria": 1,
+            "acqua": 0
+          },
+          "modalities": {
+            "cardinale": 0,
+            "fisso": 2,
+            "mobile": 0
+          },
+          "counted": [
+            "nodo-nord",
+            "nodo-sud"
+          ]
+        },
+        "angles": {
+          "elements": {
+            "fuoco": 1,
+            "terra": 0,
+            "aria": 0,
+            "acqua": 1
+          },
+          "modalities": {
+            "cardinale": 2,
+            "fisso": 0,
+            "mobile": 0
+          },
+          "counted": [
+            "ascendente",
+            "medio-cielo"
+          ]
+        }
+      },
+      "warnings": [
+        "File di effemeridi non trovati in /fascicolo-canonico-senza-effemeridi: uso le effemeridi Moshier (nessun file richiesto, precisione leggermente inferiore, Chirone non disponibile). Esegui `npm run ephe:download -w @dodicisegni/core` per la precisione piena."
+      ],
+      "place": {
+        "latitude": 41.9028,
+        "longitude": 12.4964
+      },
+      "siderealTime": {
+        "hours": 0.49936532954270874,
+        "formatted": "00:29:58"
+      },
+      "houseSystem": "regiomontano",
+      "angles": {
+        "ascendant": 115.67023101177277,
+        "midheaven": 8.15539241525445,
+        "descendant": 295.6702310117728,
+        "imumCoeli": 188.15539241525445,
+        "vertex": 251.92111656633995
+      },
+      "sect": "notturna",
+      "dignities": {
+        "sources": {
+          "domicili": {
+            "tradizionale": "i sette pianeti, comuni alle scuole antiche (Tolomeo, Tetrabiblos I.17; Lilly, p. 104).",
+            "moderno": "Novecento, senza un autore unico: Urano e Nettuno come li riferisce Alan Leo (The Art of Synthesis, p. 117), Plutone senza un autore."
+          },
+          "esilio": "il segno opposto al domicilio (Lilly, p. 104; nella moderna per la stessa regola).",
+          "esaltazione": "Tolomeo, Tetrabiblos I.19, per segno e senza gradi; caduta nel segno opposto."
+        },
+        "signLords": {
+          "ariete": {
+            "tradizionale": "marte",
+            "moderno": "marte"
+          },
+          "toro": {
+            "tradizionale": "venere",
+            "moderno": "venere"
+          },
+          "gemelli": {
+            "tradizionale": "mercurio",
+            "moderno": "mercurio"
+          },
+          "cancro": {
+            "tradizionale": "luna",
+            "moderno": "luna"
+          },
+          "leone": {
+            "tradizionale": "sole",
+            "moderno": "sole"
+          },
+          "vergine": {
+            "tradizionale": "mercurio",
+            "moderno": "mercurio"
+          },
+          "bilancia": {
+            "tradizionale": "venere",
+            "moderno": "venere"
+          },
+          "scorpione": {
+            "tradizionale": "marte",
+            "moderno": "plutone"
+          },
+          "sagittario": {
+            "tradizionale": "giove",
+            "moderno": "giove"
+          },
+          "capricorno": {
+            "tradizionale": "saturno",
+            "moderno": "saturno"
+          },
+          "acquario": {
+            "tradizionale": "saturno",
+            "moderno": "urano"
+          },
+          "pesci": {
+            "tradizionale": "giove",
+            "moderno": "nettuno"
+          }
+        },
+        "bodies": [
+          {
+            "id": "sole",
+            "name": "Sole",
+            "sign": "scorpione",
+            "dignities": {
+              "tradizionale": [],
+              "moderno": []
+            }
+          },
+          {
+            "id": "luna",
+            "name": "Luna",
+            "sign": "toro",
+            "dignities": {
+              "tradizionale": [
+                "esaltazione"
+              ],
+              "moderno": []
+            }
+          },
+          {
+            "id": "mercurio",
+            "name": "Mercurio",
+            "sign": "scorpione",
+            "dignities": {
+              "tradizionale": [],
+              "moderno": []
+            }
+          },
+          {
+            "id": "venere",
+            "name": "Venere",
+            "sign": "bilancia",
+            "dignities": {
+              "tradizionale": [
+                "domicilio"
+              ],
+              "moderno": [
+                "domicilio"
+              ]
+            }
+          },
+          {
+            "id": "marte",
+            "name": "Marte",
+            "sign": "leone",
+            "dignities": {
+              "tradizionale": [],
+              "moderno": []
+            }
+          },
+          {
+            "id": "giove",
+            "name": "Giove",
+            "sign": "leone",
+            "dignities": {
+              "tradizionale": [],
+              "moderno": []
+            }
+          },
+          {
+            "id": "saturno",
+            "name": "Saturno",
+            "sign": "ariete",
+            "dignities": {
+              "tradizionale": [
+                "caduta"
+              ],
+              "moderno": []
+            }
+          },
+          {
+            "id": "urano",
+            "name": "Urano",
+            "sign": "gemelli",
+            "dignities": {
+              "tradizionale": [],
+              "moderno": []
+            }
+          },
+          {
+            "id": "nettuno",
+            "name": "Nettuno",
+            "sign": "ariete",
+            "dignities": {
+              "tradizionale": [],
+              "moderno": []
+            }
+          },
+          {
+            "id": "plutone",
+            "name": "Plutone",
+            "sign": "acquario",
+            "dignities": {
+              "tradizionale": [],
+              "moderno": []
+            }
+          },
+          {
+            "id": "nodo-nord",
+            "name": "Nodo Nord",
+            "sign": "acquario",
+            "dignities": {
+              "tradizionale": [],
+              "moderno": []
+            }
+          },
+          {
+            "id": "nodo-sud",
+            "name": "Nodo Sud",
+            "sign": "leone",
+            "dignities": {
+              "tradizionale": [],
+              "moderno": []
+            }
+          }
+        ],
+        "receptions": {
+          "source": "Lilly, p. 112 (mutua, per «any essentiall dignity») e p. 176 (semplice), sulla tavola di p. 104.",
+          "counted": [
+            "domicilio",
+            "esaltazione",
+            "triplicita",
+            "termine",
+            "faccia"
+          ],
+          "single": [
+            {
+              "receiver": "sole",
+              "received": "marte",
+              "by": [
+                "domicilio"
+              ]
+            },
+            {
+              "receiver": "sole",
+              "received": "giove",
+              "by": [
+                "domicilio"
+              ]
+            },
+            {
+              "receiver": "sole",
+              "received": "saturno",
+              "by": [
+                "esaltazione"
+              ]
+            },
+            {
+              "receiver": "mercurio",
+              "received": "venere",
+              "by": [
+                "triplicita"
+              ]
+            },
+            {
+              "receiver": "venere",
+              "received": "luna",
+              "by": [
+                "domicilio"
+              ]
+            },
+            {
+              "receiver": "venere",
+              "received": "mercurio",
+              "by": [
+                "termine",
+                "faccia"
+              ]
+            },
+            {
+              "receiver": "venere",
+              "received": "marte",
+              "by": [
+                "termine"
+              ]
+            },
+            {
+              "receiver": "venere",
+              "received": "saturno",
+              "by": [
+                "termine"
+              ]
+            },
+            {
+              "receiver": "marte",
+              "received": "sole",
+              "by": [
+                "domicilio",
+                "triplicita",
+                "termine",
+                "faccia"
+              ]
+            },
+            {
+              "receiver": "marte",
+              "received": "luna",
+              "by": [
+                "termine"
+              ]
+            },
+            {
+              "receiver": "marte",
+              "received": "mercurio",
+              "by": [
+                "domicilio",
+                "triplicita"
+              ]
+            },
+            {
+              "receiver": "marte",
+              "received": "venere",
+              "by": [
+                "termine"
+              ]
+            },
+            {
+              "receiver": "marte",
+              "received": "giove",
+              "by": [
+                "faccia"
+              ]
+            },
+            {
+              "receiver": "marte",
+              "received": "saturno",
+              "by": [
+                "domicilio",
+                "faccia"
+              ]
+            },
+            {
+              "receiver": "giove",
+              "received": "venere",
+              "by": [
+                "faccia"
+              ]
+            },
+            {
+              "receiver": "giove",
+              "received": "marte",
+              "by": [
+                "triplicita",
+                "faccia"
+              ]
+            },
+            {
+              "receiver": "giove",
+              "received": "saturno",
+              "by": [
+                "triplicita"
+              ]
+            },
+            {
+              "receiver": "saturno",
+              "received": "luna",
+              "by": [
+                "faccia"
+              ]
+            },
+            {
+              "receiver": "saturno",
+              "received": "venere",
+              "by": [
+                "esaltazione"
+              ]
+            }
+          ],
+          "mutual": [
+            {
+              "bodies": [
+                "sole",
+                "marte"
+              ],
+              "firstReceives": [
+                "domicilio"
+              ],
+              "secondReceives": [
+                "domicilio",
+                "triplicita",
+                "termine",
+                "faccia"
+              ]
+            },
+            {
+              "bodies": [
+                "mercurio",
+                "venere"
+              ],
+              "firstReceives": [
+                "triplicita"
+              ],
+              "secondReceives": [
+                "termine",
+                "faccia"
+              ]
+            },
+            {
+              "bodies": [
+                "venere",
+                "marte"
+              ],
+              "firstReceives": [
+                "termine"
+              ],
+              "secondReceives": [
+                "termine"
+              ]
+            },
+            {
+              "bodies": [
+                "venere",
+                "saturno"
+              ],
+              "firstReceives": [
+                "termine"
+              ],
+              "secondReceives": [
+                "esaltazione"
+              ]
+            },
+            {
+              "bodies": [
+                "marte",
+                "giove"
+              ],
+              "firstReceives": [
+                "faccia"
+              ],
+              "secondReceives": [
+                "triplicita",
+                "faccia"
+              ]
+            }
+          ]
+        },
+        "lilly": {
+          "school": "lilly",
+          "source": "Lilly, Christian Astrology (1647), pp. 104-105: esaltazioni col grado e i Nodi, triplicità di giorno e di notte, termini «according to Ptolomy», facce caldee.",
+          "bodies": [
+            {
+              "id": "sole",
+              "name": "Sole",
+              "rulers": {
+                "domicilio": "marte",
+                "triplicita": "marte",
+                "termine": "marte",
+                "faccia": "marte"
+              },
+              "dignities": []
+            },
+            {
+              "id": "luna",
+              "name": "Luna",
+              "rulers": {
+                "domicilio": "venere",
+                "esaltazione": "luna",
+                "triplicita": "luna",
+                "termine": "marte",
+                "faccia": "saturno"
+              },
+              "dignities": [
+                "esaltazione",
+                "triplicita"
+              ]
+            },
+            {
+              "id": "mercurio",
+              "name": "Mercurio",
+              "rulers": {
+                "domicilio": "marte",
+                "triplicita": "marte",
+                "termine": "venere",
+                "faccia": "venere"
+              },
+              "dignities": []
+            },
+            {
+              "id": "venere",
+              "name": "Venere",
+              "rulers": {
+                "domicilio": "venere",
+                "esaltazione": "saturno",
+                "triplicita": "mercurio",
+                "termine": "marte",
+                "faccia": "giove"
+              },
+              "dignities": [
+                "domicilio"
+              ]
+            },
+            {
+              "id": "marte",
+              "name": "Marte",
+              "rulers": {
+                "domicilio": "sole",
+                "triplicita": "giove",
+                "termine": "venere",
+                "faccia": "giove"
+              },
+              "dignities": []
+            },
+            {
+              "id": "giove",
+              "name": "Giove",
+              "rulers": {
+                "domicilio": "sole",
+                "triplicita": "giove",
+                "termine": "giove",
+                "faccia": "marte"
+              },
+              "dignities": [
+                "triplicita",
+                "termine"
+              ]
+            },
+            {
+              "id": "saturno",
+              "name": "Saturno",
+              "rulers": {
+                "domicilio": "marte",
+                "esaltazione": "sole",
+                "triplicita": "giove",
+                "termine": "venere",
+                "faccia": "marte"
+              },
+              "dignities": [
+                "caduta"
+              ]
+            },
+            {
+              "id": "urano",
+              "name": "Urano",
+              "rulers": {
+                "domicilio": "mercurio",
+                "esaltazione": "nodo-nord",
+                "triplicita": "mercurio",
+                "termine": "mercurio",
+                "faccia": "giove"
+              },
+              "dignities": []
+            },
+            {
+              "id": "nettuno",
+              "name": "Nettuno",
+              "rulers": {
+                "domicilio": "marte",
+                "esaltazione": "sole",
+                "triplicita": "giove",
+                "termine": "giove",
+                "faccia": "marte"
+              },
+              "dignities": []
+            },
+            {
+              "id": "plutone",
+              "name": "Plutone",
+              "rulers": {
+                "domicilio": "saturno",
+                "triplicita": "mercurio",
+                "termine": "saturno",
+                "faccia": "venere"
+              },
+              "dignities": []
+            },
+            {
+              "id": "nodo-nord",
+              "name": "Nodo Nord",
+              "rulers": {
+                "domicilio": "saturno",
+                "triplicita": "mercurio",
+                "termine": "marte",
+                "faccia": "luna"
+              },
+              "dignities": []
+            },
+            {
+              "id": "nodo-sud",
+              "name": "Nodo Sud",
+              "rulers": {
+                "domicilio": "sole",
+                "triplicita": "giove",
+                "termine": "marte",
+                "faccia": "marte"
+              },
+              "dignities": []
+            }
+          ],
+          "conditions": {
+            "source": "Lilly, Christian Astrology (1647): punti dalla tavola di p. 115, applicata come a pp. 177-181; casa con la regola dei cinque gradi (p. 33), moto medio dal libro I (pp. 57-80), Sole a p. 113, orientale e occidentale e assedio a p. 114, partile a p. 106, antiscion a p. 90, Ascendente e Via Combusta a p. 122.",
+            "readings": [
+              "Sotto i raggi entro 17° in qualunque segno, come dice p. 113; la combustione (8°30') solo nello stesso segno. Nell'esempio di pp. 179-180 Lilly dà «Free from Combustion» a Mercurio e alla Luna, che la regola mette sotto i raggi.",
+              "Ricezione mutua per domicilio o per esaltazione: conta come dignità («shall have Dignities», p. 115), e chi ce l'ha non è peregrino.",
+              "Veloce o lento confrontando il moto col segno con la media: un retrogrado è sempre lento, come il Saturno di p. 178.",
+              "Assediato: fra Saturno e Marte nello stesso segno, come nell'esempio di p. 114.",
+              "Stelle in longitudine ed entro 5° tutte e tre: Algol per la tavola, Spica per l'esempio di p. 179, Regolo come loro. A p. 179 Lilly scrive «within six degrees» per Venere, ma non conta Regolo alla Luna, che il motore mette a 5°40'."
+            ],
+            "missing": [
+              "stelle (Regolo, Spica, Algol): manca il catalogo delle stelle (sefstars.txt)"
+            ],
+            "bodies": [
+              {
+                "id": "sole",
+                "name": "Sole",
+                "motion": {
+                  "speed": 0.9975378951513866,
+                  "mean": 0.9855555555555555,
+                  "pace": "veloce",
+                  "direction": "diretto"
+                },
+                "peregrine": false,
+                "besieged": false,
+                "antiscion": 325.5326303462696,
+                "contrantiscion": 145.53263034626963,
+                "score": {
+                  "fortitudes": [
+                    {
+                      "item": "ricezione-domicilio",
+                      "points": 5,
+                      "with": "marte"
+                    },
+                    {
+                      "item": "casa",
+                      "house": 4,
+                      "points": 4
+                    },
+                    {
+                      "item": "veloce",
+                      "points": 2
+                    }
+                  ],
+                  "debilities": [],
+                  "totals": {
+                    "fortitudes": 11,
+                    "debilities": 0,
+                    "net": 11
+                  }
+                },
+                "house": 4,
+                "angularity": "angolare"
+              },
+              {
+                "id": "luna",
+                "name": "Luna",
+                "motion": {
+                  "speed": 14.6971008772726,
+                  "mean": 13.176666666666666,
+                  "pace": "veloce",
+                  "direction": "diretto"
+                },
+                "peregrine": false,
+                "besieged": false,
+                "antiscion": 122.3163855387591,
+                "contrantiscion": 302.3163855387591,
+                "score": {
+                  "fortitudes": [
+                    {
+                      "item": "esaltazione",
+                      "points": 4
+                    },
+                    {
+                      "item": "triplicita",
+                      "points": 3
+                    },
+                    {
+                      "item": "casa",
+                      "house": 11,
+                      "points": 4
+                    },
+                    {
+                      "item": "veloce",
+                      "points": 2
+                    },
+                    {
+                      "item": "libero",
+                      "points": 5
+                    }
+                  ],
+                  "debilities": [
+                    {
+                      "item": "calante",
+                      "points": 2
+                    }
+                  ],
+                  "totals": {
+                    "fortitudes": 18,
+                    "debilities": 2,
+                    "net": 16
+                  }
+                },
+                "house": 11,
+                "angularity": "succedente",
+                "sun": {
+                  "distance": 156.78375519248948,
+                  "state": "libero"
+                },
+                "phase": "orientale"
+              },
+              {
+                "id": "mercurio",
+                "name": "Mercurio",
+                "motion": {
+                  "speed": -0.5217266140512391,
+                  "mean": 0.9855555555555555,
+                  "pace": "lento",
+                  "direction": "retrogrado"
+                },
+                "peregrine": true,
+                "besieged": false,
+                "antiscion": 309.9320471082026,
+                "contrantiscion": 129.9320471082026,
+                "score": {
+                  "fortitudes": [
+                    {
+                      "item": "casa",
+                      "house": 5,
+                      "points": 3
+                    },
+                    {
+                      "item": "occidentale",
+                      "points": 2
+                    }
+                  ],
+                  "debilities": [
+                    {
+                      "item": "peregrino",
+                      "points": 5
+                    },
+                    {
+                      "item": "retrogrado",
+                      "points": 5
+                    },
+                    {
+                      "item": "lento",
+                      "points": 2
+                    },
+                    {
+                      "item": "sotto-i-raggi",
+                      "points": 4
+                    }
+                  ],
+                  "totals": {
+                    "fortitudes": 5,
+                    "debilities": 16,
+                    "net": -11
+                  }
+                },
+                "house": 5,
+                "angularity": "succedente",
+                "sun": {
+                  "distance": 15.600583238067003,
+                  "state": "sotto-i-raggi"
+                },
+                "phase": "occidentale"
+              },
+              {
+                "id": "venere",
+                "name": "Venere",
+                "motion": {
+                  "speed": -0.5869124921610845,
+                  "mean": 0.9855555555555555,
+                  "pace": "lento",
+                  "direction": "retrogrado"
+                },
+                "peregrine": false,
+                "besieged": false,
+                "antiscion": 331.5045866314895,
+                "contrantiscion": 151.50458663148947,
+                "score": {
+                  "fortitudes": [
+                    {
+                      "item": "domicilio",
+                      "points": 5
+                    },
+                    {
+                      "item": "casa",
+                      "house": 4,
+                      "points": 4
+                    }
+                  ],
+                  "debilities": [
+                    {
+                      "item": "retrogrado",
+                      "points": 5
+                    },
+                    {
+                      "item": "lento",
+                      "points": 2
+                    },
+                    {
+                      "item": "orientale",
+                      "points": 2
+                    },
+                    {
+                      "item": "sotto-i-raggi",
+                      "points": 4
+                    }
+                  ],
+                  "totals": {
+                    "fortitudes": 9,
+                    "debilities": 13,
+                    "net": -4
+                  }
+                },
+                "house": 4,
+                "angularity": "angolare",
+                "sun": {
+                  "distance": 5.9719562852198464,
+                  "state": "sotto-i-raggi"
+                },
+                "phase": "orientale"
+              },
+              {
+                "id": "marte",
+                "name": "Marte",
+                "motion": {
+                  "speed": 0.5164074703590595,
+                  "mean": 0.5241666666666667,
+                  "pace": "lento",
+                  "direction": "diretto"
+                },
+                "peregrine": false,
+                "besieged": false,
+                "antiscion": 43.477340896050066,
+                "contrantiscion": 223.47734089605007,
+                "score": {
+                  "fortitudes": [
+                    {
+                      "item": "ricezione-domicilio",
+                      "points": 5,
+                      "with": "sole"
+                    },
+                    {
+                      "item": "casa",
+                      "house": 2,
+                      "points": 3
+                    },
+                    {
+                      "item": "diretto",
+                      "points": 4
+                    },
+                    {
+                      "item": "orientale",
+                      "points": 2
+                    },
+                    {
+                      "item": "libero",
+                      "points": 5
+                    }
+                  ],
+                  "debilities": [
+                    {
+                      "item": "lento",
+                      "points": 2
+                    }
+                  ],
+                  "totals": {
+                    "fortitudes": 19,
+                    "debilities": 2,
+                    "net": 17
+                  }
+                },
+                "house": 2,
+                "angularity": "succedente",
+                "sun": {
+                  "distance": 77.94471054978044,
+                  "state": "libero"
+                },
+                "phase": "orientale"
+              },
+              {
+                "id": "giove",
+                "name": "Giove",
+                "motion": {
+                  "speed": 0.1308068903335788,
+                  "mean": 0.08305555555555555,
+                  "pace": "veloce",
+                  "direction": "diretto"
+                },
+                "peregrine": false,
+                "besieged": false,
+                "antiscion": 36.196202387564654,
+                "contrantiscion": 216.19620238756465,
+                "score": {
+                  "fortitudes": [
+                    {
+                      "item": "triplicita",
+                      "points": 3
+                    },
+                    {
+                      "item": "termine",
+                      "points": 2
+                    },
+                    {
+                      "item": "casa",
+                      "house": 2,
+                      "points": 3
+                    },
+                    {
+                      "item": "diretto",
+                      "points": 4
+                    },
+                    {
+                      "item": "veloce",
+                      "points": 2
+                    },
+                    {
+                      "item": "orientale",
+                      "points": 2
+                    },
+                    {
+                      "item": "libero",
+                      "points": 5
+                    }
+                  ],
+                  "debilities": [],
+                  "totals": {
+                    "fortitudes": 21,
+                    "debilities": 0,
+                    "net": 21
+                  }
+                },
+                "house": 2,
+                "angularity": "succedente",
+                "sun": {
+                  "distance": 70.66357204129503,
+                  "state": "libero"
+                },
+                "phase": "orientale"
+              },
+              {
+                "id": "saturno",
+                "name": "Saturno",
+                "motion": {
+                  "speed": -0.06712452177143502,
+                  "mean": 0.03361111111111111,
+                  "pace": "lento",
+                  "direction": "retrogrado"
+                },
+                "peregrine": true,
+                "besieged": false,
+                "antiscion": 170.44588995589416,
+                "contrantiscion": 350.44588995589413,
+                "score": {
+                  "fortitudes": [
+                    {
+                      "item": "casa",
+                      "house": 10,
+                      "points": 5
+                    },
+                    {
+                      "item": "libero",
+                      "points": 5
+                    }
+                  ],
+                  "debilities": [
+                    {
+                      "item": "caduta",
+                      "points": 4
+                    },
+                    {
+                      "item": "peregrino",
+                      "points": 5
+                    },
+                    {
+                      "item": "retrogrado",
+                      "points": 5
+                    },
+                    {
+                      "item": "lento",
+                      "points": 2
+                    },
+                    {
+                      "item": "occidentale",
+                      "points": 2
+                    }
+                  ],
+                  "totals": {
+                    "fortitudes": 10,
+                    "debilities": 18,
+                    "net": -8
+                  }
+                },
+                "house": 10,
+                "angularity": "angolare",
+                "sun": {
+                  "distance": 155.08674039037547,
+                  "state": "libero"
+                },
+                "phase": "occidentale"
+              }
+            ],
+            "hour": {
+              "ruler": "venere",
+              "dayRuler": "marte",
+              "diurnal": false,
+              "index": 5,
+              "start": "2026-10-27T20:38Z",
+              "end": "2026-10-27T21:46Z",
+              "local": {
+                "start": "2026-10-27T21:38+01:00",
+                "end": "2026-10-27T22:46+01:00"
+              },
+              "minutes": 68
+            },
+            "ascendant": {
+              "signDegree": 25.67023101177277,
+              "early": false,
+              "late": false
+            },
+            "moonInViaCombusta": false
+          }
+        }
+      }
+    },
+    "question": {
+      "house": 7,
+      "effectiveHouse": 7,
+      "cuspSign": "capricorno"
+    },
+    "significators": [
+      {
+        "body": "luna",
+        "role": "querente",
+        "rules": 1,
+        "longitude": 57.6836144612409,
+        "sign": "toro",
+        "house": 11
+      },
+      {
+        "body": "saturno",
+        "role": "quesito",
+        "rules": 7,
+        "longitude": 9.554110044105848,
+        "sign": "ariete",
+        "house": 10
+      }
+    ],
+    "sameSignificator": false,
+    "courses": [
+      {
+        "body": "luna",
+        "name": "Luna",
+        "at": "2026-10-27T21:15Z",
+        "local": "2026-10-27T22:15+01:00",
+        "longitude": 57.6836144612409,
+        "sign": "toro",
+        "signDegree": 27.6836144612409,
+        "with": [
+          "sole",
+          "mercurio",
+          "venere",
+          "marte",
+          "giove",
+          "saturno"
+        ],
+        "separations": [
+          {
+            "kind": "aspetto",
+            "with": "sole",
+            "aspect": "opposizione",
+            "retrograde": {
+              "body": false,
+              "other": false
+            },
+            "exact": "2026-10-26T04:12Z",
+            "local": "2026-10-26T05:12+01:00"
+          },
+          {
+            "kind": "aspetto",
+            "with": "marte",
+            "aspect": "quadrato",
+            "retrograde": {
+              "body": false,
+              "other": false
+            },
+            "exact": "2026-10-27T02:18Z",
+            "local": "2026-10-27T03:18+01:00"
+          },
+          {
+            "kind": "aspetto",
+            "with": "mercurio",
+            "aspect": "opposizione",
+            "retrograde": {
+              "body": false,
+              "other": true
+            },
+            "exact": "2026-10-27T09:11Z",
+            "local": "2026-10-27T10:11+01:00"
+          },
+          {
+            "kind": "aspetto",
+            "with": "giove",
+            "aspect": "quadrato",
+            "retrograde": {
+              "body": false,
+              "other": false
+            },
+            "exact": "2026-10-27T14:51Z",
+            "local": "2026-10-27T15:51+01:00"
+          }
+        ],
+        "events": [
+          {
+            "kind": "ingresso",
+            "sign": "gemelli",
+            "from": "toro",
+            "retrograde": false,
+            "exact": "2026-10-28T01:02Z",
+            "local": "2026-10-28T02:02+01:00"
+          }
+        ],
+        "voids": [
+          {
+            "school": "moderno",
+            "name": "moderna",
+            "source": "Il criterio del calendario elettivo (election.ts): vuota dall'ultimo aspetto esatto al cambio di segno.",
+            "rule": "Vuota se fino al cambio di segno non perfeziona più nessun aspetto tolemaico con i corpi nominati.",
+            "void": true
+          },
+          {
+            "school": "lilly",
+            "name": "Lilly",
+            "source": "Lilly, Christian Astrology (1647), p. 112: «when he is seperated from a Planet, nor doth forthwith, during his being in that Signe, apply to any other»; orbite di p. 107 (moieties).",
+            "rule": "Vuota se fino al cambio di segno non perfeziona nessun aspetto, e se quando esce non sta formando nessun aspetto entro la metà delle orbite dei due pianeti: un aspetto che si perfeziona nel segno dopo, ma che è già in orbita, è un'applicazione. Solo fra i sette.",
+            "void": false,
+            "applyingAtExit": {
+              "with": "saturno",
+              "aspect": "sestile",
+              "orb": 9.552505271438868
+            }
+          }
+        ],
+        "warnings": [
+          "File di effemeridi non trovati in /fascicolo-canonico-senza-effemeridi: uso le effemeridi Moshier (nessun file richiesto, precisione leggermente inferiore, Chirone non disponibile). Esegui `npm run ephe:download -w @dodicisegni/core` per la precisione piena."
+        ],
+        "lastPerfected": {
+          "kind": "aspetto",
+          "with": "giove",
+          "aspect": "quadrato",
+          "retrograde": {
+            "body": false,
+            "other": false
+          },
+          "exact": "2026-10-27T14:51Z",
+          "local": "2026-10-27T15:51+01:00"
+        },
+        "entered": "2026-10-25T23:35Z"
+      },
+      {
+        "body": "saturno",
+        "name": "Saturno",
+        "at": "2026-10-27T21:15Z",
+        "local": "2026-10-27T22:15+01:00",
+        "longitude": 9.554110044105848,
+        "sign": "ariete",
+        "signDegree": 9.554110044105848,
+        "with": [
+          "sole",
+          "luna",
+          "mercurio",
+          "venere",
+          "marte",
+          "giove"
+        ],
+        "separations": [
+          {
+            "kind": "aspetto",
+            "with": "luna",
+            "aspect": "sestile",
+            "retrograde": {
+              "body": false,
+              "other": false
+            },
+            "exact": "2026-02-15T06:33Z",
+            "local": "2026-02-15T07:33+01:00"
+          },
+          {
+            "kind": "aspetto",
+            "with": "luna",
+            "aspect": "congiunzione",
+            "retrograde": {
+              "body": false,
+              "other": false
+            },
+            "exact": "2026-02-19T20:48Z",
+            "local": "2026-02-19T21:48+01:00"
+          },
+          {
+            "kind": "aspetto",
+            "with": "luna",
+            "aspect": "sestile",
+            "retrograde": {
+              "body": false,
+              "other": false
+            },
+            "exact": "2026-02-24T04:26Z",
+            "local": "2026-02-24T05:26+01:00"
+          },
+          {
+            "kind": "aspetto",
+            "with": "luna",
+            "aspect": "quadrato",
+            "retrograde": {
+              "body": false,
+              "other": false
+            },
+            "exact": "2026-02-26T07:34Z",
+            "local": "2026-02-26T08:34+01:00"
+          },
+          {
+            "kind": "aspetto",
+            "with": "luna",
+            "aspect": "trigono",
+            "retrograde": {
+              "body": false,
+              "other": false
+            },
+            "exact": "2026-02-28T11:08Z",
+            "local": "2026-02-28T12:08+01:00"
+          },
+          {
+            "kind": "aspetto",
+            "with": "luna",
+            "aspect": "opposizione",
+            "retrograde": {
+              "body": false,
+              "other": false
+            },
+            "exact": "2026-03-04T23:01Z",
+            "local": "2026-03-05T00:01+01:00"
+          },
+          {
+            "kind": "aspetto",
+            "with": "venere",
+            "aspect": "congiunzione",
+            "retrograde": {
+              "body": false,
+              "other": false
+            },
+            "exact": "2026-03-08T13:40Z",
+            "local": "2026-03-08T14:40+01:00"
+          },
+          {
+            "kind": "aspetto",
+            "with": "luna",
+            "aspect": "trigono",
+            "retrograde": {
+              "body": false,
+              "other": false
+            },
+            "exact": "2026-03-09T21:15Z",
+            "local": "2026-03-09T22:15+01:00"
+          },
+          {
+            "kind": "aspetto",
+            "with": "luna",
+            "aspect": "quadrato",
+            "retrograde": {
+              "body": false,
+              "other": false
+            },
+            "exact": "2026-03-12T10:21Z",
+            "local": "2026-03-12T11:21+01:00"
+          },
+          {
+            "kind": "aspetto",
+            "with": "luna",
+            "aspect": "sestile",
+            "retrograde": {
+              "body": false,
+              "other": false
+            },
+            "exact": "2026-03-14T21:47Z",
+            "local": "2026-03-14T22:47+01:00"
+          },
+          {
+            "kind": "aspetto",
+            "with": "luna",
+            "aspect": "congiunzione",
+            "retrograde": {
+              "body": false,
+              "other": false
+            },
+            "exact": "2026-03-19T10:52Z",
+            "local": "2026-03-19T11:52+01:00"
+          },
+          {
+            "kind": "aspetto",
+            "with": "luna",
+            "aspect": "sestile",
+            "retrograde": {
+              "body": false,
+              "other": false
+            },
+            "exact": "2026-03-23T15:48Z",
+            "local": "2026-03-23T16:48+01:00"
+          },
+          {
+            "kind": "aspetto",
+            "with": "sole",
+            "aspect": "congiunzione",
+            "retrograde": {
+              "body": false,
+              "other": false
+            },
+            "exact": "2026-03-25T08:55Z",
+            "local": "2026-03-25T09:55+01:00"
+          },
+          {
+            "kind": "aspetto",
+            "with": "luna",
+            "aspect": "quadrato",
+            "retrograde": {
+              "body": false,
+              "other": false
+            },
+            "exact": "2026-03-25T18:39Z",
+            "local": "2026-03-25T19:39+01:00"
+          },
+          {
+            "kind": "aspetto",
+            "with": "luna",
+            "aspect": "trigono",
+            "retrograde": {
+              "body": false,
+              "other": false
+            },
+            "exact": "2026-03-27T23:01Z",
+            "local": "2026-03-28T00:01+01:00"
+          },
+          {
+            "kind": "aspetto",
+            "with": "luna",
+            "aspect": "opposizione",
+            "retrograde": {
+              "body": false,
+              "other": false
+            },
+            "exact": "2026-04-01T13:25Z",
+            "local": "2026-04-01T15:25+02:00"
+          },
+          {
+            "kind": "aspetto",
+            "with": "luna",
+            "aspect": "trigono",
+            "retrograde": {
+              "body": false,
+              "other": false
+            },
+            "exact": "2026-04-06T12:03Z",
+            "local": "2026-04-06T14:03+02:00"
+          },
+          {
+            "kind": "aspetto",
+            "with": "luna",
+            "aspect": "quadrato",
+            "retrograde": {
+              "body": false,
+              "other": false
+            },
+            "exact": "2026-04-09T01:16Z",
+            "local": "2026-04-09T03:16+02:00"
+          },
+          {
+            "kind": "aspetto",
+            "with": "luna",
+            "aspect": "sestile",
+            "retrograde": {
+              "body": false,
+              "other": false
+            },
+            "exact": "2026-04-11T13:16Z",
+            "local": "2026-04-11T15:16+02:00"
+          },
+          {
+            "kind": "aspetto",
+            "with": "luna",
+            "aspect": "congiunzione",
+            "retrograde": {
+              "body": false,
+              "other": false
+            },
+            "exact": "2026-04-16T02:38Z",
+            "local": "2026-04-16T04:38+02:00"
+          },
+          {
+            "kind": "aspetto",
+            "with": "marte",
+            "aspect": "congiunzione",
+            "retrograde": {
+              "body": false,
+              "other": false
+            },
+            "exact": "2026-04-19T22:44Z",
+            "local": "2026-04-20T00:44+02:00"
+          },
+          {
+            "kind": "aspetto",
+            "with": "luna",
+            "aspect": "sestile",
+            "retrograde": {
+              "body": false,
+              "other": false
+            },
+            "exact": "2026-04-20T05:00Z",
+            "local": "2026-04-20T07:00+02:00"
+          },
+          {
+            "kind": "aspetto",
+            "with": "mercurio",
+            "aspect": "congiunzione",
+            "retrograde": {
+              "body": false,
+              "other": false
+            },
+            "exact": "2026-04-20T11:23Z",
+            "local": "2026-04-20T13:23+02:00"
+          },
+          {
+            "kind": "aspetto",
+            "with": "luna",
+            "aspect": "quadrato",
+            "retrograde": {
+              "body": false,
+              "other": false
+            },
+            "exact": "2026-04-22T06:31Z",
+            "local": "2026-04-22T08:31+02:00"
+          },
+          {
+            "kind": "aspetto",
+            "with": "luna",
+            "aspect": "trigono",
+            "retrograde": {
+              "body": false,
+              "other": false
+            },
+            "exact": "2026-04-24T10:20Z",
+            "local": "2026-04-24T12:20+02:00"
+          },
+          {
+            "kind": "aspetto",
+            "with": "luna",
+            "aspect": "opposizione",
+            "retrograde": {
+              "body": false,
+              "other": false
+            },
+            "exact": "2026-04-29T02:07Z",
+            "local": "2026-04-29T04:07+02:00"
+          },
+          {
+            "kind": "aspetto",
+            "with": "venere",
+            "aspect": "sestile",
+            "retrograde": {
+              "body": false,
+              "other": false
+            },
+            "exact": "2026-05-01T18:45Z",
+            "local": "2026-05-01T20:45+02:00"
+          },
+          {
+            "kind": "aspetto",
+            "with": "luna",
+            "aspect": "trigono",
+            "retrograde": {
+              "body": false,
+              "other": false
+            },
+            "exact": "2026-05-04T01:38Z",
+            "local": "2026-05-04T03:38+02:00"
+          },
+          {
+            "kind": "aspetto",
+            "with": "luna",
+            "aspect": "quadrato",
+            "retrograde": {
+              "body": false,
+              "other": false
+            },
+            "exact": "2026-05-06T14:52Z",
+            "local": "2026-05-06T16:52+02:00"
+          },
+          {
+            "kind": "aspetto",
+            "with": "luna",
+            "aspect": "sestile",
+            "retrograde": {
+              "body": false,
+              "other": false
+            },
+            "exact": "2026-05-09T03:17Z",
+            "local": "2026-05-09T05:17+02:00"
+          },
+          {
+            "kind": "aspetto",
+            "with": "luna",
+            "aspect": "congiunzione",
+            "retrograde": {
+              "body": false,
+              "other": false
+            },
+            "exact": "2026-05-13T18:10Z",
+            "local": "2026-05-13T20:10+02:00"
+          },
+          {
+            "kind": "aspetto",
+            "with": "luna",
+            "aspect": "sestile",
+            "retrograde": {
+              "body": false,
+              "other": false
+            },
+            "exact": "2026-05-17T19:36Z",
+            "local": "2026-05-17T21:36+02:00"
+          },
+          {
+            "kind": "aspetto",
+            "with": "luna",
+            "aspect": "quadrato",
+            "retrograde": {
+              "body": false,
+              "other": false
+            },
+            "exact": "2026-05-19T19:40Z",
+            "local": "2026-05-19T21:40+02:00"
+          },
+          {
+            "kind": "aspetto",
+            "with": "luna",
+            "aspect": "trigono",
+            "retrograde": {
+              "body": false,
+              "other": false
+            },
+            "exact": "2026-05-21T22:05Z",
+            "local": "2026-05-22T00:05+02:00"
+          },
+          {
+            "kind": "aspetto",
+            "with": "mercurio",
+            "aspect": "sestile",
+            "retrograde": {
+              "body": false,
+              "other": false
+            },
+            "exact": "2026-05-22T18:02Z",
+            "local": "2026-05-22T20:02+02:00"
+          },
+          {
+            "kind": "aspetto",
+            "with": "luna",
+            "aspect": "opposizione",
+            "retrograde": {
+              "body": false,
+              "other": false
+            },
+            "exact": "2026-05-26T13:11Z",
+            "local": "2026-05-26T15:11+02:00"
+          },
+          {
+            "kind": "aspetto",
+            "with": "venere",
+            "aspect": "quadrato",
+            "retrograde": {
+              "body": false,
+              "other": false
+            },
+            "exact": "2026-05-29T03:03Z",
+            "local": "2026-05-29T05:03+02:00"
+          },
+          {
+            "kind": "aspetto",
+            "with": "luna",
+            "aspect": "trigono",
+            "retrograde": {
+              "body": false,
+              "other": false
+            },
+            "exact": "2026-05-31T13:21Z",
+            "local": "2026-05-31T15:21+02:00"
+          },
+          {
+            "kind": "aspetto",
+            "with": "sole",
+            "aspect": "sestile",
+            "retrograde": {
+              "body": false,
+              "other": false
+            },
+            "exact": "2026-06-02T22:49Z",
+            "local": "2026-06-03T00:49+02:00"
+          },
+          {
+            "kind": "aspetto",
+            "with": "luna",
+            "aspect": "quadrato",
+            "retrograde": {
+              "body": false,
+              "other": false
+            },
+            "exact": "2026-06-03T02:25Z",
+            "local": "2026-06-03T04:25+02:00"
+          },
+          {
+            "kind": "aspetto",
+            "with": "luna",
+            "aspect": "sestile",
+            "retrograde": {
+              "body": false,
+              "other": false
+            },
+            "exact": "2026-06-05T14:51Z",
+            "local": "2026-06-05T16:51+02:00"
+          },
+          {
+            "kind": "aspetto",
+            "with": "mercurio",
+            "aspect": "quadrato",
+            "retrograde": {
+              "body": false,
+              "other": false
+            },
+            "exact": "2026-06-10T05:39Z",
+            "local": "2026-06-10T07:39+02:00"
+          },
+          {
+            "kind": "aspetto",
+            "with": "luna",
+            "aspect": "congiunzione",
+            "retrograde": {
+              "body": false,
+              "other": false
+            },
+            "exact": "2026-06-10T07:30Z",
+            "local": "2026-06-10T09:30+02:00"
+          },
+          {
+            "kind": "aspetto",
+            "with": "luna",
+            "aspect": "sestile",
+            "retrograde": {
+              "body": false,
+              "other": false
+            },
+            "exact": "2026-06-14T10:00Z",
+            "local": "2026-06-14T12:00+02:00"
+          },
+          {
+            "kind": "aspetto",
+            "with": "luna",
+            "aspect": "quadrato",
+            "retrograde": {
+              "body": false,
+              "other": false
+            },
+            "exact": "2026-06-16T09:23Z",
+            "local": "2026-06-16T11:23+02:00"
+          },
+          {
+            "kind": "aspetto",
+            "with": "luna",
+            "aspect": "trigono",
+            "retrograde": {
+              "body": false,
+              "other": false
+            },
+            "exact": "2026-06-18T10:27Z",
+            "local": "2026-06-18T12:27+02:00"
+          },
+          {
+            "kind": "aspetto",
+            "with": "luna",
+            "aspect": "opposizione",
+            "retrograde": {
+              "body": false,
+              "other": false
+            },
+            "exact": "2026-06-22T23:07Z",
+            "local": "2026-06-23T01:07+02:00"
+          },
+          {
+            "kind": "aspetto",
+            "with": "venere",
+            "aspect": "trigono",
+            "retrograde": {
+              "body": false,
+              "other": false
+            },
+            "exact": "2026-06-25T12:02Z",
+            "local": "2026-06-25T14:02+02:00"
+          },
+          {
+            "kind": "aspetto",
+            "with": "luna",
+            "aspect": "trigono",
+            "retrograde": {
+              "body": false,
+              "other": false
+            },
+            "exact": "2026-06-27T23:04Z",
+            "local": "2026-06-28T01:04+02:00"
+          },
+          {
+            "kind": "aspetto",
+            "with": "luna",
+            "aspect": "quadrato",
+            "retrograde": {
+              "body": false,
+              "other": false
+            },
+            "exact": "2026-06-30T11:51Z",
+            "local": "2026-06-30T13:51+02:00"
+          },
+          {
+            "kind": "aspetto",
+            "with": "luna",
+            "aspect": "sestile",
+            "retrograde": {
+              "body": false,
+              "other": false
+            },
+            "exact": "2026-07-02T23:48Z",
+            "local": "2026-07-03T01:48+02:00"
+          },
+          {
+            "kind": "aspetto",
+            "with": "sole",
+            "aspect": "quadrato",
+            "retrograde": {
+              "body": false,
+              "other": false
+            },
+            "exact": "2026-07-06T10:47Z",
+            "local": "2026-07-06T12:47+02:00"
+          },
+          {
+            "kind": "aspetto",
+            "with": "luna",
+            "aspect": "congiunzione",
+            "retrograde": {
+              "body": false,
+              "other": false
+            },
+            "exact": "2026-07-07T17:15Z",
+            "local": "2026-07-07T19:15+02:00"
+          },
+          {
+            "kind": "aspetto",
+            "with": "luna",
+            "aspect": "sestile",
+            "retrograde": {
+              "body": false,
+              "other": false
+            },
+            "exact": "2026-07-11T22:12Z",
+            "local": "2026-07-12T00:12+02:00"
+          },
+          {
+            "kind": "aspetto",
+            "with": "luna",
+            "aspect": "quadrato",
+            "retrograde": {
+              "body": false,
+              "other": false
+            },
+            "exact": "2026-07-13T21:58Z",
+            "local": "2026-07-13T23:58+02:00"
+          },
+          {
+            "kind": "aspetto",
+            "with": "luna",
+            "aspect": "trigono",
+            "retrograde": {
+              "body": false,
+              "other": false
+            },
+            "exact": "2026-07-15T22:27Z",
+            "local": "2026-07-16T00:27+02:00"
+          },
+          {
+            "kind": "aspetto",
+            "with": "marte",
+            "aspect": "sestile",
+            "retrograde": {
+              "body": false,
+              "other": false
+            },
+            "exact": "2026-07-19T18:11Z",
+            "local": "2026-07-19T20:11+02:00"
+          },
+          {
+            "kind": "aspetto",
+            "with": "luna",
+            "aspect": "opposizione",
+            "retrograde": {
+              "body": false,
+              "other": false
+            },
+            "exact": "2026-07-20T08:16Z",
+            "local": "2026-07-20T10:16+02:00"
+          },
+          {
+            "kind": "aspetto",
+            "with": "luna",
+            "aspect": "trigono",
+            "retrograde": {
+              "body": false,
+              "other": false
+            },
+            "exact": "2026-07-25T06:54Z",
+            "local": "2026-07-25T08:54+02:00"
+          },
+          {
+            "kind": "aspetto",
+            "with": "luna",
+            "aspect": "quadrato",
+            "retrograde": {
+              "body": true,
+              "other": false
+            },
+            "exact": "2026-07-27T19:24Z",
+            "local": "2026-07-27T21:24+02:00"
+          },
+          {
+            "kind": "aspetto",
+            "with": "luna",
+            "aspect": "sestile",
+            "retrograde": {
+              "body": true,
+              "other": false
+            },
+            "exact": "2026-07-30T06:44Z",
+            "local": "2026-07-30T08:44+02:00"
+          },
+          {
+            "kind": "aspetto",
+            "with": "luna",
+            "aspect": "congiunzione",
+            "retrograde": {
+              "body": true,
+              "other": false
+            },
+            "exact": "2026-08-03T23:22Z",
+            "local": "2026-08-04T01:22+02:00"
+          },
+          {
+            "kind": "aspetto",
+            "with": "sole",
+            "aspect": "trigono",
+            "retrograde": {
+              "body": true,
+              "other": false
+            },
+            "exact": "2026-08-07T02:44Z",
+            "local": "2026-08-07T04:44+02:00"
+          },
+          {
+            "kind": "aspetto",
+            "with": "luna",
+            "aspect": "sestile",
+            "retrograde": {
+              "body": true,
+              "other": false
+            },
+            "exact": "2026-08-08T06:29Z",
+            "local": "2026-08-08T08:29+02:00"
+          },
+          {
+            "kind": "aspetto",
+            "with": "luna",
+            "aspect": "quadrato",
+            "retrograde": {
+              "body": true,
+              "other": false
+            },
+            "exact": "2026-08-10T07:30Z",
+            "local": "2026-08-10T09:30+02:00"
+          },
+          {
+            "kind": "aspetto",
+            "with": "luna",
+            "aspect": "trigono",
+            "retrograde": {
+              "body": true,
+              "other": false
+            },
+            "exact": "2026-08-12T08:28Z",
+            "local": "2026-08-12T10:28+02:00"
+          },
+          {
+            "kind": "aspetto",
+            "with": "luna",
+            "aspect": "opposizione",
+            "retrograde": {
+              "body": true,
+              "other": false
+            },
+            "exact": "2026-08-16T16:27Z",
+            "local": "2026-08-16T18:27+02:00"
+          },
+          {
+            "kind": "aspetto",
+            "with": "mercurio",
+            "aspect": "trigono",
+            "retrograde": {
+              "body": true,
+              "other": false
+            },
+            "exact": "2026-08-17T15:27Z",
+            "local": "2026-08-17T17:27+02:00"
+          },
+          {
+            "kind": "aspetto",
+            "with": "venere",
+            "aspect": "opposizione",
+            "retrograde": {
+              "body": true,
+              "other": false
+            },
+            "exact": "2026-08-21T12:43Z",
+            "local": "2026-08-21T14:43+02:00"
+          },
+          {
+            "kind": "aspetto",
+            "with": "luna",
+            "aspect": "trigono",
+            "retrograde": {
+              "body": true,
+              "other": false
+            },
+            "exact": "2026-08-21T13:03Z",
+            "local": "2026-08-21T15:03+02:00"
+          },
+          {
+            "kind": "aspetto",
+            "with": "luna",
+            "aspect": "quadrato",
+            "retrograde": {
+              "body": true,
+              "other": false
+            },
+            "exact": "2026-08-24T01:21Z",
+            "local": "2026-08-24T03:21+02:00"
+          },
+          {
+            "kind": "aspetto",
+            "with": "luna",
+            "aspect": "sestile",
+            "retrograde": {
+              "body": true,
+              "other": false
+            },
+            "exact": "2026-08-26T12:21Z",
+            "local": "2026-08-26T14:21+02:00"
+          },
+          {
+            "kind": "aspetto",
+            "with": "luna",
+            "aspect": "congiunzione",
+            "retrograde": {
+              "body": true,
+              "other": false
+            },
+            "exact": "2026-08-31T03:18Z",
+            "local": "2026-08-31T05:18+02:00"
+          },
+          {
+            "kind": "aspetto",
+            "with": "giove",
+            "aspect": "trigono",
+            "retrograde": {
+              "body": true,
+              "other": false
+            },
+            "exact": "2026-08-31T22:17Z",
+            "local": "2026-09-01T00:17+02:00"
+          },
+          {
+            "kind": "aspetto",
+            "with": "marte",
+            "aspect": "quadrato",
+            "retrograde": {
+              "body": true,
+              "other": false
+            },
+            "exact": "2026-09-01T09:59Z",
+            "local": "2026-09-01T11:59+02:00"
+          },
+          {
+            "kind": "aspetto",
+            "with": "luna",
+            "aspect": "sestile",
+            "retrograde": {
+              "body": true,
+              "other": false
+            },
+            "exact": "2026-09-04T10:40Z",
+            "local": "2026-09-04T12:40+02:00"
+          },
+          {
+            "kind": "aspetto",
+            "with": "luna",
+            "aspect": "quadrato",
+            "retrograde": {
+              "body": true,
+              "other": false
+            },
+            "exact": "2026-09-06T12:54Z",
+            "local": "2026-09-06T14:54+02:00"
+          },
+          {
+            "kind": "aspetto",
+            "with": "luna",
+            "aspect": "trigono",
+            "retrograde": {
+              "body": true,
+              "other": false
+            },
+            "exact": "2026-09-08T15:05Z",
+            "local": "2026-09-08T17:05+02:00"
+          },
+          {
+            "kind": "aspetto",
+            "with": "luna",
+            "aspect": "opposizione",
+            "retrograde": {
+              "body": true,
+              "other": false
+            },
+            "exact": "2026-09-12T23:08Z",
+            "local": "2026-09-13T01:08+02:00"
+          },
+          {
+            "kind": "aspetto",
+            "with": "luna",
+            "aspect": "trigono",
+            "retrograde": {
+              "body": true,
+              "other": false
+            },
+            "exact": "2026-09-17T17:47Z",
+            "local": "2026-09-17T19:47+02:00"
+          },
+          {
+            "kind": "aspetto",
+            "with": "mercurio",
+            "aspect": "opposizione",
+            "retrograde": {
+              "body": true,
+              "other": false
+            },
+            "exact": "2026-09-18T10:01Z",
+            "local": "2026-09-18T12:01+02:00"
+          },
+          {
+            "kind": "aspetto",
+            "with": "luna",
+            "aspect": "quadrato",
+            "retrograde": {
+              "body": true,
+              "other": false
+            },
+            "exact": "2026-09-20T06:00Z",
+            "local": "2026-09-20T08:00+02:00"
+          },
+          {
+            "kind": "aspetto",
+            "with": "luna",
+            "aspect": "sestile",
+            "retrograde": {
+              "body": true,
+              "other": false
+            },
+            "exact": "2026-09-22T17:17Z",
+            "local": "2026-09-22T19:17+02:00"
+          },
+          {
+            "kind": "aspetto",
+            "with": "luna",
+            "aspect": "congiunzione",
+            "retrograde": {
+              "body": true,
+              "other": false
+            },
+            "exact": "2026-09-27T07:20Z",
+            "local": "2026-09-27T09:20+02:00"
+          },
+          {
+            "kind": "aspetto",
+            "with": "luna",
+            "aspect": "sestile",
+            "retrograde": {
+              "body": true,
+              "other": false
+            },
+            "exact": "2026-10-01T12:49Z",
+            "local": "2026-10-01T14:49+02:00"
+          },
+          {
+            "kind": "aspetto",
+            "with": "luna",
+            "aspect": "quadrato",
+            "retrograde": {
+              "body": true,
+              "other": false
+            },
+            "exact": "2026-10-03T15:09Z",
+            "local": "2026-10-03T17:09+02:00"
+          },
+          {
+            "kind": "aspetto",
+            "with": "sole",
+            "aspect": "opposizione",
+            "retrograde": {
+              "body": true,
+              "other": false
+            },
+            "exact": "2026-10-04T12:29Z",
+            "local": "2026-10-04T14:29+02:00"
+          },
+          {
+            "kind": "aspetto",
+            "with": "luna",
+            "aspect": "trigono",
+            "retrograde": {
+              "body": true,
+              "other": false
+            },
+            "exact": "2026-10-05T18:11Z",
+            "local": "2026-10-05T20:11+02:00"
+          },
+          {
+            "kind": "aspetto",
+            "with": "luna",
+            "aspect": "opposizione",
+            "retrograde": {
+              "body": true,
+              "other": false
+            },
+            "exact": "2026-10-10T03:54Z",
+            "local": "2026-10-10T05:54+02:00"
+          },
+          {
+            "kind": "aspetto",
+            "with": "luna",
+            "aspect": "trigono",
+            "retrograde": {
+              "body": true,
+              "other": false
+            },
+            "exact": "2026-10-14T21:45Z",
+            "local": "2026-10-14T23:45+02:00"
+          },
+          {
+            "kind": "aspetto",
+            "with": "marte",
+            "aspect": "trigono",
+            "retrograde": {
+              "body": true,
+              "other": false
+            },
+            "exact": "2026-10-16T08:33Z",
+            "local": "2026-10-16T10:33+02:00"
+          },
+          {
+            "kind": "aspetto",
+            "with": "luna",
+            "aspect": "quadrato",
+            "retrograde": {
+              "body": true,
+              "other": false
+            },
+            "exact": "2026-10-17T09:50Z",
+            "local": "2026-10-17T11:50+02:00"
+          },
+          {
+            "kind": "aspetto",
+            "with": "luna",
+            "aspect": "sestile",
+            "retrograde": {
+              "body": true,
+              "other": false
+            },
+            "exact": "2026-10-19T21:51Z",
+            "local": "2026-10-19T23:51+02:00"
+          },
+          {
+            "kind": "aspetto",
+            "with": "luna",
+            "aspect": "congiunzione",
+            "retrograde": {
+              "body": true,
+              "other": false
+            },
+            "exact": "2026-10-24T13:06Z",
+            "local": "2026-10-24T15:06+02:00"
+          }
+        ],
+        "events": [],
+        "voids": [],
+        "warnings": [
+          "File di effemeridi non trovati in /fascicolo-canonico-senza-effemeridi: uso le effemeridi Moshier (nessun file richiesto, precisione leggermente inferiore, Chirone non disponibile). Esegui `npm run ephe:download -w @dodicisegni/core` per la precisione piena."
+        ],
+        "lastPerfected": {
+          "kind": "aspetto",
+          "with": "luna",
+          "aspect": "congiunzione",
+          "retrograde": {
+            "body": true,
+            "other": false
+          },
+          "exact": "2026-10-24T13:06Z",
+          "local": "2026-10-24T15:06+02:00"
+        },
+        "entered": "2026-02-14T00:12Z"
+      }
+    ],
+    "perfections": [],
+    "impediments": [],
+    "considerations": [
+      {
+        "id": "radicale",
+        "page": 121,
+        "text": "La figura è radicale quando il signore dell'ora e quello dell'Ascendente sono della stessa triplicità, lo stesso pianeta, o della stessa natura.",
+        "holds": true,
+        "detail": "Ora di Venere, Ascendente cancro di Luna: tutti e due freddo e umido."
+      },
+      {
+        "id": "ascendente-presto",
+        "page": 122,
+        "text": "Ascendono 0, 1 o 2 gradi di un segno, soprattutto nei segni di ascensione breve.",
+        "holds": false,
+        "detail": "cancro a 25.67°."
+      },
+      {
+        "id": "ascendente-tardi",
+        "page": 122,
+        "text": "Ascendono 27, 28 o 29 gradi di un segno.",
+        "holds": false
+      },
+      {
+        "id": "luna-gradi-tardi",
+        "page": 122,
+        "text": "La Luna negli ultimi gradi di un segno, soprattutto in Gemelli, Scorpione o Capricorno.",
+        "detail": "Lilly non dice da che grado: non si calcola."
+      },
+      {
+        "id": "luna-via-combusta",
+        "page": 122,
+        "text": "La Luna in Via Combusta, gli ultimi 15° della Bilancia e i primi 15° dello Scorpione («as some say»).",
+        "holds": false
+      },
+      {
+        "id": "luna-vuota",
+        "page": 122,
+        "text": "La Luna vuota di corso, secondo la definizione di p. 112.",
+        "holds": false,
+        "detail": "All'uscita dal segno applica a Saturno per sestile."
+      },
+      {
+        "id": "settima",
+        "page": 122,
+        "text": "La cuspide della settima afflitta, o il suo signore retrogrado o impedito.",
+        "holds": true,
+        "detail": "Signore della settima: Saturno, retrogrado. Si calcola solo il retrogrado: «afflitta» e «impedito» Lilly non li misura."
+      },
+      {
+        "id": "saturno-ascendente",
+        "page": 122,
+        "text": "Saturno nell'Ascendente, soprattutto retrogrado.",
+        "holds": false
+      },
+      {
+        "id": "saturno-settima",
+        "page": 123,
+        "text": "Saturno nella settima.",
+        "holds": false
+      },
+      {
+        "id": "signore-ascendente-combusto",
+        "page": 123,
+        "text": "Il signore dell'Ascendente combusto.",
+        "holds": false
+      },
+      {
+        "id": "signore-settima",
+        "page": 123,
+        "text": "Il signore della settima sfortunato, in caduta, o nei termini dei malefici.",
+        "holds": true,
+        "detail": "Saturno: in caduta. «Sfortunato» non si misura."
+      }
+    ],
+    "warnings": [
+      "File di effemeridi non trovati in /fascicolo-canonico-senza-effemeridi: uso le effemeridi Moshier (nessun file richiesto, precisione leggermente inferiore, Chirone non disponibile). Esegui `npm run ephe:download -w @dodicisegni/core` per la precisione piena."
+    ]
+  }
+}

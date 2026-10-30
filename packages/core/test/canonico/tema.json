@@ -1,0 +1,2259 @@
+{
+  "Napoli 1968, diurno": {
+    "input": {
+      "date": "1968-03-12",
+      "time": "14:30",
+      "latitude": 40.8518,
+      "longitude": 14.2681,
+      "timezone": "Europe/Rome"
+    },
+    "time": {
+      "julianDayUT": 2439928.0625,
+      "utc": "1968-03-12T13:30:00Z",
+      "local": "1968-03-12T14:30:00+01:00",
+      "offsetMinutes": 60,
+      "timeKnown": true
+    },
+    "houseSystem": "placidus",
+    "ephemerisMode": "moshier",
+    "zodiac": "tropicale",
+    "bodies": [
+      {
+        "id": "sole",
+        "name": "Sole",
+        "longitude": 352.0453558424357,
+        "latitude": 0.00004284985512215255,
+        "distance": 0.9939205903432724,
+        "speed": 0.9971853236538153,
+        "retrograde": false,
+        "sign": "pesci",
+        "signDegree": 22.045355842435697,
+        "house": 8
+      },
+      {
+        "id": "luna",
+        "name": "Luna",
+        "longitude": 142.8858734742358,
+        "latitude": 4.337173349478956,
+        "distance": 0.002520523924349631,
+        "speed": 13.720766474163318,
+        "retrograde": false,
+        "sign": "leone",
+        "signDegree": 22.885873474235808,
+        "house": 1
+      },
+      {
+        "id": "mercurio",
+        "name": "Mercurio",
+        "longitude": 324.51819992291104,
+        "latitude": -0.7046073668489088,
+        "distance": 0.9213917501632627,
+        "speed": 0.9796743265869761,
+        "retrograde": false,
+        "sign": "acquario",
+        "signDegree": 24.518199922911037,
+        "house": 7
+      },
+      {
+        "id": "venere",
+        "name": "Venere",
+        "longitude": 326.3020971486321,
+        "latitude": -0.9216751511606429,
+        "distance": 1.4810143052611748,
+        "speed": 1.2321357492505685,
+        "retrograde": false,
+        "sign": "acquario",
+        "signDegree": 26.302097148632072,
+        "house": 7
+      },
+      {
+        "id": "marte",
+        "name": "Marte",
+        "longitude": 18.524538057619925,
+        "latitude": -0.26388603996914956,
+        "distance": 2.264781287920612,
+        "speed": 0.7497691602668399,
+        "retrograde": false,
+        "sign": "ariete",
+        "signDegree": 18.524538057619925,
+        "house": 9
+      },
+      {
+        "id": "giove",
+        "name": "Giove",
+        "longitude": 148.24185220626413,
+        "latitude": 1.248848560248987,
+        "distance": 4.462381858250322,
+        "speed": -0.11119936168465015,
+        "retrograde": true,
+        "sign": "leone",
+        "signDegree": 28.241852206264127,
+        "house": 1
+      },
+      {
+        "id": "saturno",
+        "name": "Saturno",
+        "longitude": 12.436092224641307,
+        "latitude": -2.2384914493736083,
+        "distance": 10.322235637773053,
+        "speed": 0.12080439939554112,
+        "retrograde": false,
+        "sign": "ariete",
+        "signDegree": 12.436092224641307,
+        "house": 9
+      },
+      {
+        "id": "urano",
+        "name": "Urano",
+        "longitude": 177.40430646546105,
+        "latitude": 0.7951454882434345,
+        "distance": 17.30332768043376,
+        "speed": -0.04326502418061976,
+        "retrograde": true,
+        "sign": "vergine",
+        "signDegree": 27.404306465461048,
+        "house": 3
+      },
+      {
+        "id": "nettuno",
+        "name": "Nettuno",
+        "longitude": 236.4753249317219,
+        "latitude": 1.7503778099704352,
+        "distance": 29.881731256459098,
+        "speed": -0.007781746053852814,
+        "retrograde": true,
+        "sign": "scorpione",
+        "signDegree": 26.4753249317219,
+        "house": 4
+      },
+      {
+        "id": "plutone",
+        "name": "Plutone",
+        "longitude": 171.52956148304108,
+        "latitude": 15.667997156415383,
+        "distance": 31.07040994708414,
+        "speed": -0.02689136111111078,
+        "retrograde": true,
+        "sign": "vergine",
+        "signDegree": 21.52956148304108,
+        "house": 2
+      },
+      {
+        "id": "nodo-nord",
+        "name": "Nodo Nord",
+        "longitude": 20.203914700668822,
+        "latitude": 0,
+        "distance": 0.0025695552897999903,
+        "speed": -0.052967843979231106,
+        "retrograde": true,
+        "sign": "ariete",
+        "signDegree": 20.203914700668822,
+        "house": 9
+      },
+      {
+        "id": "nodo-sud",
+        "name": "Nodo Sud",
+        "longitude": 200.20391470066883,
+        "latitude": 0,
+        "distance": 0.0025695552897999903,
+        "speed": -0.052967843979231106,
+        "retrograde": true,
+        "sign": "bilancia",
+        "signDegree": 20.203914700668832,
+        "house": 3
+      }
+    ],
+    "houses": [
+      {
+        "number": 1,
+        "longitude": 130.5031683427164,
+        "sign": "leone",
+        "signDegree": 10.503168342716407
+      },
+      {
+        "number": 2,
+        "longitude": 151.43165810872074,
+        "sign": "vergine",
+        "signDegree": 1.4316581087207396
+      },
+      {
+        "number": 3,
+        "longitude": 177.11656354715367,
+        "sign": "vergine",
+        "signDegree": 27.116563547153675
+      },
+      {
+        "number": 4,
+        "longitude": 209.07171281694144,
+        "sign": "bilancia",
+        "signDegree": 29.071712816941442
+      },
+      {
+        "number": 5,
+        "longitude": 245.48092304391974,
+        "sign": "sagittario",
+        "signDegree": 5.480923043919745
+      },
+      {
+        "number": 6,
+        "longitude": 280.48372229758985,
+        "sign": "capricorno",
+        "signDegree": 10.48372229758985
+      },
+      {
+        "number": 7,
+        "longitude": 310.50316834271644,
+        "sign": "acquario",
+        "signDegree": 10.503168342716435
+      },
+      {
+        "number": 8,
+        "longitude": 331.43165810872074,
+        "sign": "pesci",
+        "signDegree": 1.4316581087207396
+      },
+      {
+        "number": 9,
+        "longitude": 357.11656354715365,
+        "sign": "pesci",
+        "signDegree": 27.116563547153646
+      },
+      {
+        "number": 10,
+        "longitude": 29.071712816941442,
+        "sign": "ariete",
+        "signDegree": 29.071712816941442
+      },
+      {
+        "number": 11,
+        "longitude": 65.48092304391976,
+        "sign": "gemelli",
+        "signDegree": 5.480923043919759
+      },
+      {
+        "number": 12,
+        "longitude": 100.48372229758985,
+        "sign": "cancro",
+        "signDegree": 10.48372229758985
+      }
+    ],
+    "siderealTime": {
+      "hours": 1.801575466178308,
+      "formatted": "01:48:06"
+    },
+    "orbConvention": {
+      "id": "greene",
+      "name": "Liz Greene (predefinita di Astrodienst)",
+      "source": "astro.com, «A Brief Introduction to Astrology: Aspects», tavola delle orbite 2.AT/2.GW/2.GR; FAQ fq_fh_setup_e.htm per i punti senza orbita. Copia del 27 ottobre 2026.",
+      "rule": "Per aspetto, uguale per tutti i pianeti e Chirone: 10° a congiunzione, opposizione, quadrato e trigono, 6° al sestile, 3° a semisestile, quinconce, semiquadrato e sesquiquadrato, 2° a quintile e biquintile. Nodi, Lilith, assi e Parte di Fortuna non hanno orbita: con un pianeta vale metà della sua, fra loro nessun aspetto."
+    },
+    "aspects": [
+      {
+        "aspect": "quadrato",
+        "angle": 90,
+        "from": "venere",
+        "to": "nettuno",
+        "orb": 0.17322778308982834,
+        "applying": true
+      },
+      {
+        "aspect": "opposizione",
+        "angle": 180,
+        "from": "sole",
+        "to": "plutone",
+        "orb": 0.5157943593946186,
+        "applying": false
+      },
+      {
+        "aspect": "sestile",
+        "angle": 60,
+        "from": "urano",
+        "to": "nettuno",
+        "orb": 0.9289815337391474,
+        "applying": true
+      },
+      {
+        "aspect": "opposizione",
+        "angle": 180,
+        "from": "luna",
+        "to": "mercurio",
+        "orb": 1.6323264486752294,
+        "applying": true
+      },
+      {
+        "aspect": "congiunzione",
+        "angle": 0,
+        "from": "marte",
+        "to": "nodo-nord",
+        "orb": 1.6793766430488972,
+        "applying": true
+      },
+      {
+        "aspect": "opposizione",
+        "angle": 180,
+        "from": "marte",
+        "to": "nodo-sud",
+        "orb": 1.6793766430488972,
+        "applying": true
+      },
+      {
+        "aspect": "quadrato",
+        "angle": 90,
+        "from": "giove",
+        "to": "nettuno",
+        "orb": 1.7665272745422271,
+        "applying": true
+      },
+      {
+        "aspect": "congiunzione",
+        "angle": 0,
+        "from": "mercurio",
+        "to": "venere",
+        "orb": 1.7838972257210344,
+        "applying": false
+      },
+      {
+        "aspect": "opposizione",
+        "angle": 180,
+        "from": "venere",
+        "to": "giove",
+        "orb": 1.9397550576320555,
+        "applying": true
+      },
+      {
+        "aspect": "quadrato",
+        "angle": 90,
+        "from": "mercurio",
+        "to": "nettuno",
+        "orb": 1.9571250088108627,
+        "applying": true
+      },
+      {
+        "aspect": "sestile",
+        "angle": 60,
+        "from": "luna",
+        "to": "nodo-sud",
+        "orb": 2.6819587735669757,
+        "applying": false
+      },
+      {
+        "aspect": "trigono",
+        "angle": 120,
+        "from": "luna",
+        "to": "nodo-nord",
+        "orb": 2.68195877356699,
+        "applying": false
+      },
+      {
+        "aspect": "opposizione",
+        "angle": 180,
+        "from": "luna",
+        "to": "venere",
+        "orb": 3.4162236743962637,
+        "applying": true
+      },
+      {
+        "aspect": "quadrato",
+        "angle": 90,
+        "from": "luna",
+        "to": "nettuno",
+        "orb": 3.589451457486092,
+        "applying": true
+      },
+      {
+        "aspect": "opposizione",
+        "angle": 180,
+        "from": "mercurio",
+        "to": "giove",
+        "orb": 3.72365228335309,
+        "applying": true
+      },
+      {
+        "aspect": "trigono",
+        "angle": 120,
+        "from": "mercurio",
+        "to": "nodo-sud",
+        "orb": 4.314285222242205,
+        "applying": false
+      },
+      {
+        "aspect": "trigono",
+        "angle": 120,
+        "from": "luna",
+        "to": "marte",
+        "orb": 4.361335416615887,
+        "applying": false
+      },
+      {
+        "aspect": "trigono",
+        "angle": 120,
+        "from": "sole",
+        "to": "nettuno",
+        "orb": 4.429969089286203,
+        "applying": true
+      },
+      {
+        "aspect": "sestile",
+        "angle": 60,
+        "from": "nettuno",
+        "to": "plutone",
+        "orb": 4.945763448680822,
+        "applying": false
+      },
+      {
+        "aspect": "congiunzione",
+        "angle": 0,
+        "from": "luna",
+        "to": "giove",
+        "orb": 5.355978732028319,
+        "applying": true
+      },
+      {
+        "aspect": "opposizione",
+        "angle": 180,
+        "from": "sole",
+        "to": "urano",
+        "orb": 5.3589506230253505,
+        "applying": true
+      },
+      {
+        "aspect": "congiunzione",
+        "angle": 0,
+        "from": "urano",
+        "to": "plutone",
+        "orb": 5.874744982419969,
+        "applying": true
+      },
+      {
+        "aspect": "sestile",
+        "angle": 60,
+        "from": "mercurio",
+        "to": "marte",
+        "orb": 5.993661865291131,
+        "applying": false
+      },
+      {
+        "aspect": "congiunzione",
+        "angle": 0,
+        "from": "marte",
+        "to": "saturno",
+        "orb": 6.088445832978618,
+        "applying": false
+      },
+      {
+        "aspect": "trigono",
+        "angle": 120,
+        "from": "marte",
+        "to": "giove",
+        "orb": 9.717314148644192,
+        "applying": true
+      }
+    ],
+    "distribution": {
+      "planets": {
+        "elements": {
+          "fuoco": 4,
+          "terra": 2,
+          "aria": 2,
+          "acqua": 2
+        },
+        "modalities": {
+          "cardinale": 2,
+          "fisso": 5,
+          "mobile": 3
+        },
+        "counted": [
+          "sole",
+          "luna",
+          "mercurio",
+          "venere",
+          "marte",
+          "giove",
+          "saturno",
+          "urano",
+          "nettuno",
+          "plutone"
+        ]
+      },
+      "points": {
+        "elements": {
+          "fuoco": 1,
+          "terra": 1,
+          "aria": 1,
+          "acqua": 0
+        },
+        "modalities": {
+          "cardinale": 3,
+          "fisso": 0,
+          "mobile": 0
+        },
+        "counted": [
+          "nodo-nord",
+          "nodo-sud",
+          "fortuna"
+        ]
+      },
+      "angles": {
+        "elements": {
+          "fuoco": 2,
+          "terra": 0,
+          "aria": 0,
+          "acqua": 0
+        },
+        "modalities": {
+          "cardinale": 1,
+          "fisso": 1,
+          "mobile": 0
+        },
+        "counted": [
+          "ascendente",
+          "medio-cielo"
+        ]
+      }
+    },
+    "warnings": [
+      "File di effemeridi non trovati in /fascicolo-canonico-senza-effemeridi: uso le effemeridi Moshier (nessun file richiesto, precisione leggermente inferiore, Chirone non disponibile). Esegui `npm run ephe:download -w @dodicisegni/core` per la precisione piena."
+    ],
+    "angles": {
+      "ascendant": 130.5031683427164,
+      "midheaven": 29.071712816941442,
+      "descendant": 310.50316834271644,
+      "imumCoeli": 209.07171281694144,
+      "vertex": 267.21932864107123
+    },
+    "sect": "diurna",
+    "partOfFortune": {
+      "longitude": 281.3436859745165,
+      "sign": "capricorno",
+      "signDegree": 11.343685974516518,
+      "house": 6
+    },
+    "dignities": {
+      "sources": {
+        "domicili": {
+          "tradizionale": "i sette pianeti, comuni alle scuole antiche (Tolomeo, Tetrabiblos I.17; Lilly, p. 104).",
+          "moderno": "Novecento, senza un autore unico: Urano e Nettuno come li riferisce Alan Leo (The Art of Synthesis, p. 117), Plutone senza un autore."
+        },
+        "esilio": "il segno opposto al domicilio (Lilly, p. 104; nella moderna per la stessa regola).",
+        "esaltazione": "Tolomeo, Tetrabiblos I.19, per segno e senza gradi; caduta nel segno opposto."
+      },
+      "signLords": {
+        "ariete": {
+          "tradizionale": "marte",
+          "moderno": "marte"
+        },
+        "toro": {
+          "tradizionale": "venere",
+          "moderno": "venere"
+        },
+        "gemelli": {
+          "tradizionale": "mercurio",
+          "moderno": "mercurio"
+        },
+        "cancro": {
+          "tradizionale": "luna",
+          "moderno": "luna"
+        },
+        "leone": {
+          "tradizionale": "sole",
+          "moderno": "sole"
+        },
+        "vergine": {
+          "tradizionale": "mercurio",
+          "moderno": "mercurio"
+        },
+        "bilancia": {
+          "tradizionale": "venere",
+          "moderno": "venere"
+        },
+        "scorpione": {
+          "tradizionale": "marte",
+          "moderno": "plutone"
+        },
+        "sagittario": {
+          "tradizionale": "giove",
+          "moderno": "giove"
+        },
+        "capricorno": {
+          "tradizionale": "saturno",
+          "moderno": "saturno"
+        },
+        "acquario": {
+          "tradizionale": "saturno",
+          "moderno": "urano"
+        },
+        "pesci": {
+          "tradizionale": "giove",
+          "moderno": "nettuno"
+        }
+      },
+      "bodies": [
+        {
+          "id": "sole",
+          "name": "Sole",
+          "sign": "pesci",
+          "dignities": {
+            "tradizionale": [],
+            "moderno": []
+          }
+        },
+        {
+          "id": "luna",
+          "name": "Luna",
+          "sign": "leone",
+          "dignities": {
+            "tradizionale": [],
+            "moderno": []
+          }
+        },
+        {
+          "id": "mercurio",
+          "name": "Mercurio",
+          "sign": "acquario",
+          "dignities": {
+            "tradizionale": [],
+            "moderno": []
+          }
+        },
+        {
+          "id": "venere",
+          "name": "Venere",
+          "sign": "acquario",
+          "dignities": {
+            "tradizionale": [],
+            "moderno": []
+          }
+        },
+        {
+          "id": "marte",
+          "name": "Marte",
+          "sign": "ariete",
+          "dignities": {
+            "tradizionale": [
+              "domicilio"
+            ],
+            "moderno": [
+              "domicilio"
+            ]
+          }
+        },
+        {
+          "id": "giove",
+          "name": "Giove",
+          "sign": "leone",
+          "dignities": {
+            "tradizionale": [],
+            "moderno": []
+          }
+        },
+        {
+          "id": "saturno",
+          "name": "Saturno",
+          "sign": "ariete",
+          "dignities": {
+            "tradizionale": [
+              "caduta"
+            ],
+            "moderno": []
+          }
+        },
+        {
+          "id": "urano",
+          "name": "Urano",
+          "sign": "vergine",
+          "dignities": {
+            "tradizionale": [],
+            "moderno": []
+          }
+        },
+        {
+          "id": "nettuno",
+          "name": "Nettuno",
+          "sign": "scorpione",
+          "dignities": {
+            "tradizionale": [],
+            "moderno": []
+          }
+        },
+        {
+          "id": "plutone",
+          "name": "Plutone",
+          "sign": "vergine",
+          "dignities": {
+            "tradizionale": [],
+            "moderno": []
+          }
+        },
+        {
+          "id": "nodo-nord",
+          "name": "Nodo Nord",
+          "sign": "ariete",
+          "dignities": {
+            "tradizionale": [],
+            "moderno": []
+          }
+        },
+        {
+          "id": "nodo-sud",
+          "name": "Nodo Sud",
+          "sign": "bilancia",
+          "dignities": {
+            "tradizionale": [],
+            "moderno": []
+          }
+        }
+      ],
+      "receptions": {
+        "source": "Lilly, p. 112 (mutua) e p. 176 (semplice), per domicilio ed esaltazione; per triplicità, termine e faccia non calcolate senza il pacchetto di Lilly.",
+        "counted": [
+          "domicilio",
+          "esaltazione"
+        ],
+        "single": [
+          {
+            "receiver": "sole",
+            "received": "luna",
+            "by": [
+              "domicilio"
+            ]
+          },
+          {
+            "receiver": "sole",
+            "received": "marte",
+            "by": [
+              "esaltazione"
+            ]
+          },
+          {
+            "receiver": "sole",
+            "received": "giove",
+            "by": [
+              "domicilio"
+            ]
+          },
+          {
+            "receiver": "sole",
+            "received": "saturno",
+            "by": [
+              "esaltazione"
+            ]
+          },
+          {
+            "receiver": "venere",
+            "received": "sole",
+            "by": [
+              "esaltazione"
+            ]
+          },
+          {
+            "receiver": "marte",
+            "received": "saturno",
+            "by": [
+              "domicilio"
+            ]
+          },
+          {
+            "receiver": "giove",
+            "received": "sole",
+            "by": [
+              "domicilio"
+            ]
+          },
+          {
+            "receiver": "saturno",
+            "received": "mercurio",
+            "by": [
+              "domicilio"
+            ]
+          },
+          {
+            "receiver": "saturno",
+            "received": "venere",
+            "by": [
+              "domicilio"
+            ]
+          }
+        ],
+        "mutual": [
+          {
+            "bodies": [
+              "sole",
+              "giove"
+            ],
+            "firstReceives": [
+              "domicilio"
+            ],
+            "secondReceives": [
+              "domicilio"
+            ]
+          }
+        ]
+      }
+    }
+  },
+  "Napoli 1968, notturno": {
+    "input": {
+      "date": "1968-03-12",
+      "time": "02:30",
+      "latitude": 40.8518,
+      "longitude": 14.2681,
+      "timezone": "Europe/Rome"
+    },
+    "time": {
+      "julianDayUT": 2439927.5625,
+      "utc": "1968-03-12T01:30:00Z",
+      "local": "1968-03-12T02:30:00+01:00",
+      "offsetMinutes": 60,
+      "timeKnown": true
+    },
+    "houseSystem": "placidus",
+    "ephemerisMode": "moshier",
+    "zodiac": "tropicale",
+    "bodies": [
+      {
+        "id": "sole",
+        "name": "Sole",
+        "longitude": 351.5466869429794,
+        "latitude": 0.00005347134060682762,
+        "distance": 0.9937873755741506,
+        "speed": 0.9974866474445241,
+        "retrograde": false,
+        "sign": "pesci",
+        "signDegree": 21.54668694297942,
+        "house": 2
+      },
+      {
+        "id": "luna",
+        "name": "Luna",
+        "longitude": 136.07450599395852,
+        "latitude": 4.651547166783675,
+        "distance": 0.0025388770371889873,
+        "speed": 13.523517375230007,
+        "retrograde": false,
+        "sign": "leone",
+        "signDegree": 16.074505993958525,
+        "house": 8
+      },
+      {
+        "id": "mercurio",
+        "name": "Mercurio",
+        "longitude": 324.0341619686041,
+        "latitude": -0.6237322872252457,
+        "distance": 0.9139393191471887,
+        "speed": 0.9563447005686153,
+        "retrograde": false,
+        "sign": "acquario",
+        "signDegree": 24.03416196860411,
+        "house": 2
+      },
+      {
+        "id": "venere",
+        "name": "Venere",
+        "longitude": 325.6860309965023,
+        "latitude": -0.9037936885927774,
+        "distance": 1.478675792566346,
+        "speed": 1.2321268798300167,
+        "retrograde": false,
+        "sign": "acquario",
+        "signDegree": 25.686030996502325,
+        "house": 2
+      },
+      {
+        "id": "marte",
+        "name": "Marte",
+        "longitude": 18.149554235461796,
+        "latitude": -0.26986918941946936,
+        "distance": 2.2625017496706676,
+        "speed": 0.7501641695775416,
+        "retrograde": false,
+        "sign": "ariete",
+        "signDegree": 18.149554235461796,
+        "house": 3
+      },
+      {
+        "id": "giove",
+        "name": "Giove",
+        "longitude": 148.29768178592408,
+        "latitude": 1.2490625265418593,
+        "distance": 4.459199177839926,
+        "speed": -0.11211524288855237,
+        "retrograde": true,
+        "sign": "leone",
+        "signDegree": 28.297681785924084,
+        "house": 8
+      },
+      {
+        "id": "saturno",
+        "name": "Saturno",
+        "longitude": 12.375743370005834,
+        "latitude": -2.2390546714449857,
+        "distance": 10.319323484458609,
+        "speed": 0.12059099597470353,
+        "retrograde": false,
+        "sign": "ariete",
+        "signDegree": 12.375743370005834,
+        "house": 3
+      },
+      {
+        "id": "urano",
+        "name": "Urano",
+        "longitude": 177.42592430181995,
+        "latitude": 0.7951219643041243,
+        "distance": 17.30428215999746,
+        "speed": -0.04320478170723493,
+        "retrograde": true,
+        "sign": "vergine",
+        "signDegree": 27.425924301819947,
+        "house": 9
+      },
+      {
+        "id": "nettuno",
+        "name": "Nettuno",
+        "longitude": 236.47914844805064,
+        "latitude": 1.749940620654467,
+        "distance": 29.88955613136955,
+        "speed": -0.0075113743753260475,
+        "retrograde": true,
+        "sign": "scorpione",
+        "signDegree": 26.479148448050637,
+        "house": 11
+      },
+      {
+        "id": "plutone",
+        "name": "Plutone",
+        "longitude": 171.5430079837757,
+        "latitude": 15.66751224030775,
+        "distance": 31.07076939461752,
+        "speed": -0.026884091306353483,
+        "retrograde": true,
+        "sign": "vergine",
+        "signDegree": 21.54300798377571,
+        "house": 8
+      },
+      {
+        "id": "nodo-nord",
+        "name": "Nodo Nord",
+        "longitude": 20.230396638024004,
+        "latitude": 0,
+        "distance": 0.0025695552897999903,
+        "speed": -0.052960009186156766,
+        "retrograde": true,
+        "sign": "ariete",
+        "signDegree": 20.230396638024004,
+        "house": 3
+      },
+      {
+        "id": "nodo-sud",
+        "name": "Nodo Sud",
+        "longitude": 200.230396638024,
+        "latitude": 0,
+        "distance": 0.0025695552897999903,
+        "speed": -0.052960009186156766,
+        "retrograde": true,
+        "sign": "bilancia",
+        "signDegree": 20.23039663802399,
+        "house": 9
+      }
+    ],
+    "houses": [
+      {
+        "number": 1,
+        "longitude": 274.2015797879332,
+        "sign": "capricorno",
+        "signDegree": 4.201579787933213
+      },
+      {
+        "number": 2,
+        "longitude": 314.1023725415878,
+        "sign": "acquario",
+        "signDegree": 14.102372541587783
+      },
+      {
+        "number": 3,
+        "longitude": 355.68006365986196,
+        "sign": "pesci",
+        "signDegree": 25.680063659861958
+      },
+      {
+        "number": 4,
+        "longitude": 28.55429449156202,
+        "sign": "ariete",
+        "signDegree": 28.55429449156202
+      },
+      {
+        "number": 5,
+        "longitude": 53.28404099670297,
+        "sign": "toro",
+        "signDegree": 23.28404099670297
+      },
+      {
+        "number": 6,
+        "longitude": 73.91744157360677,
+        "sign": "gemelli",
+        "signDegree": 13.917441573606766
+      },
+      {
+        "number": 7,
+        "longitude": 94.20157978793321,
+        "sign": "cancro",
+        "signDegree": 4.201579787933213
+      },
+      {
+        "number": 8,
+        "longitude": 134.10237254158778,
+        "sign": "leone",
+        "signDegree": 14.102372541587783
+      },
+      {
+        "number": 9,
+        "longitude": 175.68006365986196,
+        "sign": "vergine",
+        "signDegree": 25.680063659861958
+      },
+      {
+        "number": 10,
+        "longitude": 208.554294491562,
+        "sign": "bilancia",
+        "signDegree": 28.55429449156199
+      },
+      {
+        "number": 11,
+        "longitude": 233.28404099670297,
+        "sign": "scorpione",
+        "signDegree": 23.28404099670297
+      },
+      {
+        "number": 12,
+        "longitude": 253.91744157360677,
+        "sign": "sagittario",
+        "signDegree": 13.917441573606766
+      }
+    ],
+    "siderealTime": {
+      "hours": 13.768720862278979,
+      "formatted": "13:46:07"
+    },
+    "orbConvention": {
+      "id": "greene",
+      "name": "Liz Greene (predefinita di Astrodienst)",
+      "source": "astro.com, «A Brief Introduction to Astrology: Aspects», tavola delle orbite 2.AT/2.GW/2.GR; FAQ fq_fh_setup_e.htm per i punti senza orbita. Copia del 27 ottobre 2026.",
+      "rule": "Per aspetto, uguale per tutti i pianeti e Chirone: 10° a congiunzione, opposizione, quadrato e trigono, 6° al sestile, 3° a semisestile, quinconce, semiquadrato e sesquiquadrato, 2° a quintile e biquintile. Nodi, Lilith, assi e Parte di Fortuna non hanno orbita: con un pianeta vale metà della sua, fra loro nessun aspetto."
+    },
+    "aspects": [
+      {
+        "aspect": "opposizione",
+        "angle": 180,
+        "from": "sole",
+        "to": "plutone",
+        "orb": 0.003678959203710974,
+        "applying": false
+      },
+      {
+        "aspect": "quadrato",
+        "angle": 90,
+        "from": "venere",
+        "to": "nettuno",
+        "orb": 0.7931174515483121,
+        "applying": true
+      },
+      {
+        "aspect": "sestile",
+        "angle": 60,
+        "from": "urano",
+        "to": "nettuno",
+        "orb": 0.9467758537693101,
+        "applying": true
+      },
+      {
+        "aspect": "congiunzione",
+        "angle": 0,
+        "from": "mercurio",
+        "to": "venere",
+        "orb": 1.6518690278982149,
+        "applying": false
+      },
+      {
+        "aspect": "quadrato",
+        "angle": 90,
+        "from": "giove",
+        "to": "nettuno",
+        "orb": 1.818533337873447,
+        "applying": true
+      },
+      {
+        "aspect": "trigono",
+        "angle": 120,
+        "from": "luna",
+        "to": "marte",
+        "orb": 2.075048241503268,
+        "applying": true
+      },
+      {
+        "aspect": "opposizione",
+        "angle": 180,
+        "from": "marte",
+        "to": "nodo-sud",
+        "orb": 2.0808424025621832,
+        "applying": true
+      },
+      {
+        "aspect": "congiunzione",
+        "angle": 0,
+        "from": "marte",
+        "to": "nodo-nord",
+        "orb": 2.080842402562208,
+        "applying": true
+      },
+      {
+        "aspect": "quadrato",
+        "angle": 90,
+        "from": "mercurio",
+        "to": "nettuno",
+        "orb": 2.444986479446527,
+        "applying": true
+      },
+      {
+        "aspect": "opposizione",
+        "angle": 180,
+        "from": "venere",
+        "to": "giove",
+        "orb": 2.611650789421759,
+        "applying": true
+      },
+      {
+        "aspect": "trigono",
+        "angle": 120,
+        "from": "luna",
+        "to": "saturno",
+        "orb": 3.698762623952689,
+        "applying": false
+      },
+      {
+        "aspect": "trigono",
+        "angle": 120,
+        "from": "mercurio",
+        "to": "nodo-sud",
+        "orb": 3.80376533058012,
+        "applying": false
+      },
+      {
+        "aspect": "trigono",
+        "angle": 120,
+        "from": "luna",
+        "to": "nodo-nord",
+        "orb": 4.1558906440654795,
+        "applying": true
+      },
+      {
+        "aspect": "opposizione",
+        "angle": 180,
+        "from": "mercurio",
+        "to": "giove",
+        "orb": 4.263519817319974,
+        "applying": true
+      },
+      {
+        "aspect": "trigono",
+        "angle": 120,
+        "from": "sole",
+        "to": "nettuno",
+        "orb": 4.932461505071217,
+        "applying": true
+      },
+      {
+        "aspect": "sestile",
+        "angle": 60,
+        "from": "nettuno",
+        "to": "plutone",
+        "orb": 4.936140464274928,
+        "applying": false
+      },
+      {
+        "aspect": "congiunzione",
+        "angle": 0,
+        "from": "marte",
+        "to": "saturno",
+        "orb": 5.773810865455962,
+        "applying": false
+      },
+      {
+        "aspect": "opposizione",
+        "angle": 180,
+        "from": "sole",
+        "to": "urano",
+        "orb": 5.879237358840527,
+        "applying": true
+      },
+      {
+        "aspect": "congiunzione",
+        "angle": 0,
+        "from": "urano",
+        "to": "plutone",
+        "orb": 5.882916318044238,
+        "applying": true
+      },
+      {
+        "aspect": "sestile",
+        "angle": 60,
+        "from": "mercurio",
+        "to": "marte",
+        "orb": 5.884607733142332,
+        "applying": false
+      },
+      {
+        "aspect": "opposizione",
+        "angle": 180,
+        "from": "luna",
+        "to": "mercurio",
+        "orb": 7.959655974645585,
+        "applying": true
+      },
+      {
+        "aspect": "opposizione",
+        "angle": 180,
+        "from": "luna",
+        "to": "venere",
+        "orb": 9.6115250025438,
+        "applying": true
+      }
+    ],
+    "distribution": {
+      "planets": {
+        "elements": {
+          "fuoco": 4,
+          "terra": 2,
+          "aria": 2,
+          "acqua": 2
+        },
+        "modalities": {
+          "cardinale": 2,
+          "fisso": 5,
+          "mobile": 3
+        },
+        "counted": [
+          "sole",
+          "luna",
+          "mercurio",
+          "venere",
+          "marte",
+          "giove",
+          "saturno",
+          "urano",
+          "nettuno",
+          "plutone"
+        ]
+      },
+      "points": {
+        "elements": {
+          "fuoco": 2,
+          "terra": 0,
+          "aria": 1,
+          "acqua": 0
+        },
+        "modalities": {
+          "cardinale": 2,
+          "fisso": 1,
+          "mobile": 0
+        },
+        "counted": [
+          "nodo-nord",
+          "nodo-sud",
+          "fortuna"
+        ]
+      },
+      "angles": {
+        "elements": {
+          "fuoco": 0,
+          "terra": 1,
+          "aria": 1,
+          "acqua": 0
+        },
+        "modalities": {
+          "cardinale": 2,
+          "fisso": 0,
+          "mobile": 0
+        },
+        "counted": [
+          "ascendente",
+          "medio-cielo"
+        ]
+      }
+    },
+    "warnings": [
+      "File di effemeridi non trovati in /fascicolo-canonico-senza-effemeridi: uso le effemeridi Moshier (nessun file richiesto, precisione leggermente inferiore, Chirone non disponibile). Esegui `npm run ephe:download -w @dodicisegni/core` per la precisione piena."
+    ],
+    "angles": {
+      "ascendant": 274.2015797879332,
+      "midheaven": 208.554294491562,
+      "descendant": 94.20157978793321,
+      "imumCoeli": 28.55429449156202,
+      "vertex": 134.19533768406745
+    },
+    "sect": "notturna",
+    "partOfFortune": {
+      "longitude": 129.67376073695414,
+      "sign": "leone",
+      "signDegree": 9.673760736954137,
+      "house": 7
+    },
+    "dignities": {
+      "sources": {
+        "domicili": {
+          "tradizionale": "i sette pianeti, comuni alle scuole antiche (Tolomeo, Tetrabiblos I.17; Lilly, p. 104).",
+          "moderno": "Novecento, senza un autore unico: Urano e Nettuno come li riferisce Alan Leo (The Art of Synthesis, p. 117), Plutone senza un autore."
+        },
+        "esilio": "il segno opposto al domicilio (Lilly, p. 104; nella moderna per la stessa regola).",
+        "esaltazione": "Tolomeo, Tetrabiblos I.19, per segno e senza gradi; caduta nel segno opposto."
+      },
+      "signLords": {
+        "ariete": {
+          "tradizionale": "marte",
+          "moderno": "marte"
+        },
+        "toro": {
+          "tradizionale": "venere",
+          "moderno": "venere"
+        },
+        "gemelli": {
+          "tradizionale": "mercurio",
+          "moderno": "mercurio"
+        },
+        "cancro": {
+          "tradizionale": "luna",
+          "moderno": "luna"
+        },
+        "leone": {
+          "tradizionale": "sole",
+          "moderno": "sole"
+        },
+        "vergine": {
+          "tradizionale": "mercurio",
+          "moderno": "mercurio"
+        },
+        "bilancia": {
+          "tradizionale": "venere",
+          "moderno": "venere"
+        },
+        "scorpione": {
+          "tradizionale": "marte",
+          "moderno": "plutone"
+        },
+        "sagittario": {
+          "tradizionale": "giove",
+          "moderno": "giove"
+        },
+        "capricorno": {
+          "tradizionale": "saturno",
+          "moderno": "saturno"
+        },
+        "acquario": {
+          "tradizionale": "saturno",
+          "moderno": "urano"
+        },
+        "pesci": {
+          "tradizionale": "giove",
+          "moderno": "nettuno"
+        }
+      },
+      "bodies": [
+        {
+          "id": "sole",
+          "name": "Sole",
+          "sign": "pesci",
+          "dignities": {
+            "tradizionale": [],
+            "moderno": []
+          }
+        },
+        {
+          "id": "luna",
+          "name": "Luna",
+          "sign": "leone",
+          "dignities": {
+            "tradizionale": [],
+            "moderno": []
+          }
+        },
+        {
+          "id": "mercurio",
+          "name": "Mercurio",
+          "sign": "acquario",
+          "dignities": {
+            "tradizionale": [],
+            "moderno": []
+          }
+        },
+        {
+          "id": "venere",
+          "name": "Venere",
+          "sign": "acquario",
+          "dignities": {
+            "tradizionale": [],
+            "moderno": []
+          }
+        },
+        {
+          "id": "marte",
+          "name": "Marte",
+          "sign": "ariete",
+          "dignities": {
+            "tradizionale": [
+              "domicilio"
+            ],
+            "moderno": [
+              "domicilio"
+            ]
+          }
+        },
+        {
+          "id": "giove",
+          "name": "Giove",
+          "sign": "leone",
+          "dignities": {
+            "tradizionale": [],
+            "moderno": []
+          }
+        },
+        {
+          "id": "saturno",
+          "name": "Saturno",
+          "sign": "ariete",
+          "dignities": {
+            "tradizionale": [
+              "caduta"
+            ],
+            "moderno": []
+          }
+        },
+        {
+          "id": "urano",
+          "name": "Urano",
+          "sign": "vergine",
+          "dignities": {
+            "tradizionale": [],
+            "moderno": []
+          }
+        },
+        {
+          "id": "nettuno",
+          "name": "Nettuno",
+          "sign": "scorpione",
+          "dignities": {
+            "tradizionale": [],
+            "moderno": []
+          }
+        },
+        {
+          "id": "plutone",
+          "name": "Plutone",
+          "sign": "vergine",
+          "dignities": {
+            "tradizionale": [],
+            "moderno": []
+          }
+        },
+        {
+          "id": "nodo-nord",
+          "name": "Nodo Nord",
+          "sign": "ariete",
+          "dignities": {
+            "tradizionale": [],
+            "moderno": []
+          }
+        },
+        {
+          "id": "nodo-sud",
+          "name": "Nodo Sud",
+          "sign": "bilancia",
+          "dignities": {
+            "tradizionale": [],
+            "moderno": []
+          }
+        }
+      ],
+      "receptions": {
+        "source": "Lilly, p. 112 (mutua) e p. 176 (semplice), per domicilio ed esaltazione; per triplicità, termine e faccia non calcolate senza il pacchetto di Lilly.",
+        "counted": [
+          "domicilio",
+          "esaltazione"
+        ],
+        "single": [
+          {
+            "receiver": "sole",
+            "received": "luna",
+            "by": [
+              "domicilio"
+            ]
+          },
+          {
+            "receiver": "sole",
+            "received": "marte",
+            "by": [
+              "esaltazione"
+            ]
+          },
+          {
+            "receiver": "sole",
+            "received": "giove",
+            "by": [
+              "domicilio"
+            ]
+          },
+          {
+            "receiver": "sole",
+            "received": "saturno",
+            "by": [
+              "esaltazione"
+            ]
+          },
+          {
+            "receiver": "venere",
+            "received": "sole",
+            "by": [
+              "esaltazione"
+            ]
+          },
+          {
+            "receiver": "marte",
+            "received": "saturno",
+            "by": [
+              "domicilio"
+            ]
+          },
+          {
+            "receiver": "giove",
+            "received": "sole",
+            "by": [
+              "domicilio"
+            ]
+          },
+          {
+            "receiver": "saturno",
+            "received": "mercurio",
+            "by": [
+              "domicilio"
+            ]
+          },
+          {
+            "receiver": "saturno",
+            "received": "venere",
+            "by": [
+              "domicilio"
+            ]
+          }
+        ],
+        "mutual": [
+          {
+            "bodies": [
+              "sole",
+              "giove"
+            ],
+            "firstReceives": [
+              "domicilio"
+            ],
+            "secondReceives": [
+              "domicilio"
+            ]
+          }
+        ]
+      }
+    }
+  },
+  "Napoli 1968, ora ignota": {
+    "input": {
+      "date": "1968-03-12",
+      "latitude": 40.8518,
+      "longitude": 14.2681,
+      "timezone": "Europe/Rome"
+    },
+    "time": {
+      "julianDayUT": 2439927.9583333335,
+      "utc": "1968-03-12T11:00:00Z",
+      "local": "1968-03-12T12:00:00+01:00",
+      "offsetMinutes": 60,
+      "timeKnown": false
+    },
+    "houseSystem": "placidus",
+    "ephemerisMode": "moshier",
+    "zodiac": "tropicale",
+    "bodies": [
+      {
+        "id": "sole",
+        "name": "Sole",
+        "longitude": 351.9414789056108,
+        "latitude": 0.00004521243085548085,
+        "distance": 0.9938927758058481,
+        "speed": 0.9972478884055601,
+        "retrograde": false,
+        "sign": "pesci",
+        "signDegree": 21.94147890561078
+      },
+      {
+        "id": "luna",
+        "name": "Luna",
+        "longitude": 141.45872680583506,
+        "latitude": 4.408314547776862,
+        "distance": 0.002524289736017345,
+        "speed": 13.680202317866488,
+        "retrograde": false,
+        "sign": "leone",
+        "signDegree": 21.458726805835056
+      },
+      {
+        "id": "mercurio",
+        "name": "Mercurio",
+        "longitude": 324.4163996956767,
+        "latitude": -0.6879063893525007,
+        "distance": 0.919841330943865,
+        "speed": 0.9748740609478697,
+        "retrograde": false,
+        "sign": "acquario",
+        "signDegree": 24.416399695676716
+      },
+      {
+        "id": "venere",
+        "name": "Venere",
+        "longitude": 326.17374966516974,
+        "latitude": -0.917968447278915,
+        "distance": 1.4805277805925865,
+        "speed": 1.2321338038553278,
+        "retrograde": false,
+        "sign": "acquario",
+        "signDegree": 26.173749665169737
+      },
+      {
+        "id": "marte",
+        "name": "Marte",
+        "longitude": 18.446432719256798,
+        "latitude": -0.26513197432225466,
+        "distance": 2.2643066760813535,
+        "speed": 0.7498515010876086,
+        "retrograde": false,
+        "sign": "ariete",
+        "signDegree": 18.446432719256798
+      },
+      {
+        "id": "giove",
+        "name": "Giove",
+        "longitude": 148.2534455380518,
+        "latitude": 1.2488948073684714,
+        "distance": 4.4617130374834675,
+        "speed": -0.1113915372575823,
+        "retrograde": true,
+        "sign": "leone",
+        "signDegree": 28.253445538051807
+      },
+      {
+        "id": "saturno",
+        "name": "Saturno",
+        "longitude": 12.423510767533989,
+        "latitude": -2.238607703670446,
+        "distance": 10.32163382124407,
+        "speed": 0.12076034419576448,
+        "retrograde": false,
+        "sign": "ariete",
+        "signDegree": 12.423510767533989
+      },
+      {
+        "id": "urano",
+        "name": "Urano",
+        "longitude": 177.4088126479904,
+        "latitude": 0.7951408864078972,
+        "distance": 17.303520226816097,
+        "speed": -0.04325283162961117,
+        "retrograde": true,
+        "sign": "vergine",
+        "signDegree": 27.408812647990402
+      },
+      {
+        "id": "nettuno",
+        "name": "Nettuno",
+        "longitude": 236.47613264229656,
+        "latitude": 1.7502868700493164,
+        "distance": 29.883358784568674,
+        "speed": -0.007725474467005518,
+        "retrograde": true,
+        "sign": "scorpione",
+        "signDegree": 26.476132642296562
+      },
+      {
+        "id": "plutone",
+        "name": "Plutone",
+        "longitude": 171.5323631277345,
+        "latitude": 15.667899265133826,
+        "distance": 31.070478789861067,
+        "speed": -0.02689001143311367,
+        "retrograde": true,
+        "sign": "vergine",
+        "signDegree": 21.5323631277345
+      },
+      {
+        "id": "nodo-nord",
+        "name": "Nodo Nord",
+        "longitude": 20.20943209560203,
+        "latitude": 0,
+        "distance": 0.00256955528979999,
+        "speed": -0.05296615528172926,
+        "retrograde": true,
+        "sign": "ariete",
+        "signDegree": 20.20943209560203
+      },
+      {
+        "id": "nodo-sud",
+        "name": "Nodo Sud",
+        "longitude": 200.20943209560204,
+        "latitude": 0,
+        "distance": 0.00256955528979999,
+        "speed": -0.05296615528172926,
+        "retrograde": true,
+        "sign": "bilancia",
+        "signDegree": 20.20943209560204
+      }
+    ],
+    "houses": [],
+    "siderealTime": {
+      "hours": 23.29473078059757,
+      "formatted": "23:17:41"
+    },
+    "orbConvention": {
+      "id": "greene",
+      "name": "Liz Greene (predefinita di Astrodienst)",
+      "source": "astro.com, «A Brief Introduction to Astrology: Aspects», tavola delle orbite 2.AT/2.GW/2.GR; FAQ fq_fh_setup_e.htm per i punti senza orbita. Copia del 27 ottobre 2026.",
+      "rule": "Per aspetto, uguale per tutti i pianeti e Chirone: 10° a congiunzione, opposizione, quadrato e trigono, 6° al sestile, 3° a semisestile, quinconce, semiquadrato e sesquiquadrato, 2° a quintile e biquintile. Nodi, Lilith, assi e Parte di Fortuna non hanno orbita: con un pianeta vale metà della sua, fra loro nessun aspetto."
+    },
+    "aspects": [
+      {
+        "aspect": "quadrato",
+        "angle": 90,
+        "from": "venere",
+        "to": "nettuno",
+        "orb": 0.3023829771268254,
+        "applying": true
+      },
+      {
+        "aspect": "opposizione",
+        "angle": 180,
+        "from": "sole",
+        "to": "plutone",
+        "orb": 0.4091157778762806,
+        "applying": false
+      },
+      {
+        "aspect": "sestile",
+        "angle": 60,
+        "from": "urano",
+        "to": "nettuno",
+        "orb": 0.9326800056938396,
+        "applying": true
+      },
+      {
+        "aspect": "sestile",
+        "angle": 60,
+        "from": "luna",
+        "to": "nodo-sud",
+        "orb": 1.2492947102330163,
+        "applying": false
+      },
+      {
+        "aspect": "trigono",
+        "angle": 120,
+        "from": "luna",
+        "to": "nodo-nord",
+        "orb": 1.2492947102330305,
+        "applying": false
+      },
+      {
+        "aspect": "congiunzione",
+        "angle": 0,
+        "from": "mercurio",
+        "to": "venere",
+        "orb": 1.7573499694930206,
+        "applying": false
+      },
+      {
+        "aspect": "congiunzione",
+        "angle": 0,
+        "from": "marte",
+        "to": "nodo-nord",
+        "orb": 1.7629993763452312,
+        "applying": true
+      },
+      {
+        "aspect": "opposizione",
+        "angle": 180,
+        "from": "marte",
+        "to": "nodo-sud",
+        "orb": 1.762999376345249,
+        "applying": true
+      },
+      {
+        "aspect": "quadrato",
+        "angle": 90,
+        "from": "giove",
+        "to": "nettuno",
+        "orb": 1.7773128957552444,
+        "applying": true
+      },
+      {
+        "aspect": "quadrato",
+        "angle": 90,
+        "from": "mercurio",
+        "to": "nettuno",
+        "orb": 2.059732946619846,
+        "applying": true
+      },
+      {
+        "aspect": "opposizione",
+        "angle": 180,
+        "from": "venere",
+        "to": "giove",
+        "orb": 2.07969587288207,
+        "applying": true
+      },
+      {
+        "aspect": "opposizione",
+        "angle": 180,
+        "from": "luna",
+        "to": "mercurio",
+        "orb": 2.9576728898416604,
+        "applying": true
+      },
+      {
+        "aspect": "trigono",
+        "angle": 120,
+        "from": "luna",
+        "to": "marte",
+        "orb": 3.0122940865782653,
+        "applying": false
+      },
+      {
+        "aspect": "opposizione",
+        "angle": 180,
+        "from": "mercurio",
+        "to": "giove",
+        "orb": 3.8370458423750904,
+        "applying": true
+      },
+      {
+        "aspect": "trigono",
+        "angle": 120,
+        "from": "mercurio",
+        "to": "nodo-sud",
+        "orb": 4.206967600074677,
+        "applying": false
+      },
+      {
+        "aspect": "trigono",
+        "angle": 120,
+        "from": "sole",
+        "to": "nettuno",
+        "orb": 4.534653736685783,
+        "applying": true
+      },
+      {
+        "aspect": "opposizione",
+        "angle": 180,
+        "from": "luna",
+        "to": "venere",
+        "orb": 4.715022859334681,
+        "applying": true
+      },
+      {
+        "aspect": "sestile",
+        "angle": 60,
+        "from": "nettuno",
+        "to": "plutone",
+        "orb": 4.943769514562064,
+        "applying": false
+      },
+      {
+        "aspect": "quadrato",
+        "angle": 90,
+        "from": "luna",
+        "to": "nettuno",
+        "orb": 5.017405836461506,
+        "applying": true
+      },
+      {
+        "aspect": "opposizione",
+        "angle": 180,
+        "from": "sole",
+        "to": "urano",
+        "orb": 5.467333742379623,
+        "applying": true
+      },
+      {
+        "aspect": "congiunzione",
+        "angle": 0,
+        "from": "urano",
+        "to": "plutone",
+        "orb": 5.876449520255903,
+        "applying": true
+      },
+      {
+        "aspect": "sestile",
+        "angle": 60,
+        "from": "mercurio",
+        "to": "marte",
+        "orb": 5.969966976419926,
+        "applying": false
+      },
+      {
+        "aspect": "congiunzione",
+        "angle": 0,
+        "from": "marte",
+        "to": "saturno",
+        "orb": 6.022921951722809,
+        "applying": false
+      },
+      {
+        "aspect": "congiunzione",
+        "angle": 0,
+        "from": "luna",
+        "to": "giove",
+        "orb": 6.794718732216751,
+        "applying": true
+      },
+      {
+        "aspect": "trigono",
+        "angle": 120,
+        "from": "luna",
+        "to": "saturno",
+        "orb": 9.035216038301058,
+        "applying": false
+      },
+      {
+        "aspect": "trigono",
+        "angle": 120,
+        "from": "marte",
+        "to": "giove",
+        "orb": 9.807012818795016,
+        "applying": true
+      }
+    ],
+    "distribution": {
+      "planets": {
+        "elements": {
+          "fuoco": 4,
+          "terra": 2,
+          "aria": 2,
+          "acqua": 2
+        },
+        "modalities": {
+          "cardinale": 2,
+          "fisso": 5,
+          "mobile": 3
+        },
+        "counted": [
+          "sole",
+          "luna",
+          "mercurio",
+          "venere",
+          "marte",
+          "giove",
+          "saturno",
+          "urano",
+          "nettuno",
+          "plutone"
+        ]
+      },
+      "points": {
+        "elements": {
+          "fuoco": 1,
+          "terra": 0,
+          "aria": 1,
+          "acqua": 0
+        },
+        "modalities": {
+          "cardinale": 2,
+          "fisso": 0,
+          "mobile": 0
+        },
+        "counted": [
+          "nodo-nord",
+          "nodo-sud"
+        ]
+      },
+      "angles": {
+        "elements": {
+          "fuoco": 0,
+          "terra": 0,
+          "aria": 0,
+          "acqua": 0
+        },
+        "modalities": {
+          "cardinale": 0,
+          "fisso": 0,
+          "mobile": 0
+        },
+        "counted": []
+      }
+    },
+    "warnings": [
+      "File di effemeridi non trovati in /fascicolo-canonico-senza-effemeridi: uso le effemeridi Moshier (nessun file richiesto, precisione leggermente inferiore, Chirone non disponibile). Esegui `npm run ephe:download -w @dodicisegni/core` per la precisione piena.",
+      "Ora di nascita non fornita: la carta è calcolata a mezzogiorno locale. Case, assi e posizione della Luna sono indicativi."
+    ],
+    "dignities": {
+      "sources": {
+        "domicili": {
+          "tradizionale": "i sette pianeti, comuni alle scuole antiche (Tolomeo, Tetrabiblos I.17; Lilly, p. 104).",
+          "moderno": "Novecento, senza un autore unico: Urano e Nettuno come li riferisce Alan Leo (The Art of Synthesis, p. 117), Plutone senza un autore."
+        },
+        "esilio": "il segno opposto al domicilio (Lilly, p. 104; nella moderna per la stessa regola).",
+        "esaltazione": "Tolomeo, Tetrabiblos I.19, per segno e senza gradi; caduta nel segno opposto."
+      },
+      "signLords": {
+        "ariete": {
+          "tradizionale": "marte",
+          "moderno": "marte"
+        },
+        "toro": {
+          "tradizionale": "venere",
+          "moderno": "venere"
+        },
+        "gemelli": {
+          "tradizionale": "mercurio",
+          "moderno": "mercurio"
+        },
+        "cancro": {
+          "tradizionale": "luna",
+          "moderno": "luna"
+        },
+        "leone": {
+          "tradizionale": "sole",
+          "moderno": "sole"
+        },
+        "vergine": {
+          "tradizionale": "mercurio",
+          "moderno": "mercurio"
+        },
+        "bilancia": {
+          "tradizionale": "venere",
+          "moderno": "venere"
+        },
+        "scorpione": {
+          "tradizionale": "marte",
+          "moderno": "plutone"
+        },
+        "sagittario": {
+          "tradizionale": "giove",
+          "moderno": "giove"
+        },
+        "capricorno": {
+          "tradizionale": "saturno",
+          "moderno": "saturno"
+        },
+        "acquario": {
+          "tradizionale": "saturno",
+          "moderno": "urano"
+        },
+        "pesci": {
+          "tradizionale": "giove",
+          "moderno": "nettuno"
+        }
+      },
+      "bodies": [
+        {
+          "id": "sole",
+          "name": "Sole",
+          "sign": "pesci",
+          "dignities": {
+            "tradizionale": [],
+            "moderno": []
+          }
+        },
+        {
+          "id": "luna",
+          "name": "Luna",
+          "sign": "leone",
+          "dignities": {
+            "tradizionale": [],
+            "moderno": []
+          }
+        },
+        {
+          "id": "mercurio",
+          "name": "Mercurio",
+          "sign": "acquario",
+          "dignities": {
+            "tradizionale": [],
+            "moderno": []
+          }
+        },
+        {
+          "id": "venere",
+          "name": "Venere",
+          "sign": "acquario",
+          "dignities": {
+            "tradizionale": [],
+            "moderno": []
+          }
+        },
+        {
+          "id": "marte",
+          "name": "Marte",
+          "sign": "ariete",
+          "dignities": {
+            "tradizionale": [
+              "domicilio"
+            ],
+            "moderno": [
+              "domicilio"
+            ]
+          }
+        },
+        {
+          "id": "giove",
+          "name": "Giove",
+          "sign": "leone",
+          "dignities": {
+            "tradizionale": [],
+            "moderno": []
+          }
+        },
+        {
+          "id": "saturno",
+          "name": "Saturno",
+          "sign": "ariete",
+          "dignities": {
+            "tradizionale": [
+              "caduta"
+            ],
+            "moderno": []
+          }
+        },
+        {
+          "id": "urano",
+          "name": "Urano",
+          "sign": "vergine",
+          "dignities": {
+            "tradizionale": [],
+            "moderno": []
+          }
+        },
+        {
+          "id": "nettuno",
+          "name": "Nettuno",
+          "sign": "scorpione",
+          "dignities": {
+            "tradizionale": [],
+            "moderno": []
+          }
+        },
+        {
+          "id": "plutone",
+          "name": "Plutone",
+          "sign": "vergine",
+          "dignities": {
+            "tradizionale": [],
+            "moderno": []
+          }
+        },
+        {
+          "id": "nodo-nord",
+          "name": "Nodo Nord",
+          "sign": "ariete",
+          "dignities": {
+            "tradizionale": [],
+            "moderno": []
+          }
+        },
+        {
+          "id": "nodo-sud",
+          "name": "Nodo Sud",
+          "sign": "bilancia",
+          "dignities": {
+            "tradizionale": [],
+            "moderno": []
+          }
+        }
+      ],
+      "receptions": {
+        "source": "Lilly, p. 112 (mutua) e p. 176 (semplice), per domicilio ed esaltazione; per triplicità, termine e faccia non calcolate senza il pacchetto di Lilly.",
+        "counted": [
+          "domicilio",
+          "esaltazione"
+        ],
+        "single": [
+          {
+            "receiver": "sole",
+            "received": "luna",
+            "by": [
+              "domicilio"
+            ]
+          },
+          {
+            "receiver": "sole",
+            "received": "marte",
+            "by": [
+              "esaltazione"
+            ]
+          },
+          {
+            "receiver": "sole",
+            "received": "giove",
+            "by": [
+              "domicilio"
+            ]
+          },
+          {
+            "receiver": "sole",
+            "received": "saturno",
+            "by": [
+              "esaltazione"
+            ]
+          },
+          {
+            "receiver": "venere",
+            "received": "sole",
+            "by": [
+              "esaltazione"
+            ]
+          },
+          {
+            "receiver": "marte",
+            "received": "saturno",
+            "by": [
+              "domicilio"
+            ]
+          },
+          {
+            "receiver": "giove",
+            "received": "sole",
+            "by": [
+              "domicilio"
+            ]
+          },
+          {
+            "receiver": "saturno",
+            "received": "mercurio",
+            "by": [
+              "domicilio"
+            ]
+          },
+          {
+            "receiver": "saturno",
+            "received": "venere",
+            "by": [
+              "domicilio"
+            ]
+          }
+        ],
+        "mutual": [
+          {
+            "bodies": [
+              "sole",
+              "giove"
+            ],
+            "firstReceives": [
+              "domicilio"
+            ],
+            "secondReceives": [
+              "domicilio"
+            ]
+          }
+        ]
+      }
+    }
+  }
+}

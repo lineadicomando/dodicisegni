@@ -25,6 +25,7 @@ Le voci chiuse dopo, con il commit in cui si leggono ancora per intero:
 | 8 | `c4c4820` |
 | 24 | `bd489c8` |
 | 19 | `91ca295` |
+| 27 | `f6026fa` |
 
 Le fonti citate qui stanno in copia locale in `texts/`, fuori dal repo: la
 cartella, le schede `FONTE.md` e l'elenco `texts/INDICE.md` si mantengono come
@@ -79,16 +80,15 @@ volta e ricominciare da capo.
 | 5. I varga: le convenzioni che restano | bassa | piccola | i sedici sono fatti; restano rifiniture, una per riga |
 | 25. Le dignità del Jyotisha: le rifiniture | bassa | piccola | due calcoli, da fare solo se servissero |
 | 26. Le scuole occidentali: quello che resta | bassa | piccola | la ricezione di Bonatti va con la 17; Valente aspetta un testo |
-| 27. Il fascicolo canonico | media | piccola | da fare prima del prossimo cambio di versione che tocchi il motore |
 
 **Versione 0.1.0**, dal 30 ottobre 2026, in ogni manifesto, col tag
 `v0.1.0`: è la prima, e cade alla chiusura della voce 19. Le regole (un
 numero solo, le tre domande che dicono quale cifra si muove, il tag) stanno
-in `CLAUDE.md`, *La versione*. Le voci della tabella sono indipendenti dal
-numero; la 27 serve a deciderlo meglio.
+in `CLAUDE.md`, *La versione*. Se una risposta che c'era è cambiata lo dice
+il fascicolo canonico (`packages/core/test/canonico.test.ts`, voce 27,
+chiusa): un file di `test/canonico/` che cambia muove la seconda cifra.
 
-L'ordine consigliato è quello della tabella, salvo la 27, che conviene fare
-prima del prossimo rilascio che cambi un calcolo. La voce 19, le dignità per
+L'ordine consigliato è quello della tabella. La voce 19, le dignità per
 scuola, è chiusa il 30 ottobre 2026: nell'occidente Lilly, Tolomeo, Bonatti
 e Valente, nel Jyotisha Parashara con Narasimha Rao accanto; quello che
 restava è nelle voci 25 e 26, o in *Esaminato* dove manca una fonte. La 17
@@ -389,24 +389,6 @@ quella scuola entra. Il conto delle fortezze è di Lilly e resta suo: una
 scuola porta il proprio, o nessuno. Le ricezioni restano quelle comuni per
 ogni scuola che non le definisce o che le definisce in un modo che la
 tavola non calcola, e la riga della fonte lo dice.
-
-## 27. Il fascicolo canonico
-
-**Priorità media.** La prima delle tre domande della versione («una domanda
-che aveva già una risposta ne riceve un'altra?») oggi la risponde chi fa il
-commit, a giudizio. Il progetto shipan la fa rispondere alla macchina: un
-pugno di temi calcolati su input fissi, scritti in file sotto `test/` e
-ricalcolati a ogni prova; se un file cambia, la risposta è sì, stampata
-invece che giudicata. Va fissato sulle effemeridi Moshier, perché un file
-non cambi per un download.
-
-Che cosa metterci, un caso per ramo che il tema di Napoli del 1968 manca:
-un tema natale tropicale con le quattro scuole delle dignità (diurno) e uno
-notturno; uno senza ora; un tema vedico coi varga e gli stati; un cielo con
-una scuola; una domanda oraria; un tema siderale con un ayanamsa diverso dal
-predefinito. La forma è quella di `formatChartCompact` e delle sue sorelle,
-che è anche quella che leggono gli agenti. Non sostituisce i test per
-dominio: prende il cambiamento che nessuno ha pensato di asserire.
 
 ## Deciso, e da non riaprire
 

@@ -1,0 +1,3404 @@
+{
+  "lilly": {
+    "sources": {
+      "domicili": {
+        "tradizionale": "i sette pianeti, comuni alle scuole antiche (Tolomeo, Tetrabiblos I.17; Lilly, p. 104).",
+        "moderno": "Novecento, senza un autore unico: Urano e Nettuno come li riferisce Alan Leo (The Art of Synthesis, p. 117), Plutone senza un autore."
+      },
+      "esilio": "il segno opposto al domicilio (Lilly, p. 104; nella moderna per la stessa regola).",
+      "esaltazione": "Tolomeo, Tetrabiblos I.19, per segno e senza gradi; caduta nel segno opposto."
+    },
+    "signLords": {
+      "ariete": {
+        "tradizionale": "marte",
+        "moderno": "marte"
+      },
+      "toro": {
+        "tradizionale": "venere",
+        "moderno": "venere"
+      },
+      "gemelli": {
+        "tradizionale": "mercurio",
+        "moderno": "mercurio"
+      },
+      "cancro": {
+        "tradizionale": "luna",
+        "moderno": "luna"
+      },
+      "leone": {
+        "tradizionale": "sole",
+        "moderno": "sole"
+      },
+      "vergine": {
+        "tradizionale": "mercurio",
+        "moderno": "mercurio"
+      },
+      "bilancia": {
+        "tradizionale": "venere",
+        "moderno": "venere"
+      },
+      "scorpione": {
+        "tradizionale": "marte",
+        "moderno": "plutone"
+      },
+      "sagittario": {
+        "tradizionale": "giove",
+        "moderno": "giove"
+      },
+      "capricorno": {
+        "tradizionale": "saturno",
+        "moderno": "saturno"
+      },
+      "acquario": {
+        "tradizionale": "saturno",
+        "moderno": "urano"
+      },
+      "pesci": {
+        "tradizionale": "giove",
+        "moderno": "nettuno"
+      }
+    },
+    "bodies": [
+      {
+        "id": "sole",
+        "name": "Sole",
+        "sign": "pesci",
+        "dignities": {
+          "tradizionale": [],
+          "moderno": []
+        }
+      },
+      {
+        "id": "luna",
+        "name": "Luna",
+        "sign": "leone",
+        "dignities": {
+          "tradizionale": [],
+          "moderno": []
+        }
+      },
+      {
+        "id": "mercurio",
+        "name": "Mercurio",
+        "sign": "acquario",
+        "dignities": {
+          "tradizionale": [],
+          "moderno": []
+        }
+      },
+      {
+        "id": "venere",
+        "name": "Venere",
+        "sign": "acquario",
+        "dignities": {
+          "tradizionale": [],
+          "moderno": []
+        }
+      },
+      {
+        "id": "marte",
+        "name": "Marte",
+        "sign": "ariete",
+        "dignities": {
+          "tradizionale": [
+            "domicilio"
+          ],
+          "moderno": [
+            "domicilio"
+          ]
+        }
+      },
+      {
+        "id": "giove",
+        "name": "Giove",
+        "sign": "leone",
+        "dignities": {
+          "tradizionale": [],
+          "moderno": []
+        }
+      },
+      {
+        "id": "saturno",
+        "name": "Saturno",
+        "sign": "ariete",
+        "dignities": {
+          "tradizionale": [
+            "caduta"
+          ],
+          "moderno": []
+        }
+      },
+      {
+        "id": "urano",
+        "name": "Urano",
+        "sign": "vergine",
+        "dignities": {
+          "tradizionale": [],
+          "moderno": []
+        }
+      },
+      {
+        "id": "nettuno",
+        "name": "Nettuno",
+        "sign": "scorpione",
+        "dignities": {
+          "tradizionale": [],
+          "moderno": []
+        }
+      },
+      {
+        "id": "plutone",
+        "name": "Plutone",
+        "sign": "vergine",
+        "dignities": {
+          "tradizionale": [],
+          "moderno": []
+        }
+      },
+      {
+        "id": "nodo-nord",
+        "name": "Nodo Nord",
+        "sign": "ariete",
+        "dignities": {
+          "tradizionale": [],
+          "moderno": []
+        }
+      },
+      {
+        "id": "nodo-sud",
+        "name": "Nodo Sud",
+        "sign": "bilancia",
+        "dignities": {
+          "tradizionale": [],
+          "moderno": []
+        }
+      }
+    ],
+    "receptions": {
+      "source": "Lilly, p. 112 (mutua, per «any essentiall dignity») e p. 176 (semplice), sulla tavola di p. 104.",
+      "counted": [
+        "domicilio",
+        "esaltazione",
+        "triplicita",
+        "termine",
+        "faccia"
+      ],
+      "single": [
+        {
+          "receiver": "sole",
+          "received": "luna",
+          "by": [
+            "domicilio",
+            "triplicita"
+          ]
+        },
+        {
+          "receiver": "sole",
+          "received": "marte",
+          "by": [
+            "esaltazione",
+            "triplicita",
+            "faccia"
+          ]
+        },
+        {
+          "receiver": "sole",
+          "received": "giove",
+          "by": [
+            "domicilio",
+            "triplicita"
+          ]
+        },
+        {
+          "receiver": "sole",
+          "received": "saturno",
+          "by": [
+            "esaltazione",
+            "triplicita",
+            "faccia"
+          ]
+        },
+        {
+          "receiver": "luna",
+          "received": "mercurio",
+          "by": [
+            "faccia"
+          ]
+        },
+        {
+          "receiver": "luna",
+          "received": "venere",
+          "by": [
+            "faccia"
+          ]
+        },
+        {
+          "receiver": "mercurio",
+          "received": "marte",
+          "by": [
+            "termine"
+          ]
+        },
+        {
+          "receiver": "venere",
+          "received": "sole",
+          "by": [
+            "esaltazione"
+          ]
+        },
+        {
+          "receiver": "venere",
+          "received": "saturno",
+          "by": [
+            "termine"
+          ]
+        },
+        {
+          "receiver": "marte",
+          "received": "sole",
+          "by": [
+            "triplicita",
+            "termine",
+            "faccia"
+          ]
+        },
+        {
+          "receiver": "marte",
+          "received": "luna",
+          "by": [
+            "faccia"
+          ]
+        },
+        {
+          "receiver": "marte",
+          "received": "venere",
+          "by": [
+            "termine"
+          ]
+        },
+        {
+          "receiver": "marte",
+          "received": "giove",
+          "by": [
+            "termine",
+            "faccia"
+          ]
+        },
+        {
+          "receiver": "marte",
+          "received": "saturno",
+          "by": [
+            "domicilio"
+          ]
+        },
+        {
+          "receiver": "giove",
+          "received": "sole",
+          "by": [
+            "domicilio"
+          ]
+        },
+        {
+          "receiver": "giove",
+          "received": "luna",
+          "by": [
+            "termine"
+          ]
+        },
+        {
+          "receiver": "giove",
+          "received": "mercurio",
+          "by": [
+            "termine"
+          ]
+        },
+        {
+          "receiver": "saturno",
+          "received": "mercurio",
+          "by": [
+            "domicilio",
+            "triplicita"
+          ]
+        },
+        {
+          "receiver": "saturno",
+          "received": "venere",
+          "by": [
+            "domicilio",
+            "triplicita"
+          ]
+        }
+      ],
+      "mutual": [
+        {
+          "bodies": [
+            "sole",
+            "marte"
+          ],
+          "firstReceives": [
+            "esaltazione",
+            "triplicita",
+            "faccia"
+          ],
+          "secondReceives": [
+            "triplicita",
+            "termine",
+            "faccia"
+          ]
+        },
+        {
+          "bodies": [
+            "sole",
+            "giove"
+          ],
+          "firstReceives": [
+            "domicilio",
+            "triplicita"
+          ],
+          "secondReceives": [
+            "domicilio"
+          ]
+        },
+        {
+          "bodies": [
+            "venere",
+            "saturno"
+          ],
+          "firstReceives": [
+            "termine"
+          ],
+          "secondReceives": [
+            "domicilio",
+            "triplicita"
+          ]
+        }
+      ]
+    },
+    "lilly": {
+      "school": "lilly",
+      "source": "Lilly, Christian Astrology (1647), pp. 104-105: esaltazioni col grado e i Nodi, triplicità di giorno e di notte, termini «according to Ptolomy», facce caldee.",
+      "bodies": [
+        {
+          "id": "sole",
+          "name": "Sole",
+          "rulers": {
+            "domicilio": "giove",
+            "esaltazione": "venere",
+            "triplicita": "marte",
+            "termine": "marte",
+            "faccia": "marte"
+          },
+          "dignities": []
+        },
+        {
+          "id": "luna",
+          "name": "Luna",
+          "rulers": {
+            "domicilio": "sole",
+            "triplicita": "sole",
+            "termine": "giove",
+            "faccia": "marte"
+          },
+          "dignities": []
+        },
+        {
+          "id": "mercurio",
+          "name": "Mercurio",
+          "rulers": {
+            "domicilio": "saturno",
+            "triplicita": "saturno",
+            "termine": "giove",
+            "faccia": "luna"
+          },
+          "dignities": []
+        },
+        {
+          "id": "venere",
+          "name": "Venere",
+          "rulers": {
+            "domicilio": "saturno",
+            "triplicita": "saturno",
+            "termine": "marte",
+            "faccia": "luna"
+          },
+          "dignities": []
+        },
+        {
+          "id": "marte",
+          "name": "Marte",
+          "rulers": {
+            "domicilio": "marte",
+            "esaltazione": "sole",
+            "triplicita": "sole",
+            "termine": "mercurio",
+            "faccia": "sole"
+          },
+          "dignities": [
+            "domicilio"
+          ]
+        },
+        {
+          "id": "giove",
+          "name": "Giove",
+          "rulers": {
+            "domicilio": "sole",
+            "triplicita": "sole",
+            "termine": "marte",
+            "faccia": "marte"
+          },
+          "dignities": []
+        },
+        {
+          "id": "saturno",
+          "name": "Saturno",
+          "rulers": {
+            "domicilio": "marte",
+            "esaltazione": "sole",
+            "triplicita": "sole",
+            "termine": "venere",
+            "faccia": "sole"
+          },
+          "dignities": [
+            "caduta"
+          ]
+        },
+        {
+          "id": "urano",
+          "name": "Urano",
+          "rulers": {
+            "domicilio": "mercurio",
+            "esaltazione": "mercurio",
+            "triplicita": "venere",
+            "termine": "marte",
+            "faccia": "mercurio"
+          },
+          "dignities": []
+        },
+        {
+          "id": "nettuno",
+          "name": "Nettuno",
+          "rulers": {
+            "domicilio": "marte",
+            "triplicita": "marte",
+            "termine": "mercurio",
+            "faccia": "venere"
+          },
+          "dignities": []
+        },
+        {
+          "id": "plutone",
+          "name": "Plutone",
+          "rulers": {
+            "domicilio": "mercurio",
+            "esaltazione": "mercurio",
+            "triplicita": "venere",
+            "termine": "saturno",
+            "faccia": "mercurio"
+          },
+          "dignities": []
+        },
+        {
+          "id": "nodo-nord",
+          "name": "Nodo Nord",
+          "rulers": {
+            "domicilio": "marte",
+            "esaltazione": "sole",
+            "triplicita": "sole",
+            "termine": "mercurio",
+            "faccia": "venere"
+          },
+          "dignities": []
+        },
+        {
+          "id": "nodo-sud",
+          "name": "Nodo Sud",
+          "rulers": {
+            "domicilio": "venere",
+            "esaltazione": "saturno",
+            "triplicita": "saturno",
+            "termine": "mercurio",
+            "faccia": "giove"
+          },
+          "dignities": []
+        }
+      ],
+      "conditions": {
+        "source": "Lilly, Christian Astrology (1647): punti dalla tavola di p. 115, applicata come a pp. 177-181; casa con la regola dei cinque gradi (p. 33), moto medio dal libro I (pp. 57-80), Sole a p. 113, orientale e occidentale e assedio a p. 114, partile a p. 106, antiscion a p. 90, Ascendente e Via Combusta a p. 122.",
+        "readings": [
+          "Sotto i raggi entro 17° in qualunque segno, come dice p. 113; la combustione (8°30') solo nello stesso segno. Nell'esempio di pp. 179-180 Lilly dà «Free from Combustion» a Mercurio e alla Luna, che la regola mette sotto i raggi.",
+          "Ricezione mutua per domicilio o per esaltazione: conta come dignità («shall have Dignities», p. 115), e chi ce l'ha non è peregrino.",
+          "Veloce o lento confrontando il moto col segno con la media: un retrogrado è sempre lento, come il Saturno di p. 178.",
+          "Assediato: fra Saturno e Marte nello stesso segno, come nell'esempio di p. 114.",
+          "Stelle in longitudine ed entro 5° tutte e tre: Algol per la tavola, Spica per l'esempio di p. 179, Regolo come loro. A p. 179 Lilly scrive «within six degrees» per Venere, ma non conta Regolo alla Luna, che il motore mette a 5°40'."
+        ],
+        "missing": [
+          "stelle (Regolo, Spica, Algol): manca il catalogo delle stelle (sefstars.txt)"
+        ],
+        "bodies": [
+          {
+            "id": "sole",
+            "name": "Sole",
+            "motion": {
+              "speed": 0.9971853236538153,
+              "mean": 0.9855555555555555,
+              "pace": "veloce",
+              "direction": "diretto"
+            },
+            "peregrine": false,
+            "besieged": false,
+            "antiscion": 187.9546441575643,
+            "contrantiscion": 7.954644157564303,
+            "score": {
+              "fortitudes": [
+                {
+                  "item": "ricezione-domicilio",
+                  "points": 5,
+                  "with": "giove"
+                },
+                {
+                  "item": "veloce",
+                  "points": 2
+                }
+              ],
+              "debilities": [
+                {
+                  "item": "casa",
+                  "house": 8,
+                  "points": 2
+                }
+              ],
+              "totals": {
+                "fortitudes": 7,
+                "debilities": 2,
+                "net": 5
+              }
+            },
+            "house": 8,
+            "angularity": "succedente"
+          },
+          {
+            "id": "luna",
+            "name": "Luna",
+            "motion": {
+              "speed": 13.720766474163318,
+              "mean": 13.176666666666666,
+              "pace": "veloce",
+              "direction": "diretto"
+            },
+            "peregrine": true,
+            "besieged": false,
+            "antiscion": 37.11412652576419,
+            "contrantiscion": 217.1141265257642,
+            "score": {
+              "fortitudes": [
+                {
+                  "item": "casa",
+                  "house": 1,
+                  "points": 5
+                },
+                {
+                  "item": "veloce",
+                  "points": 2
+                },
+                {
+                  "item": "crescente",
+                  "points": 2
+                },
+                {
+                  "item": "libero",
+                  "points": 5
+                }
+              ],
+              "debilities": [
+                {
+                  "item": "peregrino",
+                  "points": 5
+                }
+              ],
+              "totals": {
+                "fortitudes": 14,
+                "debilities": 5,
+                "net": 9
+              }
+            },
+            "house": 1,
+            "angularity": "angolare",
+            "sun": {
+              "distance": 150.8405176318001,
+              "state": "libero"
+            },
+            "phase": "occidentale"
+          },
+          {
+            "id": "mercurio",
+            "name": "Mercurio",
+            "motion": {
+              "speed": 0.9796743265869761,
+              "mean": 0.9855555555555555,
+              "pace": "lento",
+              "direction": "diretto"
+            },
+            "peregrine": true,
+            "besieged": false,
+            "antiscion": 215.48180007708896,
+            "contrantiscion": 35.48180007708896,
+            "score": {
+              "fortitudes": [
+                {
+                  "item": "casa",
+                  "house": 7,
+                  "points": 4
+                },
+                {
+                  "item": "diretto",
+                  "points": 4
+                },
+                {
+                  "item": "libero",
+                  "points": 5
+                }
+              ],
+              "debilities": [
+                {
+                  "item": "peregrino",
+                  "points": 5
+                },
+                {
+                  "item": "lento",
+                  "points": 2
+                },
+                {
+                  "item": "orientale",
+                  "points": 2
+                }
+              ],
+              "totals": {
+                "fortitudes": 13,
+                "debilities": 9,
+                "net": 4
+              }
+            },
+            "house": 7,
+            "angularity": "angolare",
+            "sun": {
+              "distance": 27.52715591952466,
+              "state": "libero"
+            },
+            "phase": "orientale"
+          },
+          {
+            "id": "venere",
+            "name": "Venere",
+            "motion": {
+              "speed": 1.2321357492505685,
+              "mean": 0.9855555555555555,
+              "pace": "veloce",
+              "direction": "diretto"
+            },
+            "peregrine": true,
+            "besieged": false,
+            "antiscion": 213.69790285136793,
+            "contrantiscion": 33.69790285136793,
+            "score": {
+              "fortitudes": [
+                {
+                  "item": "casa",
+                  "house": 7,
+                  "points": 4
+                },
+                {
+                  "item": "diretto",
+                  "points": 4
+                },
+                {
+                  "item": "veloce",
+                  "points": 2
+                },
+                {
+                  "item": "libero",
+                  "points": 5
+                }
+              ],
+              "debilities": [
+                {
+                  "item": "peregrino",
+                  "points": 5
+                },
+                {
+                  "item": "orientale",
+                  "points": 2
+                }
+              ],
+              "totals": {
+                "fortitudes": 15,
+                "debilities": 7,
+                "net": 8
+              }
+            },
+            "house": 7,
+            "angularity": "angolare",
+            "sun": {
+              "distance": 25.743258693803625,
+              "state": "libero"
+            },
+            "phase": "orientale"
+          },
+          {
+            "id": "marte",
+            "name": "Marte",
+            "motion": {
+              "speed": 0.7497691602668399,
+              "mean": 0.5241666666666667,
+              "pace": "veloce",
+              "direction": "diretto"
+            },
+            "peregrine": false,
+            "besieged": false,
+            "antiscion": 161.47546194238006,
+            "contrantiscion": 341.4754619423801,
+            "score": {
+              "fortitudes": [
+                {
+                  "item": "domicilio",
+                  "points": 5
+                },
+                {
+                  "item": "casa",
+                  "house": 9,
+                  "points": 2
+                },
+                {
+                  "item": "diretto",
+                  "points": 4
+                },
+                {
+                  "item": "veloce",
+                  "points": 2
+                },
+                {
+                  "item": "libero",
+                  "points": 5
+                }
+              ],
+              "debilities": [
+                {
+                  "item": "occidentale",
+                  "points": 2
+                }
+              ],
+              "totals": {
+                "fortitudes": 18,
+                "debilities": 2,
+                "net": 16
+              }
+            },
+            "house": 9,
+            "angularity": "cadente",
+            "sun": {
+              "distance": 26.47918221518421,
+              "state": "libero"
+            },
+            "phase": "occidentale"
+          },
+          {
+            "id": "giove",
+            "name": "Giove",
+            "motion": {
+              "speed": -0.11119936168465015,
+              "mean": 0.08305555555555555,
+              "pace": "lento",
+              "direction": "retrogrado"
+            },
+            "peregrine": false,
+            "besieged": false,
+            "antiscion": 31.758147793735873,
+            "contrantiscion": 211.75814779373587,
+            "score": {
+              "fortitudes": [
+                {
+                  "item": "ricezione-domicilio",
+                  "points": 5,
+                  "with": "sole"
+                },
+                {
+                  "item": "casa",
+                  "house": 2,
+                  "points": 3
+                },
+                {
+                  "item": "libero",
+                  "points": 5
+                }
+              ],
+              "debilities": [
+                {
+                  "item": "retrogrado",
+                  "points": 5
+                },
+                {
+                  "item": "lento",
+                  "points": 2
+                },
+                {
+                  "item": "occidentale",
+                  "points": 2
+                }
+              ],
+              "totals": {
+                "fortitudes": 13,
+                "debilities": 9,
+                "net": 4
+              }
+            },
+            "house": 2,
+            "angularity": "succedente",
+            "sun": {
+              "distance": 156.19649636382843,
+              "state": "libero"
+            },
+            "phase": "occidentale"
+          },
+          {
+            "id": "saturno",
+            "name": "Saturno",
+            "motion": {
+              "speed": 0.12080439939554112,
+              "mean": 0.03361111111111111,
+              "pace": "veloce",
+              "direction": "diretto"
+            },
+            "peregrine": true,
+            "besieged": false,
+            "antiscion": 167.5639077753587,
+            "contrantiscion": 347.5639077753587,
+            "score": {
+              "fortitudes": [
+                {
+                  "item": "casa",
+                  "house": 9,
+                  "points": 2
+                },
+                {
+                  "item": "diretto",
+                  "points": 4
+                },
+                {
+                  "item": "veloce",
+                  "points": 2
+                },
+                {
+                  "item": "libero",
+                  "points": 5
+                }
+              ],
+              "debilities": [
+                {
+                  "item": "caduta",
+                  "points": 4
+                },
+                {
+                  "item": "peregrino",
+                  "points": 5
+                },
+                {
+                  "item": "occidentale",
+                  "points": 2
+                }
+              ],
+              "totals": {
+                "fortitudes": 13,
+                "debilities": 11,
+                "net": 2
+              }
+            },
+            "house": 9,
+            "angularity": "cadente",
+            "sun": {
+              "distance": 20.390736382205603,
+              "state": "libero"
+            },
+            "phase": "occidentale"
+          }
+        ],
+        "hour": {
+          "ruler": "sole",
+          "dayRuler": "marte",
+          "diurnal": true,
+          "index": 9,
+          "start": "1968-03-12T13:09Z",
+          "end": "1968-03-12T14:07Z",
+          "local": {
+            "start": "1968-03-12T14:09+01:00",
+            "end": "1968-03-12T15:07+01:00"
+          },
+          "minutes": 58
+        },
+        "ascendant": {
+          "signDegree": 10.503168342716407,
+          "early": false,
+          "late": false
+        },
+        "moonInViaCombusta": false
+      }
+    }
+  },
+  "tolomeo": {
+    "sources": {
+      "domicili": {
+        "tradizionale": "i sette pianeti, comuni alle scuole antiche (Tolomeo, Tetrabiblos I.17; Lilly, p. 104).",
+        "moderno": "Novecento, senza un autore unico: Urano e Nettuno come li riferisce Alan Leo (The Art of Synthesis, p. 117), Plutone senza un autore."
+      },
+      "esilio": "il segno opposto al domicilio (Lilly, p. 104; nella moderna per la stessa regola).",
+      "esaltazione": "Tolomeo, Tetrabiblos I.19, per segno e senza gradi; caduta nel segno opposto."
+    },
+    "signLords": {
+      "ariete": {
+        "tradizionale": "marte",
+        "moderno": "marte"
+      },
+      "toro": {
+        "tradizionale": "venere",
+        "moderno": "venere"
+      },
+      "gemelli": {
+        "tradizionale": "mercurio",
+        "moderno": "mercurio"
+      },
+      "cancro": {
+        "tradizionale": "luna",
+        "moderno": "luna"
+      },
+      "leone": {
+        "tradizionale": "sole",
+        "moderno": "sole"
+      },
+      "vergine": {
+        "tradizionale": "mercurio",
+        "moderno": "mercurio"
+      },
+      "bilancia": {
+        "tradizionale": "venere",
+        "moderno": "venere"
+      },
+      "scorpione": {
+        "tradizionale": "marte",
+        "moderno": "plutone"
+      },
+      "sagittario": {
+        "tradizionale": "giove",
+        "moderno": "giove"
+      },
+      "capricorno": {
+        "tradizionale": "saturno",
+        "moderno": "saturno"
+      },
+      "acquario": {
+        "tradizionale": "saturno",
+        "moderno": "urano"
+      },
+      "pesci": {
+        "tradizionale": "giove",
+        "moderno": "nettuno"
+      }
+    },
+    "bodies": [
+      {
+        "id": "sole",
+        "name": "Sole",
+        "sign": "pesci",
+        "dignities": {
+          "tradizionale": [],
+          "moderno": []
+        }
+      },
+      {
+        "id": "luna",
+        "name": "Luna",
+        "sign": "leone",
+        "dignities": {
+          "tradizionale": [],
+          "moderno": []
+        }
+      },
+      {
+        "id": "mercurio",
+        "name": "Mercurio",
+        "sign": "acquario",
+        "dignities": {
+          "tradizionale": [],
+          "moderno": []
+        }
+      },
+      {
+        "id": "venere",
+        "name": "Venere",
+        "sign": "acquario",
+        "dignities": {
+          "tradizionale": [],
+          "moderno": []
+        }
+      },
+      {
+        "id": "marte",
+        "name": "Marte",
+        "sign": "ariete",
+        "dignities": {
+          "tradizionale": [
+            "domicilio"
+          ],
+          "moderno": [
+            "domicilio"
+          ]
+        }
+      },
+      {
+        "id": "giove",
+        "name": "Giove",
+        "sign": "leone",
+        "dignities": {
+          "tradizionale": [],
+          "moderno": []
+        }
+      },
+      {
+        "id": "saturno",
+        "name": "Saturno",
+        "sign": "ariete",
+        "dignities": {
+          "tradizionale": [
+            "caduta"
+          ],
+          "moderno": []
+        }
+      },
+      {
+        "id": "urano",
+        "name": "Urano",
+        "sign": "vergine",
+        "dignities": {
+          "tradizionale": [],
+          "moderno": []
+        }
+      },
+      {
+        "id": "nettuno",
+        "name": "Nettuno",
+        "sign": "scorpione",
+        "dignities": {
+          "tradizionale": [],
+          "moderno": []
+        }
+      },
+      {
+        "id": "plutone",
+        "name": "Plutone",
+        "sign": "vergine",
+        "dignities": {
+          "tradizionale": [],
+          "moderno": []
+        }
+      },
+      {
+        "id": "nodo-nord",
+        "name": "Nodo Nord",
+        "sign": "ariete",
+        "dignities": {
+          "tradizionale": [],
+          "moderno": []
+        }
+      },
+      {
+        "id": "nodo-sud",
+        "name": "Nodo Sud",
+        "sign": "bilancia",
+        "dignities": {
+          "tradizionale": [],
+          "moderno": []
+        }
+      }
+    ],
+    "receptions": {
+      "source": "Tolomeo non definisce la ricezione: queste sono di Lilly (p. 112 mutua, p. 176 semplice) per domicilio ed esaltazione, che coincidono con Tolomeo I.17 e I.19. Sulle triplicità e i termini di Tolomeo non si contano, per non mescolare le due scuole.",
+      "counted": [
+        "domicilio",
+        "esaltazione"
+      ],
+      "single": [
+        {
+          "receiver": "sole",
+          "received": "luna",
+          "by": [
+            "domicilio"
+          ]
+        },
+        {
+          "receiver": "sole",
+          "received": "marte",
+          "by": [
+            "esaltazione"
+          ]
+        },
+        {
+          "receiver": "sole",
+          "received": "giove",
+          "by": [
+            "domicilio"
+          ]
+        },
+        {
+          "receiver": "sole",
+          "received": "saturno",
+          "by": [
+            "esaltazione"
+          ]
+        },
+        {
+          "receiver": "venere",
+          "received": "sole",
+          "by": [
+            "esaltazione"
+          ]
+        },
+        {
+          "receiver": "marte",
+          "received": "saturno",
+          "by": [
+            "domicilio"
+          ]
+        },
+        {
+          "receiver": "giove",
+          "received": "sole",
+          "by": [
+            "domicilio"
+          ]
+        },
+        {
+          "receiver": "saturno",
+          "received": "mercurio",
+          "by": [
+            "domicilio"
+          ]
+        },
+        {
+          "receiver": "saturno",
+          "received": "venere",
+          "by": [
+            "domicilio"
+          ]
+        }
+      ],
+      "mutual": [
+        {
+          "bodies": [
+            "sole",
+            "giove"
+          ],
+          "firstReceives": [
+            "domicilio"
+          ],
+          "secondReceives": [
+            "domicilio"
+          ]
+        }
+      ]
+    },
+    "tolomeo": {
+      "school": "tolomeo",
+      "source": "Tolomeo, Tetrabiblos, ed. Robbins (Loeb 1940): domicili I.17, esaltazioni per segno e cadute I.19, triplicità I.18 coi co-reggenti dell'acqua, termini «secondo Tolomeo» I.21 dalla tavola greca di p. 106; niente facce (I.23), niente esilio, niente punteggio.",
+      "termsSource": "Termini: tavola greca di Robbins, p. 106 (cod. Vat. gr. 1453), le cui somme per pianeta (Saturno 57, Giove 79, Marte 66, Venere 82, Mercurio 76) sono quelle dei termini egizi, come Tolomeo dice a p. 103. Proclo dà doppie lezioni in Toro, Cancro, Leone, Bilancia, Scorpione, Capricorno e Pesci (nota a pp. 106-107). Nel Leone la tavola mette primo Giove, il testo di p. 105 Saturno: qui si segue la tavola.",
+      "bodies": [
+        {
+          "id": "sole",
+          "name": "Sole",
+          "rulers": {
+            "domicilio": "giove",
+            "esaltazione": "venere",
+            "triplicita": [
+              "marte",
+              "luna",
+              "venere"
+            ],
+            "triplicitaDiSetta": [
+              "marte",
+              "venere"
+            ],
+            "termine": "marte"
+          },
+          "dignities": []
+        },
+        {
+          "id": "luna",
+          "name": "Luna",
+          "rulers": {
+            "domicilio": "sole",
+            "triplicita": [
+              "sole",
+              "giove"
+            ],
+            "triplicitaDiSetta": [
+              "sole"
+            ],
+            "termine": "venere"
+          },
+          "dignities": []
+        },
+        {
+          "id": "mercurio",
+          "name": "Mercurio",
+          "rulers": {
+            "domicilio": "saturno",
+            "triplicita": [
+              "saturno",
+              "mercurio"
+            ],
+            "triplicitaDiSetta": [
+              "saturno"
+            ],
+            "termine": "giove"
+          },
+          "dignities": [
+            "triplicita"
+          ]
+        },
+        {
+          "id": "venere",
+          "name": "Venere",
+          "rulers": {
+            "domicilio": "saturno",
+            "triplicita": [
+              "saturno",
+              "mercurio"
+            ],
+            "triplicitaDiSetta": [
+              "saturno"
+            ],
+            "termine": "marte"
+          },
+          "dignities": []
+        },
+        {
+          "id": "marte",
+          "name": "Marte",
+          "rulers": {
+            "domicilio": "marte",
+            "esaltazione": "sole",
+            "triplicita": [
+              "sole",
+              "giove"
+            ],
+            "triplicitaDiSetta": [
+              "sole"
+            ],
+            "termine": "mercurio"
+          },
+          "dignities": [
+            "domicilio"
+          ]
+        },
+        {
+          "id": "giove",
+          "name": "Giove",
+          "rulers": {
+            "domicilio": "sole",
+            "triplicita": [
+              "sole",
+              "giove"
+            ],
+            "triplicitaDiSetta": [
+              "sole"
+            ],
+            "termine": "marte"
+          },
+          "dignities": [
+            "triplicita"
+          ]
+        },
+        {
+          "id": "saturno",
+          "name": "Saturno",
+          "rulers": {
+            "domicilio": "marte",
+            "esaltazione": "sole",
+            "triplicita": [
+              "sole",
+              "giove"
+            ],
+            "triplicitaDiSetta": [
+              "sole"
+            ],
+            "termine": "venere"
+          },
+          "dignities": [
+            "caduta"
+          ]
+        },
+        {
+          "id": "urano",
+          "name": "Urano",
+          "rulers": {
+            "domicilio": "mercurio",
+            "esaltazione": "mercurio",
+            "triplicita": [
+              "luna",
+              "venere"
+            ],
+            "triplicitaDiSetta": [
+              "venere"
+            ],
+            "termine": "marte"
+          },
+          "dignities": []
+        },
+        {
+          "id": "nettuno",
+          "name": "Nettuno",
+          "rulers": {
+            "domicilio": "marte",
+            "triplicita": [
+              "marte",
+              "luna",
+              "venere"
+            ],
+            "triplicitaDiSetta": [
+              "marte",
+              "venere"
+            ],
+            "termine": "mercurio"
+          },
+          "dignities": []
+        },
+        {
+          "id": "plutone",
+          "name": "Plutone",
+          "rulers": {
+            "domicilio": "mercurio",
+            "esaltazione": "mercurio",
+            "triplicita": [
+              "luna",
+              "venere"
+            ],
+            "triplicitaDiSetta": [
+              "venere"
+            ],
+            "termine": "saturno"
+          },
+          "dignities": []
+        },
+        {
+          "id": "nodo-nord",
+          "name": "Nodo Nord",
+          "rulers": {
+            "domicilio": "marte",
+            "esaltazione": "sole",
+            "triplicita": [
+              "sole",
+              "giove"
+            ],
+            "triplicitaDiSetta": [
+              "sole"
+            ],
+            "termine": "mercurio"
+          },
+          "dignities": []
+        },
+        {
+          "id": "nodo-sud",
+          "name": "Nodo Sud",
+          "rulers": {
+            "domicilio": "venere",
+            "esaltazione": "saturno",
+            "triplicita": [
+              "saturno",
+              "mercurio"
+            ],
+            "triplicitaDiSetta": [
+              "saturno"
+            ],
+            "termine": "giove"
+          },
+          "dignities": []
+        }
+      ]
+    }
+  },
+  "bonatti": {
+    "sources": {
+      "domicili": {
+        "tradizionale": "i sette pianeti, comuni alle scuole antiche (Tolomeo, Tetrabiblos I.17; Lilly, p. 104).",
+        "moderno": "Novecento, senza un autore unico: Urano e Nettuno come li riferisce Alan Leo (The Art of Synthesis, p. 117), Plutone senza un autore."
+      },
+      "esilio": "il segno opposto al domicilio (Lilly, p. 104; nella moderna per la stessa regola).",
+      "esaltazione": "Tolomeo, Tetrabiblos I.19, per segno e senza gradi; caduta nel segno opposto."
+    },
+    "signLords": {
+      "ariete": {
+        "tradizionale": "marte",
+        "moderno": "marte"
+      },
+      "toro": {
+        "tradizionale": "venere",
+        "moderno": "venere"
+      },
+      "gemelli": {
+        "tradizionale": "mercurio",
+        "moderno": "mercurio"
+      },
+      "cancro": {
+        "tradizionale": "luna",
+        "moderno": "luna"
+      },
+      "leone": {
+        "tradizionale": "sole",
+        "moderno": "sole"
+      },
+      "vergine": {
+        "tradizionale": "mercurio",
+        "moderno": "mercurio"
+      },
+      "bilancia": {
+        "tradizionale": "venere",
+        "moderno": "venere"
+      },
+      "scorpione": {
+        "tradizionale": "marte",
+        "moderno": "plutone"
+      },
+      "sagittario": {
+        "tradizionale": "giove",
+        "moderno": "giove"
+      },
+      "capricorno": {
+        "tradizionale": "saturno",
+        "moderno": "saturno"
+      },
+      "acquario": {
+        "tradizionale": "saturno",
+        "moderno": "urano"
+      },
+      "pesci": {
+        "tradizionale": "giove",
+        "moderno": "nettuno"
+      }
+    },
+    "bodies": [
+      {
+        "id": "sole",
+        "name": "Sole",
+        "sign": "pesci",
+        "dignities": {
+          "tradizionale": [],
+          "moderno": []
+        }
+      },
+      {
+        "id": "luna",
+        "name": "Luna",
+        "sign": "leone",
+        "dignities": {
+          "tradizionale": [],
+          "moderno": []
+        }
+      },
+      {
+        "id": "mercurio",
+        "name": "Mercurio",
+        "sign": "acquario",
+        "dignities": {
+          "tradizionale": [],
+          "moderno": []
+        }
+      },
+      {
+        "id": "venere",
+        "name": "Venere",
+        "sign": "acquario",
+        "dignities": {
+          "tradizionale": [],
+          "moderno": []
+        }
+      },
+      {
+        "id": "marte",
+        "name": "Marte",
+        "sign": "ariete",
+        "dignities": {
+          "tradizionale": [
+            "domicilio"
+          ],
+          "moderno": [
+            "domicilio"
+          ]
+        }
+      },
+      {
+        "id": "giove",
+        "name": "Giove",
+        "sign": "leone",
+        "dignities": {
+          "tradizionale": [],
+          "moderno": []
+        }
+      },
+      {
+        "id": "saturno",
+        "name": "Saturno",
+        "sign": "ariete",
+        "dignities": {
+          "tradizionale": [
+            "caduta"
+          ],
+          "moderno": []
+        }
+      },
+      {
+        "id": "urano",
+        "name": "Urano",
+        "sign": "vergine",
+        "dignities": {
+          "tradizionale": [],
+          "moderno": []
+        }
+      },
+      {
+        "id": "nettuno",
+        "name": "Nettuno",
+        "sign": "scorpione",
+        "dignities": {
+          "tradizionale": [],
+          "moderno": []
+        }
+      },
+      {
+        "id": "plutone",
+        "name": "Plutone",
+        "sign": "vergine",
+        "dignities": {
+          "tradizionale": [],
+          "moderno": []
+        }
+      },
+      {
+        "id": "nodo-nord",
+        "name": "Nodo Nord",
+        "sign": "ariete",
+        "dignities": {
+          "tradizionale": [],
+          "moderno": []
+        }
+      },
+      {
+        "id": "nodo-sud",
+        "name": "Nodo Sud",
+        "sign": "bilancia",
+        "dignities": {
+          "tradizionale": [],
+          "moderno": []
+        }
+      }
+    ],
+    "receptions": {
+      "source": "Bonatti (tratt. III, parte 2, PDF pp. 167-168) fa nascere la ricezione da un'applicazione per corpo o per aspetto, e la dà al signore del domicilio, dell'esaltazione o di due dignità minori insieme (termine e triplicità, termine e faccia, faccia e triplicità), mai di una sola. Qui non è calcolata: queste sono le ricezioni comuni, di Lilly (p. 112 mutua, p. 176 semplice) per domicilio ed esaltazione.",
+      "counted": [
+        "domicilio",
+        "esaltazione"
+      ],
+      "single": [
+        {
+          "receiver": "sole",
+          "received": "luna",
+          "by": [
+            "domicilio"
+          ]
+        },
+        {
+          "receiver": "sole",
+          "received": "marte",
+          "by": [
+            "esaltazione"
+          ]
+        },
+        {
+          "receiver": "sole",
+          "received": "giove",
+          "by": [
+            "domicilio"
+          ]
+        },
+        {
+          "receiver": "sole",
+          "received": "saturno",
+          "by": [
+            "esaltazione"
+          ]
+        },
+        {
+          "receiver": "venere",
+          "received": "sole",
+          "by": [
+            "esaltazione"
+          ]
+        },
+        {
+          "receiver": "marte",
+          "received": "saturno",
+          "by": [
+            "domicilio"
+          ]
+        },
+        {
+          "receiver": "giove",
+          "received": "sole",
+          "by": [
+            "domicilio"
+          ]
+        },
+        {
+          "receiver": "saturno",
+          "received": "mercurio",
+          "by": [
+            "domicilio"
+          ]
+        },
+        {
+          "receiver": "saturno",
+          "received": "venere",
+          "by": [
+            "domicilio"
+          ]
+        }
+      ],
+      "mutual": [
+        {
+          "bodies": [
+            "sole",
+            "giove"
+          ],
+          "firstReceives": [
+            "domicilio"
+          ],
+          "secondReceives": [
+            "domicilio"
+          ]
+        }
+      ]
+    },
+    "bonatti": {
+      "school": "bonatti",
+      "source": "Bonatti, Decem tractatus astronomiae (Ratdolt 1491), tratt. II, parte 2: domicili cap. VI, esilio cap. VII, esaltazioni col grado e i Nodi cap. VIII, cadute cap. X, triplicità coi tre signori cap. XI, termini cap. XIV, facce caldee cap. XVII (ff. 14v-21r); niente punteggio.",
+      "termsSource": "Termini: tavola del cap. XIV (f. 19v), quelli che Bonatti dice di Tolomeo, con le somme dei termini egizi (Saturno 57, Giove 79, Marte 66, Venere 82, Mercurio 76). Uguali alla tavola greca di Robbins in undici segni; nel Leone Saturno è primo e Giove ultimo, come il cap. XV spiega e come Tolomeo scrive a p. 105.",
+      "bodies": [
+        {
+          "id": "sole",
+          "name": "Sole",
+          "rulers": {
+            "domicilio": "giove",
+            "esaltazione": "venere",
+            "triplicita": {
+              "diurno": "venere",
+              "notturno": "marte",
+              "partecipe": "luna"
+            },
+            "triplicitaDiSetta": "venere",
+            "termine": "marte",
+            "faccia": "marte"
+          },
+          "dignities": []
+        },
+        {
+          "id": "luna",
+          "name": "Luna",
+          "rulers": {
+            "domicilio": "sole",
+            "triplicita": {
+              "diurno": "sole",
+              "notturno": "giove",
+              "partecipe": "saturno"
+            },
+            "triplicitaDiSetta": "sole",
+            "termine": "venere",
+            "faccia": "marte"
+          },
+          "dignities": []
+        },
+        {
+          "id": "mercurio",
+          "name": "Mercurio",
+          "rulers": {
+            "domicilio": "saturno",
+            "triplicita": {
+              "diurno": "saturno",
+              "notturno": "mercurio",
+              "partecipe": "giove"
+            },
+            "triplicitaDiSetta": "saturno",
+            "termine": "giove",
+            "faccia": "luna"
+          },
+          "dignities": [
+            "triplicita"
+          ]
+        },
+        {
+          "id": "venere",
+          "name": "Venere",
+          "rulers": {
+            "domicilio": "saturno",
+            "triplicita": {
+              "diurno": "saturno",
+              "notturno": "mercurio",
+              "partecipe": "giove"
+            },
+            "triplicitaDiSetta": "saturno",
+            "termine": "marte",
+            "faccia": "luna"
+          },
+          "dignities": []
+        },
+        {
+          "id": "marte",
+          "name": "Marte",
+          "rulers": {
+            "domicilio": "marte",
+            "esaltazione": "sole",
+            "triplicita": {
+              "diurno": "sole",
+              "notturno": "giove",
+              "partecipe": "saturno"
+            },
+            "triplicitaDiSetta": "sole",
+            "termine": "mercurio",
+            "faccia": "sole"
+          },
+          "dignities": [
+            "domicilio"
+          ]
+        },
+        {
+          "id": "giove",
+          "name": "Giove",
+          "rulers": {
+            "domicilio": "sole",
+            "triplicita": {
+              "diurno": "sole",
+              "notturno": "giove",
+              "partecipe": "saturno"
+            },
+            "triplicitaDiSetta": "sole",
+            "termine": "giove",
+            "faccia": "marte"
+          },
+          "dignities": [
+            "triplicita",
+            "termine"
+          ]
+        },
+        {
+          "id": "saturno",
+          "name": "Saturno",
+          "rulers": {
+            "domicilio": "marte",
+            "esaltazione": "sole",
+            "triplicita": {
+              "diurno": "sole",
+              "notturno": "giove",
+              "partecipe": "saturno"
+            },
+            "triplicitaDiSetta": "sole",
+            "termine": "venere",
+            "faccia": "sole"
+          },
+          "dignities": [
+            "triplicita",
+            "caduta"
+          ]
+        },
+        {
+          "id": "urano",
+          "name": "Urano",
+          "rulers": {
+            "domicilio": "mercurio",
+            "esaltazione": "mercurio",
+            "triplicita": {
+              "diurno": "venere",
+              "notturno": "luna",
+              "partecipe": "marte"
+            },
+            "triplicitaDiSetta": "venere",
+            "termine": "marte",
+            "faccia": "mercurio"
+          },
+          "dignities": []
+        },
+        {
+          "id": "nettuno",
+          "name": "Nettuno",
+          "rulers": {
+            "domicilio": "marte",
+            "triplicita": {
+              "diurno": "venere",
+              "notturno": "marte",
+              "partecipe": "luna"
+            },
+            "triplicitaDiSetta": "venere",
+            "termine": "mercurio",
+            "faccia": "venere"
+          },
+          "dignities": []
+        },
+        {
+          "id": "plutone",
+          "name": "Plutone",
+          "rulers": {
+            "domicilio": "mercurio",
+            "esaltazione": "mercurio",
+            "triplicita": {
+              "diurno": "venere",
+              "notturno": "luna",
+              "partecipe": "marte"
+            },
+            "triplicitaDiSetta": "venere",
+            "termine": "saturno",
+            "faccia": "mercurio"
+          },
+          "dignities": []
+        },
+        {
+          "id": "nodo-nord",
+          "name": "Nodo Nord",
+          "rulers": {
+            "domicilio": "marte",
+            "esaltazione": "sole",
+            "triplicita": {
+              "diurno": "sole",
+              "notturno": "giove",
+              "partecipe": "saturno"
+            },
+            "triplicitaDiSetta": "sole",
+            "termine": "mercurio",
+            "faccia": "venere"
+          },
+          "dignities": []
+        },
+        {
+          "id": "nodo-sud",
+          "name": "Nodo Sud",
+          "rulers": {
+            "domicilio": "venere",
+            "esaltazione": "saturno",
+            "triplicita": {
+              "diurno": "saturno",
+              "notturno": "mercurio",
+              "partecipe": "giove"
+            },
+            "triplicitaDiSetta": "saturno",
+            "termine": "giove",
+            "faccia": "giove"
+          },
+          "dignities": []
+        }
+      ]
+    }
+  },
+  "valente": {
+    "sources": {
+      "domicili": {
+        "tradizionale": "i sette pianeti, comuni alle scuole antiche (Tolomeo, Tetrabiblos I.17; Lilly, p. 104).",
+        "moderno": "Novecento, senza un autore unico: Urano e Nettuno come li riferisce Alan Leo (The Art of Synthesis, p. 117), Plutone senza un autore."
+      },
+      "esilio": "il segno opposto al domicilio (Lilly, p. 104; nella moderna per la stessa regola).",
+      "esaltazione": "Tolomeo, Tetrabiblos I.19, per segno e senza gradi; caduta nel segno opposto."
+    },
+    "signLords": {
+      "ariete": {
+        "tradizionale": "marte",
+        "moderno": "marte"
+      },
+      "toro": {
+        "tradizionale": "venere",
+        "moderno": "venere"
+      },
+      "gemelli": {
+        "tradizionale": "mercurio",
+        "moderno": "mercurio"
+      },
+      "cancro": {
+        "tradizionale": "luna",
+        "moderno": "luna"
+      },
+      "leone": {
+        "tradizionale": "sole",
+        "moderno": "sole"
+      },
+      "vergine": {
+        "tradizionale": "mercurio",
+        "moderno": "mercurio"
+      },
+      "bilancia": {
+        "tradizionale": "venere",
+        "moderno": "venere"
+      },
+      "scorpione": {
+        "tradizionale": "marte",
+        "moderno": "plutone"
+      },
+      "sagittario": {
+        "tradizionale": "giove",
+        "moderno": "giove"
+      },
+      "capricorno": {
+        "tradizionale": "saturno",
+        "moderno": "saturno"
+      },
+      "acquario": {
+        "tradizionale": "saturno",
+        "moderno": "urano"
+      },
+      "pesci": {
+        "tradizionale": "giove",
+        "moderno": "nettuno"
+      }
+    },
+    "bodies": [
+      {
+        "id": "sole",
+        "name": "Sole",
+        "sign": "pesci",
+        "dignities": {
+          "tradizionale": [],
+          "moderno": []
+        }
+      },
+      {
+        "id": "luna",
+        "name": "Luna",
+        "sign": "leone",
+        "dignities": {
+          "tradizionale": [],
+          "moderno": []
+        }
+      },
+      {
+        "id": "mercurio",
+        "name": "Mercurio",
+        "sign": "acquario",
+        "dignities": {
+          "tradizionale": [],
+          "moderno": []
+        }
+      },
+      {
+        "id": "venere",
+        "name": "Venere",
+        "sign": "acquario",
+        "dignities": {
+          "tradizionale": [],
+          "moderno": []
+        }
+      },
+      {
+        "id": "marte",
+        "name": "Marte",
+        "sign": "ariete",
+        "dignities": {
+          "tradizionale": [
+            "domicilio"
+          ],
+          "moderno": [
+            "domicilio"
+          ]
+        }
+      },
+      {
+        "id": "giove",
+        "name": "Giove",
+        "sign": "leone",
+        "dignities": {
+          "tradizionale": [],
+          "moderno": []
+        }
+      },
+      {
+        "id": "saturno",
+        "name": "Saturno",
+        "sign": "ariete",
+        "dignities": {
+          "tradizionale": [
+            "caduta"
+          ],
+          "moderno": []
+        }
+      },
+      {
+        "id": "urano",
+        "name": "Urano",
+        "sign": "vergine",
+        "dignities": {
+          "tradizionale": [],
+          "moderno": []
+        }
+      },
+      {
+        "id": "nettuno",
+        "name": "Nettuno",
+        "sign": "scorpione",
+        "dignities": {
+          "tradizionale": [],
+          "moderno": []
+        }
+      },
+      {
+        "id": "plutone",
+        "name": "Plutone",
+        "sign": "vergine",
+        "dignities": {
+          "tradizionale": [],
+          "moderno": []
+        }
+      },
+      {
+        "id": "nodo-nord",
+        "name": "Nodo Nord",
+        "sign": "ariete",
+        "dignities": {
+          "tradizionale": [],
+          "moderno": []
+        }
+      },
+      {
+        "id": "nodo-sud",
+        "name": "Nodo Sud",
+        "sign": "bilancia",
+        "dignities": {
+          "tradizionale": [],
+          "moderno": []
+        }
+      }
+    ],
+    "receptions": {
+      "source": "In Valente una definizione della ricezione non è stata cercata: queste sono di Lilly (p. 112 mutua, p. 176 semplice) per domicilio ed esaltazione. Sui triangoli e i termini di Valente non si contano, per non mescolare le scuole.",
+      "counted": [
+        "domicilio",
+        "esaltazione"
+      ],
+      "single": [
+        {
+          "receiver": "sole",
+          "received": "luna",
+          "by": [
+            "domicilio"
+          ]
+        },
+        {
+          "receiver": "sole",
+          "received": "marte",
+          "by": [
+            "esaltazione"
+          ]
+        },
+        {
+          "receiver": "sole",
+          "received": "giove",
+          "by": [
+            "domicilio"
+          ]
+        },
+        {
+          "receiver": "sole",
+          "received": "saturno",
+          "by": [
+            "esaltazione"
+          ]
+        },
+        {
+          "receiver": "venere",
+          "received": "sole",
+          "by": [
+            "esaltazione"
+          ]
+        },
+        {
+          "receiver": "marte",
+          "received": "saturno",
+          "by": [
+            "domicilio"
+          ]
+        },
+        {
+          "receiver": "giove",
+          "received": "sole",
+          "by": [
+            "domicilio"
+          ]
+        },
+        {
+          "receiver": "saturno",
+          "received": "mercurio",
+          "by": [
+            "domicilio"
+          ]
+        },
+        {
+          "receiver": "saturno",
+          "received": "venere",
+          "by": [
+            "domicilio"
+          ]
+        }
+      ],
+      "mutual": [
+        {
+          "bodies": [
+            "sole",
+            "giove"
+          ],
+          "firstReceives": [
+            "domicilio"
+          ],
+          "secondReceives": [
+            "domicilio"
+          ]
+        }
+      ]
+    },
+    "valente": {
+      "school": "valente",
+      "source": "Vettio Valente, Anthologiae, ed. Kroll (1908): domicili I.2, esaltazioni col grado e cadute al grado opposto III.4 (p. 140), triangoli coi tre signori ordinati per setta II.1 (pp. 55-56), termini egizi I.3; niente Nodi, facce, esilio né punteggio.",
+      "termsSource": "Termini: gli egizi, nella tavola che Tolomeo riferisce (Tetrabiblos I.21, ed. Robbins, p. 96; somme Saturno 57, Giove 79, Marte 66, Venere 82, Mercurio 76). Valente I.3 (ed. Kroll, pp. 14-19) li segue in nove segni; nella Bilancia stampa Saturno 6, Mercurio 5, Giove 8, Venere 7, Marte 4 (l'apparato: «ceteri» danno gli egizi), nello Scorpione i suoi numeri sommano 31 e nell'Ariete due mancano. Lì si seguono gli egizi.",
+      "bodies": [
+        {
+          "id": "sole",
+          "name": "Sole",
+          "rulers": {
+            "domicilio": "giove",
+            "esaltazione": "venere",
+            "triplicita": {
+              "diurno": "venere",
+              "notturno": "marte",
+              "terzo": "luna"
+            },
+            "triplicitaDiSetta": [
+              "venere",
+              "marte",
+              "luna"
+            ],
+            "termine": "marte"
+          },
+          "dignities": []
+        },
+        {
+          "id": "luna",
+          "name": "Luna",
+          "rulers": {
+            "domicilio": "sole",
+            "triplicita": {
+              "diurno": "sole",
+              "notturno": "giove",
+              "terzo": "saturno"
+            },
+            "triplicitaDiSetta": [
+              "sole",
+              "giove",
+              "saturno"
+            ],
+            "termine": "mercurio"
+          },
+          "dignities": []
+        },
+        {
+          "id": "mercurio",
+          "name": "Mercurio",
+          "rulers": {
+            "domicilio": "saturno",
+            "triplicita": {
+              "diurno": "saturno",
+              "notturno": "mercurio",
+              "terzo": "giove"
+            },
+            "triplicitaDiSetta": [
+              "saturno",
+              "mercurio",
+              "giove"
+            ],
+            "termine": "marte"
+          },
+          "dignities": [
+            "triplicita"
+          ]
+        },
+        {
+          "id": "venere",
+          "name": "Venere",
+          "rulers": {
+            "domicilio": "saturno",
+            "triplicita": {
+              "diurno": "saturno",
+              "notturno": "mercurio",
+              "terzo": "giove"
+            },
+            "triplicitaDiSetta": [
+              "saturno",
+              "mercurio",
+              "giove"
+            ],
+            "termine": "saturno"
+          },
+          "dignities": []
+        },
+        {
+          "id": "marte",
+          "name": "Marte",
+          "rulers": {
+            "domicilio": "marte",
+            "esaltazione": "sole",
+            "triplicita": {
+              "diurno": "sole",
+              "notturno": "giove",
+              "terzo": "saturno"
+            },
+            "triplicitaDiSetta": [
+              "sole",
+              "giove",
+              "saturno"
+            ],
+            "termine": "mercurio"
+          },
+          "dignities": [
+            "domicilio"
+          ]
+        },
+        {
+          "id": "giove",
+          "name": "Giove",
+          "rulers": {
+            "domicilio": "sole",
+            "triplicita": {
+              "diurno": "sole",
+              "notturno": "giove",
+              "terzo": "saturno"
+            },
+            "triplicitaDiSetta": [
+              "sole",
+              "giove",
+              "saturno"
+            ],
+            "termine": "marte"
+          },
+          "dignities": [
+            "triplicita"
+          ]
+        },
+        {
+          "id": "saturno",
+          "name": "Saturno",
+          "rulers": {
+            "domicilio": "marte",
+            "esaltazione": "sole",
+            "triplicita": {
+              "diurno": "sole",
+              "notturno": "giove",
+              "terzo": "saturno"
+            },
+            "triplicitaDiSetta": [
+              "sole",
+              "giove",
+              "saturno"
+            ],
+            "termine": "mercurio"
+          },
+          "dignities": [
+            "triplicita",
+            "caduta"
+          ]
+        },
+        {
+          "id": "urano",
+          "name": "Urano",
+          "rulers": {
+            "domicilio": "mercurio",
+            "esaltazione": "mercurio",
+            "triplicita": {
+              "diurno": "venere",
+              "notturno": "luna",
+              "terzo": "marte"
+            },
+            "triplicitaDiSetta": [
+              "venere",
+              "luna",
+              "marte"
+            ],
+            "termine": "marte"
+          },
+          "dignities": []
+        },
+        {
+          "id": "nettuno",
+          "name": "Nettuno",
+          "rulers": {
+            "domicilio": "marte",
+            "triplicita": {
+              "diurno": "venere",
+              "notturno": "marte",
+              "terzo": "luna"
+            },
+            "triplicitaDiSetta": [
+              "venere",
+              "marte",
+              "luna"
+            ],
+            "termine": "saturno"
+          },
+          "dignities": []
+        },
+        {
+          "id": "plutone",
+          "name": "Plutone",
+          "rulers": {
+            "domicilio": "mercurio",
+            "esaltazione": "mercurio",
+            "triplicita": {
+              "diurno": "venere",
+              "notturno": "luna",
+              "terzo": "marte"
+            },
+            "triplicitaDiSetta": [
+              "venere",
+              "luna",
+              "marte"
+            ],
+            "termine": "marte"
+          },
+          "dignities": []
+        },
+        {
+          "id": "nodo-nord",
+          "name": "Nodo Nord",
+          "rulers": {
+            "domicilio": "marte",
+            "esaltazione": "sole",
+            "triplicita": {
+              "diurno": "sole",
+              "notturno": "giove",
+              "terzo": "saturno"
+            },
+            "triplicitaDiSetta": [
+              "sole",
+              "giove",
+              "saturno"
+            ],
+            "termine": "marte"
+          },
+          "dignities": []
+        },
+        {
+          "id": "nodo-sud",
+          "name": "Nodo Sud",
+          "rulers": {
+            "domicilio": "venere",
+            "esaltazione": "saturno",
+            "triplicita": {
+              "diurno": "saturno",
+              "notturno": "mercurio",
+              "terzo": "giove"
+            },
+            "triplicitaDiSetta": [
+              "saturno",
+              "mercurio",
+              "giove"
+            ],
+            "termine": "giove"
+          },
+          "dignities": []
+        }
+      ]
+    }
+  },
+  "lilly, notturno": {
+    "sources": {
+      "domicili": {
+        "tradizionale": "i sette pianeti, comuni alle scuole antiche (Tolomeo, Tetrabiblos I.17; Lilly, p. 104).",
+        "moderno": "Novecento, senza un autore unico: Urano e Nettuno come li riferisce Alan Leo (The Art of Synthesis, p. 117), Plutone senza un autore."
+      },
+      "esilio": "il segno opposto al domicilio (Lilly, p. 104; nella moderna per la stessa regola).",
+      "esaltazione": "Tolomeo, Tetrabiblos I.19, per segno e senza gradi; caduta nel segno opposto."
+    },
+    "signLords": {
+      "ariete": {
+        "tradizionale": "marte",
+        "moderno": "marte"
+      },
+      "toro": {
+        "tradizionale": "venere",
+        "moderno": "venere"
+      },
+      "gemelli": {
+        "tradizionale": "mercurio",
+        "moderno": "mercurio"
+      },
+      "cancro": {
+        "tradizionale": "luna",
+        "moderno": "luna"
+      },
+      "leone": {
+        "tradizionale": "sole",
+        "moderno": "sole"
+      },
+      "vergine": {
+        "tradizionale": "mercurio",
+        "moderno": "mercurio"
+      },
+      "bilancia": {
+        "tradizionale": "venere",
+        "moderno": "venere"
+      },
+      "scorpione": {
+        "tradizionale": "marte",
+        "moderno": "plutone"
+      },
+      "sagittario": {
+        "tradizionale": "giove",
+        "moderno": "giove"
+      },
+      "capricorno": {
+        "tradizionale": "saturno",
+        "moderno": "saturno"
+      },
+      "acquario": {
+        "tradizionale": "saturno",
+        "moderno": "urano"
+      },
+      "pesci": {
+        "tradizionale": "giove",
+        "moderno": "nettuno"
+      }
+    },
+    "bodies": [
+      {
+        "id": "sole",
+        "name": "Sole",
+        "sign": "pesci",
+        "dignities": {
+          "tradizionale": [],
+          "moderno": []
+        }
+      },
+      {
+        "id": "luna",
+        "name": "Luna",
+        "sign": "leone",
+        "dignities": {
+          "tradizionale": [],
+          "moderno": []
+        }
+      },
+      {
+        "id": "mercurio",
+        "name": "Mercurio",
+        "sign": "acquario",
+        "dignities": {
+          "tradizionale": [],
+          "moderno": []
+        }
+      },
+      {
+        "id": "venere",
+        "name": "Venere",
+        "sign": "acquario",
+        "dignities": {
+          "tradizionale": [],
+          "moderno": []
+        }
+      },
+      {
+        "id": "marte",
+        "name": "Marte",
+        "sign": "ariete",
+        "dignities": {
+          "tradizionale": [
+            "domicilio"
+          ],
+          "moderno": [
+            "domicilio"
+          ]
+        }
+      },
+      {
+        "id": "giove",
+        "name": "Giove",
+        "sign": "leone",
+        "dignities": {
+          "tradizionale": [],
+          "moderno": []
+        }
+      },
+      {
+        "id": "saturno",
+        "name": "Saturno",
+        "sign": "ariete",
+        "dignities": {
+          "tradizionale": [
+            "caduta"
+          ],
+          "moderno": []
+        }
+      },
+      {
+        "id": "urano",
+        "name": "Urano",
+        "sign": "vergine",
+        "dignities": {
+          "tradizionale": [],
+          "moderno": []
+        }
+      },
+      {
+        "id": "nettuno",
+        "name": "Nettuno",
+        "sign": "scorpione",
+        "dignities": {
+          "tradizionale": [],
+          "moderno": []
+        }
+      },
+      {
+        "id": "plutone",
+        "name": "Plutone",
+        "sign": "vergine",
+        "dignities": {
+          "tradizionale": [],
+          "moderno": []
+        }
+      },
+      {
+        "id": "nodo-nord",
+        "name": "Nodo Nord",
+        "sign": "ariete",
+        "dignities": {
+          "tradizionale": [],
+          "moderno": []
+        }
+      },
+      {
+        "id": "nodo-sud",
+        "name": "Nodo Sud",
+        "sign": "bilancia",
+        "dignities": {
+          "tradizionale": [],
+          "moderno": []
+        }
+      }
+    ],
+    "receptions": {
+      "source": "Lilly, p. 112 (mutua, per «any essentiall dignity») e p. 176 (semplice), sulla tavola di p. 104.",
+      "counted": [
+        "domicilio",
+        "esaltazione",
+        "triplicita",
+        "termine",
+        "faccia"
+      ],
+      "single": [
+        {
+          "receiver": "sole",
+          "received": "luna",
+          "by": [
+            "domicilio"
+          ]
+        },
+        {
+          "receiver": "sole",
+          "received": "marte",
+          "by": [
+            "esaltazione",
+            "faccia"
+          ]
+        },
+        {
+          "receiver": "sole",
+          "received": "giove",
+          "by": [
+            "domicilio"
+          ]
+        },
+        {
+          "receiver": "sole",
+          "received": "saturno",
+          "by": [
+            "esaltazione",
+            "faccia"
+          ]
+        },
+        {
+          "receiver": "luna",
+          "received": "mercurio",
+          "by": [
+            "faccia"
+          ]
+        },
+        {
+          "receiver": "luna",
+          "received": "venere",
+          "by": [
+            "faccia"
+          ]
+        },
+        {
+          "receiver": "mercurio",
+          "received": "venere",
+          "by": [
+            "triplicita"
+          ]
+        },
+        {
+          "receiver": "mercurio",
+          "received": "marte",
+          "by": [
+            "termine"
+          ]
+        },
+        {
+          "receiver": "venere",
+          "received": "sole",
+          "by": [
+            "esaltazione"
+          ]
+        },
+        {
+          "receiver": "venere",
+          "received": "luna",
+          "by": [
+            "termine"
+          ]
+        },
+        {
+          "receiver": "venere",
+          "received": "saturno",
+          "by": [
+            "termine"
+          ]
+        },
+        {
+          "receiver": "marte",
+          "received": "sole",
+          "by": [
+            "triplicita",
+            "termine",
+            "faccia"
+          ]
+        },
+        {
+          "receiver": "marte",
+          "received": "venere",
+          "by": [
+            "termine"
+          ]
+        },
+        {
+          "receiver": "marte",
+          "received": "giove",
+          "by": [
+            "termine",
+            "faccia"
+          ]
+        },
+        {
+          "receiver": "marte",
+          "received": "saturno",
+          "by": [
+            "domicilio"
+          ]
+        },
+        {
+          "receiver": "giove",
+          "received": "sole",
+          "by": [
+            "domicilio"
+          ]
+        },
+        {
+          "receiver": "giove",
+          "received": "luna",
+          "by": [
+            "triplicita",
+            "faccia"
+          ]
+        },
+        {
+          "receiver": "giove",
+          "received": "mercurio",
+          "by": [
+            "termine"
+          ]
+        },
+        {
+          "receiver": "giove",
+          "received": "marte",
+          "by": [
+            "triplicita"
+          ]
+        },
+        {
+          "receiver": "giove",
+          "received": "saturno",
+          "by": [
+            "triplicita"
+          ]
+        },
+        {
+          "receiver": "saturno",
+          "received": "mercurio",
+          "by": [
+            "domicilio"
+          ]
+        },
+        {
+          "receiver": "saturno",
+          "received": "venere",
+          "by": [
+            "domicilio"
+          ]
+        }
+      ],
+      "mutual": [
+        {
+          "bodies": [
+            "sole",
+            "marte"
+          ],
+          "firstReceives": [
+            "esaltazione",
+            "faccia"
+          ],
+          "secondReceives": [
+            "triplicita",
+            "termine",
+            "faccia"
+          ]
+        },
+        {
+          "bodies": [
+            "sole",
+            "giove"
+          ],
+          "firstReceives": [
+            "domicilio"
+          ],
+          "secondReceives": [
+            "domicilio"
+          ]
+        },
+        {
+          "bodies": [
+            "luna",
+            "venere"
+          ],
+          "firstReceives": [
+            "faccia"
+          ],
+          "secondReceives": [
+            "termine"
+          ]
+        },
+        {
+          "bodies": [
+            "venere",
+            "saturno"
+          ],
+          "firstReceives": [
+            "termine"
+          ],
+          "secondReceives": [
+            "domicilio"
+          ]
+        },
+        {
+          "bodies": [
+            "marte",
+            "giove"
+          ],
+          "firstReceives": [
+            "termine",
+            "faccia"
+          ],
+          "secondReceives": [
+            "triplicita"
+          ]
+        }
+      ]
+    },
+    "lilly": {
+      "school": "lilly",
+      "source": "Lilly, Christian Astrology (1647), pp. 104-105: esaltazioni col grado e i Nodi, triplicità di giorno e di notte, termini «according to Ptolomy», facce caldee.",
+      "bodies": [
+        {
+          "id": "sole",
+          "name": "Sole",
+          "rulers": {
+            "domicilio": "giove",
+            "esaltazione": "venere",
+            "triplicita": "marte",
+            "termine": "marte",
+            "faccia": "marte"
+          },
+          "dignities": []
+        },
+        {
+          "id": "luna",
+          "name": "Luna",
+          "rulers": {
+            "domicilio": "sole",
+            "triplicita": "giove",
+            "termine": "venere",
+            "faccia": "giove"
+          },
+          "dignities": []
+        },
+        {
+          "id": "mercurio",
+          "name": "Mercurio",
+          "rulers": {
+            "domicilio": "saturno",
+            "triplicita": "mercurio",
+            "termine": "giove",
+            "faccia": "luna"
+          },
+          "dignities": [
+            "triplicita"
+          ]
+        },
+        {
+          "id": "venere",
+          "name": "Venere",
+          "rulers": {
+            "domicilio": "saturno",
+            "triplicita": "mercurio",
+            "termine": "marte",
+            "faccia": "luna"
+          },
+          "dignities": []
+        },
+        {
+          "id": "marte",
+          "name": "Marte",
+          "rulers": {
+            "domicilio": "marte",
+            "esaltazione": "sole",
+            "triplicita": "giove",
+            "termine": "mercurio",
+            "faccia": "sole"
+          },
+          "dignities": [
+            "domicilio"
+          ]
+        },
+        {
+          "id": "giove",
+          "name": "Giove",
+          "rulers": {
+            "domicilio": "sole",
+            "triplicita": "giove",
+            "termine": "marte",
+            "faccia": "marte"
+          },
+          "dignities": [
+            "triplicita"
+          ]
+        },
+        {
+          "id": "saturno",
+          "name": "Saturno",
+          "rulers": {
+            "domicilio": "marte",
+            "esaltazione": "sole",
+            "triplicita": "giove",
+            "termine": "venere",
+            "faccia": "sole"
+          },
+          "dignities": [
+            "caduta"
+          ]
+        },
+        {
+          "id": "urano",
+          "name": "Urano",
+          "rulers": {
+            "domicilio": "mercurio",
+            "esaltazione": "mercurio",
+            "triplicita": "luna",
+            "termine": "marte",
+            "faccia": "mercurio"
+          },
+          "dignities": []
+        },
+        {
+          "id": "nettuno",
+          "name": "Nettuno",
+          "rulers": {
+            "domicilio": "marte",
+            "triplicita": "marte",
+            "termine": "mercurio",
+            "faccia": "venere"
+          },
+          "dignities": []
+        },
+        {
+          "id": "plutone",
+          "name": "Plutone",
+          "rulers": {
+            "domicilio": "mercurio",
+            "esaltazione": "mercurio",
+            "triplicita": "luna",
+            "termine": "saturno",
+            "faccia": "mercurio"
+          },
+          "dignities": []
+        },
+        {
+          "id": "nodo-nord",
+          "name": "Nodo Nord",
+          "rulers": {
+            "domicilio": "marte",
+            "esaltazione": "sole",
+            "triplicita": "giove",
+            "termine": "mercurio",
+            "faccia": "venere"
+          },
+          "dignities": []
+        },
+        {
+          "id": "nodo-sud",
+          "name": "Nodo Sud",
+          "rulers": {
+            "domicilio": "venere",
+            "esaltazione": "saturno",
+            "triplicita": "mercurio",
+            "termine": "mercurio",
+            "faccia": "giove"
+          },
+          "dignities": []
+        }
+      ],
+      "conditions": {
+        "source": "Lilly, Christian Astrology (1647): punti dalla tavola di p. 115, applicata come a pp. 177-181; casa con la regola dei cinque gradi (p. 33), moto medio dal libro I (pp. 57-80), Sole a p. 113, orientale e occidentale e assedio a p. 114, partile a p. 106, antiscion a p. 90, Ascendente e Via Combusta a p. 122.",
+        "readings": [
+          "Sotto i raggi entro 17° in qualunque segno, come dice p. 113; la combustione (8°30') solo nello stesso segno. Nell'esempio di pp. 179-180 Lilly dà «Free from Combustion» a Mercurio e alla Luna, che la regola mette sotto i raggi.",
+          "Ricezione mutua per domicilio o per esaltazione: conta come dignità («shall have Dignities», p. 115), e chi ce l'ha non è peregrino.",
+          "Veloce o lento confrontando il moto col segno con la media: un retrogrado è sempre lento, come il Saturno di p. 178.",
+          "Assediato: fra Saturno e Marte nello stesso segno, come nell'esempio di p. 114.",
+          "Stelle in longitudine ed entro 5° tutte e tre: Algol per la tavola, Spica per l'esempio di p. 179, Regolo come loro. A p. 179 Lilly scrive «within six degrees» per Venere, ma non conta Regolo alla Luna, che il motore mette a 5°40'."
+        ],
+        "missing": [
+          "stelle (Regolo, Spica, Algol): manca il catalogo delle stelle (sefstars.txt)"
+        ],
+        "bodies": [
+          {
+            "id": "sole",
+            "name": "Sole",
+            "motion": {
+              "speed": 0.9974866474445241,
+              "mean": 0.9855555555555555,
+              "pace": "veloce",
+              "direction": "diretto"
+            },
+            "peregrine": false,
+            "besieged": false,
+            "antiscion": 188.45331305702058,
+            "contrantiscion": 8.45331305702058,
+            "score": {
+              "fortitudes": [
+                {
+                  "item": "ricezione-domicilio",
+                  "points": 5,
+                  "with": "giove"
+                },
+                {
+                  "item": "casa",
+                  "house": 3,
+                  "points": 1
+                },
+                {
+                  "item": "veloce",
+                  "points": 2
+                }
+              ],
+              "debilities": [],
+              "totals": {
+                "fortitudes": 8,
+                "debilities": 0,
+                "net": 8
+              }
+            },
+            "house": 3,
+            "angularity": "cadente"
+          },
+          {
+            "id": "luna",
+            "name": "Luna",
+            "motion": {
+              "speed": 13.523517375230007,
+              "mean": 13.176666666666666,
+              "pace": "veloce",
+              "direction": "diretto"
+            },
+            "peregrine": true,
+            "besieged": false,
+            "antiscion": 43.925494006041475,
+            "contrantiscion": 223.92549400604148,
+            "score": {
+              "fortitudes": [
+                {
+                  "item": "veloce",
+                  "points": 2
+                },
+                {
+                  "item": "crescente",
+                  "points": 2
+                },
+                {
+                  "item": "libero",
+                  "points": 5
+                }
+              ],
+              "debilities": [
+                {
+                  "item": "peregrino",
+                  "points": 5
+                },
+                {
+                  "item": "casa",
+                  "house": 8,
+                  "points": 2
+                }
+              ],
+              "totals": {
+                "fortitudes": 9,
+                "debilities": 7,
+                "net": 2
+              }
+            },
+            "house": 8,
+            "angularity": "succedente",
+            "sun": {
+              "distance": 144.5278190509791,
+              "state": "libero"
+            },
+            "phase": "occidentale"
+          },
+          {
+            "id": "mercurio",
+            "name": "Mercurio",
+            "motion": {
+              "speed": 0.9563447005686153,
+              "mean": 0.9855555555555555,
+              "pace": "lento",
+              "direction": "diretto"
+            },
+            "peregrine": false,
+            "besieged": false,
+            "antiscion": 215.9658380313959,
+            "contrantiscion": 35.96583803139589,
+            "score": {
+              "fortitudes": [
+                {
+                  "item": "triplicita",
+                  "points": 3
+                },
+                {
+                  "item": "casa",
+                  "house": 2,
+                  "points": 3
+                },
+                {
+                  "item": "diretto",
+                  "points": 4
+                },
+                {
+                  "item": "libero",
+                  "points": 5
+                }
+              ],
+              "debilities": [
+                {
+                  "item": "lento",
+                  "points": 2
+                },
+                {
+                  "item": "orientale",
+                  "points": 2
+                }
+              ],
+              "totals": {
+                "fortitudes": 15,
+                "debilities": 4,
+                "net": 11
+              }
+            },
+            "house": 2,
+            "angularity": "succedente",
+            "sun": {
+              "distance": 27.51252497437531,
+              "state": "libero"
+            },
+            "phase": "orientale"
+          },
+          {
+            "id": "venere",
+            "name": "Venere",
+            "motion": {
+              "speed": 1.2321268798300167,
+              "mean": 0.9855555555555555,
+              "pace": "veloce",
+              "direction": "diretto"
+            },
+            "peregrine": true,
+            "besieged": false,
+            "antiscion": 214.31396900349768,
+            "contrantiscion": 34.313969003497675,
+            "score": {
+              "fortitudes": [
+                {
+                  "item": "casa",
+                  "house": 2,
+                  "points": 3
+                },
+                {
+                  "item": "diretto",
+                  "points": 4
+                },
+                {
+                  "item": "veloce",
+                  "points": 2
+                },
+                {
+                  "item": "libero",
+                  "points": 5
+                }
+              ],
+              "debilities": [
+                {
+                  "item": "peregrino",
+                  "points": 5
+                },
+                {
+                  "item": "orientale",
+                  "points": 2
+                }
+              ],
+              "totals": {
+                "fortitudes": 14,
+                "debilities": 7,
+                "net": 7
+              }
+            },
+            "house": 2,
+            "angularity": "succedente",
+            "sun": {
+              "distance": 25.860655946477095,
+              "state": "libero"
+            },
+            "phase": "orientale"
+          },
+          {
+            "id": "marte",
+            "name": "Marte",
+            "motion": {
+              "speed": 0.7501641695775416,
+              "mean": 0.5241666666666667,
+              "pace": "veloce",
+              "direction": "diretto"
+            },
+            "peregrine": false,
+            "besieged": false,
+            "antiscion": 161.8504457645382,
+            "contrantiscion": 341.8504457645382,
+            "score": {
+              "fortitudes": [
+                {
+                  "item": "domicilio",
+                  "points": 5
+                },
+                {
+                  "item": "casa",
+                  "house": 3,
+                  "points": 1
+                },
+                {
+                  "item": "diretto",
+                  "points": 4
+                },
+                {
+                  "item": "veloce",
+                  "points": 2
+                },
+                {
+                  "item": "libero",
+                  "points": 5
+                }
+              ],
+              "debilities": [
+                {
+                  "item": "occidentale",
+                  "points": 2
+                }
+              ],
+              "totals": {
+                "fortitudes": 17,
+                "debilities": 2,
+                "net": 15
+              }
+            },
+            "house": 3,
+            "angularity": "cadente",
+            "sun": {
+              "distance": 26.602867292482358,
+              "state": "libero"
+            },
+            "phase": "occidentale"
+          },
+          {
+            "id": "giove",
+            "name": "Giove",
+            "motion": {
+              "speed": -0.11211524288855237,
+              "mean": 0.08305555555555555,
+              "pace": "lento",
+              "direction": "retrogrado"
+            },
+            "peregrine": false,
+            "besieged": false,
+            "antiscion": 31.702318214075916,
+            "contrantiscion": 211.70231821407592,
+            "score": {
+              "fortitudes": [
+                {
+                  "item": "triplicita",
+                  "points": 3
+                },
+                {
+                  "item": "ricezione-domicilio",
+                  "points": 5,
+                  "with": "sole"
+                },
+                {
+                  "item": "libero",
+                  "points": 5
+                }
+              ],
+              "debilities": [
+                {
+                  "item": "casa",
+                  "house": 8,
+                  "points": 2
+                },
+                {
+                  "item": "retrogrado",
+                  "points": 5
+                },
+                {
+                  "item": "lento",
+                  "points": 2
+                },
+                {
+                  "item": "occidentale",
+                  "points": 2
+                }
+              ],
+              "totals": {
+                "fortitudes": 13,
+                "debilities": 11,
+                "net": 2
+              }
+            },
+            "house": 8,
+            "angularity": "succedente",
+            "sun": {
+              "distance": 156.75099484294466,
+              "state": "libero"
+            },
+            "phase": "occidentale"
+          },
+          {
+            "id": "saturno",
+            "name": "Saturno",
+            "motion": {
+              "speed": 0.12059099597470353,
+              "mean": 0.03361111111111111,
+              "pace": "veloce",
+              "direction": "diretto"
+            },
+            "peregrine": true,
+            "besieged": false,
+            "antiscion": 167.62425662999416,
+            "contrantiscion": 347.6242566299942,
+            "score": {
+              "fortitudes": [
+                {
+                  "item": "casa",
+                  "house": 3,
+                  "points": 1
+                },
+                {
+                  "item": "diretto",
+                  "points": 4
+                },
+                {
+                  "item": "veloce",
+                  "points": 2
+                },
+                {
+                  "item": "libero",
+                  "points": 5
+                }
+              ],
+              "debilities": [
+                {
+                  "item": "caduta",
+                  "points": 4
+                },
+                {
+                  "item": "peregrino",
+                  "points": 5
+                },
+                {
+                  "item": "occidentale",
+                  "points": 2
+                }
+              ],
+              "totals": {
+                "fortitudes": 12,
+                "debilities": 11,
+                "net": 1
+              }
+            },
+            "house": 3,
+            "angularity": "cadente",
+            "sun": {
+              "distance": 20.829056427026387,
+              "state": "libero"
+            },
+            "phase": "occidentale"
+          }
+        ],
+        "hour": {
+          "ruler": "mercurio",
+          "dayRuler": "luna",
+          "diurnal": false,
+          "index": 9,
+          "start": "1968-03-12T01:16Z",
+          "end": "1968-03-12T02:18Z",
+          "local": {
+            "start": "1968-03-12T02:16+01:00",
+            "end": "1968-03-12T03:18+01:00"
+          },
+          "minutes": 62
+        },
+        "ascendant": {
+          "signDegree": 4.201579787933213,
+          "early": false,
+          "late": false
+        },
+        "moonInViaCombusta": false
+      }
+    }
+  }
+}

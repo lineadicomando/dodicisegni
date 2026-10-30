@@ -1,0 +1,68 @@
+{
+  "Napoli 1968": {
+    "input": {
+      "date": "1968-03-12",
+      "time": "14:30",
+      "timezone": "Europe/Rome"
+    },
+    "place": {
+      "date": "1968-03-12",
+      "time": "14:30",
+      "latitude": 40.8518,
+      "longitude": 14.2681,
+      "timezone": "Europe/Rome"
+    },
+    "time": {
+      "julianDayUT": 2439928.0625,
+      "utc": "1968-03-12T13:30:00Z",
+      "local": "1968-03-12T14:30:00+01:00",
+      "offsetMinutes": 60,
+      "timeKnown": true
+    },
+    "ephemerisMode": "moshier",
+    "zodiac": "siderale",
+    "ayanamsa": {
+      "id": "lahiri",
+      "name": "Lahiri",
+      "degrees": 23.411416801110995
+    },
+    "sun": 328.6339390413247,
+    "moon": 119.47445667312482,
+    "tithi": {
+      "index": 13,
+      "name": "Trayodashi",
+      "paksha": "shukla",
+      "numberInPaksha": 13,
+      "degree": 6.840517631800111
+    },
+    "vara": {
+      "index": 3,
+      "name": "Mangalavara",
+      "lord": "marte",
+      "sunrise": "1968-03-12T05:20Z",
+      "local": "1968-03-12T06:20+01:00"
+    },
+    "nakshatra": {
+      "id": "ashlesha",
+      "name": "Ashlesha",
+      "index": 9,
+      "lord": "mercurio",
+      "pada": 4,
+      "degree": 12.807790006458148
+    },
+    "yoga": {
+      "index": 7,
+      "name": "Sukarma",
+      "degree": 8.108395714449557
+    },
+    "karana": {
+      "index": 26,
+      "name": "Taitila",
+      "movable": true,
+      "degree": 0.8405176318001111
+    },
+    "warnings": [
+      "File di effemeridi non trovati in /fascicolo-canonico-senza-effemeridi: uso le effemeridi Moshier (nessun file richiesto, precisione leggermente inferiore, Chirone non disponibile). Esegui `npm run ephe:download -w @dodicisegni/core` per la precisione piena."
+    ]
+  }
+}

@@ -65,7 +65,10 @@ che diverge. Il README tiene descrizione, licenza e comandi, e basta.
 5. `npm test && npm run typecheck`.
 6. **La versione**, con l'ultimo commit della funzione: le tre domande di
    `CLAUDE.md` (*La versione*) dicono quale cifra si muove. Una funzione
-   nuova muove la terza; se cambia anche una risposta che c'era, la seconda.
+   nuova muove la terza; se cambia anche una risposta che c'era, la seconda,
+   e lo dice il fascicolo canonico (`test/canonico.test.ts` in `core`), che
+   allora fallisce. Se la funzione è un'opzione nuova che si chiede per nome,
+   aggiungi un suo caso al fascicolo.
    Poi il tag annotato `v<numero>` su quel commit.
 
 ## I commit

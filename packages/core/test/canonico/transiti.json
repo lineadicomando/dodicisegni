@@ -1,0 +1,191 @@
+{
+  "su Napoli 1968, al 2026-08-01": {
+    "input": {
+      "date": "2026-08-01",
+      "time": "12:00",
+      "timezone": "Europe/Rome"
+    },
+    "time": {
+      "julianDayUT": 2461253.9166666665,
+      "utc": "2026-08-01T10:00:00Z",
+      "local": "2026-08-01T12:00:00+02:00",
+      "offsetMinutes": 120,
+      "timeKnown": true
+    },
+    "ephemerisMode": "moshier",
+    "zodiac": "tropicale",
+    "transiting": [
+      {
+        "id": "sole",
+        "name": "Sole",
+        "longitude": 129.18749611635704,
+        "latitude": 0.00007584892089854509,
+        "distance": 1.0149135733580659,
+        "speed": 0.9563924282663436,
+        "retrograde": false,
+        "sign": "leone",
+        "signDegree": 9.187496116357039,
+        "house": 12
+      },
+      {
+        "id": "luna",
+        "name": "Luna",
+        "longitude": 341.44111477284684,
+        "latitude": 1.0602522019185978,
+        "distance": 0.0026130077586161236,
+        "speed": 12.706518119681121,
+        "retrograde": false,
+        "sign": "pesci",
+        "signDegree": 11.441114772846845,
+        "house": 8
+      },
+      {
+        "id": "mercurio",
+        "name": "Mercurio",
+        "longitude": 109.86306942963476,
+        "latitude": -2.045561134495604,
+        "distance": 0.8582930254583079,
+        "speed": 0.8431514825700078,
+        "retrograde": false,
+        "sign": "cancro",
+        "signDegree": 19.863069429634763,
+        "house": 12
+      },
+      {
+        "id": "venere",
+        "name": "Venere",
+        "longitude": 174.4914366123692,
+        "latitude": -0.054272577223425836,
+        "distance": 0.7969100412440095,
+        "speed": 1.036106630103767,
+        "retrograde": false,
+        "sign": "vergine",
+        "signDegree": 24.4914366123692,
+        "house": 2
+      },
+      {
+        "id": "marte",
+        "name": "Marte",
+        "longitude": 83.34992404496765,
+        "latitude": 0.09865413838408847,
+        "distance": 1.9958057812536667,
+        "speed": 0.6751621779823858,
+        "retrograde": false,
+        "sign": "gemelli",
+        "signDegree": 23.34992404496765,
+        "house": 11
+      },
+      {
+        "id": "giove",
+        "name": "Giove",
+        "longitude": 127.05392007763875,
+        "latitude": 0.47762236105352607,
+        "distance": 6.300903935536022,
+        "speed": 0.22134169846116886,
+        "retrograde": false,
+        "sign": "leone",
+        "signDegree": 7.05392007763875,
+        "house": 12
+      },
+      {
+        "id": "saturno",
+        "name": "Saturno",
+        "longitude": 14.723293327049571,
+        "latitude": -2.5277948424430474,
+        "distance": 8.987894376470987,
+        "speed": -0.009543674879460258,
+        "retrograde": true,
+        "sign": "ariete",
+        "signDegree": 14.723293327049571,
+        "house": 9
+      },
+      {
+        "id": "urano",
+        "name": "Urano",
+        "longitude": 65.02316886190108,
+        "latitude": -0.15484242308095988,
+        "distance": 19.873025013838806,
+        "speed": 0.03225768136930337,
+        "retrograde": false,
+        "sign": "gemelli",
+        "signDegree": 5.023168861901084,
+        "house": 10
+      },
+      {
+        "id": "nettuno",
+        "name": "Nettuno",
+        "longitude": 4.253685776107656,
+        "latitude": -1.3930162881678605,
+        "distance": 29.28685005517339,
+        "speed": -0.01291062904028265,
+        "retrograde": true,
+        "sign": "ariete",
+        "signDegree": 4.253685776107656,
+        "house": 9
+      },
+      {
+        "id": "plutone",
+        "name": "Plutone",
+        "longitude": 304.1655890185545,
+        "latitude": -4.279304272244987,
+        "distance": 34.55967830792026,
+        "speed": -0.02334737606563292,
+        "retrograde": true,
+        "sign": "acquario",
+        "signDegree": 4.165589018554499,
+        "house": 6
+      },
+      {
+        "id": "nodo-nord",
+        "name": "Nodo Nord",
+        "longitude": 330.9235791458771,
+        "latitude": 0,
+        "distance": 0.0025695552897999903,
+        "speed": -0.05297646274815803,
+        "retrograde": true,
+        "sign": "pesci",
+        "signDegree": 0.9235791458771132,
+        "house": 7
+      }
+    ],
+    "houses": [],
+    "orbConvention": {
+      "id": "hand",
+      "name": "Robert Hand",
+      "source": "astro.com, FAQ fq_fh_sr_fore_e.htm: le previsioni di Robert Hand «use an orb of 1° for all transits to all natal planets». Copia del 27 ottobre 2026.",
+      "rule": "1° per ogni aspetto e ogni coppia, senza eccezioni per i luminari. Il motore la usa anche per gli assi natali e per gli incontri fra i corpi in cielo, che la frase di Hand non nomina."
+    },
+    "aspects": [
+      {
+        "aspect": "quadrato",
+        "angle": 90,
+        "transiting": "mercurio",
+        "natal": "nodo-nord",
+        "orb": 0.3408452710340555,
+        "applying": true,
+        "retrograde": false
+      },
+      {
+        "aspect": "quadrato",
+        "angle": 90,
+        "transiting": "mercurio",
+        "natal": "nodo-sud",
+        "orb": 0.3408452710340697,
+        "applying": true,
+        "retrograde": false
+      },
+      {
+        "aspect": "sestile",
+        "angle": 60,
+        "transiting": "marte",
+        "natal": "luna",
+        "orb": 0.4640505707318425,
+        "applying": false,
+        "retrograde": false
+      }
+    ],
+    "warnings": [
+      "File di effemeridi non trovati in /fascicolo-canonico-senza-effemeridi: uso le effemeridi Moshier (nessun file richiesto, precisione leggermente inferiore, Chirone non disponibile). Esegui `npm run ephe:download -w @dodicisegni/core` per la precisione piena."
+    ]
+  }
+}
