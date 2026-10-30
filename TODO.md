@@ -77,10 +77,10 @@ Per spegnere il server di sviluppo lanciato in sottofondo si usa la porta
 (`fuser -k 5173/tcp`), non `pkill -f` col numero della porta: il comando
 contiene lo stesso numero e chiude anche la shell che lo lancia.
 
-**Il push non è ancora stato fatto.** Al 30 ottobre 2026 `main` è avanti di
-72 commit su `origin`, con i tag da `v0.1.0` a `v0.5.2`. Il push lo chiede il
-proprietario; quando lo chiede, `git push --follow-tags` porta anche i tag
-annotati. Prima di cominciare, `git status -sb` dice se è ancora così.
+**Il push si fa coi tag.** Il 30 ottobre 2026 sono andati su `origin` tutti
+i commit e i tag da `v0.1.0` a `v0.5.2`. Il push lo chiede il proprietario;
+quando lo chiede, `git push --follow-tags` porta anche i tag annotati.
+Prima di cominciare, `git status -sb` dice se c'è lavoro non pubblicato.
 
 In fondo ci sono due elenchi che non sono lavoro: le decisioni prese, da non
 riaprire, e le cose esaminate e lasciate stare, per non ritrovarle una seconda
