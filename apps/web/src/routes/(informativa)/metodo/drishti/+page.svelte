@@ -35,13 +35,13 @@
   </li>
   <li>
     <strong>Sono direzionali.</strong> Si contano sempre in avanti nello
-    zodiaco, contando come prima la casa di chi guarda. Che A guardi B non
+    zodiaco, e la casa di chi guarda conta come prima. Che A guardi B non
     implica che B guardi A.
   </li>
   <li>
-    <strong>Cadono anche sul vuoto.</strong> Un graha che guarda una casa
-    disabitata la guarda lo stesso; per questo i segni guardati si riportano
-    tutti, non solo quelli occupati.
+    <strong>Cadono anche sul vuoto.</strong> Un graha guarda anche una casa
+    disabitata; per questo i segni guardati si riportano tutti, non solo
+    quelli occupati.
   </li>
 </ul>
 

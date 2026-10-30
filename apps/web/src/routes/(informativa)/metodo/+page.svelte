@@ -56,7 +56,7 @@
 <h2 id="predicati">Che cosa il motore dice e che cosa tace</h2>
 
 <p>
-  Il confine è netto e non è una modestia di facciata: il motore emette
+  Il confine è netto: il motore emette
   <strong>predicati verificabili</strong>, cioè affermazioni che chiunque può
   ricalcolare dagli stessi dati di partenza seguendo la convenzione dichiarata
   accanto al risultato. «La Luna è a 12°34' dello Scorpione», «sette corpi su
@@ -87,8 +87,8 @@
 </p>
 
 <p>
-  Quale delle due strade sia stata presa non resta implicito: finisce fra le
-  avvertenze che accompagnano il risultato. È la regola generale del motore:
+  Quale delle due strade sia stata presa finisce fra le avvertenze che
+  accompagnano il risultato. È la regola generale del motore:
   <strong>il fallimento è parziale</strong>. Un corpo che non si riesce a
   calcolare produce un avviso e non un errore, e la carta arriva lo stesso con
   tutto il resto.
@@ -145,7 +145,7 @@
 </p>
 
 <p>
-  Il sistema di case usato viaggia col tema. Anche il sistema Gauquelin, che
+  Il sistema di case usato viaggia col tema. Il sistema Gauquelin, che
   divide il cielo in trentasei settori invece che in dodici, non è supportato:
   produce un errore esplicito, non dodici cuspidi arbitrarie.
 </p>
@@ -178,7 +178,7 @@
   Due precisazioni che altrove restano implicite. Il <strong>Nodo Nord è il nodo
   medio</strong>, non quello vero: sono due punti che distano fino a un grado e
   mezzo, e i programmi si dividono su quale usare. Il Nodo Sud non è calcolato
-  ma derivato, essendo per definizione all'opposizione esatta del Nord; per la
+  ma derivato, perché sta per definizione all'opposizione esatta del Nord; per la
   stessa ragione non compare fra i corpi in transito, dove ogni sua riga sarebbe
   una riga già presente letta al contrario, e non gli si assegna nessun aspetto
   col Nord. <strong>Lilith è l'apogeo lunare medio</strong>, la cosiddetta Luna
@@ -186,8 +186,8 @@
 </p>
 
 <p>
-  I <em>graha</em>, che è come l'astrologia indiana chiama i corpi, quando
-  sono retrogradi si marcano con <code>℞</code>.
+  Nell'astrologia indiana i corpi si chiamano <em>graha</em>; quando sono
+  retrogradi si marcano con <code>℞</code>.
 </p>
 
 <h2 id="aspetti">Gli aspetti e le orbite</h2>
@@ -275,8 +275,8 @@
 </p>
 
 <p>
-  Le orbite dei transiti sono molto più strette e non per gusto: con le orbite
-  natali un transito di Saturno resterebbe «in aspetto» per mesi di fila, e il
+  Le orbite dei transiti sono molto più strette perché con le orbite natali
+  un transito di Saturno resterebbe «in aspetto» per mesi di fila, e il
   quadro del momento diventerebbe un elenco di contatti permanenti che non
   distingue il giorno in cui l'aspetto si perfeziona da quello prima e da quello
   dopo. Sono quelle di <strong>Robert Hand</strong>, un grado per ogni transito,
@@ -298,8 +298,7 @@
   convenzione divergente: nella tradizione ellenistica e medievale la formula
   <strong>si inverte nei temi notturni</strong>, mentre parte dei programmi
   moderni usa sempre la forma diurna. Su un tema notturno le due danno risultati
-  che possono distare oltre cento gradi: non un dettaglio, un altro punto in un
-  altro segno.
+  che possono distare oltre cento gradi, e cadere quindi in segni diversi.
 </p>
 
 <p>
@@ -321,8 +320,8 @@
 
 <p>
   Che l'Ariete sia di fuoco non è interpretazione ma classificazione, e su
-  quella non c'è scuola che dissenta da Tolomeo in poi. Il punto delicato non è
-  contare: è <strong>decidere che cosa contare</strong>. Includere gli assi? La
+  quella non c'è scuola che dissenta da Tolomeo in poi. Il punto delicato è
+  <strong>decidere che cosa contare</strong>. Includere gli assi? La
   Parte di Fortuna? I Nodi? Le scuole non concordano, e un totale solo
   nasconderebbe la scelta dentro un numero.
 </p>
@@ -394,17 +393,17 @@
     dodici parti (lunghe d'estate, corte d'inverno) e la notte per differenza.
   </li>
   <li>
-    <strong>Il giorno comincia all'alba</strong>, non a mezzanotte: il reggitore
-    di lunedì entra in carica quando il Sole sorge, non quando scatta la data.
+    <strong>Il giorno comincia all'alba</strong>: il reggitore di lunedì entra
+    in carica quando il Sole sorge, non quando scatta la data.
   </li>
 </ul>
 
 <p>
   La successione dei reggitori segue l'ordine caldeo, cioè i sette pianeti
   classici per velocità apparente decrescente. Ventiquattro ore avanzano di tre
-  posizioni nella catena, ed è da questo scarto che nasce l'ordine dei giorni
-  della settimana, che infatti non è quello dei pianeti, e che sopravvive
-  intatto nei nomi italiani dei giorni.
+  posizioni nella catena, e da questo scarto nasce l'ordine dei giorni della
+  settimana: non è quello dei pianeti, e sopravvive intatto nei nomi italiani
+  dei giorni.
 </p>
 
 <p>
@@ -412,8 +411,8 @@
   tratto in cui non perfeziona più alcun aspetto maggiore prima di lasciare il
   segno, e che dura da pochi minuti a un giorno e mezzo. È il criterio moderno;
   quello di Lilly, più stretto, è detto <a href="#lilly">qui sotto</a>. Il sito
-  dice quando comincia e quando finisce. Che la tradizione sconsigli di cominciare qualcosa
-  mentre è in corso è interpretazione, e sta a chi legge.
+  dice quando comincia e quando finisce. Che la tradizione sconsigli di
+  cominciare qualcosa mentre è in corso è interpretazione, e sta a chi legge.
 </p>
 
 <p>
@@ -428,9 +427,9 @@
   Senza chiedere niente, il tema tropicale porta due colonne affiancate e mai
   fuse: i domicili tradizionali, con esilio, esaltazione e caduta, che sono la
   parte su cui Tolomeo, Firmico e Lilly concordano; e i domicili moderni, con
-  Urano, Nettuno e Plutone, che un autore unico non hanno. Triplicità, termini
+  Urano, Nettuno e Plutone, che non hanno un autore unico. Triplicità, termini
   e facce non compaiono finché non si nomina una scuola, perché lì le scuole
-  divergono davvero. Le scuole sono quattro, Lilly, Tolomeo, Bonatti e Valente,
+  divergono davvero. Le scuole sono quattro (Lilly, Tolomeo, Bonatti e Valente)
   e ciascuna entra intera, con le sue tavole e senza pezzi delle altre. La
   pagina <a href="/cielo">Cielo</a>, che non ha una nascita, non porta dignità
   finché non se ne nomina una; nominata, porta le stesse tavole del tema. Nello
@@ -469,7 +468,7 @@
   <strong>Le dignità di Bonatti.</strong> La terza scuola è quella medievale,
   nel <em>Decem tractatus astronomiae</em> di Guido Bonatti, letto
   nell'edizione di Augusta del 1491 (secondo trattato, fogli 14v-21r). Bonatti
-  nomina cinque dignità, domicilio, esaltazione, termine, triplicità e faccia,
+  nomina cinque dignità (domicilio, esaltazione, termine, triplicità e faccia)
   e il sito le porta tutte come le stampa: le esaltazioni col grado, nodi
   compresi, che dice di Albumasar e Alcabizio; l'esilio e la caduta; le
   triplicità coi tre signori, uno di giorno, uno di notte e un partecipe che
@@ -500,8 +499,8 @@
   Pingree (1986): sono gli egizi, quelli che Tolomeo riferisce, tranne la
   Bilancia, dove Valente ha numeri suoi. Nell'edizione di Kroll l'Ariete
   aveva due numeri persi e lo Scorpione sommava 31 gradi; Pingree li sana con
-  un'altra copia del testo. Facce, esilio e un punteggio in
-  Valente non si sono trovati, e non ci sono. Nemmeno una ricezione fra due
+  un'altra copia del testo. Facce, esilio e un punteggio in Valente non si sono
+  trovati, e non ci sono. Nemmeno una ricezione fra due
   pianeti: quello che lui chiama il «ricevitore» è il signore del segno in
   cui un pianeta si trova. Le ricezioni restano quindi quelle comuni, per
   domicilio ed esaltazione.
@@ -567,8 +566,8 @@
   punti positivi: tutte tranne la sesta, l'ottava e la dodicesima), se nel
   quadrato hanno dignità, e nell'opposizione la mutua ricezione per domicilio
   e la Luna. «Ben dignificato» e «forte» non hanno una soglia nel testo, e
-  restano non calcolati con i dati accanto. Le considerazioni
-  prima del giudizio di pp. 121-123 sono riportate come fatti, mai come un
+  restano non calcolati con i dati accanto. Le considerazioni prima del
+  giudizio di pp. 121-123 sono riportate come fatti, mai come un
   rifiuto di calcolare. Il sì o il no, e quando, restano a chi legge. La
   pagina <a href="/oraria">Oraria</a> fa scegliere la casa da un elenco delle
   dodici con le significazioni che Lilly dà a ciascuna (libro I, cap. VII, pp.

@@ -30,8 +30,7 @@
 <p>
   I termini restano in sanscrito, come in tutto il sito: tradurli produrrebbe
   parole che nessun libro usa e che non si possono cercare. La traslitterazione
-  è quella semplice, senza segni diacritici, che è anche quella con cui si
-  cercano.
+  è quella semplice, senza segni diacritici: la stessa con cui si cercano.
 </p>
 
 <h2 id="fondamenti">Il cielo del Jyotisha</h2>
@@ -157,8 +156,8 @@
 <p>
   Nel panchanga, una delle ventisette parti da 13°20' della somma delle
   longitudini di Sole e Luna. Nei temi natali la stessa parola indica invece
-  una combinazione di graha descritta dai testi: sono due cose diverse con lo
-  stesso nome, e nessuna delle due ha a che fare con la disciplina.
+  una combinazione di graha descritta dai testi. Nessuna delle due ha a che
+  fare con la disciplina.
   → <a href="/metodo/panchanga#yoga">Lo yoga del panchanga</a>
 </p>
 

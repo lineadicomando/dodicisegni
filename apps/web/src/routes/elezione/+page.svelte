@@ -383,7 +383,7 @@
 
   {#snippet dettagli()}
     <p class="nota">
-      Il luogo qui è obbligatorio, e non ha alternative: le ore planetarie nascono da
+      Il luogo qui è obbligatorio: le ore planetarie nascono da
       alba e tramonto, che cambiano con la latitudine e con il giorno dell'anno.
       Si vedono {GIORNI} giorni per volta.
     </p>

@@ -71,7 +71,7 @@
 
 <p>
   Sono le sedici divisioni del <em>Brihat Parashara Hora Shastra</em>. Le
-  regole si biforcano in modi diversi, ed è il motivo per cui la tavola non è
+  regole si biforcano in modi diversi, e per questo la tavola non si riduce a
   una formula sola: il D-3 procede per trigoni, il D-4 per
   kendra, il D-9 parte da dove dice la modalità del segno, il D-7 e il D-10 da
   dove dice la sua parità, il D-12 riparte sempre dal segno stesso. Il D-16, il
@@ -147,7 +147,7 @@
   contano la hora di Parashara, e lo dicono. Un conto di Parashara su una
   carta di Rath sarebbe una dottrina che nessuno ha praticato. Una sesta
   variante, la parivritti alternata, che un programma chiama «Somanatha», non
-  ha un autore che la scriva, e non c'è.
+  ha un autore che la scriva, e il sito la lascia fuori.
 </p>
 
 <h2 id="disuguali">Il trimsamsa, che non divide in parti uguali</h2>
@@ -170,8 +170,9 @@
   segno stesso</strong>. Il sanscrito lo scrive (<em>tad-rāśeḥ</em>, «da quel
   segno»), così lo legge P.V.R. Narasimha Rao, e così fa l'esempio di
   Santhanam: Venere a 13°25' del Capricorno, 26 diviso 12 dà resto 2, più uno
-  fa 3, e il terzo segno dal Capricorno sono i Pesci. La traduzione inglese omette quelle due parole, e c'è chi conta
-  dall'Ariete, che darebbe i Gemelli. Quella lettura non ha un autore che la
+  fa 3, e il terzo segno dal Capricorno sono i Pesci. La traduzione inglese
+  omette quelle due parole, e c'è chi conta dall'Ariete, che darebbe i
+  Gemelli. Quella lettura non ha un autore che la
   sostenga per iscritto, e il sito non la calcola.
 </p>
 
@@ -183,8 +184,7 @@
   (1°6'40"), che passano in cinque o sei minuti. Per questo il D-24, il D-27,
   il D-40, il D-45 e il D-60 escono con un'avvertenza calcolata su quel tema:
   di quanti minuti l'ora dovrebbe sbagliare, prima o dopo, perché il lagna e
-  la Luna cambino segno. Un segno con molte cifre sembra preciso anche quando
-  non lo è; l'avvertenza serve a dire quando lo è.
+  la Luna cambino segno.
 </p>
 
 <p>
@@ -197,8 +197,7 @@
   della tavola di Santhanam (pp. 84-86), col numero della lista, che nei
   segni pari non è quello della parte ed è quello con cui il nome si ritrova
   nella tavola. Il verso successivo (6.41) divide i sessanta in benefici e
-  malefici, e quello non è riportato: è un giudizio sull'effetto, e il nome
-  resta un nome.
+  malefici: è un giudizio sull'effetto, e il sito non lo riporta.
 </p>
 
 <h2 id="buoni">I varga buoni, e il loro conto</h2>
@@ -221,9 +220,9 @@
   prende il decimo o il quarto. Lo Scorpione e l'Acquario hanno due signori
   (Marte e Ketu, Saturno e Rahu), e il testo vuole il più forte: il sito lo
   sceglie con la regola che il BPHS dà per gli stessi due segni nella chara
-  dasha (46.158-166), e dice quale ha scelto. È una regola larga, che Santhanam stesso
-  segnala: può rendere buoni fino a otto segni su dodici, e per questo ogni
-  varga buono porta la sua ragione. La hora di Parashara, che non ha segni,
+  dasha (46.158-166), e dice quale ha scelto. È una regola larga, e Santhanam
+  stesso lo segnala: può rendere buoni fino a otto segni su dodici, e per
+  questo ogni varga buono porta la sua ragione. La hora di Parashara, che non ha segni,
   si conta con la nota di Santhanam (p. 90). Senza ora di nascita il conto
   non c'è, perché l'arudha vuole il lagna.
 </p>
@@ -240,8 +239,9 @@
 <p>
   Il verso 53 dice che i varga buoni di un graha combusto, sconfitto in
   guerra, in neecha, debole o in un'avastha come <em>śayana</em> «distruggono
-  gli yoga». Non cambia il conto, ma il sito calcola le condizioni che nomina,
-  ciascuna con la sua fonte, perché il BPHS le nomina senza definirle. La
+  gli yoga». Il conto non cambia, ma il sito calcola le condizioni che il
+  verso elenca, ciascuna con la sua fonte, perché il BPHS le nomina senza
+  definirle. La
   combustione usa le distanze dal Sole del <em>Surya Siddhanta</em> (IX.6-9)
   nella misura del testo, i «gradi di tempo»: quanto prima del Sole il
   pianeta sorge all'alba, o quanto dopo tramonta la sera, contato in gradi
@@ -249,11 +249,12 @@
   longitudine: a Roma, un giudizio su tredici cambia. Il sito la calcola con
   la geometria esatta invece che con le regole approssimate del testo, e lo
   dice; oltre i circoli polari, dove un corpo può non sorgere, decide la
-  longitudine. La guerra è fra due dei cinque pianeti a meno di un grado (VII.19),
-  e vince Venere comunque, degli altri chi sta a nord (BPHS 79.9). Le dodici
+  longitudine. La guerra è fra due dei cinque pianeti a meno di un grado
+  (VII.19), e vince Venere comunque, degli altri chi sta a nord (BPHS 79.9). Le dodici
   avastha si contano con la formula di 45.30-33 e le letture di Santhanam, che
   la prova su un esempio. Quali avastha guastino i varga buoni il testo non lo
-  dice, e il sito nemmeno; la debolezza non ha una soglia, e non c'è.
+  dice, e il sito nemmeno; la debolezza non ha una soglia, e il sito non la
+  calcola.
 </p>
 
 <h2 id="arudha-graha">Gli arudha dei graha in ogni varga</h2>
@@ -306,8 +307,7 @@
   78-79, e la tavola che Santhanam stampa accanto ha un refuso, nella colonna
   dei Gemelli, che la regola e la colonna della Bilancia smentiscono: il
   motore segue la regola. È il genere di errore che si propaga quando le
-  tavole si copiano invece di ricalcolarle, ed è un'altra ragione per cui il
-  sito consegna la regola e non solo il segno.
+  tavole si copiano invece di ricalcolarle.
 </p>
 
 <p>

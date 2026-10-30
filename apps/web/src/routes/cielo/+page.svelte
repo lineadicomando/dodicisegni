@@ -244,7 +244,7 @@
     modalità. Il luogo è facoltativo, e serve solo per le case.
   </p>
   <p>
-    Il calendario elenca, in ordine di tempo: gli ingressi nei segni, le stazioni (i giorni
+    Il calendario elenca in ordine di tempo gli ingressi nei segni, le stazioni (i giorni
     in cui un pianeta si ferma e cambia verso) e gli istanti in cui due corpi
     formano un aspetto esatto.
     <a href="/metodo#effemeridi">Da dove vengono queste posizioni</a>.

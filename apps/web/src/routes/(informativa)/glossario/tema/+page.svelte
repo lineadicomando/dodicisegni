@@ -120,8 +120,8 @@
 <h3 id="parte-di-fortuna">Parte di Fortuna</h3>
 <p>
   Un punto calcolato: l'Ascendente più la distanza fra Sole e Luna. Nella
-  tradizione la formula si inverte nei temi notturni, e non tutti i programmi
-  lo fanno, così che la stessa nascita può dare due Parti di Fortuna in segni
+  tradizione la formula si inverte nei temi notturni. Non tutti i programmi lo
+  fanno, e così la stessa nascita può dare due Parti di Fortuna in segni
   diversi.
   → <a href="/metodo#fortuna">La formula</a>
 </p>
@@ -192,7 +192,7 @@
 
 <h3 id="termini">Termini</h3>
 <p>
-  Tratti di grado disuguale in cui ogni segno è diviso, ciascuno assegnato a
+  Tratti di ampiezza disuguale in cui ogni segno è diviso, ciascuno assegnato a
   uno dei cinque pianeti che non sono luminari. Le tavole cambiano da autore
   ad autore.
 </p>

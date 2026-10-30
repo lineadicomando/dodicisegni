@@ -163,9 +163,9 @@
 <div class="cappello">
   <p>
     Il tema dell'istante in cui una domanda viene posta, eretto e analizzato col metodo di
-    William Lilly, <em>Christian Astrology</em> (1647): i significatori, i modi in cui la
+    William Lilly, <em>Christian Astrology</em> (1647): i significatori; i modi in cui la
     cosa chiesta si compirebbe e quelli che la impediscono, ciascuno con la pagina del
-    libro, le considerazioni prima del giudizio.
+    libro; le considerazioni prima del giudizio.
   </p>
   <p>
     La figura non dice se la cosa avverrà: il giudizio è di chi legge.
@@ -210,8 +210,8 @@
       <fieldset class="senza-cornice case">
         <legend class="titolo-fascia">La casa del quesito</legend>
         <p class="suggerimento">
-          La sceglie chi chiede, dalla domanda, come la sceglieva Lilly: il motore non la
-          indovina. Che cosa significa ciascuna, secondo Lilly (libro I, cap. VII, pp. 50-56):
+          La sceglie chi chiede, dalla domanda, come faceva Lilly; il motore non la
+          indovina. Che cosa significa ciascuna secondo Lilly (libro I, cap. VII, pp. 50-56):
         </p>
         <ul>
           {#each CASE_LILLY as casa (casa.numero)}

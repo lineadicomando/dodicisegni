@@ -53,7 +53,7 @@
 <h3 id="combustione">Combustione, cazimi, sotto i raggi</h3>
 <p>
   Tre gradi di vicinanza al Sole, nella tradizione. Sotto i raggi un pianeta
-  entro 17°, combusto entro 8°30', in <em>cazimi</em>, «nel cuore del Sole»,
+  entro 17°, combusto entro 8°30', in <em>cazimi</em> («nel cuore del Sole»)
   entro 17 primi. Sono le soglie di Lilly.
   → <a href="/metodo#lilly">Il conto di Lilly</a>
 </p>
@@ -119,9 +119,8 @@
 
 <h3 id="significatore">Significatore</h3>
 <p>
-  Il pianeta che rappresenta una delle parti della domanda: il signore
-  dell'Ascendente chi domanda, il signore della casa della cosa domandata la
-  cosa.
+  Il pianeta che rappresenta una delle parti della domanda: chi domanda ha il
+  signore dell'Ascendente, la cosa domandata il signore della sua casa.
 </p>
 
 <h3 id="traslazione">Traslazione e collezione di luce</h3>
@@ -133,7 +132,7 @@
 
 <h3 id="proibizione">Proibizione, frustrazione, refranazione</h3>
 <p>
-  Tre modi in cui l'incontro dei significatori si impedisce. Nella
+  Tre impedimenti all'incontro dei significatori. Nella
   proibizione un terzo pianeta arriva prima; nella frustrazione il
   significatore più lento si incontra prima con un altro ancora più lento;
   nella refranazione il più veloce si ferma e torna indietro prima di

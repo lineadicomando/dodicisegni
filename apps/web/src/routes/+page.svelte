@@ -299,7 +299,7 @@
         {#if chart.aspects.length > 0}
           <p class="suggerimento istruzione">
             Scegli un corpo, qui o nelle tabelle, per isolarne gli aspetti. Resta
-            scelto finché non lo si sceglie di nuovo.
+            scelto finché non lo scegli di nuovo.
           </p>
         {/if}
       </div>

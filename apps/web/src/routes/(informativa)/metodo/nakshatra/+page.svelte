@@ -22,9 +22,8 @@
 </p>
 
 <p>
-  Lo zodiaco diviso in ventisette parti invece che in dodici: sono le tappe di
-  un giro della Luna, non del Sole, e ciascuna misura 13°20', cioè ottocento
-  primi tondi. Nell'astrologia indiana pesano quanto i segni e in più d'un caso
+  Le parti sono ventisette invece di dodici, tappe di un giro della Luna e
+  non del Sole, e ciascuna misura 13°20', cioè ottocento primi tondi. Nell'astrologia indiana pesano quanto i segni e in più d'un caso
   di più; il nakshatra della Luna alla nascita è quello che si intende quando si
   chiede sotto quale stella qualcuno è nato, ed è il punto da cui partono le
   <a href="/metodo/dasha">dasha</a>.

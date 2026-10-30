@@ -36,8 +36,8 @@
 
 <p>
   Nell'ordine della successione. Ciascuno regge tre
-  <a href="/metodo/nakshatra">nakshatra</a>, uno ogni nove, ed è questo legame
-  che decide da dove la catena comincia.
+  <a href="/metodo/nakshatra">nakshatra</a>, uno ogni nove, e questo legame
+  decide da dove comincia la catena.
 </p>
 
 <table class="testo">
@@ -67,8 +67,8 @@
   Il primo periodo è quello del graha che regge il nakshatra della Luna alla
   nascita. Ma la persona non nasce all'inizio di quel periodo: ne nasce dentro,
   tanto più avanti quanto più la Luna ha già percorso del suo nakshatra. Quello
-  che resta del primo mahadasha è la sua durata per la parte del nakshatra
-  ancora da percorrere.
+  che resta del primo mahadasha è la sua durata moltiplicata per la frazione
+  del nakshatra ancora da percorrere.
 </p>
 
 <p>
@@ -80,17 +80,17 @@
 </p>
 
 <p>
-  Il primo mahadasha il sito lo calcola intero, cominciando prima della
-  nascita della parte già trascorsa: così le sue suddivisioni hanno la durata
-  piena, e la catena è una successione senza buchi.
+  Il primo mahadasha il sito lo calcola intero, e lo fa cominciare prima della
+  nascita di quanto ne è già trascorso: così le sue suddivisioni hanno la
+  durata piena, e la catena è una successione senza buchi.
 </p>
 
 <h2 id="suddivisioni">Le suddivisioni</h2>
 
 <p>
   Dentro un mahadasha gli antardasha cominciano dal suo stesso graha e
-  seguono l'ordine; ciascuno vale la sua quota del ciclo intero. Venere, che
-  vale venti anni su centoventi, vale un sesto di qualunque periodo la
+  seguono l'ordine; ciascuno dura la sua quota del ciclo intero. Venere, che
+  ha venti anni su centoventi, prende un sesto di qualunque periodo la
   contenga. Nel mahadasha di Venere, quindi:
 </p>
 
@@ -133,7 +133,7 @@
   È l'unico calcolo del sito in cui un secondo d'arco vale ore di calendario:
   13°20' di nakshatra valgono fino a vent'anni di dasha, quindi un secondo
   d'arco vale circa tre ore e mezza. La Luna percorre circa mezzo grado
-  l'ora: un quarto d'ora di incertezza sull'ora di nascita sposta le date fino
+  l'ora, e un quarto d'ora di incertezza sull'ora di nascita sposta le date fino
   a un paio di mesi. Senza l'ora di nascita le date non sono approssimate ma
   inservibili, e il risultato lo dice.
 </p>

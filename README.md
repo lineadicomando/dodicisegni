@@ -56,9 +56,9 @@ npx dodicisegni --date 1968-03-12 --time 14:30 \
 npx dodicisegni --help        # tutte le opzioni
 ```
 
-**Applicazione web.** Sei sezioni e quattordici endpoint, tutti in GET perché un
-tema è una funzione pura dei suoi parametri, più due pagine di testo: `/metodo`
-dice come si calcola, `/privacy` che cosa resta sul dispositivo.
+**Applicazione web.** Sei sezioni e due pagine di testo: `/metodo` dice come si
+calcola, `/privacy` che cosa resta sul dispositivo. Gli endpoint sono
+quattordici, tutti in GET perché un tema è una funzione pura dei suoi parametri.
 
 ```sh
 npm run dev -w @dodicisegni/web      # http://localhost:5173
@@ -74,8 +74,8 @@ in `apps/web/src/routes/+layout.svelte`.
 
 **Server MCP.** Tredici tool su stdio: non è un servizio da avviare, è un processo
 che il client lancia. Accanto ai tool c'è il prompt `lettura_del_tema`, che
-consegna il tema insieme alle istruzioni per interpretarlo: un prompt e non un
-tool perché lo sceglie chi usa il client, non il modello. Il prompt
+consegna il tema insieme alle istruzioni per interpretarlo. È un prompt perché
+a sceglierlo è chi usa il client, non il modello. Il prompt
 `lettura_oraria` fa lo stesso per una domanda, col tema orario di Lilly. Due risorse,
 `riferimento/aspetti` e `riferimento/sistemi-case`, danno gli angoli, le orbite
 e i sistemi di case che il motore usa.
@@ -114,8 +114,8 @@ docker compose --profile dev up dev                  # Vite, :5173
 docker compose --profile mcp run --rm -T mcp         # server MCP su stdio
 ```
 
-Dove viva il dataset lo decide `GEONAMES_DATA` in `.env`; vedi
-`.env.example`: un nome è un volume Docker, un percorso che inizi per `.` o `/`
+Dove viva il dataset lo decide `GEONAMES_DATA` in `.env` (l'esempio è in
+`.env.example`): un nome è un volume Docker, un percorso che inizi per `.` o `/`
 è un bind mount.
 
 ## Prima di mettere in rete
@@ -124,11 +124,11 @@ Tre cose che il codice non può indovinare da solo, e che una copia pubblicata
 deve sistemare.
 
 **`ORIGIN`.** Senza, `adapter-node` ricava l'indirizzo pubblico dalla
-richiesta: l'host è quello che il reverse proxy passa al server, che non è
-detto sia quello del mondo, e lo schema è sempre `https`. Ogni
+richiesta. L'host è quello che il reverse proxy passa al server, e non è detto
+che coincida con quello pubblico; lo schema è sempre `https`. Ogni
 `<link rel="canonical">` e ogni `og:url` del sito uscirebbe con l'indirizzo
-sbagliato, che è il modo più silenzioso di dividere in due un sito agli occhi
-di un motore di ricerca. Si dichiara una volta, **alla build**: SvelteKit lo
+sbagliato, e un motore di ricerca vedrebbe due siti dove ce n'è uno, senza che
+nessun errore lo segnali. Si dichiara una volta, **alla build**: SvelteKit lo
 scrive nel server compilato, e all'avvio non lo legge più nessuno.
 
 ```sh
@@ -162,14 +162,14 @@ npm run build
 
 ## L'interpretazione
 
-Il motore non interpreta, ed è un vincolo, non una funzione mancante. Quello che
-produce sono **predicati verificabili**: affermazioni che chiunque può
-ricalcolare dagli stessi dati di partenza, seguendo la convenzione che il motore
-dichiara accanto al risultato. L'astrologia non è una disciplina sola ma molte
-tradizioni, e il motore non ne sceglie una: dove le scuole divergono (la
-formula della Parte di Fortuna, che cosa entri in un conteggio, l'ayanamsa)
-espone i componenti e nomina la convenzione, invece di sceglierne una in
-silenzio e presentarne l'esito come un fatto. Una regola di una tradizione può
+Il motore non interpreta, ed è un vincolo, non una funzione mancante. Produce
+**predicati verificabili**: affermazioni che chiunque può ricalcolare dagli
+stessi dati di partenza, seguendo la convenzione che il motore dichiara accanto
+al risultato. L'astrologia è fatta di molte tradizioni, e il motore non ne
+sceglie una. Dove le scuole divergono (la formula della Parte di Fortuna, che
+cosa entri in un conteggio, l'ayanamsa) espone i componenti e nomina la
+convenzione, invece di decidere in silenzio e presentarne l'esito come un
+fatto. Una regola di una tradizione può
 entrare anche quando pesa o assegna, purché porti il nome della scuola e la sua
 fonte. Che cosa significhino, quei dati, non lo dice mai.
 

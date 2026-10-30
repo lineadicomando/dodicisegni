@@ -88,8 +88,9 @@
   (<code>/api/chart?date=…&amp;time=…</code>). La scelta è voluta, e rende un
   tema riproducibile. Ha due conseguenze: quell'indirizzo resta nella
   cronologia del tuo browser, e arriva al server che tiene i log descritti qui
-  sotto. Lì non si ferma: il server è configurato per registrare il percorso
-  <em>senza</em> i parametri, proprio per non conservarli.
+  sotto. Nei log, invece, i valori non restano: il server è configurato per
+  registrare il percorso <em>senza</em> i parametri, proprio per non
+  conservarli.
 </p>
 
 <p>
@@ -177,7 +178,7 @@
     aprire anche senza collegamento ne tiene una copia sul dispositivo, nel
     <em>Cache Storage</em> alla voce <code>dodicisegni-</code> seguita dal numero
     della versione. Dentro ci sono le pagine, i programmi, gli stili e le
-    icone: il contenitore, non il contenuto. <strong>Le risposte del calcolo
+    icone. <strong>Le risposte del calcolo
     non ci finiscono mai</strong>, e gli indirizzi delle pagine ci vengono
     scritti <strong>senza i parametri</strong>, cioè senza la data, l'ora e il
     luogo che portano con sé, per non farne un elenco dei temi che hai
@@ -213,10 +214,10 @@
 <h2>Nessuna profilazione, nessun marketing</h2>
 
 <p>
-  Non c'è profilazione. Non viene costruito nessun profilo di comportamento o
-  di interessi, non esiste nessun processo decisionale automatizzato che ti
-  riguardi, e i dati non vengono usati per finalità commerciali, pubblicitarie
-  o promozionali, né ceduti o venduti a terzi per quelle finalità. Del resto
+  Non viene costruito nessun profilo di comportamento o di interessi, non
+  esiste nessun processo decisionale automatizzato che ti riguardi, e i dati
+  non vengono usati per finalità commerciali, pubblicitarie o promozionali,
+  né ceduti o venduti a terzi per quelle finalità. Del resto
   mancherebbe la materia: di te restano un indirizzo IP e un percorso, per
   {RITENZIONE_LOG} giorni.
 </p>
@@ -249,7 +250,7 @@
   <code>/api/chart</code>, utilizzabili direttamente, e per il server MCP con
   cui il calcolo viene esposto agli agenti conversazionali: nessuna
   autenticazione, nessuna conservazione delle richieste, gli stessi log
-  tecnici. Il server MCP, quando eseguito sul tuo computer, non produce
+  tecnici. Il server MCP, quando gira sul tuo computer, non produce
   nemmeno quelli.
 </p>
 
@@ -257,15 +258,15 @@
 
 <p>
   Il Regolamento UE 2016/679 riconosce il diritto di accedere ai propri dati,
-  rettificarli, cancellarli, limitarne o opporsi al trattamento e riceverli in
-  forma portabile (artt. 15–22).
+  rettificarli, cancellarli, limitarne il trattamento o opporvisi, e riceverli
+  in forma portabile (artt. 15–22).
 </p>
 
 <p>
   Nella pratica, sui dati di nascita questi diritti sono già soddisfatti dal
   fatto che nulla viene conservato: non c'è un archivio da consultare o da
   ripulire. Restano esercitabili sui log tecnici, per il tempo in cui esistono,
-  scrivendo al recapito indicato sopra e indicando l'indirizzo IP e il periodo
+  scrivendo al recapito indicato sopra e specificando l'indirizzo IP e il periodo
   di riferimento: sono i soli elementi che permettono di ritrovare le righe
   che ti riguardano.
 </p>

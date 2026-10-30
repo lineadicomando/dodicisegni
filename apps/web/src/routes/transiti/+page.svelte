@@ -300,7 +300,7 @@
           Senza, i transiti cadono nelle case di nascita. Con, si aggiungono
           Ascendente, Medio Cielo e case dell'istante visti da lì.
         {:else}
-          L'ora del transito si legge ora sull'orologio di {transitLocation.name}.
+          L'ora del transito si legge adesso sull'orologio di {transitLocation.name}.
           Le case natali non cambiano: quelle dell'istante si affiancano.
         {/if}
       </p>

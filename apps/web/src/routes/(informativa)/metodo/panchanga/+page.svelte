@@ -97,7 +97,7 @@
 <p>
   <strong>Tithi e karana no</strong>, perché una differenza fra due longitudini
   non cambia se si spostano entrambe dello stesso arco. Nakshatra e yoga sì, e
-  lo yoga il doppio degli altri, perché usa la somma: cambiando
+  lo yoga il doppio, perché usa la somma: cambiando
   <a href="/metodo#zodiaco">ayanamsa</a> di un grado, lo yoga si sposta di due.
 </p>
 
