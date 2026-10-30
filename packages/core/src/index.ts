@@ -30,7 +30,16 @@ export {
   VIMSHOTTARI_TOTAL,
   VIMSHOTTARI_YEARS,
 } from './dasha.js';
-export { computeVarga, findVarga, VARGAS, vargaSignOf, type VargaOptions } from './varga.js';
+export {
+  computeVarga,
+  findVarga,
+  SHASHTIAMSA_NAMES,
+  SHASHTIAMSA_SOURCE,
+  shashtiamsaOf,
+  VARGAS,
+  vargaSignOf,
+  type VargaOptions,
+} from './varga.js';
 export {
   DEFAULT_HORA_CONVENTION,
   HORA_CONVENTIONS,
@@ -352,6 +361,7 @@ export type {
   TransitOptions,
   Vara,
   VargaChart,
+  Shashtiamsa,
   SignVargaChart,
   HoraVargaChart,
   Hora,

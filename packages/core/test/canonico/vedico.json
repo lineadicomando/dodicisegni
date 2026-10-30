@@ -16081,7 +16081,12 @@
             "name": "Sole",
             "sign": "scorpione",
             "retrograde": false,
-            "dignitySigns": []
+            "dignitySigns": [],
+            "shashtiamsa": {
+              "part": 58,
+              "number": 58,
+              "name": "Payodhi"
+            }
           },
           {
             "id": "luna",
@@ -16091,76 +16096,137 @@
             "dignitySigns": [
               "uccha",
               "moolatrikona"
-            ]
+            ],
+            "shashtiamsa": {
+              "part": 59,
+              "number": 2,
+              "name": "Rakshasa"
+            }
           },
           {
             "id": "mercurio",
             "name": "Mercurio",
             "sign": "ariete",
             "retrograde": false,
-            "dignitySigns": []
+            "dignitySigns": [],
+            "shashtiamsa": {
+              "part": 3,
+              "number": 3,
+              "name": "Deva"
+            }
           },
           {
             "id": "venere",
             "name": "Venere",
             "sign": "cancro",
             "retrograde": false,
-            "dignitySigns": []
+            "dignitySigns": [],
+            "shashtiamsa": {
+              "part": 6,
+              "number": 6,
+              "name": "Kinnara"
+            }
           },
           {
             "id": "marte",
             "name": "Marte",
             "sign": "toro",
             "retrograde": false,
-            "dignitySigns": []
+            "dignitySigns": [],
+            "shashtiamsa": {
+              "part": 51,
+              "number": 10,
+              "name": "Vahni"
+            }
           },
           {
             "id": "giove",
             "name": "Giove",
             "sign": "toro",
             "retrograde": true,
-            "dignitySigns": []
+            "dignitySigns": [],
+            "shashtiamsa": {
+              "part": 10,
+              "number": 10,
+              "name": "Vahni"
+            }
           },
           {
             "id": "saturno",
             "name": "Saturno",
             "sign": "toro",
             "retrograde": false,
-            "dignitySigns": []
+            "dignitySigns": [],
+            "shashtiamsa": {
+              "part": 39,
+              "number": 22,
+              "name": "Brahma"
+            }
           },
           {
             "id": "urano",
             "name": "Urano",
             "sign": "ariete",
-            "retrograde": true
+            "retrograde": true,
+            "shashtiamsa": {
+              "part": 8,
+              "number": 53,
+              "name": "Nirmala"
+            }
           },
           {
             "id": "nettuno",
             "name": "Nettuno",
             "sign": "toro",
-            "retrograde": true
+            "retrograde": true,
+            "shashtiamsa": {
+              "part": 7,
+              "number": 54,
+              "name": "Saumya"
+            }
           },
           {
             "id": "plutone",
             "name": "Plutone",
             "sign": "ariete",
-            "retrograde": true
+            "retrograde": true,
+            "shashtiamsa": {
+              "part": 57,
+              "number": 57,
+              "name": "Amrita"
+            }
           },
           {
             "id": "nodo-nord",
             "name": "Rahu",
             "sign": "leone",
-            "retrograde": true
+            "retrograde": true,
+            "shashtiamsa": {
+              "part": 54,
+              "number": 7,
+              "name": "Bhrashta"
+            }
           },
           {
             "id": "nodo-sud",
             "name": "Ketu",
             "sign": "acquario",
-            "retrograde": true
+            "retrograde": true,
+            "shashtiamsa": {
+              "part": 54,
+              "number": 7,
+              "name": "Bhrashta"
+            }
           }
         ],
         "ascendant": "toro",
+        "ascendantShashtiamsa": {
+          "part": 35,
+          "number": 26,
+          "name": "Ardra"
+        },
         "dignitySource": "Per segno, senza gradi: il segno del varga confrontato coi segni di uccha, moolatrikona, proprio e neecha di ciascuno dei sette graha (BPHS 3.49-54 e 4.6-24; 6.52, trad. Santhanam, vol. I, p. 88, per i primi tre come varga buoni). Tutte le corrispondenze, non una sola. Il conto dei varga buoni di 6.42-53, che aggiunge la regola dell'arudha, sta a parte nel tema vedico, con l'ora di nascita.",
+        "shashtiamsaSource": "Nomi dei sessanta shashtiamsa secondo BPHS 6.34-40 (Santhanam, vol. I, pp. 82-86, grafia della tavola di pp. 84-86): nei segni dispari dal primo mezzo grado, nei pari al rovescio (6.40). Il giudizio benefico o malefico del verso 41, che la tavola segna con (B) e (M), non è riportato.",
         "warnings": [
           "Il D60 vuole l'ora di nascita al minuto: una parte è di 30' d'arco. Qui l'Ascendente ne percorre una in circa 2,5 minuti, e il lagna cambia segno se l'ora di nascita è anticipata di 28 secondi o posticipata di 2,1 minuti. La Luna cambia segno con un anticipo di 49,8 minuti o un ritardo di 2,7 minuti. Un'ora arrotondata al quarto d'ora non basta a dire quale segno sia quello giusto."
         ]

@@ -492,7 +492,10 @@ export function registerComputeJyotishaChart(server: McpServer, context: ToolCon
               'testa: vanno riferite, non ricalcolate. d40, d45 e ' +
               'd60 hanno parti di meno di un grado: portano un\'avvertenza con i minuti di ' +
               'cui l\'ora di nascita può sbagliare prima che lagna e Luna cambino segno, e ' +
-              'va riferita a chi chiede.',
+              'va riferita a chi chiede. Nel d60 ogni graha e il lagna portano anche lo ' +
+              'shashtiamsa, il mezzo grado col nome di BPHS 6.34-40 (rovesciato nei segni pari, ' +
+              'col numero della lista): è un nome, e il giudizio benefico o malefico del ' +
+              'verso 41 non è riportato.',
           ),
         hora: z
           .enum(HORA_IDS)

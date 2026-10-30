@@ -33,6 +33,7 @@ import type {
   SkyChart,
   SkyPassage,
   Sect,
+  Shashtiamsa,
   Station,
   TransitChart,
   TransitingBody,
@@ -1236,10 +1237,15 @@ export function formatVargaCompact(varga: VargaChart): string {
   // fonte una volta sola in testa: è la stessa per tutti i varga, ma chi
   // legge un varga solo deve trovarla lì.
   lines.splice(lines.length - 1, 0, `Dignità: ${varga.dignitySource}`);
-  if (varga.ascendant) lines.push(`${'Lagna'.padEnd(11)} ${varga.ascendant}`);
+  // Nel D-60 il nome della parte chiude la riga, col numero della lista del
+  // verso: nei segni pari non è il mezzo grado, e chi rilegge la tavola di
+  // Santhanam cerca quello.
+  if (varga.shashtiamsaSource) lines.splice(lines.length - 1, 0, `Nomi: ${varga.shashtiamsaSource}`);
+  const nome = (parte: Shashtiamsa | undefined): string => (parte ? `  — n. ${parte.number} ${parte.name}` : '');
+  if (varga.ascendant) lines.push(`${'Lagna'.padEnd(11)} ${varga.ascendant}${nome(varga.ascendantShashtiamsa)}`);
   for (const position of varga.positions) {
     const dignita = position.dignitySigns?.length ? `  (${position.dignitySigns.join(', ')})` : '';
-    lines.push(`${position.name.padEnd(11)} ${position.sign}${dignita}`);
+    lines.push(`${position.name.padEnd(11)} ${position.sign}${dignita}${nome(position.shashtiamsa)}`);
   }
 
   return lines.join('\n');

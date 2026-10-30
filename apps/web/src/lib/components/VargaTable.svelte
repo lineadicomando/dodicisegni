@@ -1,5 +1,5 @@
 <script lang="ts">
-  import type { VargaChart } from '@dodicisegni/core';
+  import type { Shashtiamsa, VargaChart } from '@dodicisegni/core';
   import { BODY_GLYPH, SIGN_GLYPH, SIGN_LABEL, type StileQuadro } from '@dodicisegni/ruota';
   import type { Evidenza } from '#lib/evidenza.svelte.js';
   import QuadroVedico from './QuadroVedico.svelte';
@@ -38,7 +38,20 @@
 
   const HORA_LABEL = { sole: 'del Sole', luna: 'della Luna' } as const;
 
+  /**
+   * Solo nel D-60: la colonna dei nomi dei sessanta mezzi gradi. La guardia
+   * sta sulla fonte e non sull'identificativo, perché una risposta in cache
+   * di prima del campo ha il D-60 senza nomi.
+   */
+  const nomi = $derived(varga.kind === 'segni' && varga.shashtiamsaSource !== undefined);
+
 </script>
+
+<!-- Il numero è quello della lista del verso, che nei segni pari non è il
+     mezzo grado: è quello con cui si ritrova il nome nella tavola. -->
+{#snippet shashtiamsa(parte: Shashtiamsa | undefined)}
+  {#if parte}<span class="tenue">{parte.number}</span> {parte.name}{/if}
+{/snippet}
 
 <section>
   <h3 class="titolo-sezione">{varga.name} ({varga.varga.toUpperCase()})</h3>
@@ -62,6 +75,7 @@
         <th>Graha</th>
         <th>{varga.kind === 'segni' ? 'Segno' : 'Hora'}</th>
         {#if varga.kind === 'segni'}<th>Dignità del segno</th>{/if}
+        {#if nomi}<th>Shashtiamsa</th>{/if}
       </tr>
     </thead>
     <tbody>
@@ -102,6 +116,7 @@
             {SIGN_LABEL[varga.ascendant]}
           </td>
           <td></td>
+          {#if nomi}<td>{@render shashtiamsa(varga.ascendantShashtiamsa)}</td>{/if}
         </tr>
       {/if}
       {#each varga.positions as position (position.id)}
@@ -121,6 +136,7 @@
           <td class:tenue={!position.dignitySigns?.length}>
             {position.dignitySigns?.join(', ') || (position.dignitySigns ? '—' : '')}
           </td>
+          {#if nomi}<td>{@render shashtiamsa(position.shashtiamsa)}</td>{/if}
         </tr>
       {/each}
       {/if}
@@ -129,6 +145,9 @@
   <!-- La guardia per le risposte in cache di prima del campo. -->
   {#if varga.kind === 'segni' && varga.dignitySource}
     <p class="fonti">{varga.dignitySource}</p>
+  {/if}
+  {#if varga.kind === 'segni' && varga.shashtiamsaSource}
+    <p class="fonti">{varga.shashtiamsaSource}</p>
   {/if}
 </section>
 

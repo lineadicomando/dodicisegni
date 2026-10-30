@@ -150,7 +150,12 @@ generalizzarle. Il D40, il D45 e il D60 hanno parti di meno di un grado, e
 portano un'«Avvertenza» con i minuti di cui l'ora di nascita può sbagliare
 prima che lagna e Luna cambino segno: se sono pochi, un'ora data al quarto
 d'ora non li fissa, e lo dici prima di usarli. Senza ora di nascita di quelle
-carte valgono solo i graha lenti.
+carte valgono solo i graha lenti. Nel D60 ogni riga chiude col nome dello
+shashtiamsa, il mezzo grado, numerato come nella lista di BPHS 6.34-40 (nei
+segni pari la lista va al rovescio, e il numero non è il mezzo grado): è un
+nome del testo. Il verso 6.41 li divide in benefici e malefici, e la tabella
+non lo riporta; se lo usi, attribuiscilo al verso, e vale quanto vale l'ora
+al minuto che quella carta chiede.
 
 La sezione RELAZIONI FRA I GRAHA dice come ciascun graha vede gli altri
 secondo BPHS 3.55-58: la composta, e fra parentesi la naturale. Ha un verso,

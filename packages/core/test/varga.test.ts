@@ -4,7 +4,7 @@ import { ChartError } from '../src/errors.js';
 import { formatVargaCompact } from '../src/format.js';
 import { HORA_CONVENTIONS, horaOf } from '../src/hora.js';
 import { parasharaSignDignities } from '../src/dignita-parashara.js';
-import { computeVarga, VARGAS, vargaSignOf } from '../src/varga.js';
+import { computeVarga, SHASHTIAMSA_NAMES, shashtiamsaOf, VARGAS, vargaSignOf } from '../src/varga.js';
 import type { BirthData, VargaId } from '../src/types.js';
 
 const NASCITA: BirthData = {
@@ -453,6 +453,70 @@ describe('D-60, che conta dal segno stesso', () => {
     expect(vargaSignOf(inizioSegno(1) + 0.75, 'd60')).toBe('gemelli');
     // Sessanta parti fanno cinque giri: l'ultima è il segno prima di sé.
     expect(vargaSignOf(inizioSegno(1) + 29.9, 'd60')).toBe('ariete');
+  });
+});
+
+/**
+ * La tavola dei nomi del D-60, Santhanam, vol. I, pp. 84-86, ricopiata
+ * dall'immagine: per ogni nome l'inizio del tratto nei segni dispari e in
+ * quelli pari, in gradi, come stampati. Al n. 14 la colonna dei pari dice
+ * «23°23°30'», con il trattino caduto: è 23°-23°30'.
+ */
+const TAVOLA_D60: readonly [nome: string, dispari: number, pari: number][] = [
+  ['Ghora', 0, 29.5], ['Rakshasa', 0.5, 29], ['Deva', 1, 28.5], ['Kubera', 1.5, 28], ['Yaksha', 2, 27.5],
+  ['Kinnara', 2.5, 27], ['Bhrashta', 3, 26.5], ['Kulaghna', 3.5, 26], ['Garala', 4, 25.5], ['Vahni', 4.5, 25],
+  ['Maya', 5, 24.5], ['Purishaka', 5.5, 24], ['Apampathi', 6, 23.5], ['Marut', 6.5, 23], ['Kaala', 7, 22.5],
+  ['Sarpa', 7.5, 22], ['Amrita', 8, 21.5], ['Indu', 8.5, 21], ['Mridu', 9, 20.5], ['Komala', 9.5, 20],
+  ['Heramba', 10, 19.5], ['Brahma', 10.5, 19], ['Vishnu', 11, 18.5], ['Maheswara', 11.5, 18], ['Deva', 12, 17.5],
+  ['Ardra', 12.5, 17], ['Kalinasa', 13, 16.5], ['Kshiteesa', 13.5, 16], ['Kamalakara', 14, 15.5], ['Gulika', 14.5, 15],
+  ['Mrithyu', 15, 14.5], ['Kaala', 15.5, 14], ['Davagani', 16, 13.5], ['Ghora', 16.5, 13], ['Yama', 17, 12.5],
+  ['Kantaka', 17.5, 12], ['Sudha', 18, 11.5], ['Amrita', 18.5, 11], ['Poornachandra', 19, 10.5], ['Vishadagdha', 19.5, 10],
+  ['Kulanasa', 20, 9.5], ['Vamsakshaya', 20.5, 9], ['Utpata', 21, 8.5], ['Kaala', 21.5, 8], ['Saumya', 22, 7.5],
+  ['Komala', 22.5, 7], ['Seetala', 23, 6.5], ['Karaladamshtra', 23.5, 6], ['Chandramukhi', 24, 5.5], ['Praveena', 24.5, 5],
+  ['Kala Pavaka', 25, 4.5], ['Dandayudha', 25.5, 4], ['Nirmala', 26, 3.5], ['Saumya', 26.5, 3], ['Kroora', 27, 2.5],
+  ['Atiseetala', 27.5, 2], ['Amrita', 28, 1.5], ['Payodhi', 28.5, 1], ['Bhramana', 29, 0.5], ['Chandra Rekha', 29.5, 0],
+];
+
+describe('i nomi del D-60, rovesciati nei segni pari', () => {
+  // BPHS 6.34-40, trad. Santhanam, vol. I, pp. 82-86.
+  it('sono sessanta, e combaciano con la tavola di pp. 84-86 riga per riga', () => {
+    expect(SHASHTIAMSA_NAMES).toHaveLength(60);
+    TAVOLA_D60.forEach(([nome, dispari, pari], i) => {
+      // A metà del tratto, nell'Ariete (dispari) e nel Toro (pari).
+      expect(shashtiamsaOf(dispari + 0.25), `n. ${i + 1}, dispari`).toEqual({ part: i + 1, number: i + 1, name: nome });
+      expect(shashtiamsaOf(inizioSegno(1) + pari + 0.25), `n. ${i + 1}, pari`).toEqual({
+        part: 60 - i,
+        number: i + 1,
+        name: nome,
+      });
+    });
+  });
+
+  it("rovescia i nomi e non i segni: la Venere dell'esempio è in Ghora, nei Pesci", () => {
+    // Capricorno, segno pari: 13°25' è il ventisettesimo mezzo grado, e al
+    // rovescio il trentaquattresimo nome, il secondo Ghora.
+    const venere = inizioSegno(9) + 13 + 25 / 60;
+    expect(shashtiamsaOf(venere)).toEqual({ part: 27, number: 34, name: 'Ghora' });
+    expect(vargaSignOf(venere, 'd60')).toBe('pesci');
+  });
+
+  it('arrivano nella carta del D-60 e in nessun altra, per i graha e per il lagna', () => {
+    const carta = tema();
+    const d60 = computeVarga(carta, 'd60');
+    if (d60.kind !== 'segni') throw new Error('il D-60 ha segni');
+    for (const posizione of d60.positions) {
+      const corpo = carta.bodies.find((body) => body.id === posizione.id)!;
+      expect(posizione.shashtiamsa, posizione.id).toEqual(shashtiamsaOf(corpo.longitude));
+    }
+    expect(d60.ascendantShashtiamsa).toEqual(shashtiamsaOf(carta.angles!.ascendant));
+    expect(d60.shashtiamsaSource).toContain('6.34-40');
+    expect(d60.shashtiamsaSource).toContain('non è riportato');
+
+    const d45 = computeVarga(carta, 'd45');
+    if (d45.kind !== 'segni') throw new Error('il D-45 ha segni');
+    expect(d45.shashtiamsaSource).toBeUndefined();
+    expect(d45.ascendantShashtiamsa).toBeUndefined();
+    expect(d45.positions.every((posizione) => posizione.shashtiamsa === undefined)).toBe(true);
   });
 });
 

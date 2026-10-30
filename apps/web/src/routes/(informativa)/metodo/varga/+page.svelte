@@ -161,9 +161,17 @@
 </p>
 
 <p>
-  I sessanta nomi delle parti (Ghora, Rakshasa, Deva…), che il testo dà come
-  benigni o maligni e rovescia nei segni pari, non sono riportati: il sito
-  calcola le carte, non i giudizi.
+  Ogni parte ha un nome (6.34-39): Ghora, Rakshasa, Deva, fino a Chandra
+  Rekha, la sessantesima. Nei segni dispari la lista si legge dal primo mezzo
+  grado, nei pari al rovescio (6.40), e il rovescio tocca i nomi e non i
+  segni: la Venere dell'esempio, nel Capricorno, che è pari, cade nella
+  ventisettesima parte e porta il trentaquattresimo nome, il secondo Ghora. Il
+  sito dà il nome accanto al segno, per i graha e per il lagna, nella grafia
+  della tavola di Santhanam (pp. 84-86), col numero della lista, che nei
+  segni pari non è quello della parte ed è quello con cui il nome si ritrova
+  nella tavola. Il verso successivo (6.41) divide i sessanta in benefici e
+  malefici, e quello non è riportato: è un giudizio sull'effetto, e il nome
+  resta un nome.
 </p>
 
 <h2 id="buoni">I varga buoni, e il loro conto</h2>

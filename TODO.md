@@ -103,17 +103,16 @@ volta e ricominciare da capo.
 Le prime tre sono rifiniture, nessuna urgente. La 28 è la sola che tocca
 chi usa il programma oggi: il suo primo punto divide il sito in quattro agli
 occhi dei motori di ricerca, e si fa sul server, quando il proprietario lo
-chiede. Fra le rifiniture, la più concreta da cui
-ripartire sono i sessanta nomi del D-60 (voce 5): la regola di BPHS
-6.34-40 è letta, le pp. 82-86 di Santhanam sono già salvate in `pagine/`
-della sua copia locale, e il confine (nome sì, giudizio del verso 41 no) è
-scritto. Manca la trascrizione dei sessanta nomi uno per uno,
-sull'immagine. L'avvertenza sul D-24 e sul D-27 è una scelta del
-proprietario prima che una riga di codice; le altre convenzioni della hora
-sono il lavoro più lungo della voce. La 25 si fa solo se serve, la 26
-aspetta testi.
+chiede. Fra le rifiniture, i sessanta nomi del D-60 sono fatti il 30
+ottobre 2026 (`shashtiamsaOf` in `varga.ts`, versione 0.6.0). L'avvertenza
+sul D-24 e sul D-27 è una scelta del proprietario prima che una riga di
+codice; le altre convenzioni della hora sono il lavoro più lungo della voce
+5. Della 25 il pezzo più vicino sono gli arudha dei graha nei varga; la
+combustione in gradi di tempo vuole pagine ancora da leggere. La 26 aspetta
+testi.
 
-**Versione 0.5.2**, in ogni manifesto, col tag `v0.5.2` (su `cd6d0f2`). La
+**Versione 0.6.0**, in ogni manifesto, col tag `v0.6.0`: i nomi del D-60
+(voce 5), un campo che compare nella risposta del varga. La
 prima, la 0.1.0, cade col numero unico della voce 27 (`f6026fa`) il 30
 ottobre 2026; poi, tutte con la
 voce 17: la 0.1.1 la pagina web dell'oraria, la 0.2.0 le condizioni di
@@ -179,7 +178,13 @@ Due cose da ricordare: la tavola del D-27 a p. 79 ha un refuso (Gemelli,
 undicesima parte), e il D-20 scambia fissi e mobili rispetto al D-16 nel
 verso stesso (*cāpān mṛgendrād*).
 
-Il D-60 si conta dal segno stesso (vedi *Deciso*), e il D-40, il D-45 e il
+Il D-60 si conta dal segno stesso (vedi *Deciso*), e porta per ogni graha e
+per il lagna lo shashtiamsa, il mezzo grado col nome di BPHS 6.34-40
+(`shashtiamsaOf`, `SHASHTIAMSA_NAMES`, nella grafia della tavola di
+Santhanam, pp. 84-86, rovesciato nei segni pari), senza il benefico o
+malefico del verso 41. La seconda metà di 6.40 si potrebbe leggere anche come
+rovescio dei signori, cioè dei segni: Santhanam no, e la trascrizione dice
+perché; una lettura così entra solo con un autore. Il D-40, il D-45 e il
 D-60 portano `warnings`: di quanti minuti l'ora di nascita dovrebbe sbagliare
 perché lagna e Luna cambino segno, calcolato sulla carta con la velocità
 dell'Ascendente (`ascendantDegreesPerMinute`, dal tempo siderale locale, la
@@ -220,14 +225,6 @@ Ciascuna indipendente dalle altre.
   (`tools.ts:492-493` e `:1627`, `draw_jyotisha_chart`), `/metodo/varga`
   (il paragrafo dell'avvertenza), `packages/lettura/src/jyotisha.ts:149` e i
   commenti in `types.ts:398` e `varga.ts:83`.
-- **I sessanta nomi del D-60** (Ghora, Rakshasa…, BPHS 6.34-40, tavola alle
-  pp. 84-86, trascritta in sintesi): oggi non sono riportati, e
-  `/metodo/varga` lo dice. Se entrano, entrano come nome, rovesciati nei
-  segni pari, e senza il giudizio benefico o malefico del verso 41. Due cose
-  da sapere: nella trascrizione alcune traslitterazioni sono segnate «da
-  ricontrollare», e i nomi vanno letti sull'immagine di pp. 84-86, non
-  copiati da lì; e `/metodo/varga` spiega l'assenza con «il sito calcola le
-  carte, non i giudizi», frase che con i nomi dentro va riscritta.
 
 Per chi aggiunge un varga o una variante: l'elenco che le superfici accettano
 si legge da `VARGAS` (server MCP, le due rotte `api/jyotish`, la CLI).

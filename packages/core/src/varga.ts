@@ -60,6 +60,7 @@ import type {
   CelestialBody,
   HoraConvention,
   NatalChart,
+  Shashtiamsa,
   SignVargaChart,
   VargaChart,
   VargaId,
@@ -324,7 +325,7 @@ export const VARGAS: readonly VargaDefinition[] = [
     // autore e non è calcolata. P.V.R. Narasimha Rao legge il verso come qui
     // (un'email del 2009 riportata su un forum, in `texts/tecnica/
     // d60-letture-in-rete-2026`). La decisione sta in TODO.md, *Deciso*. I sessanta nomi (6.34-40)
-    // si rovesciano nei segni pari; i segni no.
+    // si rovesciano nei segni pari; i segni no. I nomi sono in `SHASHTIAMSA_NAMES`.
     id: 'd60',
     name: 'Shashtiamsa',
     divisions: 60,
@@ -378,6 +379,48 @@ export function vargaSignOf(
   }
 
   return at(definition.signIndex(Math.floor(longitude / 30), degreeInSign(longitude)));
+}
+
+/**
+ * I sessanta nomi del D-60 nei segni dispari, nell'ordine di BPHS 6.34-39.
+ *
+ * La grafia è quella della tavola di Santhanam, vol. I, pp. 84-86, letta
+ * sull'immagine: è la tavola che lega ogni nome al suo mezzo grado. La lista
+ * che la stessa traduzione stampa a p. 83 scrive alcuni nomi altrimenti
+ * (Marutwan per Marut, Kala per Kaala, Davagni, Karala Damshtra, Kalapavaka,
+ * Chandrarekha), e il verso traslitterato in `texts/` dice quale forma
+ * sanscrita sta sotto ciascuno. Due nomi tornano tre volte (Kaala, Amrita) e
+ * quattro due volte (Ghora, Deva, Komala, Saumya): è il testo, e la tavola li
+ * rimanda l'uno all'altro («same as S. No. 15»).
+ */
+export const SHASHTIAMSA_NAMES: readonly string[] = [
+  'Ghora', 'Rakshasa', 'Deva', 'Kubera', 'Yaksha', 'Kinnara', 'Bhrashta', 'Kulaghna', 'Garala', 'Vahni',
+  'Maya', 'Purishaka', 'Apampathi', 'Marut', 'Kaala', 'Sarpa', 'Amrita', 'Indu', 'Mridu', 'Komala',
+  'Heramba', 'Brahma', 'Vishnu', 'Maheswara', 'Deva', 'Ardra', 'Kalinasa', 'Kshiteesa', 'Kamalakara', 'Gulika',
+  'Mrithyu', 'Kaala', 'Davagani', 'Ghora', 'Yama', 'Kantaka', 'Sudha', 'Amrita', 'Poornachandra', 'Vishadagdha',
+  'Kulanasa', 'Vamsakshaya', 'Utpata', 'Kaala', 'Saumya', 'Komala', 'Seetala', 'Karaladamshtra', 'Chandramukhi', 'Praveena',
+  'Kala Pavaka', 'Dandayudha', 'Nirmala', 'Saumya', 'Kroora', 'Atiseetala', 'Amrita', 'Payodhi', 'Bhramana', 'Chandra Rekha',
+];
+
+/** Da dove vengono i nomi del D-60, e che cosa non ne viene. */
+export const SHASHTIAMSA_SOURCE =
+  'Nomi dei sessanta shashtiamsa secondo BPHS 6.34-40 (Santhanam, vol. I, pp. 82-86, grafia della ' +
+  'tavola di pp. 84-86): nei segni dispari dal primo mezzo grado, nei pari al rovescio (6.40). ' +
+  "Il giudizio benefico o malefico del verso 41, che la tavola segna con (B) e (M), non è riportato.";
+
+/**
+ * Lo shashtiamsa di una longitudine **siderale**: il mezzo grado, e il nome.
+ *
+ * Il mezzo grado è lo stesso che dà il segno del D-60 (`⌊2·gradi⌋`, BPHS
+ * 6.33). Il rovescio dei segni pari vale per i nomi soltanto (6.40, e la
+ * traduzione di Santhanam lo dice: «insomuch as these names are concerned»).
+ */
+export function shashtiamsaOf(siderealLongitude: number): Shashtiamsa {
+  const longitude = normalize360(siderealLongitude);
+  const part = Math.min(Math.floor(degreeInSign(longitude) * 2), 59) + 1;
+  const dispari = Math.floor(longitude / 30) % 2 === 0;
+  const number = dispari ? part : 61 - part;
+  return { part, number, name: SHASHTIAMSA_NAMES[number - 1]! };
 }
 
 /**
@@ -544,9 +587,14 @@ export function computeVarga(chart: NatalChart, id: VargaId, options: VargaOptio
     name: definition.name,
     divisions: definition.divisions,
     rule: definition.rule,
-    positions: chart.bodies.map((body) => posizione(body, vargaSignOf(body.longitude, id))),
+    positions: chart.bodies.map((body) => ({
+      ...posizione(body, vargaSignOf(body.longitude, id)),
+      ...(id === 'd60' ? { shashtiamsa: shashtiamsaOf(body.longitude) } : {}),
+    })),
     ...(chart.angles ? { ascendant: vargaSignOf(chart.angles.ascendant, id) } : {}),
+    ...(id === 'd60' && chart.angles ? { ascendantShashtiamsa: shashtiamsaOf(chart.angles.ascendant) } : {}),
     dignitySource: VARGA_DIGNITY_SOURCE,
+    ...(id === 'd60' ? { shashtiamsaSource: SHASHTIAMSA_SOURCE } : {}),
     ...(definition.fine ? { warnings: [fineWarning(chart, definition)] } : {}),
   };
 }

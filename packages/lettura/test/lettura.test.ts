@@ -207,6 +207,9 @@ describe('il documento vedico', () => {
     expect(testo.replace(/\s+/g, ' ')).toContain('quali guastino i varga buoni il testo non lo dice');
     expect(testo).toContain('VARGA BUONI');
     expect(testo.replace(/\s+/g, ' ')).toContain('non rifare il conto con regole tue');
+    // I nomi del D-60: senza la riga il modello aggiungerebbe di suo il
+    // benefico o il malefico del verso 41, come un dato del tema.
+    expect(testo.replace(/\s+/g, ' ')).toContain('Il verso 6.41 li divide in benefici e malefici, e la tabella non lo riporta');
   });
 
   it('mette al centro la Luna e il lagna, non il Sole', () => {

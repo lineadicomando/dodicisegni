@@ -438,11 +438,38 @@ export interface SignVargaChart extends VargaChartBase {
      * `parasharaSignDignities` e `dignitySource`.
      */
     dignitySigns?: ParasharaDignity[];
+    /** Solo nel D-60: in quale dei sessanta mezzi gradi cade, e il suo nome. */
+    shashtiamsa?: Shashtiamsa;
   }[];
   /** Il segno del lagna. Assente se il tema non ha un Ascendente. */
   ascendant?: ZodiacSign;
+  /** Solo nel D-60, e solo se c'è il lagna: il suo shashtiamsa. */
+  ascendantShashtiamsa?: Shashtiamsa;
   /** Da dove vengono `dignitySigns`, e che cosa non sono. */
   dignitySource: string;
+  /** Solo nel D-60: da dove vengono i nomi di `shashtiamsa`, e che cosa manca. */
+  shashtiamsaSource?: string;
+}
+
+/**
+ * Uno dei sessanta mezzi gradi del segno, col nome che BPHS 6.34-40 gli dà.
+ *
+ * Il nome è un nome e basta. Il verso 41 divide i sessanta in benefici e
+ * malefici, e la tavola di Santhanam (pp. 84-86) segna ciascuno con una (B) o
+ * una (M): quel giudizio resta fuori, come le altre letture sull'effetto, e
+ * `shashtiamsaSource` lo dice.
+ */
+export interface Shashtiamsa {
+  /** Il mezzo grado del segno, da 1 (0°-0°30') a 60 (29°30'-30°). */
+  part: number;
+  /**
+   * Il numero del nome nella lista del verso, da 1 (Ghora) a 60 (Chandra
+   * Rekha). Nei segni dispari è `part`; nei pari la lista si legge al
+   * rovescio (6.40), e vale 61 − `part`.
+   */
+  number: number;
+  /** Il nome, nella grafia della tavola di Santhanam. */
+  name: string;
 }
 
 /**
