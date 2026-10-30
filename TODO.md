@@ -81,10 +81,11 @@ volta e ricominciare da capo.
 | 25. Le dignità del Jyotisha: le rifiniture | bassa | piccola | due calcoli, da fare solo se servissero |
 | 26. Le scuole occidentali: quello che resta | bassa | piccola | la ricezione di Bonatti va con la 17; Valente aspetta un testo |
 
-**Versione 0.3.0**, in ogni manifesto, col tag `v0.3.0`. La prima, la
+**Versione 0.4.0**, in ogni manifesto, col tag `v0.4.0`. La prima, la
 0.1.0, cade alla chiusura della voce 19 il 30 ottobre 2026; poi, tutte con la
 voce 17, la 0.1.1 porta la pagina web dell'oraria, la 0.2.0 le condizioni di
-qualità di p. 125, la 0.3.0 la Parte di Fortuna nel conto di Lilly (p. 145). Le regole (un
+qualità di p. 125, la 0.3.0 la Parte di Fortuna nel conto di Lilly (p. 145),
+la 0.4.0 la Luna cosignificatrice che non proibisce. Le regole (un
 numero solo, le tre domande che dicono quale cifra si muove, il tag) stanno
 in `CLAUDE.md`, *La versione*. Se una risposta che c'era è cambiata lo dice
 il fascicolo canonico (`packages/core/test/canonico.test.ts`, voce 27,
@@ -224,7 +225,8 @@ più facilmente si vorranno rivedere:
   allora conterebbe Regolo alla Luna, e non lo fa);
 - le *moieties* sono la prima colonna di p. 107, quella che Lilly dice sua;
 - la Luna vuota di Lilly non pretende «separated from a Planet»;
-- la Luna può proibire come ogni altro pianeta;
+- la Luna non proibisce quando è cosignificatrice di chi chiede (p. 124):
+  dal 30 ottobre 2026, vedi *Deciso*;
 - traslazione e collezione si riconoscono anche senza la ricezione di p. 126,
   che è riportata e la cui mancanza è detta.
 
@@ -236,9 +238,6 @@ Ciascuna indipendente dalle altre.
   anche i passaggi della Luna su di lui, che sono applicazioni della Luna.
   `classifyLilly` lo risolve col peso (`peso`, ordine caldeo); il corso no, e
   `bodies` serve a restringerlo.
-- **La Luna come proibitore.** Perfeziona con tutti ogni pochi giorni: su
-  figure reali potrebbe dare proibizioni ovunque. Se succede, è il primo posto
-  da guardare, con la lettura scritta in `HORARY_LILLY_READINGS`.
 - **Il cielo con la scuola sulle superfici**: `computeSky` ha
   `dignitySchool`, ma `/api/sky` e `compute_sky` no. Con `compute_horary`
   forse non servono più; deciderlo prima di farlo.
@@ -382,6 +381,17 @@ ogni scuola che non le definisce o che le definisce in un modo che la
 tavola non calcola, e la riga della fonte lo dice.
 
 ## Deciso, e da non riaprire
+
+- **La Luna cosignificatrice non proibisce.** Scelto dal proprietario il 30
+  ottobre 2026, con la voce 17, dopo una misura: su 720 figure di Roma del
+  2026 la Luna faceva il 77% delle proibizioni (643 su 830), e in 50 delle
+  193 figure con una perfezione diretta era l'unico impedimento. Lilly la dà
+  come cosignificatrice di chi chiede (p. 124), e i suoi esempi di
+  proibizione (pp. 110-111) sono di un pianeta che sorpassa il significatore
+  più leggero: il suo incontro col significatore del quesito è la parte del
+  querente. Proibisce solo quando è lei uno dei due significatori; resta
+  traslatrice, come a p. 182. Dopo il cambio, sulle stesse figure, 187
+  proibizioni.
 
 - **La Parte di Fortuna nel conto di Lilly segue la tavola di p. 145.**
   Scelto dal proprietario il 30 ottobre 2026, con la voce 17. La Parte è

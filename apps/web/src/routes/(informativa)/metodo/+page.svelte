@@ -540,7 +540,10 @@
   Il calcolo dice chi sono i significatori (pp. 123-124) e come la figura porta
   al loro incontro secondo le definizioni di Lilly: per aspetto, per
   traslazione o per collezione di luce (pp. 125-126), o come lo impedisce, per
-  proibizione, frustrazione o refranazione (pp. 110-113). Per la congiunzione
+  proibizione, frustrazione o refranazione (pp. 110-113). La Luna, che Lilly dà
+  come cosignificatrice di chi chiede (p. 124), non conta come proibitore
+  quando è tale: il suo incontro col significatore della cosa chiesta è la
+  parte di chi chiede, non un terzo che si mette in mezzo. Per la congiunzione
   e per l'aspetto il calcolo riporta anche le condizioni che p. 125 mette a
   ciascun modo: la casa in cui la congiunzione si compie, se i significatori
   applicano da case buone (quelle a cui la tavola delle fortezze di p. 115 dà

@@ -312,3 +312,27 @@ describe('le condizioni di qualità della perfezione, p. 125', () => {
     expect(letture).toContain('vuol dire non peregrino');
   });
 });
+
+describe('la Luna cosignificatrice, p. 124', () => {
+  const ROMA = { latitude: 41.9028, longitude: 12.4964 };
+
+  it('non proibisce, ma resta a contare quando è lei un significatore', () => {
+    // Un anno di figure di settima e decima casa: la Luna cosignificatrice
+    // non compare mai fra i proibitori.
+    for (let giorno = 0; giorno < 60; giorno += 6) {
+      const date = new Date(Date.UTC(2026, 0, 1 + giorno)).toISOString().slice(0, 10);
+      for (const house of [7, 10]) {
+        const h = computeHoraryLilly({ date, time: '14:00', timezone: 'Europe/Rome' }, ROMA, { question: { house } });
+        const cosignificatrice = h.significators.some((s) => s.role === 'cosignificatore');
+        if (cosignificatrice) {
+          expect(h.impediments.filter((f) => f.mode === 'proibizione' && f.by === 'luna'), `${date} casa ${house}`).toEqual([]);
+        }
+      }
+    }
+  });
+
+  it('lo dice fra le letture', () => {
+    const h = computeHoraryLilly({ date: '2026-01-21', time: '15:00', timezone: 'Europe/Rome' }, ROMA, { question: { house: 7 } });
+    expect(h.readings.join(' ')).toContain('La Luna no, quando è cosignificatrice di chi chiede');
+  });
+});

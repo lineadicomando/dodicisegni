@@ -53,7 +53,9 @@ export const HORARY_LILLY_READINGS: readonly string[] = [
   'Il più leggero è il più veloce nel moto medio, nell\'ordine caldeo: «ever the lighter to the more ponderous» (p. 108).',
   'La finestra finisce quando il più leggero dei due significatori cambia segno: fin lì si guardano tutti; oltre, il motore non guarda.',
   'Proibizione: un terzo pianeta, più leggero del significatore più pesante, perfeziona con lui prima che i due si incontrino ' +
-    '(pp. 110-111). La Luna ne fa parte come ogni altro pianeta, perché Lilly non la esclude.',
+    '(pp. 110-111). La Luna no, quando è cosignificatrice di chi chiede («we doe give the ☽ as a Cosignificator with ' +
+    'the querent», p. 124): il suo incontro col significatore del quesito è la parte del querente, non un terzo che si ' +
+    'mette in mezzo. Proibisce, come gli altri, solo quando è lei uno dei due significatori.',
   'Frustrazione: il significatore più pesante perfeziona prima con un pianeta ancora più pesante (pp. 112-113).',
   'Refranazione: il più leggero applica in orbita all\'istante e si ferma retrogrado prima di perfezionare (p. 111).',
   'Traslazione: un pianeta più leggero di tutti e due, separato da uno dei due da quando è nel segno, la cui prima applicazione ' +
@@ -191,6 +193,7 @@ export function computeHoraryLilly(moment: SkyMoment, place: Place, options: Hor
         sect: chart.sect,
         applyingAtStart: applicaAllInizio,
         inOrbAtStart: inOrbita,
+        ...(signoreAsc !== 'luna' && signoreQuesito !== 'luna' ? { cosignificator: 'luna' as const } : {}),
       });
   const condizioniPer = new Map(conditions.bodies.map((body) => [body.id, body]));
   for (const finding of perfections) {
@@ -244,6 +247,11 @@ export interface LillyClassifierInput {
   applyingAtStart: boolean;
   /** Se all'istante sono in un aspetto qualunque entro le orbite. */
   inOrbAtStart: boolean;
+  /**
+   * La Luna quando è cosignificatrice di chi chiede (p. 124): non proibisce.
+   * Assente quando è lei uno dei due significatori.
+   */
+  cosignificator?: BodyId;
 }
 
 /**
@@ -293,6 +301,8 @@ export function classifyLilly(input: LillyClassifierInput): { perfections: Horar
     for (const event of aspetti(pesante)) {
       const terzo = con(event);
       if (!terzo || terzo === leggero || event.exact >= limite || !SETTE.includes(terzo)) continue;
+      // La cosignificatrice è la parte di chi chiede, non un terzo (p. 124).
+      if (terzo === input.cosignificator) continue;
       const frustra = peso(terzo) > peso(pesante);
       const corpo = event.kind === 'aspetto' && event.aspect === 'congiunzione';
       impediments.push({
