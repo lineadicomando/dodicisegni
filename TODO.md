@@ -35,8 +35,9 @@ esserci, se il clone è un altro: le schede dicono da dove riscaricare ogni
 fonte.
 
 I riferimenti `file:riga`, i nomi e i commit citati sono stati ricontrollati
-tutti contro il codice il 30 ottobre 2026, dopo la chiusura delle voci 17 e
-19 (`20a8f12`, versione 0.5.2). Le righe si spostano: se una non torna, il
+tutti contro il codice il 30 ottobre 2026 una seconda volta, su `b05e801`
+(versione 0.5.2), dopo i ritocchi all'interfaccia che seguono la chiusura
+delle voci 17 e 19. Le righe si spostano: se una non torna, il
 nome della funzione o della costante accanto è quello che fa fede.
 
 Prima di cominciare conviene che `npm test`, `npm run typecheck` e `npm run
@@ -75,7 +76,10 @@ lint` siano verdi. Le cose che fanno perdere tempo:
 
 Per spegnere il server di sviluppo lanciato in sottofondo si usa la porta
 (`fuser -k 5173/tcp`), non `pkill -f` col numero della porta: il comando
-contiene lo stesso numero e chiude anche la shell che lo lancia.
+contiene lo stesso numero e chiude anche la shell che lo lancia. E prima di
+provare il server compilato (`npm start -w @dodicisegni/web`) va rifatto
+`npm run build`: `apps/web/build` non è nel repo e resta com'era all'ultima
+build, che può essere di settimane prima.
 
 **Il push si fa coi tag.** Il 30 ottobre 2026 sono andati su `origin` tutti
 i commit e i tag da `v0.1.0` a `v0.5.2`. Il push lo chiede il proprietario;
@@ -92,9 +96,15 @@ volta e ricominciare da capo.
 |---|---|---|---|
 | 5. I varga: le convenzioni che restano | bassa | piccola | i sedici sono fatti; restano rifiniture, una per riga |
 | 25. Le dignità del Jyotisha: le rifiniture | bassa | piccola | due calcoli, da fare solo se servissero |
-| 26. Le scuole occidentali: quello che resta | bassa | piccola | la ricezione di Bonatti chiede un'applicazione; Valente aspetta un testo |
+| 26. Le scuole occidentali delle dignità: quello che resta | bassa | piccola | la ricezione di Bonatti chiede un'applicazione; Valente aspetta un testo |
+| 28. La revisione della SEO | media | piccola | il dominio principale è deciso; i redirect e `ORIGIN` si fanno sul server, non nel repo |
+| 29. Le dipendenze che `npm audit` segnala | media | piccola | `electron` per primo, perché entra nell'AppImage |
 
-Tutte e tre sono rifiniture, nessuna urgente. La più concreta da cui
+Le prime tre sono rifiniture, nessuna urgente. La 28 e la 29 sono in coda
+per scelta del proprietario, ma sono le sole che toccano chi usa il
+programma oggi: il primo punto della 28 divide il sito in quattro agli occhi
+dei motori di ricerca, e la 29 porta un `electron` con un avviso alto
+nell'applicazione desktop. Fra le rifiniture, la più concreta da cui
 ripartire sono i sessanta nomi del D-60 (voce 5): la regola di BPHS
 6.34-40 è letta, le pp. 82-86 di Santhanam sono già salvate in `pagine/`
 della sua copia locale, e il confine (nome sì, giudizio del verso 41 no) è
@@ -104,8 +114,9 @@ proprietario prima che una riga di codice; le altre convenzioni della hora
 sono il lavoro più lungo della voce. La 25 si fa solo se serve, la 26
 aspetta testi.
 
-**Versione 0.5.2**, in ogni manifesto, col tag `v0.5.2`. La prima, la
-0.1.0, cade alla chiusura della voce 19 il 30 ottobre 2026; poi, tutte con la
+**Versione 0.5.2**, in ogni manifesto, col tag `v0.5.2` (su `cd6d0f2`). La
+prima, la 0.1.0, cade col numero unico della voce 27 (`f6026fa`) il 30
+ottobre 2026; poi, tutte con la
 voce 17: la 0.1.1 la pagina web dell'oraria, la 0.2.0 le condizioni di
 qualità di p. 125, la 0.3.0 la Parte di Fortuna nel conto di Lilly, la 0.4.0
 la Luna cosignificatrice che non proibisce, la 0.5.0 chi si avvicina negli
@@ -147,7 +158,9 @@ superfici del tema tropicale: il modulo `dignita-<scuola>.ts` con la sua
 riga `source`, il campo in `WesternDignities`, le righe in `format.ts`, il
 blocco in `DignityTable.svelte`, la voce del menù in `lib/scuole-dignita.ts`,
 la descrizione di `dignity_school` in `packages/mcp/src/tools.ts`, il
-documento `packages/lettura/src/tropicale.ts` e `/metodo`. L'elenco preciso,
+documento `packages/lettura/src/tropicale.ts` e `/metodo`; e, dalla 0.5.1,
+il cielo, che porta la scuola anche senza nascita (`/api/sky`, `compute_sky`,
+la pagina Cielo; il modello è `ec1ad1e`). L'elenco preciso,
 con quello che nessun test controlla, è alla voce 26. Dalla riga di comando la
 sezione si vede con `--dignita <scuola>` e una nascita qualunque, con l'ora
 perché ci sia la setta.
@@ -182,35 +195,56 @@ Ciascuna indipendente dalle altre.
 - **Le altre convenzioni della hora.** La parivritti-dvaya, la Kashinatha,
   la Uma-Shambhu, quella di Raman Suprajarama: regole e casi di controllo
   nelle schede `FONTE.md` di `texts/jyotisha/narasimha-rao-*`,
-  `suprajarama-*` e `texts/tecnica/pyjhora`. Una convenzione che dà un segno
-  fisso per luminare è una voce di `HORA_CONVENTIONS` con `signOf`; quelle
-  che danno un segno diverso per segno di partenza (la Kashinatha, la
-  parivritti-dvaya) vogliono una funzione al posto di `signOf`. Le liste di
-  CLI, API e MCP derivano da `HORA_CONVENTIONS`; il menù di
-  `JyotishaSettings.svelte` no, ed è scritto a mano. La forma del D-2 nel
-  risultato: `VargaChart` è un'unione col discriminante `kind`,
+  `suprajarama-*` e `texts/tecnica/pyjhora`. Oggi `HORA_CONVENTIONS` dà a
+  ogni convenzione un segno fisso per luminare (`signOf`), che basta a
+  Parashara e a `leone-cancro`; **tutte e quattro** quelle che restano danno
+  invece un segno diverso secondo il segno di partenza, quindi la forma della
+  voce va cambiata (una funzione al posto di `signOf`) prima di aggiungere la
+  prima. PyJHora ne conosce sei e non quattro: la sesta, che chiama
+  «Somanatha» (la parivritti alternata), non è stata né presa né scartata, e
+  va cercato se ha un autore. Nella Kashinatha PyJHora e la dispensa di Rao
+  del 2003 divergono su Leone e Cancro, e quale delle due segua Jagannatha
+  Hora non è verificato (la scheda di `texts/tecnica/pyjhora` dice come). Le
+  liste di CLI, API e MCP derivano da `HORA_CONVENTIONS`; il menù
+  dell'interfaccia no: è scritto a mano nello snippet `menuHora` di
+  `JyotishaSettings.svelte`, con un `<option>` per convenzione. La forma
+  del D-2 nel risultato: `VargaChart` è un'unione col discriminante `kind`,
   `SignVargaChart` (`'segni'`) e `HoraVargaChart` (`'signori'`, il solo D-2
   di Parashara, rifiutato dal quadro con `VARGA_SENZA_SEGNI`).
 - **L'avvertenza anche sul D-24 e sul D-27?** Le loro parti sono di poco più
   di un grado (1°15' e 1°6'40"), che l'Ascendente attraversa in cinque o sei
-  minuti. Oggi la soglia è «meno di un grado»; se allargarla è una scelta, e
-  costa una riga (`fine: true`).
+  minuti. I varga «fini» oggi sono i tre con parti sotto il grado, segnati
+  a mano col campo `fine` di `VARGAS` (non c'è una soglia calcolata).
+  Allargarli è una scelta del proprietario; nel codice costa una riga, ma i
+  testi che nominano i tre fini sono almeno sette, e nessun test li vede:
+  l'aiuto della CLI («le ultime tre», `cli.ts:122-124`), le descrizioni MCP
+  (`tools.ts:492-493` e `:1627`, `draw_jyotisha_chart`), `/metodo/varga`
+  (il paragrafo dell'avvertenza), `packages/lettura/src/jyotisha.ts:149` e i
+  commenti in `types.ts:398` e `varga.ts:83`.
 - **I sessanta nomi del D-60** (Ghora, Rakshasa…, BPHS 6.34-40, tavola alle
   pp. 84-86, trascritta in sintesi): oggi non sono riportati, e
   `/metodo/varga` lo dice. Se entrano, entrano come nome, rovesciati nei
-  segni pari, e senza il giudizio benefico o malefico del verso 41.
+  segni pari, e senza il giudizio benefico o malefico del verso 41. Due cose
+  da sapere: nella trascrizione alcune traslitterazioni sono segnate «da
+  ricontrollare», e i nomi vanno letti sull'immagine di pp. 84-86, non
+  copiati da lì; e `/metodo/varga` spiega l'assenza con «il sito calcola le
+  carte, non i giudizi», frase che con i nomi dentro va riscritta.
 
 Per chi aggiunge un varga o una variante: l'elenco che le superfici accettano
 si legge da `VARGAS` (server MCP, le due rotte `api/jyotish`, la CLI).
-L'interfaccia ha una copia, `apps/web/src/lib/varghe.ts`, che lascia fuori la
-D-1 apposta; `apps/web/src/lib/elenchi.test.ts` e
-`apps/web/src/routes/(informativa)/metodo/jyotisha.test.ts` cadono finché la
-copia e la tavola di `/metodo/varga` non combaciano con `VARGAS`, **anche
-nell'ordine**. Nessun test vede invece i testi che li elencano: il commento
-delle due rotte, l'aiuto di `--varga` (`packages/core/src/cli.ts:120`), la
-descrizione dei parametri `vargas` e `varga` in `packages/mcp/src/tools.ts`,
-il rimando in `/metodo` (voce `#varga`), la pagina `/metodo/varga` con la sua
-descrizione in `Meta`, e il commento sopra `VargaId` in `types.ts`. Un varga
+L'interfaccia ne ha due copie in `apps/web/src/lib/varghe.ts`, tutte e due
+senza la D-1, apposta: `VARGHE`, l'elenco delle caselle, e `SCHEMI_VARGA`,
+i pulsanti dei quattro gruppi di Parashara (BPHS 7.17-20), copiati da
+`VARGA_SCHEMES` (`d09578b`). `apps/web/src/lib/elenchi.test.ts` e
+`apps/web/src/routes/(informativa)/metodo/jyotisha.test.ts` cadono finché le
+copie e la tavola di `/metodo/varga` non combaciano con `VARGAS` e
+`VARGA_SCHEMES`, **anche nell'ordine**. Nessun test vede invece i testi che
+li elencano: il commento delle due rotte `api/jyotish`, l'aiuto di `--varga`
+(`packages/core/src/cli.ts:120`), la descrizione dei parametri `vargas` e
+`varga` in `packages/mcp/src/tools.ts`, il rimando in `/metodo` (voce
+`#varga`), la pagina `/metodo/varga` con la sua descrizione in `Meta`, il
+commento sopra `VargaId` in `types.ts`, e i testi sui varga fini elencati qui
+sopra, nella riga sul D-24 e sul D-27. Un varga
 fuori dai sedici del BPHS fa cadere anche `varga-buoni.test.ts`, che
 pretende `VARGA_SCHEMES.shodashavarga` uguale a `VARGAS`: gli schemi e i
 pesi del vimshopaka (`VIMSHOPAKA_WEIGHTS`) sono quelli del testo, e un varga
@@ -229,7 +263,9 @@ servissero:
   longitudine, e lo dice (`COMBUSTION_SOURCE` in `stati.ts`). Il calcolo
   esatto vuole l'ascensione obliqua all'orizzonte del luogo, col pianeta
   corretto per la latitudine (SS IX.1-5, pp. 364-366, e VII.8): un calcolo
-  nuovo.
+  nuovo. Le pagine non sono ancora lette: nella copia locale
+  (`texts/jyotisha/surya-siddhanta-burgess-1860`) c'è l'immagine di p. 366 e
+  non quelle di pp. 364-365, e `trascrizioni.md` ha solo VII.8 e pp. 366-367.
 - **Gli arudha dei graha nei varga.** Rao (§9.5) li calcola in ogni
   divisionale; `arudha-graha.ts` fa solo la rashi.
 
@@ -252,26 +288,155 @@ le condizioni e il conto in `condizioni-lilly.ts`), Tolomeo
   oltre l'indice di Kroll; e un testo critico migliore per I.3, l'ed. Pingree
   (Teubner 1986), protetta, che potrebbe sanare Ariete e Scorpione e dire se
   la Bilancia di Valente è sua o del codice. Se cambia, cambia la riga dei
-  termini, non per forza la tavola.
+  termini, non per forza la tavola. L'edizione è in `texts/INDICE.md`, fra
+  le non libere.
 
 **Per chi aggiunge una scuola** (Doroteo, se un suo testo diventasse
 libero). Valente è il modello più recente: `93cb27b` il calcolo, `697fea0`
 le superfici. Un modulo `dignita-<scuola>.ts` con le righe `source` e
 `termsSource`, un valore di `DignitySchool` col nome in
 `DIGNITY_SCHOOL_NAMES` (`constants.ts`, che il compilatore pretende e da cui
-CLI, MCP e `/api/chart` imparano a validarlo), un campo in
-`WesternDignities`, un ramo in `computeWesternDignities`, una funzione di
-righe in `format.ts`, un blocco in `DignityTable.svelte`, una voce in
-`lib/scuole-dignita.ts` (provata da `elenchi.test.ts`). A mano, perché nessun
-test li vede: l'aiuto di `--dignita` (`cli.ts`), la descrizione di
-`dignity_school` (`packages/mcp/src/tools.ts`), il commento di
-`apps/web/src/routes/api/chart/+server.ts`, il documento di lettura tropicale
-e `/metodo`. `apps/web/src/lib/server/birth.test.ts` usa il nome di una
-scuola inesistente per provare il rifiuto (oggi `doroteo`), e va cambiato se
+CLI, MCP, `/api/chart` e `/api/sky` imparano a validarlo), un campo in
+`WesternDignities`, un ramo in `computeWesternDignities`, la fonte delle
+ricezioni (`*_RECEPTION_SOURCE`) con le voci di `CONTATE` e
+`FONTE_RICEZIONI` in `dignita-tema.ts`, gli export in `index.ts`, una
+funzione di righe in `format.ts`, un blocco in `DignityTable.svelte`, una
+voce in `lib/scuole-dignita.ts` (provata da `elenchi.test.ts`; la pagina
+Cielo la legge da lì). Le prove, come per Valente: un caso in
+`packages/lettura/test/lettura.test.ts` e uno in
+`packages/mcp/test/server.test.ts` (`compute_natal_chart` con
+`dignity_school`); e la scuola nuova va aggiunta a mano al blocco `dignita`
+del fascicolo canonico (`packages/core/test/canonico.test.ts:95-101`), che
+le elenca una per una. È una scuola chiesta per nome: muove la terza cifra
+della versione. A mano, perché nessun test li vede: l'aiuto di `--dignita`
+(`cli.ts`, lo stesso che vale per `--sky`), la descrizione di
+`dignity_school` in `packages/mcp/src/tools.ts` **due volte** (in
+`compute_natal_chart` e in `compute_sky`), il commento di
+`apps/web/src/routes/api/chart/+server.ts` e quello di
+`apps/web/src/routes/api/sky/+server.ts`, il commento in
+`packages/core/src/sky.ts` sulle scuole senza condizioni, il documento di
+lettura tropicale e `/metodo`. `apps/web/src/lib/server/birth.test.ts` usa
+il nome di una scuola inesistente per provare il rifiuto (oggi `doroteo`), e va cambiato se
 quella scuola entra. Il conto delle fortezze è di Lilly e resta suo: una
 scuola porta il proprio, o nessuno. Le ricezioni restano quelle comuni per
 ogni scuola che non le definisce o che le definisce in un modo che la
 tavola non calcola, e la riga della fonte lo dice.
+
+## 28. La revisione della SEO
+
+**Priorità media.** Quello che c'è è già ragionato, e ogni scelta ha il suo
+perché nel commento accanto: titolo, descrizione, canonico senza parametri,
+Open Graph, anteprima e `WebSite` in JSON-LD in
+`apps/web/src/lib/components/Meta.svelte`, su tutte le diciassette pagine;
+sitemap e `robots.txt` in `apps/web/src/lib/seo.ts`, serviti da
+`routes/sitemap.xml` e `routes/robots.txt`, con le prove in `seo.test.ts`
+(titoli sotto i sessanta caratteri, ogni pagina di `(informativa)` nella
+sitemap, `/api` chiuso). Le scelte di quei commenti (niente `lastmod`, niente
+`priority`, niente marcature che promettono risultati ricchi, i temi mai
+nella sitemap) non si riaprono qui. Restano le cose trovate controllando il
+sito pubblicato il 30 ottobre 2026, in ordine di peso:
+
+- **Quattro siti invece di uno.** I nomi sono quattro: `dodicisegni.it`,
+  `www.dodicisegni.it`, `12segni.it` e `www.12segni.it`; il principale è
+  `https://dodicisegni.it` (vedi *Deciso*). Oggi tutti e quattro rispondono
+  200 con la stessa pagina, e ciascuno dichiara canonico **sé stesso**:
+  `og:url`, `<link rel="canonical">` e gli indirizzi della sitemap seguono
+  l'host della richiesta. È il caso che il README (*Prima di mettere in
+  rete*, `ORIGIN`) descrive come «il modo più silenzioso di dividere in due
+  un sito», e vuol dire che sul server `ORIGIN` alla build non arriva, o non
+  vale. Il lavoro è tutto fuori dal repo, e sono due cose da fare insieme:
+  1. `ORIGIN=https://dodicisegni.it` nel `.env` del server, che la build
+     riceve da `compose.yaml:16` e dal `Dockerfile:61`, e poi l'immagine
+     rifatta (il deploy la rifà; come si lancia, in `CLAUDE.local.md`).
+     Basta da solo a sistemare canonici, `og:url` e sitemap;
+  2. un redirect permanente (301 o 308) dagli altri tre nomi a
+     `https://dodicisegni.it`, **in un salto solo** anche da `http://` e
+     **con percorso e query**: i temi condivisi sono indirizzi con la
+     nascita dentro (`/?date=…&locationId=…`), e un redirect che tiene solo
+     il dominio rompe ogni collegamento già in giro. Il posto è il proxy
+     davanti al container (oggi Cloudflare, dagli header delle risposte),
+     non l'applicazione: lì `url.origin` vale `ORIGIN` qualunque sia l'host,
+     e la stessa build gira in Electron e su localhost. Oggi `http://`
+     risponde già 308 verso `https://` **sullo stesso nome**: la regola dei
+     nomi secondari va messa prima di quella, o `http://www.12segni.it` fa
+     due salti.
+
+  Come arriva `ORIGIN`, verificato su SvelteKit 3.1 e adapter-node 6.0:
+  `paths.origin` in `apps/web/vite.config.ts` (non c'è `svelte.config.js`)
+  lo scrive in `build/adapter-node.js` alla build, e il server lo usa per
+  ogni richiesta ignorando l'host; all'avvio non lo legge più nessuno, quindi
+  metterlo solo nell'ambiente del container non basta.
+
+  Verifica, dopo il deploy: `curl -s https://dodicisegni.it/metodo | grep
+  canonical` dà `https://dodicisegni.it/metodo`; `curl -sI
+  'https://www.12segni.it/transiti?x=1'` (e gli altri due nomi, anche in
+  `http://`) dà un 301 o 308 con `location:
+  https://dodicisegni.it/transiti?x=1`; `curl -s
+  https://dodicisegni.it/sitemap.xml` elenca solo indirizzi di
+  `dodicisegni.it`.
+- **La pagina d'errore.** Non c'è `routes/+error.svelte`: un indirizzo
+  inesistente risponde 404 (giusto) con la pagina predefinita di SvelteKit,
+  dentro il layout (menù e piè di pagina ci sono) ma senza `<title>`, e col
+  solo `<h1>404</h1>` e «Not Found», in inglese. Un `+error.svelte` con un
+  titolo, una riga in italiano e il rimando alle sezioni; la descrizione e il
+  canonico no, che a una pagina che non esiste non servono. Verifica:
+  `curl -s <origine>/nonesiste | grep '<title>'`.
+- **Le descrizioni non le prova nessuno.** `seo.test.ts` conta i titoli (le
+  sezioni, la pagina d'ingresso, le pagine di `(informativa)`) e non le
+  descrizioni. I motori ne mostrano circa centocinquanta caratteri e
+  tagliano il resto, e dieci pagine li passano: `/metodo/varga` 217,
+  `/glossario/jyotisha` 183, `/glossario/tema` 182, `/glossario/tempo` 179,
+  `/metodo/dasha` 173, `/glossario` 170, `/metodo` 165, `/metodo/drishti`
+  164, `/metodo/panchanga` 160, `/metodo/nakshatra` 152 (contate il 30
+  ottobre 2026). Un tetto come `TITOLO_MASSIMO` e un test che le raccolga
+  dalle pagine. La descrizione di `/metodo` dice ancora «le dignità di
+  Lilly», e le scuole sono quattro; ma il problema è della pagina prima che
+  della riga: Tolomeo, Bonatti e Valente stanno come paragrafi
+  (`#tolomeo`, `#bonatti`, `#valente`) sotto `<h2 id="lilly">La scuola di
+  Lilly…`, e il cielo, che dalla 0.5.1 porta le scuole, non è nominato.
+  Titolo e ancore della sezione vanno ripensati insieme alla descrizione;
+  un'ancora che cambia rompe i rimandi, quindi si cercano prima con `grep
+  -rn 'metodo#lilly'`.
+- **Gli strumenti dei motori**, cosa del proprietario e non del codice:
+  registrare il dominio principale in Google Search Console e in Bing
+  Webmaster Tools, solo `https://dodicisegni.it` e dopo i redirect, dare loro
+  la sitemap, e dopo qualche settimana leggere
+  quali pagine risultano escluse e perché. Solo allora si sa se c'è altro da
+  fare; prima, ogni ritocco ulteriore è un'ipotesi.
+
+## 29. Le dipendenze che `npm audit` segnala
+
+**Priorità media.** Trovate il 30 ottobre 2026 rileggendo la voce di
+*Esaminato* su `sprintf-js`, che `npm audit` non segnala più: oggi gli
+avvisi sono nove, e vanno pesati per dove gira il codice, non per la gravità
+dichiarata. In ordine:
+
+- **`electron` 43.8.0, alto** (i certificati intermedi eMudhra
+  compromessi). È l'unico che entra in un prodotto consegnato, l'AppImage.
+  Il rimedio è la 43.8.4: la versione è fissata **esatta** in
+  `apps/desktop/package.json:19`, quindi va cambiata lì a mano, poi `npm
+  install`, `npm run build` e `npm run dist -w @dodicisegni/desktop`, e
+  l'AppImage aperta per vedere che parte. Non cambia nessuna risposta del
+  motore: la versione del progetto non si muove.
+- **`zod` 3.25.76, alto** (memoria esaurita validando collezioni enormi).
+  È dipendenza diretta di `packages/mcp` (`^3.25.76`) e dell'SDK MCP; il
+  rimedio è la 4.6.7, un cambio di versione maggiore che tocca gli schemi
+  di `tools.ts` e `prompts.ts`. Il server MCP riceve gli argomenti dal
+  client che lo ha lanciato, sul trasporto stdio, e non da una rete: il
+  rischio è basso, il lavoro no. Da fare quando l'SDK
+  (`@modelcontextprotocol/sdk`, oggi 1.32.1) accetta zod 4, e insieme.
+- **`body-parser`, `@hono/node-server`, `fast-uri`**: arrivano con l'SDK MCP
+  (`express`, il server HTTP, `ajv`), e il progetto usa solo
+  `StdioServerTransport` (`packages/mcp/src/stdio.ts`): il codice
+  vulnerabile non gira. `npm audit fix` li aggiorna dentro il lockfile senza
+  cambiare manifesti; si può fare, controllando poi `npm test`.
+- **`deepmerge`, basso**, sotto `@sveltejs/vite-plugin-svelte`, `kit` e
+  `adapter-node`: il «fix» che `npm audit` propone è una versione 0.0.x di
+  SvelteKit, cioè un ritorno indietro di anni. Non si segue; si aspetta un
+  aggiornamento di `vite-plugin-svelte`.
+
+Verifica: `npm audit` dopo ogni passo, e `npm ls electron zod` per vedere
+che versione è installata davvero.
 
 ## Deciso, e da non riaprire
 
@@ -364,7 +529,8 @@ tavola non calcola, e la riga della fonte lo dice.
   voce 8: `/glossario` più `tema`, `tempo` e `jyotisha`; `/metodo/nakshatra`,
   `dasha`, `varga`, `drishti` e `panchanga`. Il glossario dice che cos'è un
   termine e rimanda, `/metodo` dichiara con quale convenzione lo si calcola: il
-  taglio è scritto in testa a `glossario/jyotisha/+page.svelte`. Niente
+  taglio è scritto in testa a
+  `apps/web/src/routes/(informativa)/glossario/jyotisha/+page.svelte`. Niente
   marcature FAQ, per la ragione scritta sopra `strutturati` in `Meta.svelte`;
   i cappelli delle sezioni restano come sono.
 
@@ -376,20 +542,33 @@ tavola non calcola, e la riga della fonte lo dice.
   contro l'alternativa degli header del proxy (`PROTOCOL_HEADER`,
   `HOST_HEADER`), che avrebbe lasciato l'immagine indipendente dal dominio ma
   appesa alla configurazione del proxy.
+
+- **Il dominio principale è `https://dodicisegni.it`, senza `www`.** Scelto
+  dal proprietario il 30 ottobre 2026, con la voce 28. Coincide col nome del
+  sito (`SITE_NAME`), quello che Google mostra accanto all'indirizzo; una parola
+  chiave nel dominio non pesa sul posizionamento, e `12segni` resta il nome
+  breve e il dominio di servizio (la riga qui sotto). Senza `www` perché è
+  più corto e il sito non ha cookie da separare. `www.dodicisegni.it`,
+  `12segni.it` e `www.12segni.it` reindirizzano lì, con percorso e query,
+  così chi sente «dodici segni» e scrive `12segni` arriva lo stesso.
+
 - **`12segni` non è un secondo marchio.** È il dominio di servizio e il nome
   breve sotto l'icona, dove sette caratteri sono il tetto. Nella prosa il nome
   è uno solo.
+
 - **I transiti attivi non hanno un'interfaccia web, né un punteggio.**
   `find_active_transits`, `/api/transits/active` e `--attivi` servono agli
   agenti e alla riga di comando: la pagina e la tabella Svelte no. E nessun
   indice di intensità del periodo, che sarebbe un peso senza autore: si
   espongono i componenti (bordi, orbita ai bordi, perfezioni, avvicinamento
   massimo). Deciso con la voce 7.
+
 - **Il linter ha regole e nessun formattatore.** ESLint con typescript-eslint
   e eslint-plugin-svelte, regole scelte una per una e nessun preset acceso in
   blocco (`eslint.config.js` dice perché ciascuna). Un formattatore
   rifluirebbe la prosa dei commenti, che è mandata a capo a mano. Deciso il
   27 ottobre 2026, con la voce 9.
+
 - **Le orbite degli aspetti sono convenzioni nominate.** Greene (la
   predefinita di Astrodienst) per il tema e il cielo, con Leo (1928) e Lilly
   (1647, le *moieties*, dalla voce 17) in alternativa; Hand, 1°, per
@@ -398,12 +577,14 @@ tavola non calcola, e la riga della fonte lo dice.
   18, scegliendo come predefinita la più diffusa. Le orbite senza autore che
   c'erano prima (8/7/5 con +2° ai luminari; 2/1,5/1 nei transiti) sono
   uscite: erano un ibrido di Leo e Astrolog.
+
 - **Il D-2 si fa con più convenzioni nominate, Parashara predefinita.** Hora
   del Sole e della Luna come nei testi, e Leone-Cancro accanto, dichiarata
   come lettura corrente senza un classico che la enunci. Scelto dal
   proprietario il 27 ottobre 2026 fra quattro strade, fatto il 28 in
   `a828b3f`; la forma del risultato sta nella voce 5, *Che cosa resta*, nella
   riga sulle altre convenzioni della hora.
+
 - **Il D-60 si conta dal segno stesso, con una convenzione sola.** Il verso
   6.33 dice *tad-rāśeḥ* e l'esempio di Santhanam lo applica, e P.V.R.
   Narasimha Rao lo legge allo stesso modo (in un'email del 2009 riportata su
@@ -413,6 +594,7 @@ tavola non calcola, e la riga della fonte lo dice.
   trascrizione di 6.33 (`texts/jyotisha/bphs-santhanam-1992-vol1`) e in
   `texts/tecnica/d60-letture-in-rete-2026`. Una seconda convenzione entra
   solo con un autore e un testo.
+
 - **I varga buoni si contano secondo Santhanam, con l'arudha, la hora che
   segue la convenzione e il 6.53 come nota.** Quattro scelte prese dal
   proprietario il 28 ottobre 2026, voce 19: in 6.52 i *segni* di uccha,
@@ -422,6 +604,7 @@ tavola non calcola, e la riga della fonte lo dice.
   ottobre, qui sotto); il 6.53 come giudizio sull'effetto, che non toglie
   varga dal conto; la hora per segno con `leone-cancro`, con la nota di
   Santhanam a p. 90 con `parashara`, dichiarata come sua.
+
 - **Lo Scorpione e l'Acquario hanno due signori nel calcolo dell'arudha.**
   BPHS 29.7 vuole il più forte, 46.157 dà Ketu e Rahu accanto a Marte e
   Saturno, e il più forte si sceglie con la procedura di 46.158-166, che il
@@ -429,6 +612,7 @@ tavola non calcola, e la riga della fonte lo dice.
   contro il signore unico di 4.6-24 e contro il riportare entrambi; vale
   per gli arudha e quindi per i varga buoni. Fuori dall'arudha (dignità,
   relazioni, vimshopaka) i signori restano quelli di 4.6-24.
+
 - **Rahu e Ketu hanno le dignità di BPHS 47.35-36, solo nella tabella del
   tema, per segno e senza neecha.** Scelto dal proprietario il 29 ottobre
   2026, voce 19. Uccha, moolatrikona e segno proprio come li dà il verso,
@@ -438,6 +622,7 @@ tavola non calcola, e la riga della fonte lo dice.
   riferiti nella fonte e non usati. Restano ai sette graha le corrispondenze
   dei varga, i varga buoni, il vimshopaka, le relazioni e i signori dei
   segni di 4.6-24.
+
 - **Il 6.53: combustione, guerra e avastha come dati, con letture
   dichiarate.** Scelto dal proprietario il 29 ottobre 2026, voce 19.
   Combustione in longitudine con i limiti del *Surya Siddhanta* IX.6-9 e
@@ -451,6 +636,7 @@ tavola non calcola, e la riga della fonte lo dice.
   calcolata e mostrata come dato, col navamsa per l'*aṃśa* e la ghati in
   corso come nell'esempio di Santhanam, senza dire quali avastha annullino i
   varga buoni. Il conto dei varga buoni non cambia: il 6.53 resta una nota.
+
 - **I varga buoni si contano anche secondo Narasimha Rao, e gli arudha dei
   graha sono i suoi.** Scelto dal proprietario il 29 ottobre 2026, voce 19.
   Il conto di Rao (2000, §6.6: uccha, moolatrikona e segno proprio, senza
@@ -461,8 +647,10 @@ tavola non calcola, e la riga della fonte lo dice.
   il segno più forte, e 46.158-166 confronta due signori, non due segni. Gli
   arudha dei bhava restano del BPHS. In 46.164 conta anche l'uccha di Rahu
   e Ketu di 47.35: è lo stesso libro.
+
 - **Il server MCP non ha un pool, e non gli serve**: è un processo per client,
   sul trasporto stdio, e non c'è nessun'altra richiesta da tenere in attesa.
+
 - **I thread del pool web sono al massimo quattro, e la quinta richiesta
   pesante aspetta.** Sono uno meno dei nuclei, fino a quattro
   (`OPERAI`, `apps/web/src/lib/server/pool.ts:142`). Le due ragioni stanno nel
@@ -470,8 +658,8 @@ tavola non calcola, e la riga della fonte lo dice.
   nucleo resta al filo principale, che serve le richieste leggere; il tetto
   di quattro per la memoria, perché ogni thread carica la sua copia del
   motore e delle effemeridi. Va
-  riguardato solo se l'applicazione va in rete pubblica con concorrenza
-  seria, e non da dentro il motore.
+  riguardato solo se la concorrenza sul sito pubblico diventa seria, e non da
+  dentro il motore.
 
 ## Esaminato, e lasciato stare
 
@@ -501,7 +689,8 @@ seconda, se un giorno si volesse, è una lettura da decidere. Per leggerne
 altre: le date di Lilly sono giuliane (+10 giorni nel Seicento); «hora
 meridiana» è il mezzogiorno vero, da convertire in tempo medio con
 l'equazione del tempo (nel novembre 1645, le 11:45); nel PDF locale la
-pagina stampata N è la PDF N + 34 almeno fino a p. 289; le figure si trovano
+pagina stampata N è la PDF N + 34 almeno fino a p. 289, salvo la numerazione
+disordinata di pp. 182-185; le figure si trovano
 con miniature delle pagine, perché l'OCR non le legge. Sono state cercate e
 lette tutte le figure fra le pagine PDF 200 e 330 (stampate 166-296); il
 libro II continua oltre, e lì non sono state cercate.
@@ -550,23 +739,26 @@ le latitudini da 22 a 60. L'OCR delle tabelle è illeggibile ma le pagine si
 leggono a vista. Le tavole di Koch (le sue *Häusertabellen* del 1971 e il *Koch
 Book of Tables* di Michelsen) ci sono, ma in prestito, non scaricabili.
 
-**`sprintf-js` sotto `electron-builder`.** `npm audit` lo dà moderato in tutte
-le versioni (`*`), e con lui `roarr`, `global-agent`, `@electron/get` e la
-catena di `app-builder-lib`, che dicono «fix available» ma non ne hanno uno.
-Girano solo quando si costruisce l'AppImage, sulla macchina di chi la
-costruisce, e nell'AppImage non entrano. Da riguardare quando
-`electron-builder` smette di dipendere da `@electron/get@3`.
+**`sprintf-js` sotto `electron-builder`.** Fino a ottobre 2026 `npm audit`
+lo dava moderato in tutte le versioni, con `roarr`, `global-agent`,
+`@electron/get` e la catena di `app-builder-lib`, senza un rimedio vero; il
+30 ottobre 2026 non lo segnala più, anche se la catena è ancora installata.
+Girava solo quando si costruisce l'AppImage, e nell'AppImage non entra. Gli
+avvisi di oggi sono un'altra cosa, e stanno nella voce 29.
 
 **L'avviso di Chrome sui campi di modulo senza `id` né `name`.** Compare in
 console come *issue*, «A form field element should have an id or name
-attribute», e i campi sono una decina: le caselle di `BirthForm.svelte`,
-`ChartSettings.svelte`, `JyotishaSettings.svelte`, `MomentFields.svelte`,
-`LocationSearch.svelte`, `StrumentiLettura.svelte`, `elezione`, `vedica` e
-`oraria` (la casella della casa derivata).
-Non è accessibilità: stanno tutti dentro un `<label>`, che è ciò che li
-nomina. Riguarda l'autocompilazione del browser, che senza `name` non sa che
+attribute». Contati il 30 ottobre 2026: le due caselle di
+`BirthForm.svelte`, una di `ChartSettings.svelte`, le caselle dei varga in
+`JyotishaSettings.svelte` (una per varga), l'area di testo di
+`StrumentiLettura.svelte`, una casella in `elezione`, due pulsanti di scelta
+in `vedica` e la casella della casa derivata in `oraria`. `MomentFields` e
+`LocationSearch` un `id` ce l'hanno.
+Non è accessibilità: stanno dentro un `<label>`, o hanno un `aria-label`
+(l'area di testo di `StrumentiLettura.svelte`), che è ciò che li nomina.
+Riguarda l'autocompilazione del browser, che senza `name` non sa che
 cosa proporre, e il progetto in parte la spegne già (`autocomplete="off"` in
-`BirthForm.svelte:91` e `:103` e in `LocationSearch.svelte:156`). Prima di
+`BirthForm.svelte:79` e `:91` e in `LocationSearch.svelte:156`). Prima di
 aggiungere `name` per zittire l'avviso va ricordato che un browser che ricorda
 date e luoghi di nascita costruisce lo stesso archivio che il service worker si
 rifiuta di costruire (`lib/cache-policy.ts`).
