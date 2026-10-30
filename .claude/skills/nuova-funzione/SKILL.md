@@ -63,6 +63,10 @@ che diverge. Il README tiene descrizione, licenza e comandi, e basta.
    Il README solo se cambiano i comandi o i conteggi scritti a mano: i tool
    MCP («undici tool», anche in `CLAUDE.md`), gli endpoint e le sezioni web.
 5. `npm test && npm run typecheck`.
+6. **La versione**, con l'ultimo commit della funzione: le tre domande di
+   `CLAUDE.md` (*La versione*) dicono quale cifra si muove. Una funzione
+   nuova muove la terza; se cambia anche una risposta che c'era, la seconda.
+   Poi il tag annotato `v<numero>` su quel commit.
 
 ## I commit
 
@@ -74,6 +78,7 @@ Mostra il calendario del cielo nell'interfaccia e agli agenti → web + mcp
 ```
 
 Italiano, indicativo presente terza persona, nessun prefisso convenzionale.
+Il cambio di versione non è un commit a sé: sta nell'ultimo della serie.
 
 ## Regole che valgono qui più che altrove
 

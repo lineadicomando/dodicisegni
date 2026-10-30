@@ -559,3 +559,25 @@
   come ciascuno di questi numeri viene fuori, e correggerlo se è sbagliato. È il
   senso di questa pagina: non chiedere fiducia, ma dire dove guardare.
 </p>
+
+<h2 id="versione">La versione</h2>
+
+<p>
+  Il sito, l'interfaccia REST, la riga di comando e il server MCP hanno un
+  numero di versione solo, quello che si legge in fondo a ogni pagina. Finché
+  comincia per zero il progetto è un'<strong>alpha</strong>: da una versione
+  all'altra un parametro può cambiare nome, un indirizzo spostarsi, una
+  risposta dell'API cambiare forma, e un tema calcolato con le stesse
+  impostazioni dare un risultato diverso, perché una tavola è stata riletta
+  sulla fonte o una convenzione è cambiata.
+</p>
+
+<p>
+  Il numero serve a dire <em>quando</em> è successo. Cresce la cifra di
+  mezzo quando una domanda che aveva già una risposta ne riceve un'altra: un
+  valore diverso, un campo che compare o sparisce. Cresce l'ultima quando
+  arriva qualcosa che prima non c'era, e le risposte di prima restano quelle.
+  Un lavoro che non cambia niente di ciò che si legge (un commento, un test,
+  una fonte riletta senza conseguenze) non lo muove. Ogni versione ha la sua
+  etichetta nel repository, <code>v</code> seguito dal numero.
+</p>

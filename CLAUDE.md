@@ -118,6 +118,35 @@ il motore usa Moshier invece delle effemeridi Swiss.
 - **Un disegno non sostituisce i dati**: non porta le avvertenze del calcolo.
   Le superfici lo dicono a chi le usa, e le descrizioni MCP pure.
 
+## La versione
+
+- **Il repository ha un numero solo**, nel campo `version` di ogni
+  `package.json` e del lockfile; `apps/web/src/lib/version.test.ts` fallisce
+  se uno resta indietro. Il footer (`lib/version.ts`), il server MCP
+  (`packages/mcp/src/version.ts`) e `--version` della CLI
+  (`packages/core/src/version.ts`) lo **leggono** dal proprio manifesto: non
+  si ricopia da nessuna parte. Si cambia dappertutto in un colpo:
+  `npm version <numero> --workspaces --include-workspace-root
+  --no-git-tag-version --allow-same-version`.
+- **Quale cifra si muove lo decide la risposta, non la quantità di lavoro.**
+  Tre domande, in quest'ordine, e vince il primo sì:
+  1. una domanda che aveva già una risposta ne riceve un'altra (un valore
+     diverso, un campo che compare o sparisce, un parametro rinominato, un
+     indirizzo spostato)? Si muove la **seconda** cifra;
+  2. arriva qualcosa che prima nessun indirizzo dava (una sezione, un
+     endpoint, un'opzione, una scuola nuova chiesta per nome)? La **terza**;
+  3. non arriva niente (commenti, test, `TODO.md`, `texts/`)? **Niente**.
+
+  La prima cifra è lo stato e non una misura: passa da 0 a 1 quando finisce
+  l'alpha, e `ALPHA` in `lib/version.ts` smette di dirlo da sé. Finché è
+  zero, `/metodo#versione` dice a chi legge che cosa può cambiare.
+- **Il cambio viaggia col commit che lo guadagna**; se una funzione è
+  spezzata in più commit (calcolo, poi superfici), con l'ultimo. Su quel
+  commit va il tag annotato `v<numero>`, col messaggio
+  `dodicisegni <numero> — <oggetto del commit>`. Il tag ripete il numero, non
+  lo definisce, e non fa partire niente; va su col push, e il push si fa solo
+  quando il proprietario lo chiede.
+
 ## Stile
 
 Messaggi di commit **in italiano, indicativo presente terza persona**, che

@@ -8,6 +8,7 @@
   import Marchio from '#lib/components/Marchio.svelte';
   import { isActive, SECTIONS } from '#lib/navigation.js';
   import { REPOSITORY_URL } from '#lib/project.js';
+  import { ALPHA, VERSION } from '#lib/version.js';
   import { onMount } from 'svelte';
   import '../app.css';
 
@@ -104,7 +105,12 @@
       Dati astronomici <a href="https://www.astro.com/swisseph/" target="_blank" rel="noopener">Swiss Ephemeris</a> ·
       località <a href="https://www.geonames.org/" target="_blank" rel="noopener">GeoNames</a> (CC BY 4.0)
     </p>
+    <!-- La versione apre la riga, e porta a quello che un'alpha può cambiare:
+         gli indirizzi del sito contengono un tema, e chi ne ha salvato uno
+         deve poter sapere quando la stessa domanda ha cominciato a ricevere
+         un'altra risposta. -->
     <p>
+      <a href="/metodo#versione">dodicisegni {VERSION}{ALPHA ? ' (alpha)' : ''}</a> ·
       <a href="/metodo">Metodo</a> ·
       <a href="/glossario">Glossario</a> ·
       <a href="/privacy">Privacy e cookie</a> ·

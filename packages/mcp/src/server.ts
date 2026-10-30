@@ -24,9 +24,10 @@ import {
   registerSearchLocation,
   type ToolContext,
 } from './tools.js';
+import { SERVER_VERSION } from './version.js';
 
 export const SERVER_NAME = 'dodicisegni';
-export const SERVER_VERSION = '0.0.0';
+export { SERVER_VERSION };
 
 /**
  * Costruisce il server MCP con i tool e le risorse di riferimento.

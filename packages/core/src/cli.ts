@@ -51,6 +51,7 @@ import { NATAL_ORB_CONVENTIONS } from './orbite.js';
 import { computeSky } from './sky.js';
 import { currentMoment, resolveTime, systemTimezone } from './time.js';
 import { computeTransits } from './transits.js';
+import { VERSION } from './version.js';
 import type {
   BirthData,
   BodyId,
@@ -166,6 +167,7 @@ Opzioni
                         fondo a --lettura. Omesso, la riga non compare
   --ephe <percorso>     Cartella dei file .se1
   --help                Mostra questo messaggio
+  --version             Stampa la versione e finisce
 
 Disegno
   --svg <file>          Salva la ruota come disegno vettoriale
@@ -394,6 +396,7 @@ function main(argv: string[]): number {
       tema: { type: 'string' },
       larghezza: { type: 'string' },
       help: { type: 'boolean', default: false },
+      version: { type: 'boolean', default: false },
       transits: { type: 'boolean', default: false },
       passages: { type: 'boolean', default: false },
       attivi: { type: 'boolean', default: false },
@@ -419,6 +422,11 @@ function main(argv: string[]): number {
 
   if (values.help) {
     process.stdout.write(USAGE);
+    return 0;
+  }
+
+  if (values.version) {
+    process.stdout.write(`dodicisegni ${VERSION}\n`);
     return 0;
   }
 

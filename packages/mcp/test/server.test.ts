@@ -1,4 +1,4 @@
-import { mkdtempSync, rmSync } from 'node:fs';
+import { mkdtempSync, readFileSync, rmSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { DatabaseSync } from 'node:sqlite';
@@ -101,6 +101,14 @@ function imageOf(
 }
 
 describe('superficie MCP', () => {
+  it('dichiara la versione del package.json, non una scritta a mano', () => {
+    const { version } = JSON.parse(readFileSync(new URL('../package.json', import.meta.url), 'utf8')) as {
+      version: string;
+    };
+    expect(client.getServerVersion()?.version).toBe(version);
+    expect(version).not.toBe('0.0.0');
+  });
+
   it('espone i dodici tool con descrizione e schema', async () => {
     const { tools } = await client.listTools();
     const names = tools.map((tool) => tool.name);
