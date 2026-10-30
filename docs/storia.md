@@ -27,6 +27,7 @@ commit in cui si leggono ancora per intero (`git show <commit>:TODO.md`):
 | 25 | `63b0755` |
 | 5 | `a2e2207` |
 | 26 | `6a4898d` |
+| 30 | `66600e5` |
 
 ## Le versioni
 
