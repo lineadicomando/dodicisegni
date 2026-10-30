@@ -247,7 +247,7 @@
          sono del luogo. Qui sono una fascia sotto, a tutta larghezza. -->
     <BirthForm bind:value={birthStore.value} />
 
-    <div class="opzioni">
+    <div class="fascia">
       <JyotishaSettings
         bind:ayanamsa
         bind:dashaLevels
@@ -387,12 +387,6 @@
 {/if}
 
 <style>
-  .opzioni {
-    margin-top: 1.75rem;
-    padding-top: 1.25rem;
-    border-top: 1px solid var(--linea);
-  }
-
   .stile {
     margin-top: 1rem;
   }

@@ -284,18 +284,9 @@
   {/snippet}
 
   {#snippet dettagli()}
-    <BirthForm bind:value={birthStore.value}>
-      {#snippet options()}
-        <ChartSettings
-          bind:houseSystem
-          bind:minorAspects
-          bind:zodiac
-          bind:ayanamsa
-          housesDisabled={birth.timeUnknown}
-        />
-      {/snippet}
-    </BirthForm>
-
+    <!-- Il luogo del transito sta col momento, che è la striscia qui sopra:
+         è del transito, non della nascita. Prima stava in fondo, separato da
+         giorno e ora da tutti i campi della nascita. -->
     <div class="luogo-transito">
       <LocationSearch
         selected={transitLocation}
@@ -306,14 +297,28 @@
 
       <p class="nota">
         {#if transitLocation === null}
-          I pianeti sono allo stesso grado dello zodiaco ovunque, e le case in cui i
-          transiti cadono restano quelle di nascita. Un luogo aggiunge il cielo come
-          si vede da lì in quel momento: Ascendente, Medio Cielo e case dell'istante.
+          Senza, i transiti cadono nelle case di nascita. Con, si aggiungono
+          Ascendente, Medio Cielo e case dell'istante visti da lì.
         {:else}
           L'ora del transito si legge ora sull'orologio di {transitLocation.name}.
           Le case natali non cambiano: quelle dell'istante si affiancano.
         {/if}
       </p>
+    </div>
+
+    <section class="fascia" aria-labelledby="titolo-nascita">
+      <h2 class="titolo-fascia" id="titolo-nascita">Nascita</h2>
+      <BirthForm bind:value={birthStore.value} />
+    </section>
+
+    <div class="fascia">
+      <ChartSettings
+        bind:houseSystem
+        bind:minorAspects
+        bind:zodiac
+        bind:ayanamsa
+        housesDisabled={birth.timeUnknown}
+      />
     </div>
 
     <button
@@ -416,10 +421,18 @@
 <style>
   /* Il luogo del transito non appartiene alla nascita: una riga lo separa dal
      modulo che sta sopra, perché scritti di seguito sembrerebbero lo stesso posto. */
+  /* Il luogo e la sua nota in riga: il campo ha la larghezza di un campo,
+     non di tutto il modulo, e la nota usa lo spazio accanto. */
   .luogo-transito {
-    margin-top: 1.5rem;
-    padding-top: 1.5rem;
-    border-top: 1px solid var(--linea);
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(18rem, 1fr));
+    gap: 0.5rem 1.25rem;
+    align-items: end;
+  }
+
+  .luogo-transito .nota {
+    margin: 0;
+    padding-bottom: 0.15rem;
   }
 
   .passaggi {

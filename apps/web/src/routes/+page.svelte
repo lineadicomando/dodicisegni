@@ -248,19 +248,21 @@
   striscia={aperto ? undefined : opzioni}
 >
   {#snippet dettagli()}
-    <BirthForm bind:value={birthStore.value}>
-      {#snippet options()}
-        <ChartSettings
-          bind:houseSystem
-          bind:minorAspects
-          bind:zodiac
-          bind:ayanamsa
-          bind:dignitySchool
-          bind:orbConvention
-          housesDisabled={birth.timeUnknown}
-        />
-      {/snippet}
-    </BirthForm>
+    <!-- Le convenzioni in una fascia sotto la nascita, non nella sua griglia:
+         lì facevano una colonna lunga accanto a tre campi corti. -->
+    <BirthForm bind:value={birthStore.value} />
+
+    <div class="fascia">
+      <ChartSettings
+        bind:houseSystem
+        bind:minorAspects
+        bind:zodiac
+        bind:ayanamsa
+        bind:dignitySchool
+        bind:orbConvention
+        housesDisabled={birth.timeUnknown}
+      />
+    </div>
 
     <button
       type="submit"

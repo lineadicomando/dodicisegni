@@ -262,9 +262,15 @@
   {/snippet}
 
   {#snippet dettagli()}
-    <div class="campi">
+    <!-- Il luogo con la larghezza di un campo, le convenzioni in una fascia
+         sotto: nella stessa griglia facevano una colonna lunga accanto a un
+         campo solo. -->
+    <div class="luogo">
       <LocationSearch selected={location} onselect={selectLocation} label="Luogo (facoltativo)" />
+      <p class="nota">Serve solo per le case: i pianeti sono allo stesso grado ovunque.</p>
+    </div>
 
+    <div class="fascia">
       <ChartSettings
         bind:houseSystem
         bind:minorAspects
@@ -275,7 +281,6 @@
         {housesDisabled}
       />
     </div>
-
 
     <button
       type="submit"
@@ -377,6 +382,14 @@
 {/if}
 
 <style>
+  .luogo {
+    max-width: 32rem;
+  }
+
+  .luogo .nota {
+    margin-top: 0.4rem;
+  }
+
   .calendario {
     display: block;
     margin-top: 2.5rem;

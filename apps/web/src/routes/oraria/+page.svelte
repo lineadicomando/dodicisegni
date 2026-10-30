@@ -165,8 +165,10 @@
     Il tema dell'istante in cui una domanda viene posta, eretto e analizzato col metodo di
     William Lilly, <em>Christian Astrology</em> (1647): i significatori, i modi in cui la
     cosa chiesta si compirebbe e quelli che la impediscono, ciascuno con la pagina del
-    libro, le considerazioni prima del giudizio. La figura non dice se la cosa avverrà: il
-    giudizio è di chi legge.
+    libro, le considerazioni prima del giudizio.
+  </p>
+  <p>
+    La figura non dice se la cosa avverrà: il giudizio è di chi legge.
     <a href="/metodo#lilly">Come è calcolato</a>.
   </p>
 </div>
@@ -204,40 +206,42 @@
       />
     </div>
 
-    <fieldset class="case">
-      <legend>La casa del quesito</legend>
-      <p class="suggerimento">
-        La sceglie chi chiede, dalla domanda, come la sceglieva Lilly: il motore non la
-        indovina. Che cosa significa ciascuna, secondo Lilly (libro I, cap. VII, pp. 50-56):
-      </p>
-      <ul>
-        {#each CASE_LILLY as casa (casa.numero)}
-          <li>
-            <label class="interruttore">
-              <input type="radio" name="casa" value={casa.numero} bind:group={house} />
-              <strong>{casa.numero}</strong>
-              <span>{casa.temi}</span>
-              <span class="tenue">p. {casa.pagina}</span>
-            </label>
-          </li>
-        {/each}
-      </ul>
-      <label class="interruttore">
-        <input type="checkbox" bind:checked={derivata} />
-        <span>Contata da un'altra casa, per le persone della persona</span>
-      </label>
-      {#if derivata}
-        <div class="derivata">
-          <label class="interruttore" for="oraria-derivata">contata dalla casa</label>
-          <select id="oraria-derivata" bind:value={derivedFrom}>
-            {#each CASE_LILLY as casa (casa.numero)}
-              <option value={casa.numero}>{casa.numero}</option>
-            {/each}
-          </select>
-          <p class="suggerimento">Il partner di un fratello è la 7 contata dalla 3, cioè la 9.</p>
-        </div>
-      {/if}
-    </fieldset>
+    <div class="fascia">
+      <fieldset class="senza-cornice case">
+        <legend class="titolo-fascia">La casa del quesito</legend>
+        <p class="suggerimento">
+          La sceglie chi chiede, dalla domanda, come la sceglieva Lilly: il motore non la
+          indovina. Che cosa significa ciascuna, secondo Lilly (libro I, cap. VII, pp. 50-56):
+        </p>
+        <ul>
+          {#each CASE_LILLY as casa (casa.numero)}
+            <li>
+              <label class="interruttore">
+                <input type="radio" name="casa" value={casa.numero} bind:group={house} />
+                <strong>{casa.numero}</strong>
+                <span>{casa.temi}</span>
+                <span class="tenue">p. {casa.pagina}</span>
+              </label>
+            </li>
+          {/each}
+        </ul>
+        <label class="interruttore">
+          <input type="checkbox" bind:checked={derivata} />
+          <span>Contata da un'altra casa, per le persone della persona</span>
+        </label>
+        {#if derivata}
+          <div class="derivata">
+            <label class="interruttore" for="oraria-derivata">contata dalla casa</label>
+            <select id="oraria-derivata" bind:value={derivedFrom}>
+              {#each CASE_LILLY as casa (casa.numero)}
+                <option value={casa.numero}>{casa.numero}</option>
+              {/each}
+            </select>
+            <p class="suggerimento">Il partner di un fratello è la 7 contata dalla 3, cioè la 9.</p>
+          </div>
+        {/if}
+      </fieldset>
+    </div>
 
     <button
       type="submit"
@@ -353,23 +357,11 @@
   }
 
   .domanda textarea {
-    width: 100%;
-    font: inherit;
+    resize: vertical;
   }
 
   .domanda p {
     margin: 0;
-  }
-
-  .case {
-    margin: 1.25rem 0 0;
-    padding: 0;
-    border: none;
-  }
-
-  .case legend {
-    font-weight: 600;
-    margin-bottom: 0.3rem;
   }
 
   .case ul {

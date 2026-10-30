@@ -75,68 +75,108 @@
   }: Props = $props();
 </script>
 
-<div class:compatto={compact}>
-  <!-- L'etichetta si nasconde alla vista, non alla lettura: senza, l'unica
-       cosa che dice che cos'è questo menù sparirebbe anche per chi la pagina
-       non la vede affatto. -->
-  <label for={id} class:nascosto={compact}>Sistema di case</label>
-  <select {id} bind:value={houseSystem} disabled={housesDisabled} onchange={() => onchange?.()}>
-    {#each HOUSE_SYSTEMS as system (system.value)}
-      <option value={system.value}>{system.label}</option>
-    {/each}
-  </select>
-  {#if zodiac !== undefined}
-    <label for="{id}-zodiaco" class:nascosto={compact}>Zodiaco</label>
-    <select id="{id}-zodiaco" bind:value={zodiac} onchange={() => onchange?.()}>
-      {#each ZODIACS as voce (voce.value)}
-        <option value={voce.value}>{voce.label}</option>
+<!-- Nel modulo le opzioni sono una fascia a sé, con i menù in riga: stavano
+     nella quarta cella della griglia della nascita, impilati in una colonna
+     stretta accanto a tre campi corti. Ogni menù ha il suo contenitore perché
+     la griglia lo tratti come un campo solo; nella striscia i contenitori e la
+     fascia spariscono (`display: contents`) e la riga resta quella di prima. -->
+<fieldset class="senza-cornice convenzioni" class:compatto={compact}>
+  <legend class="titolo-fascia" class:nascosto={compact}>Convenzioni</legend>
+
+  <div class="campo">
+    <!-- L'etichetta si nasconde alla vista, non alla lettura: senza, l'unica
+         cosa che dice che cos'è questo menù sparirebbe anche per chi la pagina
+         non la vede affatto. -->
+    <label for={id} class:nascosto={compact}>Sistema di case</label>
+    <select {id} bind:value={houseSystem} disabled={housesDisabled} onchange={() => onchange?.()}>
+      {#each HOUSE_SYSTEMS as system (system.value)}
+        <option value={system.value}>{system.label}</option>
       {/each}
     </select>
+  </div>
+
+  {#if zodiac !== undefined}
+    <div class="campo">
+      <label for="{id}-zodiaco" class:nascosto={compact}>Zodiaco</label>
+      <select id="{id}-zodiaco" bind:value={zodiac} onchange={() => onchange?.()}>
+        {#each ZODIACS as voce (voce.value)}
+          <option value={voce.value}>{voce.label}</option>
+        {/each}
+      </select>
+    </div>
   {/if}
 
   <!-- L'ayanamsa compare solo dove serve. Nel tropicale non ce n'è uno, e un
        menù disattivato accanto a uno attivo si legge come una cosa che manca
        invece che come una che non esiste. -->
   {#if zodiac === 'siderale'}
-    <label for="{id}-ayanamsa" class:nascosto={compact}>Ayanamsa</label>
-    <select id="{id}-ayanamsa" bind:value={ayanamsa} onchange={() => onchange?.()}>
-      {#each AYANAMSAS as voce (voce.value)}
-        <option value={voce.value}>{voce.label}</option>
-      {/each}
-    </select>
+    <div class="campo">
+      <label for="{id}-ayanamsa" class:nascosto={compact}>Ayanamsa</label>
+      <select id="{id}-ayanamsa" bind:value={ayanamsa} onchange={() => onchange?.()}>
+        {#each AYANAMSAS as voce (voce.value)}
+          <option value={voce.value}>{voce.label}</option>
+        {/each}
+      </select>
+    </div>
   {/if}
 
   {#if orbConvention !== undefined}
-    <label for="{id}-orbite" class:nascosto={compact}>Orbite degli aspetti</label>
-    <select id="{id}-orbite" bind:value={orbConvention} onchange={() => onchange?.()}>
-      {#each ORB_CONVENTIONS as voce (voce.value)}
-        <option value={voce.value}>{voce.label}</option>
-      {/each}
-    </select>
+    <div class="campo">
+      <label for="{id}-orbite" class:nascosto={compact}>Orbite degli aspetti</label>
+      <select id="{id}-orbite" bind:value={orbConvention} onchange={() => onchange?.()}>
+        {#each ORB_CONVENTIONS as voce (voce.value)}
+          <option value={voce.value}>{voce.label}</option>
+        {/each}
+      </select>
+    </div>
   {/if}
-
-  <label class="interruttore">
-    <input type="checkbox" bind:checked={minorAspects} onchange={() => onchange?.()} />
-    <span>Aspetti minori</span>
-  </label>
 
   <!-- Una scelta e non una casella: le scuole sono più d'una e non si
        sommano, e la voce vuota dice che senza scuola restano le dignità comuni. -->
   {#if dignitySchool !== undefined && zodiac !== 'siderale'}
-    <label for="{id}-dignita" class:nascosto={compact}>Scuola delle dignità</label>
-    <select id="{id}-dignita" bind:value={dignitySchool} onchange={() => onchange?.()}>
-      <option value="">Dignità comuni</option>
-      {#each DIGNITY_SCHOOLS as voce (voce.value)}
-        <option value={voce.value}>{voce.label}</option>
-      {/each}
-    </select>
+    <div class="campo">
+      <label for="{id}-dignita" class:nascosto={compact}>Scuola delle dignità</label>
+      <select id="{id}-dignita" bind:value={dignitySchool} onchange={() => onchange?.()}>
+        <option value="">Dignità comuni</option>
+        {#each DIGNITY_SCHOOLS as voce (voce.value)}
+          <option value={voce.value}>{voce.label}</option>
+        {/each}
+      </select>
+    </div>
   {/if}
-</div>
+
+  <!-- In fondo alla riga: è l'unica casella fra menù, e in mezzo spezzerebbe
+       la fila dei campi della stessa altezza. -->
+  <div class="campo casella">
+    <label class="interruttore">
+      <input type="checkbox" bind:checked={minorAspects} onchange={() => onchange?.()} />
+      <span>Aspetti minori</span>
+    </label>
+  </div>
+</fieldset>
 
 <style>
-  /* Nella striscia i due controlli dividono una riga con il pulsante dei
-     dettagli: senza reclamare lo spazio libero si stringerebbero fino a
-     mandare a capo il menù anche dove ci starebbe. */
+  /* I menù dividono una riga come i campi della nascita, e vanno a capo da soli
+     dove non ci stanno. `auto-fill` e non `auto-fit`: con due menù soli le
+     colonne vuote restano, e un «Placidus» non si allarga a mezzo modulo. */
+  .convenzioni {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(12rem, 1fr));
+    gap: 1rem 1.25rem;
+    align-items: start;
+  }
+
+  /* La casella non ha etichetta sopra: scende all'altezza dei menù accanto,
+     invece di stare in alto a mezz'aria. */
+  .casella {
+    align-self: end;
+    padding-bottom: 0.6rem;
+  }
+
+  /* Nella striscia i controlli dividono una riga con il pulsante dei dettagli:
+     senza reclamare lo spazio libero si stringerebbero fino a mandare a capo il
+     menù anche dove ci starebbe. I contenitori spariscono, e i controlli
+     tornano figli diretti della riga. */
   .compatto {
     display: flex;
     flex-wrap: wrap;
@@ -144,6 +184,10 @@
     gap: 0.75rem;
     flex: 1 1 auto;
     min-width: 0;
+  }
+
+  .compatto .campo {
+    display: contents;
   }
 
   /* I campi del modulo occupano tutta la riga; qui il menù prende la larghezza

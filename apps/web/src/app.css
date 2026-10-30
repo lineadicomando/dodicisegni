@@ -133,13 +133,18 @@ a:hover {
 
 button,
 input,
-select {
+select,
+textarea {
   font: inherit;
   color: inherit;
 }
 
+/* La casella della domanda nell'oraria è un campo come gli altri: senza stare
+   in questa regola prendeva lo sfondo e il bordo del sistema, e sembrava di
+   un'altra applicazione. */
 input,
-select {
+select,
+textarea {
   background: var(--superficie);
   border: 1px solid var(--linea-forte);
   border-radius: var(--raggio);
@@ -214,6 +219,50 @@ label {
   grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr));
   gap: 1.25rem;
   align-items: start;
+}
+
+/* Le fasce del modulo: gruppi di campi che rispondono a domande diverse — la
+   nascita, il momento, le convenzioni di scuola. Una riga sottile le separa e
+   un titolo le nomina, lo stesso in ogni sezione: prima ogni pagina se lo
+   scriveva da sé, e ne venivano tre stili per la stessa cosa. */
+.fascia {
+  margin-top: 1.75rem;
+  padding-top: 1.25rem;
+  border-top: 1px solid var(--linea);
+}
+
+/* Il titolo sta un gradino sopra le etichette dei campi, non sotto: dice di
+   che decisione si tratta, e le etichette il nome di un valore. Vale per un
+   `legend` come per un `h2`, secondo che cosa la fascia sia nel documento. */
+.titolo-fascia {
+  display: flex;
+  align-items: baseline;
+  gap: 0.6rem;
+  margin: 0 0 0.75rem;
+  padding: 0;
+  font-family: inherit;
+  font-size: 0.85rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--testo);
+}
+
+/* Scritto accanto al titolo e non solo nella nota: chi salta le note deve
+   poter capire in un'occhiata che la fascia si può lasciare vuota. */
+.titolo-fascia .facoltativo {
+  font-size: 0.72rem;
+  font-weight: 400;
+  color: var(--testo-tenue);
+}
+
+/* Un fieldset che fa da fascia non disegna la sua cornice: la separazione la
+   fa già la riga di `.fascia`. */
+fieldset.senza-cornice {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  min-width: 0;
 }
 
 .invia {

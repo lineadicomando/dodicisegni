@@ -1,24 +1,14 @@
 <script lang="ts">
   import type { Location } from '@dodicisegni/geo';
-  import type { Snippet } from 'svelte';
   import { resetCoordinates, type BirthInput } from '#lib/birth.js';
   import LocationSearch from '#lib/components/LocationSearch.svelte';
   import { distanceKm, formatCoordinateDMS, parseCoordinate } from '#lib/coordinates.js';
 
   interface Props {
     value: BirthInput;
-    /**
-     * Celle aggiuntive nella griglia dei campi.
-     *
-     * Ogni sezione ha opzioni proprie — il sistema di case per il tema, la
-     * data per i transiti — ma tutte partono dalla stessa nascita. Uno
-     * snippet le lascia entrare nella griglia senza che questo componente
-     * debba conoscerle.
-     */
-    options?: Snippet;
   }
 
-  let { value = $bindable(), options }: Props = $props();
+  let { value = $bindable() }: Props = $props();
 
   const parsedLatitude = $derived(parseCoordinate(value.latitude, 'latitudine'));
   const parsedLongitude = $derived(parseCoordinate(value.longitude, 'longitudine'));
@@ -66,8 +56,6 @@
   </div>
 
   <LocationSearch selected={value.location} onselect={selectLocation} />
-
-  {@render options?.()}
 </div>
 
 {#if value.location}

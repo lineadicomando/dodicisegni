@@ -324,83 +324,90 @@
   onsubmit={submit}
 >
   {#snippet striscia()}
-    <div class="giorno">
-      <!-- L'etichetta si nasconde alla vista, non alla lettura: nella striscia
-           l'altezza è spazio tolto alle ore che si stanno guardando, e il
-           giorno è comunque scritto per esteso nell'intestazione del risultato.
-           È la stessa scelta che fanno i campi dell'istante altrove. -->
-      <label for="elezione-da" class:nascosto={!aperto}>Dal giorno</label>
-      <div class="riga">
-        <input id="elezione-da" type="date" bind:value={from} required />
-        {#if !aperto && election}
-          <span class="passi">
-            <button type="button" onclick={() => passo(-GIORNI)} aria-label="Giorni precedenti">
-              ‹
-            </button>
-            <button type="button" onclick={() => passo(GIORNI)} aria-label="Giorni successivi">
-              ›
-            </button>
-          </span>
-        {/if}
+    <div class="dove-quando" class:aperta={aperto}>
+      <div class="giorno">
+        <!-- L'etichetta si nasconde alla vista, non alla lettura: nella striscia
+             l'altezza è spazio tolto alle ore che si stanno guardando, e il
+             giorno è comunque scritto per esteso nell'intestazione del risultato.
+             È la stessa scelta che fanno i campi dell'istante altrove. -->
+        <label for="elezione-da" class:nascosto={!aperto}>Dal giorno</label>
+        <div class="riga">
+          <input id="elezione-da" type="date" bind:value={from} required />
+          {#if !aperto && election}
+            <span class="passi">
+              <button type="button" onclick={() => passo(-GIORNI)} aria-label="Giorni precedenti">
+                ‹
+              </button>
+              <button type="button" onclick={() => passo(GIORNI)} aria-label="Giorni successivi">
+                ›
+              </button>
+            </span>
+          {/if}
+        </div>
       </div>
+
+      <!-- Aperto, il luogo e i filtri stanno in riga con il giorno: sono le
+           tre risposte a «dove e quando», e da solo il giorno occupava una riga
+           intera. Chiuso non ci sono: la striscia è una riga di comandi, e il
+           luogo si cambia riaprendo. -->
+      {#if aperto}
+        <!-- Due ricerche di località convivono in questa pagina, e questa non è
+             una nascita: il luogo in cui si comincia qualcosa. -->
+        <LocationSearch
+          id="luogo-elezione"
+          selected={location}
+          onselect={selectLocation}
+          label="Luogo"
+        />
+
+        <div class="filtri">
+          <label for="elezione-reggitore">Reggitore</label>
+          <select id="elezione-reggitore" bind:value={ruler}>
+            <option value="">tutte le ore</option>
+            {#each REGGITORI as pianeta (pianeta)}
+              <option value={pianeta}>solo le ore di {BODY_LABEL[pianeta]}</option>
+            {/each}
+          </select>
+
+          <!-- `interruttore` e non una classe di questa pagina: il testo è
+               l'opzione stessa, e senza quella regola prende il trattamento da
+               intestazione di campo — maiuscolo, grassetto, su due righe. -->
+          <label class="interruttore">
+            <input type="checkbox" bind:checked={skipMoonVoid} />
+            Nascondi le ore con la Luna vuota di corso
+          </label>
+        </div>
+      {/if}
     </div>
   {/snippet}
 
   {#snippet dettagli()}
-    <div class="campi">
-      <!-- Due ricerche di località convivono in questa pagina, e questa non è
-           una nascita: il luogo in cui si comincia qualcosa. -->
-      <LocationSearch
-        id="luogo-elezione"
-        selected={location}
-        onselect={selectLocation}
-        label="Luogo"
-      />
-
-      <div class="filtri">
-        <label for="elezione-reggitore">Reggitore</label>
-        <select id="elezione-reggitore" bind:value={ruler}>
-          <option value="">tutte le ore</option>
-          {#each REGGITORI as pianeta (pianeta)}
-            <option value={pianeta}>solo le ore di {BODY_LABEL[pianeta]}</option>
-          {/each}
-        </select>
-
-        <!-- `interruttore` e non una classe di questa pagina: il testo è
-             l'opzione stessa, e senza quella regola prende il trattamento da
-             intestazione di campo — maiuscolo, grassetto, su due righe. -->
-        <label class="interruttore">
-          <input type="checkbox" bind:checked={skipMoonVoid} />
-          Nascondi le ore con la Luna vuota di corso
-        </label>
-      </div>
-    </div>
-
     <p class="nota">
       Il luogo qui è obbligatorio, e non ha alternative: le ore planetarie nascono da
       alba e tramonto, che cambiano con la latitudine e con il giorno dell'anno.
       Si vedono {GIORNI} giorni per volta.
     </p>
 
-    <!-- Sotto una riga di separazione perché è un secondo argomento, non altri
-         campi dello stesso: sopra si dice dove e quando, qui per chi. -->
-    <section class="nascita">
-      <h2>Tema di nascita <span class="facoltativo">facoltativo</span></h2>
+    <!-- Una fascia sotto: è un secondo argomento, non altri campi dello
+         stesso. Sopra si dice dove e quando, qui per chi. -->
+    <section class="fascia" aria-labelledby="titolo-nascita">
+      <h2 class="titolo-fascia" id="titolo-nascita">
+        Tema di nascita <span class="facoltativo">facoltativo</span>
+      </h2>
 
+      <BirthForm bind:value={birthStore.value} />
 
-      <BirthForm bind:value={birthStore.value}>
-        {#snippet options()}
-          <ChartSettings
-            id="case-elezione"
-            bind:houseSystem
-            bind:minorAspects
-            housesDisabled={birth.timeUnknown}
-            onchange={() => {
-              if (scelta) void scegli(scelta);
-            }}
-          />
-        {/snippet}
-      </BirthForm>
+      <div class="opzioni-nascita">
+        <ChartSettings
+          id="case-elezione"
+          bind:houseSystem
+          bind:minorAspects
+          housesDisabled={birth.timeUnknown}
+          onchange={() => {
+            if (scelta) void scegli(scelta);
+          }}
+        />
+      </div>
     </section>
 
     <button
@@ -500,36 +507,8 @@
 {/if}
 
 <style>
-  /* La nascita è un secondo argomento dentro lo stesso modulo, non altri campi
-     del primo: la riga la separa da dove e quando, che stanno sopra. */
-  .nascita {
-    margin-top: 1.75rem;
-    padding-top: 1.5rem;
-    border-top: 1px solid var(--linea);
-  }
-
-  .nascita h2 {
-    display: flex;
-    align-items: baseline;
-    gap: 0.6rem;
-    margin: 0 0 0.2rem;
-    font-family: var(--serif);
-    font-weight: 400;
-    font-size: 1.1rem;
-  }
-
-  /* Scritto accanto al titolo e non solo nella nota: chi salta le note deve
-     poter capire in un'occhiata che questo blocco si può lasciare vuoto. */
-  .facoltativo {
-    font-family: inherit;
-    font-size: 0.72rem;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-    color: var(--testo-tenue);
-  }
-
-  .nascita .nota {
-    margin-bottom: 1.25rem;
+  .opzioni-nascita {
+    margin-top: 1.5rem;
   }
 
   .attesa {
@@ -556,6 +535,17 @@
     padding: 0.1rem 0.5rem;
     font-size: 1rem;
     line-height: 1.2;
+  }
+
+  /* Aperta, la striscia è la prima riga del modulo: giorno, luogo e filtri
+     si dividono la larghezza come i campi della nascita più sotto. Chiusa
+     torna una riga di comandi. */
+  .dove-quando.aperta {
+    flex: 1 1 auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr));
+    gap: 1.25rem;
+    align-items: start;
   }
 
   .filtri {

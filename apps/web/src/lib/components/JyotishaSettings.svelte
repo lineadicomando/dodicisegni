@@ -81,8 +81,8 @@
      striscia i contenitori spariscono (`display: contents`) e la riga resta
      quella di prima. -->
 <div class:compatto={compact}>
-  <fieldset class="convenzioni">
-    <legend class:nascosto={compact}>Convenzioni</legend>
+  <fieldset class="senza-cornice convenzioni">
+    <legend class="titolo-fascia" class:nascosto={compact}>Convenzioni</legend>
     <div class="campo">
       <label for="ayanamsa" class:nascosto={compact}>Ayanamsa</label>
       <select id="ayanamsa" bind:value={ayanamsa} onchange={() => onchange?.()}>
@@ -124,51 +124,53 @@
   </fieldset>
 
   {#if !compact}
-    <fieldset class="divisionali">
-      <legend>Carte divisionali</legend>
-      <p class="nota">La carta rashi (D1) c'è sempre.</p>
+    <div class="fascia">
+      <fieldset class="senza-cornice divisionali">
+        <legend class="titolo-fascia">Carte divisionali</legend>
+        <p class="nota">La carta rashi (D1) c'è sempre.</p>
 
-      <!-- I gruppi sono quelli che Parashara nomina, e non una scorciatoia
-           nostra: un gruppo inventato qui sarebbe una scelta di scuola che
-           nessuno ha fatto. Premuto dice quale gruppo coincide con le caselle,
-           e smette di dirlo appena se ne tocca una. -->
-      <div class="gruppi" role="group" aria-label="Gruppi di Parashara">
-        {#each SCHEMI_VARGA as schema (schema.value)}
-          <button
-            type="button"
-            aria-pressed={coincide(schema.vargas)}
-            title={schema.vargas.map((id) => id.toUpperCase()).join(' ')}
-            onclick={() => scegli(schema.vargas)}
-          >
-            {schema.label}
+        <!-- I gruppi sono quelli che Parashara nomina, e non una scorciatoia
+             nostra: un gruppo inventato qui sarebbe una scelta di scuola che
+             nessuno ha fatto. Premuto dice quale gruppo coincide con le caselle,
+             e smette di dirlo appena se ne tocca una. -->
+        <div class="gruppi" role="group" aria-label="Gruppi di Parashara">
+          {#each SCHEMI_VARGA as schema (schema.value)}
+            <button
+              type="button"
+              aria-pressed={coincide(schema.vargas)}
+              title={schema.vargas.map((id) => id.toUpperCase()).join(' ')}
+              onclick={() => scegli(schema.vargas)}
+            >
+              {schema.label}
+            </button>
+          {/each}
+          <button type="button" aria-pressed={vargas.length === 0} onclick={() => scegli([])}>
+            Nessuna
           </button>
-        {/each}
-        <button type="button" aria-pressed={vargas.length === 0} onclick={() => scegli([])}>
-          Nessuna
-        </button>
-      </div>
-
-      <div class="scelte">
-        {#each VARGHE as varga (varga.value)}
-          <label class="interruttore">
-            <input
-              type="checkbox"
-              checked={vargas.includes(varga.value)}
-              onchange={() => commuta(varga.value)}
-            />
-            <span>{varga.label}</span>
-          </label>
-        {/each}
-      </div>
-
-      <!-- Sotto le caselle e non fra i menù: compare quando si spunta la D2,
-           vicino a dove si è cliccato, e sposta solo ciò che sta sotto. -->
-      {#if vargas.includes('d2')}
-        <div class="campo hora">
-          {@render menuHora()}
         </div>
-      {/if}
-    </fieldset>
+
+        <div class="scelte">
+          {#each VARGHE as varga (varga.value)}
+            <label class="interruttore">
+              <input
+                type="checkbox"
+                checked={vargas.includes(varga.value)}
+                onchange={() => commuta(varga.value)}
+              />
+              <span>{varga.label}</span>
+            </label>
+          {/each}
+        </div>
+
+        <!-- Sotto le caselle e non fra i menù: compare quando si spunta la D2,
+             vicino a dove si è cliccato, e sposta solo ciò che sta sotto. -->
+        {#if vargas.includes('d2')}
+          <div class="campo hora">
+            {@render menuHora()}
+          </div>
+        {/if}
+      </fieldset>
+    </div>
   {/if}
 </div>
 
@@ -181,37 +183,13 @@
 {/snippet}
 
 <style>
-  fieldset {
-    margin: 0;
-    padding: 0;
-    border: 0;
-    min-width: 0;
-  }
-
-  /* Il titolo di una fascia sta un gradino sopra le etichette dei campi, non
-     sotto: dice di che decisione si tratta, e le etichette il nome di un valore. */
-  legend {
-    padding: 0;
-    margin-bottom: 0.75rem;
-    color: var(--testo);
-    font-size: 0.85rem;
-    font-weight: 600;
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
-  }
-
   /* I menù dividono una riga come i campi della nascita, e vanno a capo da soli
-     dove non ci stanno. La legend sta fuori dalla griglia per regola del
-     fieldset, quindi la griglia è un contenitore suo. */
+     dove non ci stanno, come in `ChartSettings`. */
   .convenzioni {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(12rem, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(12rem, 1fr));
     gap: 1rem 1.25rem;
     align-items: start;
-  }
-
-  .divisionali {
-    margin-top: 1.5rem;
   }
 
   .nota {
