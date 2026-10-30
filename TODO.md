@@ -27,6 +27,7 @@ Le voci chiuse dopo, con il commit in cui si leggono ancora per intero:
 | 19 | `91ca295` |
 | 27 | `f6026fa` |
 | 17 | `cd6d0f2` |
+| 29 | `62ae8f6` |
 
 Le fonti citate qui stanno in copia locale in `texts/`, fuori dal repo: la
 cartella, le schede `FONTE.md` e l'elenco `texts/INDICE.md` si mantengono come
@@ -98,13 +99,11 @@ volta e ricominciare da capo.
 | 25. Le dignità del Jyotisha: le rifiniture | bassa | piccola | due calcoli, da fare solo se servissero |
 | 26. Le scuole occidentali delle dignità: quello che resta | bassa | piccola | la ricezione di Bonatti chiede un'applicazione; Valente aspetta un testo |
 | 28. La revisione della SEO | media | piccola | il dominio principale è deciso; i redirect e `ORIGIN` si fanno sul server, non nel repo |
-| 29. Le dipendenze che `npm audit` segnala | media | piccola | `electron` per primo, perché entra nell'AppImage |
 
-Le prime tre sono rifiniture, nessuna urgente. La 28 e la 29 sono in coda
-per scelta del proprietario, ma sono le sole che toccano chi usa il
-programma oggi: il primo punto della 28 divide il sito in quattro agli occhi
-dei motori di ricerca, e la 29 porta un `electron` con un avviso alto
-nell'applicazione desktop. Fra le rifiniture, la più concreta da cui
+Le prime tre sono rifiniture, nessuna urgente. La 28 è la sola che tocca
+chi usa il programma oggi: il suo primo punto divide il sito in quattro agli
+occhi dei motori di ricerca, e si fa sul server, quando il proprietario lo
+chiede. Fra le rifiniture, la più concreta da cui
 ripartire sono i sessanta nomi del D-60 (voce 5): la regola di BPHS
 6.34-40 è letta, le pp. 82-86 di Santhanam sono già salvate in `pagine/`
 della sua copia locale, e il confine (nome sì, giudizio del verso 41 no) è
@@ -384,40 +383,6 @@ sito pubblicato lo stesso giorno, tutte fuori dal repo, in ordine di peso:
   la sitemap, e dopo qualche settimana leggere
   quali pagine risultano escluse e perché. Solo allora si sa se c'è altro da
   fare; prima, ogni ritocco ulteriore è un'ipotesi.
-
-## 29. Le dipendenze che `npm audit` segnala
-
-**Priorità media.** Trovate il 30 ottobre 2026 rileggendo la voce di
-*Esaminato* su `sprintf-js`, che `npm audit` non segnala più: oggi gli
-avvisi sono nove, e vanno pesati per dove gira il codice, non per la gravità
-dichiarata. In ordine:
-
-- **`electron` 43.8.0, alto** (i certificati intermedi eMudhra
-  compromessi). È l'unico che entra in un prodotto consegnato, l'AppImage.
-  Il rimedio è la 43.8.4: la versione è fissata **esatta** in
-  `apps/desktop/package.json:19`, quindi va cambiata lì a mano, poi `npm
-  install`, `npm run build` e `npm run dist -w @dodicisegni/desktop`, e
-  l'AppImage aperta per vedere che parte. Non cambia nessuna risposta del
-  motore: la versione del progetto non si muove.
-- **`zod` 3.25.76, alto** (memoria esaurita validando collezioni enormi).
-  È dipendenza diretta di `packages/mcp` (`^3.25.76`) e dell'SDK MCP; il
-  rimedio è la 4.6.7, un cambio di versione maggiore che tocca gli schemi
-  di `tools.ts` e `prompts.ts`. Il server MCP riceve gli argomenti dal
-  client che lo ha lanciato, sul trasporto stdio, e non da una rete: il
-  rischio è basso, il lavoro no. Da fare quando l'SDK
-  (`@modelcontextprotocol/sdk`, oggi 1.32.1) accetta zod 4, e insieme.
-- **`body-parser`, `@hono/node-server`, `fast-uri`**: arrivano con l'SDK MCP
-  (`express`, il server HTTP, `ajv`), e il progetto usa solo
-  `StdioServerTransport` (`packages/mcp/src/stdio.ts`): il codice
-  vulnerabile non gira. `npm audit fix` li aggiorna dentro il lockfile senza
-  cambiare manifesti; si può fare, controllando poi `npm test`.
-- **`deepmerge`, basso**, sotto `@sveltejs/vite-plugin-svelte`, `kit` e
-  `adapter-node`: il «fix» che `npm audit` propone è una versione 0.0.x di
-  SvelteKit, cioè un ritorno indietro di anni. Non si segue; si aspetta un
-  aggiornamento di `vite-plugin-svelte`.
-
-Verifica: `npm audit` dopo ogni passo, e `npm ls electron zod` per vedere
-che versione è installata davvero.
 
 ## Deciso, e da non riaprire
 
@@ -724,8 +689,21 @@ Book of Tables* di Michelsen) ci sono, ma in prestito, non scaricabili.
 lo dava moderato in tutte le versioni, con `roarr`, `global-agent`,
 `@electron/get` e la catena di `app-builder-lib`, senza un rimedio vero; il
 30 ottobre 2026 non lo segnala più, anche se la catena è ancora installata.
-Girava solo quando si costruisce l'AppImage, e nell'AppImage non entra. Gli
-avvisi di oggi sono un'altra cosa, e stanno nella voce 29.
+Girava solo quando si costruisce l'AppImage, e nell'AppImage non entra.
+
+**`deepmerge` sotto SvelteKit.** Resta dalla voce 29, chiusa il 30 ottobre
+2026, quando gli avvisi di `npm audit` erano nove: `electron` è passato alla
+43.8.4 (fissata esatta in `apps/desktop/package.json`, e l'AppImage
+ricostruita parte), `zod` alla 4 (l'SDK MCP 1.32.1 accetta `^3.25 || ^4.0`;
+lo schema di `tools/list` ha perso `additionalProperties: false`, che zod 3
+dichiarava senza applicarlo, e gli interi hanno preso i limiti dei numeri
+sicuri; per il resto è identico), e `npm audit fix` ha aggiornato
+`body-parser`, `@hono/node-server`, `fast-uri`, SvelteKit (3.1.1) e
+adapter-node (6.0.1) dentro i manifesti. Restano quattro avvisi bassi su
+`deepmerge`, sotto `@sveltejs/vite-plugin-svelte`, `kit` e `adapter-node`:
+il «fix» che `npm audit` propone è una versione 0.0.x di SvelteKit, cioè un
+ritorno indietro di anni. Non si segue; si aspetta un aggiornamento di
+`vite-plugin-svelte`, e `npm audit` dice quando.
 
 **L'avviso di Chrome sui campi di modulo senza `id` né `name`.** Compare in
 console come *issue*, «A form field element should have an id or name
