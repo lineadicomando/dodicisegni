@@ -47,6 +47,7 @@
         <th></th>
         <th>Graha</th>
         <th class="numerico">Dal Sole</th>
+        <th class="numerico" title="Gradi di tempo (kālāṃśa): la distanza che il Surya Siddhanta misura, all'orizzonte del luogo">In gradi di tempo</th>
         <th>Combustione</th>
         <th>Guerra</th>
         {#if stati.avasthas}<th>Avastha</th>{/if}
@@ -65,6 +66,11 @@
           <td class="glifo">{BODY_GLYPH[riga.id]}</td>
           <td>{riga.name}</td>
           <td class="numerico" class:tenue={!c}>{c ? gradi(c.distance) : '—'}</td>
+          <!-- Le risposte in cache di prima del campo non hanno i gradi di
+               tempo: la cella resta vuota, come oltre i circoli polari. -->
+          <td class="numerico" class:tenue={c?.timeDegrees === undefined}>
+            {#if c?.timeDegrees !== undefined}{gradi(c.timeDegrees)} <span class="tenue">{c.horizon}</span>{:else}—{/if}
+          </td>
           <td class:tenue={!c?.combust}>
             {#if c}{c.combust ? 'combusto' : '—'} <span class="tenue">· limite {c.limit}°</span>{:else}—{/if}
           </td>

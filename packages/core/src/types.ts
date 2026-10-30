@@ -1157,11 +1157,21 @@ export interface CombustionState {
   name: string;
   /** Distanza dal Sole in longitudine, gradi, [0, 180]. */
   distance: number;
+  /**
+   * Distanza dal Sole in gradi di tempo (*kālāṃśa*, SS IX.4-5): la
+   * differenza di ascensione obliqua all'orizzonte del luogo. Assente oltre
+   * i circoli polari, dove uno dei due può non sorgere.
+   */
+  timeDegrees?: number;
+  /** L'orizzonte a cui si misura: est se il graha è indietro rispetto al Sole, ovest se è avanti. */
+  horizon?: 'est' | 'ovest';
+  /** Quale delle due distanze ha deciso: i gradi di tempo, o la longitudine dove quelli mancano. */
+  measure: 'gradi-di-tempo' | 'longitudine';
   /** Il limite del testo per questo graha, nel suo moto. */
   limit: number;
   /** Il moto che ha deciso il limite: conta solo per Mercurio e Venere. */
   retrograde: boolean;
-  /** `distance < limit`. */
+  /** La distanza di `measure` sotto `limit`. */
   combust: boolean;
 }
 

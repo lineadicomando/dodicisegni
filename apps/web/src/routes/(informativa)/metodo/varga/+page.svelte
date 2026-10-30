@@ -242,9 +242,14 @@
   guerra, in neecha, debole o in un'avastha come <em>śayana</em> «distruggono
   gli yoga». Non cambia il conto, ma il sito calcola le condizioni che nomina,
   ciascuna con la sua fonte, perché il BPHS le nomina senza definirle. La
-  combustione usa le distanze dal Sole del <em>Surya Siddhanta</em> (IX.6-9),
-  che il testo dà in gradi di tempo e il sito applica alla longitudine,
-  dicendolo. La guerra è fra due dei cinque pianeti a meno di un grado (VII.19),
+  combustione usa le distanze dal Sole del <em>Surya Siddhanta</em> (IX.6-9)
+  nella misura del testo, i «gradi di tempo»: quanto prima del Sole il
+  pianeta sorge all'alba, o quanto dopo tramonta la sera, contato in gradi
+  dell'equatore all'orizzonte del luogo (IX.4-5). Non è la distanza in
+  longitudine: a Roma, un giudizio su tredici cambia. Il sito la calcola con
+  la geometria esatta invece che con le regole approssimate del testo, e lo
+  dice; oltre i circoli polari, dove un corpo può non sorgere, decide la
+  longitudine. La guerra è fra due dei cinque pianeti a meno di un grado (VII.19),
   e vince Venere comunque, degli altri chi sta a nord (BPHS 79.9). Le dodici
   avastha si contano con la formula di 45.30-33 e le letture di Santhanam, che
   la prova su un esempio. Quali avastha guastino i varga buoni il testo non lo

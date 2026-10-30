@@ -4676,12 +4676,15 @@
     },
     "states": {
       "combustion": {
-        "source": "Surya Siddhanta IX.6-9 e X.1 (trad. Burgess, 1860, pp. 367, 370): Luna 12, Marte 17, Mercurio 14 (12 retrogrado), Giove 11, Venere 10 (8 retrograda), Saturno 15. Il testo li dà in gradi di tempo, l'ascensione obliqua all'orizzonte; qui sono applicati alla distanza in longitudine, che li approssima. Rahu e Ketu non sono nel testo.",
+        "source": "Surya Siddhanta IX.6-9 e X.1 (trad. Burgess, 1860, pp. 367, 370): Luna 12, Marte 17, Mercurio 14 (12 retrogrado), Giove 11, Venere 10 (8 retrograda), Saturno 15, in gradi di tempo (kālāṃśa). Come IX.2-5 (pp. 365-366): se il pianeta è indietro rispetto al Sole in longitudine si confrontano le levate all'orizzonte est, altrimenti i tramonti all'ovest, e la distanza è la differenza di ascensione (o discensione) obliqua alla latitudine del luogo, col pianeta alla sua latitudine eclittica. Calcolata con la geometria esatta, obliquità media IAU 1980, e non con le regole approssimate del testo. Oltre i circoli polari, dove un corpo può non sorgere, decide la distanza in longitudine. Rahu e Ketu non sono nel testo.",
         "grahas": [
           {
             "id": "luna",
             "name": "Luna",
             "distance": 150.8405176318001,
+            "timeDegrees": 173.06114754069273,
+            "horizon": "ovest",
+            "measure": "gradi-di-tempo",
             "limit": 12,
             "retrograde": false,
             "combust": false
@@ -4690,6 +4693,9 @@
             "id": "mercurio",
             "name": "Mercurio",
             "distance": 27.52715591952466,
+            "timeDegrees": 15.903314055337443,
+            "horizon": "est",
+            "measure": "gradi-di-tempo",
             "limit": 14,
             "retrograde": false,
             "combust": false
@@ -4698,6 +4704,9 @@
             "id": "venere",
             "name": "Venere",
             "distance": 25.743258693803625,
+            "timeDegrees": 14.471493148050154,
+            "horizon": "est",
+            "measure": "gradi-di-tempo",
             "limit": 10,
             "retrograde": false,
             "combust": false
@@ -4706,6 +4715,9 @@
             "id": "marte",
             "name": "Marte",
             "distance": 26.47918221518421,
+            "timeDegrees": 33.338207987966086,
+            "horizon": "ovest",
+            "measure": "gradi-di-tempo",
             "limit": 17,
             "retrograde": false,
             "combust": false
@@ -4714,6 +4726,9 @@
             "id": "giove",
             "name": "Giove",
             "distance": 156.19649636382843,
+            "timeDegrees": 172.6461425358344,
+            "horizon": "ovest",
+            "measure": "gradi-di-tempo",
             "limit": 11,
             "retrograde": true,
             "combust": false
@@ -4722,6 +4737,9 @@
             "id": "saturno",
             "name": "Saturno",
             "distance": 20.390736382205603,
+            "timeDegrees": 24.820071286332393,
+            "horizon": "ovest",
+            "measure": "gradi-di-tempo",
             "limit": 15,
             "retrograde": false,
             "combust": false
@@ -20351,12 +20369,15 @@
     },
     "states": {
       "combustion": {
-        "source": "Surya Siddhanta IX.6-9 e X.1 (trad. Burgess, 1860, pp. 367, 370): Luna 12, Marte 17, Mercurio 14 (12 retrogrado), Giove 11, Venere 10 (8 retrograda), Saturno 15. Il testo li dà in gradi di tempo, l'ascensione obliqua all'orizzonte; qui sono applicati alla distanza in longitudine, che li approssima. Rahu e Ketu non sono nel testo.",
+        "source": "Surya Siddhanta IX.6-9 e X.1 (trad. Burgess, 1860, pp. 367, 370): Luna 12, Marte 17, Mercurio 14 (12 retrogrado), Giove 11, Venere 10 (8 retrograda), Saturno 15, in gradi di tempo (kālāṃśa). Come IX.2-5 (pp. 365-366): se il pianeta è indietro rispetto al Sole in longitudine si confrontano le levate all'orizzonte est, altrimenti i tramonti all'ovest, e la distanza è la differenza di ascensione (o discensione) obliqua alla latitudine del luogo, col pianeta alla sua latitudine eclittica. Calcolata con la geometria esatta, obliquità media IAU 1980, e non con le regole approssimate del testo. Oltre i circoli polari, dove un corpo può non sorgere, decide la distanza in longitudine. Rahu e Ketu non sono nel testo.",
         "grahas": [
           {
             "id": "luna",
             "name": "Luna",
             "distance": 150.8405176318001,
+            "timeDegrees": 173.06114754069273,
+            "horizon": "ovest",
+            "measure": "gradi-di-tempo",
             "limit": 12,
             "retrograde": false,
             "combust": false
@@ -20365,6 +20386,9 @@
             "id": "mercurio",
             "name": "Mercurio",
             "distance": 27.52715591952466,
+            "timeDegrees": 15.903314055337443,
+            "horizon": "est",
+            "measure": "gradi-di-tempo",
             "limit": 14,
             "retrograde": false,
             "combust": false
@@ -20373,6 +20397,9 @@
             "id": "venere",
             "name": "Venere",
             "distance": 25.743258693803625,
+            "timeDegrees": 14.471493148050154,
+            "horizon": "est",
+            "measure": "gradi-di-tempo",
             "limit": 10,
             "retrograde": false,
             "combust": false
@@ -20381,6 +20408,9 @@
             "id": "marte",
             "name": "Marte",
             "distance": 26.47918221518421,
+            "timeDegrees": 33.338207987966086,
+            "horizon": "ovest",
+            "measure": "gradi-di-tempo",
             "limit": 17,
             "retrograde": false,
             "combust": false
@@ -20389,6 +20419,9 @@
             "id": "giove",
             "name": "Giove",
             "distance": 156.19649636382843,
+            "timeDegrees": 172.6461425358344,
+            "horizon": "ovest",
+            "measure": "gradi-di-tempo",
             "limit": 11,
             "retrograde": true,
             "combust": false
@@ -20397,6 +20430,9 @@
             "id": "saturno",
             "name": "Saturno",
             "distance": 20.390736382205603,
+            "timeDegrees": 24.820071286332393,
+            "horizon": "ovest",
+            "measure": "gradi-di-tempo",
             "limit": 15,
             "retrograde": false,
             "combust": false
@@ -24403,12 +24439,15 @@
     },
     "states": {
       "combustion": {
-        "source": "Surya Siddhanta IX.6-9 e X.1 (trad. Burgess, 1860, pp. 367, 370): Luna 12, Marte 17, Mercurio 14 (12 retrogrado), Giove 11, Venere 10 (8 retrograda), Saturno 15. Il testo li dà in gradi di tempo, l'ascensione obliqua all'orizzonte; qui sono applicati alla distanza in longitudine, che li approssima. Rahu e Ketu non sono nel testo.",
+        "source": "Surya Siddhanta IX.6-9 e X.1 (trad. Burgess, 1860, pp. 367, 370): Luna 12, Marte 17, Mercurio 14 (12 retrogrado), Giove 11, Venere 10 (8 retrograda), Saturno 15, in gradi di tempo (kālāṃśa). Come IX.2-5 (pp. 365-366): se il pianeta è indietro rispetto al Sole in longitudine si confrontano le levate all'orizzonte est, altrimenti i tramonti all'ovest, e la distanza è la differenza di ascensione (o discensione) obliqua alla latitudine del luogo, col pianeta alla sua latitudine eclittica. Calcolata con la geometria esatta, obliquità media IAU 1980, e non con le regole approssimate del testo. Oltre i circoli polari, dove un corpo può non sorgere, decide la distanza in longitudine. Rahu e Ketu non sono nel testo.",
         "grahas": [
           {
             "id": "luna",
             "name": "Luna",
             "distance": 149.51724790022428,
+            "timeDegrees": 172.34131068586694,
+            "horizon": "ovest",
+            "measure": "gradi-di-tempo",
             "limit": 12,
             "retrograde": false,
             "combust": false
@@ -24417,6 +24456,9 @@
             "id": "mercurio",
             "name": "Mercurio",
             "distance": 27.525079209934063,
+            "timeDegrees": 15.930811132072312,
+            "horizon": "est",
+            "measure": "gradi-di-tempo",
             "limit": 14,
             "retrograde": false,
             "combust": false
@@ -24425,6 +24467,9 @@
             "id": "venere",
             "name": "Venere",
             "distance": 25.767729240440985,
+            "timeDegrees": 14.499317681190549,
+            "horizon": "est",
+            "measure": "gradi-di-tempo",
             "limit": 10,
             "retrograde": false,
             "combust": false
@@ -24433,6 +24478,9 @@
             "id": "marte",
             "name": "Marte",
             "distance": 26.50495381364601,
+            "timeDegrees": 33.369861430983406,
+            "horizon": "ovest",
+            "measure": "gradi-di-tempo",
             "limit": 17,
             "retrograde": false,
             "combust": false
@@ -24441,6 +24489,9 @@
             "id": "giove",
             "name": "Giove",
             "distance": 156.311966632441,
+            "timeDegrees": 172.78479798365714,
+            "horizon": "ovest",
+            "measure": "gradi-di-tempo",
             "limit": 11,
             "retrograde": true,
             "combust": false
@@ -24449,6 +24500,9 @@
             "id": "saturno",
             "name": "Saturno",
             "distance": 20.48203186192319,
+            "timeDegrees": 24.935372829469713,
+            "horizon": "ovest",
+            "measure": "gradi-di-tempo",
             "limit": 15,
             "retrograde": false,
             "combust": false

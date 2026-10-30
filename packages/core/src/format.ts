@@ -1504,7 +1504,11 @@ function formatGrahaStatesCompact(stati: GrahaStates): string {
   const lines = ['STATI DEI GRAHA (BPHS 6.53)', '', `Combustione. ${stati.combustion.source}`];
   for (const c of stati.combustion.grahas) {
     lines.push(
-      `${c.name.padEnd(11)} ${formatDegrees(c.distance).padEnd(9)} dal Sole, limite ${c.limit}°` +
+      `${c.name.padEnd(11)} ${formatDegrees(c.distance).padEnd(9)} dal Sole in longitudine, ` +
+        (c.timeDegrees !== undefined
+          ? `${formatDegrees(c.timeDegrees)} in gradi di tempo (${c.horizon}), `
+          : 'gradi di tempo non calcolabili qui, decide la longitudine, ') +
+        `limite ${c.limit}°` +
         `${c.retrograde && (c.id === 'mercurio' || c.id === 'venere') ? ' (retrogrado)' : ''}` +
         `${c.combust ? ' · combusto' : ''}`,
     );

@@ -414,7 +414,8 @@ export function registerComputeJyotishaChart(server: McpServer, context: ToolCon
         'dei dodici bhava e i varga buoni contati per schema, con i versi del BPHS da cui ' +
         'vengono, in due conti nominati: quello di Santhanam con l\'arudha e quello di Narasimha ' +
         'Rao senza (non sceglierne uno al posto di chi chiede); e gli stati di BPHS 6.53: combustione e guerra planetaria secondo il Surya ' +
-        'Siddhanta (la combustione in longitudine, che approssima i suoi gradi di tempo) e, con ' +
+        'Siddhanta (la combustione nei suoi gradi di tempo, all\'orizzonte del luogo, con la ' +
+        'distanza in longitudine accanto) e, con ' +
         'l\'ora, le avastha śayanādi di BPHS 45.30-33. Quali avastha annullino i varga buoni ' +
         'il testo non lo dice, e il risultato nemmeno: non dedurlo. ' +
         "NON è compute_natal_chart con un'opzione: i gradi sono contati dalle stelle fisse " +

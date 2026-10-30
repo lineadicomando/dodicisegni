@@ -204,6 +204,8 @@ describe('il documento vedico', () => {
     expect(testo).toContain('STATI DEI GRAHA');
     expect(testo.replace(/\s+/g, ' ')).toContain('il conto di Narasimha Rao');
     expect(testo.replace(/\s+/g, ' ')).toContain('ARUDHA DEI GRAHA è di un\'altra scuola');
+    // La combustione in gradi di tempo, con la longitudine accanto: due numeri.
+    expect(testo.replace(/\s+/g, ' ')).toContain('di\' quale dei due è');
     // Gli arudha dei graha nei varga: un «indeterminato» non va completato.
     expect(testo.replace(/\s+/g, ' ')).toContain('dillo così, e non scegliere tu');
     // Le hora moderne: l'autore si nomina, e i conti del BPHS restano su Parashara.

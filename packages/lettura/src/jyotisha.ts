@@ -141,8 +141,9 @@ Rao, che l'arudha non la usa: se i due danno nomi diversi, riportali tutti e
 due con l'autore, senza sceglierne uno. Il verso 6.53 non è applicato al conto: la riga
 dice se il graha è in neecha nella rashi, combusto o vinto in guerra, e la
 sezione STATI DEI GRAHA dà le definizioni con le loro fonti. La combustione
-lì è in longitudine, mentre il testo la misura in gradi di tempo: vicino al
-limite dillo come incerto. Le avastha (Sayana e le altre) sono calcolate,
+lì è giudicata in gradi di tempo, la misura del testo, all'orizzonte del
+luogo, e la riga dà accanto anche la distanza in longitudine: non confonderle,
+e se riporti un numero di gradi dal Sole di' quale dei due è. Le avastha (Sayana e le altre) sono calcolate,
 ma quali guastino i varga buoni il testo non lo dice: non deciderlo tu. Le
 altre
 carte divisionali, se presenti, riguardano ciascuna un'area sola: dillo e non

@@ -14,10 +14,16 @@
  * *Deciso*).
  *
  * - **Combustione**: *Surya Siddhanta* IX.6-9 e X.1, trad. Burgess (JAOS 6,
- *   1860), pp. 367 e 370. Il testo misura in «gradi di tempo», l'ascensione
- *   obliqua all'orizzonte; il motore misura in longitudine, e lo dichiara.
- *   La tavola che Santhanam stampa in nota a BPHS 7.28-29 (vol. I, p. 100)
- *   non ha fonte e non coincide (Saturno 16): non è usata.
+ *   1860), pp. 367 e 370, coi limiti in «gradi di tempo» (*kālāṃśa*), che
+ *   IX.4-5 (pp. 365-366) definisce: la differenza di ascensione obliqua fra
+ *   il Sole e il pianeta all'orizzonte del luogo, col pianeta alla sua
+ *   latitudine (VII.8). Il motore calcola quella quantità con la geometria
+ *   esatta e non con le approssimazioni del testo (seni indiani, tavola
+ *   delle ascensioni di III.42-45), e lo dichiara; dove il calcolo non c'è,
+ *   oltre i circoli polari, decide la longitudine. Scelto dal proprietario il
+ *   30 ottobre 2026, al posto della sola longitudine. La tavola che
+ *   Santhanam stampa in nota a BPHS 7.28-29 (vol. I, p. 100) non ha fonte e
+ *   non coincide (Saturno 16): non è usata.
  * - **Guerra planetaria**: fra i soli cinque *tārāgraha* (SS VII.1), quando
  *   la distanza è sotto un grado (VII.19), che alla congiunzione è la
  *   differenza delle latitudini (VII.12). Vince Venere comunque, degli altri
@@ -68,9 +74,58 @@ export const COMBUSTION_LIMITS: Readonly<Partial<Record<BodyId, { direct: number
 
 const COMBUSTION_SOURCE =
   'Surya Siddhanta IX.6-9 e X.1 (trad. Burgess, 1860, pp. 367, 370): Luna 12, Marte 17, ' +
-  'Mercurio 14 (12 retrogrado), Giove 11, Venere 10 (8 retrograda), Saturno 15. Il testo li dà ' +
-  'in gradi di tempo, l\'ascensione obliqua all\'orizzonte; qui sono applicati alla distanza ' +
-  'in longitudine, che li approssima. Rahu e Ketu non sono nel testo.';
+  'Mercurio 14 (12 retrogrado), Giove 11, Venere 10 (8 retrograda), Saturno 15, in gradi di ' +
+  'tempo (kālāṃśa). Come IX.2-5 (pp. 365-366): se il pianeta è indietro rispetto al Sole in ' +
+  'longitudine si confrontano le levate all\'orizzonte est, altrimenti i tramonti all\'ovest, ' +
+  'e la distanza è la differenza di ascensione (o discensione) obliqua alla latitudine del ' +
+  'luogo, col pianeta alla sua latitudine eclittica. Calcolata con la geometria esatta, ' +
+  'obliquità media IAU 1980, e non con le regole approssimate del testo. Oltre i circoli ' +
+  'polari, dove un corpo può non sorgere, decide la distanza in longitudine. Rahu e Ketu non ' +
+  'sono nel testo.';
+
+/** Dove e quando: quanto serve per passare dall'eclittica all'orizzonte. */
+export interface CombustionPlace {
+  /** Latitudine geografica del luogo, gradi, positiva a nord. */
+  latitude: number;
+  julianDayUT: number;
+  /** L'ayanamsa da aggiungere alle longitudini siderali; 0 se sono tropicali. */
+  ayanamsa: number;
+}
+
+/**
+ * La distanza in gradi di tempo fra il Sole e un corpo, e l'orizzonte a cui
+ * si misura; `undefined` dove uno dei due non sorge o non tramonta.
+ *
+ * Ascensione retta α e declinazione δ dalla longitudine tropicale e dalla
+ * latitudine eclittica; la differenza ascensionale è asin(tan φ tan δ).
+ * A est conta il momento della levata, α − differenza (ascensione obliqua);
+ * a ovest quello del tramonto, α + differenza (discensione obliqua).
+ */
+export function timeDegreesFromSun(
+  sole: Pick<CelestialBody, 'longitude' | 'latitude'>,
+  corpo: Pick<CelestialBody, 'longitude' | 'latitude'>,
+  luogo: CombustionPlace,
+): { timeDegrees: number; horizon: 'est' | 'ovest' } | undefined {
+  const secoli = (luogo.julianDayUT - 2451545) / 36525;
+  const eps = (23.439291 - 0.0130042 * secoli) * DEG;
+  const tanPhi = Math.tan(luogo.latitude * DEG);
+  // IX.2-3: chi è indietro in longitudine si vede (o sparisce) a est, all'alba.
+  const horizon = normalize360(sole.longitude - corpo.longitude) < 180 ? 'est' : 'ovest';
+  const momento = (b: Pick<CelestialBody, 'longitude' | 'latitude'>): number | undefined => {
+    const lambda = (b.longitude + luogo.ayanamsa) * DEG;
+    const beta = b.latitude * DEG;
+    const delta = Math.asin(Math.sin(beta) * Math.cos(eps) + Math.cos(beta) * Math.sin(eps) * Math.sin(lambda));
+    const alpha = Math.atan2(Math.sin(lambda) * Math.cos(eps) - Math.tan(beta) * Math.sin(eps), Math.cos(lambda)) / DEG;
+    const seno = tanPhi * Math.tan(delta);
+    if (Math.abs(seno) > 1) return undefined;
+    const differenza = Math.asin(seno) / DEG;
+    return horizon === 'est' ? alpha - differenza : alpha + differenza;
+  };
+  const s = momento(sole);
+  const c = momento(corpo);
+  if (s === undefined || c === undefined) return undefined;
+  return { timeDegrees: arco(s, c), horizon };
+}
 
 /** Distanza fra due longitudini, [0, 180]. */
 function arco(a: number, b: number): number {
@@ -78,8 +133,12 @@ function arco(a: number, b: number): number {
   return d > 180 ? 360 - d : d;
 }
 
-/** I graha vicini al Sole, uno per ciascuno dei sei del testo che la carta contiene. */
-export function computeCombustion(bodies: readonly CelestialBody[]): CombustionState[] {
+/**
+ * I graha vicini al Sole, uno per ciascuno dei sei del testo che la carta
+ * contiene. Col luogo decidono i gradi di tempo; senza, o dove non ci sono,
+ * la longitudine, e `measure` dice quale.
+ */
+export function computeCombustion(bodies: readonly CelestialBody[], luogo?: CombustionPlace): CombustionState[] {
   const sole = bodies.find((body) => body.id === 'sole');
   if (!sole) return [];
   return bodies.flatMap((body) => {
@@ -87,17 +146,29 @@ export function computeCombustion(bodies: readonly CelestialBody[]): CombustionS
     if (!limiti) return [];
     const distance = arco(body.longitude, sole.longitude);
     const limit = body.retrograde && limiti.retrograde !== undefined ? limiti.retrograde : limiti.direct;
+    const tempo = luogo ? timeDegreesFromSun(sole, body, luogo) : undefined;
     return [
       {
         id: body.id,
         name: grahaName(body.id, body.name),
         distance,
+        ...(tempo ?? {}),
+        measure: tempo ? 'gradi-di-tempo' : 'longitudine',
         limit,
         retrograde: body.retrograde,
-        combust: distance < limit,
+        combust: (tempo?.timeDegrees ?? distance) < limit,
       },
     ];
   });
+}
+
+/** Il luogo e l'istante di una carta, per la combustione. */
+export function combustionPlace(chart: NatalChart): CombustionPlace {
+  return {
+    latitude: chart.input.latitude,
+    julianDayUT: chart.time.julianDayUT,
+    ayanamsa: chart.ayanamsa?.degrees ?? 0,
+  };
 }
 
 /** I cinque *tārāgraha* di SS VII.1, i soli che fanno guerra. */
@@ -257,7 +328,7 @@ export function computeAvasthas(chart: NatalChart, sunriseJulianDayUT: number): 
 export function computeGrahaStates(chart: NatalChart, sunriseJulianDayUT: number | null): GrahaStates {
   const avasthas = sunriseJulianDayUT === null ? undefined : computeAvasthas(chart, sunriseJulianDayUT);
   return {
-    combustion: { source: COMBUSTION_SOURCE, grahas: computeCombustion(chart.bodies) },
+    combustion: { source: COMBUSTION_SOURCE, grahas: computeCombustion(chart.bodies, combustionPlace(chart)) },
     wars: { source: WAR_SOURCE, pairs: computeWars(chart.bodies) },
     ...(avasthas ? { avasthas } : {}),
   };

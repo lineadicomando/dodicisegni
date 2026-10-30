@@ -28,6 +28,7 @@ Le voci chiuse dopo, con il commit in cui si leggono ancora per intero:
 | 27 | `f6026fa` |
 | 17 | `cd6d0f2` |
 | 29 | `62ae8f6` |
+| 25 | `63b0755` |
 
 Le fonti citate qui stanno in copia locale in `texts/`, fuori dal repo: la
 cartella, le schede `FONTE.md` e l'elenco `texts/INDICE.md` si mantengono come
@@ -96,24 +97,24 @@ volta e ricominciare da capo.
 | Voce | Priorità | Taglia | Prima di cominciare |
 |---|---|---|---|
 | 5. I varga: le convenzioni che restano | bassa | piccola | i sedici e le sei hora sono fatti; restano due verifiche sulla hora |
-| 25. Le dignità del Jyotisha: le rifiniture | bassa | piccola | la combustione in gradi di tempo, da fare solo se servisse |
 | 26. Le scuole occidentali delle dignità: quello che resta | bassa | piccola | la ricezione di Bonatti chiede un'applicazione; Valente aspetta un testo |
 | 28. La revisione della SEO | media | piccola | il dominio principale è deciso; i redirect e `ORIGIN` si fanno sul server, non nel repo |
 
-Le prime tre sono rifiniture, nessuna urgente. La 28 è la sola che tocca
+Le prime due sono rifiniture, nessuna urgente. La 28 è la sola che tocca
 chi usa il programma oggi: il suo primo punto divide il sito in quattro agli
 occhi dei motori di ricerca, e si fa sul server, quando il proprietario lo
 chiede. Fra le rifiniture, i sessanta nomi del D-60 sono fatti il 30
 ottobre 2026 (`shashtiamsaOf` in `varga.ts`, versione 0.6.0), e
 l'avvertenza sull'ora va anche al D-24 e al D-27 (versione 0.7.0), e le
 quattro convenzioni moderne della hora sono entrate (versione 0.8.1): della
-voce 5 restano due verifiche. Della 25 restano la combustione in gradi di tempo, che vuole pagine
-ancora da leggere: gli arudha dei graha nei varga sono fatti (versione
-0.8.0). La 26 aspetta testi.
+voce 5 restano due verifiche. La 25 è chiusa il 30 ottobre 2026: gli
+arudha dei graha nei varga (0.8.0) e la combustione nei gradi di tempo
+(0.9.0), tutte e due in *Deciso*. La 26 aspetta testi.
 
-**Versione 0.8.1**, in ogni manifesto, col tag `v0.8.1`: le quattro
-convenzioni moderne della hora (voce 5), valori nuovi di un'opzione che
-c'era; il fascicolo canonico non cambia. Prima, la 0.8.0 con gli arudha dei
+**Versione 0.9.0**, in ogni manifesto, col tag `v0.9.0`: la combustione del
+Jyotisha nei gradi di tempo (voce 25), tre campi che compaiono e un giudizio
+che può cambiare. Prima, la 0.8.1 con le quattro convenzioni moderne della
+hora (voce 5), valori nuovi di un'opzione che c'era, la 0.8.0 con gli arudha dei
 graha in ogni varga (voce 25), un campo che compare nella risposta di ogni
 varga coi segni, la 0.7.0 con l'avvertenza sull'ora anche nel D-24 e
 nel D-27, e la 0.6.0 coi nomi del D-60. La
@@ -253,24 +254,6 @@ fuori dai sedici del BPHS fa cadere anche `varga-buoni.test.ts`, che
 pretende `VARGA_SCHEMES.shodashavarga` uguale a `VARGAS`: gli schemi e i
 pesi del vimshopaka (`VIMSHOPAKA_WEIGHTS`) sono quelli del testo, e un varga
 nuovo non ci entra.
-
-## 25. Le dignità del Jyotisha: le rifiniture
-
-**Priorità bassa.** Restano dalla voce 19, chiusa il 30 ottobre 2026; le
-dignità di Parashara e tutto quello che ne deriva sono in `dignita-parashara.ts`,
-`varga-buoni.ts`, `maitri.ts`, `vimshopaka.ts`, `arudha.ts`,
-`arudha-graha.ts` e `stati.ts`, ciascuno con la sua fonte nel commento e la
-sua prova nel test; gli arudha dei graha anche in ogni varga, dal 30
-ottobre 2026 (versione 0.8.0, vedi *Deciso*). Resta una cosa, da fare solo
-se servisse:
-
-- **La combustione nei gradi di tempo del *Surya Siddhanta*.** Oggi è in
-  longitudine, e lo dice (`COMBUSTION_SOURCE` in `stati.ts`). Il calcolo
-  esatto vuole l'ascensione obliqua all'orizzonte del luogo, col pianeta
-  corretto per la latitudine (SS IX.1-5, pp. 364-366, e VII.8): un calcolo
-  nuovo. Le pagine non sono ancora lette: nella copia locale
-  (`texts/jyotisha/surya-siddhanta-burgess-1860`) c'è l'immagine di p. 366 e
-  non quelle di pp. 364-365, e `trascrizioni.md` ha solo VII.8 e pp. 366-367.
 
 ## 26. Le scuole occidentali delle dignità: quello che resta
 
@@ -593,9 +576,17 @@ sito pubblicato lo stesso giorno, tutte fuori dal repo, in ordine di peso:
 
 - **Il 6.53: combustione, guerra e avastha come dati, con letture
   dichiarate.** Scelto dal proprietario il 29 ottobre 2026, voce 19.
-  Combustione in longitudine con i limiti del *Surya Siddhanta* IX.6-9 e
-  X.1, dichiarando che il testo li dà in gradi di tempo e che la longitudine
-  li approssima; la tavola di Santhanam resta fuori. Guerra planetaria fra i
+  Combustione coi limiti del *Surya Siddhanta* IX.6-9 e X.1; la tavola di
+  Santhanam resta fuori. Il 30 ottobre 2026, voce 25, il proprietario ha
+  scelto di giudicarla nella misura del testo, i gradi di tempo di IX.4-5:
+  la differenza di ascensione obliqua (a est, all'alba) o di discensione (a
+  ovest, la sera) fra il Sole e il pianeta, alla latitudine del luogo e col
+  pianeta alla sua latitudine eclittica (`timeDegreesFromSun` in
+  `stati.ts`); calcolata con la geometria esatta e non con le regole
+  approssimate del testo, con la longitudine accanto, che decide solo oltre
+  i circoli polari. Su mille nascite per latitudine il giudizio cambia
+  rispetto alla longitudine in 81 casi su 6000 all'equatore, 458 a Roma, 772
+  a 55° nord, 1404 a 64°. Guerra planetaria fra i
   cinque *tārāgraha*, in coordinate eclittiche geocentriche, a distanza
   angolare sotto un grado, che alla congiunzione è la differenza delle
   latitudini (*Surya Siddhanta* VII.12 e 19), con le sole

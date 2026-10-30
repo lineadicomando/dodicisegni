@@ -36,7 +36,7 @@ import { ZODIAC_SIGNS } from './constants.js';
 import { parasharaDignityOf, parasharaSignDignities, parasharaSignLord, PARASHARA_GRAHAS } from './dignita-parashara.js';
 import { bphsHoraConvention, DEFAULT_HORA_CONVENTION, horaConvention, horaOf } from './hora.js';
 import { grahaName } from './nakshatra.js';
-import { computeCombustion, computeWars } from './stati.js';
+import { combustionPlace, computeCombustion, computeWars } from './stati.js';
 import { VARGAS, vargaSignOf } from './varga.js';
 import type {
   BodyId,
@@ -175,7 +175,7 @@ export function computeGoodVargas(
   const chiesta = horaConvention(hora);
   const usata = bphsHoraConvention(hora);
   const conSegniLaHora = usata.signOf !== undefined;
-  const combusti = computeCombustion(chart.bodies).filter((c) => c.combust).map((c) => c.id);
+  const combusti = computeCombustion(chart.bodies, combustionPlace(chart)).filter((c) => c.combust).map((c) => c.id);
   const vinti = computeWars(chart.bodies).flatMap((w) => (w.defeated ? [w.defeated] : []));
 
   const grahas = chart.bodies
