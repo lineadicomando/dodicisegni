@@ -305,6 +305,35 @@
     list-style: none;
   }
 
+  /* Su un telefono le sei voci non stanno in una riga, e andando a capo da
+     sole lasciavano «Oraria» da sola sotto e i due pulsanti su una terza riga.
+     Qui i pulsanti salgono nell'angolo, accanto al marchio dove lo spazio
+     c'è, e le voci si dispongono in due righe uguali da tre. Uno scorrimento
+     orizzontale le terrebbe in una riga, ma ne nasconderebbe una fuori dallo
+     schermo, e una sezione che non si vede è una sezione che non c'è. */
+  @media (max-width: 34rem) {
+    header {
+      position: relative;
+    }
+
+    .comandi {
+      position: absolute;
+      top: 0;
+      right: 0;
+    }
+
+    nav {
+      flex: 1 1 100%;
+    }
+
+    nav ul {
+      display: grid;
+      grid-template-columns: repeat(3, auto);
+      justify-content: space-between;
+      gap: 0.4rem 1rem;
+    }
+  }
+
   nav a {
     display: block;
     padding-bottom: 0.5rem;
