@@ -347,9 +347,14 @@ export function formatHoraryCompact(horary: HoraryLilly): string {
     const ricezioni = (f.reception ?? [])
       .map((r) => `${bodyName(r.by)} riceve ${bodyName(r.of)}: ${r.dignities.map(dignityLabel).join(', ') || 'no'}`)
       .join('; ');
+    const qualita = (f.quality ?? []).map((c) => {
+      const esito = c.holds === undefined ? 'non calcolata' : c.holds ? 'sì' : 'no';
+      return `\n  Qualità, ${esito}, p. ${c.page}: ${c.text}${c.detail ? ` ${c.detail}` : ''}`;
+    });
     return (
       `${f.mode}${quale ? ` (${quale})` : ''}, p. ${f.page}. ${f.definition}\n  Eventi: ${eventi}` +
       (ricezioni ? `\n  Ricezione: ${ricezioni}` : '') +
+      qualita.join('') +
       (f.note ? `\n  ${f.note}` : '')
     );
   };

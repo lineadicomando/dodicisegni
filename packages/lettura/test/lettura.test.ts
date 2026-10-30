@@ -271,6 +271,10 @@ describe('il documento vedico', () => {
 describe("il documento dell'oraria", () => {
   const testo = ORARIA.replace(/\s+/g, ' ');
 
+  it('manda alle righe «Qualità» della perfezione, p. 125', () => {
+    expect(testo).toContain('Le righe «Qualità» sotto la perfezione');
+  });
+
   it('non è uno dei sistemi del tema natale', () => {
     expect(SISTEMI).not.toContain('oraria');
   });

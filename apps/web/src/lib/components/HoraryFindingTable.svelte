@@ -43,7 +43,7 @@
       {#each findings as f, index (index)}
         <li>
           <p>
-            <strong>{f.mode}</strong>{#if f.by}, per {BODY_LABEL[f.by]}{/if}{#if f.aspect}, di
+            <strong>{f.mode}</strong>{#if f.by}, per {BODY_LABEL[f.by]}{/if}{#if f.aspect && f.aspect !== f.mode}, di
               {f.aspect}{/if}{#if f.local}, esatta il {formatLocalInstant(f.local)}{/if}
             <span class="tenue">· p. {f.page}</span>
           </p>
@@ -61,6 +61,24 @@
                   : 'no'}
               {/each}
             </p>
+          {/if}
+          {#if f.quality && f.quality.length > 0}
+            <table class="qualita">
+              <caption>Le condizioni di p. 125</caption>
+              <tbody>
+                {#each f.quality as c (c.id)}
+                  <tr>
+                    <td class:tenue={c.holds !== true}>
+                      <strong>{c.holds === undefined ? 'non calcolata' : c.holds ? 'sì' : 'no'}</strong>
+                    </td>
+                    <td>
+                      {c.text}
+                      {#if c.detail}<span class="tenue"> {c.detail}</span>{/if}
+                    </td>
+                  </tr>
+                {/each}
+              </tbody>
+            </table>
           {/if}
           {#if f.note}
             <p class="tenue">{f.note}</p>
@@ -92,6 +110,18 @@
     margin: 0.25rem 0;
     padding-left: 1.25rem;
     font-size: 0.85rem;
+  }
+
+  .qualita {
+    margin-top: 0.5rem;
+    font-size: 0.85rem;
+  }
+
+  .qualita caption {
+    text-align: left;
+    font-size: 0.8rem;
+    color: var(--testo-tenue);
+    padding-bottom: 0.2rem;
   }
 
   .quando {

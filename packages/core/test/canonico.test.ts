@@ -142,6 +142,13 @@ const FASCICOLO: Record<string, () => Record<string, unknown>> = {
       ROMA,
       { ...E, question: { house: 7 } },
     ),
+    // Una figura con una perfezione diretta, la congiunzione della Luna con
+    // Saturno: le condizioni di qualità di p. 125 ci sono solo lì.
+    'Roma 2026-01-21 15:00, settima casa, congiunzione': computeHoraryLilly(
+      { date: '2026-01-21', time: '15:00', timezone: 'Europe/Rome' },
+      ROMA,
+      { ...E, question: { house: 7 } },
+    ),
   }),
 };
 

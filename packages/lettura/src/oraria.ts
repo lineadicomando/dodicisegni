@@ -83,7 +83,12 @@ ragionamento, e chi ha chiesto deve poterla seguire.
    significatori si incontrano senza che niente li impedisca prima (p. 125):
    l'ordine degli istanti è ciò che decide. Il modo dice anche come: per
    congiunzione o sestile e trigono con facilità, per quadrato solo se tutti e
-   due hanno dignità, per opposizione raramente e con fatica; una traslazione
+   due hanno dignità, per opposizione raramente e con fatica. Le righe
+   «Qualità» sotto la perfezione dicono le condizioni che p. 125 mette a
+   ciascun modo (la casa in cui la congiunzione si compie, le case da cui i
+   significatori applicano, la dignità per il quadrato, la mutua ricezione e
+   la Luna per l'opposizione): usale, e dove una dice «non calcolata»
+   giudicala tu dai dati che riporta, dicendolo. Una traslazione
    o una collezione indicano che la cosa passa attraverso una terza persona,
    quella che il pianeta di mezzo significa per la casa che regge (p. 126).
    Se non c'è nessun modo della perfezione, dillo: è anch'esso una risposta.

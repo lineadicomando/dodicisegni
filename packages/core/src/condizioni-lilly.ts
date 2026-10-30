@@ -77,7 +77,7 @@ const COMBUSTIONE = dms(8, 30, 0);
 const RAGGI = 17;
 
 /** I punti della casa, p. 115. Il segno dice da che parte sta. */
-const PUNTI_CASA: Readonly<Record<number, number>> = {
+export const LILLY_HOUSE_POINTS: Readonly<Record<number, number>> = {
   1: 5,
   10: 5,
   7: 4,
@@ -218,7 +218,7 @@ export function computeLillyConditions(input: LillyConditionsInput): LillyCondit
 
     // La casa, con la regola dei cinque gradi.
     const house = conCase ? lillyHouse(body.longitude, houses) : undefined;
-    if (house !== undefined) conta({ item: 'casa', house, points: PUNTI_CASA[house] ?? 0 });
+    if (house !== undefined) conta({ item: 'casa', house, points: LILLY_HOUSE_POINTS[house] ?? 0 });
 
     // Il moto. Il Sole e la Luna non sono mai retrogradi, e per loro la riga
     // del diretto «is voyd» (p. 115).

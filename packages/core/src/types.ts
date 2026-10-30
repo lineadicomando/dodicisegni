@@ -2344,6 +2344,14 @@ export interface HoraryFinding {
    * collezione se i due significatori ricevono quello che raccoglie.
    */
   reception?: { by: BodyId; of: BodyId; dignities: ReceptionDignity[] }[];
+  /**
+   * Le condizioni di qualità di p. 125, solo per la congiunzione e
+   * l'aspetto: dove la congiunzione si compie, se i significatori hanno
+   * dignità e applicano da case buone, per l'opposizione la mutua ricezione
+   * per domicilio e la Luna. Predicati come le considerazioni: quelli senza
+   * soglia nel testo restano senza `holds`, e `detail` dice i dati.
+   */
+  quality?: HoraryConsideration[];
   note?: string;
 }
 

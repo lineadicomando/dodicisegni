@@ -247,3 +247,52 @@ describe('computeHoraryLilly', () => {
     ).toThrow(/ora/);
   });
 });
+
+describe('le condizioni di qualità della perfezione, p. 125', () => {
+  // Figure di Roma del gennaio 2026, scelte perché ciascuna porta un modo
+  // diverso; domanda di settima casa.
+  const ROMA = { latitude: 41.9028, longitude: 12.4964 };
+  const figura = (date: string, time: string) =>
+    computeHoraryLilly({ date, time, timezone: 'Europe/Rome' }, ROMA, { question: { house: 7 } });
+  const qualita = (date: string, time: string) => {
+    const perfezione = figura(date, time).perfections.find((f) => f.mode === 'congiunzione' || f.mode === 'aspetto');
+    return new Map((perfezione?.quality ?? []).map((c) => [c.id, c]));
+  };
+
+  it('per la congiunzione dicono la casa in cui si compie, la velocità, e non giudicano la forza', () => {
+    // La Luna, signora dell'Ascendente, raggiunge Saturno, signore della 7,
+    // che sta in casa 10: la congiunzione si compie in un angolo.
+    const q = qualita('2026-01-21', '15:00');
+    expect(q.get('casa-della-congiunzione')).toMatchObject({ holds: true, detail: 'In casa 10, angolare.' });
+    expect(q.get('veloci')?.holds).toBe(false);
+    expect(q.get('forti')?.holds).toBeUndefined();
+    expect(q.get('forti')?.detail).toContain('non calcolata');
+  });
+
+  it('per il quadrato chiedono dignità a tutti e due e case buone, «otherwise not»', () => {
+    // La Luna in casa 6, che a p. 115 vale -2: la casa non è buona.
+    const q = qualita('2026-01-15', '15:00');
+    expect(q.get('dignita')?.holds).toBe(true);
+    expect(q.get('case-buone')).toMatchObject({ holds: false, detail: 'Luna in casa 6, Saturno in casa 10.' });
+  });
+
+  it("per l'opposizione cercano la mutua ricezione per domicilio, le case amiche e la Luna", () => {
+    const q = qualita('2026-01-02', '15:00');
+    expect([...q.keys()]).toEqual(['mutua-per-domicilio', 'case-buone', 'luna']);
+    expect(q.get('mutua-per-domicilio')?.holds).toBe(false);
+    expect(q.get('luna')?.holds).toBe(false);
+  });
+
+  it('per sestile e trigono guardano le case, e «ben dignificato» resta non calcolato', () => {
+    const q = qualita('2026-01-01', '09:00');
+    expect(q.get('case-buone')).toMatchObject({ holds: false, detail: 'Saturno in casa 2, Sole in casa 12.' });
+    expect(q.get('forti')?.holds).toBeUndefined();
+  });
+
+  it('dicono le letture con cui sono calcolate', () => {
+    const letture = figura('2026-01-21', '15:00').readings.join(' ');
+    expect(letture).toContain('tutte tranne la 6, l\'8 e la 12');
+    expect(letture).toContain('nella casa del grado in cui si compie');
+    expect(letture).toContain('vuol dire non peregrino');
+  });
+});

@@ -852,7 +852,8 @@ export function registerComputeHorary(server: McpServer, context: ToolContext = 
         "Erige la figura dell'istante in cui una domanda viene posta e la analizza col metodo " +
         'di William Lilly (Christian Astrology, 1647): significatori, modi della perfezione ' +
         '(congiunzione, aspetto, traslazione, collezione) e impedimenti (proibizione, ' +
-        'frustrazione, refranazione) con la pagina del libro, considerazioni prima del giudizio, ' +
+        'frustrazione, refranazione) con la pagina del libro e, per congiunzione e aspetto, le condizioni ' +
+        'di qualità di p. 125 (righe «Qualità»), considerazioni prima del giudizio, ' +
         'la figura col conto delle fortezze, il corso dei significatori. USA QUESTO TOOL quando ' +
         'chi scrive pone una domanda da giudicare con l\'astrologia oraria: «otterrò il lavoro?», ' +
         '«dov\'è l\'anello?», «tornerà?». Non per il cielo di un momento senza domanda ' +

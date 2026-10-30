@@ -81,9 +81,10 @@ volta e ricominciare da capo.
 | 25. Le dignità del Jyotisha: le rifiniture | bassa | piccola | due calcoli, da fare solo se servissero |
 | 26. Le scuole occidentali: quello che resta | bassa | piccola | la ricezione di Bonatti va con la 17; Valente aspetta un testo |
 
-**Versione 0.1.1**, in ogni manifesto, col tag `v0.1.1`. La prima, la
+**Versione 0.2.0**, in ogni manifesto, col tag `v0.2.0`. La prima, la
 0.1.0, cade alla chiusura della voce 19 il 30 ottobre 2026; la 0.1.1 porta la
-pagina web dell'oraria (voce 17). Le regole (un
+pagina web dell'oraria, la 0.2.0 le condizioni di qualità di p. 125, che
+cambiano la risposta di `/api/horary` (voce 17). Le regole (un
 numero solo, le tre domande che dicono quale cifra si muove, il tag) stanno
 in `CLAUDE.md`, *La versione*. Se una risposta che c'era è cambiata lo dice
 il fascicolo canonico (`packages/core/test/canonico.test.ts`, voce 27,
@@ -231,11 +232,6 @@ più facilmente si vorranno rivedere:
 
 Ciascuna indipendente dalle altre.
 
-- **Le condizioni di qualità della perfezione**, p. 125: per il quadrato
-  «each Planet have dignity», per l'opposizione la mutua ricezione per
-  domicilio, e «out of good Houses». I dati sono tutti nel risultato
-  (`chart.dignities.lilly`); il classificatore non li incrocia ancora, e il
-  documento di lettura li chiede al lettore.
 - **La Parte di Fortuna nel conto.** Lilly la conta a p. 180 («in ♍ hath five
   Debilities», con rimando a p. 145, da leggere). `condizioni-lilly.ts` conta
   solo i sette.
@@ -389,6 +385,14 @@ ogni scuola che non le definisce o che le definisce in un modo che la
 tavola non calcola, e la riga della fonte lo dice.
 
 ## Deciso, e da non riaprire
+
+- **Le condizioni di qualità di p. 125 si leggono così.** Scelto dal
+  proprietario il 30 ottobre 2026, con la voce 17. Le case «good», «proper»
+  e «friendly» sono quelle con punti positivi nella tavola di p. 115 (tutte
+  tranne 6, 8 e 12); la congiunzione si giudica nella casa del grado in cui
+  si compie; «have dignity» del quadrato è «non peregrino», mentre
+  «essentially well dignified» e «Essentially or Accidentally strong» non si
+  calcolano e portano i dati. Le letture stanno in `HORARY_LILLY_READINGS`.
 
 - **Le dignità occidentali: due colonne di default, le scuole a richiesta,
   e la riga moderna non è una scuola.** Il default, scelto il 18 ottobre

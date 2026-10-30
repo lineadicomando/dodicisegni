@@ -20,6 +20,8 @@ import { CHALDEAN_ORDER } from './constants.js';
 import { findSignCourse } from './corso.js';
 import { DOMICILES } from './dignita.js';
 import { lillyRulersAt, lillyTriplicityRuler } from './dignita-lilly.js';
+import { LILLY_HOUSE_POINTS, lillyHouse } from './condizioni-lilly.js';
+import { computeBodies, initEphemeris } from './ephemeris.js';
 import { ChartError } from './errors.js';
 import { computeSky } from './sky.js';
 import type {
@@ -29,8 +31,10 @@ import type {
   HoraryFinding,
   HoraryLilly,
   HoraryOptions,
+  House,
   HorarySignificator,
   LillyBodyConditions,
+  MutualReception,
   Place,
   ReceptionDignity,
   Sect,
@@ -58,6 +62,12 @@ export const HORARY_LILLY_READINGS: readonly string[] = [
     'pesante di entrambi (p. 126). Anche qui la ricezione è riportata, e la sua mancanza detta.',
   'Le case dell\'Ascendente e del quesito sono rette dal signore tradizionale del segno della cuspide; la figura è eretta col ' +
     'Regiomontano, come le figure del libro II.',
+  'Qualità della perfezione (p. 125): le case «good», «proper» e «friendly» sono quelle a cui la tavola delle fortezze di ' +
+    'p. 115 dà punti positivi, cioè tutte tranne la 6, l\'8 e la 12; la casa conta con la regola dei cinque gradi (p. 33).',
+  'Qualità della perfezione: la congiunzione si giudica nella casa del grado in cui si compie («if this ☌ … be in a ' +
+    'Succedant house»), con le cuspidi della figura.',
+  'Qualità della perfezione: «have dignity in the Degrees wherein they are» (quadrato) vuol dire non peregrino (p. 112); ' +
+    '«essentially well dignified» e «Essentially or Accidentally strong» non hanno una soglia, e non si calcolano.',
 ];
 
 /**
@@ -182,6 +192,21 @@ export function computeHoraryLilly(moment: SkyMoment, place: Place, options: Hor
         applyingAtStart: applicaAllInizio,
         inOrbAtStart: inOrbita,
       });
+  const condizioniPer = new Map(conditions.bodies.map((body) => [body.id, body]));
+  for (const finding of perfections) {
+    if (finding.mode !== 'congiunzione' && finding.mode !== 'aspetto') continue;
+    finding.quality = qualitaDellaPerfezione({
+      finding,
+      querente: signoreAsc,
+      quesito: signoreQuesito,
+      condizioni: condizioniPer,
+      houses: chart.houses,
+      mutue: chart.dignities!.receptions.mutual,
+      luna: courses.get('luna')!,
+      ephemerisPath: options.ephemerisPath,
+    });
+  }
+
   if (sameSignificator) {
     warnings.push(
       `Lo stesso pianeta, ${chart.bodies.find((b) => b.id === signoreAsc)?.name}, regge l'Ascendente e la casa ` +
@@ -380,6 +405,147 @@ function ricezione(
   if (!posizione) return [];
   const signori = lillyRulersAt(posizione.longitude, input.sect);
   return voci.filter((voce) => signori[voce] === ricevente);
+}
+
+/**
+ * Le condizioni di qualità della perfezione, p. 125, per il modo che la
+ * figura porta: congiunzione, sestile o trigono, quadrato, opposizione. Le
+ * letture sono in `HORARY_LILLY_READINGS`.
+ */
+function qualitaDellaPerfezione(input: {
+  finding: HoraryFinding;
+  querente: BodyId;
+  quesito: BodyId;
+  condizioni: ReadonlyMap<BodyId, LillyBodyConditions>;
+  houses: readonly House[];
+  mutue: readonly MutualReception[];
+  luna: SignCourse;
+  ephemerisPath: string | undefined;
+}): HoraryConsideration[] {
+  const { finding, querente, quesito, condizioni } = input;
+  const due = [querente, quesito];
+  const nome = (id: BodyId): string => condizioni.get(id)?.name ?? id;
+  const casaBuona = (casa: number | undefined): boolean | undefined =>
+    casa === undefined ? undefined : (LILLY_HOUSE_POINTS[casa] ?? 0) > 0;
+  const caseBuone = (testo: string): HoraryConsideration => {
+    const case_ = due.map((id) => condizioni.get(id)?.house);
+    const esiti = case_.map(casaBuona);
+    const consideration: HoraryConsideration = {
+      id: 'case-buone',
+      page: 125,
+      text: testo,
+      detail: due.map((id, k) => `${nome(id)} in casa ${case_[k] ?? '?'}`).join(', ') + '.',
+    };
+    if (esiti.every((esito) => esito !== undefined)) consideration.holds = esiti.every(Boolean);
+    return consideration;
+  };
+  const dignita = (): HoraryConsideration => ({
+    id: 'dignita',
+    page: 125,
+    text: 'Ciascun pianeta ha dignità nel grado in cui sta («have dignity in the Degrees wherein they are»).',
+    holds: due.every((id) => condizioni.get(id)?.peregrine === false),
+    detail:
+      due.map((id) => `${nome(id)} ${condizioni.get(id)?.peregrine ? 'peregrino' : 'con dignità'}`).join(', ') +
+      ' (p. 112).',
+  });
+  const forti = (testo: string): HoraryConsideration => ({
+    id: 'forti',
+    page: 125,
+    text: testo,
+    detail:
+      'Senza soglia nel testo: non calcolata. Le differenze della tavola di p. 115: ' +
+      due.map((id) => `${nome(id)} ${condizioni.get(id)?.score.totals.net ?? '?'}`).join(', ') +
+      '.',
+  });
+
+  if (finding.mode === 'congiunzione') {
+    const risultato: HoraryConsideration[] = [];
+    const esatto = finding.exact ? Date.parse(finding.exact) / 86_400_000 + 2440587.5 : undefined;
+    if (esatto !== undefined) {
+      const context = initEphemeris(input.ephemerisPath);
+      // Il grado della congiunzione: quello del più pesante, che nell'istante
+      // esatto è lo stesso dell'altro.
+      const pesante = peso(querente) >= peso(quesito) ? querente : quesito;
+      const longitudine = computeBodies(esatto, [pesante], context).bodies[0]?.longitude;
+      const casa = longitudine === undefined ? undefined : lillyHouse(longitudine, input.houses);
+      if (casa !== undefined) {
+        const angolare = casa % 3 === 1;
+        const succedente = casa % 3 === 2;
+        risultato.push({
+          id: 'casa-della-congiunzione',
+          page: 125,
+          text: 'La congiunzione si compie nella prima casa o in un angolo («in the first house, or in any Angle»).',
+          holds: angolare,
+          detail: `In casa ${casa}, ${
+            angolare
+              ? 'angolare'
+              : succedente
+                ? 'succedente: «it will be perfected, but not so soon»'
+                : 'cadente: «with infinite losse of time, some difficulty, and much strugling»'
+          }.`,
+        });
+      }
+    }
+    risultato.push({
+      id: 'veloci',
+      page: 125,
+      text: 'Più presto se i significatori sono veloci nel moto («swift in motion»).',
+      holds: due.every((id) => condizioni.get(id)?.motion.pace === 'veloce'),
+      detail:
+        due.map((id) => `${nome(id)} ${condizioni.get(id)?.motion.pace ?? '?'}`).join(', ') +
+        ', rispetto al moto medio del libro I.',
+    });
+    risultato.push(forti('Più presto se sono forti, per dignità essenziale o accidentale («Essentially or Accidentally strong»).'));
+    return risultato;
+  }
+
+  const aspetto = finding.aspect;
+  if (aspetto === 'sestile' || aspetto === 'trigono') {
+    return [
+      caseBuone('Applicano da case buone («out of good Houses»).'),
+      forti('Applicano da luoghi in cui sono ben dignificati («essentially well dignified»).'),
+    ];
+  }
+  if (aspetto === 'quadrato') {
+    return [dignita(), caseBuone('Applicano da case proprie e buone («out of proper and good Houses»), «otherwise not».')];
+  }
+  if (aspetto === 'opposizione') {
+    const mutua = input.mutue.find(
+      (m) =>
+        due.includes(m.bodies[0]) &&
+        due.includes(m.bodies[1]) &&
+        m.firstReceives.includes('domicilio') &&
+        m.secondReceives.includes('domicilio'),
+    );
+    const risultato: HoraryConsideration[] = [
+      {
+        id: 'mutua-per-domicilio',
+        page: 125,
+        text: 'C\'è mutua ricezione per domicilio («mutuall reception by House»).',
+        holds: mutua !== undefined,
+      },
+      caseBuone('Applicano da case amiche («out of friendly Houses»).'),
+    ];
+    if (querente !== 'luna' && quesito !== 'luna') {
+      const separazione = input.luna.lastPerfected;
+      const prossimo = input.luna.events.find((e) => e.kind === 'aspetto');
+      const daQuesito = separazione?.kind === 'aspetto' && separazione.with === quesito;
+      const aQuerente = prossimo?.kind === 'aspetto' && prossimo.with === querente;
+      risultato.push({
+        id: 'luna',
+        page: 125,
+        text:
+          'La Luna si separa dal significatore della cosa chiesta e applica subito al signore dell\'Ascendente ' +
+          '(«the ☽ seperating from the Significator of the thing demanded, and applying presently to the Lord of the Ascendant»).',
+        holds: daQuesito && aQuerente,
+        detail:
+          `Si separa da ${separazione?.kind === 'aspetto' ? nome(separazione.with) : 'nessuno nel segno'}, ` +
+          `applica per prima a ${prossimo?.kind === 'aspetto' ? nome(prossimo.with) : 'nessuno prima del cambio di segno'}.`,
+      });
+    }
+    return risultato;
+  }
+  return [];
 }
 
 /** Le considerazioni prima del giudizio, pp. 121-123, una per una. */
