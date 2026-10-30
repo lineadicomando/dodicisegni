@@ -543,7 +543,7 @@ export interface ChartFormatOptions {
 }
 
 /** Le scuole delle dignità che si possono chiedere per nome. */
-export type DignitySchool = 'lilly' | 'tolomeo' | 'bonatti';
+export type DignitySchool = 'lilly' | 'tolomeo' | 'bonatti' | 'valente';
 
 /** Le due convenzioni dei domicili, che il tema porta affiancate. */
 export type DomicileScheme = 'tradizionale' | 'moderno';
@@ -648,6 +648,28 @@ export interface BonattiRulers {
   triplicitaDiSetta?: BodyId;
   termine: BodyId;
   faccia: BodyId;
+}
+
+/**
+ * Le voci di Valente, *Anthologiae* I.2-3, II.1, III.4: quattro dignità e
+ * una debilità. Niente faccia ed esilio, che in Valente non si sono trovati.
+ */
+export type ValensDignity = 'domicilio' | 'esaltazione' | 'triplicita' | 'termine' | 'caduta';
+
+/** Chi ha autorità su un grado dello zodiaco secondo Valente. */
+export interface ValensRulers {
+  domicilio: BodyId;
+  /** Il pianeta esaltato nel segno, se ce n'è uno: in Gemelli, Leone, Scorpione, Sagittario e Acquario nessuno. */
+  esaltazione?: BodyId;
+  /**
+   * I tre signori del triangolo (II.1): chi presiede di giorno, chi di notte,
+   * e il terzo, che coopera in tutte e due. Sono signori a prescindere dalla
+   * setta.
+   */
+  triplicita: { diurno: BodyId; notturno: BodyId; terzo: BodyId };
+  /** I tre nell'ordine della setta del tema: chi presiede, il secondo, il terzo. Assente senza la setta. */
+  triplicitaDiSetta?: BodyId[];
+  termine: BodyId;
 }
 
 /** Le tre stelle fisse della tavola di Lilly, p. 115. */
@@ -773,7 +795,8 @@ export interface LillyConditions {
 
 /**
  * Le dignità occidentali di un tema tropicale. Vedi `dignita.ts`,
- * `dignita-lilly.ts`, `dignita-tolomeo.ts` e `dignita-bonatti.ts`.
+ * `dignita-lilly.ts`, `dignita-tolomeo.ts`, `dignita-bonatti.ts` e
+ * `dignita-valente.ts`.
  *
  * Come per le altre dottrine, ogni blocco porta la sua fonte, e dove le scuole
  * divergono ci sono tutte e due: i domicili in due colonne mai fuse, e le
@@ -802,9 +825,9 @@ export interface WesternDignities {
   /**
    * Le ricezioni fra i sette pianeti, secondo Lilly. `counted` dice per quali
    * dignità sono state contate, come `Distribution.counted`: senza la scuola,
-   * con Tolomeo, che la ricezione non la definisce, e con Bonatti, che la
-   * definisce su un'applicazione, domicilio ed esaltazione; con Lilly, tutte
-   * e cinque.
+   * con Tolomeo, che la ricezione non la definisce, con Bonatti, che la
+   * definisce su un'applicazione, e con Valente, domicilio ed esaltazione;
+   * con Lilly, tutte e cinque.
    */
   receptions: {
     source: string;
@@ -850,7 +873,8 @@ export interface WesternDignities {
       rulers: PtolemyRulers;
       dignities: PtolemyDignity[];
     }[];
-  };  /** Il pacchetto di Bonatti, solo se chiesto con `dignitySchool: 'bonatti'`. */
+  };
+  /** Il pacchetto di Bonatti, solo se chiesto con `dignitySchool: 'bonatti'`. */
   bonatti?: {
     school: 'bonatti';
     source: string;
@@ -868,7 +892,23 @@ export interface WesternDignities {
       dignities: BonattiDignity[];
     }[];
   };
-
+  /** Il pacchetto di Valente, solo se chiesto con `dignitySchool: 'valente'`. */
+  valente?: {
+    school: 'valente';
+    source: string;
+    /** La tavola dei termini seguita, e dove il testo di Valente se ne scosta. */
+    termsSource: string;
+    /**
+     * Per ogni corpo, i signori del grado in cui sta e le dignità che ha lì.
+     * I signori ci sono per tutti; le dignità solo per i sette pianeti.
+     */
+    bodies: {
+      id: BodyId;
+      name: string;
+      rulers: ValensRulers;
+      dignities: ValensDignity[];
+    }[];
+  };
 }
 
 /**
@@ -1392,8 +1432,9 @@ export interface ChartOptions extends ZodiacOptions {
    * `NatalChart.dignities`. Omessa, nessuna: triplicità, termini e facce non
    * hanno una forma sola, e si chiedono nominando chi le ha scritte. Oggi ci
    * sono Lilly (1647), vedi `dignita-lilly.ts`, Tolomeo, vedi
-   * `dignita-tolomeo.ts`, e Bonatti (1491), vedi `dignita-bonatti.ts`. Solo nello zodiaco tropicale, su cui le loro
-   * tavole sono costruite: nel siderale è un `ChartError`.
+   * `dignita-tolomeo.ts`, Bonatti (1491), vedi `dignita-bonatti.ts`, e
+   * Valente, vedi `dignita-valente.ts`. Solo nello zodiaco tropicale, su
+   * cui le loro tavole sono costruite: nel siderale è un `ChartError`.
    */
   dignitySchool?: DignitySchool;
   /** Percorso della cartella con i file `.se1`. Default: variabile d'ambiente o `<pkg>/ephe`. */
@@ -1588,8 +1629,8 @@ export interface SkyOptions extends ZodiacOptions {
   bodies?: BodyId[];
   /**
    * Le dignità di una scuola: Lilly, con le condizioni dell'istante,
-   * Tolomeo o Bonatti. Omessa, il cielo non porta dignità. Solo nel tropicale, come nel
-   * tema. Per Lilly le case, l'ora planetaria e i gradi dell'Ascendente
+   * Tolomeo, Bonatti o Valente. Omessa, il cielo non porta dignità. Solo nel
+   * tropicale, come nel tema. Per Lilly le case, l'ora planetaria e i gradi dell'Ascendente
    * chiedono il luogo e l'ora.
    */
   dignitySchool?: DignitySchool;

@@ -142,6 +142,23 @@ export {
   type BonattiRulers,
 } from './dignita-bonatti.js';
 export {
+  VALENS_PLANETS,
+  VALENS_RECEPTION_SOURCE,
+  VALENS_SOURCE,
+  VALENS_TERMS_SOURCE,
+  valensDignitiesOf,
+  valensExaltation,
+  valensFall,
+  valensRulersAt,
+  valensTermRuler,
+  valensTerms,
+  valensTriplicityLords,
+  valensTriplicityOrder,
+  type ValensDignity,
+  type ValensPlanet,
+  type ValensRulers,
+} from './dignita-valente.js';
+export {
   computeParasharaDignities,
   PARASHARA_GRAHAS,
   PARASHARA_SOURCE,

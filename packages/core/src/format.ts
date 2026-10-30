@@ -775,6 +775,7 @@ function dignityLines(
   if (dignities.lilly) lines.push(...lillyLines(dignities.lilly, chart.sect));
   if (dignities.tolomeo) lines.push(...ptolemyLines(dignities.tolomeo, chart.sect));
   if (dignities.bonatti) lines.push(...bonattiLines(dignities.bonatti, chart.sect));
+  if (dignities.valente) lines.push(...valensLines(dignities.valente, chart.sect));
 
   const { source, single, mutual } = dignities.receptions;
   const nome = (id: BodyId): string => nameOf(chart, id);
@@ -894,6 +895,37 @@ function bonattiLines(bonatti: NonNullable<WesternDignities['bonatti']>, sect: S
     const riga =
       `${body.name.padEnd(11)} ${nome(domicilio).padEnd(9)} ${nome(esaltazione).padEnd(9)} ` +
       `${signori.padEnd(26)} ${nome(triplicitaDiSetta).padEnd(9)} ${nome(termine).padEnd(9)} ${nome(faccia).padEnd(9)}`;
+    lines.push(`${riga} | ${body.dignities.map(dignityLabel).join(', ') || '—'}`);
+  }
+  return lines;
+}
+
+/**
+ * Il pacchetto di Valente: per ogni corpo i signori del grado in cui sta, e
+ * le dignità che ha lì. I signori si danno per tutti, le dignità per i sette.
+ *
+ * Il triangolo ha due colonne: i tre signori di II.1 (di giorno, di notte e
+ * il terzo), che lo sono sempre, e i tre nell'ordine della setta del tema,
+ * che senza l'ora non si sa. Niente faccia ed esilio, che in Valente non si
+ * sono trovati.
+ */
+function valensLines(valente: NonNullable<WesternDignities['valente']>, sect: Sect | undefined): string[] {
+  const nome = (id: BodyId | undefined): string => (id ? bodyName(id) : '—');
+  const elenco = (ids: readonly BodyId[] | undefined): string => (ids ? ids.map(bodyName).join('>') : '—');
+  const lines = [
+    `Valente (a richiesta): ${valente.source}`,
+    valente.termsSource,
+    sect
+      ? `Triangolo: i tre signori di II.1 (giorno+notte+terzo), e il loro ordine di ${sect === 'diurna' ? 'giorno' : 'notte'}, dalla setta del tema.`
+      : "Triangolo: i tre signori di II.1 (giorno+notte+terzo); senza l'ora la setta manca, e l'ordine non si dice.",
+    `${'Corpo'.padEnd(11)} ${['domic.', 'esalt.'].map((t) => t.padEnd(9)).join(' ')} ${'triangolo'.padEnd(26)} ${'ordine'.padEnd(26)} ${'termine'.padEnd(9)} | dignità`,
+  ];
+  for (const body of valente.bodies) {
+    const { domicilio, esaltazione, triplicita, triplicitaDiSetta, termine } = body.rulers;
+    const signori = [triplicita.diurno, triplicita.notturno, triplicita.terzo].map(bodyName).join('+');
+    const riga =
+      `${body.name.padEnd(11)} ${nome(domicilio).padEnd(9)} ${nome(esaltazione).padEnd(9)} ` +
+      `${signori.padEnd(26)} ${elenco(triplicitaDiSetta).padEnd(26)} ${nome(termine).padEnd(9)}`;
     lines.push(`${riga} | ${body.dignities.map(dignityLabel).join(', ') || '—'}`);
   }
   return lines;

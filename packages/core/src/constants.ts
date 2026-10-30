@@ -276,6 +276,7 @@ export const DIGNITY_SCHOOL_NAMES: Readonly<Record<DignitySchool, string>> = {
   lilly: 'Lilly',
   tolomeo: 'Tolomeo',
   bonatti: 'Bonatti',
+  valente: 'Valente',
 };
 
 export interface AspectDefinition {

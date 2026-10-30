@@ -3,8 +3,9 @@
  * porta: le tavole comuni sempre, quelle di una scuola solo se chiesta.
  *
  * Sta in un file suo perché tiene insieme `dignita.ts` e i pacchetti delle
- * scuole (`dignita-lilly.ts`, `dignita-tolomeo.ts`, `dignita-bonatti.ts`),
- * che dipendono dal primo: messo in uno di loro farebbe un ciclo.
+ * scuole (`dignita-lilly.ts`, `dignita-tolomeo.ts`, `dignita-bonatti.ts`,
+ * `dignita-valente.ts`), che dipendono dal primo: messo in uno di loro
+ * farebbe un ciclo.
  * Non aggiunge regole, le applica ai corpi di un tema.
  */
 
@@ -39,6 +40,13 @@ import {
   bonattiDignitiesOf,
   bonattiRulersAt,
 } from './dignita-bonatti.js';
+import {
+  VALENS_RECEPTION_SOURCE,
+  VALENS_SOURCE,
+  VALENS_TERMS_SOURCE,
+  valensDignitiesOf,
+  valensRulersAt,
+} from './dignita-valente.js';
 import { computeLillyConditions, type LillyConditionsInput } from './condizioni-lilly.js';
 import type {
   CelestialBody,
@@ -53,12 +61,14 @@ import type {
  * Tolomeo restano le comuni: la ricezione è una definizione di Lilly, e
  * contarla sulle tavole di Tolomeo mescolerebbe le due scuole. Con Bonatti
  * pure: la sua ricezione nasce da un'applicazione, e qui non si calcola.
+ * Con Valente anche: in lui una definizione non è stata cercata.
  */
 const CONTATE: Readonly<Record<'comune' | DignitySchool, readonly ReceptionDignity[]>> = {
   comune: ['domicilio', 'esaltazione'],
   lilly: ['domicilio', 'esaltazione', 'triplicita', 'termine', 'faccia'],
   tolomeo: ['domicilio', 'esaltazione'],
   bonatti: ['domicilio', 'esaltazione'],
+  valente: ['domicilio', 'esaltazione'],
 };
 
 /** La riga delle ricezioni per ciascun caso. */
@@ -67,6 +77,7 @@ const FONTE_RICEZIONI: Readonly<Record<'comune' | DignitySchool, string>> = {
   lilly: LILLY_RECEPTION_SOURCE,
   tolomeo: PTOLEMY_RECEPTION_SOURCE,
   bonatti: BONATTI_RECEPTION_SOURCE,
+  valente: VALENS_RECEPTION_SOURCE,
 };
 
 /**
@@ -162,6 +173,20 @@ export function computeWesternDignities(
         name: body.name,
         rulers: bonattiRulersAt(body.longitude, sect),
         dignities: bonattiDignitiesOf(body.id, body.longitude),
+      })),
+    };
+  }
+
+  if (school === 'valente') {
+    dignities.valente = {
+      school: 'valente',
+      source: VALENS_SOURCE,
+      termsSource: VALENS_TERMS_SOURCE,
+      bodies: bodies.map((body) => ({
+        id: body.id,
+        name: body.name,
+        rulers: valensRulersAt(body.longitude, sect),
+        dignities: valensDignitiesOf(body.id, body.longitude),
       })),
     };
   }
