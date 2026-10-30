@@ -30,18 +30,48 @@ Le voci chiuse dopo, con il commit in cui si leggono ancora per intero:
 | 29 | `62ae8f6` |
 | 25 | `63b0755` |
 | 5 | `a2e2207` |
+| 26 | `6a4898d` |
 
-Le fonti citate qui stanno in copia locale in `texts/`, fuori dal repo: la
+## Dove siamo
+
+Al 30 ottobre 2026, versione **0.13.0**. Sono aperte due voci, e nessuna
+aspetta un testo:
+
+| Voce | Priorità | Taglia | Prima di cominciare |
+|---|---|---|---|
+| 30. «Mobile» vuol dire due cose: la terza modalità diventa «mutevole» | media | media | chiesta dal proprietario; il piano è nella voce, file per file, e cambia un campo delle risposte |
+| 28. La revisione della SEO | media | piccola | si fa sul server e non nel repo, e solo quando il proprietario chiede push e deploy |
+
+La 30 si può fare subito, in un commit solo. La 28 è la sola che tocca chi
+usa il sito oggi: i quattro nomi di dominio rispondono ciascuno come sito a
+sé.
+
+**Non pubblicato.** `origin` è fermo a `v0.5.2`: tutti i commit dopo, coi
+tag annotati da `v0.6.0` a `v0.13.0`, sono solo locali. Il push lo chiede il
+proprietario; si fa con `git push --follow-tags origin main`, poi il deploy
+(come, in `CLAUDE.local.md`). `git status -sb` dice quanto manca.
+
+**Che cosa è successo nell'ultima sessione**, il 30 ottobre 2026, per chi
+riprende: chiuse le voci 5, 25 e 26 (le rifiniture del Jyotisha e delle
+scuole occidentali), dalla 0.6.0 alla 0.12.0, ciascuna scelta in *Deciso*;
+rivista la prosa del sito con la skill di scrittura italiana anti pattern AI
+(`750708f`, vedi *Deciso*); messe al femminile dasha, mahadasha e antardasha
+(0.13.0); aperta la voce 30.
+
+## Come si lavora qui
+
+Le fonti citate stanno in copia locale in `texts/`, fuori dal repo: la
 cartella, le schede `FONTE.md` e l'elenco `texts/INDICE.md` si mantengono come
 dice `CLAUDE.md` (*Le fonti testuali*). In una sessione nuova `texts/` può non
 esserci, se il clone è un altro: le schede dicono da dove riscaricare ogni
-fonte.
+fonte. Alcune non si riscaricano: le pagine dell'ed. Pingree di Valente
+(`texts/occidentale/valente-anthologiae-pingree-1986`) le ha fotografate il
+proprietario, e su archive.org quel libro non si presta.
 
-I riferimenti `file:riga`, i nomi e i commit citati sono stati ricontrollati
-tutti contro il codice il 30 ottobre 2026 una seconda volta, su `b05e801`
-(versione 0.5.2), dopo i ritocchi all'interfaccia che seguono la chiusura
-delle voci 17 e 19. Le righe si spostano: se una non torna, il
-nome della funzione o della costante accanto è quello che fa fede.
+I riferimenti `file:riga`, i nomi, le cartelle di `texts/` e i commit citati
+qui sono stati ricontrollati tutti contro il codice il 30 ottobre 2026 una
+terza volta, sulla versione 0.13.0. Le righe si spostano: se una non torna,
+il nome della funzione o della costante accanto è quello che fa fede.
 
 Prima di cominciare conviene che `npm test`, `npm run typecheck` e `npm run
 lint` siano verdi. Le cose che fanno perdere tempo:
@@ -57,25 +87,32 @@ lint` siano verdi. Le cose che fanno perdere tempo:
   una risposta del motore cambia, ed è il suo mestiere: se il cambiamento è
   voluto si guarda il diff, si riscrivono i file con `npx vitest run
   test/canonico.test.ts -u` dentro `packages/core`, e la versione muove la
-  seconda cifra (`CLAUDE.md`, *La versione*). È calcolato con Moshier e senza
+  seconda cifra (`CLAUDE.md`, *La versione*), anche quando a cambiare è solo
+  il testo di un'avvertenza o di una fonte. È calcolato con Moshier e senza
   stelle fisse, apposta;
 - i test che leggono le stelle fisse vogliono `packages/core/ephe/sefstars.txt`,
   che `npm run ephe:download -w @dodicisegni/core` scarica (133 KB); senza,
   vengono saltati e non falliscono;
 - `/api/jyotish` si fa memorizzare dal browser per un giorno
   (`private, max-age=86400`): provando la pagina `/vedica` dopo aver
-  cambiato il motore, il browser può mostrare la risposta vecchia. Basta
-  cambiare di un minuto l'ora nell'indirizzo. Per la stessa ragione i
-  componenti di `/vedica` mettono una guardia sui campi nuovi
+  cambiato il motore, il browser può mostrare la risposta vecchia, e il
+  browser di prova di Chrome DevTools la conserva fra una sessione e
+  l'altra. Basta cambiare di un minuto l'ora nell'indirizzo. Per la stessa
+  ragione i componenti di `/vedica` mettono una guardia sui campi nuovi
   (`{#if jyotisha.arudhas}`) anche dove il tipo li dà per presenti;
 - la pagina `/vedica` legge il luogo solo da `locationId`
   (`/vedica?date=1968-03-12&time=14:30&locationId=3172394` è Napoli): con
   `latitude` e `longitude` mostra il modulo vuoto, mentre `/api/jyotish` li
   accetta tutti e due;
-- `computeJyotisha` non è più una funzione della sola carta: per l'alba delle
+- `computeJyotisha` non è una funzione della sola carta: per l'alba delle
   avastha (`stati.ts`) chiama `initEphemeris` e `lastSunrise` di
   `panchanga.ts`, con `JyotishaOptions.ephemerisPath` se c'è. Resta
-  sincrona, e l'alba non usa i flag siderali.
+  sincrona, e l'alba non usa i flag siderali;
+- la CLI vuole le opzioni lunghe per tutto: `--date`, `--time`, `--lat`,
+  `--lon`, `--tz`. La tabella compatta del Jyotisha si vede con `--zodiaco
+  siderale --lettura --sistema jyotisha` (i varga, con `--varga`, si
+  stampano senza `--lettura`), le dignità di una scuola con `--dignita
+  <scuola>` e una nascita con l'ora, perché ci sia la setta.
 
 Per spegnere il server di sviluppo lanciato in sottofondo si usa la porta
 (`fuser -k 5173/tcp`), non `pkill -f` col numero della porta: il comando
@@ -84,137 +121,62 @@ provare il server compilato (`npm start -w @dodicisegni/web`) va rifatto
 `npm run build`: `apps/web/build` non è nel repo e resta com'era all'ultima
 build, che può essere di settimane prima.
 
-**Il push si fa coi tag.** Il 30 ottobre 2026 sono andati su `origin` tutti
-i commit e i tag da `v0.1.0` a `v0.5.2`. Il push lo chiede il proprietario;
-quando lo chiede, `git push --follow-tags` porta anche i tag annotati.
-Prima di cominciare, `git status -sb` dice se c'è lavoro non pubblicato.
+**Come si è lavorato su una dottrina, e conviene continuare.** Ogni regola
+si legge sull'immagine della pagina (`pdftoppm`, vedi le schede `FONTE.md`;
+l'OCR serve solo a orientarsi, e sul gotico e sul greco non basta nemmeno a
+quello: `tesseract -l ita` a 150-250 dpi trova almeno le parole), si
+trascrive in `trascrizioni.md` e si prova contro una tavola o un esempio
+svolto della fonte, ricopiati nel test. Dove il testo lascia due strade si
+cerca chi le percorre, con un nome e un testo; se l'alternativa non ha un
+autore resta fuori e lo si scrive; se ce l'ha, la scelta si fa fare al
+proprietario prima del codice, e finisce in *Deciso*. Ogni risultato porta
+la sua fonte in un campo `source` o `rule`.
+
+Nel Jyotisha le superfici sono cinque: la tabella compatta (`format.ts`), la
+pagina `/vedica` (un componente per sezione), la descrizione di
+`compute_jyotisha_chart` (`packages/mcp/src/tools.ts`), il documento di
+lettura (`packages/lettura/src/jyotisha.ts`, con le prove in
+`lettura.test.ts`) e, quando è una convenzione, `/metodo/varga` o un'altra
+sottopagina di `/metodo`. Quest'ultima nessun test la confronta con la prosa,
+ed è quella che si dimentica. Chi aggiunge un varga o una convenzione della
+hora trova l'elenco dei testi da toccare nei commenti sopra `VARGAS`
+(`varga.ts`) e `HORA_CONVENTIONS` (`hora.ts`).
+
+Nelle scuole occidentali le superfici sono quelle del tema tropicale e del
+cielo, che porta la scuola anche senza nascita (`/api/sky`, `compute_sky`,
+la pagina Cielo): l'elenco completo, con quello che nessun test controlla,
+sta nel commento in testa a `packages/core/src/dignita-tema.ts`.
 
 In fondo ci sono due elenchi che non sono lavoro: le decisioni prese, da non
 riaprire, e le cose esaminate e lasciate stare, per non ritrovarle una seconda
 volta e ricominciare da capo.
 
-## Da dove ripartire
+## Le versioni
 
-| Voce | Priorità | Taglia | Prima di cominciare |
-|---|---|---|---|
-| 30. «Mobile» vuol dire due cose: la terza modalità diventa «mutevole» | media | media | il piano è nella voce, file per file; cambia un campo delle risposte |
-| 28. La revisione della SEO | media | piccola | il dominio principale è deciso; i redirect e `ORIGIN` si fanno sul server, non nel repo |
+Le regole (un numero solo, le tre domande che dicono quale cifra si muove,
+il tag) stanno in `CLAUDE.md`, *La versione*. Se una risposta che c'era è
+cambiata lo dice il fascicolo canonico: un file di `test/canonico/` che
+cambia muove la seconda cifra.
 
-La 26 non ha lavoro: tiene le istruzioni per chi aggiunge una scuola. La 28 è la sola che tocca chi usa
-il programma oggi: il suo primo punto divide il sito in quattro agli occhi
-dei motori di ricerca, e si fa sul server, quando il proprietario lo chiede.
-Il 30 ottobre 2026 si sono chiuse le voci 5 e 25, le rifiniture del
-Jyotisha: i nomi del D-60 (0.6.0), l'avvertenza sull'ora anche nel D-24 e
-nel D-27 (0.7.0), gli arudha dei graha nei varga (0.8.0), le quattro hora
-moderne (0.8.1) e la combustione nei gradi di tempo (0.9.0); le scelte sono
-in *Deciso*, le due verifiche senza esito in *Esaminato*. Le istruzioni per
-chi aggiunge un varga o una convenzione della hora stanno nei commenti sopra
-`VARGAS` (`varga.ts`) e `HORA_CONVENTIONS` (`hora.ts`).
-
-**Versione 0.13.0**, in ogni manifesto, col tag `v0.13.0`: dasha,
-mahadasha e antardasha al femminile, che cambia il testo di un'avvertenza.
-Prima, la 0.12.0 con i termini di Valente nell'edizione Pingree (voce 26), la
-0.11.0 con le ricezioni di Bonatti (voce 26), la 0.10.0 con la riga delle ricezioni di Valente, che dice
-che lui non ne definisce una (voce 26), la 0.9.0 con la combustione del Jyotisha nei
-gradi di tempo (voce 25), tre campi che compaiono e un giudizio che può
-cambiare, la 0.8.1 con le quattro convenzioni moderne della
-hora (voce 5), valori nuovi di un'opzione che c'era, la 0.8.0 con gli arudha dei
-graha in ogni varga (voce 25), un campo che compare nella risposta di ogni
-varga coi segni, la 0.7.0 con l'avvertenza sull'ora anche nel D-24 e
-nel D-27, e la 0.6.0 coi nomi del D-60. La
-prima, la 0.1.0, cade col numero unico della voce 27 (`f6026fa`) il 30
-ottobre 2026; poi, tutte con la
-voce 17: la 0.1.1 la pagina web dell'oraria, la 0.2.0 le condizioni di
-qualità di p. 125, la 0.3.0 la Parte di Fortuna nel conto di Lilly, la 0.4.0
-la Luna cosignificatrice che non proibisce, la 0.5.0 chi si avvicina negli
-incontri del corso, la 0.5.1 la scuola delle dignità sul cielo (`/api/sky`,
-`compute_sky`, la pagina Cielo), la 0.5.2 il corso come superficie a sé (il
-tool `find_sign_course` e `GET /api/sky/course`). Le regole (un
-numero solo, le tre domande che dicono quale cifra si muove, il tag) stanno
-in `CLAUDE.md`, *La versione*. Se una risposta che c'era è cambiata lo dice
-il fascicolo canonico (`packages/core/test/canonico.test.ts`, voce 27,
-chiusa): un file di `test/canonico/` che cambia muove la seconda cifra.
-
-L'ordine consigliato è quello della tabella. La voce 19, le dignità per
-scuola, è chiusa il 30 ottobre 2026: nell'occidente Lilly, Tolomeo, Bonatti
-e Valente, nel Jyotisha Parashara con Narasimha Rao accanto; quello che
-restava è nelle voci 25 e 26, o in *Esaminato* dove manca una fonte. Anche
-la 17, l'oraria, è chiusa il 30 ottobre 2026: le sue decisioni sono in
-*Deciso*, le figure di Lilly che il motore non riproduce in *Esaminato*.
-
-**Come si è lavorato nel Jyotisha, e conviene continuare.** Ogni regola si
-legge sull'immagine della pagina (`pdftoppm`, vedi le schede `FONTE.md`), si
-trascrive in `trascrizioni.md` col sanscrito traslitterato e la traduzione,
-e si prova contro una tavola o un esempio svolto della fonte, ricopiati nel
-test. Dove il testo lascia due strade si cerca chi le percorre, con un nome
-e un testo; se l'alternativa non ha un autore resta fuori e lo si scrive; se
-ce l'ha, la scelta si fa fare al proprietario prima del codice, e finisce in
-*Deciso*. Ogni risultato porta la sua fonte e le sue letture in un campo
-`source` o `rule`, e arriva a cinque superfici: la tabella compatta
-(`format.ts`), la pagina `/vedica` (un componente per sezione), la
-descrizione di `compute_jyotisha_chart` (`packages/mcp/src/tools.ts`), il
-documento di lettura (`packages/lettura/src/jyotisha.ts`, con le prove in
-`lettura.test.ts`) e, quando è una convenzione, `/metodo/varga`.
-Quest'ultima nessun test la confronta con la prosa, ed è quella che si
-dimentica: il 29 ottobre 2026 diceva ancora il 6.53 «non verificato». Dalla
-riga di comando la tabella compatta si vede con `--zodiaco siderale
---lettura --sistema jyotisha`.
-
-**Come si lavora su una scuola occidentale.** Lo stesso metodo, con le
-superfici del tema tropicale: il modulo `dignita-<scuola>.ts` con la sua
-riga `source`, il campo in `WesternDignities`, le righe in `format.ts`, il
-blocco in `DignityTable.svelte`, la voce del menù in `lib/scuole-dignita.ts`,
-la descrizione di `dignity_school` in `packages/mcp/src/tools.ts`, il
-documento `packages/lettura/src/tropicale.ts` e `/metodo`; e, dalla 0.5.1,
-il cielo, che porta la scuola anche senza nascita (`/api/sky`, `compute_sky`,
-la pagina Cielo; il modello è `ec1ad1e`). L'elenco preciso,
-con quello che nessun test controlla, è alla voce 26. Dalla riga di comando la
-sezione si vede con `--dignita <scuola>` e una nascita qualunque, con l'ora
-perché ci sia la setta.
-
-## 26. Le scuole occidentali delle dignità: quello che resta
-
-**Priorità bassa.** Dalla voce 19, chiusa il 30 ottobre 2026. Le scuole sono
-quattro, ciascuna un modulo con la sua fonte, le sue tavole ricopiate nel
-test e le scelte del proprietario in *Deciso*: Lilly (`dignita-lilly.ts`, con
-le condizioni e il conto in `condizioni-lilly.ts`), Tolomeo
-(`dignita-tolomeo.ts`), Bonatti (`dignita-bonatti.ts`) e Valente
-(`dignita-valente.ts`). Le tavole comuni, che il tema porta sempre, sono in
-`dignita.ts`; il blocco del tema in `dignita-tema.ts`. Dal 30 ottobre 2026
-Bonatti ha le sue ricezioni (versione 0.11.0) e Valente i termini
-dell'edizione Pingree (versione 0.12.0), tutte e due in *Deciso*. La voce
-non ha lavoro: resta per chi aggiunge una scuola.
-
-**Per chi aggiunge una scuola** (Doroteo, se un suo testo diventasse
-libero). Valente è il modello più recente: `93cb27b` il calcolo, `697fea0`
-le superfici. Un modulo `dignita-<scuola>.ts` con le righe `source` e
-`termsSource`, un valore di `DignitySchool` col nome in
-`DIGNITY_SCHOOL_NAMES` (`constants.ts`, che il compilatore pretende e da cui
-CLI, MCP, `/api/chart` e `/api/sky` imparano a validarlo), un campo in
-`WesternDignities`, un ramo in `computeWesternDignities`, la fonte delle
-ricezioni (`*_RECEPTION_SOURCE`) con le voci di `CONTATE` e
-`FONTE_RICEZIONI` in `dignita-tema.ts`, gli export in `index.ts`, una
-funzione di righe in `format.ts`, un blocco in `DignityTable.svelte`, una
-voce in `lib/scuole-dignita.ts` (provata da `elenchi.test.ts`; la pagina
-Cielo la legge da lì). Le prove, come per Valente: un caso in
-`packages/lettura/test/lettura.test.ts` e uno in
-`packages/mcp/test/server.test.ts` (`compute_natal_chart` con
-`dignity_school`); e la scuola nuova va aggiunta a mano al blocco `dignita`
-del fascicolo canonico (`packages/core/test/canonico.test.ts:95-101`), che
-le elenca una per una. È una scuola chiesta per nome: muove la terza cifra
-della versione. A mano, perché nessun test li vede: l'aiuto di `--dignita`
-(`cli.ts`, lo stesso che vale per `--sky`), la descrizione di
-`dignity_school` in `packages/mcp/src/tools.ts` **due volte** (in
-`compute_natal_chart` e in `compute_sky`), il commento di
-`apps/web/src/routes/api/chart/+server.ts` e quello di
-`apps/web/src/routes/api/sky/+server.ts`, il commento in
-`packages/core/src/sky.ts` sulle scuole senza condizioni, il documento di
-lettura tropicale e `/metodo`. `apps/web/src/lib/server/birth.test.ts` usa
-il nome di una scuola inesistente per provare il rifiuto (oggi `doroteo`), e va cambiato se
-quella scuola entra. Il conto delle fortezze è di Lilly e resta suo: una
-scuola porta il proprio, o nessuno. Le ricezioni restano quelle comuni per
-ogni scuola che non le definisce o che le definisce in un modo che la
-tavola non calcola, e la riga della fonte lo dice.
+| Versione | Che cosa | Voce |
+|---|---|---|
+| 0.1.0 | il numero unico (`f6026fa`) | 27 |
+| 0.1.1 | la pagina web dell'oraria | 17 |
+| 0.2.0 | le condizioni di qualità di Lilly, p. 125 | 17 |
+| 0.3.0 | la Parte di Fortuna nel conto di Lilly | 17 |
+| 0.4.0 | la Luna cosignificatrice che non proibisce | 17 |
+| 0.5.0 | chi si avvicina negli incontri del corso | 17 |
+| 0.5.1 | la scuola delle dignità sul cielo (`/api/sky`, `compute_sky`, la pagina Cielo) | 17 |
+| 0.5.2 | il corso come superficie a sé (`find_sign_course`, `GET /api/sky/course`) | 17 |
+| 0.6.0 | i nomi dei sessanta shashtiamsa del D-60 | 5 |
+| 0.7.0 | l'avvertenza sull'ora anche nel D-24 e nel D-27 | 5 |
+| 0.8.0 | gli arudha dei graha in ogni varga | 25 |
+| 0.8.1 | le quattro convenzioni moderne della hora | 5 |
+| 0.9.0 | la combustione del Jyotisha nei gradi di tempo | 25 |
+| 0.10.0 | la riga delle ricezioni di Valente: lui non ne definisce una | 26 |
+| 0.11.0 | le ricezioni di Bonatti, dall'applicazione entro sei gradi | 26 |
+| 0.12.0 | i termini di Valente dall'ed. Pingree (cambia la Bilancia) | 26 |
+| 0.13.0 | dasha, mahadasha e antardasha al femminile (cambia un'avvertenza) | — |
 
 ## 28. La revisione della SEO
 
@@ -341,12 +303,33 @@ un commit solo, perché cambia un valore che le risposte portano):
    `grep -w mobile`). Restano «mobili» dove non sono modalità: i karana
    mobili del panchanga (`panchanga.ts`, *cara karana*), i beni mobili delle
    case dell'oraria, il quadro del nord dove «i segni sono mobili».
-5. Versione: seconda cifra, per il campo rinominato.
+5. La regola, perché non torni: in `CLAUDE.md`, *Stile*, una riga accanto
+   a quella sul genere di dasha («la terza modalità è mutevole; nei testi
+   tradizionali "mobile" vuol dire cardinale»), e una voce in *Deciso*.
+6. Versione: seconda cifra, per il campo rinominato.
 
 Verifica: `grep -rnw mobile packages apps` non trova più la modalità; il
 fascicolo canonico cambia solo dove deve; `npm test`, `typecheck`, `lint`.
 
 ## Deciso, e da non riaprire
+
+- **La prosa del sito si rivede con la skill di scrittura italiana anti
+  pattern AI, senza «anima» decorativa.** Chiesto dal proprietario il 30
+  ottobre 2026, senza calibrare una voce d'autore: perimetro le pagine
+  informative, il README e i testi visibili delle pagine di calcolo; fuori i
+  documenti di lettura e le descrizioni MCP, che leggono le AI. Si tolgono le
+  negazioni che smentiscono un equivoco che il lettore non ha, le chiuse a
+  effetto che ripetono il paragrafo, le ripetizioni; restano le negazioni
+  che correggono un equivoco reale («due zodiaci non sono due astronomie»)
+  e le frasi che enunciano i principi del sito. Niente prima persona, niente
+  aneddoti: la voce è sobria e impersonale («il sito», «il motore»). Fatti,
+  fonti, link, ancore, tavole e `<Meta>` non si toccano in una revisione di
+  forma. Il lavoro è in `750708f`.
+
+- **Dasha è femminile, con tutti i suoi periodi.** Scelto dal proprietario
+  il 30 ottobre 2026: la dasha, la mahadasha, le antardasha, le
+  pratyantardasha, come il sanscrito *daśā*. Vale per pagine, CLI,
+  documenti, commenti e test; la regola è anche in `CLAUDE.md`, *Stile*.
 
 - **L'oraria: scuole a pacchetti, e Lilly per prima.** Deciso il 18 e il
   27 ottobre 2026 con la voce 17, chiusa il 30. Un substrato neutro, il
@@ -425,10 +408,9 @@ fascicolo canonico cambia solo dove deve; `npm test`, `typecheck`, `lint`.
   159 («orbes amborum», di lettura incerta), e **non l'opposizione**, che il
   passo non nomina. Un fatto di posizione: il moto retrogrado non conta, e
   `corso.ts` non serve (`bonattiReceptionsOf` in `dignita-bonatti.ts`). Il
-  5-4-5-3 del signore
-  dell'anno non diventa un punteggio delle dignità. Il resto non era una
-  scelta: le tavole sono quelle stampate, e nel Leone la tavola e il testo
-  di Bonatti concordano.
+  5-4-5-3 del signore dell'anno non diventa un punteggio delle dignità. Il
+  resto non era una scelta: le tavole sono quelle stampate, e nel Leone la
+  tavola e il testo di Bonatti concordano.
 
 - **La scuola di Tolomeo segue la tavola greca di Robbins com'è stampata.**
   Scelto dal proprietario il 29 ottobre 2026, con la voce 19. I termini

@@ -171,10 +171,11 @@ Commenti e identificatori di dominio in italiano dove il dominio è italiano
 `nakshatra`, `tithi`, `karana`, `yoga`, `dasha`, `varga`, `drishti`, `pada`. La
 regola di sopra dice «nella lingua del dominio», e qui il dominio è quello,
 come `yoga` e `karma`, che in italiano si dicono così. Tradurli produrrebbe
-parole che nessun libro usa e che non si possono cercare da nessuna parte:
+parole che i testi della tradizione non usano e che non si possono cercare:
 «dimore lunari» per i nakshatra è una perifrasi, non un nome. La prosa dei
 commenti resta italiana, e la prima volta che un termine compare lo si spiega
-in mezza riga.
+in mezza riga. Il genere segue il sanscrito: *daśā* è femminile, e così la
+mahadasha, le antardasha, le pratyantardasha.
 
 ## Le fonti testuali: `texts/`
 

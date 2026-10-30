@@ -7,6 +7,35 @@
  * `dignita-valente.ts`), che dipendono dal primo: messo in uno di loro
  * farebbe un ciclo.
  * Non aggiunge regole, le applica ai corpi di un tema.
+ *
+ * **Per chi aggiunge una scuola** (Doroteo, se un suo testo diventasse
+ * libero). Valente è il modello: `93cb27b` il calcolo, `697fea0` le
+ * superfici. Servono un modulo `dignita-<scuola>.ts` con le righe `source` e
+ * `termsSource` e le tavole ricopiate nel suo test; un valore di
+ * `DignitySchool` col nome in `DIGNITY_SCHOOL_NAMES` (`constants.ts`: il
+ * compilatore lo pretende, e da lì CLI, MCP, `/api/chart` e `/api/sky`
+ * imparano a validarlo); un campo in `WesternDignities` e un ramo qui sotto;
+ * la fonte delle ricezioni (`*_RECEPTION_SOURCE`) con le voci di `CONTATE` e
+ * `FONTE_RICEZIONI`; gli export in `index.ts`; una funzione di righe in
+ * `format.ts`; un blocco in `DignityTable.svelte`; una voce in
+ * `apps/web/src/lib/scuole-dignita.ts` (provata da `elenchi.test.ts`; la
+ * pagina Cielo la legge da lì). Le prove: un caso in
+ * `packages/lettura/test/lettura.test.ts`, uno in
+ * `packages/mcp/test/server.test.ts` (`compute_natal_chart` con
+ * `dignity_school`), e la scuola nel blocco `dignita` del fascicolo canonico
+ * (`packages/core/test/canonico.test.ts`), che le elenca una per una. Nessun
+ * test vede invece i testi che le nominano a mano: l'aiuto di `--dignita` in
+ * `cli.ts` (vale anche per `--sky`), la descrizione di `dignity_school` in
+ * `packages/mcp/src/tools.ts` due volte (`compute_natal_chart` e
+ * `compute_sky`), i commenti di `routes/api/chart/+server.ts` e
+ * `routes/api/sky/+server.ts`, il commento in `sky.ts` sulle scuole senza
+ * condizioni, il documento `packages/lettura/src/tropicale.ts` e `/metodo`
+ * (`#dignita`). `apps/web/src/lib/server/birth.test.ts` prova il rifiuto con
+ * una scuola che non c'è (oggi `doroteo`): va cambiata se quella entra. È una
+ * scuola chiesta per nome, e muove la terza cifra della versione. Il conto
+ * delle fortezze è di Lilly e resta suo: una scuola porta il proprio, o
+ * nessuno; e le ricezioni restano quelle comuni per ogni scuola che non le
+ * definisce, e la riga della fonte lo dice.
  */
 
 import { ZODIAC_SIGNS } from './constants.js';
