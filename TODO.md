@@ -262,8 +262,20 @@ servissero:
   nuovo. Le pagine non sono ancora lette: nella copia locale
   (`texts/jyotisha/surya-siddhanta-burgess-1860`) c'è l'immagine di p. 366 e
   non quelle di pp. 364-365, e `trascrizioni.md` ha solo VII.8 e pp. 366-367.
-- **Gli arudha dei graha nei varga.** Rao (§9.5) li calcola in ogni
-  divisionale; `arudha-graha.ts` fa solo la rashi.
+- **Gli arudha dei graha nei varga.** Rao (§9.5, p. 94, letto
+  sull'immagine) li calcola in ogni divisionale («the sign containing the
+  planet in the divisional chart of interest»); `arudha-graha.ts` fa solo la
+  rashi. Il nodo è uno, e chiede una scelta del proprietario prima del
+  codice: due spareggi della catena, §15.5.1 (5b) e §15.5.2 (6), guardano
+  quanto un graha è avanzato nel segno, e in un segno di varga il grado non
+  è definito (`types.ts`, il commento a `retrograde` di `SignVargaChart`).
+  Rao non dice che grado usare. Le strade: lasciare indeterminato l'arudha
+  quando la catena arriva lì, dicendolo; o il grado «del varga» (gradi × N
+  modulo 30), che è l'uso dei programmi e non vale per il D-30, a tratti
+  disuguali. Misurato il 30 ottobre 2026 su 300 nascite di prova e i
+  quattordici varga con segni dal D-3 al D-60: in 13 carte su 4200 il
+  risultato cambia col grado (5 nel D-30, 3 nel D-10, 2 nel D-27, una nel
+  D-7, nel D-9 e nel D-12).
 
 ## 26. Le scuole occidentali delle dignità: quello che resta
 
