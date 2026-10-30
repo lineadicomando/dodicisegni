@@ -197,7 +197,8 @@ describe('readChartOptions', () => {
     expect(readChartOptions(params('dignitySchool=lilly')).dignitySchool).toBe('lilly');
     expect(readChartOptions(params('dignitySchool=bonatti')).dignitySchool).toBe('bonatti');
     expect('dignitySchool' in readChartOptions(params(''))).toBe(false);
-    const result = capture(() => readChartOptions(params('dignitySchool=valente')));
+    expect(readChartOptions(params('dignitySchool=valente')).dignitySchool).toBe('valente');
+    const result = capture(() => readChartOptions(params('dignitySchool=doroteo')));
     expect(result.status).toBe(400);
     expect(result.body.code).toBe('SCUOLA_DIGNITA_NON_VALIDA');
   });

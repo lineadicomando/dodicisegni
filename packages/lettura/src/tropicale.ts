@@ -117,7 +117,11 @@ esaltazione col grado, i tre signori della triplicità (di giorno, di notte e
 il partecipe) e chi la governa nella setta, termine, faccia, esilio e
 caduta. Bonatti non ha un punteggio delle dignità, e la sua ricezione nasce
 da un'applicazione che la tabella non calcola: le ricezioni restano per
-domicilio ed esaltazione, e non vanno dedotte dalle sue tavole. Due pianeti personali di tempra opposta sono un
+domicilio ed esaltazione, e non vanno dedotte dalle sue tavole. Oppure la
+tavola di Valente (riga «Valente (a richiesta)»), la scuola ellenistica:
+domicilio, esaltazione col grado, i tre signori del triangolo e il loro
+ordine nella setta, e i termini egizi. Valente non ha qui facce, esilio, Nodi
+né un punteggio: non attribuirglieli. Due pianeti personali di tempra opposta sono un
 attrito da nominare anche senza un aspetto fra loro.
 
 Le forze in conflitto, e come si compongono. Un quadrato o un'opposizione non è

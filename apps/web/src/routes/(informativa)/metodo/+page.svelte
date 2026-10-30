@@ -487,6 +487,21 @@
   esaltazione.
 </p>
 
+<p id="valente">
+  <strong>Le dignità di Valente.</strong> La scuola ellenistica entra con
+  Vettio Valente, <em>Anthologiae</em>, nell'edizione di Kroll (1908), letta
+  sulla scansione. Valente dà i gradi delle esaltazioni, gli stessi che poi
+  ripetono Firmico, Bonatti e Lilly, con la caduta al grado opposto e senza i
+  nodi; e i tre signori di ogni triangolo ordinati per setta: chi presiede,
+  il secondo e il terzo, che coopera in tutte e due. I termini sono gli
+  egizi: Valente li scrive segno per segno, ma il testo che ci è arrivato è
+  guasto in tre punti (nell'Ariete mancano due numeri, lo Scorpione somma 31
+  gradi, la Bilancia ne dà una versione sua), e lì il sito segue la tavola
+  egizia che Tolomeo riferisce, dicendolo. Facce, esilio e un punteggio in
+  Valente non si sono trovati, e non ci sono; le ricezioni restano per
+  domicilio ed esaltazione.
+</p>
+
 <p>
   <strong>Il conto delle fortezze.</strong> A p. 115 Lilly stampa una tavola che
   assegna punti a ogni condizione di un pianeta: le dignità, la casa (con la

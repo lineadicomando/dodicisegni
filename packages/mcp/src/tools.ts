@@ -337,6 +337,10 @@ export function registerComputeNatalChart(server: McpServer, context: ToolContex
               'esilio e caduta; niente punteggio, e le ricezioni restano quelle comuni, perché Bonatti la ' +
               "ricezione la fa nascere da un'applicazione. È la scuola medievale: non chiederla per avere " +
               'le triplicità di Lilly o di Tolomeo, che nell\'acqua sono diverse. ' +
+              'valente: Anthologiae (ed. Kroll), la scuola ellenistica, con domicilio, esaltazione col grado, ' +
+              'i tre signori del triangolo e il loro ordine nella setta (chi presiede, il secondo, il terzo), ' +
+              'e i termini egizi, che Valente segue dove il suo testo è sano (la riga della fonte dice dove ' +
+              'no); niente Nodi, facce, esilio né punteggio, e le ricezioni restano quelle comuni. ' +
               'Ometti se chi scrive non chiede l\'astrologia tradizionale: non è un default ' +
               'migliore, è una scuola. Solo nello zodiaco tropicale; con zodiac siderale è un ' +
               'errore. Le dignità sono tavole di una tradizione, non giudizi sul tema.',

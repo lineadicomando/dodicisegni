@@ -38,7 +38,11 @@ import type { RequestHandler } from './$types';
  * signori della triplicità e chi la governa nella setta, termine tolemaico
  * col Leone di Saturno, faccia caldea, esilio e caduta; niente punteggio, e
  * ricezioni solo per domicilio ed esaltazione, perché quella di Bonatti
- * chiede un'applicazione. Un'altra scuola è
+ * chiede un'applicazione. `dignitySchool=valente` aggiunge le tavole delle
+ * *Anthologiae* (ed. Kroll) in `chart.dignities.valente`: domicilio,
+ * esaltazione col grado, i tre signori del triangolo e il loro ordine nella
+ * setta, termine egizio e caduta; niente Nodi, facce, esilio o punteggio, e
+ * ricezioni solo per domicilio ed esaltazione. Un'altra scuola è
  * `SCUOLA_DIGNITA_NON_VALIDA`; chiesta insieme a `zodiac=siderale` è
  * `ZODIACO_NON_TROPICALE`, perché le tavole sono costruite sullo zodiaco
  * tropicale. Nel siderale le dignità

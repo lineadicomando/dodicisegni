@@ -1,6 +1,7 @@
 <!--
   Le dignità occidentali di un tema: signori dei segni, dignità dei corpi,
-  ricezioni e, se chiesta, la tavola di una scuola: Lilly, Tolomeo o Bonatti.
+  ricezioni e, se chiesta, la tavola di una scuola: Lilly, Tolomeo, Bonatti o
+  Valente.
 
   Prende le dignità e le case, non il tema: è la regola delle altre tabelle, e
   le dignità hanno già tutto ciò che serve, nomi compresi.
@@ -28,7 +29,8 @@
     houses?: House[];
     /**
      * La setta del tema, da cui dipendono la triplicità di Lilly e chi governa
-     * il triangolo di Tolomeo e la triplicità di Bonatti. Assente senza ora.
+     * il triangolo di Tolomeo, la triplicità di Bonatti e l'ordine del
+     * triangolo di Valente. Assente senza ora.
      */
     sect?: Sect | undefined;
     /** Il corpo isolato, condiviso con la ruota e con gli aspetti. */
@@ -65,6 +67,7 @@
   const lilly = $derived(dignities.lilly);
   const tolomeo = $derived(dignities.tolomeo);
   const bonatti = $derived(dignities.bonatti);
+  const valente = $derived(dignities.valente);
 </script>
 
 <section>
@@ -292,6 +295,59 @@
       {/if}
     </p>
     <p class="fonti">{bonatti.termsSource}</p>
+  {/if}
+
+  <!-- Niente colonne per faccia ed esilio: in Valente non si sono trovati.
+       Il triangolo ha due colonne: i tre signori, e il loro ordine nella setta. -->
+  {#if valente}
+    <h4>Secondo Valente</h4>
+    <table>
+      <thead>
+        <tr>
+          <th></th>
+          <th>Corpo</th>
+          <th>Domicilio</th>
+          <th>Esaltaz.</th>
+          <th>Triangolo</th>
+          <th>Ordine</th>
+          <th>Termine</th>
+          <th>Dignità del corpo</th>
+        </tr>
+      </thead>
+      <tbody>
+        {#each valente.bodies as body (body.id)}
+          <tr
+            onmouseenter={() => evidenza?.sorvola(body.id)}
+            onmouseleave={() => evidenza?.sorvola(null)}
+            class:evidenziato={evidenza?.attivo === body.id}
+          >
+            <td class="glifo">{BODY_GLYPH[body.id]}</td>
+            <td>{body.name}</td>
+            <td>{nome(body.rulers.domicilio)}</td>
+            <td>{nome(body.rulers.esaltazione)}</td>
+            <td>
+              {nomi([body.rulers.triplicita.diurno, body.rulers.triplicita.notturno, body.rulers.triplicita.terzo])}
+            </td>
+            <td>{nomi(body.rulers.triplicitaDiSetta)}</td>
+            <td>{nome(body.rulers.termine)}</td>
+            <td class:tenue={body.dignities.length === 0}>
+              {body.dignities.map(voce).join(', ') || '—'}
+            </td>
+          </tr>
+        {/each}
+      </tbody>
+    </table>
+    <p class="fonti">
+      {valente.source} Le colonne dicono chi governa il grado in cui sta ciascun corpo; il
+      triangolo elenca i tre signori, di giorno, di notte e il terzo.
+      {#if sect}
+        L'ordine è quello {sect === 'diurna' ? 'di giorno' : 'di notte'}, dalla setta del tema: chi
+        presiede, il secondo, il terzo.
+      {:else}
+        Senza l'ora la setta manca, e l'ordine non si dice.
+      {/if}
+    </p>
+    <p class="fonti">{valente.termsSource}</p>
   {/if}
 
   <h4>Ricezioni</h4>
