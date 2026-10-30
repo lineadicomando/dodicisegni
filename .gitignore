@@ -42,3 +42,6 @@ compose.override.yaml
 # locale e fuori dal repo: molte non sono redistribuibili. L'organizzazione
 # sta in CLAUDE.md, l'elenco in texts/INDICE.md.
 texts/
+
+# Note locali di chi lavora sul progetto (deploy, macchina): non si pubblicano.
+CLAUDE.local.md
