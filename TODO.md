@@ -74,7 +74,7 @@ volta e ricominciare da capo.
 
 | Voce | Priorità | Taglia | Prima di cominciare |
 |---|---|---|---|
-| 19. Le dignità, per scuola | bassa | media | Jyotisha: fatto, restano rifiniture; occidente: Lilly, Tolomeo e Bonatti fatti; la prossima è l'ellenistica, da Valente |
+| 19. Le dignità, per scuola | bassa | piccola, ormai | Jyotisha: fatto, restano rifiniture; occidente: Lilly, Tolomeo, Bonatti e Valente fatti; resta la moderna, da decidere se è una scuola |
 | 17. L'astrologia oraria | bassa | piccola, ormai | i quattro lotti sono fatti; restano rifiniture indipendenti, una per riga |
 | 5. I varga: le convenzioni che restano | bassa | piccola | i sedici sono fatti; restano rifiniture, una per riga |
 
@@ -82,11 +82,11 @@ L'ordine consigliato è quello della tabella. Della 19, nel Jyotisha, sono
 fatti dignità (anche dei nodi), varga buoni (nei due conti, Santhanam e
 Narasimha Rao), relazioni, vimshopaka, arudha dei bhava e dei graha, e gli
 stati di 6.53; restano rifiniture senza urgenza. Nell'occidente ci sono Lilly,
-Tolomeo (29 ottobre 2026) e Bonatti (30 ottobre 2026); la prossima scuola è
-l'ellenistica, e il primo passo è trovare in Valente i gradi delle
-esaltazioni e la sua tavola delle triplicità (voce 19, *Da verificare*).
-Firmico, Valente e Leo sono in `texts/` con le pagine lette (voce 24,
-chiusa). La 17 usa le
+Tolomeo (29 ottobre 2026), Bonatti e Valente (30 ottobre 2026). Resta la
+riga moderna della tavola delle scuole: il primo passo è leggere i decani
+per triplicità in Alan Leo, che è in `texts/`, e decidere col proprietario
+se fanno una scuola (voce 19, *Che cosa resta*, 2). Firmico, Valente e Leo
+sono in `texts/` con le pagine lette (voce 24, chiusa). La 17 usa le
 tavole di Lilly della 19 e ha già le *moieties* come terza convenzione delle
 orbite.
 
@@ -115,9 +115,10 @@ blocco in `DignityTable.svelte`, la voce del menù in `lib/scuole-dignita.ts`,
 la descrizione di `dignity_school` in `packages/mcp/src/tools.ts`, il
 documento `packages/lettura/src/tropicale.ts` e `/metodo`. L'elenco preciso,
 con quello che nessun test controlla, è alla voce 19, *Che cosa resta*, 2.
-L'ultima fatta, Bonatti, è il modello: `3191b08` il calcolo, `f1afe76` le
-superfici (prima di lei Tolomeo, `14df446` e `75cc895`). Dalla riga di comando la sezione si vede con `--dignita <scuola>`
-e una nascita qualunque, con l'ora perché ci sia la setta.
+L'ultima fatta, Valente, è il modello: `93cb27b` il calcolo, `697fea0` le
+superfici (prima Bonatti, `3191b08` e `f1afe76`). Dalla riga di comando la
+sezione si vede con `--dignita <scuola>` e una nascita qualunque, con l'ora
+perché ci sia la setta.
 
 ## 5. I varga: le convenzioni che restano
 
@@ -333,9 +334,8 @@ un pacchetto di tavole nel punto 19.
 **Priorità bassa**, ora che il tropicale è fatto per intero. Viene dal punto
 17, che ne ha bisogno, ma vale da sola: le dignità servono al natale letto
 alla maniera tradizionale e al Jyotisha. Il Jyotisha è fatto, salvo
-rifiniture. Nell'occidente ci sono Lilly, Tolomeo e Bonatti; restano le
-scuole le cui fonti non sono ancora state lette, e la prossima è
-l'ellenistica (sotto, *Da verificare*).
+rifiniture. Nell'occidente ci sono Lilly, Tolomeo, Bonatti e Valente; resta
+la riga moderna, che un autore unico non ha (sotto, *Che cosa resta*, 2).
 
 ### A che punto è
 
@@ -542,6 +542,36 @@ Le cose trovate leggendo, scritte anche nella copia locale
   p. 484, il signore dell'anno): domicilio 5, esaltazione 4, termine 5,
   triplicità 3, la faccia non nominata. Non è il 5-4-3-2-1.
 
+Fatta anche la scuola di Valente, l'ellenistica, il 30 ottobre 2026, in
+`93cb27b` e `697fea0`, con le scelte del proprietario in *Deciso*. Letta
+sulla scansione dell'ed. Kroll (1908): `packages/core/src/dignita-valente.ts`
+tiene le esaltazioni col grado e le cadute al grado opposto (III.4, p. 140,
+senza i Nodi; è il luogo «Val.» dell'apparato a Firmico), i tre signori dei
+triangoli e il loro ordine nella setta (II.1, pp. 55-56: chi presiede, il
+secondo, il terzo), i termini egizi della tavola di Robbins p. 96. I
+domicili sono quelli di `dignita.ts`. Niente Nodi, facce, esilio né
+punteggio; ricezioni comuni. Si chiede con `dignitySchool: 'valente'` e
+arriva in `WesternDignities.valente`, con le stesse superfici di Bonatti
+(`/metodo#valente`). Prove in `packages/core/test/dignita-valente.test.ts`,
+con la tavola egizia e quella di Valente ricopiate.
+
+Le cose trovate leggendo, in
+`texts/occidentale/valente-anthologiae-kroll-1908/trascrizioni.md`:
+
+- **I termini di I.3 (pp. 14-19) sono gli egizi dove il testo è sano**, in
+  nove segni. Nella Bilancia Valente stampa ♄ 6, ☿ 5, ♃ 8, ♀ 7, ♂ 4 (somma
+  30, l'apparato: «ceteri» danno gli egizi); nello Scorpione i numeri
+  stampati sommano 31 (♃ ς' e ♄ ς', letti a 400 dpi) e l'apparato tace;
+  nell'Ariete il numero di Giove è corrotto e Mercurio non ne ha. Il codice
+  segue gli egizi in tutti e dodici, e la riga dei termini lo dice;
+- **nel fuoco** Valente non dice chi stia al secondo posto: il Sole di
+  giorno, Giove di notte «κατὰ διαδοχήν», Saturno che coopera con tutti e
+  due. Il codice mette secondo l'altro dei due, come negli altri triangoli,
+  e il commento a `TRIANGOLI` lo dice;
+- **«δεκανός» non è nell'indice dei termini astrologici di Kroll**: le
+  facce non ci sono, ma esilio e ricezione in Valente non sono stati
+  cercati oltre l'indice.
+
 ### Che cosa resta
 
 1. **Il Jyotisha: quello che resta dopo il 29 ottobre 2026.** Ciascuna
@@ -561,14 +591,16 @@ Le cose trovate leggendo, scritte anche nella copia locale
 
 2. **Le altre scuole occidentali**, quando le loro fonti sono state lette
    (vedi *Da verificare* qui sotto): ciascuna come valore nuovo di
-   `DignitySchool`, intera. Lilly, Tolomeo e Bonatti ci sono; la prossima è
-   l'ellenistica. Bonatti è il modello più recente da seguire:
-   `dignita-bonatti.ts`, un campo in `WesternDignities`, un ramo in
-   `computeWesternDignities`, una funzione di righe in `format.ts`
-   (`bonattiLines`), un blocco in `DignityTable.svelte`, una voce in
+   `DignitySchool`, intera. Lilly, Tolomeo, Bonatti e Valente ci sono. Resta
+   la riga moderna, che un autore unico non ha: se Alan Leo, coi domicili
+   moderni e i decani per triplicità, sia una scuola o solo una colonna è da
+   decidere col proprietario dopo averlo letto. Valente è il modello più
+   recente da seguire: `dignita-valente.ts`, un campo in `WesternDignities`,
+   un ramo in `computeWesternDignities`, una funzione di righe in `format.ts`
+   (`valensLines`), un blocco in `DignityTable.svelte`, una voce in
    `lib/scuole-dignita.ts`. Attenzione a `apps/web/src/lib/server/birth.test.ts`,
    che usa il nome di una scuola inesistente per provare il rifiuto (oggi
-   `valente`): va cambiato quando quella scuola entra.
+   `doroteo`): va cambiato quando quella scuola entra.
 
    Il compilatore pretende il nome in
    `DIGNITY_SCHOOL_NAMES` (`packages/core/src/constants.ts`), e da lì CLI,
@@ -589,13 +621,19 @@ Le cose trovate leggendo, scritte anche nella copia locale
    (da leggere: non è stata cercata) e il corso di `corso.ts`. È lavoro
    dell'oraria più che della tavola, e va pensato con la voce 17.
 
+4. **Valente, le cose non cercate.** Esilio e ricezione nelle
+   *Anthologiae* (oltre l'indice di Kroll); e un testo critico migliore per
+   I.3, l'ed. Pingree (Teubner 1986), protetta, che potrebbe sanare Ariete e
+   Scorpione e dire se la Bilancia di Valente è sua o del codice. Se uno
+   dei due cambia, cambia la riga dei termini, non per forza la tavola.
+
 ### Le scuole, e il default deciso il 18 ottobre 2026
 
 Per il tema tropicale le scuole possibili sono cinque, ciascuna come pacchetto:
 
 | | Domicili | Esaltazioni | Triplicità | Termini | Facce | Punteggio | Fonte primaria |
 |---|---|---|---|---|---|---|---|
-| Ellenistica (Doroteo, Valente) | tradizionali | da trovare: non in Valente I.2, ma Valente dà gradi altrove (apparato di Kroll-Skutsch a Firmico II.3.5) | tre reggenti, uno partecipe | egizi | sì | nessuno | Doroteo sopravvive in arabo, e la traduzione di Pingree è protetta; Valente in greco è libero |
+| Ellenistica (Valente) | tradizionali (I.2 ne nomina nove) | col grado, senza Nodi (III.4, p. 140) | tre signori ordinati per setta (II.1) | egizi; il testo di I.3 è guasto in Ariete, Bilancia e Scorpione | non trovate | nessuno | Valente in greco (Kroll 1908) libero; nel codice dal 30 ottobre 2026 (`dignita-valente.ts`). Doroteo sopravvive in arabo, e la traduzione di Pingree è protetta |
 | Tolomeo, *Tetrabiblos* | tradizionali | per segno, senza gradi (I.19) | due reggenti per setta; l'acqua a Marte, con Venere di giorno e la Luna di notte (I.18, p. 87) | tolemaici, dalla tavola greca di Robbins (p. 106) | no: la sua «faccia» è un aspetto ai luminari (I.23) | nessuno | greco e Ashmand (1822) liberi; nel codice dal 29 ottobre 2026 (`dignita-tolomeo.ts`) |
 | Medievale (Bonatti, che cita Abū Maʿshar e Alcabizio) | tradizionali | col grado, e i Nodi | doroteiche, tre signori col partecipe | tolemaici, col Leone di Saturno | caldee | nessuno nelle dignità; 5-4-5-3 solo per il signore dell'anno | Bonatti latino (1491) libero; nel codice dal 30 ottobre 2026 (`dignita-bonatti.ts`) |
 | Lilly, 1647 | tradizionali | col grado, e i Nodi | due reggenti, Marte sull'acqua | tolemaici, nella sua versione | caldee | p. 104: esaltazione 4, triplicità 3, termine 2, faccia 1, esilio 5, caduta 4; domicilio illeggibile; peregrino definito a p. 112; tavola delle fortezze a p. 115, letta, domicilio 5 | scansioni libere; tavole lette il 27 ottobre 2026 |
@@ -603,8 +641,10 @@ Per il tema tropicale le scuole possibili sono cinque, ciascuna come pacchetto:
 
 La riga medievale è stata letta su Bonatti il 30 ottobre 2026, e
 correggeva due celle che venivano da fonti secondarie (termini «egizi»,
-punteggio 5-4-3-2-1). Le righe ellenistica e moderna, fuori da quanto
-verificato qui sotto, vengono da fonti secondarie e vanno lette sulle primarie prima di diventare tavole.
+punteggio 5-4-3-2-1); quella ellenistica su Valente lo stesso giorno, e
+correggeva le facce («sì») e le esaltazioni («da trovare»). La riga moderna,
+fuori da quanto verificato qui sotto, viene da fonti secondarie e va letta
+sulle primarie prima di diventare una tavola.
 La riga di Lilly è stata letta sulla scansione, punti in calce compresi
 (tranne quello del domicilio, illeggibile), e così la tavola delle fortezze
 di p. 115, che dà il domicilio a 5.
@@ -620,8 +660,8 @@ ed è quello che la sezione DIGNITÀ porta oggi:
 
 Triplicità, termini e facce **non compaiono per default**: si chiedono
 nominando la scuola. Le disponibili sono Lilly, che l'oraria richiede
-comunque, Tolomeo e Bonatti; le altre entrano quando le loro fonti sono state lette.
-Il punteggio c'è per Lilly, in `condizioni-lilly.ts`; Tolomeo e Bonatti non ne hanno, e
+comunque, Tolomeo, Bonatti e Valente; le altre entrano quando le loro fonti sono state lette.
+Il punteggio c'è per Lilly, in `condizioni-lilly.ts`; Tolomeo, Bonatti e Valente non ne hanno, e
 una scuola nuova porta il suo, o nessuno.
 Nel Jyotisha la scelta è più semplice, perché Parashara è il riferimento che i
 documenti di lettura già presuppongono; dove il BPHS lascia un buco senza
@@ -694,26 +734,27 @@ intera di Lilly il 27 ottobre, in `dignita-lilly.ts`):
 - **I termini egizi** sono trascritti anche loro, dal greco di Robbins
   p. 96 e controllati con le somme per pianeta dell'apparato (Saturno 57,
   Giove 79, Marte 66, Venere 82, Mercurio 76), nella stessa
-  `trascrizioni.md`: servono all'ellenistica, che li usa. Alla medievale
-  no: la tavola di Bonatti è tolemaica (vedi sopra).
+  `trascrizioni.md`: sono la tavola della scuola di Valente
+  (`dignita-valente.ts`). Alla medievale no: la tavola di Bonatti è
+  tolemaica (vedi sopra).
 - **Bonatti, le dignità intere**: lette il 30 ottobre 2026 sulle immagini
   della stampa di Ratdolt, tratt. II, parte 2, capp. V-XVII (ff. 14v-21r;
   nel PDF il foglio N recto è la pagina 2N + 33), più la ricezione (tratt.
   III, PDF pp. 167-168) e le «fortitudines» del signore dell'anno (PDF p.
   484). Nel codice in `dignita-bonatti.ts`; la mappa dei fogli in
   `FONTE.md`, i passi in `trascrizioni.md`.
+- **Valente, esaltazioni, triangoli e termini**: letti il 30 ottobre 2026
+  sulla scansione dell'ed. Kroll (pagina stampata N = PDF N + 19): III.4 a
+  p. 140, II.1 a pp. 55-56, I.3 a pp. 14-19. Il luogo di III.4 è quello che
+  l'apparato di Kroll-Skutsch a Firmico II.3.5 (p. 44) chiama «Val.»,
+  quando corregge Saturno a 21 e Giove a 15 contro i codici di Firmico (XX
+  e XIX per Saturno, XXI e XVIII per Giove): i gradi di `dignita-lilly.ts`
+  sono il testo critico di Firmico, e Valente li conferma. Per trovare un
+  luogo in Valente si usa l'indice dei termini astrologici di Kroll, nell'OCR
+  dalla riga 33279: il greco dell'OCR non si legge, i numeri di pagina sì.
 
 Da verificare:
 
-- **Le esaltazioni nella scuola ellenistica**: altrove in Valente, o in
-  Doroteo. Valente i gradi li dà: l'apparato di Kroll-Skutsch a Firmico
-  II.3.5 (p. 44) corregge Saturno a 21 e Giove a 15 «e Val. Doroth.»,
-  contro i manoscritti (XX e XIX per Saturno, XXI e XVIII per Giove; per
-  la caduta di Marte i codici hanno XXV e XXVI). Il luogo di Valente non è
-  indicato: si cerca nell'indice dell'ed. Kroll. Vuol dire anche che i
-  gradi di `dignita-lilly.ts` sono il testo critico di Firmico, non la
-  lezione dei codici; vedi
-  `texts/occidentale/firmico-mathesis-kroll-skutsch-1897/trascrizioni.md`.
 - **I punti 5-4-3-2-1 medievali**: a chi vanno attribuiti. I siti li danno
   come «medievali» senza un testo. In Bonatti non ci sono: i capitoli delle
   dignità non danno punti, e il solo conto (PDF p. 484) è 5-4-5-3 per il
@@ -735,6 +776,14 @@ righe della tavola coi glifi della stampa e le rilegge: è il modello per una
 scuola nuova.
 
 ## Deciso, e da non riaprire
+
+- **La scuola di Valente si chiama `valente` e porta i termini egizi.**
+  Scelto dal proprietario il 30 ottobre 2026, con la voce 19. Un autore, come
+  le altre scuole, e non «ellenistica»: Doroteo resta fuori finché non c'è un
+  suo testo libero. I termini sono la tavola egizia di Robbins p. 96, che
+  Valente I.3 segue dove il testo è sano; non la sua Bilancia né una tavola
+  composta segno per segno, che nessuna fonte stampa intera. La riga dei
+  termini dice le tre divergenze.
 
 - **La scuola di Bonatti lascia le ricezioni comuni e non ha punteggio.**
   Scelto dal proprietario il 30 ottobre 2026, con la voce 19. La ricezione
