@@ -30,7 +30,7 @@
  */
 
 import { parasharaSignLord, PARASHARA_GRAHAS } from './dignita-parashara.js';
-import { DEFAULT_HORA_CONVENTION, horaConvention, horaOf } from './hora.js';
+import { bphsHoraConvention, DEFAULT_HORA_CONVENTION, horaConvention, horaOf } from './hora.js';
 import { computeRelationships } from './maitri.js';
 import { grahaName } from './nakshatra.js';
 import { VARGAS, vargaSignOf } from './varga.js';
@@ -78,7 +78,11 @@ const SOURCE =
 /** Il vimshopaka dei sette graha di una carta siderale, nei quattro schemi. */
 export function computeVimshopaka(chart: NatalChart, hora: HoraConvention = DEFAULT_HORA_CONVENTION): Vimshopaka {
   const relazioni = computeRelationships(chart).pairs;
-  const conSegniLaHora = horaConvention(hora).signOf !== undefined;
+  // Con una convenzione moderna della hora il conto resta su Parashara: vedi
+  // `bphsHoraConvention`. Con Leone-Cancro il signore è comunque il luminare.
+  const usata = bphsHoraConvention(hora);
+  const chiesta = horaConvention(hora);
+  const conSegniLaHora = usata.signOf !== undefined;
 
   const grahas = chart.bodies
     .filter((body) => (PARASHARA_GRAHAS as readonly BodyId[]).includes(body.id))
@@ -87,7 +91,7 @@ export function computeVimshopaka(chart: NatalChart, hora: HoraConvention = DEFA
         const lord: BodyId =
           id === 'd2' && !conSegniLaHora
             ? horaOf(body.longitude)
-            : parasharaSignLord(vargaSignOf(body.longitude, id, hora));
+            : parasharaSignLord(vargaSignOf(body.longitude, id, usata.id));
         const relation: CompoundMaitri | 'swakshetra' =
           lord === body.id
             ? 'swakshetra'
@@ -102,5 +106,10 @@ export function computeVimshopaka(chart: NatalChart, hora: HoraConvention = DEFA
       return { id: body.id, name: grahaName(body.id, body.name), vargas, schemes };
     });
 
-  return { source: SOURCE, weights: VIMSHOPAKA_WEIGHTS, grahas };
+  const source =
+    chiesta === usata
+      ? SOURCE
+      : `${SOURCE} La convenzione ${chiesta.name} scelta per il D-2 è una lettura moderna e non ` +
+        'entra nei conti del BPHS: qui la hora è quella di Parashara.';
+  return { source, weights: VIMSHOPAKA_WEIGHTS, grahas };
 }

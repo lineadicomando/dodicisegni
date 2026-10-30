@@ -675,6 +675,98 @@ describe('D-2, la hora, con due convenzioni', () => {
   });
 });
 
+describe('D-2, le convenzioni moderne con un segno', () => {
+  // Le tavole e gli esempi delle fonti, in `texts/jyotisha/`: Rao 2003
+  // (parivritti-dvaya e Kashinatha), Suprajarama 2005, Rao 2012
+  // (Uma-Shambhu). Ogni riga: il segno, poi i segni della prima e della
+  // seconda metà.
+  const SEGNI = ['ariete', 'toro', 'gemelli', 'cancro', 'leone', 'vergine', 'bilancia', 'scorpione', 'sagittario', 'capricorno', 'acquario', 'pesci'] as const;
+  const ABBR: Record<string, (typeof SEGNI)[number]> = {
+    Ar: 'ariete', Ta: 'toro', Ge: 'gemelli', Cn: 'cancro', Le: 'leone', Vi: 'vergine',
+    Li: 'bilancia', Sc: 'scorpione', Sg: 'sagittario', Cp: 'capricorno', Aq: 'acquario', Pi: 'pesci',
+  };
+  /** Le due metà di ogni segno secondo una convenzione, nella forma «Ar Ar/Ta». */
+  const tavola = (hora: Parameters<typeof vargaSignOf>[2]) =>
+    SEGNI.map((_, i) => [vargaSignOf(i * 30 + 7, 'd2', hora), vargaSignOf(i * 30 + 22, 'd2', hora)]);
+  const leggi = (righe: string) =>
+    righe.trim().split(/\s*,\s*/).map((riga) => riga.split(' ')[1]!.split('/').map((a) => ABBR[a]));
+
+  it('parivritti-dvaya: due giri dall Ariete, come la descrive Rao (2003)', () => {
+    // «the two parts of Aries go into Aries and Taurus; the two parts of
+    // Taurus go into Gemini and Cancer; … Cancer go into Libra and Scorpio».
+    expect(tavola('parivritti-dvaya').slice(0, 4)).toEqual(leggi('Ar Ar/Ta, Ta Ge/Cn, Ge Le/Vi, Cn Li/Sc'));
+    expect(tavola('parivritti-dvaya')[11]).toEqual(['acquario', 'pesci']);
+  });
+
+  it('Uma-Shambhu: la tavola di Rao (2012), p. 3', () => {
+    expect(tavola('uma-shambhu')).toEqual(
+      leggi('Ar Ar/Ta, Ta Cn/Ge, Ge Le/Vi, Cn Sc/Li, Le Sg/Cp, Vi Pi/Aq, Li Ar/Ta, Sc Cn/Ge, Sg Le/Vi, Cp Sc/Li, Aq Sg/Cp, Pi Pi/Aq'),
+    );
+  });
+
+  it('Suprajarama: la tavola del post del 2005', () => {
+    expect(tavola('suprajarama')).toEqual(
+      leggi('Ar Sc/Cp, Ta Ta/Pi, Ge Vi/Ar, Cn Cn/Li, Le Le/Ge, Vi Ge/Cn, Li Li/Le, Sc Ar/Vi, Sg Pi/Ta, Cp Cp/Sc, Aq Aq/Sg, Pi Sg/Aq'),
+    );
+  });
+
+  it('Kashinatha: gli esempi del testo di Rao (2003) e la sua carta 1', () => {
+    const k = (gradi: number, segno: (typeof SEGNI)[number]) => vargaSignOf(SEGNI.indexOf(segno) * 30 + gradi, 'd2', 'kashinatha');
+    // Nel testo: Giove a 25°16' del Toro → Bilancia; Marte a 18°53' del
+    // Sagittario → Sagittario.
+    expect(k(25 + 16 / 60, 'toro')).toBe('bilancia');
+    expect(k(18 + 53 / 60, 'sagittario')).toBe('sagittario');
+    // La carta 1, D-2 (Kn), 7 aprile 1893 (p. 4 del PDF, letta
+    // sull'immagine): le posizioni della rashi e il segno del D-2.
+    const carta1: [number, (typeof SEGNI)[number], (typeof SEGNI)[number]][] = [
+      [26 + 23 / 60, 'toro', 'bilancia'], // As
+      [25 + 13 / 60, 'pesci', 'pesci'], // Su
+      [29 + 47 / 60, 'scorpione', 'scorpione'], // Mo
+      [13 + 47 / 60, 'toro', 'toro'], // Ma
+      [14 + 34 / 60, 'pesci', 'sagittario'], // Me
+      [10 + 36 / 60, 'ariete', 'scorpione'], // Ju
+      [18 + 39 / 60, 'pesci', 'pesci'], // Ve
+      [16 + 27 / 60, 'vergine', 'vergine'], // Sa
+      [7 + 3 / 60, 'ariete', 'scorpione'], // Ra
+      [7 + 3 / 60, 'bilancia', 'bilancia'], // Ke
+      [14 + 44 / 60, 'cancro', 'cancro'], // HL, la hora lagna
+      [29 + 15 / 60, 'sagittario', 'sagittario'], // GL, la ghati lagna
+    ];
+    for (const [gradi, segno, d2] of carta1) expect(k(gradi, segno), `${gradi} ${segno}`).toBe(d2);
+  });
+
+  it('Kashinatha: il Leone e il Cancro fanno coppia, come dice Rao', () => {
+    // «Leo and Cancer form a pair»: la hora del Sole al Leone, quella della
+    // Luna al Cancro. PyJHora manda invece tutto il Leone al Leone.
+    expect(tavola('kashinatha')[3]).toEqual(['cancro', 'leone']);
+    expect(tavola('kashinatha')[4]).toEqual(['leone', 'cancro']);
+    // Il segno coincide con la hora: diurno col Sole, notturno con la Luna.
+    const diurni = ['leone', 'vergine', 'bilancia', 'scorpione', 'acquario', 'pesci'];
+    for (let l = 1; l < 360; l += 2) {
+      expect(diurni.includes(vargaSignOf(l, 'd2', 'kashinatha')), `${l}`).toBe(horaOf(l) === 'sole');
+    }
+  });
+
+  it('Uma-Shambhu: il genere del segno di arrivo è la hora di Parashara', () => {
+    // È il punto dell'articolo: dispari = Sole, pari = Luna.
+    for (let l = 1; l < 360; l += 2) {
+      const arrivo = SEGNI.indexOf(vargaSignOf(l, 'd2', 'uma-shambhu') as (typeof SEGNI)[number]);
+      expect(arrivo % 2 === 0, `${l}`).toBe(horaOf(l) === 'sole');
+    }
+  });
+
+  it('ogni convenzione con un segno esce come un varga coi segni, e porta la sua fonte', () => {
+    const carta = tema();
+    for (const convenzione of HORA_CONVENTIONS.filter((c) => c.signOf)) {
+      const d2 = computeVarga(carta, 'd2', { hora: convenzione.id });
+      expect(d2.kind, convenzione.id).toBe('segni');
+      expect(d2.convention?.id).toBe(convenzione.id);
+      expect(d2.rule).toBe(convenzione.rule);
+      expect(d2).not.toHaveProperty('convention.bphs');
+    }
+  });
+});
+
 describe('computeVarga', () => {
   it('dice per i sette graha in quali loro segni di dignità cade il varga, e da dove lo prende', () => {
     const carta = tema();

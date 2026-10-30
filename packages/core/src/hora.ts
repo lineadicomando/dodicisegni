@@ -19,15 +19,27 @@
  * per quella che gli astrologi «normally use», dubitandone. Entra come
  * convenzione a sé, dichiarata per quello che è.
  *
- * Le altre varianti moderne con un segno (la parivritti-dvaya, la Kashinatha,
- * la Uma-Shambhu, quella di Raman Suprajarama) hanno ciascuna un autore e
- * possono entrare accanto a queste due; finora non ci sono. La regola di
- * Garga e Yavana, che Varahamihira riporta e scarta (BJ I.12), no.
+ * Le varianti moderne con un segno sono quattro, ciascuna con un autore che
+ * la scrive per intero, e stanno accanto alle due di sopra: la
+ * parivritti-dvaya, che Narasimha Rao (2003) riporta come ipotesi circolata
+ * in rete e tiene nella sua tavola delle carte cicliche; la Kashinatha, di
+ * Kashinath Rath, nella dispensa di Rao del 2003; quella di Raman
+ * Suprajarama (2005); la Uma-Shambhu di Rao (2012). Sono letture moderne del
+ * verso, e per questo **non entrano nei conti del BPHS** (varga buoni e
+ * vimshopaka), che con loro contano la hora di Parashara e lo dicono: un
+ * conto di Parashara su una carta di Rath sarebbe un ibrido che nessuno ha
+ * praticato. Scelto dal proprietario il 30 ottobre 2026 (`TODO.md`,
+ * *Deciso*). La sesta variante di PyJHora, che chiama «Somanatha» (la
+ * parivritti alternata), non ha un autore che la scriva e non c'è; la regola
+ * di Garga e Yavana, che Varahamihira riporta e scarta (BJ I.12), nemmeno.
  *
- * Le fonti stanno in `texts/jyotisha/`: `bphs-santhanam-1992-vol1` e
- * `narasimha-rao-personal-finances-hora-chart-2003`, con le trascrizioni.
+ * Le fonti stanno in `texts/jyotisha/`: `bphs-santhanam-1992-vol1`,
+ * `narasimha-rao-personal-finances-hora-chart-2003`,
+ * `narasimha-rao-uma-shambhu-hora-2012` e
+ * `suprajarama-raman-hora-jyotish-blog-2005`, con le trascrizioni.
  */
 
+import { ZODIAC_SIGNS } from './constants.js';
 import { ChartError } from './errors.js';
 import { degreeInSign, normalize360 } from './math.js';
 import type { Hora, HoraConvention, HoraConventionInfo, ZodiacSign } from './types.js';
@@ -35,9 +47,60 @@ import type { Hora, HoraConvention, HoraConventionInfo, ZodiacSign } from './typ
 export interface HoraConventionDefinition extends HoraConventionInfo {
   /** La regola in una riga, che viaggia col risultato come quella di ogni varga. */
   rule: string;
-  /** Il segno che la convenzione dà a ciascuna hora, se ne dà uno. */
-  signOf?: Readonly<Record<Hora, ZodiacSign>>;
+  /**
+   * Il segno in cui la convenzione manda una longitudine **siderale**, se ne
+   * dà uno. Una funzione e non una tavola per luminare: tutte le varianti
+   * moderne danno un segno diverso secondo il segno di partenza.
+   */
+  signOf?: (siderealLongitude: number) => ZodiacSign;
+  /**
+   * Se i conti del BPHS (varga buoni, vimshopaka) contano la hora con questa
+   * convenzione. Solo le due del testo e del suo traduttore: con le altre i
+   * conti usano Parashara, e lo dicono.
+   */
+  bphs: boolean;
 }
+
+/** Il segno all'indice dato, con il giro chiuso. */
+const at = (index: number): ZodiacSign => ZODIAC_SIGNS[((index % 12) + 12) % 12] as ZodiacSign;
+
+/** L'indice del segno (0 l'Ariete), se il segno è dispari, e se si è nella prima metà. */
+function parti(siderealLongitude: number): { segno: number; dispari: boolean; prima: boolean } {
+  const longitude = normalize360(siderealLongitude);
+  const segno = Math.floor(longitude / 30);
+  return { segno, dispari: segno % 2 === 0, prima: degreeInSign(longitude) < 15 };
+}
+
+/**
+ * I segni forti di giorno e di notte di ciascun signore, nell'ordine
+ * [diurno, notturno]: Rao (2003), «Sun represents day-strong signs, i.e.
+ * Leo, Virgo, Libra, Scorpio, Aquarius and Pisces», e ogni pianeta con due
+ * segni ne ha uno per parte. Indicizzati per segno, col signore di BPHS 4.
+ */
+const DIURNO_NOTTURNO: readonly (readonly [ZodiacSign, ZodiacSign])[] = [
+  ['scorpione', 'ariete'], // Ariete, Marte
+  ['bilancia', 'toro'], // Toro, Venere
+  ['vergine', 'gemelli'], // Gemelli, Mercurio
+  ['leone', 'cancro'], // Cancro, la Luna: in coppia col Sole
+  ['leone', 'cancro'], // Leone, il Sole: in coppia con la Luna
+  ['vergine', 'gemelli'], // Vergine, Mercurio
+  ['bilancia', 'toro'], // Bilancia, Venere
+  ['scorpione', 'ariete'], // Scorpione, Marte
+  ['pesci', 'sagittario'], // Sagittario, Giove
+  ['acquario', 'capricorno'], // Capricorno, Saturno
+  ['acquario', 'capricorno'], // Acquario, Saturno
+  ['pesci', 'sagittario'], // Pesci, Giove
+];
+
+/**
+ * La stessa tavola per Suprajarama, che per il Sole e la Luna dà un segno
+ * solo: «for Sun both day and night signs are Leo, for Moon both are
+ * Cancer».
+ */
+const DIURNO_NOTTURNO_SUPRAJARAMA: readonly (readonly [ZodiacSign, ZodiacSign])[] = DIURNO_NOTTURNO.map(
+  (coppia, segno): readonly [ZodiacSign, ZodiacSign] =>
+    segno === 3 ? ['cancro', 'cancro'] : segno === 4 ? ['leone', 'leone'] : coppia,
+);
 
 export const HORA_CONVENTIONS: readonly HoraConventionDefinition[] = [
   {
@@ -49,6 +112,7 @@ export const HORA_CONVENTIONS: readonly HoraConventionDefinition[] = [
     rule:
       'Due parti da 15°. Nei segni dispari la prima è hora del Sole e la seconda della Luna, nei ' +
       'pari il contrario. La hora è di un luminare, non un segno: il testo non ne nomina (BPHS 6.5-6).',
+    bphs: true,
   },
   {
     id: 'leone-cancro',
@@ -59,7 +123,82 @@ export const HORA_CONVENTIONS: readonly HoraConventionDefinition[] = [
     rule:
       'Le due metà di Parashara, con la hora del Sole al Leone e quella della Luna al Cancro, i ' +
       'segni dei due luminari: tutti i graha cadono in uno dei due.',
-    signOf: { sole: 'leone', luna: 'cancro' },
+    signOf: (longitude) => (horaOf(longitude) === 'sole' ? 'leone' : 'cancro'),
+    bphs: true,
+  },
+  {
+    id: 'parivritti-dvaya',
+    name: 'Parivritti-dvaya',
+    source:
+      'Proposta in rete senza un nome prima del 2003. La descrive P.V.R. Narasimha Rao, «Personal ' +
+      'Finances from Hora Chart» (2003), che la tiene fra le carte cicliche della sua tavola 1 ' +
+      '(«family support to karma») e non per la ricchezza; e di nuovo in «Uma-Shambhu Hora» ' +
+      '(2012), «View 4». Legge «meṣādi … parivṛttidvayaṃ» di BPHS 6.6 come due giri dello zodiaco.',
+    rule:
+      "Due parti da 15°, contate di seguito dall'Ariete: le due metà dell'Ariete vanno all'Ariete e " +
+      'al Toro, del Toro ai Gemelli e al Cancro, e così via, due giri in ventiquattro metà. Non ' +
+      'lega le metà al Sole e alla Luna.',
+    signOf: (longitude) => {
+      const { segno, prima } = parti(longitude);
+      return at(2 * segno + (prima ? 0 : 1));
+    },
+    bphs: false,
+  },
+  {
+    id: 'kashinatha',
+    name: 'Kashinatha',
+    source:
+      'Di Pt. Kashinath Rath, nella tradizione di Achyuta Dasa: P.V.R. Narasimha Rao, «Personal ' +
+      'Finances from Hora Chart» (2003), con gli esempi di Giove a 25°16\' del Toro e di Marte a ' +
+      '18°53\' del Sagittario e la carta 1. Il Leone e il Cancro fanno coppia («Leo and Cancer form ' +
+      'a pair»): la hora del Sole va al Leone e quella della Luna al Cancro anche lì. PyJHora manda ' +
+      'invece le due metà del Leone al Leone e del Cancro al Cancro; qui si segue il testo di Rao.',
+    rule:
+      'Le due metà di Parashara, e ciascuna va a un segno del signore del segno: la hora del Sole ' +
+      'al suo segno forte di giorno (Leone, Vergine, Bilancia, Scorpione, Acquario, Pesci), quella ' +
+      'della Luna al suo segno forte di notte (Ariete, Toro, Gemelli, Cancro, Sagittario, ' +
+      'Capricorno).',
+    signOf: (longitude) => {
+      const coppia = DIURNO_NOTTURNO[parti(longitude).segno]!;
+      return horaOf(longitude) === 'sole' ? coppia[0] : coppia[1];
+    },
+    bphs: false,
+  },
+  {
+    id: 'suprajarama',
+    name: 'Raman Suprajarama',
+    source:
+      'Raman Suprajarama, relazione del 15 agosto 2005, «Assessing finances through Hora chart (BV ' +
+      'Raman Hora Chart)», riportata su jyotish-blog.blogspot.com il 17 agosto 2005, con la tavola. ' +
+      'La regola è sua, non di B. V. Raman; riprende la hora degli Yavana che Varahamihira riporta ' +
+      '(BJ I.12), il signore del segno e dell\'undicesimo.',
+    rule:
+      "Nel segno dispari la prima metà va al segno diurno del signore del segno, la seconda al " +
+      "segno notturno del signore dell'undicesimo; nel pari la prima al notturno del signore del " +
+      "segno, la seconda al diurno del signore dell'undicesimo. Per il Sole i due segni sono il " +
+      'Leone, per la Luna il Cancro.',
+    signOf: (longitude) => {
+      const { segno, dispari, prima } = parti(longitude);
+      const coppia = DIURNO_NOTTURNO_SUPRAJARAMA[prima ? segno : (segno + 10) % 12]!;
+      return dispari === prima ? coppia[0] : coppia[1];
+    },
+    bphs: false,
+  },
+  {
+    id: 'uma-shambhu',
+    name: 'Uma-Shambhu',
+    source:
+      'P.V.R. Narasimha Rao, «Parasara\'s Hora Chart Decoded: Uma-Shambhu Hora» (2012), con la ' +
+      'tavola completa a p. 3, sull\'esempio del navamsa di Krishna Mishra.',
+    rule:
+      "Due giri dello zodiaco dall'Ariete, come la parivritti-dvaya, ma nei segni pari l'ordine " +
+      'delle due metà si rovescia: il Toro va al Cancro e poi ai Gemelli. La hora è del Sole se il ' +
+      'segno di arrivo è dispari, della Luna se è pari.',
+    signOf: (longitude) => {
+      const { segno, dispari, prima } = parti(longitude);
+      return at(2 * segno + (dispari === prima ? 0 : 1));
+    },
+    bphs: false,
   },
 ];
 
@@ -75,6 +214,16 @@ export function horaConvention(id: HoraConvention = DEFAULT_HORA_CONVENTION): Ho
     );
   }
   return definition;
+}
+
+/**
+ * La convenzione con cui i conti del BPHS (varga buoni, vimshopaka) contano
+ * la hora: quella chiesta se è del testo o del suo traduttore, altrimenti
+ * Parashara. Vedi `bphs`.
+ */
+export function bphsHoraConvention(id: HoraConvention = DEFAULT_HORA_CONVENTION): HoraConventionDefinition {
+  const chiesta = horaConvention(id);
+  return chiesta.bphs ? chiesta : horaConvention('parashara');
 }
 
 /**

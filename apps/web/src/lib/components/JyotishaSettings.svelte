@@ -179,6 +179,10 @@
   <select id="hora" bind:value={hora} onchange={() => onchange?.()}>
     <option value="parashara">Hora di Parashara, senza segni</option>
     <option value="leone-cancro">Hora in Leone e Cancro</option>
+    <option value="parivritti-dvaya">Parivritti-dvaya</option>
+    <option value="kashinatha">Kashinatha (Rath)</option>
+    <option value="suprajarama">Raman Suprajarama</option>
+    <option value="uma-shambhu">Uma-Shambhu (Rao)</option>
   </select>
 {/snippet}
 

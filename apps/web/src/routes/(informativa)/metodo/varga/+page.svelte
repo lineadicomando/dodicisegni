@@ -121,8 +121,33 @@
   Luna, senza segno, e quindi senza quadro da disegnare. L'altra,
   <strong>Leone e Cancro</strong>, si chiede, e dà una carta con i segni, che
   si può disegnare. In entrambi i casi la convenzione e la sua fonte viaggiano
-  col risultato. Le altre varianti moderne con un segno, ciascuna con un
-  autore, non sono calcolate.
+  col risultato.
+</p>
+
+<p>
+  Accanto ci sono quattro letture moderne, ciascuna con un autore e con un
+  segno per metà. La <strong>parivritti-dvaya</strong> prende alla lettera le
+  ultime parole del verso, «due giri dall'Ariete»: le metà dell'Ariete vanno
+  all'Ariete e al Toro, del Toro ai Gemelli e al Cancro. È nata in rete senza
+  un nome, e la descrive Narasimha Rao (2003). La <strong>Kashinatha</strong>,
+  di Kashinath Rath, nella stessa dispensa di Rao, legge il Sole e la Luna
+  come i segni forti di giorno e di notte: la metà del Sole va al segno diurno
+  del signore del segno, quella della Luna al notturno, e il Leone e il Cancro
+  fanno coppia. Quella di <strong>Raman Suprajarama</strong> (2005) prende il
+  signore del segno per la prima metà e quello dell'undicesimo per la
+  seconda, come la regola degli Yavana che Varahamihira riporta. La
+  <strong>Uma-Shambhu</strong> di Rao (2012) fa i due giri della parivritti
+  ma rovescia l'ordine nei segni pari, così che la metà del Sole cada sempre
+  in un segno dispari.
+</p>
+
+<p>
+  Sono letture del verso, non il verso, e per questo non entrano nei conti
+  che il BPHS fa sulla hora: con una di loro i varga buoni e il vimshopaka
+  contano la hora di Parashara, e lo dicono. Un conto di Parashara su una
+  carta di Rath sarebbe una dottrina che nessuno ha praticato. Una sesta
+  variante, la parivritti alternata, che un programma chiama «Somanatha», non
+  ha un autore che la scriva, e non c'è.
 </p>
 
 <h2 id="disuguali">Il trimsamsa, che non divide in parti uguali</h2>

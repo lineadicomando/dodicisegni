@@ -125,10 +125,14 @@ Opzioni
                         cambino segno.
                         Richiede --zodiaco siderale
   --hora <convenzione>  Come leggere il D-2: parashara (default, BPHS 6.5-6: la
-                        hora del Sole o della Luna, senza segno) oppure
-                        leone-cancro (l'uso corrente, che nessun classico
-                        enuncia: la hora del Sole al Leone, della Luna al
-                        Cancro). Il quadro del D-2 vuole leone-cancro
+                        hora del Sole o della Luna, senza segno), leone-cancro
+                        (l'uso corrente, che nessun classico enuncia: la hora
+                        del Sole al Leone, della Luna al Cancro), oppure una
+                        lettura moderna con un autore: parivritti-dvaya,
+                        kashinatha (Rath), suprajarama, uma-shambhu (Rao).
+                        Le moderne non entrano in varga buoni e vimshopaka,
+                        che contano Parashara. Il quadro del D-2 vuole una
+                        convenzione con i segni, cioè non parashara
   --drishti             Gli sguardi fra i graha, contati a segni interi e con un
                         verso: chi guarda chi non è reciproco
   --drishti-nodi <n>    nessuna (default, forma classica) oppure gioviana, che dà

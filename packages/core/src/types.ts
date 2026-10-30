@@ -365,10 +365,17 @@ export type Hora = 'sole' | 'luna';
 /**
  * Come si legge il D-2. `parashara` (predefinita) dà a ogni metà un luminare
  * e nessun segno, come il testo; `leone-cancro` manda la hora del Sole al
- * Leone e quella della Luna al Cancro, come l'uso corrente. Le fonti in
- * `hora.ts`.
+ * Leone e quella della Luna al Cancro, come l'uso corrente. Le altre quattro
+ * sono letture moderne con un autore, ciascuna con un segno per metà, e i
+ * conti del BPHS non le usano. Le fonti in `hora.ts`.
  */
-export type HoraConvention = 'parashara' | 'leone-cancro';
+export type HoraConvention =
+  | 'parashara'
+  | 'leone-cancro'
+  | 'parivritti-dvaya'
+  | 'kashinatha'
+  | 'suprajarama'
+  | 'uma-shambhu';
 
 /** La convenzione della hora, come viaggia col risultato. */
 export interface HoraConventionInfo {

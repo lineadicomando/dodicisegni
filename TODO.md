@@ -95,7 +95,7 @@ volta e ricominciare da capo.
 
 | Voce | Priorità | Taglia | Prima di cominciare |
 |---|---|---|---|
-| 5. I varga: le convenzioni che restano | bassa | piccola | i sedici sono fatti; restano rifiniture, una per riga |
+| 5. I varga: le convenzioni che restano | bassa | piccola | i sedici e le sei hora sono fatti; restano due verifiche sulla hora |
 | 25. Le dignità del Jyotisha: le rifiniture | bassa | piccola | la combustione in gradi di tempo, da fare solo se servisse |
 | 26. Le scuole occidentali delle dignità: quello che resta | bassa | piccola | la ricezione di Bonatti chiede un'applicazione; Valente aspetta un testo |
 | 28. La revisione della SEO | media | piccola | il dominio principale è deciso; i redirect e `ORIGIN` si fanno sul server, non nel repo |
@@ -105,14 +105,17 @@ chi usa il programma oggi: il suo primo punto divide il sito in quattro agli
 occhi dei motori di ricerca, e si fa sul server, quando il proprietario lo
 chiede. Fra le rifiniture, i sessanta nomi del D-60 sono fatti il 30
 ottobre 2026 (`shashtiamsaOf` in `varga.ts`, versione 0.6.0), e
-l'avvertenza sull'ora va anche al D-24 e al D-27 (versione 0.7.0); le altre
-convenzioni della hora sono il lavoro più lungo della voce 5. Della 25 restano la combustione in gradi di tempo, che vuole pagine
+l'avvertenza sull'ora va anche al D-24 e al D-27 (versione 0.7.0), e le
+quattro convenzioni moderne della hora sono entrate (versione 0.8.1): della
+voce 5 restano due verifiche. Della 25 restano la combustione in gradi di tempo, che vuole pagine
 ancora da leggere: gli arudha dei graha nei varga sono fatti (versione
 0.8.0). La 26 aspetta testi.
 
-**Versione 0.8.0**, in ogni manifesto, col tag `v0.8.0`: gli arudha dei
+**Versione 0.8.1**, in ogni manifesto, col tag `v0.8.1`: le quattro
+convenzioni moderne della hora (voce 5), valori nuovi di un'opzione che
+c'era; il fascicolo canonico non cambia. Prima, la 0.8.0 con gli arudha dei
 graha in ogni varga (voce 25), un campo che compare nella risposta di ogni
-varga coi segni. Prima, la 0.7.0 con l'avvertenza sull'ora anche nel D-24 e
+varga coi segni, la 0.7.0 con l'avvertenza sull'ora anche nel D-24 e
 nel D-27, e la 0.6.0 coi nomi del D-60. La
 prima, la 0.1.0, cade col numero unico della voce 27 (`f6026fa`) il 30
 ottobre 2026; poi, tutte con la
@@ -195,25 +198,38 @@ siano «fini» lo dice il campo `fine` di `VARGAS`.
 
 ### Che cosa resta
 
-- **Le altre convenzioni della hora.** La parivritti-dvaya, la Kashinatha,
-  la Uma-Shambhu, quella di Raman Suprajarama: regole e casi di controllo
-  nelle schede `FONTE.md` di `texts/jyotisha/narasimha-rao-*`,
-  `suprajarama-*` e `texts/tecnica/pyjhora`. Oggi `HORA_CONVENTIONS` dà a
-  ogni convenzione un segno fisso per luminare (`signOf`), che basta a
-  Parashara e a `leone-cancro`; **tutte e quattro** quelle che restano danno
-  invece un segno diverso secondo il segno di partenza, quindi la forma della
-  voce va cambiata (una funzione al posto di `signOf`) prima di aggiungere la
-  prima. PyJHora ne conosce sei e non quattro: la sesta, che chiama
-  «Somanatha» (la parivritti alternata), non è stata né presa né scartata, e
-  va cercato se ha un autore. Nella Kashinatha PyJHora e la dispensa di Rao
-  del 2003 divergono su Leone e Cancro, e quale delle due segua Jagannatha
-  Hora non è verificato (la scheda di `texts/tecnica/pyjhora` dice come). Le
-  liste di CLI, API e MCP derivano da `HORA_CONVENTIONS`; il menù
-  dell'interfaccia no: è scritto a mano nello snippet `menuHora` di
-  `JyotishaSettings.svelte`, con un `<option>` per convenzione. La forma
-  del D-2 nel risultato: `VargaChart` è un'unione col discriminante `kind`,
-  `SignVargaChart` (`'segni'`) e `HoraVargaChart` (`'signori'`, il solo D-2
-  di Parashara, rifiutato dal quadro con `VARGA_SENZA_SEGNI`).
+Le sei convenzioni della hora sono fatte dal 30 ottobre 2026 (versione
+0.8.1): Parashara e Leone-Cancro, e le quattro moderne, parivritti-dvaya,
+Kashinatha, Raman Suprajarama e Uma-Shambhu, ciascuna con la sua tavola o il
+suo esempio in `varga.test.ts`. `signOf` è una funzione della longitudine, e
+il campo `bphs` dice quali convenzioni entrano nei conti del BPHS (vedi
+*Deciso*). Restano due cose piccole, indipendenti:
+
+- **La Kashinatha su Leone e Cancro.** Il motore segue il testo di Rao
+  (2003): «Leo and Cancer form a pair», quindi la hora del Sole va al Leone e
+  quella della Luna al Cancro anche in quei due segni. PyJHora manda invece
+  tutto il Leone al Leone e tutto il Cancro al Cancro
+  (`planet_hora_dict_for_odd_even_signs`). La carta 1 di Rao (p. 4 del PDF,
+  trascritta) non ha punti che distinguano le due letture. Quale delle due
+  segua Jagannatha Hora non è verificato: la scheda di `texts/tecnica/pyjhora`
+  dice come. Se Rao stesso, in un testo successivo, la desse come PyJHora,
+  la riga `source` e il test della coppia vanno cambiati.
+- **La parivritti alternata, che PyJHora chiama «Somanatha».** Dispari
+  dall'Ariete in avanti, pari dai Pesci all'indietro. Non è stata cercata;
+  entra solo con un autore che la scriva.
+
+Le liste di CLI, API e MCP derivano da `HORA_CONVENTIONS`. Le nominano a
+mano, e nessun test lo vede: il menù `menuHora` di
+`JyotishaSettings.svelte` (un `<option>` per convenzione), l'aiuto di
+`--hora` in `cli.ts`, le descrizioni di `hora` in `packages/mcp/src/tools.ts`
+(in `compute_jyotisha_chart` e in `draw_jyotisha_chart`, più il messaggio di
+rifiuto del D-2 senza segni), i commenti delle due rotte `api/jyotish` e il
+messaggio di rifiuto della rotta `quadro`, la sezione `#hora` di
+`/metodo/varga` e il paragrafo della HORA in
+`packages/lettura/src/jyotisha.ts`. La forma del D-2 nel risultato:
+`VargaChart` è un'unione col discriminante `kind`, `SignVargaChart`
+(`'segni'`) e `HoraVargaChart` (`'signori'`, il solo D-2 di Parashara,
+rifiutato dal quadro con `VARGA_SENZA_SEGNI`).
 
 Per chi aggiunge un varga o una variante: l'elenco che le superfici accettano
 si legge da `VARGAS` (server MCP, le due rotte `api/jyotish`, la CLI).
@@ -526,6 +542,16 @@ sito pubblicato lo stesso giorno, tutte fuori dal repo, in ordine di peso:
   quarto d'ora a cui di solito si dà l'ora. Il D-30 no: tratti da cinque a
   otto gradi. Restano segnati a mano col campo `fine` di `VARGAS`, senza una
   soglia calcolata.
+
+- **Le hora moderne entrano con un autore, e non nei conti del BPHS.**
+  Scelto dal proprietario il 30 ottobre 2026, voce 5. Parivritti-dvaya,
+  Kashinatha, Raman Suprajarama e Uma-Shambhu sono convenzioni del D-2 accanto
+  a Parashara e Leone-Cancro. La parivritti-dvaya è nata anonima, ma Rao
+  (2003, tavola 1; 2012, View 4) la descrive e le dà un uso, e si cita lui.
+  Con una delle quattro il D-2 mostrato la segue, mentre i varga buoni di
+  Santhanam e il vimshopaka contano la hora di Parashara e lo dicono
+  (`bphsHoraConvention` in `hora.ts`): un conto del BPHS su una carta di
+  Rath sarebbe un ibrido. Il conto di Rao (§6.6) resta col suo Leone-Cancro.
 
 - **Il D-60 si conta dal segno stesso, con una convenzione sola.** Il verso
   6.33 dice *tad-rāśeḥ* e l'esempio di Santhanam lo applica, e P.V.R.

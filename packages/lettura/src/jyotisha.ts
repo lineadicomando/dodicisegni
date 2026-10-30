@@ -183,7 +183,11 @@ La HORA (D2), se c'è, porta in testa la sua convenzione. Con quella di
 Parashara, che è il testo, ogni graha sta nella hora del Sole o della Luna e NON
 in un segno: dillo così, e non tradurlo in Leone o Cancro. Con la convenzione
 Leone e Cancro i segni ci sono, ma è la lettura corrente e non il testo, e
-quando la usi lo dici.
+quando la usi lo dici. Le convenzioni Parivritti-dvaya, Kashinatha, Raman
+Suprajarama e Uma-Shambhu sono letture moderne, ciascuna del suo autore: se
+la usi, nomina l'autore, e non mescolarla con le altre. I VARGA BUONI e il
+VIMSHOPAKA, con queste quattro, contano la hora di Parashara, e la loro riga
+lo dice.
 
 LE DASHA: LA PARTE PIÙ DELICATA
 

@@ -19,9 +19,11 @@
  *   varga buoni di un graha combusto, sconfitto, in neecha, debole o in
  *   avastha come shayana, non che non vadano contati. La riga di ogni graha
  *   porta neecha, combustione e sconfitta, definite in `stati.ts`;
- * - **la hora segue la convenzione del D-2**: con `leone-cancro` si conta per
- *   segno come ogni altro varga, con `parashara`, che non ha segni, secondo
- *   la nota di Santhanam a p. 90, dichiarata come sua.
+ * - **la hora segue la convenzione del D-2, se è del BPHS**: con
+ *   `leone-cancro` si conta per segno come ogni altro varga, con
+ *   `parashara`, che non ha segni, secondo la nota di Santhanam a p. 90,
+ *   dichiarata come sua. Con una convenzione moderna (Kashinatha e le altre)
+ *   si conta Parashara, e la riga della hora lo dice: vedi `hora.ts`.
  *
  * Fonte: *Brihat Parashara Hora Shastra*, trad. R. Santhanam, vol. I (Ranjan,
  * 1992), pp. 87-90 (6.42-53), 95-96 (7.17-25) e 294-297 (29.1-5), letti
@@ -32,7 +34,7 @@
 import { computeArudhas } from './arudha.js';
 import { ZODIAC_SIGNS } from './constants.js';
 import { parasharaDignityOf, parasharaSignDignities, parasharaSignLord, PARASHARA_GRAHAS } from './dignita-parashara.js';
-import { DEFAULT_HORA_CONVENTION, horaConvention, horaOf } from './hora.js';
+import { bphsHoraConvention, DEFAULT_HORA_CONVENTION, horaConvention, horaOf } from './hora.js';
 import { grahaName } from './nakshatra.js';
 import { computeCombustion, computeWars } from './stati.js';
 import { VARGAS, vargaSignOf } from './varga.js';
@@ -102,7 +104,7 @@ const HORA_BUONE: Readonly<Record<string, readonly ('sole' | 'luna')[]>> = {
   saturno: ['luna'],
 };
 
-const HORA_RULE: Readonly<Record<HoraConvention, string>> = {
+const HORA_RULE: Readonly<Partial<Record<HoraConvention, string>>> = {
   parashara:
     'Hora di Parashara, senza segni: buona per Sole, Marte e Giove quella del Sole, per Luna, ' +
     'Venere e Saturno quella della Luna, per Mercurio e Giove entrambe. È la nota di Santhanam ' +
@@ -169,7 +171,10 @@ export function computeGoodVargas(
 
   const kendraLords = [...new Set([0, 3, 6, 9].map((k) => parasharaSignLord(segno(indice(arudhaLagna) + k))))];
   const arudhaSigns = ZODIAC_SIGNS.filter((sign) => kendraLords.includes(parasharaSignLord(sign)));
-  const conSegniLaHora = horaConvention(hora).signOf !== undefined;
+  // La convenzione chiesta per il D-2 entra nel conto solo se è del BPHS.
+  const chiesta = horaConvention(hora);
+  const usata = bphsHoraConvention(hora);
+  const conSegniLaHora = usata.signOf !== undefined;
   const combusti = computeCombustion(chart.bodies).filter((c) => c.combust).map((c) => c.id);
   const vinti = computeWars(chart.bodies).flatMap((w) => (w.defeated ? [w.defeated] : []));
 
@@ -182,7 +187,7 @@ export function computeGoodVargas(
           const good: GoodVargaReason[] = HORA_BUONE[body.id]?.includes(h) ? ['hora'] : [];
           return { varga: id, hora: h, good };
         }
-        const sign = vargaSignOf(body.longitude, id, hora);
+        const sign = vargaSignOf(body.longitude, id, usata.id);
         const good: GoodVargaReason[] = [
           ...parasharaSignDignities(body.id, sign).filter((d) => d !== 'neecha'),
           ...(arudhaSigns.includes(sign) ? (['arudha'] as const) : []),
@@ -197,7 +202,7 @@ export function computeGoodVargas(
       });
 
       const segniRao = Object.fromEntries(
-        VARGAS.map(({ id }) => [id, vargaSignOf(body.longitude, id, id === 'd2' ? 'leone-cancro' : hora)]),
+        VARGAS.map(({ id }) => [id, vargaSignOf(body.longitude, id, id === 'd2' ? 'leone-cancro' : usata.id)]),
       ) as Record<VargaId, ZodiacSign>;
 
       return {
@@ -218,7 +223,14 @@ export function computeGoodVargas(
     arudhaRule: ARUDHA_RULE,
     kendraLords,
     arudhaSigns,
-    hora: { convention: hora, rule: HORA_RULE[hora] },
+    hora: {
+      convention: usata.id,
+      rule:
+        chiesta === usata
+          ? HORA_RULE[usata.id]!
+          : `${HORA_RULE[usata.id]!} La convenzione ${chiesta.name} scelta per il D-2 è una lettura ` +
+            'moderna e non entra nei conti del BPHS.',
+    },
     verse53: VERSE_53,
     narasimhaRaoSource: RAO_SOURCE,
     grahas,

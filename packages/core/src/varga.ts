@@ -53,7 +53,7 @@ import { grahaArudhasOf, VARGA_GRAHA_ARUDHA_SOURCE, type Posizioni } from './aru
 import { ZODIAC_SIGNS } from './constants.js';
 import { ChartError } from './errors.js';
 import { degreeInSign, normalize360 } from './math.js';
-import { DEFAULT_HORA_CONVENTION, horaConvention, horaOf } from './hora.js';
+import { DEFAULT_HORA_CONVENTION, HORA_CONVENTIONS, horaConvention, horaOf } from './hora.js';
 import { grahaName, requireSidereal } from './nakshatra.js';
 import { PARASHARA_GRAHAS, parasharaSignDignities, VARGA_DIGNITY_SOURCE } from './dignita-parashara.js';
 import type {
@@ -379,10 +379,11 @@ export function vargaSignOf(
       throw new ChartError(
         'VARGA_SENZA_SEGNI',
         `Il D-2 secondo ${convenzione.name} non ha segni, solo la hora del Sole o della Luna. ` +
-          'Per avere un segno serve la convenzione leone-cancro.',
+          'Per avere un segno serve un\'altra convenzione: ' +
+          `${HORA_CONVENTIONS.filter((c) => c.signOf).map((c) => c.id).join(', ')}.`,
       );
     }
-    return convenzione.signOf[horaOf(longitude)];
+    return convenzione.signOf(longitude);
   }
 
   return at(definition.signIndex(Math.floor(longitude / 30), degreeInSign(longitude)));
@@ -562,8 +563,8 @@ export interface VargaOptions {
  * domificazione dove il sistema non ne prevede.
  *
  * Il D-2 secondo Parashara esce come `HoraVargaChart`, con la hora al posto
- * del segno; con `leone-cancro` come ogni altro varga. In tutti e due i casi
- * porta la convenzione e la sua regola.
+ * del segno; con ogni altra convenzione come ogni altro varga. In tutti i
+ * casi porta la convenzione e la sua regola.
  */
 export function computeVarga(chart: NatalChart, id: VargaId, options: VargaOptions = {}): VargaChart {
   requireSidereal(chart.zodiac, `Il varga ${id.toUpperCase()}`);
@@ -571,7 +572,7 @@ export function computeVarga(chart: NatalChart, id: VargaId, options: VargaOptio
   const definition = findVarga(id);
 
   if (definition.id === 'd2') {
-    const { rule, signOf, ...convention } = horaConvention(options.hora);
+    const { rule, signOf, bphs: _bphs, ...convention } = horaConvention(options.hora);
     const comune = { varga: 'd2' as const, name: definition.name, divisions: definition.divisions, rule, convention };
     if (!signOf) {
       return {
@@ -586,12 +587,12 @@ export function computeVarga(chart: NatalChart, id: VargaId, options: VargaOptio
         ...(chart.angles ? { ascendant: horaOf(chart.angles.ascendant) } : {}),
       };
     }
-    const positions = chart.bodies.map((body) => posizione(body, signOf[horaOf(body.longitude)]));
+    const positions = chart.bodies.map((body) => posizione(body, signOf(body.longitude)));
     return {
       ...comune,
       kind: 'segni',
       positions,
-      ...(chart.angles ? { ascendant: signOf[horaOf(chart.angles.ascendant)] } : {}),
+      ...(chart.angles ? { ascendant: signOf(chart.angles.ascendant) } : {}),
       dignitySource: VARGA_DIGNITY_SOURCE,
       grahaArudhas: arudhaNelVarga(chart, positions, false),
     };

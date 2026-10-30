@@ -507,8 +507,14 @@ export function registerComputeJyotishaChart(server: McpServer, context: ToolCon
             'Come leggere il d2, se è fra i vargas. parashara (default) è il testo, BPHS ' +
               '6.5-6: ogni graha sta nella hora del Sole o della Luna, e un segno non c\'è. ' +
               'leone-cancro manda la hora del Sole al Leone e quella della Luna al Cancro: è ' +
-              "la lettura corrente, ma nessun classico la enuncia. Non sceglierla per conto " +
-              "tuo; se l'utente vuole la carta hora coi segni, usala e digli che cos'è.",
+              'la lettura corrente, ma nessun classico la enuncia. Le altre quattro sono letture ' +
+              'moderne con un autore, ciascuna con un segno per metà: parivritti-dvaya (due giri ' +
+              "dall'Ariete), kashinatha (di Kashinath Rath, nella dispensa di Narasimha Rao del 2003: " +
+              'segni forti di giorno e di notte), suprajarama (Raman Suprajarama, 2005) e ' +
+              'uma-shambhu (Narasimha Rao, 2012). Con queste quattro i varga buoni e il vimshopaka, ' +
+              'che sono conti del BPHS, contano la hora di Parashara, e la risposta lo dice. Non ' +
+              "sceglierne una per conto tuo; se l'utente la chiede per nome o vuole la carta hora " +
+              "coi segni, usala e digli di chi è.",
           ),
         drishti_nodes: z
           .enum(['nessuna', 'gioviana'])
@@ -1639,8 +1645,10 @@ export function registerDrawJyotishaChart(server: McpServer, context: ToolContex
           .optional()
           .describe(
             'Solo con varga=d2. Con parashara (default) il d2 non ha segni e non si disegna: ' +
-              'serve leone-cancro, la lettura corrente che manda la hora del Sole al Leone e ' +
-              "quella della Luna al Cancro. Dillo all'utente, perché non è il testo.",
+              'serve una convenzione con i segni, di solito leone-cancro, la lettura corrente che ' +
+              'manda la hora del Sole al Leone e quella della Luna al Cancro; le altre sono ' +
+              'parivritti-dvaya, kashinatha, suprajarama e uma-shambhu, descritte in ' +
+              "compute_jyotisha_chart. Dillo all'utente, perché nessuna è il testo.",
           ),
         theme: z.enum(['chiaro', 'scuro']).optional().describe('Colori. Default: chiaro.'),
         width: z
@@ -1677,9 +1685,11 @@ export function registerDrawJyotishaChart(server: McpServer, context: ToolContex
         if (varga.kind !== 'segni') {
           return fail(
             `Il D-2 secondo ${varga.convention.name} non ha segni: ogni graha sta nella hora del Sole o ` +
-              'della Luna, e il quadro non ha dove metterlo. Per disegnarlo serve hora=leone-cancro, ' +
-              "che manda la hora del Sole al Leone e quella della Luna al Cancro; dillo all'utente, " +
-              'perché è una lettura corrente e non il testo. Per la tabella usa compute_jyotisha_chart.',
+              'della Luna, e il quadro non ha dove metterlo. Per disegnarlo serve una convenzione con ' +
+              'i segni: di solito hora=leone-cancro, che manda la hora del Sole al Leone e quella ' +
+              'della Luna al Cancro; le altre sono parivritti-dvaya, kashinatha, suprajarama e ' +
+              "uma-shambhu. Dillo all'utente, perché nessuna è il testo. Per la tabella usa " +
+              'compute_jyotisha_chart.',
           );
         }
 

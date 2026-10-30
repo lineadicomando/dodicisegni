@@ -330,6 +330,15 @@ describe('superficie MCP', () => {
       }),
     );
     expect(conSegni).toContain('Convenzione: Leone e Cancro.');
+
+    const kashinatha = textOf(
+      await client.callTool({
+        name: 'compute_jyotisha_chart',
+        arguments: { date: '1968-03-12', time: '14:30', location_id: ROMA_ID, vargas: ['d2'], hora: 'kashinatha' },
+      }),
+    );
+    expect(kashinatha).toContain('Convenzione: Kashinatha.');
+    expect(kashinatha).toContain('non entra nei conti del BPHS');
   });
 
   it('disegna il varga chiesto, e la carta rashi se non se ne chiede uno', async () => {

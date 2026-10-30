@@ -42,6 +42,7 @@ export {
 } from './varga.js';
 export {
   DEFAULT_HORA_CONVENTION,
+  bphsHoraConvention,
   HORA_CONVENTIONS,
   horaConvention,
   horaOf,

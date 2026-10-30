@@ -5,6 +5,7 @@ import { computeJyotisha } from '../src/jyotisha.js';
 import { arudhaOf } from '../src/arudha.js';
 import { computeGoodVargas, GOOD_VARGA_NAMES, narasimhaRaoGoodVargas, VARGA_SCHEMES } from '../src/varga-buoni.js';
 import { VARGAS } from '../src/varga.js';
+import { computeVimshopaka } from '../src/vimshopaka.js';
 import type { BirthData, VargaId, ZodiacSign } from '../src/types.js';
 
 const NASCITA: BirthData = {
@@ -118,6 +119,23 @@ describe('i varga buoni di un tema', () => {
     const leoneCancro = computeGoodVargas(carta, 'leone-cancro')!;
     const d2 = leoneCancro.grahas.find((g) => g.id === 'sole')!.vargas.find((v) => v.varga === 'd2')!;
     expect(['leone', 'cancro']).toContain(d2.sign);
+  });
+
+  it('con una convenzione moderna conta Parashara, e lo dice', () => {
+    // Scelto dal proprietario il 30 ottobre 2026: le hora moderne non entrano
+    // nei conti del BPHS. Il vimshopaka, che non ha una riga della hora, deve
+    // dare gli stessi numeri.
+    const carta = tema();
+    const parashara = computeGoodVargas(carta, 'parashara')!;
+    for (const hora of ['parivritti-dvaya', 'kashinatha', 'suprajarama', 'uma-shambhu'] as const) {
+      const moderna = computeGoodVargas(carta, hora)!;
+      expect(moderna.grahas, hora).toEqual(parashara.grahas);
+      expect(moderna.hora.convention).toBe('parashara');
+      expect(moderna.hora.rule).toContain('non entra nei conti del BPHS');
+      const vimshopaka = computeVimshopaka(carta, hora);
+      expect(vimshopaka.grahas).toEqual(computeVimshopaka(carta, 'parashara').grahas);
+      expect(vimshopaka.source).toContain('non entra nei conti del BPHS');
+    }
   });
 
   it('dichiara il 6.53 invece di applicarlo', () => {

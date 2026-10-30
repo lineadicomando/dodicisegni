@@ -48,11 +48,16 @@ const VARGHE_CALCOLATE = new Set<string>(VARGAS.map((varga) => varga.id));
  * - `dashaYear` — `solare` (default, 365,25 giorni) o `savana` (360).
  * - `vargas` — elenco separato da virgola fra
  *   `d1,d2,d3,d4,d7,d9,d10,d12,d16,d20,d24,d27,d30,d40,d45,d60`. Default: `d9`.
- *   I tre fini portano un'avvertenza sui minuti dell'ora, che sale in `warnings`.
+ *   I cinque fini (`d24`, `d27`, `d40`, `d45`, `d60`) portano un'avvertenza
+ *   sui minuti dell'ora, che sale in `warnings`.
  * - `hora` — come leggere il D-2: `parashara` (default, BPHS 6.5-6: ogni
- *   graha nella hora del Sole o della Luna, senza segno) o `leone-cancro` (la
+ *   graha nella hora del Sole o della Luna, senza segno), `leone-cancro` (la
  *   lettura corrente, che nessun classico enuncia: la hora del Sole al Leone,
- *   della Luna al Cancro). Senza `d2` fra i `vargas` non cambia niente.
+ *   della Luna al Cancro), o una delle quattro letture moderne con un autore:
+ *   `parivritti-dvaya`, `kashinatha`, `suprajarama`, `uma-shambhu`. Le
+ *   moderne non entrano nei conti del BPHS (varga buoni e vimshopaka), che
+ *   con loro contano Parashara e lo dicono. Senza `d2` fra i `vargas` cambia
+ *   solo la riga che lo dice.
  * - `drishtiNodes` — `nessuna` (default, forma classica) o `gioviana`.
  * - `format` — `json` (default) o `compact`.
  *

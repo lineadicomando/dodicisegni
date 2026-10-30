@@ -39,9 +39,10 @@ const VARGHE_CALCOLATE = new Set<string>(VARGAS.map((varga) => varga.id));
  * - `varga` — uno fra `d1` (default), `d2` (vedi `hora`), `d3`, `d4`, `d7`,
  *   `d9`, `d10`, `d12`, `d16`, `d20`, `d24`, `d27`, `d30`, `d40`, `d45`, `d60`.
  *   **Uno solo**: un'immagine è un quadro solo.
- * - `hora` — solo con `varga=d2`: `parashara` (default) o `leone-cancro`. Con
- *   Parashara il D-2 non ha segni e il quadro risponde 400
- *   (`VARGA_SENZA_SEGNI`): per disegnarlo serve `leone-cancro`.
+ * - `hora` — solo con `varga=d2`: `parashara` (default), `leone-cancro`,
+ *   `parivritti-dvaya`, `kashinatha`, `suprajarama` o `uma-shambhu` (vedi
+ *   `/api/jyotish`). Con Parashara il D-2 non ha segni e il quadro risponde
+ *   400 (`VARGA_SENZA_SEGNI`): per disegnarlo serve una delle altre.
  * - `ayanamsa` — come su `/api/jyotish`.
  *
  * Lo zodiaco non si sceglie, ed è siderale. Lo `stile` del nord **richiede
@@ -71,7 +72,9 @@ export const GET: RequestHandler = ({ url, setHeaders }) => {
         400,
         `Il D-2 secondo ${varga.convention.name} non ha segni, e il quadro non ha dove mettere ` +
           'i graha. Con "hora=leone-cancro" la hora del Sole va al Leone e quella della Luna ' +
-          'al Cancro, ed è la lettura corrente; la tabella senza segni sta su /api/jyotish.',
+          'al Cancro, ed è la lettura corrente; le altre convenzioni con un segno sono ' +
+          'parivritti-dvaya, kashinatha, suprajarama e uma-shambhu. La tabella senza segni ' +
+          'sta su /api/jyotish.',
         { code: 'VARGA_SENZA_SEGNI' },
       );
     }
