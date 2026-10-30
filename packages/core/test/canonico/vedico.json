@@ -1800,7 +1800,89 @@
           }
         ],
         "ascendant": "sagittario",
-        "dignitySource": "Per segno, senza gradi: il segno del varga confrontato coi segni di uccha, moolatrikona, proprio e neecha di ciascuno dei sette graha (BPHS 3.49-54 e 4.6-24; 6.52, trad. Santhanam, vol. I, p. 88, per i primi tre come varga buoni). Tutte le corrispondenze, non una sola. Il conto dei varga buoni di 6.42-53, che aggiunge la regola dell'arudha, sta a parte nel tema vedico, con l'ora di nascita."
+        "dignitySource": "Per segno, senza gradi: il segno del varga confrontato coi segni di uccha, moolatrikona, proprio e neecha di ciascuno dei sette graha (BPHS 3.49-54 e 4.6-24; 6.52, trad. Santhanam, vol. I, p. 88, per i primi tre come varga buoni). Tutte le corrispondenze, non una sola. Il conto dei varga buoni di 6.42-53, che aggiunge la regola dell'arudha, sta a parte nel tema vedico, con l'ora di nascita.",
+        "grahaArudhas": {
+          "source": "P.V.R. Narasimha Rao, Vedic Astrology: An Integrated Approach (2000), §9.5, pp. 94-95: dal segno del graha al suo segno proprio, e altrettanto oltre; se si cade nel 1° o nel 7° dal graha, il 10° dal segno trovato. Per i graha con due segni il più forte secondo §15.5.2 (pp. 203-205), con le rasi drishti di §10.3 e, per Scorpione e Acquario, il co-signore più forte di §15.5.1; dignità della sua tavola 6 (p. 34), che per i nodi non sono quelle del BPHS. Lettura del motore: un graha nello Scorpione o nell'Acquario ha per dispositore tutti e due i co-signori. Nel varga, coi segni del varga (§9.5, p. 94). Due spareggi guardano il grado nel segno (§15.5.1, 5b; §15.5.2, 6), che nel varga non è definito, e Rao non dice quale usare: se la catena arriva lì il segno più forte resta indeterminato, e l'arudha pure. Succede solo a Marte e a Saturno, per il co-signore di Scorpione e Acquario.",
+          "grahas": [
+            {
+              "id": "sole",
+              "name": "Sole",
+              "sign": "gemelli",
+              "ownSign": "leone",
+              "pada": "bilancia",
+              "exception": false
+            },
+            {
+              "id": "luna",
+              "name": "Luna",
+              "sign": "pesci",
+              "ownSign": "cancro",
+              "pada": "scorpione",
+              "exception": false
+            },
+            {
+              "id": "mercurio",
+              "name": "Mercurio",
+              "sign": "bilancia",
+              "ownSign": "vergine",
+              "ownSignRule": "Il signore sta in un segno di parità diversa (§15.5.2, 4).",
+              "pada": "leone",
+              "exception": false
+            },
+            {
+              "id": "venere",
+              "name": "Venere",
+              "sign": "bilancia",
+              "ownSign": "bilancia",
+              "ownSignRule": "Più graha nel segno (§15.5.2, 1).",
+              "pada": "cancro",
+              "exception": true
+            },
+            {
+              "id": "marte",
+              "name": "Marte",
+              "sign": "acquario",
+              "ownSign": "ariete",
+              "ownSignRule": "Più fra Giove, Mercurio e il signore lo occupano o lo guardano (§15.5.2, 2).",
+              "pada": "gemelli",
+              "exception": false
+            },
+            {
+              "id": "giove",
+              "name": "Giove",
+              "sign": "toro",
+              "ownSign": "pesci",
+              "ownSignRule": "Più graha nel segno (§15.5.2, 1).",
+              "pada": "capricorno",
+              "exception": false
+            },
+            {
+              "id": "saturno",
+              "name": "Saturno",
+              "sign": "sagittario",
+              "ownSign": "acquario",
+              "ownSignRule": "Più graha nel segno (§15.5.2, 1).",
+              "pada": "ariete",
+              "exception": false
+            },
+            {
+              "id": "nodo-nord",
+              "name": "Rahu",
+              "sign": "pesci",
+              "ownSign": "acquario",
+              "pada": "capricorno",
+              "exception": false
+            },
+            {
+              "id": "nodo-sud",
+              "name": "Ketu",
+              "sign": "vergine",
+              "ownSign": "scorpione",
+              "pada": "capricorno",
+              "exception": false
+            }
+          ]
+        }
       }
     ],
     "drishti": {
@@ -4770,7 +4852,7 @@
       }
     },
     "grahaArudhas": {
-      "source": "P.V.R. Narasimha Rao, Vedic Astrology: An Integrated Approach (2000), §9.5, pp. 94-95: dal segno del graha al suo segno proprio, e altrettanto oltre; se si cade nel 1° o nel 7° dal graha, il 10° dal segno trovato. Per i graha con due segni il più forte secondo §15.5.2 (pp. 203-205), con le rasi drishti di §10.3 e, per Scorpione e Acquario, il co-signore più forte di §15.5.1; dignità della sua tavola 6 (p. 34), che per i nodi non sono quelle del BPHS. Lettura del motore: un graha nello Scorpione o nell'Acquario ha per dispositore tutti e due i co-signori. Solo la rashi. BPHS 29.6-7 non dice come scegliere il segno più forte: per questo la scuola è quella di Rao.",
+      "source": "P.V.R. Narasimha Rao, Vedic Astrology: An Integrated Approach (2000), §9.5, pp. 94-95: dal segno del graha al suo segno proprio, e altrettanto oltre; se si cade nel 1° o nel 7° dal graha, il 10° dal segno trovato. Per i graha con due segni il più forte secondo §15.5.2 (pp. 203-205), con le rasi drishti di §10.3 e, per Scorpione e Acquario, il co-signore più forte di §15.5.1; dignità della sua tavola 6 (p. 34), che per i nodi non sono quelle del BPHS. Lettura del motore: un graha nello Scorpione o nell'Acquario ha per dispositore tutti e due i co-signori. Questi sono della rashi; ogni varga porta i suoi. BPHS 29.6-7 non dice come scegliere il segno più forte: per questo la scuola è quella di Rao.",
       "grahas": [
         {
           "id": "sole",
@@ -14926,7 +15008,89 @@
           }
         ],
         "ascendant": "scorpione",
-        "dignitySource": "Per segno, senza gradi: il segno del varga confrontato coi segni di uccha, moolatrikona, proprio e neecha di ciascuno dei sette graha (BPHS 3.49-54 e 4.6-24; 6.52, trad. Santhanam, vol. I, p. 88, per i primi tre come varga buoni). Tutte le corrispondenze, non una sola. Il conto dei varga buoni di 6.42-53, che aggiunge la regola dell'arudha, sta a parte nel tema vedico, con l'ora di nascita."
+        "dignitySource": "Per segno, senza gradi: il segno del varga confrontato coi segni di uccha, moolatrikona, proprio e neecha di ciascuno dei sette graha (BPHS 3.49-54 e 4.6-24; 6.52, trad. Santhanam, vol. I, p. 88, per i primi tre come varga buoni). Tutte le corrispondenze, non una sola. Il conto dei varga buoni di 6.42-53, che aggiunge la regola dell'arudha, sta a parte nel tema vedico, con l'ora di nascita.",
+        "grahaArudhas": {
+          "source": "P.V.R. Narasimha Rao, Vedic Astrology: An Integrated Approach (2000), §9.5, pp. 94-95: dal segno del graha al suo segno proprio, e altrettanto oltre; se si cade nel 1° o nel 7° dal graha, il 10° dal segno trovato. Per i graha con due segni il più forte secondo §15.5.2 (pp. 203-205), con le rasi drishti di §10.3 e, per Scorpione e Acquario, il co-signore più forte di §15.5.1; dignità della sua tavola 6 (p. 34), che per i nodi non sono quelle del BPHS. Lettura del motore: un graha nello Scorpione o nell'Acquario ha per dispositore tutti e due i co-signori. Nel varga, coi segni del varga (§9.5, p. 94). Due spareggi guardano il grado nel segno (§15.5.1, 5b; §15.5.2, 6), che nel varga non è definito, e Rao non dice quale usare: se la catena arriva lì il segno più forte resta indeterminato, e l'arudha pure. Succede solo a Marte e a Saturno, per il co-signore di Scorpione e Acquario.",
+          "grahas": [
+            {
+              "id": "sole",
+              "name": "Sole",
+              "sign": "bilancia",
+              "ownSign": "leone",
+              "pada": "gemelli",
+              "exception": false
+            },
+            {
+              "id": "luna",
+              "name": "Luna",
+              "sign": "pesci",
+              "ownSign": "cancro",
+              "pada": "scorpione",
+              "exception": false
+            },
+            {
+              "id": "mercurio",
+              "name": "Mercurio",
+              "sign": "acquario",
+              "ownSign": "vergine",
+              "ownSignRule": "Il signore sta in un segno di parità diversa (§15.5.2, 4).",
+              "pada": "ariete",
+              "exception": false
+            },
+            {
+              "id": "venere",
+              "name": "Venere",
+              "sign": "acquario",
+              "ownSign": "bilancia",
+              "ownSignRule": "Più fra Giove, Mercurio e il signore lo occupano o lo guardano (§15.5.2, 2).",
+              "pada": "gemelli",
+              "exception": false
+            },
+            {
+              "id": "marte",
+              "name": "Marte",
+              "sign": "scorpione",
+              "ownSign": "scorpione",
+              "ownSignRule": "Più graha nel segno (§15.5.2, 1).",
+              "pada": "leone",
+              "exception": true
+            },
+            {
+              "id": "giove",
+              "name": "Giove",
+              "sign": "leone",
+              "ownSign": "pesci",
+              "ownSignRule": "Più graha nel segno (§15.5.2, 1).",
+              "pada": "bilancia",
+              "exception": false
+            },
+            {
+              "id": "saturno",
+              "name": "Saturno",
+              "sign": "cancro",
+              "ownSign": "acquario",
+              "ownSignRule": "Più graha nel segno (§15.5.2, 1).",
+              "pada": "vergine",
+              "exception": false
+            },
+            {
+              "id": "nodo-nord",
+              "name": "Rahu",
+              "sign": "scorpione",
+              "ownSign": "acquario",
+              "pada": "acquario",
+              "exception": true
+            },
+            {
+              "id": "nodo-sud",
+              "name": "Ketu",
+              "sign": "toro",
+              "ownSign": "scorpione",
+              "pada": "acquario",
+              "exception": true
+            }
+          ]
+        }
       },
       {
         "kind": "segni",
@@ -15016,7 +15180,89 @@
           }
         ],
         "ascendant": "capricorno",
-        "dignitySource": "Per segno, senza gradi: il segno del varga confrontato coi segni di uccha, moolatrikona, proprio e neecha di ciascuno dei sette graha (BPHS 3.49-54 e 4.6-24; 6.52, trad. Santhanam, vol. I, p. 88, per i primi tre come varga buoni). Tutte le corrispondenze, non una sola. Il conto dei varga buoni di 6.42-53, che aggiunge la regola dell'arudha, sta a parte nel tema vedico, con l'ora di nascita."
+        "dignitySource": "Per segno, senza gradi: il segno del varga confrontato coi segni di uccha, moolatrikona, proprio e neecha di ciascuno dei sette graha (BPHS 3.49-54 e 4.6-24; 6.52, trad. Santhanam, vol. I, p. 88, per i primi tre come varga buoni). Tutte le corrispondenze, non una sola. Il conto dei varga buoni di 6.42-53, che aggiunge la regola dell'arudha, sta a parte nel tema vedico, con l'ora di nascita.",
+        "grahaArudhas": {
+          "source": "P.V.R. Narasimha Rao, Vedic Astrology: An Integrated Approach (2000), §9.5, pp. 94-95: dal segno del graha al suo segno proprio, e altrettanto oltre; se si cade nel 1° o nel 7° dal graha, il 10° dal segno trovato. Per i graha con due segni il più forte secondo §15.5.2 (pp. 203-205), con le rasi drishti di §10.3 e, per Scorpione e Acquario, il co-signore più forte di §15.5.1; dignità della sua tavola 6 (p. 34), che per i nodi non sono quelle del BPHS. Lettura del motore: un graha nello Scorpione o nell'Acquario ha per dispositore tutti e due i co-signori. Nel varga, coi segni del varga (§9.5, p. 94). Due spareggi guardano il grado nel segno (§15.5.1, 5b; §15.5.2, 6), che nel varga non è definito, e Rao non dice quale usare: se la catena arriva lì il segno più forte resta indeterminato, e l'arudha pure. Succede solo a Marte e a Saturno, per il co-signore di Scorpione e Acquario.",
+          "grahas": [
+            {
+              "id": "sole",
+              "name": "Sole",
+              "sign": "scorpione",
+              "ownSign": "leone",
+              "pada": "acquario",
+              "exception": true
+            },
+            {
+              "id": "luna",
+              "name": "Luna",
+              "sign": "ariete",
+              "ownSign": "cancro",
+              "pada": "cancro",
+              "exception": true
+            },
+            {
+              "id": "mercurio",
+              "name": "Mercurio",
+              "sign": "acquario",
+              "ownSign": "vergine",
+              "ownSignRule": "Il signore sta in un segno di parità diversa (§15.5.2, 4).",
+              "pada": "ariete",
+              "exception": false
+            },
+            {
+              "id": "venere",
+              "name": "Venere",
+              "sign": "acquario",
+              "ownSign": "bilancia",
+              "ownSignRule": "Più fra Giove, Mercurio e il signore lo occupano o lo guardano (§15.5.2, 2).",
+              "pada": "gemelli",
+              "exception": false
+            },
+            {
+              "id": "marte",
+              "name": "Marte",
+              "sign": "sagittario",
+              "ownSign": "ariete",
+              "ownSignRule": "Più fra Giove, Mercurio e il signore lo occupano o lo guardano (§15.5.2, 2).",
+              "pada": "leone",
+              "exception": false
+            },
+            {
+              "id": "giove",
+              "name": "Giove",
+              "sign": "leone",
+              "ownSign": "sagittario",
+              "ownSignRule": "Più graha nel segno (§15.5.2, 1).",
+              "pada": "ariete",
+              "exception": false
+            },
+            {
+              "id": "saturno",
+              "name": "Saturno",
+              "sign": "vergine",
+              "ownSign": "acquario",
+              "ownSignRule": "Più graha nel segno (§15.5.2, 1).",
+              "pada": "cancro",
+              "exception": false
+            },
+            {
+              "id": "nodo-nord",
+              "name": "Rahu",
+              "sign": "sagittario",
+              "ownSign": "acquario",
+              "pada": "ariete",
+              "exception": false
+            },
+            {
+              "id": "nodo-sud",
+              "name": "Ketu",
+              "sign": "gemelli",
+              "ownSign": "scorpione",
+              "pada": "ariete",
+              "exception": false
+            }
+          ]
+        }
       },
       {
         "kind": "segni",
@@ -15113,7 +15359,89 @@
           }
         ],
         "ascendant": "ariete",
-        "dignitySource": "Per segno, senza gradi: il segno del varga confrontato coi segni di uccha, moolatrikona, proprio e neecha di ciascuno dei sette graha (BPHS 3.49-54 e 4.6-24; 6.52, trad. Santhanam, vol. I, p. 88, per i primi tre come varga buoni). Tutte le corrispondenze, non una sola. Il conto dei varga buoni di 6.42-53, che aggiunge la regola dell'arudha, sta a parte nel tema vedico, con l'ora di nascita."
+        "dignitySource": "Per segno, senza gradi: il segno del varga confrontato coi segni di uccha, moolatrikona, proprio e neecha di ciascuno dei sette graha (BPHS 3.49-54 e 4.6-24; 6.52, trad. Santhanam, vol. I, p. 88, per i primi tre come varga buoni). Tutte le corrispondenze, non una sola. Il conto dei varga buoni di 6.42-53, che aggiunge la regola dell'arudha, sta a parte nel tema vedico, con l'ora di nascita.",
+        "grahaArudhas": {
+          "source": "P.V.R. Narasimha Rao, Vedic Astrology: An Integrated Approach (2000), §9.5, pp. 94-95: dal segno del graha al suo segno proprio, e altrettanto oltre; se si cade nel 1° o nel 7° dal graha, il 10° dal segno trovato. Per i graha con due segni il più forte secondo §15.5.2 (pp. 203-205), con le rasi drishti di §10.3 e, per Scorpione e Acquario, il co-signore più forte di §15.5.1; dignità della sua tavola 6 (p. 34), che per i nodi non sono quelle del BPHS. Lettura del motore: un graha nello Scorpione o nell'Acquario ha per dispositore tutti e due i co-signori. Nel varga, coi segni del varga (§9.5, p. 94). Due spareggi guardano il grado nel segno (§15.5.1, 5b; §15.5.2, 6), che nel varga non è definito, e Rao non dice quale usare: se la catena arriva lì il segno più forte resta indeterminato, e l'arudha pure. Succede solo a Marte e a Saturno, per il co-signore di Scorpione e Acquario.",
+          "grahas": [
+            {
+              "id": "sole",
+              "name": "Sole",
+              "sign": "leone",
+              "ownSign": "leone",
+              "pada": "toro",
+              "exception": true
+            },
+            {
+              "id": "luna",
+              "name": "Luna",
+              "sign": "cancro",
+              "ownSign": "cancro",
+              "pada": "ariete",
+              "exception": true
+            },
+            {
+              "id": "mercurio",
+              "name": "Mercurio",
+              "sign": "acquario",
+              "ownSign": "vergine",
+              "ownSignRule": "Più graha nel segno (§15.5.2, 1).",
+              "pada": "ariete",
+              "exception": false
+            },
+            {
+              "id": "venere",
+              "name": "Venere",
+              "sign": "acquario",
+              "ownSign": "bilancia",
+              "ownSignRule": "Più fra Giove, Mercurio e il signore lo occupano o lo guardano (§15.5.2, 2).",
+              "pada": "gemelli",
+              "exception": false
+            },
+            {
+              "id": "marte",
+              "name": "Marte",
+              "sign": "acquario",
+              "ownSign": "ariete",
+              "ownSignRule": "Più fra Giove, Mercurio e il signore lo occupano o lo guardano (§15.5.2, 2).",
+              "pada": "gemelli",
+              "exception": false
+            },
+            {
+              "id": "giove",
+              "name": "Giove",
+              "sign": "vergine",
+              "ownSign": "pesci",
+              "ownSignRule": "Più graha nel segno (§15.5.2, 1).",
+              "pada": "gemelli",
+              "exception": true
+            },
+            {
+              "id": "saturno",
+              "name": "Saturno",
+              "sign": "capricorno",
+              "ownSign": "acquario",
+              "ownSignRule": "Più graha nel segno (§15.5.2, 1).",
+              "pada": "pesci",
+              "exception": false
+            },
+            {
+              "id": "nodo-nord",
+              "name": "Rahu",
+              "sign": "pesci",
+              "ownSign": "acquario",
+              "pada": "capricorno",
+              "exception": false
+            },
+            {
+              "id": "nodo-sud",
+              "name": "Ketu",
+              "sign": "vergine",
+              "ownSign": "scorpione",
+              "pada": "capricorno",
+              "exception": false
+            }
+          ]
+        }
       },
       {
         "kind": "segni",
@@ -15206,7 +15534,89 @@
           }
         ],
         "ascendant": "sagittario",
-        "dignitySource": "Per segno, senza gradi: il segno del varga confrontato coi segni di uccha, moolatrikona, proprio e neecha di ciascuno dei sette graha (BPHS 3.49-54 e 4.6-24; 6.52, trad. Santhanam, vol. I, p. 88, per i primi tre come varga buoni). Tutte le corrispondenze, non una sola. Il conto dei varga buoni di 6.42-53, che aggiunge la regola dell'arudha, sta a parte nel tema vedico, con l'ora di nascita."
+        "dignitySource": "Per segno, senza gradi: il segno del varga confrontato coi segni di uccha, moolatrikona, proprio e neecha di ciascuno dei sette graha (BPHS 3.49-54 e 4.6-24; 6.52, trad. Santhanam, vol. I, p. 88, per i primi tre come varga buoni). Tutte le corrispondenze, non una sola. Il conto dei varga buoni di 6.42-53, che aggiunge la regola dell'arudha, sta a parte nel tema vedico, con l'ora di nascita.",
+        "grahaArudhas": {
+          "source": "P.V.R. Narasimha Rao, Vedic Astrology: An Integrated Approach (2000), §9.5, pp. 94-95: dal segno del graha al suo segno proprio, e altrettanto oltre; se si cade nel 1° o nel 7° dal graha, il 10° dal segno trovato. Per i graha con due segni il più forte secondo §15.5.2 (pp. 203-205), con le rasi drishti di §10.3 e, per Scorpione e Acquario, il co-signore più forte di §15.5.1; dignità della sua tavola 6 (p. 34), che per i nodi non sono quelle del BPHS. Lettura del motore: un graha nello Scorpione o nell'Acquario ha per dispositore tutti e due i co-signori. Nel varga, coi segni del varga (§9.5, p. 94). Due spareggi guardano il grado nel segno (§15.5.1, 5b; §15.5.2, 6), che nel varga non è definito, e Rao non dice quale usare: se la catena arriva lì il segno più forte resta indeterminato, e l'arudha pure. Succede solo a Marte e a Saturno, per il co-signore di Scorpione e Acquario.",
+          "grahas": [
+            {
+              "id": "sole",
+              "name": "Sole",
+              "sign": "gemelli",
+              "ownSign": "leone",
+              "pada": "bilancia",
+              "exception": false
+            },
+            {
+              "id": "luna",
+              "name": "Luna",
+              "sign": "pesci",
+              "ownSign": "cancro",
+              "pada": "scorpione",
+              "exception": false
+            },
+            {
+              "id": "mercurio",
+              "name": "Mercurio",
+              "sign": "bilancia",
+              "ownSign": "vergine",
+              "ownSignRule": "Il signore sta in un segno di parità diversa (§15.5.2, 4).",
+              "pada": "leone",
+              "exception": false
+            },
+            {
+              "id": "venere",
+              "name": "Venere",
+              "sign": "bilancia",
+              "ownSign": "bilancia",
+              "ownSignRule": "Più graha nel segno (§15.5.2, 1).",
+              "pada": "cancro",
+              "exception": true
+            },
+            {
+              "id": "marte",
+              "name": "Marte",
+              "sign": "acquario",
+              "ownSign": "ariete",
+              "ownSignRule": "Più fra Giove, Mercurio e il signore lo occupano o lo guardano (§15.5.2, 2).",
+              "pada": "gemelli",
+              "exception": false
+            },
+            {
+              "id": "giove",
+              "name": "Giove",
+              "sign": "toro",
+              "ownSign": "pesci",
+              "ownSignRule": "Più graha nel segno (§15.5.2, 1).",
+              "pada": "capricorno",
+              "exception": false
+            },
+            {
+              "id": "saturno",
+              "name": "Saturno",
+              "sign": "sagittario",
+              "ownSign": "acquario",
+              "ownSignRule": "Più graha nel segno (§15.5.2, 1).",
+              "pada": "ariete",
+              "exception": false
+            },
+            {
+              "id": "nodo-nord",
+              "name": "Rahu",
+              "sign": "pesci",
+              "ownSign": "acquario",
+              "pada": "capricorno",
+              "exception": false
+            },
+            {
+              "id": "nodo-sud",
+              "name": "Ketu",
+              "sign": "vergine",
+              "ownSign": "scorpione",
+              "pada": "capricorno",
+              "exception": false
+            }
+          ]
+        }
       },
       {
         "kind": "segni",
@@ -15298,7 +15708,89 @@
           }
         ],
         "ascendant": "leone",
-        "dignitySource": "Per segno, senza gradi: il segno del varga confrontato coi segni di uccha, moolatrikona, proprio e neecha di ciascuno dei sette graha (BPHS 3.49-54 e 4.6-24; 6.52, trad. Santhanam, vol. I, p. 88, per i primi tre come varga buoni). Tutte le corrispondenze, non una sola. Il conto dei varga buoni di 6.42-53, che aggiunge la regola dell'arudha, sta a parte nel tema vedico, con l'ora di nascita."
+        "dignitySource": "Per segno, senza gradi: il segno del varga confrontato coi segni di uccha, moolatrikona, proprio e neecha di ciascuno dei sette graha (BPHS 3.49-54 e 4.6-24; 6.52, trad. Santhanam, vol. I, p. 88, per i primi tre come varga buoni). Tutte le corrispondenze, non una sola. Il conto dei varga buoni di 6.42-53, che aggiunge la regola dell'arudha, sta a parte nel tema vedico, con l'ora di nascita.",
+        "grahaArudhas": {
+          "source": "P.V.R. Narasimha Rao, Vedic Astrology: An Integrated Approach (2000), §9.5, pp. 94-95: dal segno del graha al suo segno proprio, e altrettanto oltre; se si cade nel 1° o nel 7° dal graha, il 10° dal segno trovato. Per i graha con due segni il più forte secondo §15.5.2 (pp. 203-205), con le rasi drishti di §10.3 e, per Scorpione e Acquario, il co-signore più forte di §15.5.1; dignità della sua tavola 6 (p. 34), che per i nodi non sono quelle del BPHS. Lettura del motore: un graha nello Scorpione o nell'Acquario ha per dispositore tutti e due i co-signori. Nel varga, coi segni del varga (§9.5, p. 94). Due spareggi guardano il grado nel segno (§15.5.1, 5b; §15.5.2, 6), che nel varga non è definito, e Rao non dice quale usare: se la catena arriva lì il segno più forte resta indeterminato, e l'arudha pure. Succede solo a Marte e a Saturno, per il co-signore di Scorpione e Acquario.",
+          "grahas": [
+            {
+              "id": "sole",
+              "name": "Sole",
+              "sign": "scorpione",
+              "ownSign": "leone",
+              "pada": "acquario",
+              "exception": true
+            },
+            {
+              "id": "luna",
+              "name": "Luna",
+              "sign": "sagittario",
+              "ownSign": "cancro",
+              "pada": "acquario",
+              "exception": false
+            },
+            {
+              "id": "mercurio",
+              "name": "Mercurio",
+              "sign": "acquario",
+              "ownSign": "vergine",
+              "ownSignRule": "Più graha nel segno (§15.5.2, 1).",
+              "pada": "ariete",
+              "exception": false
+            },
+            {
+              "id": "venere",
+              "name": "Venere",
+              "sign": "acquario",
+              "ownSign": "toro",
+              "ownSignRule": "Più graha nel segno (§15.5.2, 1).",
+              "pada": "toro",
+              "exception": true
+            },
+            {
+              "id": "marte",
+              "name": "Marte",
+              "sign": "cancro",
+              "ownSign": "scorpione",
+              "ownSignRule": "Più graha nel segno (§15.5.2, 1).",
+              "pada": "pesci",
+              "exception": false
+            },
+            {
+              "id": "giove",
+              "name": "Giove",
+              "sign": "vergine",
+              "ownSign": "sagittario",
+              "ownSignRule": "Più graha nel segno (§15.5.2, 1).",
+              "pada": "sagittario",
+              "exception": true
+            },
+            {
+              "id": "saturno",
+              "name": "Saturno",
+              "sign": "toro",
+              "ownSign": "acquario",
+              "ownSignRule": "Più graha nel segno (§15.5.2, 1).",
+              "pada": "leone",
+              "exception": true
+            },
+            {
+              "id": "nodo-nord",
+              "name": "Rahu",
+              "sign": "cancro",
+              "ownSign": "acquario",
+              "pada": "vergine",
+              "exception": false
+            },
+            {
+              "id": "nodo-sud",
+              "name": "Ketu",
+              "sign": "capricorno",
+              "ownSign": "scorpione",
+              "pada": "vergine",
+              "exception": false
+            }
+          ]
+        }
       },
       {
         "kind": "segni",
@@ -15394,7 +15886,89 @@
           }
         ],
         "ascendant": "capricorno",
-        "dignitySource": "Per segno, senza gradi: il segno del varga confrontato coi segni di uccha, moolatrikona, proprio e neecha di ciascuno dei sette graha (BPHS 3.49-54 e 4.6-24; 6.52, trad. Santhanam, vol. I, p. 88, per i primi tre come varga buoni). Tutte le corrispondenze, non una sola. Il conto dei varga buoni di 6.42-53, che aggiunge la regola dell'arudha, sta a parte nel tema vedico, con l'ora di nascita."
+        "dignitySource": "Per segno, senza gradi: il segno del varga confrontato coi segni di uccha, moolatrikona, proprio e neecha di ciascuno dei sette graha (BPHS 3.49-54 e 4.6-24; 6.52, trad. Santhanam, vol. I, p. 88, per i primi tre come varga buoni). Tutte le corrispondenze, non una sola. Il conto dei varga buoni di 6.42-53, che aggiunge la regola dell'arudha, sta a parte nel tema vedico, con l'ora di nascita.",
+        "grahaArudhas": {
+          "source": "P.V.R. Narasimha Rao, Vedic Astrology: An Integrated Approach (2000), §9.5, pp. 94-95: dal segno del graha al suo segno proprio, e altrettanto oltre; se si cade nel 1° o nel 7° dal graha, il 10° dal segno trovato. Per i graha con due segni il più forte secondo §15.5.2 (pp. 203-205), con le rasi drishti di §10.3 e, per Scorpione e Acquario, il co-signore più forte di §15.5.1; dignità della sua tavola 6 (p. 34), che per i nodi non sono quelle del BPHS. Lettura del motore: un graha nello Scorpione o nell'Acquario ha per dispositore tutti e due i co-signori. Nel varga, coi segni del varga (§9.5, p. 94). Due spareggi guardano il grado nel segno (§15.5.1, 5b; §15.5.2, 6), che nel varga non è definito, e Rao non dice quale usare: se la catena arriva lì il segno più forte resta indeterminato, e l'arudha pure. Succede solo a Marte e a Saturno, per il co-signore di Scorpione e Acquario.",
+          "grahas": [
+            {
+              "id": "sole",
+              "name": "Sole",
+              "sign": "capricorno",
+              "ownSign": "leone",
+              "pada": "pesci",
+              "exception": false
+            },
+            {
+              "id": "luna",
+              "name": "Luna",
+              "sign": "gemelli",
+              "ownSign": "cancro",
+              "pada": "leone",
+              "exception": false
+            },
+            {
+              "id": "mercurio",
+              "name": "Mercurio",
+              "sign": "acquario",
+              "ownSign": "vergine",
+              "ownSignRule": "Il signore sta in un segno di parità diversa (§15.5.2, 4).",
+              "pada": "ariete",
+              "exception": false
+            },
+            {
+              "id": "venere",
+              "name": "Venere",
+              "sign": "pesci",
+              "ownSign": "bilancia",
+              "ownSignRule": "Più graha nel segno (§15.5.2, 1).",
+              "pada": "toro",
+              "exception": false
+            },
+            {
+              "id": "marte",
+              "name": "Marte",
+              "sign": "capricorno",
+              "ownSign": "ariete",
+              "ownSignRule": "Il signore sta in un segno di parità diversa (§15.5.2, 4).",
+              "pada": "ariete",
+              "exception": true
+            },
+            {
+              "id": "giove",
+              "name": "Giove",
+              "sign": "vergine",
+              "ownSign": "pesci",
+              "ownSignRule": "Più graha nel segno (§15.5.2, 1).",
+              "pada": "gemelli",
+              "exception": true
+            },
+            {
+              "id": "saturno",
+              "name": "Saturno",
+              "sign": "bilancia",
+              "ownSign": "capricorno",
+              "ownSignRule": "Più graha nel segno (§15.5.2, 1).",
+              "pada": "capricorno",
+              "exception": true
+            },
+            {
+              "id": "nodo-nord",
+              "name": "Rahu",
+              "sign": "capricorno",
+              "ownSign": "acquario",
+              "pada": "pesci",
+              "exception": false
+            },
+            {
+              "id": "nodo-sud",
+              "name": "Ketu",
+              "sign": "cancro",
+              "ownSign": "scorpione",
+              "pada": "pesci",
+              "exception": false
+            }
+          ]
+        }
       },
       {
         "kind": "segni",
@@ -15492,7 +16066,89 @@
           }
         ],
         "ascendant": "capricorno",
-        "dignitySource": "Per segno, senza gradi: il segno del varga confrontato coi segni di uccha, moolatrikona, proprio e neecha di ciascuno dei sette graha (BPHS 3.49-54 e 4.6-24; 6.52, trad. Santhanam, vol. I, p. 88, per i primi tre come varga buoni). Tutte le corrispondenze, non una sola. Il conto dei varga buoni di 6.42-53, che aggiunge la regola dell'arudha, sta a parte nel tema vedico, con l'ora di nascita."
+        "dignitySource": "Per segno, senza gradi: il segno del varga confrontato coi segni di uccha, moolatrikona, proprio e neecha di ciascuno dei sette graha (BPHS 3.49-54 e 4.6-24; 6.52, trad. Santhanam, vol. I, p. 88, per i primi tre come varga buoni). Tutte le corrispondenze, non una sola. Il conto dei varga buoni di 6.42-53, che aggiunge la regola dell'arudha, sta a parte nel tema vedico, con l'ora di nascita.",
+        "grahaArudhas": {
+          "source": "P.V.R. Narasimha Rao, Vedic Astrology: An Integrated Approach (2000), §9.5, pp. 94-95: dal segno del graha al suo segno proprio, e altrettanto oltre; se si cade nel 1° o nel 7° dal graha, il 10° dal segno trovato. Per i graha con due segni il più forte secondo §15.5.2 (pp. 203-205), con le rasi drishti di §10.3 e, per Scorpione e Acquario, il co-signore più forte di §15.5.1; dignità della sua tavola 6 (p. 34), che per i nodi non sono quelle del BPHS. Lettura del motore: un graha nello Scorpione o nell'Acquario ha per dispositore tutti e due i co-signori. Nel varga, coi segni del varga (§9.5, p. 94). Due spareggi guardano il grado nel segno (§15.5.1, 5b; §15.5.2, 6), che nel varga non è definito, e Rao non dice quale usare: se la catena arriva lì il segno più forte resta indeterminato, e l'arudha pure. Succede solo a Marte e a Saturno, per il co-signore di Scorpione e Acquario.",
+          "grahas": [
+            {
+              "id": "sole",
+              "name": "Sole",
+              "sign": "scorpione",
+              "ownSign": "leone",
+              "pada": "acquario",
+              "exception": true
+            },
+            {
+              "id": "luna",
+              "name": "Luna",
+              "sign": "cancro",
+              "ownSign": "cancro",
+              "pada": "ariete",
+              "exception": true
+            },
+            {
+              "id": "mercurio",
+              "name": "Mercurio",
+              "sign": "leone",
+              "ownSign": "vergine",
+              "ownSignRule": "Più graha nel segno (§15.5.2, 1).",
+              "pada": "bilancia",
+              "exception": false
+            },
+            {
+              "id": "venere",
+              "name": "Venere",
+              "sign": "vergine",
+              "ownSign": "bilancia",
+              "ownSignRule": "Più graha nel segno (§15.5.2, 1).",
+              "pada": "scorpione",
+              "exception": false
+            },
+            {
+              "id": "marte",
+              "name": "Marte",
+              "sign": "capricorno",
+              "ownSign": "scorpione",
+              "ownSignRule": "Più graha nel segno (§15.5.2, 1).",
+              "pada": "vergine",
+              "exception": false
+            },
+            {
+              "id": "giove",
+              "name": "Giove",
+              "sign": "bilancia",
+              "ownSign": "pesci",
+              "ownSignRule": "Il signore sta in un segno di parità diversa (§15.5.2, 4).",
+              "pada": "leone",
+              "exception": false
+            },
+            {
+              "id": "saturno",
+              "name": "Saturno",
+              "sign": "bilancia",
+              "ownSign": "acquario",
+              "ownSignRule": "Più graha nel segno (§15.5.2, 1).",
+              "pada": "gemelli",
+              "exception": false
+            },
+            {
+              "id": "nodo-nord",
+              "name": "Rahu",
+              "sign": "acquario",
+              "ownSign": "acquario",
+              "pada": "scorpione",
+              "exception": true
+            },
+            {
+              "id": "nodo-sud",
+              "name": "Ketu",
+              "sign": "acquario",
+              "ownSign": "scorpione",
+              "pada": "toro",
+              "exception": true
+            }
+          ]
+        }
       },
       {
         "kind": "segni",
@@ -15586,7 +16242,89 @@
           }
         ],
         "ascendant": "pesci",
-        "dignitySource": "Per segno, senza gradi: il segno del varga confrontato coi segni di uccha, moolatrikona, proprio e neecha di ciascuno dei sette graha (BPHS 3.49-54 e 4.6-24; 6.52, trad. Santhanam, vol. I, p. 88, per i primi tre come varga buoni). Tutte le corrispondenze, non una sola. Il conto dei varga buoni di 6.42-53, che aggiunge la regola dell'arudha, sta a parte nel tema vedico, con l'ora di nascita."
+        "dignitySource": "Per segno, senza gradi: il segno del varga confrontato coi segni di uccha, moolatrikona, proprio e neecha di ciascuno dei sette graha (BPHS 3.49-54 e 4.6-24; 6.52, trad. Santhanam, vol. I, p. 88, per i primi tre come varga buoni). Tutte le corrispondenze, non una sola. Il conto dei varga buoni di 6.42-53, che aggiunge la regola dell'arudha, sta a parte nel tema vedico, con l'ora di nascita.",
+        "grahaArudhas": {
+          "source": "P.V.R. Narasimha Rao, Vedic Astrology: An Integrated Approach (2000), §9.5, pp. 94-95: dal segno del graha al suo segno proprio, e altrettanto oltre; se si cade nel 1° o nel 7° dal graha, il 10° dal segno trovato. Per i graha con due segni il più forte secondo §15.5.2 (pp. 203-205), con le rasi drishti di §10.3 e, per Scorpione e Acquario, il co-signore più forte di §15.5.1; dignità della sua tavola 6 (p. 34), che per i nodi non sono quelle del BPHS. Lettura del motore: un graha nello Scorpione o nell'Acquario ha per dispositore tutti e due i co-signori. Nel varga, coi segni del varga (§9.5, p. 94). Due spareggi guardano il grado nel segno (§15.5.1, 5b; §15.5.2, 6), che nel varga non è definito, e Rao non dice quale usare: se la catena arriva lì il segno più forte resta indeterminato, e l'arudha pure. Succede solo a Marte e a Saturno, per il co-signore di Scorpione e Acquario.",
+          "grahas": [
+            {
+              "id": "sole",
+              "name": "Sole",
+              "sign": "cancro",
+              "ownSign": "leone",
+              "pada": "vergine",
+              "exception": false
+            },
+            {
+              "id": "luna",
+              "name": "Luna",
+              "sign": "scorpione",
+              "ownSign": "cancro",
+              "pada": "pesci",
+              "exception": false
+            },
+            {
+              "id": "mercurio",
+              "name": "Mercurio",
+              "sign": "sagittario",
+              "ownSign": "vergine",
+              "ownSignRule": "Il signore sta in un segno di parità diversa (§15.5.2, 4).",
+              "pada": "pesci",
+              "exception": true
+            },
+            {
+              "id": "venere",
+              "name": "Venere",
+              "sign": "capricorno",
+              "ownSign": "toro",
+              "ownSignRule": "Più fra Giove, Mercurio e il signore lo occupano o lo guardano (§15.5.2, 2).",
+              "pada": "vergine",
+              "exception": false
+            },
+            {
+              "id": "marte",
+              "name": "Marte",
+              "sign": "sagittario",
+              "ownSign": "scorpione",
+              "ownSignRule": "Più graha nel segno (§15.5.2, 1).",
+              "pada": "bilancia",
+              "exception": false
+            },
+            {
+              "id": "giove",
+              "name": "Giove",
+              "sign": "pesci",
+              "ownSign": "sagittario",
+              "ownSignRule": "Più graha nel segno (§15.5.2, 1).",
+              "pada": "gemelli",
+              "exception": true
+            },
+            {
+              "id": "saturno",
+              "name": "Saturno",
+              "sign": "leone",
+              "ownSign": "capricorno",
+              "ownSignRule": "Più graha nel segno (§15.5.2, 1).",
+              "pada": "gemelli",
+              "exception": false
+            },
+            {
+              "id": "nodo-nord",
+              "name": "Rahu",
+              "sign": "capricorno",
+              "ownSign": "acquario",
+              "pada": "pesci",
+              "exception": false
+            },
+            {
+              "id": "nodo-sud",
+              "name": "Ketu",
+              "sign": "capricorno",
+              "ownSign": "scorpione",
+              "pada": "vergine",
+              "exception": false
+            }
+          ]
+        }
       },
       {
         "kind": "segni",
@@ -15684,7 +16422,89 @@
         "dignitySource": "Per segno, senza gradi: il segno del varga confrontato coi segni di uccha, moolatrikona, proprio e neecha di ciascuno dei sette graha (BPHS 3.49-54 e 4.6-24; 6.52, trad. Santhanam, vol. I, p. 88, per i primi tre come varga buoni). Tutte le corrispondenze, non una sola. Il conto dei varga buoni di 6.42-53, che aggiunge la regola dell'arudha, sta a parte nel tema vedico, con l'ora di nascita.",
         "warnings": [
           "Il D24 vuole l'ora di nascita al minuto: una parte è di 1°15' d'arco. Qui l'Ascendente ne percorre una in circa 6,4 minuti, e il lagna cambia segno se l'ora di nascita è anticipata di 4,3 minuti o posticipata di 2,1 minuti. La Luna cambia segno con un anticipo di 76,0 minuti o un ritardo di 55,2 minuti. Un'ora arrotondata al quarto d'ora non basta a dire quale segno sia quello giusto."
-        ]
+        ],
+        "grahaArudhas": {
+          "source": "P.V.R. Narasimha Rao, Vedic Astrology: An Integrated Approach (2000), §9.5, pp. 94-95: dal segno del graha al suo segno proprio, e altrettanto oltre; se si cade nel 1° o nel 7° dal graha, il 10° dal segno trovato. Per i graha con due segni il più forte secondo §15.5.2 (pp. 203-205), con le rasi drishti di §10.3 e, per Scorpione e Acquario, il co-signore più forte di §15.5.1; dignità della sua tavola 6 (p. 34), che per i nodi non sono quelle del BPHS. Lettura del motore: un graha nello Scorpione o nell'Acquario ha per dispositore tutti e due i co-signori. Nel varga, coi segni del varga (§9.5, p. 94). Due spareggi guardano il grado nel segno (§15.5.1, 5b; §15.5.2, 6), che nel varga non è definito, e Rao non dice quale usare: se la catena arriva lì il segno più forte resta indeterminato, e l'arudha pure. Succede solo a Marte e a Saturno, per il co-signore di Scorpione e Acquario.",
+          "grahas": [
+            {
+              "id": "sole",
+              "name": "Sole",
+              "sign": "gemelli",
+              "ownSign": "leone",
+              "pada": "bilancia",
+              "exception": false
+            },
+            {
+              "id": "luna",
+              "name": "Luna",
+              "sign": "gemelli",
+              "ownSign": "cancro",
+              "pada": "leone",
+              "exception": false
+            },
+            {
+              "id": "mercurio",
+              "name": "Mercurio",
+              "sign": "leone",
+              "ownSign": "gemelli",
+              "ownSignRule": "Più graha nel segno (§15.5.2, 1).",
+              "pada": "ariete",
+              "exception": false
+            },
+            {
+              "id": "venere",
+              "name": "Venere",
+              "sign": "bilancia",
+              "ownSign": "bilancia",
+              "ownSignRule": "Più graha nel segno (§15.5.2, 1).",
+              "pada": "cancro",
+              "exception": true
+            },
+            {
+              "id": "marte",
+              "name": "Marte",
+              "sign": "pesci",
+              "ownSign": "ariete",
+              "ownSignRule": "Più graha nel segno (§15.5.2, 1).",
+              "pada": "toro",
+              "exception": false
+            },
+            {
+              "id": "giove",
+              "name": "Giove",
+              "sign": "scorpione",
+              "ownSign": "pesci",
+              "ownSignRule": "Più graha nel segno (§15.5.2, 1).",
+              "pada": "cancro",
+              "exception": false
+            },
+            {
+              "id": "saturno",
+              "name": "Saturno",
+              "sign": "bilancia",
+              "ownSign": "capricorno",
+              "ownSignRule": "Più fra Giove, Mercurio e il signore lo occupano o lo guardano (§15.5.2, 2).",
+              "pada": "capricorno",
+              "exception": true
+            },
+            {
+              "id": "nodo-nord",
+              "name": "Rahu",
+              "sign": "ariete",
+              "ownSign": "acquario",
+              "pada": "sagittario",
+              "exception": false
+            },
+            {
+              "id": "nodo-sud",
+              "name": "Ketu",
+              "sign": "ariete",
+              "ownSign": "scorpione",
+              "pada": "gemelli",
+              "exception": false
+            }
+          ]
+        }
       },
       {
         "kind": "segni",
@@ -15779,7 +16599,89 @@
         "dignitySource": "Per segno, senza gradi: il segno del varga confrontato coi segni di uccha, moolatrikona, proprio e neecha di ciascuno dei sette graha (BPHS 3.49-54 e 4.6-24; 6.52, trad. Santhanam, vol. I, p. 88, per i primi tre come varga buoni). Tutte le corrispondenze, non una sola. Il conto dei varga buoni di 6.42-53, che aggiunge la regola dell'arudha, sta a parte nel tema vedico, con l'ora di nascita.",
         "warnings": [
           "Il D27 vuole l'ora di nascita al minuto: una parte è di 1°6'40\" d'arco. Qui l'Ascendente ne percorre una in circa 5,7 minuti, e il lagna cambia segno se l'ora di nascita è anticipata di 2,2 minuti o posticipata di 3,5 minuti. La Luna cambia segno con un anticipo di 61,5 minuti o un ritardo di 55,2 minuti. Un'ora arrotondata al quarto d'ora non basta a dire quale segno sia quello giusto."
-        ]
+        ],
+        "grahaArudhas": {
+          "source": "P.V.R. Narasimha Rao, Vedic Astrology: An Integrated Approach (2000), §9.5, pp. 94-95: dal segno del graha al suo segno proprio, e altrettanto oltre; se si cade nel 1° o nel 7° dal graha, il 10° dal segno trovato. Per i graha con due segni il più forte secondo §15.5.2 (pp. 203-205), con le rasi drishti di §10.3 e, per Scorpione e Acquario, il co-signore più forte di §15.5.1; dignità della sua tavola 6 (p. 34), che per i nodi non sono quelle del BPHS. Lettura del motore: un graha nello Scorpione o nell'Acquario ha per dispositore tutti e due i co-signori. Nel varga, coi segni del varga (§9.5, p. 94). Due spareggi guardano il grado nel segno (§15.5.1, 5b; §15.5.2, 6), che nel varga non è definito, e Rao non dice quale usare: se la catena arriva lì il segno più forte resta indeterminato, e l'arudha pure. Succede solo a Marte e a Saturno, per il co-signore di Scorpione e Acquario.",
+          "grahas": [
+            {
+              "id": "sole",
+              "name": "Sole",
+              "sign": "scorpione",
+              "ownSign": "leone",
+              "pada": "acquario",
+              "exception": true
+            },
+            {
+              "id": "luna",
+              "name": "Luna",
+              "sign": "pesci",
+              "ownSign": "cancro",
+              "pada": "scorpione",
+              "exception": false
+            },
+            {
+              "id": "mercurio",
+              "name": "Mercurio",
+              "sign": "bilancia",
+              "ownSign": "gemelli",
+              "ownSignRule": "Più graha nel segno (§15.5.2, 1).",
+              "pada": "acquario",
+              "exception": false
+            },
+            {
+              "id": "venere",
+              "name": "Venere",
+              "sign": "sagittario",
+              "ownSign": "bilancia",
+              "ownSignRule": "Più graha nel segno (§15.5.2, 1).",
+              "pada": "leone",
+              "exception": false
+            },
+            {
+              "id": "marte",
+              "name": "Marte",
+              "sign": "scorpione",
+              "ownSign": "scorpione",
+              "ownSignRule": "Più graha nel segno (§15.5.2, 1).",
+              "pada": "leone",
+              "exception": true
+            },
+            {
+              "id": "giove",
+              "name": "Giove",
+              "sign": "leone",
+              "ownSign": "pesci",
+              "ownSignRule": "Il signore sta in un segno di parità diversa (§15.5.2, 4).",
+              "pada": "bilancia",
+              "exception": false
+            },
+            {
+              "id": "saturno",
+              "name": "Saturno",
+              "sign": "gemelli",
+              "ownSign": "capricorno",
+              "ownSignRule": "Più graha nel segno (§15.5.2, 1).",
+              "pada": "leone",
+              "exception": false
+            },
+            {
+              "id": "nodo-nord",
+              "name": "Rahu",
+              "sign": "capricorno",
+              "ownSign": "acquario",
+              "pada": "pesci",
+              "exception": false
+            },
+            {
+              "id": "nodo-sud",
+              "name": "Ketu",
+              "sign": "cancro",
+              "ownSign": "scorpione",
+              "pada": "pesci",
+              "exception": false
+            }
+          ]
+        }
       },
       {
         "kind": "segni",
@@ -15875,7 +16777,89 @@
           }
         ],
         "ascendant": "pesci",
-        "dignitySource": "Per segno, senza gradi: il segno del varga confrontato coi segni di uccha, moolatrikona, proprio e neecha di ciascuno dei sette graha (BPHS 3.49-54 e 4.6-24; 6.52, trad. Santhanam, vol. I, p. 88, per i primi tre come varga buoni). Tutte le corrispondenze, non una sola. Il conto dei varga buoni di 6.42-53, che aggiunge la regola dell'arudha, sta a parte nel tema vedico, con l'ora di nascita."
+        "dignitySource": "Per segno, senza gradi: il segno del varga confrontato coi segni di uccha, moolatrikona, proprio e neecha di ciascuno dei sette graha (BPHS 3.49-54 e 4.6-24; 6.52, trad. Santhanam, vol. I, p. 88, per i primi tre come varga buoni). Tutte le corrispondenze, non una sola. Il conto dei varga buoni di 6.42-53, che aggiunge la regola dell'arudha, sta a parte nel tema vedico, con l'ora di nascita.",
+        "grahaArudhas": {
+          "source": "P.V.R. Narasimha Rao, Vedic Astrology: An Integrated Approach (2000), §9.5, pp. 94-95: dal segno del graha al suo segno proprio, e altrettanto oltre; se si cade nel 1° o nel 7° dal graha, il 10° dal segno trovato. Per i graha con due segni il più forte secondo §15.5.2 (pp. 203-205), con le rasi drishti di §10.3 e, per Scorpione e Acquario, il co-signore più forte di §15.5.1; dignità della sua tavola 6 (p. 34), che per i nodi non sono quelle del BPHS. Lettura del motore: un graha nello Scorpione o nell'Acquario ha per dispositore tutti e due i co-signori. Nel varga, coi segni del varga (§9.5, p. 94). Due spareggi guardano il grado nel segno (§15.5.1, 5b; §15.5.2, 6), che nel varga non è definito, e Rao non dice quale usare: se la catena arriva lì il segno più forte resta indeterminato, e l'arudha pure. Succede solo a Marte e a Saturno, per il co-signore di Scorpione e Acquario.",
+          "grahas": [
+            {
+              "id": "sole",
+              "name": "Sole",
+              "sign": "bilancia",
+              "ownSign": "leone",
+              "pada": "gemelli",
+              "exception": false
+            },
+            {
+              "id": "luna",
+              "name": "Luna",
+              "sign": "scorpione",
+              "ownSign": "cancro",
+              "pada": "pesci",
+              "exception": false
+            },
+            {
+              "id": "mercurio",
+              "name": "Mercurio",
+              "sign": "ariete",
+              "ownSign": "vergine",
+              "ownSignRule": "Il signore sta in un segno di parità diversa (§15.5.2, 4).",
+              "pada": "acquario",
+              "exception": false
+            },
+            {
+              "id": "venere",
+              "name": "Venere",
+              "sign": "ariete",
+              "ownSign": "bilancia",
+              "ownSignRule": "Più graha nel segno (§15.5.2, 1).",
+              "pada": "capricorno",
+              "exception": true
+            },
+            {
+              "id": "marte",
+              "name": "Marte",
+              "sign": "scorpione",
+              "ownSign": "scorpione",
+              "ownSignRule": "Più graha nel segno (§15.5.2, 1).",
+              "pada": "leone",
+              "exception": true
+            },
+            {
+              "id": "giove",
+              "name": "Giove",
+              "sign": "ariete",
+              "ownSign": "pesci",
+              "ownSignRule": "Più graha nel segno (§15.5.2, 1).",
+              "pada": "acquario",
+              "exception": false
+            },
+            {
+              "id": "saturno",
+              "name": "Saturno",
+              "sign": "pesci",
+              "ownSign": "acquario",
+              "ownSignRule": "Più fra Giove, Mercurio e il signore lo occupano o lo guardano (§15.5.2, 2).",
+              "pada": "capricorno",
+              "exception": false
+            },
+            {
+              "id": "nodo-nord",
+              "name": "Rahu",
+              "sign": "scorpione",
+              "ownSign": "acquario",
+              "pada": "acquario",
+              "exception": true
+            },
+            {
+              "id": "nodo-sud",
+              "name": "Ketu",
+              "sign": "scorpione",
+              "ownSign": "scorpione",
+              "pada": "leone",
+              "exception": true
+            }
+          ]
+        }
       },
       {
         "kind": "segni",
@@ -15970,7 +16954,89 @@
         "dignitySource": "Per segno, senza gradi: il segno del varga confrontato coi segni di uccha, moolatrikona, proprio e neecha di ciascuno dei sette graha (BPHS 3.49-54 e 4.6-24; 6.52, trad. Santhanam, vol. I, p. 88, per i primi tre come varga buoni). Tutte le corrispondenze, non una sola. Il conto dei varga buoni di 6.42-53, che aggiunge la regola dell'arudha, sta a parte nel tema vedico, con l'ora di nascita.",
         "warnings": [
           "Il D40 vuole l'ora di nascita al minuto: una parte è di 45' d'arco. Qui l'Ascendente ne percorre una in circa 3,8 minuti, e il lagna cambia segno se l'ora di nascita è anticipata di 3,0 minuti o posticipata di 48 secondi. La Luna cambia segno con un anticipo di 23,6 minuti o un ritardo di 55,2 minuti. Un'ora arrotondata al quarto d'ora non basta a dire quale segno sia quello giusto."
-        ]
+        ],
+        "grahaArudhas": {
+          "source": "P.V.R. Narasimha Rao, Vedic Astrology: An Integrated Approach (2000), §9.5, pp. 94-95: dal segno del graha al suo segno proprio, e altrettanto oltre; se si cade nel 1° o nel 7° dal graha, il 10° dal segno trovato. Per i graha con due segni il più forte secondo §15.5.2 (pp. 203-205), con le rasi drishti di §10.3 e, per Scorpione e Acquario, il co-signore più forte di §15.5.1; dignità della sua tavola 6 (p. 34), che per i nodi non sono quelle del BPHS. Lettura del motore: un graha nello Scorpione o nell'Acquario ha per dispositore tutti e due i co-signori. Nel varga, coi segni del varga (§9.5, p. 94). Due spareggi guardano il grado nel segno (§15.5.1, 5b; §15.5.2, 6), che nel varga non è definito, e Rao non dice quale usare: se la catena arriva lì il segno più forte resta indeterminato, e l'arudha pure. Succede solo a Marte e a Saturno, per il co-signore di Scorpione e Acquario.",
+          "grahas": [
+            {
+              "id": "sole",
+              "name": "Sole",
+              "sign": "gemelli",
+              "ownSign": "leone",
+              "pada": "bilancia",
+              "exception": false
+            },
+            {
+              "id": "luna",
+              "name": "Luna",
+              "sign": "capricorno",
+              "ownSign": "cancro",
+              "pada": "bilancia",
+              "exception": true
+            },
+            {
+              "id": "mercurio",
+              "name": "Mercurio",
+              "sign": "toro",
+              "ownSign": "vergine",
+              "ownSignRule": "Più graha nel segno (§15.5.2, 1).",
+              "pada": "capricorno",
+              "exception": false
+            },
+            {
+              "id": "venere",
+              "name": "Venere",
+              "sign": "cancro",
+              "ownSign": "toro",
+              "ownSignRule": "Più fra Giove, Mercurio e il signore lo occupano o lo guardano (§15.5.2, 2).",
+              "pada": "pesci",
+              "exception": false
+            },
+            {
+              "id": "marte",
+              "name": "Marte",
+              "sign": "cancro",
+              "ownSign": "scorpione",
+              "ownSignRule": "Più graha nel segno (§15.5.2, 1).",
+              "pada": "pesci",
+              "exception": false
+            },
+            {
+              "id": "giove",
+              "name": "Giove",
+              "sign": "bilancia",
+              "ownSign": "pesci",
+              "ownSignRule": "Il signore sta in un segno di parità diversa (§15.5.2, 4).",
+              "pada": "leone",
+              "exception": false
+            },
+            {
+              "id": "saturno",
+              "name": "Saturno",
+              "sign": "scorpione",
+              "ownSign": "capricorno",
+              "ownSignRule": "Più graha nel segno (§15.5.2, 1).",
+              "pada": "pesci",
+              "exception": false
+            },
+            {
+              "id": "nodo-nord",
+              "name": "Rahu",
+              "sign": "vergine",
+              "ownSign": "acquario",
+              "pada": "cancro",
+              "exception": false
+            },
+            {
+              "id": "nodo-sud",
+              "name": "Ketu",
+              "sign": "vergine",
+              "ownSign": "scorpione",
+              "pada": "capricorno",
+              "exception": false
+            }
+          ]
+        }
       },
       {
         "kind": "segni",
@@ -16073,7 +17139,89 @@
         "dignitySource": "Per segno, senza gradi: il segno del varga confrontato coi segni di uccha, moolatrikona, proprio e neecha di ciascuno dei sette graha (BPHS 3.49-54 e 4.6-24; 6.52, trad. Santhanam, vol. I, p. 88, per i primi tre come varga buoni). Tutte le corrispondenze, non una sola. Il conto dei varga buoni di 6.42-53, che aggiunge la regola dell'arudha, sta a parte nel tema vedico, con l'ora di nascita.",
         "warnings": [
           "Il D45 vuole l'ora di nascita al minuto: una parte è di 40' d'arco. Qui l'Ascendente ne percorre una in circa 3,4 minuti, e il lagna cambia segno se l'ora di nascita è anticipata di 2,2 minuti o posticipata di 1,2 minuti. La Luna cambia segno con un anticipo di 14,8 minuti o un ritardo di 55,2 minuti. Un'ora arrotondata al quarto d'ora non basta a dire quale segno sia quello giusto."
-        ]
+        ],
+        "grahaArudhas": {
+          "source": "P.V.R. Narasimha Rao, Vedic Astrology: An Integrated Approach (2000), §9.5, pp. 94-95: dal segno del graha al suo segno proprio, e altrettanto oltre; se si cade nel 1° o nel 7° dal graha, il 10° dal segno trovato. Per i graha con due segni il più forte secondo §15.5.2 (pp. 203-205), con le rasi drishti di §10.3 e, per Scorpione e Acquario, il co-signore più forte di §15.5.1; dignità della sua tavola 6 (p. 34), che per i nodi non sono quelle del BPHS. Lettura del motore: un graha nello Scorpione o nell'Acquario ha per dispositore tutti e due i co-signori. Nel varga, coi segni del varga (§9.5, p. 94). Due spareggi guardano il grado nel segno (§15.5.1, 5b; §15.5.2, 6), che nel varga non è definito, e Rao non dice quale usare: se la catena arriva lì il segno più forte resta indeterminato, e l'arudha pure. Succede solo a Marte e a Saturno, per il co-signore di Scorpione e Acquario.",
+          "grahas": [
+            {
+              "id": "sole",
+              "name": "Sole",
+              "sign": "acquario",
+              "ownSign": "leone",
+              "pada": "scorpione",
+              "exception": true
+            },
+            {
+              "id": "luna",
+              "name": "Luna",
+              "sign": "sagittario",
+              "ownSign": "cancro",
+              "pada": "acquario",
+              "exception": false
+            },
+            {
+              "id": "mercurio",
+              "name": "Mercurio",
+              "sign": "vergine",
+              "ownSign": "vergine",
+              "ownSignRule": "Più graha nel segno (§15.5.2, 1).",
+              "pada": "gemelli",
+              "exception": true
+            },
+            {
+              "id": "venere",
+              "name": "Venere",
+              "sign": "sagittario",
+              "ownSign": "toro",
+              "ownSignRule": "Il signore sta in un segno di parità diversa (§15.5.2, 4).",
+              "pada": "bilancia",
+              "exception": false
+            },
+            {
+              "id": "marte",
+              "name": "Marte",
+              "sign": "capricorno",
+              "ownSign": "ariete",
+              "ownSignRule": "Più graha nel segno (§15.5.2, 1).",
+              "pada": "ariete",
+              "exception": true
+            },
+            {
+              "id": "giove",
+              "name": "Giove",
+              "sign": "pesci",
+              "ownSign": "sagittario",
+              "ownSignRule": "Più graha nel segno (§15.5.2, 1).",
+              "pada": "gemelli",
+              "exception": true
+            },
+            {
+              "id": "saturno",
+              "name": "Saturno",
+              "sign": "ariete",
+              "ownSign": "acquario",
+              "ownSignRule": "Più fra Giove, Mercurio e il signore lo occupano o lo guardano (§15.5.2, 2).",
+              "pada": "sagittario",
+              "exception": false
+            },
+            {
+              "id": "nodo-nord",
+              "name": "Rahu",
+              "sign": "ariete",
+              "ownSign": "acquario",
+              "pada": "sagittario",
+              "exception": false
+            },
+            {
+              "id": "nodo-sud",
+              "name": "Ketu",
+              "sign": "ariete",
+              "ownSign": "scorpione",
+              "pada": "gemelli",
+              "exception": false
+            }
+          ]
+        }
       },
       {
         "kind": "segni",
@@ -16235,7 +17383,89 @@
         "shashtiamsaSource": "Nomi dei sessanta shashtiamsa secondo BPHS 6.34-40 (Santhanam, vol. I, pp. 82-86, grafia della tavola di pp. 84-86): nei segni dispari dal primo mezzo grado, nei pari al rovescio (6.40). Il giudizio benefico o malefico del verso 41, che la tavola segna con (B) e (M), non è riportato.",
         "warnings": [
           "Il D60 vuole l'ora di nascita al minuto: una parte è di 30' d'arco. Qui l'Ascendente ne percorre una in circa 2,5 minuti, e il lagna cambia segno se l'ora di nascita è anticipata di 28 secondi o posticipata di 2,1 minuti. La Luna cambia segno con un anticipo di 49,8 minuti o un ritardo di 2,7 minuti. Un'ora arrotondata al quarto d'ora non basta a dire quale segno sia quello giusto."
-        ]
+        ],
+        "grahaArudhas": {
+          "source": "P.V.R. Narasimha Rao, Vedic Astrology: An Integrated Approach (2000), §9.5, pp. 94-95: dal segno del graha al suo segno proprio, e altrettanto oltre; se si cade nel 1° o nel 7° dal graha, il 10° dal segno trovato. Per i graha con due segni il più forte secondo §15.5.2 (pp. 203-205), con le rasi drishti di §10.3 e, per Scorpione e Acquario, il co-signore più forte di §15.5.1; dignità della sua tavola 6 (p. 34), che per i nodi non sono quelle del BPHS. Lettura del motore: un graha nello Scorpione o nell'Acquario ha per dispositore tutti e due i co-signori. Nel varga, coi segni del varga (§9.5, p. 94). Due spareggi guardano il grado nel segno (§15.5.1, 5b; §15.5.2, 6), che nel varga non è definito, e Rao non dice quale usare: se la catena arriva lì il segno più forte resta indeterminato, e l'arudha pure. Succede solo a Marte e a Saturno, per il co-signore di Scorpione e Acquario.",
+          "grahas": [
+            {
+              "id": "sole",
+              "name": "Sole",
+              "sign": "scorpione",
+              "ownSign": "leone",
+              "pada": "acquario",
+              "exception": true
+            },
+            {
+              "id": "luna",
+              "name": "Luna",
+              "sign": "toro",
+              "ownSign": "cancro",
+              "pada": "vergine",
+              "exception": false
+            },
+            {
+              "id": "mercurio",
+              "name": "Mercurio",
+              "sign": "ariete",
+              "ownSign": "vergine",
+              "ownSignRule": "Il signore sta in un segno di parità diversa (§15.5.2, 4).",
+              "pada": "acquario",
+              "exception": false
+            },
+            {
+              "id": "venere",
+              "name": "Venere",
+              "sign": "cancro",
+              "ownSign": "toro",
+              "ownSignRule": "Più graha nel segno (§15.5.2, 1).",
+              "pada": "pesci",
+              "exception": false
+            },
+            {
+              "id": "marte",
+              "name": "Marte",
+              "sign": "toro",
+              "ownSign": "ariete",
+              "ownSignRule": "Il signore sta in un segno di parità diversa (§15.5.2, 4).",
+              "pada": "pesci",
+              "exception": false
+            },
+            {
+              "id": "giove",
+              "name": "Giove",
+              "sign": "toro",
+              "ownSign": "sagittario",
+              "ownSignRule": "Il signore sta in un segno di parità diversa (§15.5.2, 4).",
+              "pada": "cancro",
+              "exception": false
+            },
+            {
+              "id": "saturno",
+              "name": "Saturno",
+              "sign": "toro",
+              "ownSign": "acquario",
+              "ownSignRule": "Più graha nel segno (§15.5.2, 1).",
+              "pada": "leone",
+              "exception": true
+            },
+            {
+              "id": "nodo-nord",
+              "name": "Rahu",
+              "sign": "leone",
+              "ownSign": "acquario",
+              "pada": "toro",
+              "exception": true
+            },
+            {
+              "id": "nodo-sud",
+              "name": "Ketu",
+              "sign": "acquario",
+              "ownSign": "scorpione",
+              "pada": "toro",
+              "exception": true
+            }
+          ]
+        }
       }
     ],
     "drishti": {
@@ -19297,7 +20527,7 @@
       }
     },
     "grahaArudhas": {
-      "source": "P.V.R. Narasimha Rao, Vedic Astrology: An Integrated Approach (2000), §9.5, pp. 94-95: dal segno del graha al suo segno proprio, e altrettanto oltre; se si cade nel 1° o nel 7° dal graha, il 10° dal segno trovato. Per i graha con due segni il più forte secondo §15.5.2 (pp. 203-205), con le rasi drishti di §10.3 e, per Scorpione e Acquario, il co-signore più forte di §15.5.1; dignità della sua tavola 6 (p. 34), che per i nodi non sono quelle del BPHS. Lettura del motore: un graha nello Scorpione o nell'Acquario ha per dispositore tutti e due i co-signori. Solo la rashi. BPHS 29.6-7 non dice come scegliere il segno più forte: per questo la scuola è quella di Rao.",
+      "source": "P.V.R. Narasimha Rao, Vedic Astrology: An Integrated Approach (2000), §9.5, pp. 94-95: dal segno del graha al suo segno proprio, e altrettanto oltre; se si cade nel 1° o nel 7° dal graha, il 10° dal segno trovato. Per i graha con due segni il più forte secondo §15.5.2 (pp. 203-205), con le rasi drishti di §10.3 e, per Scorpione e Acquario, il co-signore più forte di §15.5.1; dignità della sua tavola 6 (p. 34), che per i nodi non sono quelle del BPHS. Lettura del motore: un graha nello Scorpione o nell'Acquario ha per dispositore tutti e due i co-signori. Questi sono della rashi; ogni varga porta i suoi. BPHS 29.6-7 non dice come scegliere il segno più forte: per questo la scuola è quella di Rao.",
       "grahas": [
         {
           "id": "sole",
@@ -21629,7 +22859,89 @@
             "retrograde": true
           }
         ],
-        "dignitySource": "Per segno, senza gradi: il segno del varga confrontato coi segni di uccha, moolatrikona, proprio e neecha di ciascuno dei sette graha (BPHS 3.49-54 e 4.6-24; 6.52, trad. Santhanam, vol. I, p. 88, per i primi tre come varga buoni). Tutte le corrispondenze, non una sola. Il conto dei varga buoni di 6.42-53, che aggiunge la regola dell'arudha, sta a parte nel tema vedico, con l'ora di nascita."
+        "dignitySource": "Per segno, senza gradi: il segno del varga confrontato coi segni di uccha, moolatrikona, proprio e neecha di ciascuno dei sette graha (BPHS 3.49-54 e 4.6-24; 6.52, trad. Santhanam, vol. I, p. 88, per i primi tre come varga buoni). Tutte le corrispondenze, non una sola. Il conto dei varga buoni di 6.42-53, che aggiunge la regola dell'arudha, sta a parte nel tema vedico, con l'ora di nascita.",
+        "grahaArudhas": {
+          "source": "P.V.R. Narasimha Rao, Vedic Astrology: An Integrated Approach (2000), §9.5, pp. 94-95: dal segno del graha al suo segno proprio, e altrettanto oltre; se si cade nel 1° o nel 7° dal graha, il 10° dal segno trovato. Per i graha con due segni il più forte secondo §15.5.2 (pp. 203-205), con le rasi drishti di §10.3 e, per Scorpione e Acquario, il co-signore più forte di §15.5.1; dignità della sua tavola 6 (p. 34), che per i nodi non sono quelle del BPHS. Lettura del motore: un graha nello Scorpione o nell'Acquario ha per dispositore tutti e due i co-signori. Nel varga, coi segni del varga (§9.5, p. 94). Due spareggi guardano il grado nel segno (§15.5.1, 5b; §15.5.2, 6), che nel varga non è definito, e Rao non dice quale usare: se la catena arriva lì il segno più forte resta indeterminato, e l'arudha pure. Succede solo a Marte e a Saturno, per il co-signore di Scorpione e Acquario.",
+          "grahas": [
+            {
+              "id": "sole",
+              "name": "Sole",
+              "sign": "gemelli",
+              "ownSign": "leone",
+              "pada": "bilancia",
+              "exception": false
+            },
+            {
+              "id": "luna",
+              "name": "Luna",
+              "sign": "pesci",
+              "ownSign": "cancro",
+              "pada": "scorpione",
+              "exception": false
+            },
+            {
+              "id": "mercurio",
+              "name": "Mercurio",
+              "sign": "bilancia",
+              "ownSign": "vergine",
+              "ownSignRule": "Il signore sta in un segno di parità diversa (§15.5.2, 4).",
+              "pada": "leone",
+              "exception": false
+            },
+            {
+              "id": "venere",
+              "name": "Venere",
+              "sign": "bilancia",
+              "ownSign": "bilancia",
+              "ownSignRule": "Più graha nel segno (§15.5.2, 1).",
+              "pada": "cancro",
+              "exception": true
+            },
+            {
+              "id": "marte",
+              "name": "Marte",
+              "sign": "acquario",
+              "ownSign": "ariete",
+              "ownSignRule": "Più fra Giove, Mercurio e il signore lo occupano o lo guardano (§15.5.2, 2).",
+              "pada": "gemelli",
+              "exception": false
+            },
+            {
+              "id": "giove",
+              "name": "Giove",
+              "sign": "toro",
+              "ownSign": "pesci",
+              "ownSignRule": "Più graha nel segno (§15.5.2, 1).",
+              "pada": "capricorno",
+              "exception": false
+            },
+            {
+              "id": "saturno",
+              "name": "Saturno",
+              "sign": "sagittario",
+              "ownSign": "acquario",
+              "ownSignRule": "Più graha nel segno (§15.5.2, 1).",
+              "pada": "ariete",
+              "exception": false
+            },
+            {
+              "id": "nodo-nord",
+              "name": "Rahu",
+              "sign": "pesci",
+              "ownSign": "acquario",
+              "pada": "capricorno",
+              "exception": false
+            },
+            {
+              "id": "nodo-sud",
+              "name": "Ketu",
+              "sign": "vergine",
+              "ownSign": "scorpione",
+              "pada": "capricorno",
+              "exception": false
+            }
+          ]
+        }
       }
     ],
     "drishti": {
@@ -23149,7 +24461,7 @@
       }
     },
     "grahaArudhas": {
-      "source": "P.V.R. Narasimha Rao, Vedic Astrology: An Integrated Approach (2000), §9.5, pp. 94-95: dal segno del graha al suo segno proprio, e altrettanto oltre; se si cade nel 1° o nel 7° dal graha, il 10° dal segno trovato. Per i graha con due segni il più forte secondo §15.5.2 (pp. 203-205), con le rasi drishti di §10.3 e, per Scorpione e Acquario, il co-signore più forte di §15.5.1; dignità della sua tavola 6 (p. 34), che per i nodi non sono quelle del BPHS. Lettura del motore: un graha nello Scorpione o nell'Acquario ha per dispositore tutti e due i co-signori. Solo la rashi. BPHS 29.6-7 non dice come scegliere il segno più forte: per questo la scuola è quella di Rao.",
+      "source": "P.V.R. Narasimha Rao, Vedic Astrology: An Integrated Approach (2000), §9.5, pp. 94-95: dal segno del graha al suo segno proprio, e altrettanto oltre; se si cade nel 1° o nel 7° dal graha, il 10° dal segno trovato. Per i graha con due segni il più forte secondo §15.5.2 (pp. 203-205), con le rasi drishti di §10.3 e, per Scorpione e Acquario, il co-signore più forte di §15.5.1; dignità della sua tavola 6 (p. 34), che per i nodi non sono quelle del BPHS. Lettura del motore: un graha nello Scorpione o nell'Acquario ha per dispositore tutti e due i co-signori. Questi sono della rashi; ogni varga porta i suoi. BPHS 29.6-7 non dice come scegliere il segno più forte: per questo la scuola è quella di Rao.",
       "grahas": [
         {
           "id": "sole",

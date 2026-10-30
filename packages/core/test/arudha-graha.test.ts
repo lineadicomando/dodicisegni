@@ -1,8 +1,16 @@
 import { describe, expect, it } from 'vitest';
-import { grahaArudhaOf, rasiDrishti, strongerCoLord, strongerRasi, type Posizioni } from '../src/arudha-graha.js';
+import {
+  grahaArudhaOf,
+  grahaArudhasOf,
+  rasiDrishti,
+  strongerCoLord,
+  strongerRasi,
+  type Posizioni,
+} from '../src/arudha-graha.js';
 import { computeNatalChart } from '../src/chart.js';
-import { formatJyotishaCompact } from '../src/format.js';
+import { formatJyotishaCompact, formatVargaCompact } from '../src/format.js';
 import { computeJyotisha } from '../src/jyotisha.js';
+import { computeVarga, VARGAS } from '../src/varga.js';
 import type { BodyId, ZodiacSign } from '../src/types.js';
 
 /** Posizioni a metà segno, salvo dove l'avanzamento conta. */
@@ -106,5 +114,105 @@ describe('nel tema vedico', () => {
     expect(vedico.grahaArudhas.grahas).toHaveLength(9);
     expect(vedico.grahaArudhas.source).toContain('Narasimha Rao');
     expect(formatJyotishaCompact(vedico)).toContain('ARUDHA DEI GRAHA (NARASIMHA RAO)');
+  });
+});
+
+describe('nei varga, dove il grado non c\'è', () => {
+  // Rao, §9.5, p. 94: gli arudha si contano in ogni divisionale. Il grado nel
+  // segno manca, e la scelta del proprietario del 30 ottobre 2026 è di
+  // lasciare indeterminato quello che senza grado non si decide.
+  /** Posizioni coi soli segni, come in un varga. */
+  const segni = (s: Partial<Record<BodyId, ZodiacSign>>): Posizioni =>
+    Object.fromEntries(Object.entries(s).map(([id, sign]) => [id, { sign }]));
+
+  it('il co-signore resta indeterminato quando decide la 5b', () => {
+    // Il caso della 5b di sopra, senza i gradi.
+    const r = strongerCoLord('scorpione', segni({ marte: 'bilancia', 'nodo-sud': 'cancro' }));
+    expect(r.lord).toBeUndefined();
+    expect(r.rule).toContain('5b');
+  });
+
+  it('e con lui il segno più forte, se il conto della (2) dipende da chi è', () => {
+    // Ketu dal Cancro guarda lo Scorpione, Marte dalla Bilancia no: con Ketu
+    // signore lo Scorpione vince la (2), con Marte i due sono pari.
+    const p = segni({ marte: 'bilancia', 'nodo-sud': 'cancro' });
+    const r = strongerRasi('ariete', 'scorpione', p);
+    expect(r.sign).toBeUndefined();
+    expect(r.rule).toContain('(§15.5.2, 2)');
+    const marte = grahaArudhaOf('marte', p);
+    expect(marte?.pada).toBeUndefined();
+    expect(marte?.ownSign).toBeUndefined();
+    expect(marte?.ownSignRule).toContain('Indeterminato');
+  });
+
+  it('ma il dubbio non conta se decide una regola prima', () => {
+    const p = segni({ marte: 'bilancia', 'nodo-sud': 'cancro', giove: 'ariete' });
+    expect(strongerRasi('ariete', 'scorpione', p)).toEqual({ sign: 'ariete', rule: 'Più graha nel segno (§15.5.2, 1).' });
+  });
+
+  it('con i gradi il risultato è quello di prima', () => {
+    const p = pos({ marte: 'bilancia', 'nodo-sud': 'cancro' }, { marte: 23 + 17 / 60, 'nodo-sud': 5 + 54 / 60 });
+    expect(strongerRasi('ariete', 'scorpione', p).sign).toBeDefined();
+    expect(grahaArudhaOf('marte', p)?.pada).toBeDefined();
+  });
+
+  const carta = computeNatalChart(
+    { date: '1968-03-12', time: '14:30', latitude: 40.8518, longitude: 14.2681, timezone: 'Europe/Rome' },
+    { zodiac: 'siderale', houseSystem: 'segni-interi' },
+  );
+
+  it('il D-1 ha gli arudha della rashi', () => {
+    const d1 = computeVarga(carta, 'd1');
+    if (d1.kind !== 'segni') throw new Error('il D-1 ha segni');
+    expect(d1.grahaArudhas.grahas).toEqual(computeJyotisha(carta).grahaArudhas.grahas);
+  });
+
+  it('ogni varga coi segni li porta, con la fonte, e nella tabella compatta', () => {
+    for (const { id } of VARGAS) {
+      const varga = computeVarga(carta, id, { hora: 'leone-cancro' });
+      if (varga.kind !== 'segni') throw new Error(id);
+      expect(varga.grahaArudhas.grahas, id).toHaveLength(9);
+      expect(varga.grahaArudhas.source, id).toContain('§9.5, p. 94');
+      expect(formatVargaCompact(varga), id).toContain('Arudha dei graha (Narasimha Rao)');
+    }
+  });
+
+  it('un arudha determinato non cambia con nessun grado', () => {
+    // Su cento nascite e i quattordici varga dal D-3 al D-60: dove il motore
+    // dà l'arudha, darlo col grado «del varga» (gradi × N modulo 30, l'uso
+    // dei programmi) non lo cambia. Gli indeterminati sono pochi: il 30
+    // ottobre 2026, su 4200 carte, 26 arudha.
+    let indeterminati = 0;
+    let determinati = 0;
+    for (let i = 0; i < 100; i++) {
+      const istante = new Date(Date.UTC(1940, 0, 1) + i * 86400000 * 97.3 + i * 3600000 * 7.1).toISOString();
+      const nascita = computeNatalChart(
+        { date: istante.slice(0, 10), time: istante.slice(11, 16), latitude: 41.9, longitude: 12.5, timezone: 'Europe/Rome' },
+        { zodiac: 'siderale' },
+      );
+      for (const def of VARGAS) {
+        if (def.id === 'd1' || def.id === 'd2') continue;
+        const varga = computeVarga(nascita, def.id);
+        if (varga.kind !== 'segni') continue;
+        const conGrado: Posizioni = Object.fromEntries(
+          nascita.bodies.map((body) => [
+            body.id,
+            { sign: varga.positions.find((x) => x.id === body.id)!.sign, signDegree: (body.signDegree * def.divisions) % 30 },
+          ]),
+        );
+        const altri = grahaArudhasOf(nascita.bodies, conGrado);
+        for (const a of varga.grahaArudhas.grahas) {
+          if (a.pada === undefined) {
+            indeterminati += 1;
+            expect(['marte', 'saturno']).toContain(a.id);
+            continue;
+          }
+          determinati += 1;
+          expect(altri.find((x) => x.id === a.id)?.pada, `${def.id} ${a.id}`).toBe(a.pada);
+        }
+      }
+    }
+    expect(determinati).toBeGreaterThan(12000);
+    expect(indeterminati).toBeLessThan(determinati / 100);
   });
 });

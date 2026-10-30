@@ -226,6 +226,31 @@
   dice, e il sito nemmeno; la debolezza non ha una soglia, e non c'è.
 </p>
 
+<h2 id="arudha-graha">Gli arudha dei graha in ogni varga</h2>
+
+<p>
+  Gli arudha dei nove graha sono di un altro autore, P.V.R. Narasimha Rao
+  (<em>Vedic Astrology: An Integrated Approach</em>, 2000, §9.5): dal segno
+  del graha si conta fino al suo segno proprio, e altrettanto oltre. Rao li
+  calcola in ogni divisionale, coi segni di quella carta, e il sito fa lo
+  stesso: ogni varga ha la sua colonna di arudha.
+</p>
+
+<p>
+  Marte e Saturno hanno due segni, e si conta dal più forte. Per sceglierlo
+  Rao dà una catena di regole (§15.5.2), e per lo Scorpione e l'Acquario, che
+  hanno due signori, un'altra (§15.5.1). Due spareggi in fondo a quelle
+  catene guardano di quanti gradi un graha è avanzato nel segno. In un segno
+  di varga quel grado non esiste (il trimsamsa, a tratti disuguali, lo
+  mostra meglio di ogni altro), e Rao non dice quale usare. I programmi usano
+  di solito i gradi moltiplicati per il numero delle parti, ma è una scelta
+  loro, non sua. Il sito non ne sceglie uno: quando la catena arriva lì,
+  l'arudha resta <strong>indeterminato</strong>, e la nota dice dove si è
+  fermata. Succede di rado: il 30 ottobre 2026, su trecento nascite e
+  quattordici varga, a 26 arudha su più di trentasettemila. Dove l'arudha c'è,
+  nessun grado lo cambierebbe.
+</p>
+
 <h2 id="vimshopaka">Il vimshopaka, la forza su venti punti</h2>
 
 <p>

@@ -49,6 +49,7 @@
  * controllate contro la regola, non copiate: quella del D-27 ha un refuso.
  */
 
+import { grahaArudhasOf, VARGA_GRAHA_ARUDHA_SOURCE, type Posizioni } from './arudha-graha.js';
 import { ZODIAC_SIGNS } from './constants.js';
 import { ChartError } from './errors.js';
 import { degreeInSign, normalize360 } from './math.js';
@@ -58,6 +59,7 @@ import { PARASHARA_GRAHAS, parasharaSignDignities, VARGA_DIGNITY_SOURCE } from '
 import type {
   BodyId,
   CelestialBody,
+  GrahaArudhas,
   HoraConvention,
   NatalChart,
   Shashtiamsa,
@@ -584,29 +586,50 @@ export function computeVarga(chart: NatalChart, id: VargaId, options: VargaOptio
         ...(chart.angles ? { ascendant: horaOf(chart.angles.ascendant) } : {}),
       };
     }
+    const positions = chart.bodies.map((body) => posizione(body, signOf[horaOf(body.longitude)]));
     return {
       ...comune,
       kind: 'segni',
-      positions: chart.bodies.map((body) => posizione(body, signOf[horaOf(body.longitude)])),
+      positions,
       ...(chart.angles ? { ascendant: signOf[horaOf(chart.angles.ascendant)] } : {}),
       dignitySource: VARGA_DIGNITY_SOURCE,
+      grahaArudhas: arudhaNelVarga(chart, positions, false),
     };
   }
 
+  const positions = chart.bodies.map((body) => ({
+    ...posizione(body, vargaSignOf(body.longitude, id)),
+    ...(id === 'd60' ? { shashtiamsa: shashtiamsaOf(body.longitude) } : {}),
+  }));
   return {
     kind: 'segni',
     varga: definition.id,
     name: definition.name,
     divisions: definition.divisions,
     rule: definition.rule,
-    positions: chart.bodies.map((body) => ({
-      ...posizione(body, vargaSignOf(body.longitude, id)),
-      ...(id === 'd60' ? { shashtiamsa: shashtiamsaOf(body.longitude) } : {}),
-    })),
+    positions,
     ...(chart.angles ? { ascendant: vargaSignOf(chart.angles.ascendant, id) } : {}),
     ...(id === 'd60' && chart.angles ? { ascendantShashtiamsa: shashtiamsaOf(chart.angles.ascendant) } : {}),
     dignitySource: VARGA_DIGNITY_SOURCE,
     ...(id === 'd60' ? { shashtiamsaSource: SHASHTIAMSA_SOURCE } : {}),
     ...(definition.fine ? { warnings: [fineWarning(chart, definition)] } : {}),
+    grahaArudhas: arudhaNelVarga(chart, positions, id === 'd1'),
   };
+}
+
+/**
+ * Gli arudha dei graha coi segni del varga. Il grado nel segno entra solo
+ * nel D-1, dove è quello della rashi; negli altri non è definito, e la
+ * catena di Rao può fermarsi (`strongerCoLord`).
+ */
+function arudhaNelVarga(
+  chart: NatalChart,
+  positions: readonly { id: BodyId; sign: ZodiacSign }[],
+  conGrado: boolean,
+): GrahaArudhas {
+  const gradi = new Map(chart.bodies.map((body) => [body.id, body.signDegree]));
+  const p: Posizioni = Object.fromEntries(
+    positions.map(({ id, sign }) => [id, conGrado ? { sign, signDegree: gradi.get(id) } : { sign }]),
+  );
+  return { source: VARGA_GRAHA_ARUDHA_SOURCE, grahas: grahaArudhasOf(chart.bodies, p) };
 }

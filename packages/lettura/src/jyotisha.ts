@@ -174,7 +174,10 @@ primo dei quali è l'arudha lagna. Per lo Scorpione e l'Acquario, che hanno
 due signori, la riga dice da quale si è contato e perché: è una lettura,
 dillo se lo usi. La sezione ARUDHA DEI GRAHA è di un'altra scuola, quella di
 Narasimha Rao, che per i nodi ha esaltazioni diverse dal BPHS: se la usi,
-nomina Rao, e non mescolarla con gli arudha dei bhava.
+nomina Rao, e non mescolarla con gli arudha dei bhava. Ogni carta
+divisionale chiude con gli arudha dei graha contati coi suoi segni, della
+stessa scuola. Dove la riga dice «indeterminato», la regola di Rao guarda il
+grado nel segno, che in un varga non c'è: dillo così, e non scegliere tu.
 
 La HORA (D2), se c'è, porta in testa la sua convenzione. Con quella di
 Parashara, che è il testo, ogni graha sta nella hora del Sole o della Luna e NON

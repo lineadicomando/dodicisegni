@@ -45,6 +45,14 @@
    */
   const nomi = $derived(varga.kind === 'segni' && varga.shashtiamsaSource !== undefined);
 
+  /**
+   * Gli arudha dei graha coi segni di questo varga (Narasimha Rao, §9.5), in
+   * una colonna e non in una tabella a sé: sono di questa carta. Assenti
+   * nelle risposte in cache di prima del campo.
+   */
+  const arudhas = $derived(varga.kind === 'segni' ? varga.grahaArudhas : undefined);
+  const arudhaDi = (id: string) => arudhas?.grahas.find((g) => g.id === id);
+
 </script>
 
 <!-- Il numero è quello della lista del verso, che nei segni pari non è il
@@ -76,6 +84,7 @@
         <th>{varga.kind === 'segni' ? 'Segno' : 'Hora'}</th>
         {#if varga.kind === 'segni'}<th>Dignità del segno</th>{/if}
         {#if nomi}<th>Shashtiamsa</th>{/if}
+        {#if arudhas}<th>Arudha (Rao)</th>{/if}
       </tr>
     </thead>
     <tbody>
@@ -117,6 +126,7 @@
           </td>
           <td></td>
           {#if nomi}<td>{@render shashtiamsa(varga.ascendantShashtiamsa)}</td>{/if}
+          {#if arudhas}<td></td>{/if}
         </tr>
       {/if}
       {#each varga.positions as position (position.id)}
@@ -137,6 +147,17 @@
             {position.dignitySigns?.join(', ') || (position.dignitySigns ? '—' : '')}
           </td>
           {#if nomi}<td>{@render shashtiamsa(position.shashtiamsa)}</td>{/if}
+          {#if arudhas}
+            {@const a = arudhaDi(position.id)}
+            <td class:tenue={a && !a.pada} title={a?.ownSignRule}>
+              {#if a?.pada}
+                {SIGN_GLYPH[a.pada]} {SIGN_LABEL[a.pada]}
+                {#if a.exception}<span class="tenue">· il 10°</span>{/if}
+              {:else if a}
+                indeterminato *
+              {/if}
+            </td>
+          {/if}
         </tr>
       {/each}
       {/if}
@@ -148,6 +169,12 @@
   {/if}
   {#if varga.kind === 'segni' && varga.shashtiamsaSource}
     <p class="fonti">{varga.shashtiamsaSource}</p>
+  {/if}
+  {#if arudhas}
+    {#each arudhas.grahas.filter((g) => !g.pada) as g (g.id)}
+      <p class="fonti">* Arudha di {g.name}: {g.ownSignRule}</p>
+    {/each}
+    <p class="fonti">Arudha dei graha: {arudhas.source}</p>
   {/if}
 </section>
 

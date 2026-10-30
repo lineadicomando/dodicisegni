@@ -449,6 +449,12 @@ export interface SignVargaChart extends VargaChartBase {
   dignitySource: string;
   /** Solo nel D-60: da dove vengono i nomi di `shashtiamsa`, e che cosa manca. */
   shashtiamsaSource?: string;
+  /**
+   * Gli arudha dei nove graha contati coi segni di questo varga, secondo
+   * Narasimha Rao (§9.5). Dove la catena guarda il grado, che qui non c'è,
+   * possono restare indeterminati; `source` lo dice.
+   */
+  grahaArudhas: GrahaArudhas;
 }
 
 /**
@@ -1226,13 +1232,20 @@ export interface GrahaArudhas {
     id: BodyId;
     name: string;
     sign: ZodiacSign;
-    /** Il segno proprio da cui si conta: per i graha con due segni, il più forte. */
-    ownSign: ZodiacSign;
-    /** Solo per i graha con due segni: la regola di §15.5.2 che ha scelto. */
+    /**
+     * Il segno proprio da cui si conta: per i graha con due segni, il più
+     * forte. Assente solo nei varga, quando la scelta resta indeterminata.
+     */
+    ownSign?: ZodiacSign;
+    /** Solo per i graha con due segni: la regola di §15.5.2 che ha scelto, o dove si è fermata. */
     ownSignRule?: string;
-    pada: ZodiacSign;
-    /** Se è scattata l'eccezione del 1° o del 7°, e si è preso il 10°. */
-    exception: boolean;
+    /**
+     * L'arudha. Assente solo nei varga, quando il segno proprio è
+     * indeterminato: `ownSignRule` dice perché.
+     */
+    pada?: ZodiacSign;
+    /** Se è scattata l'eccezione del 1° o del 7°, e si è preso il 10°. Assente con `pada`. */
+    exception?: boolean;
   }[];
 }
 

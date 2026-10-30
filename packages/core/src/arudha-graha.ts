@@ -23,9 +23,10 @@
  * tondo. Il motore conta allora tutti e due i co-signori: basta che uno dei
  * due congiunga o guardi. Rao non dice altro.
  *
- * Il calcolo vale per la rashi (D-1); Rao lo applica a ogni divisionale, e
- * qui non è fatto. Che cosa un arudha di graha significhi il motore non lo
- * dice.
+ * Rao lo applica a ogni divisionale, e così il motore: `computeGrahaArudhas`
+ * per la rashi, `grahaArudhasOf` coi segni di un varga, dove il grado manca
+ * e la catena può fermarsi (vedi `strongerCoLord`). Che cosa un arudha di
+ * graha significhi il motore non lo dice.
  */
 
 import { ZODIAC_SIGNS } from './constants.js';
@@ -88,15 +89,24 @@ const CO_SIGNORI: Readonly<Partial<Record<ZodiacSign, readonly [BodyId, BodyId]>
   acquario: ['saturno', 'nodo-nord'],
 };
 
-/** Dove sta un graha: il segno e i gradi nel segno. */
-export type Posizioni = Readonly<Partial<Record<BodyId, { sign: ZodiacSign; signDegree: number }>>>;
+/**
+ * Dove sta un graha: il segno e i gradi nel segno. Nei varga il grado manca,
+ * perché dentro un segno di varga non è definito (vedi il commento a
+ * `retrograde` in `SignVargaChart`).
+ */
+export type Posizioni = Readonly<Partial<Record<BodyId, { sign: ZodiacSign; signDegree?: number }>>>;
 
 const isNodo = (id: BodyId) => id === 'nodo-nord' || id === 'nodo-sud';
 
-/** L'avanzamento nel segno; per i nodi dalla fine del segno (§15.5.1, 5b). */
-const avanzamento = (id: BodyId, p: Posizioni): number => {
+/**
+ * L'avanzamento nel segno; per i nodi dalla fine del segno (§15.5.1, 5b).
+ * Un graha che manca conta −1, come sempre; uno che c'è senza grado non
+ * conta niente: `undefined`, e chi lo chiede si ferma.
+ */
+const avanzamento = (id: BodyId, p: Posizioni): number | undefined => {
   const pos = p[id];
   if (!pos) return -1;
+  if (pos.signDegree === undefined) return undefined;
   return isNodo(id) ? 30 - pos.signDegree : pos.signDegree;
 };
 
@@ -120,8 +130,13 @@ const grahaNel = (sign: ZodiacSign, p: Posizioni, tranne?: BodyId): number =>
 /**
  * Il signore più forte di Scorpione o Acquario, §15.5.1, con la regola che
  * ha deciso. Per gli altri segni il signore è uno, e la regola è vuota.
+ *
+ * Senza il grado nel segno, cioè in un varga, lo spareggio 5b non si fa: se
+ * la catena arriva lì il signore è `undefined`, e la regola dice perché.
+ * Scelto dal proprietario il 30 ottobre 2026, contro il grado «del varga»
+ * (gradi × N modulo 30) che Rao non nomina (`TODO.md`, *Deciso*).
  */
-export function strongerCoLord(sign: ZodiacSign, p: Posizioni): { lord: BodyId; rule: string } {
+export function strongerCoLord(sign: ZodiacSign, p: Posizioni): { lord: BodyId | undefined; rule: string } {
   const coppia = CO_SIGNORI[sign];
   if (!coppia) return { lord: SIGNORE[sign], rule: '' };
   const [a, b] = coppia;
@@ -154,91 +169,169 @@ export function strongerCoLord(sign: ZodiacSign, p: Posizioni): { lord: BodyId; 
 
   const aa = avanzamento(a, p);
   const ab = avanzamento(b, p);
+  if (aa === undefined || ab === undefined) {
+    return {
+      lord: undefined,
+      rule:
+        `Indeterminato fra ${grahaName(a, a)} e ${grahaName(b, b)}: pari fino alla (4), e lo spareggio ` +
+        '(§15.5.1, 5b) guarda il grado nel segno, che nel varga non è definito.',
+    };
+  }
   if (aa !== ab) return vince(aa > ab, 'Più avanzato nel segno, i nodi dalla fine (§15.5.1, 5b).');
   return { lord: a, rule: 'Pari in tutto: si prende il primo della tavola 6.' };
 }
 
+/** L'esito di una regola fra due segni: vince il primo, il secondo, o pari. */
+type Esito = 'x' | 'y' | 'pari';
+const confronta = (vx: number | boolean, vy: number | boolean): Esito =>
+  vx === vy ? 'pari' : vx > vy ? 'x' : 'y';
+
 /**
  * Il più forte fra due segni, §15.5.2, regole 1-6, con la regola che ha
- * deciso. Per i due segni di uno stesso graha decide al più la (4).
+ * deciso. Per i due segni di uno stesso graha decide al più la (5).
+ *
+ * Tre regole guardano il signore del segno, e per Scorpione e Acquario il
+ * signore può restare indeterminato (`strongerCoLord`, senza grado). Allora
+ * la regola si prova con tutti e due i co-signori: se l'esito è lo stesso, il
+ * dubbio non conta; se cambia, il segno più forte è `undefined`, e la regola
+ * dice dove la catena si è fermata. Lo stesso per la (6), che guarda il
+ * grado.
  */
-export function strongerRasi(x: ZodiacSign, y: ZodiacSign, p: Posizioni): { sign: ZodiacSign; rule: string } {
-  const vince = (primo: boolean, regola: string) => ({ sign: primo ? x : y, rule: regola });
-
-  const gx = grahaNel(x, p);
-  const gy = grahaNel(y, p);
-  if (gx !== gy) return vince(gx > gy, 'Più graha nel segno (§15.5.2, 1).');
-
-  const conto = (s: ZodiacSign): number => {
-    const signore = strongerCoLord(s, p).lord;
-    return (['giove', 'mercurio', signore] as BodyId[]).filter((id) => vedeIlSegno(id, s, p)).length;
+export function strongerRasi(x: ZodiacSign, y: ZodiacSign, p: Posizioni): { sign: ZodiacSign | undefined; rule: string } {
+  const signori = (s: ZodiacSign): readonly BodyId[] => {
+    const { lord } = strongerCoLord(s, p);
+    return lord ? [lord] : (CO_SIGNORI[s] ?? []);
   };
-  const cx = conto(x);
-  const cy = conto(y);
-  if (cx !== cy) return vince(cx > cy, 'Più fra Giove, Mercurio e il signore lo occupano o lo guardano (§15.5.2, 2).');
+  const dubbio = (s: ZodiacSign) => (strongerCoLord(s, p).lord ? '' : strongerCoLord(s, p).rule);
+  /** L'esito della regola per ogni scelta possibile dei signori; `undefined` se non è uno solo. */
+  const coiSignori = (f: (lx: BodyId, ly: BodyId) => Esito | undefined): Esito | undefined => {
+    const esiti = new Set<Esito | undefined>();
+    for (const lx of signori(x)) for (const ly of signori(y)) esiti.add(f(lx, ly));
+    return esiti.size === 1 ? [...esiti][0] : undefined;
+  };
+  const indeterminato = (regola: string, perche: string) => ({
+    sign: undefined,
+    rule: `Indeterminato alla ${regola}: ${perche}`,
+  });
+  const vince = (esito: 'x' | 'y', regola: string) => ({ sign: esito === 'x' ? x : y, rule: regola });
+  const senzaSignore = [dubbio(x), dubbio(y)].filter(Boolean).join(' ');
+
+  const r1 = confronta(grahaNel(x, p), grahaNel(y, p));
+  if (r1 !== 'pari') return vince(r1, 'Più graha nel segno (§15.5.2, 1).');
+
+  const conto = (s: ZodiacSign, signore: BodyId): number =>
+    (['giove', 'mercurio', signore] as BodyId[]).filter((id) => vedeIlSegno(id, s, p)).length;
+  const r2 = coiSignori((lx, ly) => confronta(conto(x, lx), conto(y, ly)));
+  if (r2 === undefined) return indeterminato('(§15.5.2, 2)', `il conto cambia secondo il signore. ${senzaSignore}`);
+  if (r2 !== 'pari') return vince(r2, 'Più fra Giove, Mercurio e il signore lo occupano o lo guardano (§15.5.2, 2).');
 
   const esaltato = (s: ZodiacSign) => NOVE.some((id) => p[id]?.sign === s && RAO_EXALTATION[id] === s);
-  if (esaltato(x) !== esaltato(y)) return vince(esaltato(x), 'Contiene un graha esaltato (§15.5.2, 3).');
+  const r3 = confronta(esaltato(x), esaltato(y));
+  if (r3 !== 'pari') return vince(r3, 'Contiene un graha esaltato (§15.5.2, 3).');
 
   const dispari = (s: ZodiacSign) => indice(s) % 2;
-  const diversa = (s: ZodiacSign) => {
-    const dove = p[strongerCoLord(s, p).lord]?.sign;
+  const diversa = (s: ZodiacSign, signore: BodyId) => {
+    const dove = p[signore]?.sign;
     return dove !== undefined && dispari(dove) !== dispari(s);
   };
-  if (diversa(x) !== diversa(y)) return vince(diversa(x), 'Il signore sta in un segno di parità diversa (§15.5.2, 4).');
+  const r4 = coiSignori((lx, ly) => confronta(diversa(x, lx), diversa(y, ly)));
+  if (r4 === undefined) return indeterminato('(§15.5.2, 4)', `la parità cambia secondo il signore. ${senzaSignore}`);
+  if (r4 !== 'pari') return vince(r4, 'Il signore sta in un segno di parità diversa (§15.5.2, 4).');
 
-  if (natura(x) !== natura(y)) return vince(natura(x) > natura(y), 'Segno doppio più forte del fisso, fisso del mobile (§15.5.2, 5).');
+  const r5 = confronta(natura(x), natura(y));
+  if (r5 !== 'pari') return vince(r5, 'Segno doppio più forte del fisso, fisso del mobile (§15.5.2, 5).');
 
-  const ax = avanzamento(strongerCoLord(x, p).lord, p);
-  const ay = avanzamento(strongerCoLord(y, p).lord, p);
-  if (ax !== ay) return vince(ax > ay, 'Signore più avanzato nel segno (§15.5.2, 6).');
+  const r6 = coiSignori((lx, ly) => {
+    if (lx === ly) return 'pari';
+    const [ax, ay] = [avanzamento(lx, p), avanzamento(ly, p)];
+    return ax === undefined || ay === undefined ? undefined : confronta(ax, ay);
+  });
+  if (r6 === undefined) {
+    return indeterminato('(§15.5.2, 6)', 'guarda quanto il signore è avanzato nel segno, e nel varga il grado non è definito.');
+  }
+  if (r6 !== 'pari') return vince(r6, 'Signore più avanzato nel segno (§15.5.2, 6).');
   return { sign: x, rule: 'Pari in tutto: si prende il primo.' };
+}
+
+/** Il pada contato da un segno proprio, con l'eccezione del 1° e del 7°. */
+function padaDa(dove: ZodiacSign, ownSign: ZodiacSign): { pada: ZodiacSign; exception: boolean } {
+  const grezzo = segno(indice(ownSign) + avanti(dove, ownSign));
+  const daGraha = avanti(dove, grezzo);
+  const exception = daGraha === 0 || daGraha === 6;
+  return { pada: exception ? segno(indice(grezzo) + 9) : grezzo, exception };
+}
+
+/** L'arudha di un graha, come lo dà `grahaArudhaOf`. */
+export interface GrahaArudhaOf {
+  /** Assente se il segno più forte resta indeterminato (solo nei varga). */
+  ownSign?: ZodiacSign;
+  ownSignRule?: string;
+  /** Assente con `ownSign`. */
+  pada?: ZodiacSign;
+  exception?: boolean;
 }
 
 /**
  * L'arudha di un graha, §9.5: dal suo segno al segno proprio (il più forte,
  * se sono due) e altrettanto oltre; se si cade nel primo o nel settimo dal
  * segno del graha, il decimo dal segno trovato.
+ *
+ * Se il più forte resta indeterminato (in un varga, vedi `strongerRasi`)
+ * l'arudha manca. Contarli tutti e due non salverebbe niente: il dubbio
+ * nasce solo dal co-signore di Scorpione e Acquario, cioè per Marte e
+ * Saturno, e i loro due segni danno sempre arudha diversi (i due conti
+ * distano due segni, e l'eccezione del 10° non li fa mai coincidere).
  */
-export function grahaArudhaOf(
-  id: BodyId,
-  p: Posizioni,
-): { ownSign: ZodiacSign; ownSignRule?: string; pada: ZodiacSign; exception: boolean } | undefined {
+export function grahaArudhaOf(id: BodyId, p: Posizioni): GrahaArudhaOf | undefined {
   const dove = p[id]?.sign;
   const propri = RAO_OWN_SIGNS[id];
   if (!dove || !propri) return undefined;
   const scelta = propri.length === 2 ? strongerRasi(propri[0]!, propri[1]!, p) : undefined;
+  const ownSignRule = scelta ? { ownSignRule: scelta.rule } : {};
+  if (scelta && scelta.sign === undefined) return ownSignRule;
   const ownSign = scelta?.sign ?? propri[0]!;
-  const grezzo = segno(indice(ownSign) + avanti(dove, ownSign));
-  const daGraha = avanti(dove, grezzo);
-  const exception = daGraha === 0 || daGraha === 6;
-  return {
-    ownSign,
-    ...(scelta ? { ownSignRule: scelta.rule } : {}),
-    pada: exception ? segno(indice(grezzo) + 9) : grezzo,
-    exception,
-  };
+  return { ownSign, ...ownSignRule, ...padaDa(dove, ownSign) };
 }
 
-const SOURCE =
+const SOURCE_COMUNE =
   'P.V.R. Narasimha Rao, Vedic Astrology: An Integrated Approach (2000), §9.5, pp. 94-95: dal ' +
   'segno del graha al suo segno proprio, e altrettanto oltre; se si cade nel 1° o nel 7° dal ' +
   'graha, il 10° dal segno trovato. Per i graha con due segni il più forte secondo §15.5.2 ' +
   '(pp. 203-205), con le rasi drishti di §10.3 e, per Scorpione e Acquario, il co-signore più ' +
   'forte di §15.5.1; dignità della sua tavola 6 (p. 34), che per i nodi non sono quelle del ' +
   'BPHS. Lettura del motore: un graha nello Scorpione o nell\'Acquario ha per dispositore ' +
-  'tutti e due i co-signori. Solo la rashi. BPHS 29.6-7 non dice come scegliere il segno più ' +
-  'forte: per questo la scuola è quella di Rao.';
+  'tutti e due i co-signori.';
+
+const SOURCE =
+  `${SOURCE_COMUNE} Questi sono della rashi; ogni varga porta i suoi. BPHS 29.6-7 non dice come ` +
+  'scegliere il segno più forte: per questo la scuola è quella di Rao.';
+
+/**
+ * La fonte degli arudha in un varga. Rao li calcola in ogni divisionale («the
+ * sign containing the planet in the divisional chart of interest», §9.5, p.
+ * 94), ma non dice che grado usare dove la catena lo guarda.
+ */
+export const VARGA_GRAHA_ARUDHA_SOURCE =
+  `${SOURCE_COMUNE} Nel varga, coi segni del varga (§9.5, p. 94). Due spareggi guardano il grado ` +
+  'nel segno (§15.5.1, 5b; §15.5.2, 6), che nel varga non è definito, e Rao non dice quale ' +
+  'usare: se la catena arriva lì il segno più forte resta indeterminato, e l\'arudha pure. ' +
+  'Succede solo a Marte e a Saturno, per il co-signore di Scorpione e Acquario.';
+
+/** Gli arudha dei nove graha, da un elenco di posizioni. */
+export function grahaArudhasOf(
+  bodies: readonly { id: BodyId; name: string }[],
+  p: Posizioni,
+): GrahaArudhas['grahas'] {
+  return bodies.flatMap((body) => {
+    const sign = p[body.id]?.sign;
+    const arudha = sign ? grahaArudhaOf(body.id, p) : undefined;
+    return sign && arudha ? [{ id: body.id, name: grahaName(body.id, body.name), sign, ...arudha }] : [];
+  });
+}
 
 /** Gli arudha dei nove graha di una carta siderale. */
 export function computeGrahaArudhas(chart: NatalChart): GrahaArudhas {
   const p: Partial<Record<BodyId, { sign: ZodiacSign; signDegree: number }>> = {};
   for (const body of chart.bodies) p[body.id] = { sign: body.sign, signDegree: body.signDegree };
-  return {
-    source: SOURCE,
-    grahas: chart.bodies.flatMap((body) => {
-      const arudha = grahaArudhaOf(body.id, p);
-      return arudha ? [{ id: body.id, name: grahaName(body.id, body.name), sign: body.sign, ...arudha }] : [];
-    }),
-  };
+  return { source: SOURCE, grahas: grahaArudhasOf(chart.bodies, p) };
 }

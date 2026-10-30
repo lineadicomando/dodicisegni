@@ -495,7 +495,10 @@ export function registerComputeJyotishaChart(server: McpServer, context: ToolCon
               'va riferita a chi chiede. Nel d60 ogni graha e il lagna portano anche lo ' +
               'shashtiamsa, il mezzo grado col nome di BPHS 6.34-40 (rovesciato nei segni pari, ' +
               'col numero della lista): è un nome, e il giudizio benefico o malefico del ' +
-              'verso 41 non è riportato.',
+              'verso 41 non è riportato. Ogni varga con i segni porta anche gli arudha dei nove ' +
+              'graha contati coi suoi segni, secondo Narasimha Rao (§9.5); dove la sua catena ' +
+              'guarda il grado nel segno, che nel varga non c\'è, Marte o Saturno possono restare ' +
+              'senza arudha, e la regola dice perché: riferiscilo, non completarlo.',
           ),
         hora: z
           .enum(HORA_IDS)

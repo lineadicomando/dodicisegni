@@ -1248,6 +1248,11 @@ export function formatVargaCompact(varga: VargaChart): string {
     lines.push(`${position.name.padEnd(11)} ${position.sign}${dignita}${nome(position.shashtiamsa)}`);
   }
 
+  // Gli arudha dei graha coi segni di questo varga: un'altra scuola rispetto
+  // alle dignità di sopra, e la fonte lo dice.
+  lines.push('', 'Arudha dei graha (Narasimha Rao), coi segni di questo varga', `Fonte: ${varga.grahaArudhas.source}`);
+  for (const g of varga.grahaArudhas.grahas) lines.push(rigaArudhaGraha(g));
+
   return lines.join('\n');
 }
 
@@ -1409,13 +1414,22 @@ function formatArudhasCompact(arudhas: Arudhas): string {
  */
 function formatGrahaArudhasCompact(arudhas: GrahaArudhas): string {
   const lines = ['ARUDHA DEI GRAHA (NARASIMHA RAO)', `Fonte: ${arudhas.source}`, ''];
-  for (const g of arudhas.grahas) {
-    lines.push(
-      `${g.name.padEnd(11)} ${SIGN_ABBR[g.sign]} → proprio ${SIGN_ABBR[g.ownSign]} → ${g.pada}` +
-        `${g.exception ? ' (eccezione del 1°/7°: il 10°)' : ''}${g.ownSignRule ? ` · ${g.ownSignRule}` : ''}`,
-    );
-  }
+  for (const g of arudhas.grahas) lines.push(rigaArudhaGraha(g));
   return lines.join('\n');
+}
+
+/**
+ * Una riga d'arudha di graha. Nei varga il segno proprio o l'arudha possono
+ * mancare: la riga lo scrive per esteso, e la regola dice dove la catena si
+ * è fermata.
+ */
+function rigaArudhaGraha(g: GrahaArudhas['grahas'][number]): string {
+  const proprio = g.ownSign ? SIGN_ABBR[g.ownSign] : 'indeterminato';
+  const pada = g.pada ?? 'indeterminato';
+  return (
+    `${g.name.padEnd(11)} ${SIGN_ABBR[g.sign]} → proprio ${proprio} → ${pada}` +
+    `${g.exception ? ' (eccezione del 1°/7°: il 10°)' : ''}${g.ownSignRule ? ` · ${g.ownSignRule}` : ''}`
+  );
 }
 
 /**

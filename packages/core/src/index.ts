@@ -53,6 +53,8 @@ export { computeVimshopaka, VARGA_VISWA, VIMSHOPAKA_WEIGHTS } from './vimshopaka
 export {
   computeGrahaArudhas,
   grahaArudhaOf,
+  grahaArudhasOf,
+  VARGA_GRAHA_ARUDHA_SOURCE,
   RAO_EXALTATION,
   RAO_OWN_SIGNS,
   rasiDrishti,

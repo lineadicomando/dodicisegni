@@ -96,7 +96,7 @@ volta e ricominciare da capo.
 | Voce | Priorità | Taglia | Prima di cominciare |
 |---|---|---|---|
 | 5. I varga: le convenzioni che restano | bassa | piccola | i sedici sono fatti; restano rifiniture, una per riga |
-| 25. Le dignità del Jyotisha: le rifiniture | bassa | piccola | due calcoli, da fare solo se servissero |
+| 25. Le dignità del Jyotisha: le rifiniture | bassa | piccola | la combustione in gradi di tempo, da fare solo se servisse |
 | 26. Le scuole occidentali delle dignità: quello che resta | bassa | piccola | la ricezione di Bonatti chiede un'applicazione; Valente aspetta un testo |
 | 28. La revisione della SEO | media | piccola | il dominio principale è deciso; i redirect e `ORIGIN` si fanno sul server, non nel repo |
 
@@ -106,13 +106,14 @@ occhi dei motori di ricerca, e si fa sul server, quando il proprietario lo
 chiede. Fra le rifiniture, i sessanta nomi del D-60 sono fatti il 30
 ottobre 2026 (`shashtiamsaOf` in `varga.ts`, versione 0.6.0), e
 l'avvertenza sull'ora va anche al D-24 e al D-27 (versione 0.7.0); le altre
-convenzioni della hora sono il lavoro più lungo della voce 5. Della 25 il pezzo più vicino sono gli arudha dei graha nei varga; la
-combustione in gradi di tempo vuole pagine ancora da leggere. La 26 aspetta
-testi.
+convenzioni della hora sono il lavoro più lungo della voce 5. Della 25 restano la combustione in gradi di tempo, che vuole pagine
+ancora da leggere: gli arudha dei graha nei varga sono fatti (versione
+0.8.0). La 26 aspetta testi.
 
-**Versione 0.7.0**, in ogni manifesto, col tag `v0.7.0`: l'avvertenza
-sull'ora anche nel D-24 e nel D-27 (voce 5), un campo che compare nella
-risposta di due varga. Prima, la 0.6.0 coi nomi del D-60. La
+**Versione 0.8.0**, in ogni manifesto, col tag `v0.8.0`: gli arudha dei
+graha in ogni varga (voce 25), un campo che compare nella risposta di ogni
+varga coi segni. Prima, la 0.7.0 con l'avvertenza sull'ora anche nel D-24 e
+nel D-27, e la 0.6.0 coi nomi del D-60. La
 prima, la 0.1.0, cade col numero unico della voce 27 (`f6026fa`) il 30
 ottobre 2026; poi, tutte con la
 voce 17: la 0.1.1 la pagina web dell'oraria, la 0.2.0 le condizioni di
@@ -243,8 +244,9 @@ nuovo non ci entra.
 dignità di Parashara e tutto quello che ne deriva sono in `dignita-parashara.ts`,
 `varga-buoni.ts`, `maitri.ts`, `vimshopaka.ts`, `arudha.ts`,
 `arudha-graha.ts` e `stati.ts`, ciascuno con la sua fonte nel commento e la
-sua prova nel test. Le due cose qui sono indipendenti, e da fare solo se
-servissero:
+sua prova nel test; gli arudha dei graha anche in ogni varga, dal 30
+ottobre 2026 (versione 0.8.0, vedi *Deciso*). Resta una cosa, da fare solo
+se servisse:
 
 - **La combustione nei gradi di tempo del *Surya Siddhanta*.** Oggi è in
   longitudine, e lo dice (`COMBUSTION_SOURCE` in `stati.ts`). Il calcolo
@@ -253,20 +255,6 @@ servissero:
   nuovo. Le pagine non sono ancora lette: nella copia locale
   (`texts/jyotisha/surya-siddhanta-burgess-1860`) c'è l'immagine di p. 366 e
   non quelle di pp. 364-365, e `trascrizioni.md` ha solo VII.8 e pp. 366-367.
-- **Gli arudha dei graha nei varga.** Rao (§9.5, p. 94, letto
-  sull'immagine) li calcola in ogni divisionale («the sign containing the
-  planet in the divisional chart of interest»); `arudha-graha.ts` fa solo la
-  rashi. Il nodo è uno, e chiede una scelta del proprietario prima del
-  codice: due spareggi della catena, §15.5.1 (5b) e §15.5.2 (6), guardano
-  quanto un graha è avanzato nel segno, e in un segno di varga il grado non
-  è definito (`types.ts`, il commento a `retrograde` di `SignVargaChart`).
-  Rao non dice che grado usare. Le strade: lasciare indeterminato l'arudha
-  quando la catena arriva lì, dicendolo; o il grado «del varga» (gradi × N
-  modulo 30), che è l'uso dei programmi e non vale per il D-30, a tratti
-  disuguali. Misurato il 30 ottobre 2026 su 300 nascite di prova e i
-  quattordici varga con segni dal D-3 al D-60: in 13 carte su 4200 il
-  risultato cambia col grado (5 nel D-30, 3 nel D-10, 2 nel D-27, una nel
-  D-7, nel D-9 e nel D-12).
 
 ## 26. Le scuole occidentali delle dignità: quello che resta
 
@@ -601,6 +589,18 @@ sito pubblicato lo stesso giorno, tutte fuori dal repo, in ordine di peso:
   il segno più forte, e 46.158-166 confronta due signori, non due segni. Gli
   arudha dei bhava restano del BPHS. In 46.164 conta anche l'uccha di Rahu
   e Ketu di 47.35: è lo stesso libro.
+
+- **Gli arudha dei graha nei varga restano indeterminati dove la catena
+  guarda il grado.** Scelto dal proprietario il 30 ottobre 2026, voce 25.
+  Rao (§9.5, p. 94) li calcola in ogni divisionale, ma due spareggi
+  (§15.5.1, 5b; §15.5.2, 6) guardano quanto un graha è avanzato nel segno,
+  e nel segno di un varga il grado non è definito. Contro il grado «del
+  varga» (gradi × N modulo 30), che è l'uso dei programmi e non di Rao, e
+  che non vale per il D-30: quando la catena arriva lì, segno proprio e
+  arudha mancano e `ownSignRule` dice dove si è fermata. Succede solo a
+  Marte e Saturno, per il co-signore di Scorpione e Acquario: misurato su
+  4200 carte, 26 arudha su 37800; dove l'arudha c'è, coincide con quello
+  del grado «del varga» (`arudha-graha.test.ts`).
 
 - **Il server MCP non ha un pool, e non gli serve**: è un processo per client,
   sul trasporto stdio, e non c'è nessun'altra richiesta da tenere in attesa.

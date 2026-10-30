@@ -204,6 +204,8 @@ describe('il documento vedico', () => {
     expect(testo).toContain('STATI DEI GRAHA');
     expect(testo.replace(/\s+/g, ' ')).toContain('il conto di Narasimha Rao');
     expect(testo.replace(/\s+/g, ' ')).toContain('ARUDHA DEI GRAHA è di un\'altra scuola');
+    // Gli arudha dei graha nei varga: un «indeterminato» non va completato.
+    expect(testo.replace(/\s+/g, ' ')).toContain('dillo così, e non scegliere tu');
     expect(testo.replace(/\s+/g, ' ')).toContain('quali guastino i varga buoni il testo non lo dice');
     expect(testo).toContain('VARGA BUONI');
     expect(testo.replace(/\s+/g, ' ')).toContain('non rifare il conto con regole tue');

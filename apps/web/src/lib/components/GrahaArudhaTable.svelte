@@ -42,12 +42,19 @@
           <td class="glifo">{BODY_GLYPH[g.id]}</td>
           <td>{g.name}</td>
           <td>{SIGN_GLYPH[g.sign]} {SIGN_LABEL[g.sign]}</td>
+          <!-- Nella rashi segno proprio e arudha ci sono sempre: mancano solo
+               nei varga, che li mostrano in `VargaTable.svelte`. La guardia
+               serve al tipo, che è lo stesso. -->
           <td title={g.ownSignRule}>
-            {SIGN_LABEL[g.ownSign]}{#if g.ownSignRule}<span class="tenue"> *</span>{/if}
+            {g.ownSign ? SIGN_LABEL[g.ownSign] : 'indeterminato'}{#if g.ownSignRule}<span class="tenue"> *</span>{/if}
           </td>
           <td>
-            {SIGN_GLYPH[g.pada]} {SIGN_LABEL[g.pada]}
-            {#if g.exception}<span class="tenue">· il 10°</span>{/if}
+            {#if g.pada}
+              {SIGN_GLYPH[g.pada]} {SIGN_LABEL[g.pada]}
+              {#if g.exception}<span class="tenue">· il 10°</span>{/if}
+            {:else}
+              indeterminato
+            {/if}
           </td>
         </tr>
       {/each}
