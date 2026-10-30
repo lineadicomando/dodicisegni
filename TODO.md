@@ -97,7 +97,7 @@ volta e ricominciare da capo.
 
 | Voce | Priorità | Taglia | Prima di cominciare |
 |---|---|---|---|
-| 26. Le scuole occidentali delle dignità: quello che resta | bassa | piccola | Valente aspetta l'ed. Pingree, protetta |
+| 26. Le scuole occidentali delle dignità: quello che resta | bassa | piccola | Valente I.3 nell'ed. Pingree, pp. 13-18 col suo apparato: si legge in biblioteca |
 | 28. La revisione della SEO | media | piccola | il dominio principale è deciso; i redirect e `ORIGIN` si fanno sul server, non nel repo |
 
 La 26 è una rifinitura e aspetta un testo protetto. La 28 è la sola che tocca chi usa
@@ -184,12 +184,39 @@ Bonatti ha le sue ricezioni (versione 0.11.0, vedi *Deciso*): le orbite che
 dà ai pianeti sono trascritte nella copia locale, e non usate. Resta una
 cosa, che aspetta un testo:
 
-- **Valente, un testo critico migliore per I.3**: l'ed. Pingree (Teubner
-  1986), protetta, che potrebbe sanare Ariete e Scorpione e dire se la
-  Bilancia di Valente è sua o del codice. Se cambia, cambia la riga dei
-  termini, non per forza la tavola. L'edizione è in `texts/INDICE.md`, fra
-  le non libere. Esilio e ricezione invece sono stati cercati, e in Valente
-  non ci sono (vedi *Esaminato*).
+- **Valente, I.3 nel testo di Pingree.** I termini della scuola `valente`
+  sono gli egizi di Robbins p. 96 (vedi *Deciso*), perché in Kroll tre
+  segni non si leggono: nell'Ariete mancano i numeri di Giove e di
+  Mercurio, lo Scorpione somma 31, la Bilancia ha numeri suoi che
+  l'apparato dice diversi dagli «altri» (`VALENS_TERMS_SOURCE`).
+
+  *Il testo atteso*: *Vettii Valentis Antiocheni Anthologiarum libri
+  novem*, a cura di David Pingree, Leipzig, Teubner, 1986 (Bibliotheca
+  Teubneriana; ISBN 3-322-00275-6), xxi + 583 pagine, greco con prefazione
+  e apparato in latino; ristampato in digitale da De Gruyter nel 2010
+  (ISBN 978-3-11-095822-5, doi 10.1515/9783110958225), a pagamento. Copie
+  libere non ce ne sono; si legge in biblioteca. Il capitolo è I.3, alle pp.
+  13-18 di Pingree: l'Ariete fra la 13 e la 14, la Bilancia a p. 16, lo
+  Scorpione fra la 16 e la 17. Servono le **pagine col testo e l'apparato
+  critico**, e la **prefazione** dove dice su quali codici fonda il libro I.
+
+  *Che cosa dirà, con buona probabilità*: la traduzione di Mark Riley
+  (2010), fatta sul testo di Pingree e con le sue pagine segnate, è in
+  `texts/occidentale/valente-anthologies-riley-2010` (scaricata il 30
+  ottobre 2026), e dà Ariete ♃6 ♀6 ☿8 ♂5 ♄5 e Scorpione ♂7 ♀4 ☿8 ♃5 ♄6,
+  cioè gli egizi, ma Bilancia ♄6 ☿5 ♃8 ♀7 ♂4, cioè quella di Kroll. Una
+  traduzione però non è il testo critico: non dice se i numeri dell'Ariete
+  sono nei codici o integrati da Pingree, né se il ♃5 dello Scorpione è una
+  lezione o una correzione.
+
+  *Che cosa ne segue*: se il greco conferma Riley, Ariete e Scorpione non
+  cambiano la tavola, solo la riga `VALENS_TERMS_SOURCE`, che potrà dire
+  «nell'ed. Pingree» invece di «corrotti in Kroll»; e la versione si
+  muove, perché cambia una risposta. La Bilancia invece è una scelta del
+  proprietario: la tavola segue gli egizi «non la sua Bilancia» (*Deciso*),
+  e se Pingree la stampa senza dubbi nell'apparato, la Bilancia di Valente
+  diventa una lezione del testo critico e non più del solo codice. Da
+  decidere allora, con l'apparato davanti.
 
 **Per chi aggiunge una scuola** (Doroteo, se un suo testo diventasse
 libero). Valente è il modello più recente: `93cb27b` il calcolo, `697fea0`
