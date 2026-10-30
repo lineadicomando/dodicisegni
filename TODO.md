@@ -74,17 +74,19 @@ volta e ricominciare da capo.
 
 | Voce | Priorità | Taglia | Prima di cominciare |
 |---|---|---|---|
-| 19. Le dignità, per scuola | bassa | media | Jyotisha: fatto, restano rifiniture; occidente: Lilly e Tolomeo fatti; la prossima è Bonatti, da leggere sulle immagini |
+| 19. Le dignità, per scuola | bassa | media | Jyotisha: fatto, restano rifiniture; occidente: Lilly, Tolomeo e Bonatti fatti; la prossima è l'ellenistica, da Valente |
 | 17. L'astrologia oraria | bassa | piccola, ormai | i quattro lotti sono fatti; restano rifiniture indipendenti, una per riga |
 | 5. I varga: le convenzioni che restano | bassa | piccola | i sedici sono fatti; restano rifiniture, una per riga |
 
 L'ordine consigliato è quello della tabella. Della 19, nel Jyotisha, sono
 fatti dignità (anche dei nodi), varga buoni (nei due conti, Santhanam e
 Narasimha Rao), relazioni, vimshopaka, arudha dei bhava e dei graha, e gli
-stati di 6.53; restano rifiniture senza urgenza. Nell'occidente ci sono Lilly e, dal 29 ottobre
-2026, Tolomeo; la prossima scuola è Bonatti, e il primo passo è trovare nella
-scansione i fogli delle dignità (voce 19, *Da verificare*). Firmico, Valente
-e Leo sono in `texts/` con le pagine lette (voce 24, chiusa). La 17 usa le
+stati di 6.53; restano rifiniture senza urgenza. Nell'occidente ci sono Lilly,
+Tolomeo (29 ottobre 2026) e Bonatti (30 ottobre 2026); la prossima scuola è
+l'ellenistica, e il primo passo è trovare in Valente i gradi delle
+esaltazioni e la sua tavola delle triplicità (voce 19, *Da verificare*).
+Firmico, Valente e Leo sono in `texts/` con le pagine lette (voce 24,
+chiusa). La 17 usa le
 tavole di Lilly della 19 e ha già le *moieties* come terza convenzione delle
 orbite.
 
@@ -113,8 +115,8 @@ blocco in `DignityTable.svelte`, la voce del menù in `lib/scuole-dignita.ts`,
 la descrizione di `dignity_school` in `packages/mcp/src/tools.ts`, il
 documento `packages/lettura/src/tropicale.ts` e `/metodo`. L'elenco preciso,
 con quello che nessun test controlla, è alla voce 19, *Che cosa resta*, 2.
-L'ultima fatta, Tolomeo, è il modello: `14df446` il calcolo, `75cc895` le
-superfici. Dalla riga di comando la sezione si vede con `--dignita <scuola>`
+L'ultima fatta, Bonatti, è il modello: `3191b08` il calcolo, `f1afe76` le
+superfici (prima di lei Tolomeo, `14df446` e `75cc895`). Dalla riga di comando la sezione si vede con `--dignita <scuola>`
 e una nascita qualunque, con l'ora perché ci sia la setta.
 
 ## 5. I varga: le convenzioni che restano
@@ -312,9 +314,12 @@ un pacchetto di tavole nel punto 19.
   (*Decem tractatus astronomiae*, Ratdolt 1491, col trattato sulle
   interrogazioni; scaricato in `texts/occidentale/bonatti-decem-tractatus-1491`,
   copia della Biblioteca Jagellonica: l'OCR dell'incunabolo è inutile e si
-  legge sulle immagini). Termini egizi, le sei negazioni della perfezione
-  (refranazione, evasione, proibizione, abscissione, contrarietà, ritorno della
-  luce), che non coincidono coi nomi di Lilly. Le traduzioni latine medievali
+  legge sulle immagini). I termini di Bonatti non sono gli egizi ma i
+  tolemaici (voce 19); il trattato delle interrogazioni non è ancora stato
+  cercato nella scansione, e la `FONTE.md` dice come orientarsi con l'OCR.
+  Bonatti conta sei negazioni della perfezione (refranazione, evasione,
+  proibizione, abscissione, contrarietà, ritorno della luce), che non
+  coincidono coi nomi di Lilly. Le traduzioni latine medievali
   sono di pubblico dominio, quelle inglesi moderne (Dykes) no.
 - **Il prashna del Jyotisha.** Il *Prasna Marga* (Kerala, XVII secolo), e
   soprattutto la Krishnamurti Paddhati (KP), la più calcolabile: il
@@ -328,9 +333,9 @@ un pacchetto di tavole nel punto 19.
 **Priorità bassa**, ora che il tropicale è fatto per intero. Viene dal punto
 17, che ne ha bisogno, ma vale da sola: le dignità servono al natale letto
 alla maniera tradizionale e al Jyotisha. Il Jyotisha è fatto, salvo
-rifiniture. Nell'occidente ci sono Lilly e Tolomeo; restano le scuole le cui
-fonti non sono ancora state lette, e la prossima è Bonatti (sotto, *Da
-verificare*).
+rifiniture. Nell'occidente ci sono Lilly, Tolomeo e Bonatti; restano le
+scuole le cui fonti non sono ancora state lette, e la prossima è
+l'ellenistica (sotto, *Da verificare*).
 
 ### A che punto è
 
@@ -502,6 +507,41 @@ tropicale e `/metodo#tolomeo`. Prove in
 `packages/core/test/dignita-tolomeo.test.ts`, con la tavola ricopiata coi
 glifi e il controllo delle somme di p. 103.
 
+Fatta anche la scuola di Bonatti, il 30 ottobre 2026, in `3191b08` e
+`f1afe76`, con le scelte del proprietario in *Deciso*. Letta sulle immagini
+del *Decem tractatus* (Ratdolt 1491), tratt. II, parte 2, ff. 14v-21r:
+`packages/core/src/dignita-bonatti.ts` tiene le sue tavole, scritte e non
+prese da Lilly anche dove coincidono: esaltazioni col grado e i Nodi (cap.
+VIII), cadute (cap. X), triplicità coi tre signori, di giorno, di notte e
+il partecipe (cap. XI; nell'acqua Venere, Marte e la Luna), termini (cap.
+XIV), facce caldee (cap. XVII); domicili ed esilio da `dignita.ts`, che
+coincidono coi capp. VI e VII. Tutti e tre i signori della triplicità hanno
+la dignità a prescindere dalla setta: Bonatti chiama Saturno, il partecipe,
+«dominus triplicitatis arietis» negli esempi della ricezione. Si chiede con
+`dignitySchool: 'bonatti'` e arriva in `WesternDignities.bonatti`, anche nel
+cielo. Superfici: `--dignita bonatti`, `/api/chart`, `dignity_school` su
+`compute_natal_chart`, la voce del menù, il blocco «Secondo Bonatti» di
+`DignityTable.svelte`, il documento di lettura tropicale e `/metodo#bonatti`.
+Prove in `packages/core/test/dignita-bonatti.test.ts`, con le tavole
+ricopiate coi glifi e le somme dei termini.
+
+Le cose trovate leggendo, scritte anche nella copia locale
+(`texts/occidentale/bonatti-decem-tractatus-1491/trascrizioni.md`):
+
+- **i termini di Bonatti sono i tolemaici, non gli egizi.** Coincidono con
+  la tavola greca di Robbins in undici segni; nel Leone Bonatti mette Saturno
+  primo e Giove ultimo (♄ 6, ☿ 7, ♂ 5, ♀ 6, ♃ 6), e il cap. XV lo spiega
+  come Tolomeo a p. 105. È una terza versione del Leone, diversa anche da
+  Lilly. La tavola delle scuole qui sotto diceva «egizi» per la riga
+  medievale, da fonti secondarie;
+- **la ricezione di Bonatti** (tratt. III, parte 2, PDF pp. 167-168) nasce
+  da un'applicazione per corpo o per aspetto e vale per domicilio,
+  esaltazione o due dignità minori insieme, mai una sola; la lettura larga
+  di Alcabizio la riferisce senza farla sua;
+- **i punti.** L'unico conto trovato è nel trattato delle rivoluzioni (PDF
+  p. 484, il signore dell'anno): domicilio 5, esaltazione 4, termine 5,
+  triplicità 3, la faccia non nominata. Non è il 5-4-3-2-1.
+
 ### Che cosa resta
 
 1. **Il Jyotisha: quello che resta dopo il 29 ottobre 2026.** Ciascuna
@@ -521,11 +561,14 @@ glifi e il controllo delle somme di p. 103.
 
 2. **Le altre scuole occidentali**, quando le loro fonti sono state lette
    (vedi *Da verificare* qui sotto): ciascuna come valore nuovo di
-   `DignitySchool`, intera. Lilly e Tolomeo ci sono; la prossima è Bonatti.
-   Tolomeo è il modello più recente da seguire: `dignita-tolomeo.ts`, un
-   campo in `WesternDignities`, un ramo in `computeWesternDignities`, una
-   funzione di righe in `format.ts` (`ptolemyLines`), un blocco in
-   `DignityTable.svelte`, una voce in `lib/scuole-dignita.ts`.
+   `DignitySchool`, intera. Lilly, Tolomeo e Bonatti ci sono; la prossima è
+   l'ellenistica. Bonatti è il modello più recente da seguire:
+   `dignita-bonatti.ts`, un campo in `WesternDignities`, un ramo in
+   `computeWesternDignities`, una funzione di righe in `format.ts`
+   (`bonattiLines`), un blocco in `DignityTable.svelte`, una voce in
+   `lib/scuole-dignita.ts`. Attenzione a `apps/web/src/lib/server/birth.test.ts`,
+   che usa il nome di una scuola inesistente per provare il rifiuto (oggi
+   `valente`): va cambiato quando quella scuola entra.
 
    Il compilatore pretende il nome in
    `DIGNITY_SCHOOL_NAMES` (`packages/core/src/constants.ts`), e da lì CLI,
@@ -538,7 +581,13 @@ glifi e il controllo delle somme di p. 103.
    accidentali sono di Lilly e restano suoi: una scuola nuova porta il
    proprio, o nessuno, e `LillyConditions` non si generalizza. Le ricezioni
    sono una definizione di Lilly: una scuola che non ne ha una sua le lascia
-   comuni, come Tolomeo.
+   comuni, come Tolomeo; una che ne ha una diversa, se non si calcola, la
+   riporta nella riga della fonte e lascia le comuni, come Bonatti.
+
+3. **La ricezione di Bonatti, se un giorno servisse**: chiede
+   un'applicazione in corso, quindi una convenzione delle orbite di Bonatti
+   (da leggere: non è stata cercata) e il corso di `corso.ts`. È lavoro
+   dell'oraria più che della tavola, e va pensato con la voce 17.
 
 ### Le scuole, e il default deciso il 18 ottobre 2026
 
@@ -548,12 +597,14 @@ Per il tema tropicale le scuole possibili sono cinque, ciascuna come pacchetto:
 |---|---|---|---|---|---|---|---|
 | Ellenistica (Doroteo, Valente) | tradizionali | da trovare: non in Valente I.2, ma Valente dà gradi altrove (apparato di Kroll-Skutsch a Firmico II.3.5) | tre reggenti, uno partecipe | egizi | sì | nessuno | Doroteo sopravvive in arabo, e la traduzione di Pingree è protetta; Valente in greco è libero |
 | Tolomeo, *Tetrabiblos* | tradizionali | per segno, senza gradi (I.19) | due reggenti per setta; l'acqua a Marte, con Venere di giorno e la Luna di notte (I.18, p. 87) | tolemaici, dalla tavola greca di Robbins (p. 106) | no: la sua «faccia» è un aspetto ai luminari (I.23) | nessuno | greco e Ashmand (1822) liberi; nel codice dal 29 ottobre 2026 (`dignita-tolomeo.ts`) |
-| Medievale araba (Abū Maʿshar, al-Bīrūnī, Bonatti) | tradizionali | col grado | doroteiche | egizi | caldee | 5-4-3-2-1, almuten | Bonatti latino (1491) libero |
+| Medievale (Bonatti, che cita Abū Maʿshar e Alcabizio) | tradizionali | col grado, e i Nodi | doroteiche, tre signori col partecipe | tolemaici, col Leone di Saturno | caldee | nessuno nelle dignità; 5-4-5-3 solo per il signore dell'anno | Bonatti latino (1491) libero; nel codice dal 30 ottobre 2026 (`dignita-bonatti.ts`) |
 | Lilly, 1647 | tradizionali | col grado, e i Nodi | due reggenti, Marte sull'acqua | tolemaici, nella sua versione | caldee | p. 104: esaltazione 4, triplicità 3, termine 2, faccia 1, esilio 5, caduta 4; domicilio illeggibile; peregrino definito a p. 112; tavola delle fortezze a p. 115, letta, domicilio 5 | scansioni libere; tavole lette il 27 ottobre 2026 |
 | Moderna, XX secolo | con Urano, Nettuno, Plutone | segni, i pianeti esterni senza autore | nessuna | nessuno | decani per triplicità (Alan Leo) | nessuno | senza un autore unico |
 
-Le righe medievale e moderna, fuori da quanto verificato qui sotto, vengono
-da fonti secondarie e vanno lette sulle primarie prima di diventare tavole.
+La riga medievale è stata letta su Bonatti il 30 ottobre 2026, e
+correggeva due celle che venivano da fonti secondarie (termini «egizi»,
+punteggio 5-4-3-2-1). Le righe ellenistica e moderna, fuori da quanto
+verificato qui sotto, vengono da fonti secondarie e vanno lette sulle primarie prima di diventare tavole.
 La riga di Lilly è stata letta sulla scansione, punti in calce compresi
 (tranne quello del domicilio, illeggibile), e così la tavola delle fortezze
 di p. 115, che dà il domicilio a 5.
@@ -569,8 +620,8 @@ ed è quello che la sezione DIGNITÀ porta oggi:
 
 Triplicità, termini e facce **non compaiono per default**: si chiedono
 nominando la scuola. Le disponibili sono Lilly, che l'oraria richiede
-comunque, e Tolomeo; le altre entrano quando le loro fonti sono state lette.
-Il punteggio c'è per Lilly, in `condizioni-lilly.ts`; Tolomeo non ne ha, e
+comunque, Tolomeo e Bonatti; le altre entrano quando le loro fonti sono state lette.
+Il punteggio c'è per Lilly, in `condizioni-lilly.ts`; Tolomeo e Bonatti non ne hanno, e
 una scuola nuova porta il suo, o nessuno.
 Nel Jyotisha la scelta è più semplice, perché Parashara è il riferimento che i
 documenti di lettura già presuppongono; dove il BPHS lascia un buco senza
@@ -643,21 +694,17 @@ intera di Lilly il 27 ottobre, in `dignita-lilly.ts`):
 - **I termini egizi** sono trascritti anche loro, dal greco di Robbins
   p. 96 e controllati con le somme per pianeta dell'apparato (Saturno 57,
   Giove 79, Marte 66, Venere 82, Mercurio 76), nella stessa
-  `trascrizioni.md`: servono alla scuola medievale e all'ellenistica, che
-  li usano, e vanno confrontati con la tavola di Bonatti quando la si legge.
+  `trascrizioni.md`: servono all'ellenistica, che li usa. Alla medievale
+  no: la tavola di Bonatti è tolemaica (vedi sopra).
+- **Bonatti, le dignità intere**: lette il 30 ottobre 2026 sulle immagini
+  della stampa di Ratdolt, tratt. II, parte 2, capp. V-XVII (ff. 14v-21r;
+  nel PDF il foglio N recto è la pagina 2N + 33), più la ricezione (tratt.
+  III, PDF pp. 167-168) e le «fortitudines» del signore dell'anno (PDF p.
+  484). Nel codice in `dignita-bonatti.ts`; la mappa dei fogli in
+  `FONTE.md`, i passi in `trascrizioni.md`.
 
 Da verificare:
 
-- **Bonatti**, per domicili ed esaltazioni: non è stato letto. L'edizione
-  Ratdolt 1491 è in `texts/occidentale/bonatti-decem-tractatus-1491`, e l'OCR
-  dell'incunabolo non serve: si legge sulle immagini. Non c'è ancora una
-  mappa dei fogli: quali contengano domicili ed esaltazioni va trovato
-  sfogliando, e scritto nella `FONTE.md`: la pista da provare per prima è il
-  secondo trattato, quello sui segni, ma non è stata verificata. Bonatti
-  dovrebbe dare anche triplicità, termini e facce, e la riga medievale della
-  tavola qui sopra è di fonti secondarie. Un'altra copia, senza
-  OCR, è `ita-bnc-in1-00000968-001` (Biblioteca Nazionale Centrale di
-  Firenze); quella della Bayerische Staatsbibliothek non si è trovata.
 - **Le esaltazioni nella scuola ellenistica**: altrove in Valente, o in
   Doroteo. Valente i gradi li dà: l'apparato di Kroll-Skutsch a Firmico
   II.3.5 (p. 44) corregge Saturno a 21 e Giove a 15 «e Val. Doroth.»,
@@ -668,7 +715,9 @@ Da verificare:
   lezione dei codici; vedi
   `texts/occidentale/firmico-mathesis-kroll-skutsch-1897/trascrizioni.md`.
 - **I punti 5-4-3-2-1 medievali**: a chi vanno attribuiti. I siti li danno
-  come «medievali» senza un testo.
+  come «medievali» senza un testo. In Bonatti non ci sono: i capitoli delle
+  dignità non danno punti, e il solo conto (PDF p. 484) è 5-4-5-3 per il
+  signore dell'anno. Da cercare altrove (al-Qabīṣī, Ibn Ezra), se servisse.
 - **Per il Jyotisha, l'esaltazione dei nodi**: chiusa col BPHS stesso,
   47.34-36, nel codice dal 29 ottobre 2026 (vedi *Deciso*). Se un giorno
   servisse una seconda fonte: Santhanam in nota a 3.50 rimanda alla sua
@@ -686,6 +735,15 @@ righe della tavola coi glifi della stampa e le rilegge: è il modello per una
 scuola nuova.
 
 ## Deciso, e da non riaprire
+
+- **La scuola di Bonatti lascia le ricezioni comuni e non ha punteggio.**
+  Scelto dal proprietario il 30 ottobre 2026, con la voce 19. La ricezione
+  di Bonatti nasce da un'applicazione e chiede domicilio, esaltazione o due
+  dignità minori: non si calcola, la riga delle ricezioni la riporta, e
+  restano quelle per domicilio ed esaltazione. Il 5-4-5-3 del signore
+  dell'anno non diventa un punteggio delle dignità. Il resto non era una
+  scelta: le tavole sono quelle stampate, e nel Leone la tavola e il testo
+  di Bonatti concordano.
 
 - **La scuola di Tolomeo segue la tavola greca di Robbins com'è stampata.**
   Scelto dal proprietario il 29 ottobre 2026, con la voce 19. I termini
