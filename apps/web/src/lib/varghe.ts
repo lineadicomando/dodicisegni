@@ -13,7 +13,7 @@
  * uguali.
  */
 
-import type { VargaId } from '@dodicisegni/core';
+import type { VargaId, VargaScheme } from '@dodicisegni/core';
 
 export const VARGHE: readonly { value: VargaId; label: string }[] = [
   { value: 'd2', label: 'D2 Hora' },
@@ -31,4 +31,26 @@ export const VARGHE: readonly { value: VargaId; label: string }[] = [
   { value: 'd40', label: 'D40 Khavedamsa' },
   { value: 'd45', label: 'D45 Akshavedamsa' },
   { value: 'd60', label: 'D60 Shashtiamsa' },
+];
+
+/**
+ * I quattro gruppi di varga che Parashara nomina, BPHS 7.17-20 (pp. 95-96
+ * di Santhanam): una copia di `VARGA_SCHEMES` del motore, come l'elenco qui
+ * sopra, e `elenchi.test.ts` la confronta con quella.
+ *
+ * Senza la D-1 per la stessa ragione dell'elenco: la rashi c'è sempre.
+ */
+export const SCHEMI_VARGA: readonly { value: VargaScheme; label: string; vargas: readonly VargaId[] }[] = [
+  { value: 'shadvarga', label: 'Shadvarga', vargas: ['d2', 'd3', 'd9', 'd12', 'd30'] },
+  { value: 'saptavarga', label: 'Saptavarga', vargas: ['d2', 'd3', 'd7', 'd9', 'd12', 'd30'] },
+  {
+    value: 'dashavarga',
+    label: 'Dashavarga',
+    vargas: ['d2', 'd3', 'd7', 'd9', 'd10', 'd12', 'd16', 'd30', 'd60'],
+  },
+  {
+    value: 'shodashavarga',
+    label: 'Shodashavarga',
+    vargas: ['d2', 'd3', 'd4', 'd7', 'd9', 'd10', 'd12', 'd16', 'd20', 'd24', 'd27', 'd30', 'd40', 'd45', 'd60'],
+  },
 ];

@@ -22,13 +22,14 @@ import {
   DIGNITY_SCHOOL_NAMES,
   HOUSE_SYSTEM_CODES,
   NATAL_ORB_CONVENTIONS,
+  VARGA_SCHEMES,
   VARGAS,
 } from '@dodicisegni/core';
 import { describe, expect, it } from 'vitest';
 import { HOUSE_SYSTEMS } from './house-systems';
 import { DEFAULT_ORB_CONVENTION, ORB_CONVENTIONS } from './orbite';
 import { DIGNITY_SCHOOLS } from './scuole-dignita';
-import { VARGHE } from './varghe';
+import { SCHEMI_VARGA, VARGHE } from './varghe';
 import { AYANAMSAS } from './zodiacs';
 
 describe('gli elenchi del client combaciano con il motore', () => {
@@ -66,5 +67,16 @@ describe('gli elenchi del client combaciano con il motore', () => {
       VARGHE.map((varga) => varga.value),
       'lib/varghe.ts è rimasto indietro rispetto a VARGAS in packages/core/src/varga.ts',
     ).toEqual(VARGAS.map((varga) => varga.id).filter((id) => id !== 'd1'));
+  });
+
+  it('i gruppi di varghe.ts sono quelli di VARGA_SCHEMES, senza la D-1', () => {
+    expect(
+      Object.fromEntries(SCHEMI_VARGA.map((schema) => [schema.value, schema.vargas])),
+      'lib/varghe.ts è rimasto indietro rispetto a VARGA_SCHEMES in packages/core/src/varga-buoni.ts',
+    ).toEqual(
+      Object.fromEntries(
+        Object.entries(VARGA_SCHEMES).map(([schema, ids]) => [schema, ids.filter((id) => id !== 'd1')]),
+      ),
+    );
   });
 });

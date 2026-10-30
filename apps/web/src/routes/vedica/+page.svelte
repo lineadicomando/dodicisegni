@@ -241,18 +241,22 @@
   striscia={aperto ? undefined : opzioni}
 >
   {#snippet dettagli()}
-    <BirthForm bind:value={birthStore.value}>
-      {#snippet options()}
-        <JyotishaSettings
-          bind:ayanamsa
-          bind:dashaLevels
-          bind:dashaYear
-          bind:drishtiNodes
-          bind:vargas
-          bind:hora
-        />
-      {/snippet}
-    </BirthForm>
+    <!-- Le opzioni fuori dalla griglia della nascita, non nella sua quarta
+         cella: lì quattro menù e quindici caselle facevano una colonna lunga
+         accanto a tre campi corti, e spingevano in fondo le coordinate, che
+         sono del luogo. Qui sono una fascia sotto, a tutta larghezza. -->
+    <BirthForm bind:value={birthStore.value} />
+
+    <div class="opzioni">
+      <JyotishaSettings
+        bind:ayanamsa
+        bind:dashaLevels
+        bind:dashaYear
+        bind:drishtiNodes
+        bind:vargas
+        bind:hora
+      />
+    </div>
 
     <button
       type="submit"
@@ -383,6 +387,12 @@
 {/if}
 
 <style>
+  .opzioni {
+    margin-top: 1.75rem;
+    padding-top: 1.25rem;
+    border-top: 1px solid var(--linea);
+  }
+
   .stile {
     margin-top: 1rem;
   }
