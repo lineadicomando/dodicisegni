@@ -120,6 +120,25 @@ const TRIMSAMSA_EVEN: readonly { until: number; sign: number }[] = [
   { until: 30, sign: 7 }, // Marte — Scorpione
 ];
 
+/**
+ * I sedici varga di BPHS 6, nell'ordine del testo.
+ *
+ * **Per chi aggiunge un varga o ne cambia uno.** Le superfici leggono
+ * l'elenco da qui (server MCP, le due rotte `api/jyotish`, la CLI).
+ * L'interfaccia ne ha due copie in `apps/web/src/lib/varghe.ts`, senza la
+ * D-1: `VARGHE` e `SCHEMI_VARGA`, copiato da `VARGA_SCHEMES`; con la tavola
+ * di `/metodo/varga` le provano `elenchi.test.ts` e `metodo/jyotisha.test.ts`,
+ * anche nell'ordine. Un varga fuori dai sedici fa cadere `varga-buoni.test.ts`:
+ * gli schemi e i pesi del vimshopaka sono quelli del testo, e un varga nuovo
+ * non ci entra. Nessun test vede i testi che li nominano a mano: i commenti
+ * delle due rotte `api/jyotish`, l'aiuto di `--varga` in `cli.ts`, i
+ * parametri `vargas` e `varga` in `packages/mcp/src/tools.ts`, il rimando
+ * `#varga` di `/metodo`, la pagina `/metodo/varga` con la sua descrizione, il
+ * commento sopra `VargaId` in `types.ts`. Se cambia quali sono `fine`, li
+ * nominano anche il paragrafo dell'avvertenza in `/metodo/varga`, il
+ * documento `packages/lettura/src/jyotisha.ts` e il commento a `warnings` in
+ * `types.ts`.
+ */
 export const VARGAS: readonly VargaDefinition[] = [
   {
     id: 'd1',

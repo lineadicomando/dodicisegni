@@ -29,6 +29,7 @@ Le voci chiuse dopo, con il commit in cui si leggono ancora per intero:
 | 17 | `cd6d0f2` |
 | 29 | `62ae8f6` |
 | 25 | `63b0755` |
+| 5 | `a2e2207` |
 
 Le fonti citate qui stanno in copia locale in `texts/`, fuori dal repo: la
 cartella, le schede `FONTE.md` e l'elenco `texts/INDICE.md` si mantengono come
@@ -96,20 +97,19 @@ volta e ricominciare da capo.
 
 | Voce | Priorità | Taglia | Prima di cominciare |
 |---|---|---|---|
-| 5. I varga: le convenzioni che restano | bassa | piccola | i sedici e le sei hora sono fatti; restano due verifiche sulla hora |
 | 26. Le scuole occidentali delle dignità: quello che resta | bassa | piccola | la ricezione di Bonatti chiede un'applicazione; Valente aspetta un testo |
 | 28. La revisione della SEO | media | piccola | il dominio principale è deciso; i redirect e `ORIGIN` si fanno sul server, non nel repo |
 
-Le prime due sono rifiniture, nessuna urgente. La 28 è la sola che tocca
-chi usa il programma oggi: il suo primo punto divide il sito in quattro agli
-occhi dei motori di ricerca, e si fa sul server, quando il proprietario lo
-chiede. Fra le rifiniture, i sessanta nomi del D-60 sono fatti il 30
-ottobre 2026 (`shashtiamsaOf` in `varga.ts`, versione 0.6.0), e
-l'avvertenza sull'ora va anche al D-24 e al D-27 (versione 0.7.0), e le
-quattro convenzioni moderne della hora sono entrate (versione 0.8.1): della
-voce 5 restano due verifiche. La 25 è chiusa il 30 ottobre 2026: gli
-arudha dei graha nei varga (0.8.0) e la combustione nei gradi di tempo
-(0.9.0), tutte e due in *Deciso*. La 26 aspetta testi.
+La 26 è una rifinitura e aspetta testi. La 28 è la sola che tocca chi usa
+il programma oggi: il suo primo punto divide il sito in quattro agli occhi
+dei motori di ricerca, e si fa sul server, quando il proprietario lo chiede.
+Il 30 ottobre 2026 si sono chiuse le voci 5 e 25, le rifiniture del
+Jyotisha: i nomi del D-60 (0.6.0), l'avvertenza sull'ora anche nel D-24 e
+nel D-27 (0.7.0), gli arudha dei graha nei varga (0.8.0), le quattro hora
+moderne (0.8.1) e la combustione nei gradi di tempo (0.9.0); le scelte sono
+in *Deciso*, le due verifiche senza esito in *Esaminato*. Le istruzioni per
+chi aggiunge un varga o una convenzione della hora stanno nei commenti sopra
+`VARGAS` (`varga.ts`) e `HORA_CONVENTIONS` (`hora.ts`).
 
 **Versione 0.9.0**, in ogni manifesto, col tag `v0.9.0`: la combustione del
 Jyotisha nei gradi di tempo (voce 25), tre campi che compaiono e un giudizio
@@ -167,93 +167,6 @@ la pagina Cielo; il modello è `ec1ad1e`). L'elenco preciso,
 con quello che nessun test controlla, è alla voce 26. Dalla riga di comando la
 sezione si vede con `--dignita <scuola>` e una nascita qualunque, con l'ora
 perché ci sia la setta.
-
-## 5. I varga: le convenzioni che restano
-
-**Priorità bassa.** I sedici varga del BPHS, cap. 6, sono calcolati tutti, in
-`packages/core/src/varga.ts` (il D-2 con le sue convenzioni in `hora.ts`), in
-quattro passaggi del 28 ottobre 2026: D-4 e D-7 (`097ae59`), il D-2
-(`a828b3f`), D-16, D-20 e D-24 (`87fb824`), D-40, D-45 e D-60
-(`178f01d`). Ogni regola è stata letta sull'immagine di Santhanam, vol. I,
-pp. 68-86, sanscrito compreso, e ogni
-tavola stampata è ricopiata in `packages/core/test/varga.test.ts` e
-confrontata con la regola (`controllaTavola`, `tavolaPerGruppi`). Le
-trascrizioni stanno in `texts/jyotisha/bphs-santhanam-1992-vol1/trascrizioni.md`.
-Due cose da ricordare: la tavola del D-27 a p. 79 ha un refuso (Gemelli,
-undicesima parte), e il D-20 scambia fissi e mobili rispetto al D-16 nel
-verso stesso (*cāpān mṛgendrād*).
-
-Il D-60 si conta dal segno stesso (vedi *Deciso*), e porta per ogni graha e
-per il lagna lo shashtiamsa, il mezzo grado col nome di BPHS 6.34-40
-(`shashtiamsaOf`, `SHASHTIAMSA_NAMES`, nella grafia della tavola di
-Santhanam, pp. 84-86, rovesciato nei segni pari), senza il benefico o
-malefico del verso 41. La seconda metà di 6.40 si potrebbe leggere anche come
-rovescio dei signori, cioè dei segni: Santhanam no, e la trascrizione dice
-perché; una lettura così entra solo con un autore. Il D-40, il D-45 e il
-D-60 portano `warnings`: di quanti minuti l'ora di nascita dovrebbe sbagliare
-perché lagna e Luna cambino segno, calcolato sulla carta con la velocità
-dell'Ascendente (`ascendantDegreesPerMinute`, dal tempo siderale locale, la
-latitudine e l'obliquità media). Le avvertenze salgono in
-`JyotishaChart.warnings` e le stampa `formatVargaCompact`. Quali varga
-siano «fini» lo dice il campo `fine` di `VARGAS`.
-
-### Che cosa resta
-
-Le sei convenzioni della hora sono fatte dal 30 ottobre 2026 (versione
-0.8.1): Parashara e Leone-Cancro, e le quattro moderne, parivritti-dvaya,
-Kashinatha, Raman Suprajarama e Uma-Shambhu, ciascuna con la sua tavola o il
-suo esempio in `varga.test.ts`. `signOf` è una funzione della longitudine, e
-il campo `bphs` dice quali convenzioni entrano nei conti del BPHS (vedi
-*Deciso*). Restano due cose piccole, indipendenti:
-
-- **La Kashinatha su Leone e Cancro.** Il motore segue il testo di Rao
-  (2003): «Leo and Cancer form a pair», quindi la hora del Sole va al Leone e
-  quella della Luna al Cancro anche in quei due segni. PyJHora manda invece
-  tutto il Leone al Leone e tutto il Cancro al Cancro
-  (`planet_hora_dict_for_odd_even_signs`). La carta 1 di Rao (p. 4 del PDF,
-  trascritta) non ha punti che distinguano le due letture. Quale delle due
-  segua Jagannatha Hora non è verificato: la scheda di `texts/tecnica/pyjhora`
-  dice come. Se Rao stesso, in un testo successivo, la desse come PyJHora,
-  la riga `source` e il test della coppia vanno cambiati.
-- **La parivritti alternata, che PyJHora chiama «Somanatha».** Dispari
-  dall'Ariete in avanti, pari dai Pesci all'indietro. Non è stata cercata;
-  entra solo con un autore che la scriva.
-
-Le liste di CLI, API e MCP derivano da `HORA_CONVENTIONS`. Le nominano a
-mano, e nessun test lo vede: il menù `menuHora` di
-`JyotishaSettings.svelte` (un `<option>` per convenzione), l'aiuto di
-`--hora` in `cli.ts`, le descrizioni di `hora` in `packages/mcp/src/tools.ts`
-(in `compute_jyotisha_chart` e in `draw_jyotisha_chart`, più il messaggio di
-rifiuto del D-2 senza segni), i commenti delle due rotte `api/jyotish` e il
-messaggio di rifiuto della rotta `quadro`, la sezione `#hora` di
-`/metodo/varga` e il paragrafo della HORA in
-`packages/lettura/src/jyotisha.ts`. La forma del D-2 nel risultato:
-`VargaChart` è un'unione col discriminante `kind`, `SignVargaChart`
-(`'segni'`) e `HoraVargaChart` (`'signori'`, il solo D-2 di Parashara,
-rifiutato dal quadro con `VARGA_SENZA_SEGNI`).
-
-Per chi aggiunge un varga o una variante: l'elenco che le superfici accettano
-si legge da `VARGAS` (server MCP, le due rotte `api/jyotish`, la CLI).
-L'interfaccia ne ha due copie in `apps/web/src/lib/varghe.ts`, tutte e due
-senza la D-1, apposta: `VARGHE`, l'elenco delle caselle, e `SCHEMI_VARGA`,
-i pulsanti dei quattro gruppi di Parashara (BPHS 7.17-20), copiati da
-`VARGA_SCHEMES` (`d09578b`). `apps/web/src/lib/elenchi.test.ts` e
-`apps/web/src/routes/(informativa)/metodo/jyotisha.test.ts` cadono finché le
-copie e la tavola di `/metodo/varga` non combaciano con `VARGAS` e
-`VARGA_SCHEMES`, **anche nell'ordine**. Nessun test vede invece i testi che
-li elencano: il commento delle due rotte `api/jyotish`, l'aiuto di `--varga`
-(`packages/core/src/cli.ts:120`), la descrizione dei parametri `vargas` e
-`varga` in `packages/mcp/src/tools.ts`, il rimando in `/metodo` (voce
-`#varga`), la pagina `/metodo/varga` con la sua descrizione in `Meta`, il
-commento sopra `VargaId` in `types.ts`. Se cambia l'elenco dei varga fini
-(il campo `fine` di `VARGAS`), lo nominano a mano: l'aiuto di `--varga`, la
-descrizione di `vargas` e di `varga` (`draw_jyotisha_chart`) in `tools.ts`,
-il paragrafo dell'avvertenza in `/metodo/varga`, il documento
-`packages/lettura/src/jyotisha.ts` e il commento a `warnings` in `types.ts`. Un varga
-fuori dai sedici del BPHS fa cadere anche `varga-buoni.test.ts`, che
-pretende `VARGA_SCHEMES.shodashavarga` uguale a `VARGAS`: gli schemi e i
-pesi del vimshopaka (`VIMSHOPAKA_WEIGHTS`) sono quelli del testo, e un varga
-nuovo non ci entra.
 
 ## 26. Le scuole occidentali delle dignità: quello che resta
 
@@ -515,8 +428,9 @@ sito pubblicato lo stesso giorno, tutte fuori dal repo, in ordine di peso:
   del Sole e della Luna come nei testi, e Leone-Cancro accanto, dichiarata
   come lettura corrente senza un classico che la enunci. Scelto dal
   proprietario il 27 ottobre 2026 fra quattro strade, fatto il 28 in
-  `a828b3f`; la forma del risultato sta nella voce 5, *Che cosa resta*, nella
-  riga sulle altre convenzioni della hora.
+  `a828b3f`. Il risultato è un'unione col discriminante `kind`:
+  `SignVargaChart` (`'segni'`) e `HoraVargaChart` (`'signori'`, il solo D-2
+  di Parashara, che il quadro rifiuta con `VARGA_SENZA_SEGNI`).
 
 - **L'avvertenza sull'ora va anche al D-24 e al D-27.** Scelto dal
   proprietario il 30 ottobre 2026, voce 5. I varga fini sono cinque: i tre
@@ -633,6 +547,23 @@ sito pubblicato lo stesso giorno, tutte fuori dal repo, in ordine di peso:
   dentro il motore.
 
 ## Esaminato, e lasciato stare
+
+**Due verifiche sulla hora, senza esito.** Dalla voce 5, chiusa il 30
+ottobre 2026. *La Kashinatha su Leone e Cancro*: il motore segue Rao
+(2003), «Leo and Cancer form a pair», e manda la hora del Sole al Leone e
+quella della Luna al Cancro anche lì; PyJHora manda tutto il Leone al Leone
+e tutto il Cancro al Cancro (`planet_hora_dict_for_odd_even_signs`). La
+carta 1 di Rao (p. 4 del PDF, trascritta) non distingue le due letture, e
+che cosa faccia Jagannatha Hora non si trova in rete (cercato il 30 ottobre
+2026); servirebbe il programma, che gira su Windows. Se Rao stesso, in un
+testo successivo, la desse come PyJHora, cambiano la riga `source` della
+Kashinatha in `hora.ts` e il test della coppia in `varga.test.ts`. *La
+parivritti alternata*, che PyJHora chiama «Somanatha» (dispari dall'Ariete in
+avanti, pari dai Pesci all'indietro): cercata lo stesso giorno, compare come
+voce di menù anche in Deva Guru («D2 Somanath», accanto a un «D2
+Samasaptaka»; `texts/tecnica/deva-guru-varga-2026`), dove «Somanath» è il
+nome di una famiglia di varga (D-2, D-3, D-9), ma nessuno ne scrive la regola
+con un nome. Entra solo con un autore.
 
 **Le scuole d'oraria che verranno, non pianificate.** Note dalla voce 17.
 Ciascuna sarebbe un classificatore sul corso di `corso.ts` e un pacchetto di

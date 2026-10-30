@@ -102,6 +102,16 @@ const DIURNO_NOTTURNO_SUPRAJARAMA: readonly (readonly [ZodiacSign, ZodiacSign])[
     segno === 3 ? ['cancro', 'cancro'] : segno === 4 ? ['leone', 'leone'] : coppia,
 );
 
+/**
+ * Le convenzioni del D-2. CLI, API e MCP ne leggono l'elenco da qui; lo
+ * nominano a mano, e nessun test lo vede: il menù `menuHora` di
+ * `JyotishaSettings.svelte`, l'aiuto di `--hora` in `cli.ts`, le descrizioni
+ * di `hora` in `packages/mcp/src/tools.ts` (in `compute_jyotisha_chart` e in
+ * `draw_jyotisha_chart`, e il rifiuto del D-2 senza segni), i commenti delle
+ * due rotte `api/jyotish` e il rifiuto della rotta `quadro`, la sezione
+ * `#hora` di `/metodo/varga` e il paragrafo della HORA in
+ * `packages/lettura/src/jyotisha.ts`.
+ */
 export const HORA_CONVENTIONS: readonly HoraConventionDefinition[] = [
   {
     id: 'parashara',
