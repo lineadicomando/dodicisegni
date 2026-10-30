@@ -16,6 +16,13 @@ import type { RequestHandler } from './$types';
  *
  * `zodiac`, `ayanamsa`, `orbConvention` e `minorAspects` valgono come su
  * `/api/chart`, e il cielo porta la convenzione in `sky.orbConvention`.
+ *
+ * `dignitySchool` (lilly, tolomeo, bonatti, valente) aggiunge le dignità di
+ * quella scuola in `sky.dignities`, come su `/api/chart`; con Lilly anche le
+ * condizioni dell'istante e il conto delle fortezze, che per case, ora
+ * planetaria e Parte di Fortuna vogliono il luogo e l'ora. Senza scuola il
+ * cielo non porta dignità. Solo nello zodiaco tropicale
+ * (`ZODIACO_NON_TROPICALE`).
  */
 export const GET: RequestHandler = ({ url, setHeaders }) => {
   try {
@@ -23,13 +30,14 @@ export const GET: RequestHandler = ({ url, setHeaders }) => {
     const place = resolveOptionalPlace(parameters);
     const { moment, explicit } = resolveSkyMoment(parameters, place?.timezone);
 
-    const { houseSystem, minorAspects, zodiac, ayanamsa, orbConvention } =
+    const { houseSystem, minorAspects, zodiac, ayanamsa, orbConvention, dignitySchool } =
       readChartOptions(parameters);
     const options: SkyOptions = { minorAspects: minorAspects ?? false };
     if (orbConvention) options.orbConvention = orbConvention;
     if (houseSystem) options.houseSystem = houseSystem;
     if (zodiac) options.zodiac = zodiac;
     if (ayanamsa) options.ayanamsa = ayanamsa;
+    if (dignitySchool) options.dignitySchool = dignitySchool;
     if (place) options.place = { latitude: place.latitude, longitude: place.longitude };
 
     const sky = computeSky(moment, options);

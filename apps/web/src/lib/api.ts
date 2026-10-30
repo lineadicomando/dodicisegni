@@ -292,6 +292,7 @@ export function skyParameters(
   });
 
   setZodiac(parameters, options);
+  if (options.dignitySchool) parameters.set('dignitySchool', options.dignitySchool);
 
   if (moment.time) parameters.set('time', moment.time);
   if (location) parameters.set('locationId', String(location.id));

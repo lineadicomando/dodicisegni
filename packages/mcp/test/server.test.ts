@@ -1043,6 +1043,29 @@ describe('compute_sky', () => {
     expect(testo).not.toMatch(/\nASSI\n/);
   });
 
+  it('porta le dignità di una scuola solo se chiesta, e le rifiuta nel siderale', async () => {
+    const senza = textOf(await client.callTool({ name: 'compute_sky', arguments: { date: '2026-08-01', time: '18:30' } }));
+    expect(senza).not.toContain('\nDIGNITÀ\n');
+    const con = textOf(
+      await client.callTool({
+        name: 'compute_sky',
+        arguments: { date: '2026-08-01', time: '18:30', location_id: ROMA_ID, dignity_school: 'lilly' },
+      }),
+    );
+    expect(con).toContain('\nDIGNITÀ\n');
+    expect(con).toContain('CONDIZIONI (LILLY)');
+    expect(con).toContain('Parte di Fortuna (p. 144');
+    const tolomeo = textOf(
+      await client.callTool({ name: 'compute_sky', arguments: { date: '2026-08-01', dignity_school: 'tolomeo' } }),
+    );
+    expect(tolomeo).toContain('Tolomeo (a richiesta)');
+    const siderale = await client.callTool({
+      name: 'compute_sky',
+      arguments: { date: '2026-08-01', zodiac: 'siderale', dignity_school: 'lilly' },
+    });
+    expect(siderale.isError).toBe(true);
+  });
+
   it('aggiunge assi e case quando il luogo c è', async () => {
     const result = await client.callTool({
       name: 'compute_sky',

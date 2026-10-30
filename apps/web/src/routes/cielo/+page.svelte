@@ -32,6 +32,9 @@
   import { houseSystemOrDefault } from '#lib/house-systems.js';
   import { orbConventionOrDefault } from '#lib/orbite.js';
   import { ayanamsaOrDefault, zodiacOrDefault } from '#lib/zodiacs.js';
+  import { dignitySchoolOrNone, type DignitySchoolChoice } from '#lib/scuole-dignita.js';
+  import DignityTable from '#lib/components/DignityTable.svelte';
+  import LillyConditionsTable from '#lib/components/LillyConditionsTable.svelte';
   import { isCompleteMoment, nowMoment } from '#lib/moment.js';
   import { Evidenza } from '#lib/evidenza.svelte.js';
 
@@ -44,7 +47,16 @@
 
   /** Le condizioni con cui si chiede il cielo, uguali in ogni punto che lo chiede. */
   let orbConvention = $state<NatalOrbConvention>('greene');
-  const opzioniCielo = $derived({ houseSystem, minorAspects, zodiac, ayanamsa, orbConvention });
+  /** Nessuna scuola all'inizio: il cielo porta dignità solo se una scuola le chiede. */
+  let dignitySchool = $state<DignitySchoolChoice>('');
+  const opzioniCielo = $derived({
+    houseSystem,
+    minorAspects,
+    zodiac,
+    ayanamsa,
+    orbConvention,
+    ...(dignitySchool && zodiac === 'tropicale' ? { dignitySchool } : {}),
+  });
 
   let sky = $state<SkyChart | null>(null);
   let placeLabel = $state<string | null>(null);
@@ -102,6 +114,7 @@
     orbConvention = orbConventionOrDefault(parametri.get('orbConvention'));
     zodiac = zodiacOrDefault(parametri.get('zodiac'));
     ayanamsa = ayanamsaOrDefault(parametri.get('ayanamsa'));
+    dignitySchool = dignitySchoolOrNone(parametri.get('dignitySchool'));
 
     const id = Number(parametri.get('locationId'));
     if (Number.isInteger(id) && id > 0) location = await fetchLocation(id);
@@ -258,6 +271,7 @@
         bind:zodiac
         bind:ayanamsa
         bind:orbConvention
+        bind:dignitySchool
         {housesDisabled}
       />
     </div>
@@ -317,6 +331,15 @@
         {/if}
 
         <AspectTable aspects={sky.aspects} {evidenza} orbite={sky.orbConvention} />
+
+        <!-- Solo se una scuola è stata chiesta: senza, il cielo non porta
+             dignità, ed è giusto che la tabella non ci sia. -->
+        {#if sky.dignities}
+          <DignityTable dignities={sky.dignities} houses={sky.houses} sect={sky.sect} {evidenza} />
+        {/if}
+        {#if sky.dignities?.lilly}
+          <LillyConditionsTable conditions={sky.dignities.lilly.conditions} {evidenza} />
+        {/if}
       </div>
     </div>
 

@@ -81,12 +81,13 @@ volta e ricominciare da capo.
 | 25. Le dignità del Jyotisha: le rifiniture | bassa | piccola | due calcoli, da fare solo se servissero |
 | 26. Le scuole occidentali: quello che resta | bassa | piccola | la ricezione di Bonatti va con la 17; Valente aspetta un testo |
 
-**Versione 0.5.0**, in ogni manifesto, col tag `v0.5.0`. La prima, la
+**Versione 0.5.1**, in ogni manifesto, col tag `v0.5.1`. La prima, la
 0.1.0, cade alla chiusura della voce 19 il 30 ottobre 2026; poi, tutte con la
 voce 17: la 0.1.1 la pagina web dell'oraria, la 0.2.0 le condizioni di
 qualità di p. 125, la 0.3.0 la Parte di Fortuna nel conto di Lilly, la 0.4.0
 la Luna cosignificatrice che non proibisce, la 0.5.0 chi si avvicina negli
-incontri del corso. Le regole (un
+incontri del corso, la 0.5.1 la scuola delle dignità sul cielo (`/api/sky`,
+`compute_sky`, la pagina Cielo). Le regole (un
 numero solo, le tre domande che dicono quale cifra si muove, il tag) stanno
 in `CLAUDE.md`, *La versione*. Se una risposta che c'era è cambiata lo dice
 il fascicolo canonico (`packages/core/test/canonico.test.ts`, voce 27,
@@ -235,9 +236,6 @@ più facilmente si vorranno rivedere:
 
 Ciascuna indipendente dalle altre.
 
-- **Il cielo con la scuola sulle superfici**: `computeSky` ha
-  `dignitySchool`, ma `/api/sky` e `compute_sky` no. Con `compute_horary`
-  forse non servono più; deciderlo prima di farlo.
 - **Il corso come superficie a sé**: `findSignCourse` arriva agli agenti solo
   dentro `compute_horary`. Un tool suo servirebbe a chi chiede «la Luna è
   vuota di corso?» senza una domanda oraria; `find_election_hours` risponde già

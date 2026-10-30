@@ -805,6 +805,17 @@ export function registerComputeSky(server: McpServer, context: ToolContext = {})
           .optional()
           .describe(MINOR_ASPECTS_TEXT),
         ...ORB_CONVENTION_SCHEMA,
+        dignity_school: z
+          .enum(DIGNITY_SCHOOLS)
+          .optional()
+          .describe(
+            'Le dignità di una scuola nominata per i corpi dell\'istante: lilly (con le condizioni ' +
+              'dell\'istante e il conto delle fortezze, che per case, ora planetaria e Parte di Fortuna ' +
+              'vogliono luogo e ora), tolomeo, bonatti, valente; le stesse di dignity_school in ' +
+              'compute_natal_chart. Ometti se non è chiesta l\'astrologia tradizionale: senza, il cielo non ' +
+              'porta dignità. Per una domanda oraria usa compute_horary, che sceglie Lilly da sé. Solo ' +
+              'nello zodiaco tropicale.',
+          ),
         format: z
           .enum(['compact', 'json'])
           .optional()
@@ -825,6 +836,7 @@ export function registerComputeSky(server: McpServer, context: ToolContext = {})
         const options: SkyOptions = { minorAspects: args.minor_aspects ?? false, ...zodiaco };
         if (args.orb_convention) options.orbConvention = args.orb_convention;
         if (args.house_system) options.houseSystem = args.house_system;
+        if (args.dignity_school) options.dignitySchool = args.dignity_school;
         if (context.ephemerisPath) options.ephemerisPath = context.ephemerisPath;
         if (observation.place) options.place = observation.place;
 
