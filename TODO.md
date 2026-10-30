@@ -194,8 +194,16 @@ cosa, che aspetta un testo:
   novem*, a cura di David Pingree, Leipzig, Teubner, 1986 (Bibliotheca
   Teubneriana; ISBN 3-322-00275-6), xxi + 583 pagine, greco con prefazione
   e apparato in latino; ristampato in digitale da De Gruyter nel 2010
-  (ISBN 978-3-11-095822-5, doi 10.1515/9783110958225), a pagamento. Copie
-  libere non ce ne sono; si legge in biblioteca. Il capitolo è I.3, alle pp.
+  (ISBN 978-3-11-095822-5, doi 10.1515/9783110958225), a pagamento. In
+  rete, cercato il 30 ottobre 2026: si legge in **prestito digitale** su
+  archive.org (`vettiivalentisan0000vett`, la copia della Trent University,
+  collezioni `internetarchivebooks` e `printdisabled`), con un account
+  gratuito e senza scaricarlo; HathiTrust ha la copia del Michigan
+  (`mdp.39015012171917`) solo per la ricerca di parole; Google Books non
+  l'ha. La voce `VettiusValens` di archive.org è una scansione caricata da un
+  privato nel 2016, senza file, e non si usa. Dal prestito si trascrivono i
+  numeri e le note d'apparato che servono, in `trascrizioni.md`; le immagini
+  delle pagine no, perché il prestito non lo consente. Il capitolo è I.3, alle pp.
   13-18 di Pingree: l'Ariete fra la 13 e la 14, la Bilancia a p. 16, lo
   Scorpione fra la 16 e la 17. Servono le **pagine col testo e l'apparato
   critico**, e la **prefazione** dove dice su quali codici fonda il libro I.
