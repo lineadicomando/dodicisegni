@@ -109,7 +109,7 @@ describe('superficie MCP', () => {
     expect(version).not.toBe('0.0.0');
   });
 
-  it('espone i dodici tool con descrizione e schema', async () => {
+  it('espone i tredici tool con descrizione e schema', async () => {
     const { tools } = await client.listTools();
     const names = tools.map((tool) => tool.name);
 
@@ -125,7 +125,8 @@ describe('superficie MCP', () => {
     expect(names).toContain('compute_jyotisha_chart');
     expect(names).toContain('draw_jyotisha_chart');
     expect(names).toContain('compute_horary');
-    expect(names).toHaveLength(12);
+    expect(names).toContain('find_sign_course');
+    expect(names).toHaveLength(13);
 
     const quadroTool = tools.find((tool) => tool.name === 'draw_jyotisha_chart');
     // Deve dire che si chiama dopo i dati e non al posto loro, come la ruota.
@@ -1027,6 +1028,31 @@ describe('compute_transits', () => {
       expect(result.isError).toBe(true);
       expect(textOf(result)).toMatch(/transit_longitude/);
     });
+  });
+});
+
+describe('find_sign_course', () => {
+  it('dà il corso della Luna fino al cambio di segno, con le due Lune vuote', async () => {
+    const result = await client.callTool({
+      name: 'find_sign_course',
+      arguments: { date: '2026-10-27', time: '22:15', timezone: 'Europe/Rome' },
+    });
+    const testo = textOf(result);
+    expect(result.isError).toBeFalsy();
+    expect(testo).toMatch(/^CORSO — Luna/);
+    expect(testo).toContain('VUOTO DI CORSO');
+    expect(testo).toMatch(/Lilly: (non )?vuoto/);
+  });
+
+  it('dice chi si avvicina, e prende il fuso dalla località', async () => {
+    const result = await client.callTool({
+      name: 'find_sign_course',
+      arguments: { body: 'saturno', date: '2026-01-10', time: '12:00', location_id: ROMA_ID, format: 'json' },
+    });
+    const corso = JSON.parse(textOf(result)) as { local: string; events: { kind: string; with?: string; approaching?: string[] }[] };
+    expect(corso.local).toMatch(/\+01:00$/);
+    const conLaLuna = corso.events.find((e) => e.kind === 'aspetto' && e.with === 'luna');
+    expect(conLaLuna?.approaching).toEqual(['other']);
   });
 });
 

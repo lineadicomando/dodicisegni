@@ -12,6 +12,7 @@ import {
   computeTransits,
   currentMoment,
   findElectionHours,
+  findSignCourse,
   findSignIngresses,
   findSkyPassages,
   findStations,
@@ -23,6 +24,8 @@ import {
   formatActiveTransitsCompact,
   formatHoraryCompact,
   formatSkyCompact,
+  formatSignCourseCompact,
+  resolveTime,
   formatSkyEventsCompact,
   formatSkyPassagesCompact,
   formatTransitsCompact,
@@ -848,6 +851,76 @@ export function registerComputeSky(server: McpServer, context: ToolContext = {})
 
         const header = observation.label ? `Luogo: ${observation.label}\n` : '';
         return ok(header + formatSkyCompact(sky));
+      } catch (error) {
+        return fail(describeError(error));
+      }
+    },
+  );
+}
+
+/** I corpi di cui si può chiedere il corso: i sette, che sono quelli che le due Lune vuote sanno leggere. */
+const CORPI_DEL_CORSO = ['luna', 'sole', 'mercurio', 'venere', 'marte', 'giove', 'saturno'] as const;
+
+export function registerFindSignCourse(server: McpServer, context: ToolContext = {}): void {
+  server.registerTool(
+    'find_sign_course',
+    {
+      title: 'Il corso di un corpo fino al cambio di segno',
+      description:
+        'Elenca che cosa fa un corpo dall\'istante dato finché non cambia segno: gli aspetti tolemaici ' +
+        'esatti coi sette pianeti, ciascuno con chi si avvicina, le stazioni, l\'ingresso nel segno dopo; da ' +
+        'che cosa si sta separando; e, per tutti, la Luna vuota di corso in due letture nominate, la moderna ' +
+        'e quella di Lilly (p. 112), che possono divergere. USA QUESTO TOOL per «la Luna è vuota di corso?», ' +
+        '«a che cosa applica la Luna?», «quando Marte cambia segno?». Non serve una nascita né un luogo: il ' +
+        'corso è lo stesso ovunque. Per un calendario di giorni con le ore planetarie usa find_election_hours; ' +
+        'per una domanda oraria compute_horary, che il corso lo contiene già. OMETTI date e time per adesso. ' +
+        'Il risultato dice quando, non che cosa significhi.',
+      inputSchema: {
+        body: z
+          .enum(CORPI_DEL_CORSO)
+          .optional()
+          .describe('Il corpo di cui seguire il corso. Default: luna.'),
+        date: z
+          .string()
+          .regex(/^\d{4}-\d{2}-\d{2}$/)
+          .optional()
+          .describe('Giorno di partenza, YYYY-MM-DD. OMETTILO per adesso.'),
+        time: z
+          .string()
+          .regex(/^\d{2}:\d{2}(:\d{2})?$/)
+          .optional()
+          .describe('Ora di partenza, HH:mm. OMETTILA per adesso; con una date senza time vale mezzogiorno.'),
+        timezone: z
+          .string()
+          .optional()
+          .describe('Fuso IANA in cui leggere l\'istante e scrivere gli eventi. Default: UTC, o quello della località.'),
+        location_id: z
+          .number()
+          .int()
+          .optional()
+          .describe('Facoltativo: serve solo a prendere il fuso della località, il corso non dipende dal luogo.'),
+        format: z
+          .enum(['compact', 'json'])
+          .optional()
+          .describe('compact (default): elenco denso. json: oggetto completo.'),
+      },
+    },
+    async (args) => {
+      try {
+        let timezone = args.timezone;
+        if (!timezone && args.location_id !== undefined) {
+          const observation = resolveObservation({ location_id: args.location_id }, context);
+          if ('error' in observation) return fail(observation.error);
+          timezone = observation.timezone;
+        }
+        const zona = timezone ?? 'UTC';
+        const istante = resolveTime(skyMoment(args, zona)).time.julianDayUT;
+        const corso = findSignCourse(istante, args.body ?? 'luna', {
+          timezone: zona,
+          ...(context.ephemerisPath ? { ephemerisPath: context.ephemerisPath } : {}),
+        });
+        if (args.format === 'json') return ok(JSON.stringify(corso, null, 2));
+        return ok(formatSignCourseCompact(corso));
       } catch (error) {
         return fail(describeError(error));
       }

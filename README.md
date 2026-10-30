@@ -29,7 +29,7 @@ Monorepo npm workspaces, Node ≥ 22.17, ESM, TypeScript.
 | `packages/geo` | ricerca località su dataset GeoNames locale (SQLite) |
 | `packages/ruota` | il disegno: la ruota e il quadro vedico, geometria, glifi, colori, SVG e PNG |
 | `packages/lettura` | il tema più le istruzioni per leggerlo, in un testo solo: un documento per sistema astrologico |
-| `packages/mcp` | server MCP: dodici tool e due prompt di lettura, trasporto stdio |
+| `packages/mcp` | server MCP: tredici tool e due prompt di lettura, trasporto stdio |
 | `apps/web` | SvelteKit: interfaccia e API REST, tutti gli endpoint in GET |
 | `apps/desktop` | Electron: la web app in una finestra |
 
@@ -56,7 +56,7 @@ npx dodicisegni --date 1968-03-12 --time 14:30 \
 npx dodicisegni --help        # tutte le opzioni
 ```
 
-**Applicazione web.** Sei sezioni e tredici endpoint, tutti in GET perché un
+**Applicazione web.** Sei sezioni e quattordici endpoint, tutti in GET perché un
 tema è una funzione pura dei suoi parametri, più due pagine di testo: `/metodo`
 dice come si calcola, `/privacy` che cosa resta sul dispositivo.
 
@@ -72,7 +72,7 @@ invece di far finta. Nessuna notifica, né la richiesta di poterne mandare. Il
 service worker si registra solo sulla build, e non dentro Electron: il perché è
 in `apps/web/src/routes/+layout.svelte`.
 
-**Server MCP.** Dodici tool su stdio: non è un servizio da avviare, è un processo
+**Server MCP.** Tredici tool su stdio: non è un servizio da avviare, è un processo
 che il client lancia. Accanto ai tool c'è il prompt `lettura_del_tema`, che
 consegna il tema insieme alle istruzioni per interpretarlo: un prompt e non un
 tool perché lo sceglie chi usa il client, non il modello. Il prompt

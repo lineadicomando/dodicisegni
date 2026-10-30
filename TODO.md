@@ -81,13 +81,14 @@ volta e ricominciare da capo.
 | 25. Le dignità del Jyotisha: le rifiniture | bassa | piccola | due calcoli, da fare solo se servissero |
 | 26. Le scuole occidentali: quello che resta | bassa | piccola | la ricezione di Bonatti va con la 17; Valente aspetta un testo |
 
-**Versione 0.5.1**, in ogni manifesto, col tag `v0.5.1`. La prima, la
+**Versione 0.5.2**, in ogni manifesto, col tag `v0.5.2`. La prima, la
 0.1.0, cade alla chiusura della voce 19 il 30 ottobre 2026; poi, tutte con la
 voce 17: la 0.1.1 la pagina web dell'oraria, la 0.2.0 le condizioni di
 qualità di p. 125, la 0.3.0 la Parte di Fortuna nel conto di Lilly, la 0.4.0
 la Luna cosignificatrice che non proibisce, la 0.5.0 chi si avvicina negli
 incontri del corso, la 0.5.1 la scuola delle dignità sul cielo (`/api/sky`,
-`compute_sky`, la pagina Cielo). Le regole (un
+`compute_sky`, la pagina Cielo), la 0.5.2 il corso come superficie a sé (il
+tool `find_sign_course` e `GET /api/sky/course`). Le regole (un
 numero solo, le tre domande che dicono quale cifra si muove, il tag) stanno
 in `CLAUDE.md`, *La versione*. Se una risposta che c'era è cambiata lo dice
 il fascicolo canonico (`packages/core/test/canonico.test.ts`, voce 27,
@@ -236,10 +237,6 @@ più facilmente si vorranno rivedere:
 
 Ciascuna indipendente dalle altre.
 
-- **Il corso come superficie a sé**: `findSignCourse` arriva agli agenti solo
-  dentro `compute_horary`. Un tool suo servirebbe a chi chiede «la Luna è
-  vuota di corso?» senza una domanda oraria; `find_election_hours` risponde già
-  col criterio moderno.
 - **Altre figure del libro II** per la verifica. Oltre a quella del 1634 sono
   provate, dal 30 ottobre 2026, «Where an absent Brother was?» (pp. 196-197)
   e la notizia di Cambridge (p. 200), in `oraria-lilly.test.ts`: posizioni

@@ -19,6 +19,7 @@ import {
   registerDrawJyotishaChart,
   registerFindElectionHours,
   registerFindSkyEvents,
+  registerFindSignCourse,
   registerFindTransitPassages,
   registerFindActiveTransits,
   registerSearchLocation,
@@ -81,6 +82,7 @@ export function createServer(context: ToolContext = {}): McpServer {
   registerFindTransitPassages(server, context);
   registerFindActiveTransits(server, context);
   registerFindSkyEvents(server, context);
+  registerFindSignCourse(server, context);
   registerFindElectionHours(server, context);
   registerLetturaDelTema(server, context);
   registerLetturaOraria(server, context);
