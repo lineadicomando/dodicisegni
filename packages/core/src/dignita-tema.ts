@@ -61,7 +61,7 @@ import type {
  * Tolomeo restano le comuni: la ricezione è una definizione di Lilly, e
  * contarla sulle tavole di Tolomeo mescolerebbe le due scuole. Con Bonatti
  * pure: la sua ricezione nasce da un'applicazione, e qui non si calcola.
- * Con Valente anche: in lui una definizione non è stata cercata.
+ * Con Valente anche: lui non ne definisce una (vedi `VALENS_RECEPTION_SOURCE`).
  */
 const CONTATE: Readonly<Record<'comune' | DignitySchool, readonly ReceptionDignity[]>> = {
   comune: ['domicilio', 'esaltazione'],

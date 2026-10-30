@@ -18,8 +18,11 @@
  *
  * E non tiene quello che in Valente non si è trovato: le **facce**
  * decaniche, l'**esilio**, un **punteggio**, i **Nodi**. Le ricezioni restano
- * quelle comuni: in Valente non sono state cercate, e quella del tema è di
- * Lilly.
+ * quelle comuni, perché Valente non ne ha una: il suo ὑποδοχεύς (II.31,
+ * pp. 102-105) è il signore del segno, non una ricezione fra due pianeti.
+ * Cercata nell'indice di Kroll il 30 ottobre 2026, con l'esilio, che
+ * nemmeno c'è; le trascrizioni in `texts/occidentale/valente-anthologiae-
+ * kroll-1908`. Quella del tema è di Lilly.
  *
  * Le tavole sono scritte qui, e non prese da Bonatti, che ha gli stessi tre
  * signori dei triangoli, né da Lilly, che ha gli stessi gradi: una scuola
@@ -182,6 +185,6 @@ export function valensDignitiesOf(body: BodyId, longitude: number): ValensDignit
 
 /** La riga delle ricezioni quando la scuola è Valente. */
 export const VALENS_RECEPTION_SOURCE =
-  'In Valente una definizione della ricezione non è stata cercata: queste sono di Lilly (p. 112 mutua, p. 176 ' +
-  'semplice) per domicilio ed esaltazione. Sui triangoli e i termini di Valente non si contano, per non ' +
+  'Valente non definisce una ricezione fra due pianeti (il suo ὑποδοχεύς, II.31, ed. Kroll pp. 102-105, è il ' +
+  'signore del segno): queste sono di Lilly (p. 112 mutua, p. 176 semplice) per domicilio ed esaltazione. Sui triangoli e i termini di Valente non si contano, per non ' +
   'mescolare le scuole.';

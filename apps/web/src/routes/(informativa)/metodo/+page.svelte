@@ -497,7 +497,9 @@
   guasto in tre punti (nell'Ariete mancano due numeri, lo Scorpione somma 31
   gradi, la Bilancia ne dà una versione sua), e lì il sito segue la tavola
   egizia che Tolomeo riferisce, dicendolo. Facce, esilio e un punteggio in
-  Valente non si sono trovati, e non ci sono; le ricezioni restano per
+  Valente non si sono trovati, e non ci sono. Nemmeno una ricezione fra due
+  pianeti: quello che lui chiama il «ricevitore» è il signore del segno in
+  cui un pianeta si trova. Le ricezioni restano quindi quelle comuni, per
   domicilio ed esaltazione.
 </p>
 

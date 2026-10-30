@@ -97,7 +97,7 @@ volta e ricominciare da capo.
 
 | Voce | Priorità | Taglia | Prima di cominciare |
 |---|---|---|---|
-| 26. Le scuole occidentali delle dignità: quello che resta | bassa | piccola | la ricezione di Bonatti chiede un'applicazione; Valente aspetta un testo |
+| 26. Le scuole occidentali delle dignità: quello che resta | bassa | piccola | la ricezione di Bonatti ha le orbite lette e aspetta due scelte; Valente aspetta l'ed. Pingree |
 | 28. La revisione della SEO | media | piccola | il dominio principale è deciso; i redirect e `ORIGIN` si fanno sul server, non nel repo |
 
 La 26 è una rifinitura e aspetta testi. La 28 è la sola che tocca chi usa
@@ -111,9 +111,11 @@ in *Deciso*, le due verifiche senza esito in *Esaminato*. Le istruzioni per
 chi aggiunge un varga o una convenzione della hora stanno nei commenti sopra
 `VARGAS` (`varga.ts`) e `HORA_CONVENTIONS` (`hora.ts`).
 
-**Versione 0.9.0**, in ogni manifesto, col tag `v0.9.0`: la combustione del
-Jyotisha nei gradi di tempo (voce 25), tre campi che compaiono e un giudizio
-che può cambiare. Prima, la 0.8.1 con le quattro convenzioni moderne della
+**Versione 0.10.0**, in ogni manifesto, col tag `v0.10.0`: la riga delle
+ricezioni di Valente dice che lui non ne definisce una, invece che «non
+cercata» (voce 26). Prima, la 0.9.0 con la combustione del Jyotisha nei
+gradi di tempo (voce 25), tre campi che compaiono e un giudizio che può
+cambiare, la 0.8.1 con le quattro convenzioni moderne della
 hora (voce 5), valori nuovi di un'opzione che c'era, la 0.8.0 con gli arudha dei
 graha in ogni varga (voce 25), un campo che compare nella risposta di ogni
 varga coi segni, la 0.7.0 con l'avvertenza sull'ora anche nel D-24 e
@@ -178,17 +180,34 @@ le condizioni e il conto in `condizioni-lilly.ts`), Tolomeo
 (`dignita-valente.ts`). Le tavole comuni, che il tema porta sempre, sono in
 `dignita.ts`; il blocco del tema in `dignita-tema.ts`.
 
-- **La ricezione di Bonatti**, se un giorno servisse: nasce da
-  un'applicazione in corso (tratt. III, PDF pp. 167-168), quindi vuole una
-  convenzione delle orbite di Bonatti (da leggere: non è stata cercata) e il
-  corso di `corso.ts`. È lavoro dell'oraria (voce 17, chiusa) più che della
-  tavola.
-- **Valente, le cose non cercate.** Esilio e ricezione nelle *Anthologiae*,
-  oltre l'indice di Kroll; e un testo critico migliore per I.3, l'ed. Pingree
-  (Teubner 1986), protetta, che potrebbe sanare Ariete e Scorpione e dire se
-  la Bilancia di Valente è sua o del codice. Se cambia, cambia la riga dei
+- **La ricezione di Bonatti**, se un giorno servisse. Nasce da
+  un'applicazione in corso (tratt. III, PDF pp. 167-168): chi si applica è
+  ricevuto da quello a cui si applica, se sta nel suo domicilio, nella sua
+  esaltazione o in due sue dignità minori insieme. Il 30 ottobre 2026 sono
+  state lette le orbite e l'applicazione, in
+  `texts/occidentale/bonatti-decem-tractatus-1491/trascrizioni.md`:
+  - l'orbe di ciascun pianeta, tratt. III, parte 1 (PDF pp. 124-143), «tanto
+    prima quanto dopo»: Saturno 9, Giove 9, Marte 8, Sole 15, Venere 7,
+    Mercurio 7, Luna 12;
+  - l'applicazione, tratt. III, parte 2, cap. 4 (PDF pp. 158-159): per corpo
+    nello stesso segno, o per sestile, quadrato e trigono (l'opposizione non
+    è nominata lì); il più leggero ha meno gradi nel suo segno del più
+    pesante, «ita tamen quod sint sex gradus vel minus inter eos»; e subito
+    dopo la regola con le orbite: «tantum quantum sunt orbes amborum» è
+    congiunzione «grauis», dentro l'orbe di uno solo «absolute».
+
+  Restano due scelte del proprietario prima del codice: quale soglia (i sei
+  gradi della definizione, la somma delle due orbite intere come dice la
+  lettera, o la somma delle metà, le *moieties* della tradizione araba, che
+  il testo letto non nomina); e se l'opposizione conta. Con la definizione
+  di p. 158 l'applicazione è un fatto di posizione (gradi nel segno), e il
+  corso di `corso.ts` non serve.
+- **Valente, un testo critico migliore per I.3**: l'ed. Pingree (Teubner
+  1986), protetta, che potrebbe sanare Ariete e Scorpione e dire se la
+  Bilancia di Valente è sua o del codice. Se cambia, cambia la riga dei
   termini, non per forza la tavola. L'edizione è in `texts/INDICE.md`, fra
-  le non libere.
+  le non libere. Esilio e ricezione invece sono stati cercati, e in Valente
+  non ci sono (vedi *Esaminato*).
 
 **Per chi aggiunge una scuola** (Doroteo, se un suo testo diventasse
 libero). Valente è il modello più recente: `93cb27b` il calcolo, `697fea0`
@@ -547,6 +566,16 @@ sito pubblicato lo stesso giorno, tutte fuori dal repo, in ordine di peso:
   dentro il motore.
 
 ## Esaminato, e lasciato stare
+
+**Esilio e ricezione in Valente.** Cercati il 30 ottobre 2026 (voce 26)
+nell'indice II di Kroll, lettere δ, ε e υ, e riletti i luoghi. ὑποδοχεύς
+(«ricevitore», pp. 103 e 105) è in II.31 il signore del segno in cui sta un
+luminare, sinonimo di οἰκοδεσπότης, come annota Kroll a p. 102: il
+dispositore, non una ricezione fra due pianeti. ἐναντίαι μοῖραι (p. 70, 16)
+sono gradi «contrari», non il segno opposto al domicilio. Nessun lemma per
+l'esilio. Le ricezioni di `valente` restano quelle comuni, come dice
+`VALENS_RECEPTION_SOURCE`, e la scuola non ha esilio, come dice la sua riga
+`source`. Le trascrizioni in `texts/occidentale/valente-anthologiae-kroll-1908`.
 
 **Due verifiche sulla hora, senza esito.** Dalla voce 5, chiusa il 30
 ottobre 2026. *La Kashinatha su Leone e Cancro*: il motore segue Rao

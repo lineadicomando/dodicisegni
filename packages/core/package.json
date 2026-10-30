@@ -1,6 +1,6 @@
 {
   "name": "@dodicisegni/core",
-  "version": "0.9.0",
+  "version": "0.10.0",
   "description": "Motore di calcolo del tema natale: effemeridi, case, aspetti, fusi orari storici",
   "license": "AGPL-3.0-or-later",
   "type": "module",
