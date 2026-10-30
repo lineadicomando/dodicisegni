@@ -64,3 +64,13 @@ cambia muove la seconda cifra.
   `docs/decisioni.md`; rivista la prosa del sito con la skill di scrittura
   italiana anti pattern AI (`750708f`); dasha e i suoi periodi al femminile
   (0.13.0); aperta la voce 30; il `TODO.md` diviso fra sé e `docs/`.
+- **30 ottobre 2026, dopo.** Chiusa la voce 30 (0.14.0), e pubblicato tutto:
+  push da `v0.5.2` a `v0.14.0` e deploy. Voce 28, i quattro domini: sul
+  server mancava il `.env`, e ora `/srv/dodicisegni/.env` porta
+  `ORIGIN=https://dodicisegni.it` (git lo ignora); in Cloudflare una
+  *Single Redirect* per zona, 301 con destinazione dinamica
+  `concat("https://dodicisegni.it", http.request.uri.path)` e la query
+  conservata: nella zona `12segni.it` su tutte le richieste, con *Always Use
+  HTTPS* spento, nella `dodicisegni.it` su `http.host eq
+  "www.dodicisegni.it"`. Verificato con `curl -sI` sui tre nomi secondari,
+  in `http` e `https`: un salto solo, percorso e query intatti.
