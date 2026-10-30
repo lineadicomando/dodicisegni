@@ -24,7 +24,7 @@
 import { computeAspects } from './aspects.js';
 import { computeBodies, initEphemeris } from './ephemeris.js';
 import { ChartError } from './errors.js';
-import { degreeInSign } from './math.js';
+import { degreeInSign, signedDifference } from './math.js';
 import { natalOrbConvention } from './orbite.js';
 import { julianDayToISO, meanDailyMotion } from './roots.js';
 import { findSignIngresses, findStations } from './sky-events.js';
@@ -123,6 +123,7 @@ export function findSignCourse(
         with: other,
         aspect: passage.aspect,
         retrograde: { body: passage.retrograde[lui], other: passage.retrograde[altro] },
+        approaching: chiSiAvvicina(body, other, passage.angle, exact, context),
         exact: julianDayToISO(exact),
         local: julianDayToISO(exact, timezone),
         julianDay: exact,
@@ -191,6 +192,38 @@ export function findSignCourse(
 
   if (exit && conUscita) course.voids = classifyVoids(body, others, dopo.some((event) => event.kind === 'aspetto'), exit.julianDay, options);
   return course;
+}
+
+/**
+ * Chi dei due si avvicina all'aspetto col proprio moto, un quarto d'ora prima
+ * dell'istante esatto: tenendo fermo l'altro, il suo passo riduce lo scarto?
+ * Un quarto d'ora e non un minuto perché l'istante esatto ha la precisione
+ * della ricerca, e a un minuto lo scarto può già essere dall'altra parte.
+ * Sono tutti e due quando si vengono incontro, uno solo quando l'altro sta
+ * fermo o si allontana più piano.
+ */
+function chiSiAvvicina(
+  body: BodyId,
+  other: BodyId,
+  angle: number,
+  julianDay: number,
+  context: ReturnType<typeof initEphemeris>,
+): ('body' | 'other')[] {
+  const prima = julianDay - 1 / 96;
+  const { bodies } = computeBodies(prima, [body, other], context);
+  const lui = bodies.find((b) => b.id === body);
+  const altro = bodies.find((b) => b.id === other);
+  if (!lui || !altro) return [];
+  const differenza = signedDifference(lui.longitude, altro.longitude);
+  // Lo scarto dal punto esatto più vicino, fra i due lati dell'aspetto.
+  const scarti = [angle, -angle].map((a) => signedDifference(differenza, a));
+  const scarto = scarti.reduce((x, y) => (Math.abs(y) < Math.abs(x) ? y : x));
+  const passo = 1 / 1440;
+  // Il passo è piccolo rispetto allo scarto di un quarto d'ora: un minuto.
+  const risultato: ('body' | 'other')[] = [];
+  if (Math.abs(scarto + lui.speed * passo) < Math.abs(scarto)) risultato.push('body');
+  if (Math.abs(scarto - altro.speed * passo) < Math.abs(scarto)) risultato.push('other');
+  return risultato;
 }
 
 /**

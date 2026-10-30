@@ -76,3 +76,25 @@ describe('findSignCourse', () => {
     expect(() => findSignCourse(istante('2026-10-27', '22:15'), 'vulcano' as never)).toThrow(ChartError);
   });
 });
+
+describe('chi si avvicina, nel corso di un pianeta lento', () => {
+  // Il 10 gennaio 2026 Saturno è diretto nei Pesci: ogni incontro del suo
+  // corso con la Luna è la Luna che arriva, non Saturno.
+  const saturno = findSignCourse(istante('2026-01-10', '12:00'), 'saturno', {
+    timezone: 'Europe/Rome',
+    until: istante('2026-02-09', '12:00'),
+  });
+  const conLaLuna = saturno.events.filter((e) => e.kind === 'aspetto' && e.with === 'luna');
+
+  it('dice che a muoversi è la Luna', () => {
+    expect(conLaLuna.length).toBeGreaterThan(0);
+    for (const e of conLaLuna) expect(e.kind === 'aspetto' && e.approaching).toEqual(['other']);
+  });
+
+  it('dice tutti e due quando uno è retrogrado e si vengono incontro', () => {
+    // Il 10 gennaio Giove è retrogrado nel Cancro e la Luna va al quadrato.
+    const luna = findSignCourse(istante('2026-01-10', '12:00'), 'luna', { timezone: 'Europe/Rome' });
+    const giove = luna.events.find((e) => e.kind === 'aspetto' && e.with === 'giove');
+    expect(giove).toMatchObject({ aspect: 'quadrato', retrograde: { other: true }, approaching: ['body', 'other'] });
+  });
+});

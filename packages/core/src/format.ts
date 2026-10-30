@@ -378,6 +378,14 @@ export function formatHoraryCompact(horary: HoraryLilly): string {
   return lines.join('\n');
 }
 
+/** Chi si avvicina all'aspetto, a parole: uno, l'altro, o tutti e due. */
+function chiSiAvvicina(approaching: readonly ('body' | 'other')[], lui: string, altro: string): string {
+  if (approaching.length === 2) return 'ciascuno all\'altro';
+  if (approaching[0] === 'body') return lui;
+  if (approaching[0] === 'other') return altro;
+  return '—';
+}
+
 /**
  * Il corso di un corpo fino all'uscita dal segno, e le due Lune vuote.
  *
@@ -404,7 +412,8 @@ export function formatSignCourseCompact(course: SignCourse): string {
     const quale =
       event.kind === 'aspetto'
         ? `${event.aspect} a ${bodyName(event.with)}${event.retrograde.body ? ' (retrogrado)' : ''}` +
-          `${event.retrograde.other ? ` (${bodyName(event.with)} retrogrado)` : ''}`
+          `${event.retrograde.other ? ` (${bodyName(event.with)} retrogrado)` : ''}` +
+          `, si avvicina ${chiSiAvvicina(event.approaching, course.name, bodyName(event.with))}`
         : event.kind === 'stazione'
           ? `stazione ${event.direction} a ${formatZodiacal(event.longitude)}`
           : `ingresso in ${event.sign}${event.retrograde ? ", all'indietro" : ''}`;

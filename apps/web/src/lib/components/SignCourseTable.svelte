@@ -21,7 +21,15 @@
   function evento(e: CourseEvent): string {
     if (e.kind === 'aspetto') {
       const retro = e.retrograde.body ? ', retrogrado' : '';
-      return `${e.aspect} a ${BODY_LABEL[e.with]}${retro}`;
+      // La guardia: una risposta in cache può precedere il campo.
+      const chi = !e.approaching
+        ? ''
+        : e.approaching.length === 2
+          ? '; si vengono incontro'
+          : e.approaching[0] === 'other'
+            ? `; si avvicina ${BODY_LABEL[e.with]}`
+            : '';
+      return `${e.aspect} a ${BODY_LABEL[e.with]}${retro}${chi}`;
     }
     if (e.kind === 'stazione') return `stazione ${e.direction}`;
     return `entra in ${SIGN_LABEL[e.sign]}${e.retrograde ? ', all\'indietro' : ''}`;

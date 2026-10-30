@@ -2238,6 +2238,13 @@ export type CourseEvent = {
       aspect: AspectId;
       /** Chi dei due è retrogrado nell'istante esatto. */
       retrograde: { body: boolean; other: boolean };
+      /**
+       * Chi si avvicina all'aspetto col proprio moto, un attimo prima
+       * dell'esatto: il corpo del corso, l'altro, o tutti e due quando si
+       * vengono incontro (uno retrogrado). È moto, non una scuola: nel corso
+       * di Saturno l'incontro con la Luna dice che a muoversi è la Luna.
+       */
+      approaching: ('body' | 'other')[];
     }
   | { kind: 'stazione'; direction: 'retrograda' | 'diretta'; longitude: number }
   | { kind: 'ingresso'; sign: ZodiacSign; from: ZodiacSign; retrograde: boolean }
