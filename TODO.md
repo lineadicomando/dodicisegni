@@ -24,6 +24,7 @@ Le voci chiuse dopo, con il commit in cui si leggono ancora per intero:
 | 6 | `8aa31a9` |
 | 8 | `c4c4820` |
 | 24 | `bd489c8` |
+| 19 | `91ca295` |
 
 Le fonti citate qui stanno in copia locale in `texts/`, fuori dal repo: la
 cartella, le schede `FONTE.md` e l'elenco `texts/INDICE.md` si mantengono come
@@ -74,20 +75,16 @@ volta e ricominciare da capo.
 
 | Voce | Priorità | Taglia | Prima di cominciare |
 |---|---|---|---|
-| 19. Le dignità, per scuola | bassa | piccola, ormai | Jyotisha: fatto, restano rifiniture; occidente: Lilly, Tolomeo, Bonatti e Valente fatti; resta la moderna, da decidere se è una scuola |
 | 17. L'astrologia oraria | bassa | piccola, ormai | i quattro lotti sono fatti; restano rifiniture indipendenti, una per riga |
 | 5. I varga: le convenzioni che restano | bassa | piccola | i sedici sono fatti; restano rifiniture, una per riga |
+| 25. Le dignità del Jyotisha: le rifiniture | bassa | piccola | due calcoli, da fare solo se servissero |
+| 26. Le scuole occidentali: quello che resta | bassa | piccola | la ricezione di Bonatti va con la 17; Valente aspetta un testo |
 
-L'ordine consigliato è quello della tabella. Della 19, nel Jyotisha, sono
-fatti dignità (anche dei nodi), varga buoni (nei due conti, Santhanam e
-Narasimha Rao), relazioni, vimshopaka, arudha dei bhava e dei graha, e gli
-stati di 6.53; restano rifiniture senza urgenza. Nell'occidente ci sono Lilly,
-Tolomeo (29 ottobre 2026), Bonatti e Valente (30 ottobre 2026). Resta la
-riga moderna della tavola delle scuole: il primo passo è leggere i decani
-per triplicità in Alan Leo, che è in `texts/`, e decidere col proprietario
-se fanno una scuola (voce 19, *Che cosa resta*, 2). Firmico, Valente e Leo
-sono in `texts/` con le pagine lette (voce 24, chiusa). La 17 usa le
-tavole di Lilly della 19 e ha già le *moieties* come terza convenzione delle
+L'ordine consigliato è quello della tabella. La voce 19, le dignità per
+scuola, è chiusa il 30 ottobre 2026: nell'occidente Lilly, Tolomeo, Bonatti
+e Valente, nel Jyotisha Parashara con Narasimha Rao accanto; quello che
+restava è nelle voci 25 e 26, o in *Esaminato* dove manca una fonte. La 17
+usa le tavole di Lilly e ha già le *moieties* come terza convenzione delle
 orbite.
 
 **Come si è lavorato nel Jyotisha, e conviene continuare.** Ogni regola si
@@ -114,9 +111,7 @@ riga `source`, il campo in `WesternDignities`, le righe in `format.ts`, il
 blocco in `DignityTable.svelte`, la voce del menù in `lib/scuole-dignita.ts`,
 la descrizione di `dignity_school` in `packages/mcp/src/tools.ts`, il
 documento `packages/lettura/src/tropicale.ts` e `/metodo`. L'elenco preciso,
-con quello che nessun test controlla, è alla voce 19, *Che cosa resta*, 2.
-L'ultima fatta, Valente, è il modello: `93cb27b` il calcolo, `697fea0` le
-superfici (prima Bonatti, `3191b08` e `f1afe76`). Dalla riga di comando la
+con quello che nessun test controlla, è alla voce 26. Dalla riga di comando la
 sezione si vede con `--dignita <scuola>` e una nascita qualunque, con l'ora
 perché ci sia la setta.
 
@@ -267,7 +262,8 @@ Il 18 ottobre 2026:
 - **Il documento di lettura ha un registro attribuito**: «secondo il metodo di
   Lilly la figura indica…». È l'unico che risponde; salute, morte, questioni
   legali e finanziarie le rifiuta dicendo perché.
-- **Le dignità stanno nel punto 19.**
+- **Le dignità stanno nel punto 19**, chiuso il 30 ottobre 2026: le tavole
+  sono nei moduli `dignita-*.ts`.
 
 Il 27 ottobre 2026, facendolo:
 
@@ -309,14 +305,14 @@ saltati (`describe.skipIf`), e nel CI il file c'è.
 ### Le scuole che verranno
 
 Note, non pianificate. Ciascuna è un classificatore sul corso di `corso.ts` e
-un pacchetto di tavole nel punto 19.
+un pacchetto di tavole come quelli di `dignita-*.ts`.
 
 - **La linea araba e medievale**: Māshā'allāh e Sahl ibn Bishr, poi Bonatti
   (*Decem tractatus astronomiae*, Ratdolt 1491, col trattato sulle
   interrogazioni; scaricato in `texts/occidentale/bonatti-decem-tractatus-1491`,
   copia della Biblioteca Jagellonica: l'OCR dell'incunabolo è inutile e si
   legge sulle immagini). I termini di Bonatti non sono gli egizi ma i
-  tolemaici (voce 19); il trattato delle interrogazioni non è ancora stato
+  tolemaici (`dignita-bonatti.ts`); il trattato delle interrogazioni non è ancora stato
   cercato nella scansione, e la `FONTE.md` dice come orientarsi con l'OCR.
   Bonatti conta sei negazioni della perfezione (refranazione, evasione,
   proibizione, abscissione, contrarietà, ritorno della luce), che non
@@ -329,453 +325,76 @@ un pacchetto di tavole nel punto 19.
   in `nakshatra.ts` e `dasha.ts`. Va verificato lo stato dei diritti sui libri
   di Krishnamurti; la regola si ricalcola dalla definizione.
 
-## 19. Le dignità, per scuola
+## 25. Le dignità del Jyotisha: le rifiniture
 
-**Priorità bassa**, ora che il tropicale è fatto per intero. Viene dal punto
-17, che ne ha bisogno, ma vale da sola: le dignità servono al natale letto
-alla maniera tradizionale e al Jyotisha. Il Jyotisha è fatto, salvo
-rifiniture. Nell'occidente ci sono Lilly, Tolomeo, Bonatti e Valente; resta
-la riga moderna, che un autore unico non ha (sotto, *Che cosa resta*, 2).
+**Priorità bassa.** Restano dalla voce 19, chiusa il 30 ottobre 2026; le
+dignità di Parashara e tutto quello che ne deriva sono in `dignita-parashara.ts`,
+`varga-buoni.ts`, `maitri.ts`, `vimshopaka.ts`, `arudha.ts`,
+`arudha-graha.ts` e `stati.ts`, ciascuno con la sua fonte nel commento e la
+sua prova nel test. Le due cose qui sono indipendenti, e da fare solo se
+servissero:
 
-### A che punto è
+- **La combustione nei gradi di tempo del *Surya Siddhanta*.** Oggi è in
+  longitudine, e lo dice (`COMBUSTION_SOURCE` in `stati.ts`). Il calcolo
+  esatto vuole l'ascensione obliqua all'orizzonte del luogo, col pianeta
+  corretto per la latitudine (SS IX.1-5, pp. 364-366, e VII.8): un calcolo
+  nuovo.
+- **Gli arudha dei graha nei varga.** Rao (§9.5) li calcola in ogni
+  divisionale; `arudha-graha.ts` fa solo la rashi.
 
-Fatto per il tema tropicale, in `2feb3be` e `ac7c553`.
-`packages/core/src/dignita.ts` tiene domicili (tradizionali e moderni),
-esilio, esaltazione e caduta, con le fonti e le pagine nei commenti;
-`packages/core/test/dignita.test.ts` le prova contro le tavole delle fonti,
-ricopiate indipendentemente. La sezione DIGNITÀ di `format.ts`
-(`dignityLines`) porta le due colonne dei signori con le case e, in coda, una
-riga per convenzione con chi è in domicilio, esaltazione, esilio o caduta.
-`packages/lettura/src/tropicale.ts` manda lì il modello invece di fargliele
-ricavare dal segno, e `lettura.test.ts` lo verifica.
+## 26. Le scuole occidentali delle dignità: quello che resta
 
-Che cosa la sezione porta, e perché così:
+**Priorità bassa.** Dalla voce 19, chiusa il 30 ottobre 2026. Le scuole sono
+quattro, ciascuna un modulo con la sua fonte, le sue tavole ricopiate nel
+test e le scelte del proprietario in *Deciso*: Lilly (`dignita-lilly.ts`, con
+le condizioni e il conto in `condizioni-lilly.ts`), Tolomeo
+(`dignita-tolomeo.ts`), Bonatti (`dignita-bonatti.ts`) e Valente
+(`dignita-valente.ts`). Le tavole comuni, che il tema porta sempre, sono in
+`dignita.ts`; il blocco del tema in `dignita-tema.ts`.
 
-- **domicili** in due colonne mai fuse. La tradizionale, dei sette pianeti, è
-  comune alle scuole antiche; la moderna dà lo Scorpione a Plutone, l'Acquario
-  a Urano, i Pesci a Nettuno, e dichiara di non avere un autore unico;
-- **esilio** in tutte e due: il segno opposto al domicilio. Nella tradizionale
-  ha una fonte, la colonna Detriment di Lilly; nella moderna è la stessa
-  regola sull'altra tavola, e la riga lo dice. È così che Saturno in Leone è in
-  esilio per una colonna e non per l'altra;
-- **esaltazione e caduta** solo nella tradizionale, **per segno e senza
-  gradi**: è la parte su cui Tolomeo, Firmico e Lilly concordano. I gradi e
-  le esaltazioni dei Nodi vengono col pacchetto di Lilly. Per Urano, Nettuno
-  e Plutone nessuna esaltazione ha un autore, e non entrano.
+- **La ricezione di Bonatti**, se un giorno servisse: nasce da
+  un'applicazione in corso (tratt. III, PDF pp. 167-168), quindi vuole una
+  convenzione delle orbite di Bonatti (da leggere: non è stata cercata) e il
+  corso di `corso.ts`. È lavoro dell'oraria più che della tavola, da pensare
+  con la voce 17.
+- **Valente, le cose non cercate.** Esilio e ricezione nelle *Anthologiae*,
+  oltre l'indice di Kroll; e un testo critico migliore per I.3, l'ed. Pingree
+  (Teubner 1986), protetta, che potrebbe sanare Ariete e Scorpione e dire se
+  la Bilancia di Valente è sua o del codice. Se cambia, cambia la riga dei
+  termini, non per forza la tavola.
 
-Fatto anche per il Jyotisha, in `15e79a3`. `packages/core/src/dignita-parashara.ts` tiene
-uccha col grado più profondo, neecha nel settimo segno, moolatrikona e segno
-proprio secondo il BPHS, e `computeJyotisha` le mette in `JyotishaChart.dignities`,
-quindi nel JSON del tema vedico, non in `NatalChart`. La sezione DIGNITÀ
-(PARASHARA) di `formatJyotishaCompact` porta la fonte, i signori dei segni, le
-esaltazioni e una riga per graha; su `/vedica` le mostra
-`ParasharaDignityTable.svelte` (`c6faa27`), un componente separato da
-`DignityTable.svelte` apposta. `packages/lettura/src/jyotisha.ts` manda lì
-invece di ricopiare i domicili. Prove in
-`packages/core/test/dignita-parashara.test.ts` e in `lettura.test.ts`.
-
-Il resto del Jyotisha, del 28 e del 29 ottobre 2026, tutto con le scelte del
-proprietario in *Deciso*:
-
-| Che cosa | Dove | Commit | Fonte, e la prova |
-|---|---|---|---|
-| In ogni varga, in quali segni di uccha, moolatrikona, proprio e neecha cade il graha, per segno e tutte le corrispondenze | `parasharaSignDignities` in `dignita-parashara.ts`, campo `dignitySigns` di `SignVargaChart` con `dignitySource` | `8b09b74` | BPHS 6.52, p. 88; la tavola intera in `dignita-parashara.test.ts` |
-| I varga buoni contati nei quattro schemi, col nome del conto | `varga-buoni.ts`, `JyotishaChart.goodVargas`, `GoodVargaTable.svelte` | `ef95829` | 6.42-53 e 7.17-20, pp. 87-96; `varga-buoni.test.ts` |
-| Le relazioni fra i graha, naturale, temporanea e composta | `maitri.ts`, `JyotishaChart.relationships`, `RelationshipTable.svelte` | `a3840d3` | 3.55-58, pp. 40-42; la regola ridà la tavola di p. 40 in `maitri.test.ts` |
-| Il vimshopaka nei quattro schemi | `vimshopaka.ts`, `JyotishaChart.vimshopaka`, `VimshopakaTable.svelte` | `0f511f3` | 7.17-27, pp. 95-99; l'esempio di Venere (New Delhi 1984, 16,8) in `vimshopaka.test.ts` |
-| Gli arudha dei dodici bhava, coi due signori di Scorpione e Acquario | `arudha.ts` (`arudhaOf`, `bhavaLord`), `JyotishaChart.arudhas`, `ArudhaTable.svelte` | `f8c34a2` | 29.1-7, vol. I pp. 294-297, e 46.157-166, vol. II pp. 553-556; gli esempi di Santhanam in `arudha.test.ts` |
-| Le dignità di Rahu e Ketu, per segno e senza neecha | `parasharaNodeDignities` in `dignita-parashara.ts`, campo `signDignities` dei nodi in `ParasharaDignities.grahas`, `ParasharaDignityTable.svelte` | `a38314c` | 47.34-36, vol. II pp. 581-582; il verso ricopiato in `dignita-parashara.test.ts` |
-| Combustione, guerra planetaria e avastha, le condizioni di 6.53 | `stati.ts`, `JyotishaChart.states`, i campi `combust` e `defeated` di `GoodVargas.grahas`, `GrahaStatesTable.svelte` | `2a17fa6`, `294f6b3` | *Surya Siddhanta* IX.6-9, X.1, VII.12 e 19-23 (Burgess 1860); BPHS 79.9 e 45.30-33; l'esempio delle avastha di Santhanam (p. 455) in `stati.test.ts` |
-| Il conto dei varga buoni di Narasimha Rao, accanto a quello di Santhanam | `narasimhaRaoGoodVargas` in `varga-buoni.ts`, campo `narasimhaRao` di `GoodVargas.grahas` | `a75189e`, `5bb3807` | Rao (2000), §6.6, pp. 63-65; il Giove di Bill Cosby in `varga-buoni.test.ts` |
-| L'uccha dei nodi di 47.35 nella scelta del signore dell'arudha (46.164) | `bhavaLord` in `arudha.ts` | `b35e20e` | `arudha.test.ts` |
-| Gli arudha dei nove graha secondo Narasimha Rao, con rasi drishti, segno più forte e co-signore più forte | `arudha-graha.ts`, `JyotishaChart.grahaArudhas`, `GrahaArudhaTable.svelte` | `277c300`, `f18f6b5` | Rao (2000), §9.5, 10.3, 15.5.1-2 e tavola 6; l'esempio 30 per tutti e nove i graha in `arudha-graha.test.ts` |
-
-Senza ora di nascita `goodVargas` (e con lui il conto di Rao), `arudhas` e
-`states.avasthas` mancano, e un'avvertenza lo dice per ciascuno; relazioni,
-vimshopaka, combustione, guerra e arudha dei graha ci sono comunque. Le
-sezioni della tabella compatta, nell'ordine: DIGNITÀ (PARASHARA), RELAZIONI
-FRA I GRAHA, VIMSHOPAKA, ARUDHA DEI BHAVA, ARUDHA DEI GRAHA (NARASIMHA RAO),
-VARGA BUONI, STATI DEI GRAHA (BPHS 6.53); sulla pagina `/vedica` un
-componente per ciascuna (`GrahaArudhaTable.svelte` e `GrahaStatesTable.svelte`
-sono gli ultimi). `/metodo/varga` (`#buoni`) racconta i due conti e il 6.53;
-gli arudha e le dignità di Parashara in `/metodo` non ci sono, né prima né
-ora.
-
-I testi letti stanno in `texts/jyotisha/bphs-santhanam-1992-vol1/trascrizioni.md`
-(sezioni «3.55-58», «6.42-53», «7.17-27», «29.1-5, 7.17-25», «La combustione
-e la guerra nelle note di Santhanam», «45.30-37»),
-`texts/jyotisha/bphs-santhanam-1992-vol2/trascrizioni.md` («46.157-166»,
-«47.34-36 e 41», «79.9»), `texts/jyotisha/surya-siddhanta-burgess-1860/trascrizioni.md`
-e `texts/jyotisha/narasimha-rao-vedic-astrology-integrated-approach-2000/trascrizioni.md`.
-Le cose trovate leggendo, che il codice tiene scritte:
-
-- la traduzione di 6.53 omette *nīcagā*;
-- il secondo esempio delle note di Santhanam sull'arudha (p. 296) contraddice
-  il verso, e il motore segue il verso;
-- nel saptavarga il verso 7.18 non assegna i pesi ai varga, e il motore segue
-  la tavola di p. 97;
-- in 47.41 «(Scorpio)», la neecha di Rahu, è di Santhanam, non del verso;
-- la tavola di combustione di Santhanam (vol. I, p. 100) non ha fonte e non
-  è il *Surya Siddhanta* (Saturno 16 invece di 15, valori retrogradi per i
-  pianeti esterni);
-- in 79.9 «within one degree» è di Santhanam: il verso dice solo
-  «congiunti», il grado è del *Surya Siddhanta* VII.19;
-- in 45.33 il verso dice *yātadaṇḍa*, le ghati trascorse, e l'esempio di
-  Santhanam conta quella in corso: il motore segue l'esempio, e lo dice;
-- Narasimha Rao dà ai nodi esaltazioni diverse dal BPHS (Rahu Gemelli, Ketu
-  Sagittario, tavola 6): valgono solo dentro `arudha-graha.ts`;
-- negli esempi di Rao per le regole 1 e 2 dei due «più forte» (§15.5.1-2)
-  la regola 1 decide già: illustrano la regola, non la catena, e i test non
-  li usano come catena.
-
-Una scelta di lettura, scritta nel commento a `TRATTI`: nei sette segni che
-3.51-54 divide in tratti decide il tratto, anche contro 3.49 letto da solo.
-La Luna a 10 del Toro è in moolatrikona e non in uccha, Mercurio a 18 della
-Vergine pure. È il testo che precisa se stesso, non un'altra scuola.
-
-Fatte anche le ricezioni, in `3349553`, nella stessa sezione del tema tropicale:
-`receptionsOf` in `dignita.ts`, mutue e semplici fra i sette pianeti. La
-definizione è di Lilly, p. 112 («in each others dignity», per domicilio,
-triplicità, termine, faccia o «any essentiall dignity»), e a p. 176 il verbo
-vale anche in un verso solo («single reception by exaltation»). Le pagine sono
-in `texts/occidentale/lilly-christian-astrology-1647`, con la trascrizione.
-Senza scuola le ricezioni sono per domicilio ed esaltazione; la riga della
-fonte dice che le altre tre mancano, e il documento di lettura tropicale
-vieta di dedurle. Con Lilly sono contate tutte e cinque (qui sotto).
-
-Fatto anche il pacchetto di Lilly, in `c7ca93a`, `cbf5b83` e `193a5ee`.
-`packages/core/src/dignita-lilly.ts` tiene la tavola di p. 104 per intero:
-esaltazioni col grado e i Nodi (con le cadute della colonna Fall, il Sud nei
-Gemelli e il Nord nel Sagittario), triplicità di giorno e di notte con l'acqua
-a Marte, termini e facce; `lillyReceptionsOf` conta le ricezioni per tutte e
-cinque le dignità, sugli esempi di Lilly a p. 112. La tavola è trascritta
-riga per riga in `texts/occidentale/lilly-christian-astrology-1647/trascrizioni.md`,
-con la lettura di p. 105 (che dice come si leggono le celle), e il test la
-ricopia coi glifi della stampa (`packages/core/test/dignita-lilly.test.ts`).
-Si accende con `ChartOptions.dignitySchool: 'lilly'` (`types.ts:1349`, letto
-in `chart.ts`), con `SkyOptions.dignitySchool` (`types.ts:1546`, in
-`sky.ts`) e con `--dignita lilly` nella CLI, solo nello zodiaco tropicale: la
-sezione DIGNITÀ aggiunge, sotto le righe comuni,
-una riga per corpo con i signori del suo grado e le sue dignità, e le
-ricezioni diventano quelle di tutta la tavola. `packages/lettura/src/tropicale.ts`
-dice al modello di usarle solo se la riga di Lilly c'è.
-
-Due scelte, scritte nei commenti: l'esaltazione vale per tutto il segno e il
-grado è un dato a parte («in these Signes the Planets have their
-Exaltations»); senza l'ora la triplicità c'è solo nell'acqua, dove il
-reggente è lo stesso di giorno e di notte.
-
-In calce alla tavola Lilly stampa i punti: 4 l'esaltazione, 3 la triplicità,
-2 il termine, 1 la faccia, 5 l'esilio, 4 la caduta. Sotto la colonna dei
-domicili il numero è illeggibile; la tavola delle fortezze di p. 115 dà 5.
-Il punteggio, col peregrino di p. 112 e le condizioni accidentali, è in
-`condizioni-lilly.ts` (voce 17), e la sezione CONDIZIONI (LILLY) della tabella
-lo porta sotto la sezione DIGNITÀ.
-
-Fatte anche le superfici, in `510d777` e `8622c05`. Le dignità occidentali
-stanno in `NatalChart.dignities` (`dignita-tema.ts`), **solo nello zodiaco
-tropicale**: nel siderale, che è anche la carta che il Jyotisha riusa,
-mancano dal JSON e dalla tabella, e chiedere Lilly lì è `ZODIACO_NON_TROPICALE`.
-È un cambiamento: prima la tabella compatta del tema siderale portava la
-sezione DIGNITÀ coi domicili occidentali, e ora no. Il pacchetto di Lilly si
-chiede nel calcolo (`ChartOptions.dignitySchool`), non nel formato: la tabella
-compatta impagina il JSON e non ricalcola, e i test che confrontavano le due
-rese non tolgono più la sezione. Le ricezioni portano `counted`, come la
-distribuzione. Superfici: `--dignita lilly` (anche con `--json`),
-`dignitySchool=lilly` su `/api/chart`, `dignity_school` su
-`compute_natal_chart`, la voce «Dignità di Lilly» del menù «Scuola delle
-dignità» (era una casella fino a `75cc895`) e `DignityTable.svelte` nella
-pagina del tema. Il compatto ora pesa circa il 25% del JSON, e le
-descrizioni dicono «circa un quarto».
-
-Fatta anche la scuola di Tolomeo, il 29 ottobre 2026, in `14df446` e
-`75cc895`, con le scelte del proprietario in *Deciso*.
-`packages/core/src/dignita-tolomeo.ts` tiene i triangoli di I.18 (i signori
-tutti, e chi governa nella setta, nell'acqua Marte col co-reggente) e i
-termini della tavola greca di Robbins, p. 106; domicili ed esaltazioni per
-segno li prende da `dignita.ts`, che sono già di Tolomeo. Niente facce,
-esilio, punteggio, e niente ricezioni sue: Tolomeo la ricezione non la
-definisce, e con la sua scuola restano quelle comuni, con una riga che lo
-dice (`PTOLEMY_RECEPTION_SOURCE`). Si chiede con `dignitySchool: 'tolomeo'`
-e arriva in `WesternDignities.tolomeo`, anche nel cielo, senza condizioni.
-Superfici: `--dignita tolomeo`, `dignitySchool=tolomeo` su `/api/chart`,
-`dignity_school` su `compute_natal_chart`, il menù «Scuola delle dignità»
-che ha preso il posto della casella di Lilly (`ChartSettings.svelte`, con la
-copia `lib/scuole-dignita.ts` provata da `elenchi.test.ts`), il blocco
-«Secondo Tolomeo» di `DignityTable.svelte`, il documento di lettura
-tropicale e `/metodo#tolomeo`. Prove in
-`packages/core/test/dignita-tolomeo.test.ts`, con la tavola ricopiata coi
-glifi e il controllo delle somme di p. 103.
-
-Fatta anche la scuola di Bonatti, il 30 ottobre 2026, in `3191b08` e
-`f1afe76`, con le scelte del proprietario in *Deciso*. Letta sulle immagini
-del *Decem tractatus* (Ratdolt 1491), tratt. II, parte 2, ff. 14v-21r:
-`packages/core/src/dignita-bonatti.ts` tiene le sue tavole, scritte e non
-prese da Lilly anche dove coincidono: esaltazioni col grado e i Nodi (cap.
-VIII), cadute (cap. X), triplicità coi tre signori, di giorno, di notte e
-il partecipe (cap. XI; nell'acqua Venere, Marte e la Luna), termini (cap.
-XIV), facce caldee (cap. XVII); domicili ed esilio da `dignita.ts`, che
-coincidono coi capp. VI e VII. Tutti e tre i signori della triplicità hanno
-la dignità a prescindere dalla setta: Bonatti chiama Saturno, il partecipe,
-«dominus triplicitatis arietis» negli esempi della ricezione. Si chiede con
-`dignitySchool: 'bonatti'` e arriva in `WesternDignities.bonatti`, anche nel
-cielo. Superfici: `--dignita bonatti`, `/api/chart`, `dignity_school` su
-`compute_natal_chart`, la voce del menù, il blocco «Secondo Bonatti» di
-`DignityTable.svelte`, il documento di lettura tropicale e `/metodo#bonatti`.
-Prove in `packages/core/test/dignita-bonatti.test.ts`, con le tavole
-ricopiate coi glifi e le somme dei termini.
-
-Le cose trovate leggendo, scritte anche nella copia locale
-(`texts/occidentale/bonatti-decem-tractatus-1491/trascrizioni.md`):
-
-- **i termini di Bonatti sono i tolemaici, non gli egizi.** Coincidono con
-  la tavola greca di Robbins in undici segni; nel Leone Bonatti mette Saturno
-  primo e Giove ultimo (♄ 6, ☿ 7, ♂ 5, ♀ 6, ♃ 6), e il cap. XV lo spiega
-  come Tolomeo a p. 105. È una terza versione del Leone, diversa anche da
-  Lilly. La tavola delle scuole qui sotto diceva «egizi» per la riga
-  medievale, da fonti secondarie;
-- **la ricezione di Bonatti** (tratt. III, parte 2, PDF pp. 167-168) nasce
-  da un'applicazione per corpo o per aspetto e vale per domicilio,
-  esaltazione o due dignità minori insieme, mai una sola; la lettura larga
-  di Alcabizio la riferisce senza farla sua;
-- **i punti.** L'unico conto trovato è nel trattato delle rivoluzioni (PDF
-  p. 484, il signore dell'anno): domicilio 5, esaltazione 4, termine 5,
-  triplicità 3, la faccia non nominata. Non è il 5-4-3-2-1.
-
-Fatta anche la scuola di Valente, l'ellenistica, il 30 ottobre 2026, in
-`93cb27b` e `697fea0`, con le scelte del proprietario in *Deciso*. Letta
-sulla scansione dell'ed. Kroll (1908): `packages/core/src/dignita-valente.ts`
-tiene le esaltazioni col grado e le cadute al grado opposto (III.4, p. 140,
-senza i Nodi; è il luogo «Val.» dell'apparato a Firmico), i tre signori dei
-triangoli e il loro ordine nella setta (II.1, pp. 55-56: chi presiede, il
-secondo, il terzo), i termini egizi della tavola di Robbins p. 96. I
-domicili sono quelli di `dignita.ts`. Niente Nodi, facce, esilio né
-punteggio; ricezioni comuni. Si chiede con `dignitySchool: 'valente'` e
-arriva in `WesternDignities.valente`, con le stesse superfici di Bonatti
-(`/metodo#valente`). Prove in `packages/core/test/dignita-valente.test.ts`,
-con la tavola egizia e quella di Valente ricopiate.
-
-Le cose trovate leggendo, in
-`texts/occidentale/valente-anthologiae-kroll-1908/trascrizioni.md`:
-
-- **I termini di I.3 (pp. 14-19) sono gli egizi dove il testo è sano**, in
-  nove segni. Nella Bilancia Valente stampa ♄ 6, ☿ 5, ♃ 8, ♀ 7, ♂ 4 (somma
-  30, l'apparato: «ceteri» danno gli egizi); nello Scorpione i numeri
-  stampati sommano 31 (♃ ς' e ♄ ς', letti a 400 dpi) e l'apparato tace;
-  nell'Ariete il numero di Giove è corrotto e Mercurio non ne ha. Il codice
-  segue gli egizi in tutti e dodici, e la riga dei termini lo dice;
-- **nel fuoco** Valente non dice chi stia al secondo posto: il Sole di
-  giorno, Giove di notte «κατὰ διαδοχήν», Saturno che coopera con tutti e
-  due. Il codice mette secondo l'altro dei due, come negli altri triangoli,
-  e il commento a `TRIANGOLI` lo dice;
-- **«δεκανός» non è nell'indice dei termini astrologici di Kroll**: le
-  facce non ci sono, ma esilio e ricezione in Valente non sono stati
-  cercati oltre l'indice.
-
-### Che cosa resta
-
-1. **Il Jyotisha: quello che resta dopo il 29 ottobre 2026.** Ciascuna
-   indipendente dalle altre, nessuna urgente.
-   - **Le relazioni dei nodi.** Santhanam a p. 41 del vol. I le dà
-     secondo altri testi, non secondo 3.55, e restano fuori finché non c'è
-     una fonte scelta.
-   - **La combustione nei gradi di tempo del *Surya Siddhanta*.** Oggi è in
-     longitudine, e lo dice (`COMBUSTION_SOURCE` in `stati.ts`). Il calcolo
-     esatto vuole l'ascensione obliqua all'orizzonte del luogo, col pianeta
-     corretto per la latitudine (SS IX.1-5, pp. 364-366, e VII.8): un
-     calcolo nuovo, da fare solo se servisse.
-   - **Gli arudha dei graha nei varga.** Rao (§9.5) li calcola in ogni
-     divisionale; `arudha-graha.ts` fa solo la rashi.
-   - **La debolezza del 6.53** (*durbalāḥ*): nessuna soglia nel verso. Resta
-     fuori finché una fonte non la dà.
-
-2. **Le altre scuole occidentali**, quando le loro fonti sono state lette
-   (vedi *Da verificare* qui sotto): ciascuna come valore nuovo di
-   `DignitySchool`, intera. Lilly, Tolomeo, Bonatti e Valente ci sono. Resta
-   la riga moderna, che un autore unico non ha: se Alan Leo, coi domicili
-   moderni e i decani per triplicità, sia una scuola o solo una colonna è da
-   decidere col proprietario dopo averlo letto. Valente è il modello più
-   recente da seguire: `dignita-valente.ts`, un campo in `WesternDignities`,
-   un ramo in `computeWesternDignities`, una funzione di righe in `format.ts`
-   (`valensLines`), un blocco in `DignityTable.svelte`, una voce in
-   `lib/scuole-dignita.ts`. Attenzione a `apps/web/src/lib/server/birth.test.ts`,
-   che usa il nome di una scuola inesistente per provare il rifiuto (oggi
-   `doroteo`): va cambiato quando quella scuola entra.
-
-   Il compilatore pretende il nome in
-   `DIGNITY_SCHOOL_NAMES` (`packages/core/src/constants.ts`), e da lì CLI,
-   MCP e `/api/chart` imparano il valore da soli, ma solo a validarlo. I
-   testi che elencano le scuole vanno aggiornati a mano: l'aiuto di
-   `--dignita` (`cli.ts`), la descrizione di `dignity_school`
-   (`packages/mcp/src/tools.ts`), il commento di
-   `apps/web/src/routes/api/chart/+server.ts`, il documento di lettura
-   tropicale e `/metodo`. Il conto delle fortezze e le condizioni
-   accidentali sono di Lilly e restano suoi: una scuola nuova porta il
-   proprio, o nessuno, e `LillyConditions` non si generalizza. Le ricezioni
-   sono una definizione di Lilly: una scuola che non ne ha una sua le lascia
-   comuni, come Tolomeo; una che ne ha una diversa, se non si calcola, la
-   riporta nella riga della fonte e lascia le comuni, come Bonatti.
-
-3. **La ricezione di Bonatti, se un giorno servisse**: chiede
-   un'applicazione in corso, quindi una convenzione delle orbite di Bonatti
-   (da leggere: non è stata cercata) e il corso di `corso.ts`. È lavoro
-   dell'oraria più che della tavola, e va pensato con la voce 17.
-
-4. **Valente, le cose non cercate.** Esilio e ricezione nelle
-   *Anthologiae* (oltre l'indice di Kroll); e un testo critico migliore per
-   I.3, l'ed. Pingree (Teubner 1986), protetta, che potrebbe sanare Ariete e
-   Scorpione e dire se la Bilancia di Valente è sua o del codice. Se uno
-   dei due cambia, cambia la riga dei termini, non per forza la tavola.
-
-### Le scuole, e il default deciso il 18 ottobre 2026
-
-Per il tema tropicale le scuole possibili sono cinque, ciascuna come pacchetto:
-
-| | Domicili | Esaltazioni | Triplicità | Termini | Facce | Punteggio | Fonte primaria |
-|---|---|---|---|---|---|---|---|
-| Ellenistica (Valente) | tradizionali (I.2 ne nomina nove) | col grado, senza Nodi (III.4, p. 140) | tre signori ordinati per setta (II.1) | egizi; il testo di I.3 è guasto in Ariete, Bilancia e Scorpione | non trovate | nessuno | Valente in greco (Kroll 1908) libero; nel codice dal 30 ottobre 2026 (`dignita-valente.ts`). Doroteo sopravvive in arabo, e la traduzione di Pingree è protetta |
-| Tolomeo, *Tetrabiblos* | tradizionali | per segno, senza gradi (I.19) | due reggenti per setta; l'acqua a Marte, con Venere di giorno e la Luna di notte (I.18, p. 87) | tolemaici, dalla tavola greca di Robbins (p. 106) | no: la sua «faccia» è un aspetto ai luminari (I.23) | nessuno | greco e Ashmand (1822) liberi; nel codice dal 29 ottobre 2026 (`dignita-tolomeo.ts`) |
-| Medievale (Bonatti, che cita Abū Maʿshar e Alcabizio) | tradizionali | col grado, e i Nodi | doroteiche, tre signori col partecipe | tolemaici, col Leone di Saturno | caldee | nessuno nelle dignità; 5-4-5-3 solo per il signore dell'anno | Bonatti latino (1491) libero; nel codice dal 30 ottobre 2026 (`dignita-bonatti.ts`) |
-| Lilly, 1647 | tradizionali | col grado, e i Nodi | due reggenti, Marte sull'acqua | tolemaici, nella sua versione | caldee | p. 104: esaltazione 4, triplicità 3, termine 2, faccia 1, esilio 5, caduta 4; domicilio illeggibile; peregrino definito a p. 112; tavola delle fortezze a p. 115, letta, domicilio 5 | scansioni libere; tavole lette il 27 ottobre 2026 |
-| Moderna, XX secolo | con Urano, Nettuno, Plutone | segni, i pianeti esterni senza autore | nessuna | nessuno | decani per triplicità (Alan Leo) | nessuno | senza un autore unico |
-
-La riga medievale è stata letta su Bonatti il 30 ottobre 2026, e
-correggeva due celle che venivano da fonti secondarie (termini «egizi»,
-punteggio 5-4-3-2-1); quella ellenistica su Valente lo stesso giorno, e
-correggeva le facce («sì») e le esaltazioni («da trovare»). La riga moderna,
-fuori da quanto verificato qui sotto, viene da fonti secondarie e va letta
-sulle primarie prima di diventare una tavola.
-La riga di Lilly è stata letta sulla scansione, punti in calce compresi
-(tranne quello del domicilio, illeggibile), e così la tavola delle fortezze
-di p. 115, che dà il domicilio a 5.
-
-Il default nel tema tropicale sono **due colonne affiancate, mai mescolate**,
-ed è quello che la sezione DIGNITÀ porta oggi:
-
-- **i domicili tradizionali con esaltazione, esilio e caduta**, dichiarati come
-  la parte comune alle scuole occidentali antiche;
-- **i domicili moderni**, attribuiti alla convenzione del Novecento, che un
-  autore unico non ce l'ha. Il progetto ha già scelto quella convenzione
-  mettendo Plutone nel tema: qui la si dichiara.
-
-Triplicità, termini e facce **non compaiono per default**: si chiedono
-nominando la scuola. Le disponibili sono Lilly, che l'oraria richiede
-comunque, Tolomeo, Bonatti e Valente; le altre entrano quando le loro fonti sono state lette.
-Il punteggio c'è per Lilly, in `condizioni-lilly.ts`; Tolomeo, Bonatti e Valente non ne hanno, e
-una scuola nuova porta il suo, o nessuno.
-Nel Jyotisha la scelta è più semplice, perché Parashara è il riferimento che i
-documenti di lettura già presuppongono; dove il BPHS lascia un buco senza
-procedura (gli arudha dei graha) o un autore moderno conta altrimenti (i
-varga buoni), entra Narasimha Rao, nominato e accanto, mai al posto.
-
-### Le fonti: verificato e da verificare
-
-Verificato sulle scansioni il 18 ottobre 2026, e scritto nei commenti di
-`dignita.ts` (il BPHS il 26 ottobre, in `dignita-parashara.ts`; la tavola
-intera di Lilly il 27 ottobre, in `dignita-lilly.ts`):
-
-- **Domicili.** Tolomeo I.17 (ed. Robbins, Loeb 1940, pp. 79-83, su
-  LacusCurtius) e Lilly, *Christian Astrology* (1647), p. 104 (archive.org,
-  `b30338724`) coincidono. Valente I.2 (ed. Kroll 1908, pp. 5-13) scrive
-  «οἶκος» per nove segni, concordi; per Toro, Acquario e Pesci no.
-  Riletto il 29 ottobre 2026 sulle immagini di
-  `valente-anthologiae-kroll-1908` (`pagine/`, `trascrizioni.md`).
-- **Domicili moderni.** Alan Leo, *The Art of Synthesis* (3ª ed., 1912,
-  in `texts/` come `leo-art-of-synthesis-1912`: archive.org la data 1926,
-  il frontespizio dice 1912), p. 117,
-  riferisce Urano all'Acquario e Nettuno ai Pesci come un uso, senza esserne
-  il primo: Urano all'Acquario circolava già nell'Ottocento (Varley 1828,
-  secondo Skyscript, pagina non vista). Per Plutone allo Scorpione nessun
-  autore; C. C. Zain (1942) lo usa dichiarandolo solo il più diffuso.
-- **Esaltazioni.** Tolomeo I.19 (Loeb pp. 89-91) dà i segni e nessun grado, e
-  scrive lui le cadute («depression») nel segno opposto. Firmico, *Mathesis*
-  II.3.5-6 (ed. Kroll-Skutsch I, 1897, p. 44, rr. 7-17) dà i gradi, con la
-  caduta allo stesso grado del segno opposto; Lilly p. 104 dà gli stessi gradi
-  e in più il Nodo Nord a 3° Gemelli e il Sud a 3° Sagittario (glifo stampato
-  male). I gradi sono quindi della tradizione da Firmico a Lilly, non di
-  Tolomeo, anche se Lilly intitola la tavola «according to Ptolomy». Valente
-  I.2 una tavola delle esaltazioni non ce l'ha.
-- **Ricezioni.** Lilly p. 112 (immagine n145) la definisce mutua, «in each
-  others dignity», per qualunque dignità essenziale; p. 176 (n209) usa la
-  ricezione in un verso solo. Trascritte in `texts/`.
-- **La tavola di Lilly per intero**, pp. 104-105 (immagini n137 e n138):
-  esaltazioni col grado e i Nodi, cadute della colonna Fall (Nodi compresi),
-  triplicità, termini e facce, più i punti in calce. Letta a piena
-  risoluzione e trascritta riga per riga in `trascrizioni.md`; p. 105 dice
-  come si leggono le celle e dà Marte sull'acqua di giorno e di notte
-  «according to Ptolomy and Naibod».
-- **Esilio.** La colonna Detriment di Lilly p. 104 nomina, segno per segno, il
-  signore del segno opposto; la colonna Fall coincide con Tolomeo per i sette
-  pianeti. Sulla scansione l'immagine è la n137 contando da zero
-  (`archive.org/download/b30338724/page/n137_w2000.jpg`).
-- **BPHS, per il Jyotisha.** Santhanam, vol. I (Ranjan, 1992), su
-  archive.org (`heag_brihat-parasara-hora-sastra-vol-1-…`): 3.49-50 a pp.
-  38-39 (immagini n42 e n43 contando da zero), 3.51-54 a p. 39, i signori dei
-  segni in 4.6-24 a pp. 50-53, letti sull'OCR e la p. 50 anche a vista
-  (immagini in `pagine/`). I numeri
-  combaciano anche col sanscrito stampato accanto. La scansione porta la
-  dicitura «CC-0. In Public Domain. Gurukul Kangri Collection», ma vale per la
-  copia digitale e non dice niente dei diritti sulla traduzione: se ne
-  prendono i valori, non il testo.
-
-- **Tolomeo, triplicità, termini e facce**: letti il 29 ottobre 2026,
-  I.18 e I.20-23, e nel codice in `dignita-tolomeo.ts`. Le triplicità (Loeb
-  pp. 83-87) danno due signori per triangolo, uno per setta, e nell'acqua
-  Marte con Venere di giorno e la Luna di notte: il «according to Ptolomy»
-  di Lilly a p. 105 vale per Marte, non per tutta la riga. I termini si
-  leggono sulla **scansione** della Loeb (pp. 96 e 106, greco, con
-  l'apparato a pp. 106-107), scaricata apposta in
-  `texts/occidentale/tolomeo-tetrabiblos-robbins-1940`: l'HTML di
-  LacusCurtius non ha il greco né l'apparato, e nella Bilancia tolemaica ha
-  ♄ al posto di ♂. Confrontati con Ashmand p. 53 e con Lilly: i termini di
-  Lilly differiscono in sette segni, e le sue somme per pianeta non tornano.
-  Facce decaniche in Tolomeo non ce ne sono (I.22-23). Tutto nelle
-  trascrizioni della fonte.
-- **I termini egizi** sono trascritti anche loro, dal greco di Robbins
-  p. 96 e controllati con le somme per pianeta dell'apparato (Saturno 57,
-  Giove 79, Marte 66, Venere 82, Mercurio 76), nella stessa
-  `trascrizioni.md`: sono la tavola della scuola di Valente
-  (`dignita-valente.ts`). Alla medievale no: la tavola di Bonatti è
-  tolemaica (vedi sopra).
-- **Bonatti, le dignità intere**: lette il 30 ottobre 2026 sulle immagini
-  della stampa di Ratdolt, tratt. II, parte 2, capp. V-XVII (ff. 14v-21r;
-  nel PDF il foglio N recto è la pagina 2N + 33), più la ricezione (tratt.
-  III, PDF pp. 167-168) e le «fortitudines» del signore dell'anno (PDF p.
-  484). Nel codice in `dignita-bonatti.ts`; la mappa dei fogli in
-  `FONTE.md`, i passi in `trascrizioni.md`.
-- **Valente, esaltazioni, triangoli e termini**: letti il 30 ottobre 2026
-  sulla scansione dell'ed. Kroll (pagina stampata N = PDF N + 19): III.4 a
-  p. 140, II.1 a pp. 55-56, I.3 a pp. 14-19. Il luogo di III.4 è quello che
-  l'apparato di Kroll-Skutsch a Firmico II.3.5 (p. 44) chiama «Val.»,
-  quando corregge Saturno a 21 e Giove a 15 contro i codici di Firmico (XX
-  e XIX per Saturno, XXI e XVIII per Giove): i gradi di `dignita-lilly.ts`
-  sono il testo critico di Firmico, e Valente li conferma. Per trovare un
-  luogo in Valente si usa l'indice dei termini astrologici di Kroll, nell'OCR
-  dalla riga 33279: il greco dell'OCR non si legge, i numeri di pagina sì.
-
-Da verificare:
-
-- **I punti 5-4-3-2-1 medievali**: a chi vanno attribuiti. I siti li danno
-  come «medievali» senza un testo. In Bonatti non ci sono: i capitoli delle
-  dignità non danno punti, e il solo conto (PDF p. 484) è 5-4-5-3 per il
-  signore dell'anno. Da cercare altrove (al-Qabīṣī, Ibn Ezra), se servisse.
-- **Per il Jyotisha, l'esaltazione dei nodi**: chiusa col BPHS stesso,
-  47.34-36, nel codice dal 29 ottobre 2026 (vedi *Deciso*). Se un giorno
-  servisse una seconda fonte: Santhanam in nota a 3.50 rimanda alla sua
-  traduzione dello *Horasara*, p. 20, che su archive.org non si è trovata
-  (`texts/INDICE.md`, «Non libere»); l'altra traduzione, Subrahmanya Sastri
-  (1949), è in `texts/jyotisha/horasara-subrahmanya-sastri-1949`, protetta,
-  e per i nodi non è stata letta (lo è solo per il D-2, 2.2 e 8.11).
-
-### Verifica
-
-Le tavole contro la fonte, segno per segno e scuola per scuola: è una prova a
-tabella e non chiede effemeridi, come in `dignita.test.ts`,
-`dignita-parashara.test.ts` e `dignita-lilly.test.ts`. L'ultimo ricopia le
-righe della tavola coi glifi della stampa e le rilegge: è il modello per una
-scuola nuova.
+**Per chi aggiunge una scuola** (Doroteo, se un suo testo diventasse
+libero). Valente è il modello più recente: `93cb27b` il calcolo, `697fea0`
+le superfici. Un modulo `dignita-<scuola>.ts` con le righe `source` e
+`termsSource`, un valore di `DignitySchool` col nome in
+`DIGNITY_SCHOOL_NAMES` (`constants.ts`, che il compilatore pretende e da cui
+CLI, MCP e `/api/chart` imparano a validarlo), un campo in
+`WesternDignities`, un ramo in `computeWesternDignities`, una funzione di
+righe in `format.ts`, un blocco in `DignityTable.svelte`, una voce in
+`lib/scuole-dignita.ts` (provata da `elenchi.test.ts`). A mano, perché nessun
+test li vede: l'aiuto di `--dignita` (`cli.ts`), la descrizione di
+`dignity_school` (`packages/mcp/src/tools.ts`), il commento di
+`apps/web/src/routes/api/chart/+server.ts`, il documento di lettura tropicale
+e `/metodo`. `apps/web/src/lib/server/birth.test.ts` usa il nome di una
+scuola inesistente per provare il rifiuto (oggi `doroteo`), e va cambiato se
+quella scuola entra. Il conto delle fortezze è di Lilly e resta suo: una
+scuola porta il proprio, o nessuno. Le ricezioni restano quelle comuni per
+ogni scuola che non le definisce o che le definisce in un modo che la
+tavola non calcola, e la riga della fonte lo dice.
 
 ## Deciso, e da non riaprire
+
+- **Le dignità occidentali: due colonne di default, le scuole a richiesta,
+  e la riga moderna non è una scuola.** Il default, scelto il 18 ottobre
+  2026 con la voce 19, sono i domicili tradizionali con esaltazione, esilio
+  e caduta, la parte comune alle scuole antiche, e accanto i domicili
+  moderni, mai fusi; triplicità, termini e facce solo nominando una scuola,
+  intera. Il 30 ottobre 2026 il proprietario ha deciso che la riga
+  «moderna» non diventa una scuola: Alan Leo, l'unico autore letto, non è
+  coerente fra le edizioni (vedi *Esaminato*), e i domicili moderni restano
+  la seconda colonna, com'erano. Nel Jyotisha il riferimento è Parashara;
+  dove il BPHS lascia un buco o un autore moderno conta altrimenti entra
+  Narasimha Rao, nominato e accanto.
 
 - **La scuola di Valente si chiama `valente` e porta i termini egizi.**
   Scelto dal proprietario il 30 ottobre 2026, con la voce 19. Un autore, come
@@ -919,6 +538,35 @@ scuola nuova.
   seria, e non da dentro il motore.
 
 ## Esaminato, e lasciato stare
+
+**Alan Leo come scuola delle dignità.** Letto il 30 ottobre 2026 (voce 19),
+in `texts/occidentale/leo-how-to-judge-a-nativity-1928/trascrizioni.md`.
+Nella 4ª ed. di *How to Judge a Nativity* (p. 27, testo del 1903) i domicili
+sono i tradizionali e Urano e Nettuno non ne hanno («for the present they
+may be taken as substitutes for the Sun and Moon»); nel 1912 (*The Art of
+Synthesis*, p. 117) li dà ad Acquario e Pesci. La colonna «Strong» di p. 27
+(Mercurio nel Cancro, il Sole nello Scorpione…) non ha una regola scritta, e
+«Weak» è l'esilio. I decani per triplicità (pp. 92-99) sono uno strumento
+per leggere l'Ascendente, coi signori tradizionali e aggiunte moderne non
+sistematiche («Saturn or Uranus»), non una dignità. Una scuola «leo»
+dovrebbe scegliere fra le sue edizioni: è una dottrina nostra.
+
+**Le relazioni dei nodi e la debolezza del 6.53, nel Jyotisha.** Ferme
+senza fonte (voce 19). Santhanam (vol. I, p. 41) dà le relazioni di Rahu e
+Ketu secondo altri testi, non secondo 3.55; *durbalāḥ* di 6.53 non ha una
+soglia nel verso. Entrano se una fonte con un nome le dà.
+
+**I punti 5-4-3-2-1 «medievali».** I siti li attribuiscono alla tradizione
+medievale senza un testo. In Bonatti non ci sono: i capitoli delle dignità
+non danno punti, e il solo conto (trattato delle rivoluzioni, PDF p. 484) è
+domicilio 5, esaltazione 4, termine 5, triplicità 3, per scegliere il
+signore dell'anno. Da cercare in al-Qabīṣī o Ibn Ezra, se mai servisse.
+
+**Una seconda fonte per l'esaltazione dei nodi nel Jyotisha.** Chiusa col
+BPHS stesso, 47.34-36. Santhanam in nota a 3.50 rimanda alla sua traduzione
+dello *Horasara*, p. 20, non trovata su archive.org; l'altra, Subrahmanya
+Sastri (1949), è in `texts/jyotisha/horasara-subrahmanya-sastri-1949`,
+protetta, e per i nodi non è stata letta.
 
 **Le fonti per le cuspidi che sembrano indipendenti e non lo sono.** Da non
 ricontrollare: **astro.com** e le sue tavole delle case in PDF, **AstroSeek**,
