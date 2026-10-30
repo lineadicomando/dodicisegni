@@ -124,6 +124,24 @@ export {
   type PtolemyRulers,
 } from './dignita-tolomeo.js';
 export {
+  BONATTI_PLANETS,
+  BONATTI_RECEPTION_SOURCE,
+  BONATTI_SOURCE,
+  BONATTI_TERMS_SOURCE,
+  bonattiDignitiesOf,
+  bonattiExaltation,
+  bonattiFaceRuler,
+  bonattiFall,
+  bonattiRulersAt,
+  bonattiTermRuler,
+  bonattiTerms,
+  bonattiTriplicityGovernor,
+  bonattiTriplicityLords,
+  type BonattiDignity,
+  type BonattiPlanet,
+  type BonattiRulers,
+} from './dignita-bonatti.js';
+export {
   computeParasharaDignities,
   PARASHARA_GRAHAS,
   PARASHARA_SOURCE,

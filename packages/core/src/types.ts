@@ -543,7 +543,7 @@ export interface ChartFormatOptions {
 }
 
 /** Le scuole delle dignità che si possono chiedere per nome. */
-export type DignitySchool = 'lilly' | 'tolomeo';
+export type DignitySchool = 'lilly' | 'tolomeo' | 'bonatti';
 
 /** Le due convenzioni dei domicili, che il tema porta affiancate. */
 export type DomicileScheme = 'tradizionale' | 'moderno';
@@ -618,6 +618,36 @@ export interface PtolemyRulers {
    */
   triplicitaDiSetta?: BodyId[];
   termine: BodyId;
+}
+
+/**
+ * Le voci di Bonatti, *Decem tractatus* II, parte 2: le cinque dignità del
+ * cap. V e le due debilità dei capp. VII e X.
+ */
+export type BonattiDignity =
+  | 'domicilio'
+  | 'esaltazione'
+  | 'triplicita'
+  | 'termine'
+  | 'faccia'
+  | 'esilio'
+  | 'caduta';
+
+/** Chi ha autorità su un grado dello zodiaco secondo Bonatti. */
+export interface BonattiRulers {
+  domicilio: BodyId;
+  /** Il corpo esaltato nel segno, Nodi compresi, se ce n'è uno: in Leone, Scorpione e Acquario nessuno. */
+  esaltazione?: BodyId;
+  /**
+   * I tre signori della triplicità (cap. XI): di giorno, di notte e il
+   * partecipe, che lo è in tutte e due le sette. Sono signori a prescindere
+   * dalla setta.
+   */
+  triplicita: { diurno: BodyId; notturno: BodyId; partecipe: BodyId };
+  /** Chi governa la triplicità nella setta del tema. Assente senza la setta. */
+  triplicitaDiSetta?: BodyId;
+  termine: BodyId;
+  faccia: BodyId;
 }
 
 /** Le tre stelle fisse della tavola di Lilly, p. 115. */
@@ -743,7 +773,7 @@ export interface LillyConditions {
 
 /**
  * Le dignità occidentali di un tema tropicale. Vedi `dignita.ts`,
- * `dignita-lilly.ts` e `dignita-tolomeo.ts`.
+ * `dignita-lilly.ts`, `dignita-tolomeo.ts` e `dignita-bonatti.ts`.
  *
  * Come per le altre dottrine, ogni blocco porta la sua fonte, e dove le scuole
  * divergono ci sono tutte e due: i domicili in due colonne mai fuse, e le
@@ -771,9 +801,10 @@ export interface WesternDignities {
   }[];
   /**
    * Le ricezioni fra i sette pianeti, secondo Lilly. `counted` dice per quali
-   * dignità sono state contate, come `Distribution.counted`: senza la scuola
-   * e con Tolomeo, che la ricezione non la definisce, domicilio ed
-   * esaltazione; con Lilly, tutte e cinque.
+   * dignità sono state contate, come `Distribution.counted`: senza la scuola,
+   * con Tolomeo, che la ricezione non la definisce, e con Bonatti, che la
+   * definisce su un'applicazione, domicilio ed esaltazione; con Lilly, tutte
+   * e cinque.
    */
   receptions: {
     source: string;
@@ -819,7 +850,25 @@ export interface WesternDignities {
       rulers: PtolemyRulers;
       dignities: PtolemyDignity[];
     }[];
+  };  /** Il pacchetto di Bonatti, solo se chiesto con `dignitySchool: 'bonatti'`. */
+  bonatti?: {
+    school: 'bonatti';
+    source: string;
+    /** La tavola dei termini seguita, e come si rapporta a quella di Tolomeo. */
+    termsSource: string;
+    /**
+     * Per ogni corpo, i signori del grado in cui sta e le dignità che ha lì.
+     * I signori ci sono per tutti; le dignità per i sette pianeti, e per i
+     * Nodi solo esaltazione e caduta.
+     */
+    bodies: {
+      id: BodyId;
+      name: string;
+      rulers: BonattiRulers;
+      dignities: BonattiDignity[];
+    }[];
   };
+
 }
 
 /**
@@ -1342,8 +1391,8 @@ export interface ChartOptions extends ZodiacOptions {
    * La scuola delle dignità da aggiungere a quelle comuni, in
    * `NatalChart.dignities`. Omessa, nessuna: triplicità, termini e facce non
    * hanno una forma sola, e si chiedono nominando chi le ha scritte. Oggi ci
-   * sono Lilly (1647), vedi `dignita-lilly.ts`, e Tolomeo, vedi
-   * `dignita-tolomeo.ts`. Solo nello zodiaco tropicale, su cui le loro
+   * sono Lilly (1647), vedi `dignita-lilly.ts`, Tolomeo, vedi
+   * `dignita-tolomeo.ts`, e Bonatti (1491), vedi `dignita-bonatti.ts`. Solo nello zodiaco tropicale, su cui le loro
    * tavole sono costruite: nel siderale è un `ChartError`.
    */
   dignitySchool?: DignitySchool;
@@ -1538,8 +1587,8 @@ export interface SkyOptions extends ZodiacOptions {
   /** Corpi da calcolare. Default: tutti tranne Chirone e Lilith. */
   bodies?: BodyId[];
   /**
-   * Le dignità di una scuola: Lilly, con le condizioni dell'istante, o
-   * Tolomeo. Omessa, il cielo non porta dignità. Solo nel tropicale, come nel
+   * Le dignità di una scuola: Lilly, con le condizioni dell'istante,
+   * Tolomeo o Bonatti. Omessa, il cielo non porta dignità. Solo nel tropicale, come nel
    * tema. Per Lilly le case, l'ora planetaria e i gradi dell'Ascendente
    * chiedono il luogo e l'ora.
    */

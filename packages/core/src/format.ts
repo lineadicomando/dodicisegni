@@ -774,6 +774,7 @@ function dignityLines(
 
   if (dignities.lilly) lines.push(...lillyLines(dignities.lilly, chart.sect));
   if (dignities.tolomeo) lines.push(...ptolemyLines(dignities.tolomeo, chart.sect));
+  if (dignities.bonatti) lines.push(...bonattiLines(dignities.bonatti, chart.sect));
 
   const { source, single, mutual } = dignities.receptions;
   const nome = (id: BodyId): string => nameOf(chart, id);
@@ -863,6 +864,36 @@ function ptolemyLines(
     const riga =
       `${body.name.padEnd(11)} ${nome(domicilio).padEnd(9)} ${nome(esaltazione).padEnd(9)} ` +
       `${elenco(triplicita).padEnd(20)} ${elenco(triplicitaDiSetta).padEnd(14)} ${nome(termine).padEnd(9)}`;
+    lines.push(`${riga} | ${body.dignities.map(dignityLabel).join(', ') || '—'}`);
+  }
+  return lines;
+}
+
+/**
+ * Il pacchetto di Bonatti: per ogni corpo i signori del grado in cui sta, e
+ * le dignità e debilità che ha lì. I signori si danno per tutti, le dignità
+ * per i sette e, d'esaltazione e caduta, per i Nodi.
+ *
+ * La triplicità ha due colonne, come il triangolo di Tolomeo: i tre signori
+ * del cap. XI, nell'ordine giorno, notte e partecipe, che lo sono sempre, e
+ * chi la governa nella setta del tema, che senza l'ora non si sa.
+ */
+function bonattiLines(bonatti: NonNullable<WesternDignities['bonatti']>, sect: Sect | undefined): string[] {
+  const nome = (id: BodyId | undefined): string => (id ? bodyName(id) : '—');
+  const lines = [
+    `Bonatti (a richiesta): ${bonatti.source}`,
+    bonatti.termsSource,
+    sect
+      ? `Triplicità: i tre signori del cap. XI (giorno+notte+partecipe), e chi la governa di ${sect === 'diurna' ? 'giorno' : 'notte'}, dalla setta del tema.`
+      : "Triplicità: i tre signori del cap. XI (giorno+notte+partecipe); senza l'ora la setta manca, e chi la governa non si dice.",
+    `${'Corpo'.padEnd(11)} ${['domic.', 'esalt.'].map((t) => t.padEnd(9)).join(' ')} ${'triplicità'.padEnd(26)} ${'governa'.padEnd(9)} ${['termine', 'faccia'].map((t) => t.padEnd(9)).join(' ')} | dignità`,
+  ];
+  for (const body of bonatti.bodies) {
+    const { domicilio, esaltazione, triplicita, triplicitaDiSetta, termine, faccia } = body.rulers;
+    const signori = [triplicita.diurno, triplicita.notturno, triplicita.partecipe].map(bodyName).join('+');
+    const riga =
+      `${body.name.padEnd(11)} ${nome(domicilio).padEnd(9)} ${nome(esaltazione).padEnd(9)} ` +
+      `${signori.padEnd(26)} ${nome(triplicitaDiSetta).padEnd(9)} ${nome(termine).padEnd(9)} ${nome(faccia).padEnd(9)}`;
     lines.push(`${riga} | ${body.dignities.map(dignityLabel).join(', ') || '—'}`);
   }
   return lines;

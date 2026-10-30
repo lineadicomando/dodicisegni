@@ -275,6 +275,7 @@ export const HOUSE_SYSTEM_CODES: Readonly<Record<HouseSystem, string>> = {
 export const DIGNITY_SCHOOL_NAMES: Readonly<Record<DignitySchool, string>> = {
   lilly: 'Lilly',
   tolomeo: 'Tolomeo',
+  bonatti: 'Bonatti',
 };
 
 export interface AspectDefinition {
