@@ -127,6 +127,15 @@ const LILLY_ORBI: Readonly<Record<string, number>> = {
   luna: 12.5,
 };
 
+/**
+ * Le metà delle orbite di Lilly, le *moieties* di p. 110: quello che ogni
+ * pianeta porta all'aspetto. Servono anche dove l'altro capo non ha un'orbita
+ * sua, come la Parte di Fortuna di p. 145.
+ */
+export const LILLY_MOIETIES: Readonly<Record<string, number>> = Object.fromEntries(
+  Object.entries(LILLY_ORBI).map(([pianeta, orbita]) => [pianeta, orbita / 2]),
+);
+
 /** I cinque aspetti che Lilly tratta: i minori non li considera (p. 110). */
 const TOLEMAICI: readonly AspectId[] = ['congiunzione', 'sestile', 'quadrato', 'trigono', 'opposizione'];
 

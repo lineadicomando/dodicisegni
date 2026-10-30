@@ -273,6 +273,7 @@ describe("il documento dell'oraria", () => {
 
   it('manda alle righe «Qualità» della perfezione, p. 125', () => {
     expect(testo).toContain('Le righe «Qualità» sotto la perfezione');
+    expect(testo).toContain('La riga «Parte di Fortuna» ha il suo conto');
   });
 
   it('non è uno dei sistemi del tema natale', () => {

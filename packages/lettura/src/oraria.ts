@@ -74,7 +74,9 @@ ragionamento, e chi ha chiesto deve poterla seguire.
    dignità, il conto di p. 115 con le fortezze e le debilità, rapporto col
    Sole, moto, ricezioni. Un significatore forte, per Lilly, è chi ha i mezzi
    per agire; uno debole, chi li ha in parte. Usa il conto come lo usava lui,
-   per confrontare, non come un voto.
+   per confrontare, non come un voto. La riga «Parte di Fortuna» ha il suo
+   conto, dalla tavola di p. 145: Lilly la guarda accanto ai significatori
+   nelle domande di beni e di fortuna, come nella figura di p. 180.
 
 4. L'incontro. Sotto PERFEZIONE e IMPEDIMENTI trovi che cosa la figura porta
    fra i due prima che il più leggero cambi segno: congiunzione o aspetto

@@ -222,6 +222,22 @@ describe('la domanda del 1634 (Christian Astrology, pp. 177-182)', () => {
     // triplicità dell'aria, né la stessa natura.
     expect(per('radicale')).toMatchObject({ holds: false, page: 121 });
   });
+
+  it('conta la Parte di Fortuna con la tavola di p. 145, dove Lilly a p. 180 se ne scosta', () => {
+    // Lilly: «in ♏ hath five Debilities», la mette in seconda e le dà «but
+    // three testimonies of strength», cioè «weak by two». Il motore segue la tavola e la regola dei
+    // cinque gradi: la Parte, a 0°30' dello Scorpione e a quasi sette gradi
+    // dalla cuspide della seconda, è in prima (5); è libera dal Sole (5), e
+    // sta nei termini di Marte (2), riga che Lilly non conta.
+    const fortuna = horary.chart.dignities!.lilly!.conditions.partOfFortune!;
+    expect(fortuna.sign).toBe('scorpione');
+    expect(fortuna.house).toBe(1);
+    expect(fortuna.score.debilities).toEqual([
+      { item: 'segno', sign: 'scorpione', points: 5 },
+      { item: 'termine', with: 'marte', points: 2 },
+    ]);
+    expect(fortuna.score.totals).toEqual({ fortitudes: 10, debilities: 7, net: 3 });
+  });
 });
 
 describe('computeHoraryLilly', () => {

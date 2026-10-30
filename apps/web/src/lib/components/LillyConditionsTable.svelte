@@ -15,7 +15,7 @@
 <script lang="ts">
   import type { LillyConditions, LillyScoreRow, LillySolarState } from '@dodicisegni/core';
   import type { Evidenza } from '#lib/evidenza.svelte.js';
-  import { BODY_GLYPH, BODY_LABEL, SIGN_GLYPH, ZODIAC_ORDER } from '@dodicisegni/ruota';
+  import { BODY_GLYPH, BODY_LABEL, SIGN_GLYPH, SIGN_LABEL, ZODIAC_ORDER } from '@dodicisegni/ruota';
   import { formatDegrees, formatSignDegree } from '#lib/format.js';
 
   interface Props {
@@ -49,6 +49,11 @@
     if (row.item === 'partile') voce = `partile ${row.aspect} ${row.with ? BODY_LABEL[row.with] : ''}`;
     if (row.item.startsWith('ricezione') && row.with) voce = `${voce} con ${BODY_LABEL[row.with]}`;
     if (row.item === 'stella' && row.star) voce = STELLE[row.star];
+    if (row.item === 'segno' && row.sign) {
+      voce = `in ${SIGN_LABEL[row.sign]}${row.with ? `, nei termini di ${BODY_LABEL[row.with]}` : ''}`;
+    }
+    if (row.item === 'aspetto') voce = `${row.aspect} ${row.with ? BODY_LABEL[row.with] : ''}`;
+    if (row.item === 'termine' && row.with) voce = `termini di ${BODY_LABEL[row.with]}`;
     return `${voce} ${row.points}`;
   }
 
@@ -164,6 +169,18 @@
           <td class="numerico">{totals.net > 0 ? '+' : ''}{totals.net}</td>
         </tr>
       {/each}
+      <!-- La Parte di Fortuna ha la sua tavola, p. 145, e la stessa forma di
+           conto: sta in coda, separata dai pianeti dalla sua riga di fonte. -->
+      {#if conditions.partOfFortune}
+        {@const fortuna = conditions.partOfFortune}
+        <tr>
+          <td class="glifo">⊗</td>
+          <td>Fortuna <span class="tenue">{formatZodiacal(fortuna.longitude)}, casa {fortuna.house}</span></td>
+          <td>{fortuna.score.fortitudes.map(riga).join(', ') || '—'} <strong>= {fortuna.score.totals.fortitudes}</strong></td>
+          <td>{fortuna.score.debilities.map(riga).join(', ') || '—'} <strong>= {fortuna.score.totals.debilities}</strong></td>
+          <td class="numerico">{fortuna.score.totals.net > 0 ? '+' : ''}{fortuna.score.totals.net}</td>
+        </tr>
+      {/if}
     </tbody>
   </table>
 
@@ -173,6 +190,12 @@
       <li>Lettura: {lettura}</li>
     {/each}
     <li>Il contrantiscion è il punto opposto all'antiscion.</li>
+    {#if conditions.partOfFortune}
+      <li>
+        La Parte di Fortuna è quella di Lilly, p. 144: Ascendente più Luna meno Sole, di giorno e di
+        notte, anche dove il tema usa un'altra formula per la sua. Il suo conto è la tavola di p. 145.
+      </li>
+    {/if}
   </ul>
 </section>
 

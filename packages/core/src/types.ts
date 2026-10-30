@@ -707,6 +707,8 @@ export type LillyScoreItem =
   | 'sotto-i-raggi'
   | 'partile'
   | 'assediato'
+  | 'segno'
+  | 'aspetto'
   | 'stella';
 
 /** Una riga del conto di Lilly: la voce, i punti e con che cosa. */
@@ -721,6 +723,28 @@ export interface LillyScoreRow {
   with?: BodyId;
   /** Per `stella`. */
   star?: LillyStar;
+  /** Per `segno`, nel conto della Parte di Fortuna. */
+  sign?: ZodiacSign;
+}
+
+/**
+ * La Parte di Fortuna nel conto di Lilly: la tavola di p. 145, applicata come
+ * a p. 180. La Parte è quella di p. 144, Ascendente più Luna meno Sole di
+ * giorno e di notte («Ptolomie, day and night takes it as above directed»),
+ * a prescindere dalla formula che il tema usa per la sua.
+ */
+export interface LillyFortuneConditions {
+  longitude: number;
+  sign: ZodiacSign;
+  /** Con la regola dei cinque gradi, come i pianeti. */
+  house: number;
+  /** Distanza dal Sole e lo stato, con le soglie dei pianeti (p. 113). */
+  sun: { distance: number; state: LillySolarState };
+  score: {
+    fortitudes: LillyScoreRow[];
+    debilities: LillyScoreRow[];
+    totals: { fortitudes: number; debilities: number; net: number };
+  };
 }
 
 /** Il rapporto col Sole secondo Lilly, p. 113. */
@@ -791,6 +815,8 @@ export interface LillyConditions {
   /** Le voci del conto che non si sono potute calcolare, e perché. */
   missing: string[];
   bodies: LillyBodyConditions[];
+  /** La Parte di Fortuna e il suo conto, p. 145. Assente senza l'ora. */
+  partOfFortune?: LillyFortuneConditions;
 }
 
 /**

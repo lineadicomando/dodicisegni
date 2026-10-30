@@ -1002,6 +1002,16 @@ function lillyConditionLines(conditions: LillyConditions): string[] {
     );
   }
 
+  const fortuna = conditions.partOfFortune;
+  if (fortuna) {
+    const { fortitudes, debilities, totals } = fortuna.score;
+    lines.push(
+      `Parte di Fortuna (p. 144, Asc + Luna − Sole di giorno e di notte) a ${formatZodiacal(fortuna.longitude)}, ` +
+        `casa ${fortuna.house}; conto di p. 145: ${fortitudes.map(scoreRowLabel).join(', ') || '—'} = ${totals.fortitudes} | ` +
+        `${debilities.map(scoreRowLabel).join(', ') || '—'} = ${totals.debilities} | ${totals.net > 0 ? '+' : ''}${totals.net}`,
+    );
+  }
+
   lines.push(
     `Antiscia: ${conditions.bodies.map((body) => `${body.name} ${formatZodiacal(body.antiscion)}`).join(', ')}; ` +
       'il contrantiscion è il punto opposto.',
@@ -1024,6 +1034,9 @@ function scoreRowLabel(row: LillyScoreRow): string {
   if (row.item === 'partile') voce = `partile ${row.aspect} ${row.with ? bodyName(row.with) : ''}`;
   if (row.item.startsWith('ricezione') && row.with) voce = `${voce} con ${bodyName(row.with)}`;
   if (row.item === 'stella' && row.star) voce = stelle[row.star];
+  if (row.item === 'segno' && row.sign) voce = `segno ${row.sign}${row.with ? ` nei termini di ${bodyName(row.with)}` : ''}`;
+  if (row.item === 'aspetto') voce = `${row.aspect} ${row.with ? bodyName(row.with) : ''}`;
+  if (row.item === 'termine' && row.with) voce = `termini di ${bodyName(row.with)}`;
   return `${voce} ${row.points}`;
 }
 

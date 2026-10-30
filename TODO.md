@@ -81,10 +81,10 @@ volta e ricominciare da capo.
 | 25. Le dignità del Jyotisha: le rifiniture | bassa | piccola | due calcoli, da fare solo se servissero |
 | 26. Le scuole occidentali: quello che resta | bassa | piccola | la ricezione di Bonatti va con la 17; Valente aspetta un testo |
 
-**Versione 0.2.0**, in ogni manifesto, col tag `v0.2.0`. La prima, la
-0.1.0, cade alla chiusura della voce 19 il 30 ottobre 2026; la 0.1.1 porta la
-pagina web dell'oraria, la 0.2.0 le condizioni di qualità di p. 125, che
-cambiano la risposta di `/api/horary` (voce 17). Le regole (un
+**Versione 0.3.0**, in ogni manifesto, col tag `v0.3.0`. La prima, la
+0.1.0, cade alla chiusura della voce 19 il 30 ottobre 2026; poi, tutte con la
+voce 17, la 0.1.1 porta la pagina web dell'oraria, la 0.2.0 le condizioni di
+qualità di p. 125, la 0.3.0 la Parte di Fortuna nel conto di Lilly (p. 145). Le regole (un
 numero solo, le tre domande che dicono quale cifra si muove, il tag) stanno
 in `CLAUDE.md`, *La versione*. Se una risposta che c'era è cambiata lo dice
 il fascicolo canonico (`packages/core/test/canonico.test.ts`, voce 27,
@@ -232,9 +232,6 @@ più facilmente si vorranno rivedere:
 
 Ciascuna indipendente dalle altre.
 
-- **La Parte di Fortuna nel conto.** Lilly la conta a p. 180 («in ♍ hath five
-  Debilities», con rimando a p. 145, da leggere). `condizioni-lilly.ts` conta
-  solo i sette.
 - **Chi applica a chi nel corso dei pianeti lenti.** Il corso di Saturno elenca
   anche i passaggi della Luna su di lui, che sono applicazioni della Luna.
   `classifyLilly` lo risolve col peso (`peso`, ordine caldeo); il corso no, e
@@ -385,6 +382,14 @@ ogni scuola che non le definisce o che le definisce in un modo che la
 tavola non calcola, e la riga della fonte lo dice.
 
 ## Deciso, e da non riaprire
+
+- **La Parte di Fortuna nel conto di Lilly segue la tavola di p. 145.**
+  Scelto dal proprietario il 30 ottobre 2026, con la voce 17. La Parte è
+  quella di p. 144 (Ascendente + Luna − Sole, di giorno e di notte);
+  aspetti coi pianeti entro la loro metà orbita, coi Nodi partili; casa con
+  la regola dei cinque gradi e riga «Not Combust» come stampate, anche dove
+  l'esempio di p. 180 non le segue; combustione con le soglie dei pianeti.
+  Le letture stanno in `LILLY_CONDITIONS_READINGS`.
 
 - **Le condizioni di qualità di p. 125 si leggono così.** Scelto dal
   proprietario il 30 ottobre 2026, con la voce 17. Le case «good», «proper»

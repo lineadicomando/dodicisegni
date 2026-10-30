@@ -287,3 +287,66 @@ describe.skipIf(!conStelle)("la figura di Lilly del 16 luglio 1634 (Christian As
     expect(conditions.missing).toEqual([]);
   });
 });
+
+describe('la Parte di Fortuna, p. 145', () => {
+  // La Parte è Ascendente + Luna − Sole (p. 144). Con l'Ascendente a 0° e il
+  // Sole a 0°, cade dov'è la Luna; le case sono uguali dall'Ascendente.
+  const fortuna = (luna: number, altri: CelestialBody[] = [], ascendant = 0, sole = 0) => {
+    const result = computeLillyConditions({
+      bodies: [corpo('sole', sole), corpo('luna', luna), ...altri],
+      houses: caseUguali(ascendant),
+      ascendant,
+      sect: 'diurna',
+      stars: SENZA_STELLE,
+    });
+    return result.partOfFortune!;
+  };
+
+  it('è Ascendente più Luna meno Sole, di giorno e di notte', () => {
+    expect(fortuna(100, [], 30, 40).longitude).toBeCloseTo(90);
+  });
+
+  it('conta il segno, la casa e gli aspetti con Giove e Venere entro la loro metà orbita', () => {
+    // A 40° (10 del Toro), seconda casa: Toro 5, seconda 3, Giove congiunto
+    // a 5° (metà orbita 6), Venere in trigono a 3° di scarto (metà orbita 4),
+    // libera dal Sole, a 40°.
+    const f = fortuna(40, [corpo('giove', 45), corpo('venere', 163)]);
+    expect(righe(f.score.fortitudes)).toEqual(['segno 5', 'casa2 3', 'aspetto 5', 'aspetto 4', 'libero 5']);
+    expect(f.score.debilities).toEqual([]);
+    // Giove a 7°: oltre la sua metà orbita, non conta.
+    expect(righe(fortuna(40, [corpo('giove', 47)]).score.fortitudes)).not.toContain('aspetto 5');
+  });
+
+  it('ha la sua tavola delle case, non quella dei pianeti: l\'ottava e la sesta valgono 4', () => {
+    // 220° è l'ottava delle case uguali dall'Ariete: per i pianeti -2.
+    expect(fortuna(220).score.debilities).toContainEqual({ item: 'casa', house: 8, points: 4 });
+  });
+
+  it('nella Vergine prende 2 solo nei termini di Giove o di Venere, e perde 2 in quelli di Saturno o Marte', () => {
+    // Termini di Lilly nella Vergine: Mercurio fino a 7, Venere a 13, Giove a 18, Saturno a 24, Marte a 30.
+    expect(righe(fortuna(165).score.fortitudes)).toContain('segno 2');
+    const saturno = fortuna(170);
+    expect(righe(saturno.score.fortitudes)).not.toContain('segno 2');
+    expect(saturno.score.debilities).toContainEqual({ item: 'termine', with: 'saturno', points: 2 });
+  });
+
+  it('combusta perde 5, sotto i raggi niente, libera prende 5', () => {
+    expect(fortuna(5, [], 0, 0).sun.state).toBe('combusto');
+    expect(righe(fortuna(5, [], 0, 0).score.debilities)).toContain('combusto 5');
+    // La Parte a 42°, il Sole a 30°: dodici gradi, sotto i raggi.
+    const raggi = fortuna(72, [], 0, 30);
+    expect(raggi.sun.state).toBe('sotto-i-raggi');
+    expect([...raggi.score.fortitudes, ...raggi.score.debilities].map((r) => r.item)).not.toContain('libero');
+  });
+
+  it('coi Nodi conta solo il contatto partile', () => {
+    const f = fortuna(40.5, [corpo('nodo-nord', 40.9)]);
+    expect(f.score.fortitudes).toContainEqual({ item: 'partile', aspect: 'congiunzione', with: 'nodo-nord', points: 3 });
+  });
+
+  it("senza l'ora non c'è, e il conto lo dice", () => {
+    const result = condizioni([corpo('sole', 0), corpo('luna', 40)]);
+    expect(result.partOfFortune).toBeUndefined();
+    expect(result.missing.join(' ')).toContain('Parte di Fortuna');
+  });
+});

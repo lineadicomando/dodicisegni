@@ -22,7 +22,14 @@
 import { fixedStarLongitude, type EphemerisContext } from './ephemeris.js';
 import { houseOf } from './houses.js';
 import { angularSeparation, arcForward, degreeInSign, normalize360, signedDifference, signOf } from './math.js';
-import { LILLY_PLANETS, lillyDignitiesOf, lillyReceptionsOf, type LillyPlanet } from './dignita-lilly.js';
+import {
+  LILLY_PLANETS,
+  lillyDignitiesOf,
+  lillyReceptionsOf,
+  lillyTermRuler,
+  type LillyPlanet,
+} from './dignita-lilly.js';
+import { LILLY_MOIETIES } from './orbite.js';
 import { ZODIAC_SIGNS } from './constants.js';
 import type {
   AspectId,
@@ -31,11 +38,13 @@ import type {
   House,
   LillyBodyConditions,
   LillyConditions,
+  LillyFortuneConditions,
   LillyScoreRow,
   LillySolarState,
   LillyStar,
   PlanetaryHourAt,
   Sect,
+  ZodiacSign,
 } from './types.js';
 
 /** La riga che viaggia col risultato. */
@@ -43,7 +52,7 @@ export const LILLY_CONDITIONS_SOURCE =
   'Lilly, Christian Astrology (1647): punti dalla tavola di p. 115, applicata come a pp. 177-181; ' +
   'casa con la regola dei cinque gradi (p. 33), moto medio dal libro I (pp. 57-80), ' +
   'Sole a p. 113, orientale e occidentale e assedio a p. 114, partile a p. 106, ' +
-  'antiscion a p. 90, Ascendente e Via Combusta a p. 122.';
+  'antiscion a p. 90, Ascendente e Via Combusta a p. 122; la Parte di Fortuna da p. 144 e la sua tavola a p. 145.';
 
 /** Le letture fatte dove il testo lascia una scelta. Viaggiano col risultato. */
 export const LILLY_CONDITIONS_READINGS: readonly string[] = [
@@ -54,6 +63,12 @@ export const LILLY_CONDITIONS_READINGS: readonly string[] = [
   'Assediato: fra Saturno e Marte nello stesso segno, come nell\'esempio di p. 114.',
   'Stelle in longitudine ed entro 5° tutte e tre: Algol per la tavola, Spica per l\'esempio di p. 179, Regolo come loro. ' +
     "A p. 179 Lilly scrive «within six degrees» per Venere, ma non conta Regolo alla Luna, che il motore mette a 5°40'.",
+  'Parte di Fortuna (p. 145): congiunzione, aspetti e opposizione coi pianeti entro la metà dell\'orbita del pianeta (p. 107), ' +
+    'perché la Parte un\'orbita sua non ce l\'ha; coi Nodi, che non ne hanno, partile.',
+  'Parte di Fortuna: la casa con la regola dei cinque gradi e la riga «Not Combust, or under the ☉ Beams», come stampate. ' +
+    'A p. 180 Lilly la mette in seconda a più di cinque gradi dalla cuspide e non le conta quella riga.',
+  'Parte di Fortuna: combusta entro 8°30\' dal Sole nello stesso segno, cazimi compreso; sotto i raggi entro 17°, e lì non ' +
+    'prende né l\'una né l\'altra riga; libera oltre.',
 ];
 
 /**
@@ -102,6 +117,65 @@ const STELLE: Readonly<Record<LillyStar, { bayer: string; orb: number; points: n
   regolo: { bayer: ',alLeo', orb: 5, points: 6 },
   spica: { bayer: ',alVir', orb: 5, points: 5 },
   algol: { bayer: ',bePer', orb: 5, points: -5 },
+};
+
+/**
+ * La tavola della Parte di Fortuna, p. 145, voce per voce. È sua, non quella
+ * dei pianeti: l'ottava e la sesta valgono 4 e non 2, Algol 4 e non 5.
+ */
+const FORTUNA_SEGNI: Readonly<Partial<Record<ZodiacSign, number>>> = {
+  toro: 5,
+  pesci: 5,
+  bilancia: 4,
+  sagittario: 4,
+  leone: 4,
+  cancro: 4,
+  gemelli: 3,
+  // La Vergine vale 2 «so it be in the Terms of ♃ or ♀»: vedi sotto.
+  scorpione: -5,
+  capricorno: -5,
+  acquario: -5,
+  // «In ♈ he neither gets or loses».
+};
+const FORTUNA_CASE: Readonly<Record<number, number>> = {
+  1: 5,
+  10: 5,
+  7: 4,
+  4: 4,
+  11: 4,
+  2: 3,
+  5: 3,
+  9: 2,
+  3: 1,
+  12: -5,
+  8: -4,
+  6: -4,
+};
+const FORTUNA_ASPETTI: readonly { with: BodyId; aspect: AspectId; points: number }[] = [
+  { with: 'giove', aspect: 'congiunzione', points: 5 },
+  { with: 'venere', aspect: 'congiunzione', points: 5 },
+  { with: 'giove', aspect: 'trigono', points: 4 },
+  { with: 'venere', aspect: 'trigono', points: 4 },
+  { with: 'giove', aspect: 'sestile', points: 3 },
+  { with: 'venere', aspect: 'sestile', points: 3 },
+  { with: 'saturno', aspect: 'congiunzione', points: -5 },
+  { with: 'marte', aspect: 'congiunzione', points: -5 },
+  { with: 'saturno', aspect: 'opposizione', points: -4 },
+  { with: 'marte', aspect: 'opposizione', points: -4 },
+  { with: 'saturno', aspect: 'quadrato', points: -3 },
+  { with: 'marte', aspect: 'quadrato', points: -3 },
+];
+const FORTUNA_NODI: readonly { with: BodyId; points: number }[] = [
+  { with: 'nodo-nord', points: 3 },
+  { with: 'nodo-sud', points: -3 },
+];
+const FORTUNA_STELLE: Readonly<Record<LillyStar, number>> = { regolo: 6, spica: 5, algol: -4 };
+const ANGOLO: Readonly<Partial<Record<AspectId, number>>> = {
+  congiunzione: 0,
+  sestile: 60,
+  quadrato: 90,
+  trigono: 120,
+  opposizione: 180,
 };
 
 /** I pianeti superiori, p. 113: orientali sono una fortezza. */
@@ -314,8 +388,84 @@ export function computeLillyConditions(input: LillyConditionsInput): LillyCondit
   }
   const luna = corpo('luna');
   if (luna) result.moonInViaCombusta = luna.longitude >= 195 && luna.longitude < 225;
+  if (input.ascendant !== undefined && conCase && sole && luna) {
+    result.partOfFortune = fortunaDiLilly(normalize360(input.ascendant + luna.longitude - sole.longitude), {
+      houses,
+      sole: sole.longitude,
+      corpi: (id) => (id in nodi ? nodi[id] : corpo(id)?.longitude),
+      stelle,
+    });
+  } else if (input.ascendant === undefined || !conCase) {
+    missing.push("Parte di Fortuna: senza l'ora l'Ascendente e le case non ci sono");
+  }
   if (stelle) result.stars = stelle;
   return result;
+}
+
+/**
+ * La Parte di Fortuna nel conto di p. 145. Le letture sono in
+ * `LILLY_CONDITIONS_READINGS`.
+ */
+function fortunaDiLilly(
+  longitude: number,
+  input: {
+    houses: readonly House[];
+    sole: number;
+    corpi: (id: BodyId) => number | undefined;
+    stelle: Record<LillyStar, number> | undefined;
+  },
+): LillyFortuneConditions {
+  const fortitudes: LillyScoreRow[] = [];
+  const debilities: LillyScoreRow[] = [];
+  const conta = (row: LillyScoreRow): void => {
+    if (row.points > 0) fortitudes.push(row);
+    else if (row.points < 0) debilities.push({ ...row, points: -row.points });
+  };
+  const sign = signOf(longitude);
+
+  const puntiSegno = FORTUNA_SEGNI[sign];
+  if (puntiSegno !== undefined) conta({ item: 'segno', sign, points: puntiSegno });
+  const termine = lillyTermRuler(longitude);
+  if (sign === 'vergine' && (termine === 'giove' || termine === 'venere')) {
+    conta({ item: 'segno', sign, points: 2, with: termine });
+  }
+  if (termine === 'saturno' || termine === 'marte') conta({ item: 'termine', with: termine, points: -2 });
+
+  const house = lillyHouse(longitude, input.houses)!;
+  conta({ item: 'casa', house, points: FORTUNA_CASE[house] ?? 0 });
+
+  for (const regola of FORTUNA_ASPETTI) {
+    const altro = input.corpi(regola.with);
+    if (altro === undefined) continue;
+    const scarto = Math.abs(angularSeparation(longitude, altro) - ANGOLO[regola.aspect]!);
+    if (scarto <= LILLY_MOIETIES[regola.with]!) {
+      conta({ item: 'aspetto', aspect: regola.aspect, with: regola.with, points: regola.points });
+    }
+  }
+  for (const regola of FORTUNA_NODI) {
+    const nodo = input.corpi(regola.with);
+    if (nodo !== undefined && partileAspect(longitude, nodo) === 'congiunzione') {
+      conta({ item: 'partile', aspect: 'congiunzione', with: regola.with, points: regola.points });
+    }
+  }
+
+  if (input.stelle) {
+    for (const star of Object.keys(FORTUNA_STELLE) as LillyStar[]) {
+      if (angularSeparation(longitude, input.stelle[star]) <= STELLE[star].orb) {
+        conta({ item: 'stella', star, points: FORTUNA_STELLE[star] });
+      }
+    }
+  }
+
+  const distance = angularSeparation(longitude, input.sole);
+  const state = solarState(distance, sign === signOf(input.sole));
+  if (state === 'combusto' || state === 'cazimi') conta({ item: 'combusto', points: -5 });
+  if (state === 'libero') conta({ item: 'libero', points: 5 });
+
+  const somma = (rows: readonly LillyScoreRow[]): number => rows.reduce((totale, row) => totale + row.points, 0);
+  const totals = { fortitudes: somma(fortitudes), debilities: somma(debilities), net: 0 };
+  totals.net = totals.fortitudes - totals.debilities;
+  return { longitude, sign, house, sun: { distance, state }, score: { fortitudes, debilities, totals } };
 }
 
 /** Le longitudini delle tre stelle all'istante, o il motivo per cui mancano. */

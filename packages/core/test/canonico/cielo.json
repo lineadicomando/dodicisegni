@@ -1042,13 +1042,16 @@
           }
         ],
         "conditions": {
-          "source": "Lilly, Christian Astrology (1647): punti dalla tavola di p. 115, applicata come a pp. 177-181; casa con la regola dei cinque gradi (p. 33), moto medio dal libro I (pp. 57-80), Sole a p. 113, orientale e occidentale e assedio a p. 114, partile a p. 106, antiscion a p. 90, Ascendente e Via Combusta a p. 122.",
+          "source": "Lilly, Christian Astrology (1647): punti dalla tavola di p. 115, applicata come a pp. 177-181; casa con la regola dei cinque gradi (p. 33), moto medio dal libro I (pp. 57-80), Sole a p. 113, orientale e occidentale e assedio a p. 114, partile a p. 106, antiscion a p. 90, Ascendente e Via Combusta a p. 122; la Parte di Fortuna da p. 144 e la sua tavola a p. 145.",
           "readings": [
             "Sotto i raggi entro 17° in qualunque segno, come dice p. 113; la combustione (8°30') solo nello stesso segno. Nell'esempio di pp. 179-180 Lilly dà «Free from Combustion» a Mercurio e alla Luna, che la regola mette sotto i raggi.",
             "Ricezione mutua per domicilio o per esaltazione: conta come dignità («shall have Dignities», p. 115), e chi ce l'ha non è peregrino.",
             "Veloce o lento confrontando il moto col segno con la media: un retrogrado è sempre lento, come il Saturno di p. 178.",
             "Assediato: fra Saturno e Marte nello stesso segno, come nell'esempio di p. 114.",
-            "Stelle in longitudine ed entro 5° tutte e tre: Algol per la tavola, Spica per l'esempio di p. 179, Regolo come loro. A p. 179 Lilly scrive «within six degrees» per Venere, ma non conta Regolo alla Luna, che il motore mette a 5°40'."
+            "Stelle in longitudine ed entro 5° tutte e tre: Algol per la tavola, Spica per l'esempio di p. 179, Regolo come loro. A p. 179 Lilly scrive «within six degrees» per Venere, ma non conta Regolo alla Luna, che il motore mette a 5°40'.",
+            "Parte di Fortuna (p. 145): congiunzione, aspetti e opposizione coi pianeti entro la metà dell'orbita del pianeta (p. 107), perché la Parte un'orbita sua non ce l'ha; coi Nodi, che non ne hanno, partile.",
+            "Parte di Fortuna: la casa con la regola dei cinque gradi e la riga «Not Combust, or under the ☉ Beams», come stampate. A p. 180 Lilly la mette in seconda a più di cinque gradi dalla cuspide e non le conta quella riga.",
+            "Parte di Fortuna: combusta entro 8°30' dal Sole nello stesso segno, cazimi compreso; sotto i raggi entro 17°, e lì non prende né l'una né l'altra riga; libera oltre."
           ],
           "missing": [
             "stelle (Regolo, Spica, Algol): manca il catalogo delle stelle (sefstars.txt)"
@@ -1456,7 +1459,42 @@
             "early": false,
             "late": false
           },
-          "moonInViaCombusta": false
+          "moonInViaCombusta": false,
+          "partOfFortune": {
+            "longitude": 161.34536940869486,
+            "sign": "vergine",
+            "house": 8,
+            "sun": {
+              "distance": 55.69056407308301,
+              "state": "libero"
+            },
+            "score": {
+              "fortitudes": [
+                {
+                  "item": "segno",
+                  "sign": "vergine",
+                  "points": 2,
+                  "with": "venere"
+                },
+                {
+                  "item": "libero",
+                  "points": 5
+                }
+              ],
+              "debilities": [
+                {
+                  "item": "casa",
+                  "house": 8,
+                  "points": 4
+                }
+              ],
+              "totals": {
+                "fortitudes": 7,
+                "debilities": 4,
+                "net": 3
+              }
+            }
+          }
         }
       }
     }

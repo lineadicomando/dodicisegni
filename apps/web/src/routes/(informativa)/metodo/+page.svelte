@@ -512,7 +512,12 @@
   debilità e la differenza, come Lilly li somma nell'esempio di pp. 177-181.
   Non dice la seconda metà della sua frase, che il pianeta «is therefore
   unfortunate». Dove l'esempio svolto non segue la sua stessa tavola, il sito
-  segue la tavola, e lo dice.
+  segue la tavola, e lo dice. La Parte di Fortuna ha una tavola sua, a p.
+  145: i segni in cui è forte o debole, gli aspetti con Giove, Venere, Saturno
+  e Marte (qui entro la metà dell'orbita del pianeta, perché la Parte una sua
+  non ce l'ha), le case, le stelle, la combustione. È la Parte di p. 144,
+  Ascendente più Luna meno Sole di giorno e di notte, come Lilly la prende
+  «with whom all Practicioners at this day consent».
 </p>
 
 <p>

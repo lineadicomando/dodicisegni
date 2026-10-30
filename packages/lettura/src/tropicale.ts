@@ -102,7 +102,8 @@ tutto il segno, anche se la tavola nomina il grado. Con la tavola di Lilly
 viene anche la sezione CONDIZIONI (LILLY): casa, rapporto col Sole, moto e
 orientalità di ciascun pianeta, e il conto della sua tavola delle fortezze
 (p. 115) scritto voce per voce, con le fortezze, le debilità e la
-differenza. È il conteggio di una scuola: attribuiscilo a Lilly, non
+differenza, e quello della Parte di Fortuna con la sua tavola (p. 145). È il
+conteggio di una scuola: attribuiscilo a Lilly, non
 ricalcolarlo con pesi tuoi, e non farne un voto sulla persona. Le righe
 «Lettura» dicono dove il testo lascia una scelta; se ne citi il conto, dì
 anche quelle. Al posto di Lilly la sezione può portare la tavola di Tolomeo
