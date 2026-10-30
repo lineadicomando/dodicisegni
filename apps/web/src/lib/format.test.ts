@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { formatDegrees, formatSignDegree } from './format';
+import { formatDegrees, formatLocalInstant, formatSignDegree } from './format';
 
 describe('formatDegrees', () => {
   it('scrive gradi e primi con i primi a due cifre', () => {
@@ -42,5 +42,17 @@ describe('formatSignDegree', () => {
 
   it('regge lo zero', () => {
     expect(formatSignDegree(0)).toBe("0°00'");
+  });
+});
+
+describe('formatLocalInstant', () => {
+  it("scrive giorno e ora del fuso dell'istante, senza convertirli", () => {
+    expect(formatLocalInstant('2026-10-27T22:15:00+01:00')).toBe('27 ott 2026, 22:15');
+    // Il fuso del browser non conta: mezzanotte a Tokyo resta mezzanotte.
+    expect(formatLocalInstant('2026-01-05T00:05:00+09:00')).toBe('5 gen 2026, 00:05');
+  });
+
+  it('lascia com\'è una stringa che non riconosce', () => {
+    expect(formatLocalInstant('adesso')).toBe('adesso');
   });
 });

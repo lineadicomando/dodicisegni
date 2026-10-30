@@ -81,8 +81,9 @@ volta e ricominciare da capo.
 | 25. Le dignità del Jyotisha: le rifiniture | bassa | piccola | due calcoli, da fare solo se servissero |
 | 26. Le scuole occidentali: quello che resta | bassa | piccola | la ricezione di Bonatti va con la 17; Valente aspetta un testo |
 
-**Versione 0.1.0**, dal 30 ottobre 2026, in ogni manifesto, col tag
-`v0.1.0`: è la prima, e cade alla chiusura della voce 19. Le regole (un
+**Versione 0.1.1**, in ogni manifesto, col tag `v0.1.1`. La prima, la
+0.1.0, cade alla chiusura della voce 19 il 30 ottobre 2026; la 0.1.1 porta la
+pagina web dell'oraria (voce 17). Le regole (un
 numero solo, le tre domande che dicono quale cifra si muove, il tag) stanno
 in `CLAUDE.md`, *La versione*. Se una risposta che c'era è cambiata lo dice
 il fascicolo canonico (`packages/core/test/canonico.test.ts`, voce 27,
@@ -202,6 +203,7 @@ porta la pagina del libro.
 | B, il corso fino al cambio di segno | `packages/core/src/corso.ts` | `916b711`, `dfd9a67` | `findSignCourse`: aspetti tolemaici esatti, stazioni e ingresso di un corpo dall'istante al cambio di segno, le separazioni da quando è nel segno, un limite `until`; sopra, la Luna vuota moderna e quella di Lilly (p. 112). Le *moieties* sono la convenzione `lilly` di `orbite.ts` | `test/corso.test.ts`, `test/aspects.test.ts` |
 | C, la scuola di Lilly | `packages/core/src/oraria-lilly.ts` | `2433924` | `computeHoraryLilly(moment, place, { question: { house, derivedFrom? } })`: figura col Regiomontano, significatori (pp. 123-124), e i classificatori puri di `classifyLilly` (congiunzione e aspetto p. 125, traslazione e collezione p. 126, proibizione e frustrazione pp. 110-113, refranazione p. 111); le considerazioni di pp. 121-123 come predicati, con le nature dei pianeti del libro I | `test/oraria-lilly.test.ts`: gli esempi del libro I scritti a mano, e la traslazione della Luna della domanda del 1634 (p. 182) |
 | D, le superfici | `packages/mcp/src/tools.ts` (`registerComputeHorary`), `prompts.ts` (`registerLetturaOraria`), `packages/lettura/src/oraria.ts`, `apps/web/src/routes/api/horary/+server.ts` | `ec58bdf` | il tool `compute_horary`, il prompt `lettura_oraria`, il documento `ORARIA` (fuori da `SISTEMI`), `GET /api/horary` | `packages/mcp/test/server.test.ts`, `packages/lettura/test/lettura.test.ts` |
+| E, la pagina web | `apps/web/src/routes/oraria/+page.svelte`, i componenti `Horary*` e `SignCourseTable.svelte`, `lib/case-lilly.ts` | v0.1.1 | `/oraria`: istante, luogo, la casa scelta da un elenco delle dodici con le significazioni di Lilly (pp. 50-56), la domanda scritta che resta nel browser e va solo nel prompt (`letturaOrariaDaIncollare`) | `lib/case-lilly.test.ts`, `format.test.ts`; vista nel browser |
 
 Dalla riga di comando: `--dignita lilly` col tema o con `--sky`, `--sky
 --corso <corpo>`, `--oraria <casa>` con `--derivata`. Con una longitudine
@@ -229,10 +231,6 @@ più facilmente si vorranno rivedere:
 
 Ciascuna indipendente dalle altre.
 
-- **La pagina web.** «Solo se le tabelle reggono da sole»: la resa compatta
-  regge, ma l'interfaccia non ha un modulo per la domanda, e la casa va scelta
-  da un elenco che spieghi le dodici case (la descrizione di `compute_horary`
-  ne nomina sei, ed è un punto di partenza). La rotta c'è già.
 - **Le condizioni di qualità della perfezione**, p. 125: per il quadrato
   «each Planet have dignity», per l'opposizione la mutua ricezione per
   domicilio, e «out of good Houses». I dati sono tutti nel risultato

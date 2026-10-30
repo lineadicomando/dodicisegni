@@ -56,7 +56,7 @@ npx dodicisegni --date 1968-03-12 --time 14:30 \
 npx dodicisegni --help        # tutte le opzioni
 ```
 
-**Applicazione web.** Cinque sezioni e tredici endpoint, tutti in GET perché un
+**Applicazione web.** Sei sezioni e tredici endpoint, tutti in GET perché un
 tema è una funzione pura dei suoi parametri, più due pagine di testo: `/metodo`
 dice come si calcola, `/privacy` che cosa resta sul dispositivo.
 

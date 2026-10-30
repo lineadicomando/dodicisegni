@@ -537,9 +537,12 @@
   traslazione o per collezione di luce (pp. 125-126), o come lo impedisce, per
   proibizione, frustrazione o refranazione (pp. 110-113). Le considerazioni
   prima del giudizio di pp. 121-123 sono riportate come fatti, mai come un
-  rifiuto di calcolare. Il sì o il no, e quando, restano a chi legge. Il tema
-  orario non ha ancora una pagina sua: lo calcolano l'interfaccia REST, la riga
-  di comando e il server MCP.
+  rifiuto di calcolare. Il sì o il no, e quando, restano a chi legge. La
+  pagina <a href="/oraria">Oraria</a> fa scegliere la casa da un elenco delle
+  dodici con le significazioni che Lilly dà a ciascuna (libro I, cap. VII, pp.
+  50-56), nelle sue voci e nel suo ordine: la quinta ha le taverne e gli
+  ambasciatori, la terza le lettere e i vicini, e chi ha una domanda di oggi
+  cerca la voce che le somiglia.
 </p>
 
 <h2 id="rifare-i-conti">Rifare i conti</h2>

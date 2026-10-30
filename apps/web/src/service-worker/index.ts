@@ -8,7 +8,7 @@
  * Quello che se ne ottiene ha un limite netto, ed è meglio dirlo che scoprirlo:
  * **senza rete non si calcola niente.** Il motore è Swiss Ephemeris, un modulo
  * nativo che gira sul server e che il vincolo sul client tiene fuori dal
- * bundle; le cinque sezioni non fanno altro che comporre parametri e chiamare
+ * bundle; le sezioni non fanno altro che comporre parametri e chiamare
  * `/api`. Offline si apre l'interfaccia, si naviga fra le sezioni e si compila
  * il modulo; premendo «Calcola» arriva il «server non raggiungibile» che
  * `lib/api.ts` già scrive. Il guadagno è che l'applicazione si apre invece di

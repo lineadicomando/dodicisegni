@@ -13,6 +13,7 @@ import type {
   BodyId,
   DashaYear,
   HoraConvention,
+  HoraryLilly,
   HouseSystem,
   JyotishaChart,
   NatalChart,
@@ -389,6 +390,48 @@ export async function fetchElection(parameters: URLSearchParams): Promise<Electi
     `/api/election?${parameters}`,
     'Calcolo dell\'elezione non riuscito',
   );
+}
+
+export interface HoraryResponse {
+  horary: HoraryLilly;
+  place?: { label: string; refined: boolean };
+}
+
+/**
+ * Compone i parametri di `/api/horary`.
+ *
+ * Il luogo è obbligatorio: senza non ci sono case, e senza case non c'è una
+ * casa del quesito. Il fuso resta quello del modulo, come nel cielo: l'ora
+ * scritta è quella dell'orologio di chi ha posto la domanda.
+ *
+ * La domanda scritta non ci entra: serve solo al prompt, che si compone nel
+ * browser, e un indirizzo con dentro «tornerà?» finirebbe nella cronologia e
+ * nei registri del server.
+ */
+export function horaryParameters(
+  moment: MomentInput,
+  location: Location,
+  house: number,
+  derivedFrom: number | null,
+): URLSearchParams {
+  const parameters = new URLSearchParams({
+    date: moment.date,
+    timezone: moment.timezone,
+    locationId: String(location.id),
+    house: String(house),
+  });
+  if (moment.time) parameters.set('time', moment.time);
+  if (derivedFrom !== null) parameters.set('derivedFrom', String(derivedFrom));
+  return parameters;
+}
+
+export async function fetchHorary(parameters: URLSearchParams): Promise<HoraryResponse> {
+  return request<HoraryResponse>(`/api/horary?${parameters}`, 'Calcolo della figura non riuscito');
+}
+
+/** La figura in forma compatta, per il prompt: la stessa tabella che il server MCP dà agli agenti. */
+export async function fetchHoraryCompact(parameters: URLSearchParams): Promise<string> {
+  return requestCompact('/api/horary', parameters, 'Figura non riletta');
 }
 
 export interface TransitsResponse extends ChartResponse {

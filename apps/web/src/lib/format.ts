@@ -36,3 +36,21 @@ export function formatSignDegree(value: number): string {
   const ultimo = 30 * 60 - 1;
   return formatDegrees(Math.min(Math.round(value * 60), ultimo) / 60);
 }
+
+const MESI = ['gen', 'feb', 'mar', 'apr', 'mag', 'giu', 'lug', 'ago', 'set', 'ott', 'nov', 'dic'];
+
+/**
+ * Un istante locale come lo scrive il motore, `2026-10-27T22:15:00+01:00`,
+ * reso `27 ott 2026, 22:15`.
+ *
+ * Letto dalla stringa e non da `Date`: `toLocaleString` convertirebbe nel
+ * fuso del browser, e un evento della figura va scritto nel fuso in cui la
+ * domanda è stata posta, che può essere un altro. Il fuso è già nell'istante
+ * locale, e qui si mostrano solo giorno e ora.
+ */
+export function formatLocalInstant(local: string): string {
+  const match = /^(\d{4})-(\d{2})-(\d{2})T(\d{2}):(\d{2})/.exec(local);
+  if (!match) return local;
+  const [, anno, mese, giorno, ore, minuti] = match;
+  return `${Number(giorno)} ${MESI[Number(mese) - 1]} ${anno}, ${ore}:${minuti}`;
+}

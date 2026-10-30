@@ -39,7 +39,7 @@ export function titoloCompleto(titolo: string): string {
 /**
  * Le pagine che ha senso indicizzare, in ordine.
  *
- * Le cinque sezioni vengono da `SECTIONS`, che è già dichiarato «un elenco
+ * Le sezioni vengono da `SECTIONS`, che è già dichiarato «un elenco
  * solo»: una sezione nuova entra nella sitemap senza che nessuno se ne ricordi.
  * Le pagine di prosa invece no — non stanno nel menù e non stanno nel
  * manifesto — e sono le uniche che si possano cercare per quello che dicono

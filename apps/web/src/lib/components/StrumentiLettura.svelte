@@ -13,7 +13,7 @@
   contatta nessun altro server.
 -->
 <script lang="ts">
-  import { letturaDaIncollare, type Sistema } from '@dodicisegni/lettura';
+  import { letturaDaIncollare, letturaOrariaDaIncollare, type Sistema } from '@dodicisegni/lettura';
   import { RequestError } from '#lib/api.js';
   import { REPOSITORY_URL } from '#lib/project.js';
 
@@ -33,9 +33,21 @@
      * su un tema vedico non danno un errore, danno un ibrido plausibile.
      */
     sistema?: Sistema;
+    /**
+     * La domanda di un tema orario, così come l'ha scritta chi chiede.
+     *
+     * Presente, il prompt usa le istruzioni dell'oraria invece di quelle di un
+     * sistema: leggono una domanda e non una nascita, ed è la ragione per cui
+     * non sono un valore di `Sistema`. Vuota, il pulsante aspetta: senza la
+     * domanda la figura non si legge.
+     */
+    domanda?: string;
   }
 
-  let { tavola, sistema = 'tropicale' }: Props = $props();
+  let { tavola, sistema = 'tropicale', domanda }: Props = $props();
+
+  const oraria = $derived(domanda !== undefined);
+  const manca = $derived(oraria && domanda!.trim() === '');
 
   /** Quanto resta scritto «copiato», prima che il pulsante torni a offrirsi. */
   const CONFERMA = 2500;
@@ -64,10 +76,9 @@
       // L'indirizzo va passato: il pacchetto non ha modo di sapere da dove sia
       // servita la copia che sta girando, ed è quella che l'AGPL obbliga a
       // offrire.
-      const testo = letturaDaIncollare(await tavola(), {
-        sistema,
-        repository: REPOSITORY_URL,
-      });
+      const testo = oraria
+        ? letturaOrariaDaIncollare(domanda!, await tavola(), { repository: REPOSITORY_URL })
+        : letturaDaIncollare(await tavola(), { sistema, repository: REPOSITORY_URL });
 
       try {
         await navigator.clipboard.writeText(testo);
@@ -88,19 +99,33 @@
 <section class="lettura">
   <h3>Prompt per un'AI</h3>
 
-  <p>
-    Copia un <strong>prompt già pronto</strong> (questo tema più le istruzioni
-    per interpretarlo) da incollare in ChatGPT, Claude o un altro assistente:
-    la lettura la scrive lui, sulle posizioni calcolate qui. Questa pagina non
-    parla con nessuna AI: il prompt finisce negli appunti, e dove vada poi lo
-    decidi tu.
-  </p>
+  {#if oraria}
+    <p>
+      Copia un <strong>prompt già pronto</strong> (la tua domanda, questa figura e
+      le istruzioni per giudicarla col metodo di Lilly) da incollare in ChatGPT,
+      Claude o un altro assistente. Le istruzioni non giudicano domande su salute,
+      morte, cause legali e denaro, e lo dicono. Questa pagina non parla con
+      nessuna AI: il prompt finisce negli appunti, e dove vada poi lo decidi tu.
+    </p>
+  {:else}
+    <p>
+      Copia un <strong>prompt già pronto</strong> (questo tema più le istruzioni
+      per interpretarlo) da incollare in ChatGPT, Claude o un altro assistente:
+      la lettura la scrive lui, sulle posizioni calcolate qui. Questa pagina non
+      parla con nessuna AI: il prompt finisce negli appunti, e dove vada poi lo
+      decidi tu.
+    </p>
+  {/if}
 
   <div class="strumenti">
-    <button type="button" class="strumento" onclick={copia} disabled={inCorso} aria-live="polite">
+    <button type="button" class="strumento" onclick={copia} disabled={inCorso || manca} aria-live="polite">
       {#if inCorso}Preparo…{:else if copiato}Copiato{:else}Copia il prompt{/if}
     </button>
   </div>
+
+  {#if manca}
+    <p class="suggerimento">Scrivi la domanda nel modulo: senza, la figura non si legge.</p>
+  {/if}
 
   {#if errore}
     <p class="errore" role="alert">{errore}</p>
