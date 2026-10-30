@@ -41,7 +41,7 @@ import type { RequestHandler } from './$types';
  * corpo, sestile, quadrato o trigono), e ognuna porta `application`. `dignitySchool=valente` aggiunge le tavole delle
  * *Anthologiae* (ed. Kroll) in `chart.dignities.valente`: domicilio,
  * esaltazione col grado, i tre signori del triangolo e il loro ordine nella
- * setta, termine egizio e caduta; niente Nodi, facce, esilio o punteggio, e
+ * setta, termine (gli egizi tranne la Bilancia, nell'ed. Pingree) e caduta; niente Nodi, facce, esilio o punteggio, e
  * ricezioni solo per domicilio ed esaltazione. Un'altra scuola è
  * `SCUOLA_DIGNITA_NON_VALIDA`; chiesta insieme a `zodiac=siderale` è
  * `ZODIACO_NON_TROPICALE`, perché le tavole sono costruite sullo zodiaco

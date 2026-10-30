@@ -13,8 +13,11 @@
  *   Nodi;
  * - **i triangoli coi tre signori** (II.1, pp. 55-56): chi presiede nella
  *   setta, l'altro al secondo posto e un terzo che coopera in tutte e due;
- * - **i termini egizi**, quelli che I.3 (pp. 14-19) segue dove il testo è
- *   sano, nella tavola che Tolomeo riferisce (vedi `VALENS_TERMS_SOURCE`).
+ * - **i termini di I.3** come li stampa l'edizione critica di Pingree
+ *   (Teubner 1986, pp. 13-18): gli egizi in undici segni, con l'Ariete e lo
+ *   Scorpione sanati dalla copia di Rhosus, e nella Bilancia i numeri suoi
+ *   (vedi `VALENS_TERMS_SOURCE`). Scelto dal proprietario il 30 ottobre
+ *   2026, sulle pagine di Pingree (`TODO.md`, *Deciso*).
  *
  * E non tiene quello che in Valente non si è trovato: le **facce**
  * decaniche, l'**esilio**, un **punteggio**, i **Nodi**. Le ricezioni restano
@@ -40,15 +43,18 @@ export type { ValensDignity, ValensRulers };
 /** La riga che viaggia col risultato: da dove vengono le tavole. */
 export const VALENS_SOURCE =
   'Vettio Valente, Anthologiae, ed. Kroll (1908): domicili I.2, esaltazioni col grado e cadute al grado opposto ' +
-  'III.4 (p. 140), triangoli coi tre signori ordinati per setta II.1 (pp. 55-56), termini egizi I.3; ' +
+  'III.4 (p. 140), triangoli coi tre signori ordinati per setta II.1 (pp. 55-56), termini I.3 nell\'ed. Pingree ' +
+  '(1986); ' +
   'niente Nodi, facce, esilio né punteggio.';
 
 /** La tavola dei termini seguita, e dove il testo di Valente se ne scosta. */
 export const VALENS_TERMS_SOURCE =
-  'Termini: gli egizi, nella tavola che Tolomeo riferisce (Tetrabiblos I.21, ed. Robbins, p. 96; somme Saturno 57, ' +
-  'Giove 79, Marte 66, Venere 82, Mercurio 76). Valente I.3 (ed. Kroll, pp. 14-19) li segue in nove segni; ' +
-  'nella Bilancia stampa Saturno 6, Mercurio 5, Giove 8, Venere 7, Marte 4 (l\'apparato: «ceteri» danno gli ' +
-  'egizi), nello Scorpione i suoi numeri sommano 31 e nell\'Ariete due mancano. Lì si seguono gli egizi.';
+  'Termini: Valente I.3 nell\'edizione critica di Pingree (Teubner 1986, pp. 13-18). In undici segni sono gli egizi, ' +
+  'quelli della tavola che Tolomeo riferisce (Tetrabiblos I.21, ed. Robbins, p. 96): nell\'Ariete Giove 6 e Mercurio ' +
+  '8 mancano nel codice M e Pingree li integra dalla copia di Rhosus, nello Scorpione legge Giove 5 con Rhosus ' +
+  'contro il 6 di M (che in Kroll fa sommare 31). Nella Bilancia Valente ha numeri suoi, Saturno 6, Mercurio 5, ' +
+  'Giove 8, Venere 7, Marte 4, che Pingree stampa senza note: gli egizi danno Mercurio 8, Giove 7, Marte 2. ' +
+  'Somme per pianeta: Saturno 57, Giove 80, Marte 68, Venere 82, Mercurio 73.';
 
 /** I sette pianeti, gli unici a cui Valente dà domicili, esaltazioni, triangoli e termini. */
 export const VALENS_PLANETS = [
@@ -93,9 +99,10 @@ const TRIANGOLI: Readonly<Record<Element, { diurno: ValensPlanet; notturno: Vale
   };
 
 /**
- * I termini egizi, dalla tavola greca di Robbins, p. 96: per ogni segno
- * cinque tratti, col pianeta e il grado in cui il tratto finisce. Il tratto
- * comprende il suo inizio ed esclude la fine.
+ * I termini di I.3 nell'ed. Pingree, pp. 13-18: per ogni segno cinque
+ * tratti, col pianeta e il grado in cui il tratto finisce. Il tratto
+ * comprende il suo inizio ed esclude la fine. Sono gli egizi di Robbins p. 96
+ * tranne la Bilancia.
  */
 const TERMINI: Readonly<Record<ZodiacSign, readonly (readonly [ValensPlanet, number])[]>> = {
   ariete: [['giove', 6], ['venere', 12], ['mercurio', 20], ['marte', 25], ['saturno', 30]],
@@ -104,7 +111,7 @@ const TERMINI: Readonly<Record<ZodiacSign, readonly (readonly [ValensPlanet, num
   cancro: [['marte', 7], ['venere', 13], ['mercurio', 19], ['giove', 26], ['saturno', 30]],
   leone: [['giove', 6], ['venere', 11], ['saturno', 18], ['mercurio', 24], ['marte', 30]],
   vergine: [['mercurio', 7], ['venere', 17], ['giove', 21], ['marte', 28], ['saturno', 30]],
-  bilancia: [['saturno', 6], ['mercurio', 14], ['giove', 21], ['venere', 28], ['marte', 30]],
+  bilancia: [['saturno', 6], ['mercurio', 11], ['giove', 19], ['venere', 26], ['marte', 30]],
   scorpione: [['marte', 7], ['venere', 11], ['mercurio', 19], ['giove', 24], ['saturno', 30]],
   sagittario: [['giove', 12], ['venere', 17], ['mercurio', 21], ['saturno', 26], ['marte', 30]],
   capricorno: [['mercurio', 7], ['giove', 14], ['venere', 22], ['saturno', 26], ['marte', 30]],

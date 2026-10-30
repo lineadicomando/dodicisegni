@@ -495,11 +495,12 @@
   sulla scansione. Valente dà i gradi delle esaltazioni, gli stessi che poi
   ripetono Firmico, Bonatti e Lilly, con la caduta al grado opposto e senza i
   nodi; e i tre signori di ogni triangolo ordinati per setta: chi presiede,
-  il secondo e il terzo, che coopera in tutte e due. I termini sono gli
-  egizi: Valente li scrive segno per segno, ma il testo che ci è arrivato è
-  guasto in tre punti (nell'Ariete mancano due numeri, lo Scorpione somma 31
-  gradi, la Bilancia ne dà una versione sua), e lì il sito segue la tavola
-  egizia che Tolomeo riferisce, dicendolo. Facce, esilio e un punteggio in
+  il secondo e il terzo, che coopera in tutte e due. I termini Valente li
+  scrive segno per segno, e il sito li prende dall'edizione critica di
+  Pingree (1986): sono gli egizi, quelli che Tolomeo riferisce, tranne la
+  Bilancia, dove Valente ha numeri suoi. Nell'edizione di Kroll l'Ariete
+  aveva due numeri persi e lo Scorpione sommava 31 gradi; Pingree li sana con
+  un'altra copia del testo. Facce, esilio e un punteggio in
   Valente non si sono trovati, e non ci sono. Nemmeno una ricezione fra due
   pianeti: quello che lui chiama il «ricevitore» è il signore del segno in
   cui un pianeta si trova. Le ricezioni restano quindi quelle comuni, per

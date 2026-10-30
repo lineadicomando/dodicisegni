@@ -124,7 +124,8 @@ due dignità minori insieme bastano, una sola no, e mutue non ce ne sono.
 Riferiscile con l'aspetto, e non dedurne altre dalle tavole. Oppure la
 tavola di Valente (riga «Valente (a richiesta)»), la scuola ellenistica:
 domicilio, esaltazione col grado, i tre signori del triangolo e il loro
-ordine nella setta, e i termini egizi. Valente non ha qui facce, esilio, Nodi
+ordine nella setta, e i termini nell'edizione di Pingree, egizi tranne la
+Bilancia. Valente non ha qui facce, esilio, Nodi
 né un punteggio: non attribuirglieli. Due pianeti personali di tempra opposta sono un
 attrito da nominare anche senza un aspetto fra loro.
 

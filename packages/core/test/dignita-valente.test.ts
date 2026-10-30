@@ -38,17 +38,20 @@ const EGIZI: readonly string[] = [
 ];
 
 /**
- * I termini come Valente li scrive in I.3 (ed. Kroll, pp. 14-19), dove il
- * testo dà tutti i numeri. Ariete (numeri persi) e Scorpione (somma 31)
- * restano fuori; la Bilancia è la sua lezione.
+ * I termini come li stampa l'ed. Pingree (Teubner 1986), I.3, pp. 13-18,
+ * letti sulle pagine il 30 ottobre 2026 (`texts/occidentale/
+ * valente-anthologiae-pingree-1986`): l'Ariete coi due numeri integrati da
+ * Rhosus, lo Scorpione col 5 di Rhosus, la Bilancia di Valente.
  */
-const VALENTE: Partial<Record<ZodiacSign, string>> = {
+const VALENTE: Record<ZodiacSign, string> = {
+  ariete: '♃6 ♀6 ☿8 ♂5 ♄5',
   toro: '♀8 ☿6 ♃8 ♄5 ♂3',
   gemelli: '☿6 ♃6 ♀5 ♂7 ♄6',
   cancro: '♂7 ♀6 ☿6 ♃7 ♄4',
   leone: '♃6 ♀5 ♄7 ☿6 ♂6',
   vergine: '☿7 ♀10 ♃4 ♂7 ♄2',
   bilancia: '♄6 ☿5 ♃8 ♀7 ♂4',
+  scorpione: '♂7 ♀4 ☿8 ♃5 ♄6',
   sagittario: '♃12 ♀5 ☿4 ♄5 ♂4',
   capricorno: '☿7 ♃7 ♀8 ♄4 ♂4',
   acquario: '☿7 ♀6 ♃7 ♂5 ♄5',
@@ -76,36 +79,27 @@ function lon(sign: ZodiacSign, degree: number): number {
 }
 
 describe('i termini della scuola di Valente', () => {
-  it('sono gli egizi di Robbins, provati in ogni tratto e ai due bordi', () => {
-    EGIZI.forEach((riga, i) => {
-      const sign = ZODIAC_SIGNS[i] as ZodiacSign;
+  it('sono quelli di Pingree, provati in ogni tratto e ai due bordi', () => {
+    for (const sign of ZODIAC_SIGNS) {
       let inizio = 0;
-      for (const [pianeta, gradi] of tratti(riga)) {
-        expect(valensTermRuler(lon(sign, inizio))).toBe(pianeta);
+      for (const [pianeta, gradi] of tratti(VALENTE[sign])) {
+        expect(valensTermRuler(lon(sign, inizio)), `${sign} ${inizio}`).toBe(pianeta);
         expect(valensTermRuler(lon(sign, inizio + gradi - 0.001))).toBe(pianeta);
         inizio += gradi;
       }
-      expect(inizio).toBe(30);
-    });
+      expect(inizio, sign).toBe(30);
+    }
   });
 
-  it('hanno le somme per pianeta di Robbins, p. 96', () => {
+  it('sono gli egizi di Robbins tranne la Bilancia, e la riga lo dice', () => {
     const somme: Record<string, number> = {};
     for (const riga of EGIZI) for (const [p, g] of tratti(riga)) somme[p] = (somme[p] ?? 0) + g;
     expect(somme).toEqual({ saturno: 57, giove: 79, marte: 66, venere: 82, mercurio: 76 });
-  });
-
-  it('coincidono col testo di Valente dove è intero, tranne la Bilancia, e la riga lo dice', () => {
-    const diversi = (Object.keys(VALENTE) as ZodiacSign[]).filter(
-      (sign) => VALENTE[sign] !== EGIZI[ZODIAC_SIGNS.indexOf(sign)],
-    );
+    const diversi = ZODIAC_SIGNS.filter((sign) => VALENTE[sign] !== EGIZI[ZODIAC_SIGNS.indexOf(sign)]);
     expect(diversi).toEqual(['bilancia']);
-    for (const sign of Object.keys(VALENTE) as ZodiacSign[]) {
-      const somma = tratti(VALENTE[sign]!).reduce((t, [, g]) => t + g, 0);
-      expect(somma, sign).toBe(30);
-    }
-    expect(VALENS_TERMS_SOURCE).toContain('nella Bilancia stampa Saturno 6, Mercurio 5, Giove 8, Venere 7, Marte 4');
-    expect(VALENS_TERMS_SOURCE).toContain('nello Scorpione i suoi numeri sommano 31');
+    expect(VALENS_TERMS_SOURCE).toContain('Pingree');
+    expect(VALENS_TERMS_SOURCE).toContain('Saturno 6, Mercurio 5, Giove 8, Venere 7, Marte 4');
+    expect(VALENS_TERMS_SOURCE).toContain('Saturno 57, Giove 80, Marte 68, Venere 82, Mercurio 73');
   });
 });
 

@@ -158,7 +158,8 @@ Opzioni
                         ricezioni, che nascono da un'applicazione;
                         oppure valente (Anthologiae, ed. Kroll), la scuola
                         ellenistica, con esaltazioni col grado, i tre signori
-                        dei triangoli in ordine di setta e i termini egizi,
+                        dei triangoli in ordine di setta e i termini di
+                        Pingree, egizi tranne la Bilancia,
                         senza Nodi, facce, esilio né punteggio.
                         Solo nello zodiaco tropicale, col tema natale o con
                         --sky, in tabella e in --json

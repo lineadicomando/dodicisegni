@@ -97,10 +97,9 @@ volta e ricominciare da capo.
 
 | Voce | Priorità | Taglia | Prima di cominciare |
 |---|---|---|---|
-| 26. Le scuole occidentali delle dignità: quello che resta | bassa | piccola | Valente I.3 nell'ed. Pingree, pp. 13-18 col suo apparato: si legge in biblioteca |
 | 28. La revisione della SEO | media | piccola | il dominio principale è deciso; i redirect e `ORIGIN` si fanno sul server, non nel repo |
 
-La 26 è una rifinitura e aspetta un testo protetto. La 28 è la sola che tocca chi usa
+La 26 non ha lavoro: tiene le istruzioni per chi aggiunge una scuola. La 28 è la sola che tocca chi usa
 il programma oggi: il suo primo punto divide il sito in quattro agli occhi
 dei motori di ricerca, e si fa sul server, quando il proprietario lo chiede.
 Il 30 ottobre 2026 si sono chiuse le voci 5 e 25, le rifiniture del
@@ -111,9 +110,9 @@ in *Deciso*, le due verifiche senza esito in *Esaminato*. Le istruzioni per
 chi aggiunge un varga o una convenzione della hora stanno nei commenti sopra
 `VARGAS` (`varga.ts`) e `HORA_CONVENTIONS` (`hora.ts`).
 
-**Versione 0.11.0**, in ogni manifesto, col tag `v0.11.0`: le ricezioni di
-Bonatti con la sua scuola (voce 26), che cambiano la risposta di chi la
-chiede. Prima, la 0.10.0 con la riga delle ricezioni di Valente, che dice
+**Versione 0.12.0**, in ogni manifesto, col tag `v0.12.0`: i termini di
+Valente nell'edizione Pingree (voce 26), che nella Bilancia cambiano. Prima,
+la 0.11.0 con le ricezioni di Bonatti (voce 26), la 0.10.0 con la riga delle ricezioni di Valente, che dice
 che lui non ne definisce una (voce 26), la 0.9.0 con la combustione del Jyotisha nei
 gradi di tempo (voce 25), tre campi che compaiono e un giudizio che può
 cambiare, la 0.8.1 con le quattro convenzioni moderne della
@@ -180,55 +179,9 @@ le condizioni e il conto in `condizioni-lilly.ts`), Tolomeo
 (`dignita-tolomeo.ts`), Bonatti (`dignita-bonatti.ts`) e Valente
 (`dignita-valente.ts`). Le tavole comuni, che il tema porta sempre, sono in
 `dignita.ts`; il blocco del tema in `dignita-tema.ts`. Dal 30 ottobre 2026
-Bonatti ha le sue ricezioni (versione 0.11.0, vedi *Deciso*): le orbite che
-dà ai pianeti sono trascritte nella copia locale, e non usate. Resta una
-cosa, che aspetta un testo:
-
-- **Valente, I.3 nel testo di Pingree.** I termini della scuola `valente`
-  sono gli egizi di Robbins p. 96 (vedi *Deciso*), perché in Kroll tre
-  segni non si leggono: nell'Ariete mancano i numeri di Giove e di
-  Mercurio, lo Scorpione somma 31, la Bilancia ha numeri suoi che
-  l'apparato dice diversi dagli «altri» (`VALENS_TERMS_SOURCE`).
-
-  *Il testo atteso*: *Vettii Valentis Antiocheni Anthologiarum libri
-  novem*, a cura di David Pingree, Leipzig, Teubner, 1986 (Bibliotheca
-  Teubneriana; ISBN 3-322-00275-6), xxi + 583 pagine, greco con prefazione
-  e apparato in latino; ristampato in digitale da De Gruyter nel 2010
-  (ISBN 978-3-11-095822-5, doi 10.1515/9783110958225), a pagamento. In
-  rete, cercato il 30 ottobre 2026: archive.org ha la scansione della copia
-  della Trent University (`vettiivalentisan0000vett`), ma **non la presta**:
-  il servizio dei prestiti risponde `is_lendable: false`,
-  `is_printdisabled: true`, cioè è aperta solo ai lettori con disabilità
-  visive certificate (l'ultimo prestito ordinario è del 2020). HathiTrust ha
-  la copia del Michigan (`mdp.39015012171917`) solo per la ricerca di
-  parole; Google Books non l'ha. La voce `VettiusValens` di archive.org è una
-  scansione caricata da un privato nel 2016, senza file, e non si usa. Resta
-  la carta: l'OPAC SBN (`opac.sbn.it`, ricerca per ISBN 3322002756, che da
-  qui non si interroga perché costruisce i risultati nel browser) dice quali
-  biblioteche italiane l'hanno; le pagine si consultano lì o si chiedono in
-  copia con la fornitura di documenti (pochi fogli di un libro, entro il
-  15%). Si trascrivono numeri e note d'apparato in `trascrizioni.md`. Il capitolo è I.3, alle pp.
-  13-18 di Pingree: l'Ariete fra la 13 e la 14, la Bilancia a p. 16, lo
-  Scorpione fra la 16 e la 17. Servono le **pagine col testo e l'apparato
-  critico**, e la **prefazione** dove dice su quali codici fonda il libro I.
-
-  *Che cosa dirà, con buona probabilità*: la traduzione di Mark Riley
-  (2010), fatta sul testo di Pingree e con le sue pagine segnate, è in
-  `texts/occidentale/valente-anthologies-riley-2010` (scaricata il 30
-  ottobre 2026), e dà Ariete ♃6 ♀6 ☿8 ♂5 ♄5 e Scorpione ♂7 ♀4 ☿8 ♃5 ♄6,
-  cioè gli egizi, ma Bilancia ♄6 ☿5 ♃8 ♀7 ♂4, cioè quella di Kroll. Una
-  traduzione però non è il testo critico: non dice se i numeri dell'Ariete
-  sono nei codici o integrati da Pingree, né se il ♃5 dello Scorpione è una
-  lezione o una correzione.
-
-  *Che cosa ne segue*: se il greco conferma Riley, Ariete e Scorpione non
-  cambiano la tavola, solo la riga `VALENS_TERMS_SOURCE`, che potrà dire
-  «nell'ed. Pingree» invece di «corrotti in Kroll»; e la versione si
-  muove, perché cambia una risposta. La Bilancia invece è una scelta del
-  proprietario: la tavola segue gli egizi «non la sua Bilancia» (*Deciso*),
-  e se Pingree la stampa senza dubbi nell'apparato, la Bilancia di Valente
-  diventa una lezione del testo critico e non più del solo codice. Da
-  decidere allora, con l'apparato davanti.
+Bonatti ha le sue ricezioni (versione 0.11.0) e Valente i termini
+dell'edizione Pingree (versione 0.12.0), tutte e due in *Deciso*. La voce
+non ha lavoro: resta per chi aggiunge una scuola.
 
 **Per chi aggiunge una scuola** (Doroteo, se un suo testo diventasse
 libero). Valente è il modello più recente: `93cb27b` il calcolo, `697fea0`
@@ -383,13 +336,15 @@ sito pubblicato lo stesso giorno, tutte fuori dal repo, in ordine di peso:
   dove il BPHS lascia un buco o un autore moderno conta altrimenti entra
   Narasimha Rao, nominato e accanto.
 
-- **La scuola di Valente si chiama `valente` e porta i termini egizi.**
-  Scelto dal proprietario il 30 ottobre 2026, con la voce 19. Un autore, come
-  le altre scuole, e non «ellenistica»: Doroteo resta fuori finché non c'è un
-  suo testo libero. I termini sono la tavola egizia di Robbins p. 96, che
-  Valente I.3 segue dove il testo è sano; non la sua Bilancia né una tavola
-  composta segno per segno, che nessuna fonte stampa intera. La riga dei
-  termini dice le tre divergenze.
+- **La scuola di Valente si chiama `valente` e porta i termini di Pingree.**
+  Scelto dal proprietario il 30 ottobre 2026, con la voce 19 e poi con la
+  26. Un autore, come le altre scuole, e non «ellenistica»: Doroteo resta
+  fuori finché non c'è un suo testo libero. I termini erano gli egizi di
+  Robbins p. 96, perché in Kroll Ariete e Scorpione non si leggono; letta
+  l'edizione critica di Pingree (1986, pp. 13-18, nella copia locale delle
+  fonti), sono quelli che stampa lei: gli egizi in undici segni, con Ariete
+  e Scorpione sanati dalla copia di Rhosus, e nella Bilancia i numeri di
+  Valente (♄6 ☿5 ♃8 ♀7 ♂4), senza note in apparato.
 
 - **La scuola di Bonatti ha le sue ricezioni, entro sei gradi, e non ha
   punteggio.** Scelto dal proprietario il 30 ottobre 2026, con la voce 19 e

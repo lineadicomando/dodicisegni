@@ -2132,8 +2132,8 @@
     },
     "valente": {
       "school": "valente",
-      "source": "Vettio Valente, Anthologiae, ed. Kroll (1908): domicili I.2, esaltazioni col grado e cadute al grado opposto III.4 (p. 140), triangoli coi tre signori ordinati per setta II.1 (pp. 55-56), termini egizi I.3; niente Nodi, facce, esilio né punteggio.",
-      "termsSource": "Termini: gli egizi, nella tavola che Tolomeo riferisce (Tetrabiblos I.21, ed. Robbins, p. 96; somme Saturno 57, Giove 79, Marte 66, Venere 82, Mercurio 76). Valente I.3 (ed. Kroll, pp. 14-19) li segue in nove segni; nella Bilancia stampa Saturno 6, Mercurio 5, Giove 8, Venere 7, Marte 4 (l'apparato: «ceteri» danno gli egizi), nello Scorpione i suoi numeri sommano 31 e nell'Ariete due mancano. Lì si seguono gli egizi.",
+      "source": "Vettio Valente, Anthologiae, ed. Kroll (1908): domicili I.2, esaltazioni col grado e cadute al grado opposto III.4 (p. 140), triangoli coi tre signori ordinati per setta II.1 (pp. 55-56), termini I.3 nell'ed. Pingree (1986); niente Nodi, facce, esilio né punteggio.",
+      "termsSource": "Termini: Valente I.3 nell'edizione critica di Pingree (Teubner 1986, pp. 13-18). In undici segni sono gli egizi, quelli della tavola che Tolomeo riferisce (Tetrabiblos I.21, ed. Robbins, p. 96): nell'Ariete Giove 6 e Mercurio 8 mancano nel codice M e Pingree li integra dalla copia di Rhosus, nello Scorpione legge Giove 5 con Rhosus contro il 6 di M (che in Kroll fa sommare 31). Nella Bilancia Valente ha numeri suoi, Saturno 6, Mercurio 5, Giove 8, Venere 7, Marte 4, che Pingree stampa senza note: gli egizi danno Mercurio 8, Giove 7, Marte 2. Somme per pianeta: Saturno 57, Giove 80, Marte 68, Venere 82, Mercurio 73.",
       "bodies": [
         {
           "id": "sole",
@@ -2375,7 +2375,7 @@
               "mercurio",
               "giove"
             ],
-            "termine": "giove"
+            "termine": "venere"
           },
           "dignities": []
         }
