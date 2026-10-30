@@ -102,28 +102,34 @@
   </div>
 
   {#if onstep}
-    <!-- I pulsanti sono `type="button"`: nei transiti il modulo è dentro un
-         `<form>`, e senza dirlo un passo indietro manderebbe una richiesta. -->
-    <div class="passo">
-      <button
-        type="button"
-        class="freccia"
-        aria-label="{passo.uno} indietro"
-        onclick={() => step(-1)}>‹</button
-      >
+    <!-- Aperto, le frecce stanno in riga con i due campi e hanno un'etichetta
+         come loro: sotto la data sembravano spostare solo quella, e spostano
+         l'istante intero. Chiuso l'etichetta si nasconde alla vista come le
+         altre. I pulsanti sono `type="button"`: nei transiti il modulo è dentro
+         un `<form>`, e senza dirlo un passo indietro manderebbe una richiesta. -->
+    <div class="campo passo-campo">
+      <label for="{id}-passo" class:nascosto={compact}>Sposta di</label>
+      <div class="passo">
+        <button
+          type="button"
+          class="freccia"
+          aria-label="{passo.uno} indietro"
+          onclick={() => step(-1)}>‹</button
+        >
 
-      <select bind:value={unit} aria-label="Ampiezza del passo">
-        {#each PASSI as candidato (candidato.unit)}
-          <option value={candidato.unit}>{candidato.label}</option>
-        {/each}
-      </select>
+        <select id="{id}-passo" bind:value={unit}>
+          {#each PASSI as candidato (candidato.unit)}
+            <option value={candidato.unit}>{candidato.label}</option>
+          {/each}
+        </select>
 
-      <button
-        type="button"
-        class="freccia"
-        aria-label="{passo.uno} avanti"
-        onclick={() => step(1)}>›</button
-      >
+        <button
+          type="button"
+          class="freccia"
+          aria-label="{passo.uno} avanti"
+          onclick={() => step(1)}>›</button
+        >
+      </div>
     </div>
   {/if}
 
@@ -145,9 +151,12 @@
     min-width: 0;
   }
 
+  /* Ogni campo prende la sua larghezza, non metà della riga: con la crescita
+     libera giorno e ora finivano ai due capi del modulo, a mezzo schermo l'uno
+     dall'altro. La misura la danno gli input, che ne hanno una propria. */
   .campo {
-    flex: 1 1 12rem;
-    min-width: 9rem;
+    flex: 0 0 auto;
+    min-width: 0;
   }
 
   .fuso {
@@ -167,12 +176,11 @@
     cursor: pointer;
   }
 
-  /* A modulo aperto le frecce vanno a capo sotto i due campi: sulla riga
-     starebbero strette fra la data e l'ora, e là sotto lo spazio c'è. */
+  /* Le frecce e il menù si stirano all'altezza del più alto, che è il menù:
+     la stessa dei campi accanto, così la riga è una riga sola. */
   .passo {
-    flex-basis: 100%;
     display: flex;
-    align-items: center;
+    align-items: stretch;
     gap: 0.35rem;
   }
 
@@ -180,13 +188,11 @@
      stanno insieme, e il menù non deve spingere via le frecce. */
   .passo select {
     width: auto;
-    padding: 0.2rem 0.4rem;
-    font-size: 0.78rem;
-    color: var(--testo-tenue);
   }
 
   .freccia {
-    padding: 0.05rem 0.5rem;
+    min-width: 2.5rem;
+    padding: 0 0.6rem;
     background: none;
     color: var(--accento);
     border: 1px solid var(--linea-forte);
@@ -214,13 +220,10 @@
     padding: 0.3rem 0.5rem;
   }
 
-  /* I tre controlli si allineano per stiramento e non per centro: il menù ha
-     un'altezza propria che il solo incavo non pareggia, e in una riga di
-     comandi tutti alti uguali sarebbe l'unico più basso. Così prende la misura
-     delle frecce senza che nessuno debba scriverla in cifre. */
-  .compatto .passo {
-    flex-basis: auto;
-    align-items: stretch;
+  /* Nella striscia il menù del passo resta tenue: è l'ampiezza del gesto, non
+     un valore del calcolo. */
+  .compatto .passo select {
+    color: var(--testo-tenue);
   }
 
   /* Nella striscia i controlli del passo non stanno più sotto i campi ma in
