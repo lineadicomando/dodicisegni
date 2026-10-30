@@ -34,19 +34,27 @@ dice `CLAUDE.md` (*Le fonti testuali*). In una sessione nuova `texts/` può non
 esserci, se il clone è un altro: le schede dicono da dove riscaricare ogni
 fonte.
 
-I riferimenti `file:riga` e i nomi citati sono stati ricontrollati tutti
-contro il codice il 29 ottobre 2026, dopo la scuola di Tolomeo della voce 19
-(`75cc895`). Le righe si spostano: se una non torna, il nome della funzione
-o della costante accanto è quello che fa fede.
+I riferimenti `file:riga`, i nomi e i commit citati sono stati ricontrollati
+tutti contro il codice il 30 ottobre 2026, dopo la chiusura delle voci 17 e
+19 (`20a8f12`, versione 0.5.2). Le righe si spostano: se una non torna, il
+nome della funzione o della costante accanto è quello che fa fede.
 
 Prima di cominciare conviene che `npm test`, `npm run typecheck` e `npm run
 lint` siano verdi. Le cose che fanno perdere tempo:
 
 - se il typecheck di `apps/web` cade su `config.kit.paths.origin`,
   `node_modules` è indietro rispetto al lockfile e serve un `npm install`;
-- `apps/web` e `packages/mcp` vedono `core` compilato, non i sorgenti: dopo
-  un export nuovo serve `npm run build -w @dodicisegni/core`, e il server di
-  sviluppo di Vite va riavviato, o risponde 500 dicendo che l'export non c'è;
+- `apps/web` e `packages/mcp` vedono `core` e `lettura` compilati, non i
+  sorgenti: dopo un export nuovo di `core` serve `npm run build -w
+  @dodicisegni/core`, dopo una modifica a un documento di lettura `npm run
+  build -w @dodicisegni/lettura`, e il server di sviluppo di Vite va
+  riavviato, o risponde 500 dicendo che l'export non c'è;
+- il fascicolo canonico (`packages/core/test/canonico.test.ts`) cade quando
+  una risposta del motore cambia, ed è il suo mestiere: se il cambiamento è
+  voluto si guarda il diff, si riscrivono i file con `npx vitest run
+  test/canonico.test.ts -u` dentro `packages/core`, e la versione muove la
+  seconda cifra (`CLAUDE.md`, *La versione*). È calcolato con Moshier e senza
+  stelle fisse, apposta;
 - i test che leggono le stelle fisse vogliono `packages/core/ephe/sefstars.txt`,
   che `npm run ephe:download -w @dodicisegni/core` scarica (133 KB); senza,
   vengono saltati e non falliscono;
@@ -69,6 +77,11 @@ Per spegnere il server di sviluppo lanciato in sottofondo si usa la porta
 (`fuser -k 5173/tcp`), non `pkill -f` col numero della porta: il comando
 contiene lo stesso numero e chiude anche la shell che lo lancia.
 
+**Il push non è ancora stato fatto.** Al 30 ottobre 2026 `main` è avanti di
+72 commit su `origin`, con i tag da `v0.1.0` a `v0.5.2`. Il push lo chiede il
+proprietario; quando lo chiede, `git push --follow-tags` porta anche i tag
+annotati. Prima di cominciare, `git status -sb` dice se è ancora così.
+
 In fondo ci sono due elenchi che non sono lavoro: le decisioni prese, da non
 riaprire, e le cose esaminate e lasciate stare, per non ritrovarle una seconda
 volta e ricominciare da capo.
@@ -80,6 +93,16 @@ volta e ricominciare da capo.
 | 5. I varga: le convenzioni che restano | bassa | piccola | i sedici sono fatti; restano rifiniture, una per riga |
 | 25. Le dignità del Jyotisha: le rifiniture | bassa | piccola | due calcoli, da fare solo se servissero |
 | 26. Le scuole occidentali: quello che resta | bassa | piccola | la ricezione di Bonatti chiede un'applicazione; Valente aspetta un testo |
+
+Tutte e tre sono rifiniture, nessuna urgente. La più concreta da cui
+ripartire sono i sessanta nomi del D-60 (voce 5): la regola di BPHS
+6.34-40 è letta, le pp. 82-86 di Santhanam sono già salvate in `pagine/`
+della sua copia locale, e il confine (nome sì, giudizio del verso 41 no) è
+scritto. Manca la trascrizione dei sessanta nomi uno per uno,
+sull'immagine. L'avvertenza sul D-24 e sul D-27 è una scelta del
+proprietario prima che una riga di codice; le altre convenzioni della hora
+sono il lavoro più lungo della voce. La 25 si fa solo se serve, la 26
+aspetta testi.
 
 **Versione 0.5.2**, in ogni manifesto, col tag `v0.5.2`. La prima, la
 0.1.0, cade alla chiusura della voce 19 il 30 ottobre 2026; poi, tutte con la
@@ -184,7 +207,7 @@ D-1 apposta; `apps/web/src/lib/elenchi.test.ts` e
 `apps/web/src/routes/(informativa)/metodo/jyotisha.test.ts` cadono finché la
 copia e la tavola di `/metodo/varga` non combaciano con `VARGAS`, **anche
 nell'ordine**. Nessun test vede invece i testi che li elencano: il commento
-delle due rotte, l'aiuto di `--varga` (`packages/core/src/cli.ts:119`), la
+delle due rotte, l'aiuto di `--varga` (`packages/core/src/cli.ts:120`), la
 descrizione dei parametri `vargas` e `varga` in `packages/mcp/src/tools.ts`,
 il rimando in `/metodo` (voce `#varga`), la pagina `/metodo/varga` con la sua
 descrizione in `Meta`, e il commento sopra `VargaId` in `types.ts`. Un varga
@@ -343,7 +366,7 @@ tavola non calcola, e la riga della fonte lo dice.
   termine e rimanda, `/metodo` dichiara con quale convenzione lo si calcola: il
   taglio è scritto in testa a `glossario/jyotisha/+page.svelte`. Niente
   marcature FAQ, per la ragione scritta sopra `strutturati` in `Meta.svelte`;
-  i cappelli delle cinque sezioni restano come sono.
+  i cappelli delle sezioni restano come sono.
 
 - **Il dominio non entra nel codice.** `Meta.svelte` compone gli indirizzi da
   `page.url.origin`, e in produzione è `ORIGIN` a dirlo: il cambio di dominio è
@@ -474,7 +497,14 @@ dopo. A p. 220 il motore vede una proibizione del Sole che Lilly legge a
 favore. A p. 241 la Luna di Lilly è in quinta per la regola dei cinque gradi
 e quella del motore in quarta per sei primi, e il testo dà «♃ Lord of the
 Houre» contro la figura. Nessuna delle tre chiede un cambio del motore; la
-seconda, se un giorno si volesse, è una lettura da decidere.
+seconda, se un giorno si volesse, è una lettura da decidere. Per leggerne
+altre: le date di Lilly sono giuliane (+10 giorni nel Seicento); «hora
+meridiana» è il mezzogiorno vero, da convertire in tempo medio con
+l'equazione del tempo (nel novembre 1645, le 11:45); nel PDF locale la
+pagina stampata N è la PDF N + 34 almeno fino a p. 289; le figure si trovano
+con miniature delle pagine, perché l'OCR non le legge. Sono state cercate e
+lette tutte le figure fra le pagine PDF 200 e 330 (stampate 166-296); il
+libro II continua oltre, e lì non sono state cercate.
 
 **Alan Leo come scuola delle dignità.** Letto il 30 ottobre 2026 (voce 19),
 in `texts/occidentale/leo-how-to-judge-a-nativity-1928/trascrizioni.md`.
@@ -531,7 +561,8 @@ costruisce, e nell'AppImage non entrano. Da riguardare quando
 console come *issue*, «A form field element should have an id or name
 attribute», e i campi sono una decina: le caselle di `BirthForm.svelte`,
 `ChartSettings.svelte`, `JyotishaSettings.svelte`, `MomentFields.svelte`,
-`LocationSearch.svelte`, `StrumentiLettura.svelte`, `elezione` e `vedica`.
+`LocationSearch.svelte`, `StrumentiLettura.svelte`, `elezione`, `vedica` e
+`oraria` (la casella della casa derivata).
 Non è accessibilità: stanno tutti dentro un `<label>`, che è ciò che li
 nomina. Riguarda l'autocompilazione del browser, che senza `name` non sa che
 cosa proporre, e il progetto in parte la spegne già (`autocomplete="off"` in
