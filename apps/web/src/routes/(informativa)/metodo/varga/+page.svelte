@@ -153,8 +153,10 @@
 <p>
   Mezzo grado è poco. L'Ascendente lo attraversa in pochi minuti di orologio,
   più o meno secondo il segno che sorge e la latitudine, e un'ora di nascita
-  data al quarto d'ora non basta a dire in quale parte cada. Per questo il
-  D-40, il D-45 e il D-60 escono con un'avvertenza calcolata su quel tema:
+  data al quarto d'ora non basta a dire in quale parte cada. Non basta
+  nemmeno per le parti di poco più d'un grado del D-24 (1°15') e del D-27
+  (1°6'40"), che passano in cinque o sei minuti. Per questo il D-24, il D-27,
+  il D-40, il D-45 e il D-60 escono con un'avvertenza calcolata su quel tema:
   di quanti minuti l'ora dovrebbe sbagliare, prima o dopo, perché il lagna e
   la Luna cambino segno. Un segno con molte cifre sembra preciso anche quando
   non lo è; l'avvertenza serve a dire quando lo è.

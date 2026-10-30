@@ -81,9 +81,12 @@ interface VargaDefinition {
    */
   signIndex?: (sign: number, degree: number) => number;
   /**
-   * Se il varga è **fine**: parti più strette di un grado, che l'Ascendente
-   * attraversa in pochi minuti di orologio. Questi portano un'avvertenza
-   * calcolata sulla carta (`fineWarning`).
+   * Se il varga è **fine**: parti di un grado e un quarto o meno, che
+   * l'Ascendente attraversa in pochi minuti di orologio. Questi portano
+   * un'avvertenza calcolata sulla carta (`fineWarning`). Sono cinque: il D-24, il
+   * D-27 e gli ultimi tre; il D-30 no, perché i suoi tratti vanno da cinque a
+   * otto gradi.
+   * Scelto dal proprietario il 30 ottobre 2026 (TODO.md, *Deciso*).
    */
   fine?: boolean;
 }
@@ -251,6 +254,7 @@ export const VARGAS: readonly VargaDefinition[] = [
       const inizio = sign % 2 === 0 ? 4 : 3;
       return inizio + Math.floor((degree * 24) / 30);
     },
+    fine: true,
   },
   {
     // BPHS 6.24-26, trad. Santhanam, vol. I, pp. 78-79: «meṣādi-cara-bha-
@@ -268,6 +272,7 @@ export const VARGAS: readonly VargaDefinition[] = [
       "fuoco, dal Cancro per la terra, dalla Bilancia per l'aria, dal Capricorno per l'acqua: " +
       "cioè si conta di seguito dall'Ariete lungo tutto lo zodiaco (BPHS 6.26).",
     signIndex: (sign, degree) => sign * 3 + Math.floor((degree * 27) / 30),
+    fine: true,
   },
   {
     // BPHS 6.27-28, p. 80, con la tavola.
@@ -468,6 +473,13 @@ function distanzeDalConfine(longitude: number, divisions: number): [number, numb
   return [dentro, ampiezza - dentro];
 }
 
+/** Un arco in gradi, primi e secondi, senza le parti nulle: 45', 1°15', 1°6'40". */
+function arco(gradi: number): string {
+  const secondi = Math.round(gradi * 3600);
+  const [g, m, s] = [Math.floor(secondi / 3600), Math.floor((secondi % 3600) / 60), secondi % 60];
+  return `${g ? `${g}°` : ''}${m ? `${m}'` : ''}${s ? `${s}"` : ''}`;
+}
+
 /**
  * L'avvertenza di un varga fine, calcolata sulla carta e non a memoria.
  *
@@ -482,7 +494,7 @@ function distanzeDalConfine(longitude: number, divisions: number): [number, numb
 function fineWarning(chart: NatalChart, definition: VargaDefinition): string {
   const n = definition.divisions;
   const nome = `Il ${definition.id.toUpperCase()}`;
-  const ampiezza = `${Math.round((30 / n) * 60)}'`;
+  const ampiezza = arco(30 / n);
   const luna = chart.bodies.find((body) => body.id === 'luna');
 
   if (!chart.time.timeKnown || !chart.angles) {

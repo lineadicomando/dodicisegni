@@ -146,8 +146,8 @@ limite dillo come incerto. Le avastha (Sayana e le altre) sono calcolate,
 ma quali guastino i varga buoni il testo non lo dice: non deciderlo tu. Le
 altre
 carte divisionali, se presenti, riguardano ciascuna un'area sola: dillo e non
-generalizzarle. Il D40, il D45 e il D60 hanno parti di meno di un grado, e
-portano un'«Avvertenza» con i minuti di cui l'ora di nascita può sbagliare
+generalizzarle. Il D24, il D27, il D40, il D45 e il D60 hanno parti di un
+grado e un quarto o meno, e portano un'«Avvertenza» con i minuti di cui l'ora di nascita può sbagliare
 prima che lagna e Luna cambino segno: se sono pochi, un'ora data al quarto
 d'ora non li fissa, e lo dici prima di usarli. Senza ora di nascita di quelle
 carte valgono solo i graha lenti. Nel D60 ogni riga chiude col nome dello

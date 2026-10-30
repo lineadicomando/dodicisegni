@@ -119,9 +119,10 @@ Opzioni
                         scuole divergono, e su ottant'anni è più di un anno
   --varga <lista>       Carte divisionali, separate da virgola: d1, d2, d3, d4,
                         d7, d9, d10, d12, d16, d20, d24, d27, d30, d40, d45,
-                        d60. Ciascuna stampa la regola che l'ha prodotta; le
-                        ultime tre, che vogliono l'ora al minuto, anche
-                        quanto l'ora può sbagliare prima che cambino segno.
+                        d60. Ciascuna stampa la regola che l'ha prodotta;
+                        d24, d27, d40, d45 e d60, che vogliono l'ora al
+                        minuto, anche quanto l'ora può sbagliare prima che
+                        cambino segno.
                         Richiede --zodiaco siderale
   --hora <convenzione>  Come leggere il D-2: parashara (default, BPHS 6.5-6: la
                         hora del Sole o della Luna, senza segno) oppure

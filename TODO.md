@@ -104,15 +104,15 @@ Le prime tre sono rifiniture, nessuna urgente. La 28 è la sola che tocca
 chi usa il programma oggi: il suo primo punto divide il sito in quattro agli
 occhi dei motori di ricerca, e si fa sul server, quando il proprietario lo
 chiede. Fra le rifiniture, i sessanta nomi del D-60 sono fatti il 30
-ottobre 2026 (`shashtiamsaOf` in `varga.ts`, versione 0.6.0). L'avvertenza
-sul D-24 e sul D-27 è una scelta del proprietario prima che una riga di
-codice; le altre convenzioni della hora sono il lavoro più lungo della voce
-5. Della 25 il pezzo più vicino sono gli arudha dei graha nei varga; la
+ottobre 2026 (`shashtiamsaOf` in `varga.ts`, versione 0.6.0), e
+l'avvertenza sull'ora va anche al D-24 e al D-27 (versione 0.7.0); le altre
+convenzioni della hora sono il lavoro più lungo della voce 5. Della 25 il pezzo più vicino sono gli arudha dei graha nei varga; la
 combustione in gradi di tempo vuole pagine ancora da leggere. La 26 aspetta
 testi.
 
-**Versione 0.6.0**, in ogni manifesto, col tag `v0.6.0`: i nomi del D-60
-(voce 5), un campo che compare nella risposta del varga. La
+**Versione 0.7.0**, in ogni manifesto, col tag `v0.7.0`: l'avvertenza
+sull'ora anche nel D-24 e nel D-27 (voce 5), un campo che compare nella
+risposta di due varga. Prima, la 0.6.0 coi nomi del D-60. La
 prima, la 0.1.0, cade col numero unico della voce 27 (`f6026fa`) il 30
 ottobre 2026; poi, tutte con la
 voce 17: la 0.1.1 la pagina web dell'oraria, la 0.2.0 le condizioni di
@@ -194,8 +194,6 @@ siano «fini» lo dice il campo `fine` di `VARGAS`.
 
 ### Che cosa resta
 
-Ciascuna indipendente dalle altre.
-
 - **Le altre convenzioni della hora.** La parivritti-dvaya, la Kashinatha,
   la Uma-Shambhu, quella di Raman Suprajarama: regole e casi di controllo
   nelle schede `FONTE.md` di `texts/jyotisha/narasimha-rao-*`,
@@ -215,16 +213,6 @@ Ciascuna indipendente dalle altre.
   del D-2 nel risultato: `VargaChart` è un'unione col discriminante `kind`,
   `SignVargaChart` (`'segni'`) e `HoraVargaChart` (`'signori'`, il solo D-2
   di Parashara, rifiutato dal quadro con `VARGA_SENZA_SEGNI`).
-- **L'avvertenza anche sul D-24 e sul D-27?** Le loro parti sono di poco più
-  di un grado (1°15' e 1°6'40"), che l'Ascendente attraversa in cinque o sei
-  minuti. I varga «fini» oggi sono i tre con parti sotto il grado, segnati
-  a mano col campo `fine` di `VARGAS` (non c'è una soglia calcolata).
-  Allargarli è una scelta del proprietario; nel codice costa una riga, ma i
-  testi che nominano i tre fini sono almeno sette, e nessun test li vede:
-  l'aiuto della CLI («le ultime tre», `cli.ts:122-124`), le descrizioni MCP
-  (`tools.ts:492-493` e `:1627`, `draw_jyotisha_chart`), `/metodo/varga`
-  (il paragrafo dell'avvertenza), `packages/lettura/src/jyotisha.ts:149` e i
-  commenti in `types.ts:398` e `varga.ts:83`.
 
 Per chi aggiunge un varga o una variante: l'elenco che le superfici accettano
 si legge da `VARGAS` (server MCP, le due rotte `api/jyotish`, la CLI).
@@ -239,8 +227,11 @@ li elencano: il commento delle due rotte `api/jyotish`, l'aiuto di `--varga`
 (`packages/core/src/cli.ts:120`), la descrizione dei parametri `vargas` e
 `varga` in `packages/mcp/src/tools.ts`, il rimando in `/metodo` (voce
 `#varga`), la pagina `/metodo/varga` con la sua descrizione in `Meta`, il
-commento sopra `VargaId` in `types.ts`, e i testi sui varga fini elencati qui
-sopra, nella riga sul D-24 e sul D-27. Un varga
+commento sopra `VargaId` in `types.ts`. Se cambia l'elenco dei varga fini
+(il campo `fine` di `VARGAS`), lo nominano a mano: l'aiuto di `--varga`, la
+descrizione di `vargas` e di `varga` (`draw_jyotisha_chart`) in `tools.ts`,
+il paragrafo dell'avvertenza in `/metodo/varga`, il documento
+`packages/lettura/src/jyotisha.ts` e il commento a `warnings` in `types.ts`. Un varga
 fuori dai sedici del BPHS fa cadere anche `varga-buoni.test.ts`, che
 pretende `VARGA_SCHEMES.shodashavarga` uguale a `VARGAS`: gli schemi e i
 pesi del vimshopaka (`VIMSHOPAKA_WEIGHTS`) sono quelli del testo, e un varga
@@ -539,6 +530,14 @@ sito pubblicato lo stesso giorno, tutte fuori dal repo, in ordine di peso:
   proprietario il 27 ottobre 2026 fra quattro strade, fatto il 28 in
   `a828b3f`; la forma del risultato sta nella voce 5, *Che cosa resta*, nella
   riga sulle altre convenzioni della hora.
+
+- **L'avvertenza sull'ora va anche al D-24 e al D-27.** Scelto dal
+  proprietario il 30 ottobre 2026, voce 5. I varga fini sono cinque: i tre
+  con parti sotto il grado e i due con parti di poco più (1°15' e
+  1°6'40"), che l'Ascendente attraversa in cinque o sei minuti, meno del
+  quarto d'ora a cui di solito si dà l'ora. Il D-30 no: tratti da cinque a
+  otto gradi. Restano segnati a mano col campo `fine` di `VARGAS`, senza una
+  soglia calcolata.
 
 - **Il D-60 si conta dal segno stesso, con una convenzione sola.** Il verso
   6.33 dice *tad-rāśeḥ* e l'esempio di Santhanam lo applica, e P.V.R.

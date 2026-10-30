@@ -395,7 +395,7 @@ interface VargaChartBase {
   /** Solo nel D-2: la convenzione con cui è stato letto. */
   convention?: HoraConventionInfo;
   /**
-   * Solo nei varga fini (D-40, D-45, D-60): di quanti minuti l'ora di nascita
+   * Solo nei varga fini (D-24, D-27, D-40, D-45, D-60): di quanti minuti l'ora di nascita
    * dovrebbe sbagliare perché lagna e Luna cambino segno, calcolato su questa
    * carta. Un segno di una parte da mezzo grado sembra preciso quanto gli
    * altri, e non lo è.

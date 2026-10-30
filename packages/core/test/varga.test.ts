@@ -538,10 +538,14 @@ function minutiDi(testo: string): number {
 describe('i varga fini, che vogliono l ora al minuto', () => {
   it('portano un avvertenza solo loro, e il tema vedico la riporta', () => {
     const carta = tema();
-    for (const id of ['d40', 'd45', 'd60'] as const) {
+    for (const id of ['d24', 'd27', 'd40', 'd45', 'd60'] as const) {
       expect(computeVarga(carta, id).warnings, id).toHaveLength(1);
     }
     expect(computeVarga(carta, 'd30').warnings).toBeUndefined();
+    expect(computeVarga(carta, 'd20').warnings).toBeUndefined();
+    expect(computeVarga(carta, 'd24').warnings![0]).toContain("una parte è di 1°15' d'arco");
+    expect(computeVarga(carta, 'd27').warnings![0]).toContain(`una parte è di 1°6'40" d'arco`);
+    expect(computeVarga(carta, 'd60').warnings![0]).toContain("una parte è di 30' d'arco");
     expect(formatVargaCompact(computeVarga(carta, 'd60'))).toContain('Avvertenza: Il D60');
   });
 

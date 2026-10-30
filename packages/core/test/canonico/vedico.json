@@ -15681,7 +15681,10 @@
           }
         ],
         "ascendant": "leone",
-        "dignitySource": "Per segno, senza gradi: il segno del varga confrontato coi segni di uccha, moolatrikona, proprio e neecha di ciascuno dei sette graha (BPHS 3.49-54 e 4.6-24; 6.52, trad. Santhanam, vol. I, p. 88, per i primi tre come varga buoni). Tutte le corrispondenze, non una sola. Il conto dei varga buoni di 6.42-53, che aggiunge la regola dell'arudha, sta a parte nel tema vedico, con l'ora di nascita."
+        "dignitySource": "Per segno, senza gradi: il segno del varga confrontato coi segni di uccha, moolatrikona, proprio e neecha di ciascuno dei sette graha (BPHS 3.49-54 e 4.6-24; 6.52, trad. Santhanam, vol. I, p. 88, per i primi tre come varga buoni). Tutte le corrispondenze, non una sola. Il conto dei varga buoni di 6.42-53, che aggiunge la regola dell'arudha, sta a parte nel tema vedico, con l'ora di nascita.",
+        "warnings": [
+          "Il D24 vuole l'ora di nascita al minuto: una parte è di 1°15' d'arco. Qui l'Ascendente ne percorre una in circa 6,4 minuti, e il lagna cambia segno se l'ora di nascita è anticipata di 4,3 minuti o posticipata di 2,1 minuti. La Luna cambia segno con un anticipo di 76,0 minuti o un ritardo di 55,2 minuti. Un'ora arrotondata al quarto d'ora non basta a dire quale segno sia quello giusto."
+        ]
       },
       {
         "kind": "segni",
@@ -15773,7 +15776,10 @@
           }
         ],
         "ascendant": "ariete",
-        "dignitySource": "Per segno, senza gradi: il segno del varga confrontato coi segni di uccha, moolatrikona, proprio e neecha di ciascuno dei sette graha (BPHS 3.49-54 e 4.6-24; 6.52, trad. Santhanam, vol. I, p. 88, per i primi tre come varga buoni). Tutte le corrispondenze, non una sola. Il conto dei varga buoni di 6.42-53, che aggiunge la regola dell'arudha, sta a parte nel tema vedico, con l'ora di nascita."
+        "dignitySource": "Per segno, senza gradi: il segno del varga confrontato coi segni di uccha, moolatrikona, proprio e neecha di ciascuno dei sette graha (BPHS 3.49-54 e 4.6-24; 6.52, trad. Santhanam, vol. I, p. 88, per i primi tre come varga buoni). Tutte le corrispondenze, non una sola. Il conto dei varga buoni di 6.42-53, che aggiunge la regola dell'arudha, sta a parte nel tema vedico, con l'ora di nascita.",
+        "warnings": [
+          "Il D27 vuole l'ora di nascita al minuto: una parte è di 1°6'40\" d'arco. Qui l'Ascendente ne percorre una in circa 5,7 minuti, e il lagna cambia segno se l'ora di nascita è anticipata di 2,2 minuti o posticipata di 3,5 minuti. La Luna cambia segno con un anticipo di 61,5 minuti o un ritardo di 55,2 minuti. Un'ora arrotondata al quarto d'ora non basta a dire quale segno sia quello giusto."
+        ]
       },
       {
         "kind": "segni",
@@ -19375,6 +19381,8 @@
     "warnings": [
       "Il tema è domificato con placidus, ma il Jyotisha conta le case a segni interi dal lagna. Le posizioni dei graha sono giuste; le cuspidi non sono quelle che questo sistema intende.",
       "Effemeridi Moshier: sulla Luna scartano dalle Swiss Ephemeris fino a due secondi d'arco fra il 1900 e il 2100, di più fuori da quegli anni. Su un tema è invisibile, qui no: 13°20' di nakshatra valgono fino a vent'anni, quindi le date di inizio possono spostarsi di qualche ora. Scarica le effemeridi per la precisione piena.",
+      "Il D24 vuole l'ora di nascita al minuto: una parte è di 1°15' d'arco. Qui l'Ascendente ne percorre una in circa 6,4 minuti, e il lagna cambia segno se l'ora di nascita è anticipata di 4,3 minuti o posticipata di 2,1 minuti. La Luna cambia segno con un anticipo di 76,0 minuti o un ritardo di 55,2 minuti. Un'ora arrotondata al quarto d'ora non basta a dire quale segno sia quello giusto.",
+      "Il D27 vuole l'ora di nascita al minuto: una parte è di 1°6'40\" d'arco. Qui l'Ascendente ne percorre una in circa 5,7 minuti, e il lagna cambia segno se l'ora di nascita è anticipata di 2,2 minuti o posticipata di 3,5 minuti. La Luna cambia segno con un anticipo di 61,5 minuti o un ritardo di 55,2 minuti. Un'ora arrotondata al quarto d'ora non basta a dire quale segno sia quello giusto.",
       "Il D40 vuole l'ora di nascita al minuto: una parte è di 45' d'arco. Qui l'Ascendente ne percorre una in circa 3,8 minuti, e il lagna cambia segno se l'ora di nascita è anticipata di 3,0 minuti o posticipata di 48 secondi. La Luna cambia segno con un anticipo di 23,6 minuti o un ritardo di 55,2 minuti. Un'ora arrotondata al quarto d'ora non basta a dire quale segno sia quello giusto.",
       "Il D45 vuole l'ora di nascita al minuto: una parte è di 40' d'arco. Qui l'Ascendente ne percorre una in circa 3,4 minuti, e il lagna cambia segno se l'ora di nascita è anticipata di 2,2 minuti o posticipata di 1,2 minuti. La Luna cambia segno con un anticipo di 14,8 minuti o un ritardo di 55,2 minuti. Un'ora arrotondata al quarto d'ora non basta a dire quale segno sia quello giusto.",
       "Il D60 vuole l'ora di nascita al minuto: una parte è di 30' d'arco. Qui l'Ascendente ne percorre una in circa 2,5 minuti, e il lagna cambia segno se l'ora di nascita è anticipata di 28 secondi o posticipata di 2,1 minuti. La Luna cambia segno con un anticipo di 49,8 minuti o un ritardo di 2,7 minuti. Un'ora arrotondata al quarto d'ora non basta a dire quale segno sia quello giusto."

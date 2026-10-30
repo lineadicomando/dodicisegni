@@ -489,8 +489,8 @@ export function registerComputeJyotishaChart(server: McpServer, context: ToolCon
               'graha ogni varga dice in quali loro segni di uccha, moolatrikona, proprio o ' +
               'neecha cade, per segno e senza gradi. Con l\'ora, il tema porta anche i varga buoni ' +
               '(BPHS 6.42-53) contati su tutti e sedici i varga, con le scelte di lettura in ' +
-              'testa: vanno riferite, non ricalcolate. d40, d45 e ' +
-              'd60 hanno parti di meno di un grado: portano un\'avvertenza con i minuti di ' +
+              'testa: vanno riferite, non ricalcolate. d24, d27, d40, d45 e ' +
+              'd60 hanno parti di un grado e un quarto o meno: portano un\'avvertenza con i minuti di ' +
               'cui l\'ora di nascita può sbagliare prima che lagna e Luna cambino segno, e ' +
               'va riferita a chi chiede. Nel d60 ogni graha e il lagna portano anche lo ' +
               'shashtiamsa, il mezzo grado col nome di BPHS 6.34-40 (rovesciato nei segni pari, ' +
@@ -1627,7 +1627,7 @@ export function registerDrawJyotishaChart(server: McpServer, context: ToolContex
           .enum(VARGA_IDS)
           .optional()
           .describe(
-            'Quale carta disegnare. Default: d1, la carta rashi. Per d40, d45 e d60 il ' +
+            'Quale carta disegnare. Default: d1, la carta rashi. Per d24, d27, d40, d45 e d60 il ' +
               'disegno non dice quanto il lagna dipenda dai minuti: lo dice ' +
               'compute_jyotisha_chart.',
           ),
