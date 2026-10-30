@@ -27,8 +27,8 @@
   <em>Vimshottari</em> vuol dire centoventi, e tanti sono gli anni del ciclo
   intero. I nove graha se li dividono in parti fisse e disuguali che sommano a
   centoventi esatti, e si succedono sempre nello stesso ordine. Ogni periodo,
-  il <em>mahadasha</em>, si suddivide nei nove secondo le stesse proporzioni
-  (gli <em>antardasha</em>), e ciascuno di quelli ancora nei nove (i
+  la <em>mahadasha</em>, si suddivide nei nove secondo le stesse proporzioni
+  (le <em>antardasha</em>), e ciascuna di quelle ancora nei nove (le
   <em>pratyantardasha</em>): il sito si ferma a questo terzo ordine.
 </p>
 
@@ -67,7 +67,7 @@
   Il primo periodo è quello del graha che regge il nakshatra della Luna alla
   nascita. Ma la persona non nasce all'inizio di quel periodo: ne nasce dentro,
   tanto più avanti quanto più la Luna ha già percorso del suo nakshatra. Quello
-  che resta del primo mahadasha è la sua durata moltiplicata per la frazione
+  che resta della prima mahadasha è la sua durata moltiplicata per la frazione
   del nakshatra ancora da percorrere.
 </p>
 
@@ -80,7 +80,7 @@
 </p>
 
 <p>
-  Il primo mahadasha il sito lo calcola intero, e lo fa cominciare prima della
+  La prima mahadasha il sito la calcola intera, e la fa cominciare prima della
   nascita di quanto ne è già trascorso: così le sue suddivisioni hanno la
   durata piena, e la catena è una successione senza buchi.
 </p>
@@ -88,10 +88,10 @@
 <h2 id="suddivisioni">Le suddivisioni</h2>
 
 <p>
-  Dentro un mahadasha gli antardasha cominciano dal suo stesso graha e
-  seguono l'ordine; ciascuno dura la sua quota del ciclo intero. Venere, che
+  Dentro una mahadasha le antardasha cominciano dal suo stesso graha e
+  seguono l'ordine; ciascuna dura la sua quota del ciclo intero. Venere, che
   ha venti anni su centoventi, prende un sesto di qualunque periodo la
-  contenga. Nel mahadasha di Venere, quindi:
+  contenga. Nella mahadasha di Venere, quindi:
 </p>
 
 <table>
@@ -115,7 +115,7 @@
 </table>
 
 <p>
-  I pratyantardasha si ricavano allo stesso modo dentro ogni antardasha.
+  Le pratyantardasha si ricavano allo stesso modo dentro ogni antardasha.
 </p>
 
 <h2 id="anno">Quanto dura un anno</h2>

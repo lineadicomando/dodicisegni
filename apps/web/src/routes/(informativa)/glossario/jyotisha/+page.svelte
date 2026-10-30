@@ -125,8 +125,8 @@
 <p>
   Un periodo della vita retto da un graha. Il sistema più diffuso, il
   <em>vimshottari</em>, divide un ciclo di centoventi anni fra i nove graha in
-  quote fisse; ogni periodo, il <em>mahadasha</em>, si suddivide in
-  <em>antardasha</em>, e questi in <em>pratyantardasha</em>.
+  quote fisse; ogni periodo, la <em>mahadasha</em>, si suddivide in
+  <em>antardasha</em>, e queste in <em>pratyantardasha</em>.
   → <a href="/metodo/dasha">Come si calcolano</a>
 </p>
 

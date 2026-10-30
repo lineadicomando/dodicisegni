@@ -105,7 +105,7 @@ export function computeVimshottari(
     // è tutt'altro ordine di grandezza.
     warnings.push(
       'Senza ora di nascita queste date non sono approssimate ma inservibili: dodici ' +
-        'ore di Luna sono sei gradi e mezzo, che su un mahadasha lungo valgono quasi ' +
+        'ore di Luna sono sei gradi e mezzo, che su una mahadasha lunga valgono quasi ' +
         'cinque anni.',
     );
   }
@@ -120,7 +120,7 @@ export function computeVimshottari(
     );
   }
 
-  // Il primo mahadasha è cominciato prima della nascita: si torna indietro
+  // La prima mahadasha è cominciata prima della nascita: si torna indietro
   // della parte già trascorsa, così l'intera catena è una successione senza
   // buchi e il primo periodo ha la durata piena che gli spetta.
   const inizioPrimo = chart.time.julianDayUT - anniDelSignore * percorso * daysPerYear;
@@ -150,8 +150,8 @@ interface ChainContext {
 /**
  * I nove periodi di un ordine, a partire da un signore e da un istante.
  *
- * La stessa funzione serve tutti e tre gli ordini: un antardasha sta a un
- * mahadasha come un mahadasha sta al ciclo intero, con le stesse proporzioni.
+ * La stessa funzione serve tutti e tre gli ordini: un'antardasha sta a una
+ * mahadasha come una mahadasha sta al ciclo intero, con le stesse proporzioni.
  * Cambia solo quanto tempo c'è da spartire.
  */
 function chain(

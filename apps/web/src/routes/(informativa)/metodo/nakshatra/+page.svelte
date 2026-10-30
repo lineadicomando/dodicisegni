@@ -97,7 +97,7 @@
 
 <p>
   I nomi restano in sanscrito e non si traducono. «Dimore lunari» è una
-  perifrasi, non un nome, e non si trova in nessun libro; Rahu e Ketu, che qui
+  perifrasi, e non il nome che usa la tradizione indiana. Rahu e Ketu, che qui
   sono due graha con un nome e non i due nodi dell'orbita lunare, si chiamano
   così anche nel resto del sito.
 </p>

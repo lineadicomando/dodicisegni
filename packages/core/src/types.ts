@@ -275,7 +275,7 @@ export interface Panchanga {
 /**
  * Quanti giorni valga un anno di dasha.
  *
- * Le scuole non concordano, e lo scarto non è trascurabile: su un mahadasha di
+ * Le scuole non concordano, e lo scarto non è trascurabile: su una mahadasha di
  * diciotto anni sono più di tre mesi, e cresce lungo la catena. `solare` è la
  * convenzione dei panchanga moderni e della maggior parte del software;
  * `savana` è l'anno tradizionale di trecentosessanta giorni, con cui i conti
@@ -331,7 +331,7 @@ export interface VimshottariDasha {
   /** Il nakshatra della Luna alla nascita: l'origine di tutta la catena. */
   nakshatra: NakshatraPosition;
   /**
-   * Quanto restava del primo mahadasha alla nascita, in anni.
+   * Quanto restava della prima mahadasha alla nascita, in anni.
    *
    * È il numero che si riporta per primo in ogni lettura, e quello con cui si
    * verifica a colpo d'occhio che il conto sia stato fatto giusto.

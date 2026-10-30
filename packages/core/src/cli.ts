@@ -113,7 +113,7 @@ Opzioni
   --dasha               Aggiunge la catena vimshottari: centoventi anni divisi
                         fra i nove graha, a partire dal nakshatra della Luna.
                         Richiede --zodiaco siderale
-  --livelli <1|2|3>     Ordini di periodo. Default 2: nove mahadasha con i loro
+  --livelli <1|2|3>     Ordini di periodo. Default 2: nove mahadasha con le loro
                         antardasha. Tre sono settecentoventinove righe
   --anno-dasha <nome>   solare (default, 365,25 giorni) oppure savana (360). Le
                         scuole divergono, e su ottant'anni è più di un anno

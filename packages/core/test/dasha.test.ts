@@ -64,7 +64,7 @@ describe('computeVimshottari', () => {
     }
   });
 
-  it('apre il primo mahadasha prima della nascita e lo chiude dopo', () => {
+  it('apre la prima mahadasha prima della nascita e la chiude dopo', () => {
     // La nascita cade dentro il primo periodo, non al suo inizio: è la ragione
     // per cui esiste un saldo, e senza tornare indietro la catena avrebbe un
     // buco lungo quanto la parte già trascorsa.
@@ -100,7 +100,7 @@ describe('computeVimshottari', () => {
     expect(primo.periods).toHaveLength(9);
     expect(anni(primo.periods!)).toBeCloseTo(primo.years, 9);
 
-    // Il primo antardasha è del signore stesso, e dura la sua quota del
+    // La prima antardasha è del signore stesso, e dura la sua quota del
     // mahadasha: diciassette anni per diciassette centoventesimi.
     const antar = primo.periods![0]!;
     expect(antar.lord).toBe('mercurio');
@@ -175,7 +175,7 @@ describe('quello che le dasha dichiarano di non sapere', () => {
   });
 
   it('avverte che senza ora di nascita le date sono inservibili', () => {
-    // Dodici ore di Luna sono sei gradi e mezzo, che su un mahadasha lungo
+    // Dodici ore di Luna sono sei gradi e mezzo, che su una mahadasha lunga
     // valgono quasi cinque anni: qui l'ora ignota non sposta i confini, li
     // rende inservibili.
     const senzaOra = computeNatalChart(
