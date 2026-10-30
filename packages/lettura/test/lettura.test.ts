@@ -84,7 +84,7 @@ describe('letturaDaIncollare', () => {
     expect(testo).toContain('Tolomeo (a richiesta)');
     expect(testo).toContain('non contare punti che lui non dà');
     expect(testo).toContain('Bonatti (a richiesta)');
-    expect(testo).toContain('non vanno dedotte dalle sue tavole');
+    expect(testo).toContain('Riferiscile con l\'aspetto, e non dedurne altre dalle tavole');
     expect(testo).toContain('Valente (a richiesta)');
     expect(testo).toContain('non attribuirglieli');
     expect(testo).toContain('non farne un voto sulla persona');

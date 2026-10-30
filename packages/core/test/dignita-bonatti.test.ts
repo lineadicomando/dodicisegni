@@ -5,7 +5,10 @@ import {
   BONATTI_RECEPTION_SOURCE,
   BONATTI_SOURCE,
   BONATTI_TERMS_SOURCE,
+  bonattiApplication,
   bonattiDignitiesOf,
+  bonattiReceptionBy,
+  bonattiReceptionsOf,
   bonattiExaltation,
   bonattiFaceRuler,
   bonattiFall,
@@ -242,12 +245,14 @@ describe('il pacchetto di Bonatti nel tema', () => {
     expect(testo).toMatch(/^Marte\s+Marte\s+Sole\s+Sole\+Giove\+Saturno\s+Sole\s+Mercurio\s+Sole\s+\| domicilio$/m);
   });
 
-  it('lascia le ricezioni alle tavole comuni, e riporta la definizione di Bonatti', () => {
+  it('porta le ricezioni di Bonatti, che nascono da un\'applicazione', () => {
     const chart = computeNatalChart(NAPOLI, { dignitySchool: 'bonatti' });
-    expect(chart.dignities?.receptions.counted).toEqual(['domicilio', 'esaltazione']);
-    expect(chart.dignities?.receptions.source).toBe(BONATTI_RECEPTION_SOURCE);
-    expect(BONATTI_RECEPTION_SOURCE).toContain("applicazione");
-    expect(chart.dignities?.receptions.single).toEqual(computeNatalChart(NAPOLI).dignities?.receptions.single);
+    const ricezioni = chart.dignities!.receptions;
+    expect(ricezioni.counted).toEqual(['domicilio', 'esaltazione', 'triplicita', 'termine', 'faccia']);
+    expect(ricezioni.source).toBe(BONATTI_RECEPTION_SOURCE);
+    expect(ricezioni.mutual).toEqual([]);
+    expect(ricezioni.single).toEqual(bonattiReceptionsOf(chart.bodies));
+    for (const r of ricezioni.single) expect(r.application, `${r.receiver} ${r.received}`).toBeDefined();
     expect(chart.dignities?.lilly).toBeUndefined();
     expect(chart.dignities?.tolomeo).toBeUndefined();
   });
@@ -286,5 +291,70 @@ describe('il pacchetto di Bonatti nel tema', () => {
     const sky = computeSky({ date: '2026-10-30', time: '12:00', timezone: 'Europe/Rome' }, { dignitySchool: 'bonatti' });
     expect(sky.dignities?.bonatti?.bodies.length).toBeGreaterThan(0);
     expect(sky.dignities?.lilly).toBeUndefined();
+  });
+});
+
+describe('la ricezione di Bonatti, tratt. III, parte 2', () => {
+  /** Una longitudine tropicale: segno e grado. */
+  const lon = (segno: ZodiacSign, grado: number) => ZODIAC_SIGNS.indexOf(segno) * 30 + grado;
+  /** Un corpo con quel che le funzioni guardano. */
+  const corpo = (id: BodyId, segno: ZodiacSign, grado: number) =>
+    ({ id, name: id, longitude: lon(segno, grado) }) as Parameters<typeof bonattiReceptionsOf>[0][number];
+
+  it('rifà l\'esempio dell\'applicazione, cap. 4 (PDF p. 158)', () => {
+    // «ponatur quod sit venus vel mercurius in quarto gradu arietis et mars
+    // vel iupiter vel saturnus sit in decimo gradu geminorum vel cancri vel
+    // leonis ante se: vel sit in decimo gradu aquarij vel capricorni vel
+    // sagittarij post se».
+    const venere = { longitude: lon('ariete', 4) };
+    const attesi = { gemelli: 'sestile', cancro: 'quadrato', leone: 'trigono', acquario: 'sestile', capricorno: 'quadrato', sagittario: 'trigono' } as const;
+    for (const [segno, aspetto] of Object.entries(attesi) as [ZodiacSign, string][]) {
+      expect(bonattiApplication(venere, { longitude: lon(segno, 10) }), segno).toEqual({ aspect: aspetto, distance: 6 });
+    }
+    // E per corpo, nello stesso segno, fino al minuto esatto.
+    expect(bonattiApplication(venere, { longitude: lon('ariete', 10) })?.aspect).toBe('congiunzione');
+    expect(bonattiApplication(venere, { longitude: lon('ariete', 4) })?.distance).toBe(0);
+  });
+
+  it('non si applica oltre sei gradi, da dietro, né per opposizione', () => {
+    const venere = { longitude: lon('ariete', 4) };
+    expect(bonattiApplication(venere, { longitude: lon('gemelli', 10.01) })).toBeUndefined();
+    expect(bonattiApplication(venere, { longitude: lon('gemelli', 3.99) })).toBeUndefined();
+    expect(bonattiApplication(venere, { longitude: lon('bilancia', 8) })).toBeUndefined();
+    expect(bonattiApplication(venere, { longitude: lon('toro', 8) })).toBeUndefined();
+  });
+
+  it('rifà l\'esempio della Luna a 3° dell\'Ariete (PDF p. 168)', () => {
+    // La ricevono Marte (domicilio), il Sole (esaltazione) e Giove, «dominus
+    // primi termini arietis et … etiam dominus triplicitatis»; Saturno, che ha
+    // solo la triplicità, no.
+    const luna = lon('ariete', 3);
+    expect(bonattiReceptionBy('marte', luna)).toContain('domicilio');
+    expect(bonattiReceptionBy('sole', luna)).toContain('esaltazione');
+    expect(bonattiReceptionBy('giove', luna)).toEqual(['triplicita', 'termine']);
+    expect(bonattiReceptionBy('saturno', luna)).toEqual([]);
+  });
+
+  it('dà al più pesante il più leggero che gli si applica, mai il contrario', () => {
+    const ricezioni = bonattiReceptionsOf([
+      corpo('luna', 'ariete', 3),
+      corpo('giove', 'gemelli', 7), // sestile, 4°, termine e triplicità: riceve
+      corpo('saturno', 'cancro', 8), // quadrato, 5°, solo la triplicità: no
+      corpo('marte', 'bilancia', 5), // alla Luna in opposizione: no
+    ]);
+    expect(ricezioni).toEqual([
+      { receiver: 'giove', received: 'luna', by: ['triplicita', 'termine'], application: { aspect: 'sestile', distance: 4 } },
+      // Marte a 5° della Bilancia, in quadrato a Saturno tre gradi più avanti,
+      // sta nella sua esaltazione (e nella triplicità e nel termine): basta.
+      // A Giove si applica per trigono, ma lì Giove ha solo la triplicità.
+      {
+        receiver: 'saturno',
+        received: 'marte',
+        by: ['esaltazione', 'triplicita', 'termine'],
+        application: { aspect: 'quadrato', distance: 3 },
+      },
+    ]);
+    // Saturno a 3° dell'Ariete e la Luna dopo di lui: Saturno non si applica.
+    expect(bonattiReceptionsOf([corpo('saturno', 'ariete', 1), corpo('marte', 'ariete', 5)])).toEqual([]);
   });
 });

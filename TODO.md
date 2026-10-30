@@ -97,10 +97,10 @@ volta e ricominciare da capo.
 
 | Voce | Priorità | Taglia | Prima di cominciare |
 |---|---|---|---|
-| 26. Le scuole occidentali delle dignità: quello che resta | bassa | piccola | la ricezione di Bonatti ha le orbite lette e aspetta due scelte; Valente aspetta l'ed. Pingree |
+| 26. Le scuole occidentali delle dignità: quello che resta | bassa | piccola | Valente aspetta l'ed. Pingree, protetta |
 | 28. La revisione della SEO | media | piccola | il dominio principale è deciso; i redirect e `ORIGIN` si fanno sul server, non nel repo |
 
-La 26 è una rifinitura e aspetta testi. La 28 è la sola che tocca chi usa
+La 26 è una rifinitura e aspetta un testo protetto. La 28 è la sola che tocca chi usa
 il programma oggi: il suo primo punto divide il sito in quattro agli occhi
 dei motori di ricerca, e si fa sul server, quando il proprietario lo chiede.
 Il 30 ottobre 2026 si sono chiuse le voci 5 e 25, le rifiniture del
@@ -111,9 +111,10 @@ in *Deciso*, le due verifiche senza esito in *Esaminato*. Le istruzioni per
 chi aggiunge un varga o una convenzione della hora stanno nei commenti sopra
 `VARGAS` (`varga.ts`) e `HORA_CONVENTIONS` (`hora.ts`).
 
-**Versione 0.10.0**, in ogni manifesto, col tag `v0.10.0`: la riga delle
-ricezioni di Valente dice che lui non ne definisce una, invece che «non
-cercata» (voce 26). Prima, la 0.9.0 con la combustione del Jyotisha nei
+**Versione 0.11.0**, in ogni manifesto, col tag `v0.11.0`: le ricezioni di
+Bonatti con la sua scuola (voce 26), che cambiano la risposta di chi la
+chiede. Prima, la 0.10.0 con la riga delle ricezioni di Valente, che dice
+che lui non ne definisce una (voce 26), la 0.9.0 con la combustione del Jyotisha nei
 gradi di tempo (voce 25), tre campi che compaiono e un giudizio che può
 cambiare, la 0.8.1 con le quattro convenzioni moderne della
 hora (voce 5), valori nuovi di un'opzione che c'era, la 0.8.0 con gli arudha dei
@@ -178,30 +179,11 @@ test e le scelte del proprietario in *Deciso*: Lilly (`dignita-lilly.ts`, con
 le condizioni e il conto in `condizioni-lilly.ts`), Tolomeo
 (`dignita-tolomeo.ts`), Bonatti (`dignita-bonatti.ts`) e Valente
 (`dignita-valente.ts`). Le tavole comuni, che il tema porta sempre, sono in
-`dignita.ts`; il blocco del tema in `dignita-tema.ts`.
+`dignita.ts`; il blocco del tema in `dignita-tema.ts`. Dal 30 ottobre 2026
+Bonatti ha le sue ricezioni (versione 0.11.0, vedi *Deciso*): le orbite che
+dà ai pianeti sono trascritte nella copia locale, e non usate. Resta una
+cosa, che aspetta un testo:
 
-- **La ricezione di Bonatti**, se un giorno servisse. Nasce da
-  un'applicazione in corso (tratt. III, PDF pp. 167-168): chi si applica è
-  ricevuto da quello a cui si applica, se sta nel suo domicilio, nella sua
-  esaltazione o in due sue dignità minori insieme. Il 30 ottobre 2026 sono
-  state lette le orbite e l'applicazione, in
-  `texts/occidentale/bonatti-decem-tractatus-1491/trascrizioni.md`:
-  - l'orbe di ciascun pianeta, tratt. III, parte 1 (PDF pp. 124-143), «tanto
-    prima quanto dopo»: Saturno 9, Giove 9, Marte 8, Sole 15, Venere 7,
-    Mercurio 7, Luna 12;
-  - l'applicazione, tratt. III, parte 2, cap. 4 (PDF pp. 158-159): per corpo
-    nello stesso segno, o per sestile, quadrato e trigono (l'opposizione non
-    è nominata lì); il più leggero ha meno gradi nel suo segno del più
-    pesante, «ita tamen quod sint sex gradus vel minus inter eos»; e subito
-    dopo la regola con le orbite: «tantum quantum sunt orbes amborum» è
-    congiunzione «grauis», dentro l'orbe di uno solo «absolute».
-
-  Restano due scelte del proprietario prima del codice: quale soglia (i sei
-  gradi della definizione, la somma delle due orbite intere come dice la
-  lettera, o la somma delle metà, le *moieties* della tradizione araba, che
-  il testo letto non nomina); e se l'opposizione conta. Con la definizione
-  di p. 158 l'applicazione è un fatto di posizione (gradi nel segno), e il
-  corso di `corso.ts` non serve.
 - **Valente, un testo critico migliore per I.3**: l'ed. Pingree (Teubner
   1986), protetta, che potrebbe sanare Ariete e Scorpione e dire se la
   Bilancia di Valente è sua o del codice. Se cambia, cambia la riga dei
@@ -370,11 +352,17 @@ sito pubblicato lo stesso giorno, tutte fuori dal repo, in ordine di peso:
   composta segno per segno, che nessuna fonte stampa intera. La riga dei
   termini dice le tre divergenze.
 
-- **La scuola di Bonatti lascia le ricezioni comuni e non ha punteggio.**
-  Scelto dal proprietario il 30 ottobre 2026, con la voce 19. La ricezione
-  di Bonatti nasce da un'applicazione e chiede domicilio, esaltazione o due
-  dignità minori: non si calcola, la riga delle ricezioni la riporta, e
-  restano quelle per domicilio ed esaltazione. Il 5-4-5-3 del signore
+- **La scuola di Bonatti ha le sue ricezioni, entro sei gradi, e non ha
+  punteggio.** Scelto dal proprietario il 30 ottobre 2026, con la voce 19 e
+  poi con la 26. La ricezione nasce da un'applicazione e chiede domicilio,
+  esaltazione o due dignità minori (PDF pp. 167-168). L'applicazione è
+  quella della definizione del cap. 4 (p. 158): il più leggero, nell'ordine
+  delle sfere, con meno gradi nel suo segno del più pesante, per corpo,
+  sestile, quadrato o trigono, e **sei gradi o meno**; non le orbite di p.
+  159 («orbes amborum», di lettura incerta), e **non l'opposizione**, che il
+  passo non nomina. Un fatto di posizione: il moto retrogrado non conta, e
+  `corso.ts` non serve (`bonattiReceptionsOf` in `dignita-bonatti.ts`). Il
+  5-4-5-3 del signore
   dell'anno non diventa un punteggio delle dignità. Il resto non era una
   scelta: le tavole sono quelle stampate, e nel Leone la tavola e il testo
   di Bonatti concordano.

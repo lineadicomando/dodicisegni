@@ -95,10 +95,11 @@ lavori agevolata o controvento. In fondo alla sezione ci sono le ricezioni
 secondo Lilly: nella mutua due pianeti stanno ciascuno in una dignità
 dell'altro, e Lilly la legge come un legame che regge anche dove l'aspetto
 manca o è difficile. Quelle per triplicità, termine e faccia ci sono solo se
-la sezione porta la tavola di Lilly, che si chiede a parte; se la riga Lilly
-non c'è, non sono calcolate: non dedurle. Quando c'è, dà per ogni corpo i
-signori del suo grado e le dignità che ha lì; esaltazione e caduta valgono per
-tutto il segno, anche se la tavola nomina il grado. Con la tavola di Lilly
+la sezione porta la tavola di Lilly, o quella di Bonatti con la sua regola,
+che si chiedono a parte; senza, non sono calcolate: non dedurle. La riga
+Lilly, quando c'è, dà per ogni corpo i signori del suo grado e le dignità
+che ha lì; esaltazione e caduta valgono per tutto il segno, anche se la
+tavola nomina il grado. Con la tavola di Lilly
 viene anche la sezione CONDIZIONI (LILLY): casa, rapporto col Sole, moto e
 orientalità di ciascun pianeta, e il conto della sua tavola delle fortezze
 (p. 115) scritto voce per voce, con le fortezze, le debilità e la
@@ -116,9 +117,11 @@ non contare punti che lui non dà. La sezione può portare invece la tavola
 di Bonatti (riga «Bonatti (a richiesta)»), la scuola medievale: domicilio,
 esaltazione col grado, i tre signori della triplicità (di giorno, di notte e
 il partecipe) e chi la governa nella setta, termine, faccia, esilio e
-caduta. Bonatti non ha un punteggio delle dignità, e la sua ricezione nasce
-da un'applicazione che la tabella non calcola: le ricezioni restano per
-domicilio ed esaltazione, e non vanno dedotte dalle sue tavole. Oppure la
+caduta. Bonatti non ha un punteggio delle dignità. La sua ricezione nasce da
+un'applicazione: con la sua tavola le ricezioni sono le sue, e ognuna dice
+per quale aspetto e a quanti gradi il più leggero si applica al più pesante;
+due dignità minori insieme bastano, una sola no, e mutue non ce ne sono.
+Riferiscile con l'aspetto, e non dedurne altre dalle tavole. Oppure la
 tavola di Valente (riga «Valente (a richiesta)»), la scuola ellenistica:
 domicilio, esaltazione col grado, i tre signori del triangolo e il loro
 ordine nella setta, e i termini egizi. Valente non ha qui facce, esilio, Nodi

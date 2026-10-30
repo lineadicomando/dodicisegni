@@ -21,6 +21,7 @@
     WesternDignities,
   } from '@dodicisegni/core';
   import type { Evidenza } from '#lib/evidenza.svelte.js';
+  import { formatSignDegree } from '#lib/format.js';
   import { BODY_GLYPH, BODY_LABEL, SIGN_GLYPH, SIGN_LABEL, ZODIAC_ORDER } from '@dodicisegni/ruota';
 
   interface Props {
@@ -364,7 +365,9 @@
       {#each dignities.receptions.single as r (`${r.receiver}-${r.received}`)}
         <li>
           {nome(r.receiver)} riceve {nome(r.received)}
-          <span class="tenue">({per(r.by)})</span>
+          <span class="tenue"
+            >({per(r.by)}{#if r.application}; {r.application.aspect} a {formatSignDegree(r.application.distance)}{/if})</span
+          >
         </li>
       {/each}
     </ul>

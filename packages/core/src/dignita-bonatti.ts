@@ -21,9 +21,9 @@
  * Non c'è un **punteggio**: nei capitoli delle dignità Bonatti non ne dà, e
  * le «fortitudines» del trattato delle rivoluzioni (domicilio 5, esaltazione
  * 4, termine 5, triplicità 3) servono a scegliere il signore dell'anno, non
- * a contare le dignità di un pianeta. Non ci sono le **sue ricezioni**:
- * Bonatti le fa nascere da un'applicazione, per corpo o per aspetto, e con
- * questa scuola restano quelle comuni (vedi `BONATTI_RECEPTION_SOURCE`).
+ * a contare le dignità di un pianeta. Le **ricezioni** sono le sue
+ * (tratt. III, parte 2): nascono da un'applicazione, e `bonattiReceptionsOf`
+ * le calcola (vedi `BONATTI_RECEPTION_SOURCE`).
  *
  * Le tavole sono scritte qui, lette sulla stampa, e non prese da Lilly
  * anche dove coincidono (esaltazioni e facce): una scuola porta le sue, e il
@@ -34,7 +34,17 @@
 import { SIGN_ELEMENT, ZODIAC_SIGNS } from './constants.js';
 import { degreeInSign, signOf } from './math.js';
 import { DOMICILES, detrimentsOf } from './dignita.js';
-import type { BodyId, BonattiDignity, BonattiRulers, Element, Sect, ZodiacSign } from './types.js';
+import type {
+  BodyId,
+  BonattiDignity,
+  BonattiRulers,
+  CelestialBody,
+  Element,
+  Reception,
+  ReceptionDignity,
+  Sect,
+  ZodiacSign,
+} from './types.js';
 
 export type { BonattiDignity, BonattiRulers };
 
@@ -245,12 +255,104 @@ export function bonattiDignitiesOf(body: BodyId, longitude: number): BonattiDign
 }
 
 /**
- * La riga delle ricezioni quando la scuola è Bonatti. Le ricezioni restano
- * quelle comuni, e la riga dice perché: la regola di Bonatti chiede
- * un'applicazione, che una tavola delle dignità non vede.
+ * Dal più leggero al più pesante: l'ordine delle sfere, dalla Luna a
+ * Saturno. Il passo (tratt. III, parte 2, cap. 4, PDF p. 158) dice che il
+ * leggero si applica sempre al pesante, «donec perueniatur ad saturnum», che
+ * non si applica a nessuno; il resto dell'ordine non lo scrive, e questo è
+ * quello delle sfere, dichiarato in `BONATTI_RECEPTION_SOURCE`.
  */
+export const BONATTI_WEIGHT_ORDER = [
+  'luna',
+  'mercurio',
+  'venere',
+  'sole',
+  'marte',
+  'giove',
+  'saturno',
+] as const satisfies readonly BonattiPlanet[];
+
+/**
+ * Quanti gradi possono separare chi si applica da chi riceve: «ita tamen
+ * quod sint sex gradus vel minus inter eos» (PDF p. 158). Scelto dal
+ * proprietario il 30 ottobre 2026 contro le orbite di p. 159 (`TODO.md`,
+ * *Deciso*).
+ */
+export const BONATTI_APPLICATION_LIMIT = 6;
+
+/** Gli aspetti per cui ci si applica, dalla distanza in segni: l'opposizione il passo non la nomina. */
+const ASPETTO_PER_SEGNI: Readonly<Record<number, NonNullable<Reception['application']>['aspect']>> = {
+  0: 'congiunzione',
+  2: 'sestile',
+  10: 'sestile',
+  3: 'quadrato',
+  9: 'quadrato',
+  4: 'trigono',
+  8: 'trigono',
+};
+
+/**
+ * Se il più leggero si applica al più pesante, secondo il cap. 4: nello
+ * stesso segno (per corpo) o in segni a sestile, quadrato o trigono, con meno
+ * gradi nel suo segno del pesante nel suo, e non più di sei gradi fra i due.
+ * È un fatto di posizione, come lo definisce il testo: il moto retrogrado non
+ * conta. Al grado esatto è ancora congiunto («donec compleat suam
+ * coniunctionem … in eodem minuto»), un minuto oltre è separato.
+ */
+export function bonattiApplication(
+  leggero: Pick<CelestialBody, 'longitude'>,
+  pesante: Pick<CelestialBody, 'longitude'>,
+): Reception['application'] {
+  const segni = (ZODIAC_SIGNS.indexOf(signOf(pesante.longitude)) - ZODIAC_SIGNS.indexOf(signOf(leggero.longitude)) + 12) % 12;
+  const aspect = ASPETTO_PER_SEGNI[segni];
+  if (!aspect) return undefined;
+  const distance = degreeInSign(pesante.longitude) - degreeInSign(leggero.longitude);
+  return distance >= 0 && distance <= BONATTI_APPLICATION_LIMIT ? { aspect, distance } : undefined;
+}
+
+const MINORI: readonly ReceptionDignity[] = ['triplicita', 'termine', 'faccia'];
+
+/**
+ * Per che cosa `receiver` riceverebbe un pianeta che sta a `longitude`:
+ * domicilio o esaltazione bastano, delle minori ne servono due (PDF p. 167,
+ * «cum domino duarum de aliis dignitatibus minoribus»). La triplicità vale
+ * per tutti e tre i signori, come nell'esempio di Giove a p. 168. Vuoto se
+ * non riceve.
+ */
+export function bonattiReceptionBy(receiver: BodyId, longitude: number): ReceptionDignity[] {
+  const tiene = bonattiDignitiesOf(receiver, longitude).filter(
+    (d): d is ReceptionDignity => d !== 'esilio' && d !== 'caduta',
+  );
+  const maggiore = tiene.includes('domicilio') || tiene.includes('esaltazione');
+  const minori = tiene.filter((d) => MINORI.includes(d)).length;
+  return maggiore || minori >= 2 ? tiene : [];
+}
+
+/**
+ * Le ricezioni di Bonatti fra i sette pianeti: il più pesante riceve il più
+ * leggero che si applica a lui, se questi sta nelle sue dignità. Non ci sono
+ * ricezioni mutue: l'applicazione va in un verso solo.
+ */
+export function bonattiReceptionsOf(bodies: readonly CelestialBody[]): Reception[] {
+  const pianeti = BONATTI_WEIGHT_ORDER.flatMap((id) => bodies.filter((body) => body.id === id));
+  const risultato: Reception[] = [];
+  pianeti.forEach((leggero, i) => {
+    for (const pesante of pianeti.slice(i + 1)) {
+      const application = bonattiApplication(leggero, pesante);
+      if (!application) continue;
+      const by = bonattiReceptionBy(pesante.id, leggero.longitude);
+      if (by.length > 0) risultato.push({ receiver: pesante.id, received: leggero.id, by, application });
+    }
+  });
+  return risultato;
+}
+
+/** La riga delle ricezioni quando la scuola è Bonatti. */
 export const BONATTI_RECEPTION_SOURCE =
-  'Bonatti (tratt. III, parte 2, PDF pp. 167-168) fa nascere la ricezione da un\'applicazione per corpo o per ' +
-  'aspetto, e la dà al signore del domicilio, dell\'esaltazione o di due dignità minori insieme (termine e ' +
-  'triplicità, termine e faccia, faccia e triplicità), mai di una sola. Qui non è calcolata: queste sono le ' +
-  'ricezioni comuni, di Lilly (p. 112 mutua, p. 176 semplice) per domicilio ed esaltazione.';
+  'Bonatti, tratt. III, parte 2: la ricezione nasce da un\'applicazione (PDF pp. 167-168), e chi si applica è ' +
+  'ricevuto dal signore del domicilio, dell\'esaltazione o di due dignità minori insieme (termine e triplicità, ' +
+  'termine e faccia, faccia e triplicità), mai di una sola; la triplicità per tutti e tre i signori. ' +
+  'L\'applicazione come il cap. 4 (p. 158): il più leggero, nell\'ordine delle sfere dalla Luna a Saturno, ' +
+  'per corpo nello stesso segno o per sestile, quadrato e trigono (l\'opposizione il passo non la nomina), con ' +
+  'meno gradi nel suo segno del più pesante e sei gradi o meno fra i due; il moto retrogrado non conta. Le ' +
+  'orbite che Bonatti dà a p. 159 (Saturno 9, Giove 9, Marte 8, Sole 15, Venere 7, Mercurio 7, Luna 12, ' +
+  'tratt. III, parte 1) non sono usate. Non ci sono ricezioni mutue: l\'applicazione va in un verso solo.';

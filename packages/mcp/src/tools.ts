@@ -337,8 +337,10 @@ export function registerComputeNatalChart(server: McpServer, context: ToolContex
               'bonatti: Decem tractatus astronomiae (Ratdolt 1491), tratt. II, con domicilio, esaltazione ' +
               'col grado e i Nodi, i tre signori della triplicità (di giorno, di notte e il partecipe) e chi ' +
               'la governa nella setta, termini tolemaici col Leone che comincia da Saturno, facce caldee, ' +
-              'esilio e caduta; niente punteggio, e le ricezioni restano quelle comuni, perché Bonatti la ' +
-              "ricezione la fa nascere da un'applicazione. È la scuola medievale: non chiederla per avere " +
+              'esilio e caduta; niente punteggio. Le ricezioni sono le sue: il più pesante riceve il più ' +
+              "leggero che gli si applica entro sei gradi, per corpo, sestile, quadrato o trigono, se sta nel " +
+              'suo domicilio, nella sua esaltazione o in due sue dignità minori; ogni ricezione dice l\'aspetto ' +
+              "e la distanza, e mutue non ce ne sono. È la scuola medievale: non chiederla per avere " +
               'le triplicità di Lilly o di Tolomeo, che nell\'acqua sono diverse. ' +
               'valente: Anthologiae (ed. Kroll), la scuola ellenistica, con domicilio, esaltazione col grado, ' +
               'i tre signori del triangolo e il loro ordine nella setta (chi presiede, il secondo, il terzo), ' +

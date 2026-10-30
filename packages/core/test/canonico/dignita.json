@@ -1641,90 +1641,16 @@
       }
     ],
     "receptions": {
-      "source": "Bonatti (tratt. III, parte 2, PDF pp. 167-168) fa nascere la ricezione da un'applicazione per corpo o per aspetto, e la dà al signore del domicilio, dell'esaltazione o di due dignità minori insieme (termine e triplicità, termine e faccia, faccia e triplicità), mai di una sola. Qui non è calcolata: queste sono le ricezioni comuni, di Lilly (p. 112 mutua, p. 176 semplice) per domicilio ed esaltazione.",
+      "source": "Bonatti, tratt. III, parte 2: la ricezione nasce da un'applicazione (PDF pp. 167-168), e chi si applica è ricevuto dal signore del domicilio, dell'esaltazione o di due dignità minori insieme (termine e triplicità, termine e faccia, faccia e triplicità), mai di una sola; la triplicità per tutti e tre i signori. L'applicazione come il cap. 4 (p. 158): il più leggero, nell'ordine delle sfere dalla Luna a Saturno, per corpo nello stesso segno o per sestile, quadrato e trigono (l'opposizione il passo non la nomina), con meno gradi nel suo segno del più pesante e sei gradi o meno fra i due; il moto retrogrado non conta. Le orbite che Bonatti dà a p. 159 (Saturno 9, Giove 9, Marte 8, Sole 15, Venere 7, Mercurio 7, Luna 12, tratt. III, parte 1) non sono usate. Non ci sono ricezioni mutue: l'applicazione va in un verso solo.",
       "counted": [
         "domicilio",
-        "esaltazione"
+        "esaltazione",
+        "triplicita",
+        "termine",
+        "faccia"
       ],
-      "single": [
-        {
-          "receiver": "sole",
-          "received": "luna",
-          "by": [
-            "domicilio"
-          ]
-        },
-        {
-          "receiver": "sole",
-          "received": "marte",
-          "by": [
-            "esaltazione"
-          ]
-        },
-        {
-          "receiver": "sole",
-          "received": "giove",
-          "by": [
-            "domicilio"
-          ]
-        },
-        {
-          "receiver": "sole",
-          "received": "saturno",
-          "by": [
-            "esaltazione"
-          ]
-        },
-        {
-          "receiver": "venere",
-          "received": "sole",
-          "by": [
-            "esaltazione"
-          ]
-        },
-        {
-          "receiver": "marte",
-          "received": "saturno",
-          "by": [
-            "domicilio"
-          ]
-        },
-        {
-          "receiver": "giove",
-          "received": "sole",
-          "by": [
-            "domicilio"
-          ]
-        },
-        {
-          "receiver": "saturno",
-          "received": "mercurio",
-          "by": [
-            "domicilio"
-          ]
-        },
-        {
-          "receiver": "saturno",
-          "received": "venere",
-          "by": [
-            "domicilio"
-          ]
-        }
-      ],
-      "mutual": [
-        {
-          "bodies": [
-            "sole",
-            "giove"
-          ],
-          "firstReceives": [
-            "domicilio"
-          ],
-          "secondReceives": [
-            "domicilio"
-          ]
-        }
-      ]
+      "single": [],
+      "mutual": []
     },
     "bonatti": {
       "school": "bonatti",

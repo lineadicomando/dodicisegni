@@ -38,6 +38,7 @@ import {
   BONATTI_SOURCE,
   BONATTI_TERMS_SOURCE,
   bonattiDignitiesOf,
+  bonattiReceptionsOf,
   bonattiRulersAt,
 } from './dignita-bonatti.js';
 import {
@@ -60,14 +61,14 @@ import type {
  * Le dignità per cui le ricezioni si contano, con e senza la scuola. Con
  * Tolomeo restano le comuni: la ricezione è una definizione di Lilly, e
  * contarla sulle tavole di Tolomeo mescolerebbe le due scuole. Con Bonatti
- * pure: la sua ricezione nasce da un'applicazione, e qui non si calcola.
- * Con Valente anche: lui non ne definisce una (vedi `VALENS_RECEPTION_SOURCE`).
+ * sono le sue, che nascono da un'applicazione: tutte e cinque le dignità,
+ * delle minori due insieme (`bonattiReceptionsOf`). Con Valente anche: lui non ne definisce una (vedi `VALENS_RECEPTION_SOURCE`).
  */
 const CONTATE: Readonly<Record<'comune' | DignitySchool, readonly ReceptionDignity[]>> = {
   comune: ['domicilio', 'esaltazione'],
   lilly: ['domicilio', 'esaltazione', 'triplicita', 'termine', 'faccia'],
   tolomeo: ['domicilio', 'esaltazione'],
-  bonatti: ['domicilio', 'esaltazione'],
+  bonatti: ['domicilio', 'esaltazione', 'triplicita', 'termine', 'faccia'],
   valente: ['domicilio', 'esaltazione'],
 };
 
@@ -104,7 +105,11 @@ export function computeWesternDignities(
   ) as WesternDignities['signLords'];
 
   const conLilly = school === 'lilly';
-  const { single, mutual } = conLilly ? lillyReceptionsOf(bodies, sect) : receptionsOf(bodies);
+  const { single, mutual } = conLilly
+    ? lillyReceptionsOf(bodies, sect)
+    : school === 'bonatti'
+      ? { single: bonattiReceptionsOf(bodies), mutual: [] }
+      : receptionsOf(bodies);
   const caso = school ?? 'comune';
 
   const dignities: WesternDignities = {

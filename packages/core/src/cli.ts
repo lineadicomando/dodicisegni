@@ -154,7 +154,8 @@ Opzioni
                         oppure bonatti (Decem tractatus, 1491, tratt. II),
                         con esaltazioni col grado e i Nodi, triplicità coi
                         tre signori, termini tolemaici col Leone di Saturno
-                        e facce caldee, senza punteggio né ricezioni sue;
+                        e facce caldee, senza punteggio, e le sue
+                        ricezioni, che nascono da un'applicazione;
                         oppure valente (Anthologiae, ed. Kroll), la scuola
                         ellenistica, con esaltazioni col grado, i tre signori
                         dei triangoli in ordine di setta e i termini egizi,

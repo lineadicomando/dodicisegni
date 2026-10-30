@@ -37,8 +37,8 @@ import type { RequestHandler } from './$types';
  * `chart.dignities.bonatti`: domicilio, esaltazione col grado e i Nodi, i tre
  * signori della triplicità e chi la governa nella setta, termine tolemaico
  * col Leone di Saturno, faccia caldea, esilio e caduta; niente punteggio, e
- * ricezioni solo per domicilio ed esaltazione, perché quella di Bonatti
- * chiede un'applicazione. `dignitySchool=valente` aggiunge le tavole delle
+ * le ricezioni sono le sue: nascono da un'applicazione entro sei gradi (per
+ * corpo, sestile, quadrato o trigono), e ognuna porta `application`. `dignitySchool=valente` aggiunge le tavole delle
  * *Anthologiae* (ed. Kroll) in `chart.dignities.valente`: domicilio,
  * esaltazione col grado, i tre signori del triangolo e il loro ordine nella
  * setta, termine egizio e caduta; niente Nodi, facce, esilio o punteggio, e

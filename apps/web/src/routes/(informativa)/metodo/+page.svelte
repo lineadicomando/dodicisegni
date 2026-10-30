@@ -480,10 +480,13 @@
   il testo di Tolomeo e non la sua tavola. Un punteggio delle dignità Bonatti
   non lo dà: i numeri che si trovano nel suo trattato delle rivoluzioni
   servono a scegliere il signore dell'anno, e non sono il 5-4-3-2-1 che gli
-  si attribuisce. La sua ricezione nasce da un'applicazione, per corpo o per
-  aspetto, e chiede il domicilio, l'esaltazione o due dignità minori insieme:
-  il sito non la calcola, e con Bonatti le ricezioni restano per domicilio ed
-  esaltazione.
+  si attribuisce. La sua ricezione nasce da un'applicazione, e il sito la
+  calcola come la definisce lui: il pianeta più leggero, con meno gradi nel
+  suo segno, si applica al più pesante per corpo, sestile, quadrato o
+  trigono, entro sei gradi; e il più pesante lo riceve se sta nel suo
+  domicilio, nella sua esaltazione o in due sue dignità minori insieme, mai
+  in una sola. Bonatti dà anche un'orbita a ogni pianeta, ma la soglia che
+  scrive nella definizione è quella dei sei gradi, e il sito usa quella.
 </p>
 
 <p id="valente">

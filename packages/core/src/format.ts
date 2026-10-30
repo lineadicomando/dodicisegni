@@ -809,7 +809,13 @@ function dignityLines(
   );
   lines.push(
     `Semplici — ${
-      single.map((r) => `${nome(r.receiver)} riceve ${nome(r.received)} (${per(r.by)})`).join('; ') ||
+      single
+        .map(
+          (r) =>
+            `${nome(r.receiver)} riceve ${nome(r.received)} (${per(r.by)}` +
+            `${r.application ? `; ${r.application.aspect} a ${formatDegrees(r.application.distance)}` : ''})`,
+        )
+        .join('; ') ||
       '—'
     }`,
   );

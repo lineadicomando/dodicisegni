@@ -602,6 +602,12 @@ export interface Reception {
   receiver: BodyId;
   received: BodyId;
   by: ReceptionDignity[];
+  /**
+   * Solo con la scuola di Bonatti, dove la ricezione nasce da
+   * un'applicazione: per quale aspetto `received` si applica a `receiver`, e
+   * a quanti gradi dall'esatto.
+   */
+  application?: { aspect: 'congiunzione' | 'sestile' | 'quadrato' | 'trigono'; distance: number };
 }
 
 /** Due pianeti ciascuno nella dignità dell'altro. */
@@ -889,11 +895,12 @@ export interface WesternDignities {
     dignities: Record<DomicileScheme, Dignity[]>;
   }[];
   /**
-   * Le ricezioni fra i sette pianeti, secondo Lilly. `counted` dice per quali
-   * dignità sono state contate, come `Distribution.counted`: senza la scuola,
-   * con Tolomeo, che la ricezione non la definisce, con Bonatti, che la
-   * definisce su un'applicazione, e con Valente, domicilio ed esaltazione;
-   * con Lilly, tutte e cinque.
+   * Le ricezioni fra i sette pianeti. `counted` dice per quali dignità sono
+   * state contate, come `Distribution.counted`: senza la scuola, con Tolomeo
+   * e con Valente, che la ricezione non la definiscono, domicilio ed
+   * esaltazione secondo Lilly; con Lilly, tutte e cinque; con Bonatti tutte
+   * e cinque, ma con la sua regola, che vuole un'applicazione e due minori
+   * insieme (`application`, `BONATTI_RECEPTION_SOURCE`).
    */
   receptions: {
     source: string;
