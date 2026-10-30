@@ -22,6 +22,7 @@
     if (e.kind === 'aspetto') {
       const retro = e.retrograde.body ? ', retrogrado' : '';
       // La guardia: una risposta in cache può precedere il campo.
+      // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition -- il tipo lo dà presente, la cache no
       const chi = !e.approaching
         ? ''
         : e.approaching.length === 2
