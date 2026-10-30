@@ -12,7 +12,7 @@
  * dice. Lo dice 46.158-166, per gli stessi due segni e gli stessi due
  * signori, a proposito della chara dasha, e Santhanam rimanda lì (vol. I,
  * p. 297). Il motore applica quella procedura anche al pada: è una lettura,
- * scelta dal proprietario il 28 ottobre 2026 (`TODO.md`, *Deciso*), e il
+ * scelta dal proprietario il 28 ottobre 2026 (`docs/decisioni.md`), e il
  * risultato dice per ogni pada quale regola ha deciso.
  *
  * Fonte: *Brihat Parashara Hora Shastra*, trad. R. Santhanam, vol. I (1992),

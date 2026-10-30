@@ -274,8 +274,8 @@ export const BONATTI_WEIGHT_ORDER = [
 /**
  * Quanti gradi possono separare chi si applica da chi riceve: «ita tamen
  * quod sint sex gradus vel minus inter eos» (PDF p. 158). Scelto dal
- * proprietario il 30 ottobre 2026 contro le orbite di p. 159 (`TODO.md`,
- * *Deciso*).
+ * proprietario il 30 ottobre 2026 contro le orbite di p. 159
+ * (`docs/decisioni.md`).
  */
 export const BONATTI_APPLICATION_LIMIT = 6;
 

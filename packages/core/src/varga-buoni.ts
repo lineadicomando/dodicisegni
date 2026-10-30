@@ -9,7 +9,7 @@
  * il punteggio di Lilly; che cosa il nome prometta non lo dice.
  *
  * Le scelte di lettura, prese dal proprietario il 28 ottobre 2026 e scritte
- * in `TODO.md` (*Deciso*), viaggiano nel risultato:
+ * in `docs/decisioni.md`, viaggiano nel risultato:
  *
  * - **6.52 come lo traduce Santhanam**: i *segni* di uccha, moolatrikona e
  *   propri. Il genitivo *adhipateḥ* si presterebbe anche a «i segni del

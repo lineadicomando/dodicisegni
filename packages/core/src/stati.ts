@@ -10,8 +10,8 @@
  * lettura. Il motore le calcola come dati e non dice che cosa annullino: il
  * conto dei varga buoni resta quello che è (vedi `varga-buoni.ts`), e che una
  * avastha guasti i varga buoni il 6.53 non lo dice per nessuna in
- * particolare. Le scelte sono del proprietario, 29 ottobre 2026 (`TODO.md`,
- * *Deciso*).
+ * particolare. Le scelte sono del proprietario, 29 ottobre 2026
+ * (`docs/decisioni.md`).
  *
  * - **Combustione**: *Surya Siddhanta* IX.6-9 e X.1, trad. Burgess (JAOS 6,
  *   1860), pp. 367 e 370, coi limiti in «gradi di tempo» (*kālāṃśa*), che

@@ -15,7 +15,7 @@
  * Sagittario) e la sua eccezione (il decimo dal segno trovato, non quella di
  * BPHS 29.4-5): sono le sue, e qui valgono solo qui. Gli arudha dei bhava
  * restano del BPHS, in `arudha.ts`. Scelto dal proprietario il 29 ottobre
- * 2026 (`TODO.md`, *Deciso*).
+ * 2026 (`docs/decisioni.md`).
  *
  * **Una lettura nostra, dichiarata.** In §15.5.1 la regola (2) conta il
  * dispositore del graha; se il graha sta nello Scorpione o nell'Acquario il
@@ -134,7 +134,7 @@ const grahaNel = (sign: ZodiacSign, p: Posizioni, tranne?: BodyId): number =>
  * Senza il grado nel segno, cioè in un varga, lo spareggio 5b non si fa: se
  * la catena arriva lì il signore è `undefined`, e la regola dice perché.
  * Scelto dal proprietario il 30 ottobre 2026, contro il grado «del varga»
- * (gradi × N modulo 30) che Rao non nomina (`TODO.md`, *Deciso*).
+ * (gradi × N modulo 30) che Rao non nomina (`docs/decisioni.md`).
  */
 export function strongerCoLord(sign: ZodiacSign, p: Posizioni): { lord: BodyId | undefined; rule: string } {
   const coppia = CO_SIGNORI[sign];

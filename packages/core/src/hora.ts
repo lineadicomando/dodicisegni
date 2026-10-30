@@ -28,10 +28,11 @@
  * verso, e per questo **non entrano nei conti del BPHS** (varga buoni e
  * vimshopaka), che con loro contano la hora di Parashara e lo dicono: un
  * conto di Parashara su una carta di Rath sarebbe un ibrido che nessuno ha
- * praticato. Scelto dal proprietario il 30 ottobre 2026 (`TODO.md`,
- * *Deciso*). La sesta variante di PyJHora, che chiama «Somanatha» (la
- * parivritti alternata), non ha un autore che la scriva e non c'è; la regola
- * di Garga e Yavana, che Varahamihira riporta e scarta (BJ I.12), nemmeno.
+ * praticato. Scelto dal proprietario il 30 ottobre 2026
+ * (`docs/decisioni.md`). La sesta variante di PyJHora, che chiama
+ * «Somanatha» (la parivritti alternata), non ha un autore che la scriva e
+ * non c'è; la regola di Garga e Yavana, che Varahamihira riporta e scarta
+ * (BJ I.12), nemmeno.
  *
  * Le fonti stanno in `texts/jyotisha/`: `bphs-santhanam-1992-vol1`,
  * `narasimha-rao-personal-finances-hora-chart-2003`,

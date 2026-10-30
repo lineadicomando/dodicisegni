@@ -88,7 +88,7 @@ interface VargaDefinition {
    * un'avvertenza calcolata sulla carta (`fineWarning`). Sono cinque: il D-24, il
    * D-27 e gli ultimi tre; il D-30 no, perché i suoi tratti vanno da cinque a
    * otto gradi.
-   * Scelto dal proprietario il 30 ottobre 2026 (TODO.md, *Deciso*).
+   * Scelto dal proprietario il 30 ottobre 2026 (`docs/decisioni.md`).
    */
   fine?: boolean;
 }
@@ -350,7 +350,7 @@ export const VARGAS: readonly VargaDefinition[] = [
     // segno»: è da lì che viene la lettura dall'Ariete, che non ha trovato un
     // autore e non è calcolata. P.V.R. Narasimha Rao legge il verso come qui
     // (un'email del 2009 riportata su un forum, in `texts/tecnica/
-    // d60-letture-in-rete-2026`). La decisione sta in TODO.md, *Deciso*. I sessanta nomi (6.34-40)
+    // d60-letture-in-rete-2026`). La decisione sta in `docs/decisioni.md`. I sessanta nomi (6.34-40)
     // si rovesciano nei segni pari; i segni no. I nomi sono in `SHASHTIAMSA_NAMES`.
     id: 'd60',
     name: 'Shashtiamsa',

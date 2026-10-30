@@ -17,7 +17,7 @@
  *   (Teubner 1986, pp. 13-18): gli egizi in undici segni, con l'Ariete e lo
  *   Scorpione sanati dalla copia di Rhosus, e nella Bilancia i numeri suoi
  *   (vedi `VALENS_TERMS_SOURCE`). Scelto dal proprietario il 30 ottobre
- *   2026, sulle pagine di Pingree (`TODO.md`, *Deciso*).
+ *   2026, sulle pagine di Pingree (`docs/decisioni.md`).
  *
  * E non tiene quello che in Valente non si è trovato: le **facce**
  * decaniche, l'**esilio**, un **punteggio**, i **Nodi**. Le ricezioni restano

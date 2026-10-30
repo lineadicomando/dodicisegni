@@ -6,8 +6,11 @@ licenza e i comandi; qui c'è ciò che serve sapere prima di toccare qualsiasi
 cosa. Il progetto è agli inizi e **non ha una documentazione estesa**: i
 parametri si leggono nei commenti delle rotte e nelle descrizioni dei tool MCP,
 che sono la fonte. Il lavoro aperto sta in `TODO.md`: una voce per cosa, con il
-file, la riga e il modo di verificarla, e le decisioni già prese da non
-ridiscutere.
+file, la riga e il modo di verificarla. In `docs/` c'è la memoria del lavoro,
+non documentazione per gli utenti: `decisioni.md` (le scelte già prese, da non
+ridiscutere), `esaminato.md` (cose cercate e lasciate fuori), `lavorare.md`
+(gli inciampi noti e come si legge una fonte), `storia.md` (voci chiuse,
+versioni, sessioni). Si leggono quando servono, non tutte all'inizio.
 
 ## Mappa
 
@@ -135,7 +138,8 @@ il motore usa Moshier invece delle effemeridi Swiss.
      indirizzo spostato)? Si muove la **seconda** cifra;
   2. arriva qualcosa che prima nessun indirizzo dava (una sezione, un
      endpoint, un'opzione, una scuola nuova chiesta per nome)? La **terza**;
-  3. non arriva niente (commenti, test, `TODO.md`, `texts/`)? **Niente**.
+  3. non arriva niente (commenti, test, `TODO.md`, `docs/`, `texts/`)?
+     **Niente**.
 
   **Alla prima domanda risponde la macchina**: il fascicolo canonico,
   `packages/core/test/canonico.test.ts`, scrive in `test/canonico/` le
@@ -186,27 +190,16 @@ redistribuibili, e tutte pesano. Serve a rileggere un valore senza rifare la
 ricerca che l'ha trovato.
 
 - **Prima di citare, scaricare.** Una fonte che una ricerca trova e che entra
-  nel codice, in un test o nel `TODO.md` va salvata qui nella stessa sessione.
-  Quelle che non si possono scaricare (protette, solo in prestito) stanno in
-  `texts/INDICE.md` con lo stato, e in una voce del `TODO.md` se servono.
-- **Una cartella per edizione**, in
-  `texts/<ambito>/<autore>-<opera>-<curatore>-<anno>/`, con l'ambito fra
-  `jyotisha`, `occidentale` e `tecnica` (effemeridi, algoritmi, software).
-  Nomi in minuscolo, col trattino, senza accenti.
-- **Dentro, nomi fissi**: `FONTE.md` (titolo, edizione, URL e identificativo,
-  stato dei diritti, la mappa fra pagine stampate e immagini, che cosa è stato
-  letto e per quale file o voce), `scansione.pdf`, `ocr.txt`,
-  `numeri-pagina.json`, `pagine/pNNN.jpg` col numero **stampato** sulla
-  pagina, `trascrizioni.md` per i passi letti a vista, `html/` e `testo/` per
-  le pagine web.
-- **Una scansione porta sempre il suo testo**: l'OCR quando c'è, convertito
-  in `.txt` quando la fonte è HTML, perché si possa cercare con `grep`. L'OCR
-  però non è una lettura: il numero che entra nel codice si legge
+  nel codice, in un test, nel `TODO.md` o in `docs/` va salvata qui nella
+  stessa sessione, in `texts/<ambito>/<autore>-<opera>-<curatore>-<anno>/`
+  con la sua scheda `FONTE.md`. Quelle che non si possono scaricare stanno in
+  `texts/INDICE.md` con lo stato. I nomi fissi dentro la cartella sono in
+  `docs/lavorare.md`, *Le fonti*.
+- **L'OCR non è una lettura**: il numero che entra nel codice si legge
   sull'immagine, che si salva in `pagine/`, e il passo si trascrive in
   `trascrizioni.md`.
-- **`texts/INDICE.md`** ha una riga per fonte: cartella, opera, stato
-  (scaricata, da scaricare, non libera), dove è usata. Va aggiornato con la
-  cartella, non dopo.
+- **`texts/INDICE.md`** ha una riga per fonte (cartella, opera, stato, dove è
+  usata) e si aggiorna con la cartella, non dopo.
 - Dal repo della fonte esce solo ciò che si cita: il valore, l'opera, la
   pagina. Il testo di una traduzione protetta non si ricopia nei commenti.
 
