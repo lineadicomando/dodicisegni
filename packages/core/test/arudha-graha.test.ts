@@ -50,7 +50,7 @@ describe('il co-signore più forte, §15.5.1', () => {
     expect(strongerCoLord('acquario', pos({ saturno: 'bilancia', 'nodo-nord': 'cancro' })).rule).toContain('3)');
   });
 
-  it('regola 4: Marte in Ge, segno doppio, contro Ketu in Aq, fisso', () => {
+  it('regola 4: Marte in Ge, segno mutevole, contro Ketu in Aq, fisso', () => {
     expect(strongerCoLord('scorpione', pos({ marte: 'gemelli', 'nodo-sud': 'acquario' })).lord).toBe('marte');
   });
 

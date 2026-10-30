@@ -1797,7 +1797,7 @@ export type NatalPointId =
 export type Element = 'fuoco' | 'terra' | 'aria' | 'acqua';
 
 /** La quadruplicità di un segno. */
-export type Modality = 'cardinale' | 'fisso' | 'mobile';
+export type Modality = 'cardinale' | 'fisso' | 'mutevole';
 
 /**
  * Quanti punti di un gruppo cadono in ciascun elemento e in ciascuna modalità.

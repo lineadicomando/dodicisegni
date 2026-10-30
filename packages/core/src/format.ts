@@ -711,7 +711,7 @@ function distributionLines(distribution: Distribution): string[] {
       const elementi = (['fuoco', 'terra', 'aria', 'acqua'] as const)
         .map((elemento) => `${elemento} ${gruppo.elements[elemento]}`)
         .join('  ');
-      const modalita = (['cardinale', 'fisso', 'mobile'] as const)
+      const modalita = (['cardinale', 'fisso', 'mutevole'] as const)
         .map((modo) => `${modo} ${gruppo.modalities[modo]}`)
         .join('  ');
       return `${nome.padEnd(8)} ${elementi.padEnd(38)} | ${modalita}`;

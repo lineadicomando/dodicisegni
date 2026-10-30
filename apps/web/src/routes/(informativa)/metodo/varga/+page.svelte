@@ -55,16 +55,16 @@
     <tr><td>D-3</td><td>Drekkana</td><td>3</td><td>Tre parti da 10°: la prima al segno stesso, la seconda al quinto da lui, la terza al nono.</td></tr>
     <tr><td>D-4</td><td>Chaturthamsa</td><td>4</td><td>Quattro parti da 7°30': al segno stesso, al quarto, al settimo e al decimo da lui.</td></tr>
     <tr><td>D-7</td><td>Saptamsa</td><td>7</td><td>Sette parti da 4°17'8,57". Nei segni dispari si parte dal segno stesso, nei pari dal settimo.</td></tr>
-    <tr><td>D-9</td><td>Navamsa</td><td>9</td><td>Nove parti da 3°20'. Si parte dal segno stesso se è cardinale, dal nono se è fisso, dal quinto se è mobile.</td></tr>
+    <tr><td>D-9</td><td>Navamsa</td><td>9</td><td>Nove parti da 3°20'. Si parte dal segno stesso se è cardinale, dal nono se è fisso, dal quinto se è mutevole.</td></tr>
     <tr><td>D-10</td><td>Dasamsa</td><td>10</td><td>Dieci parti da 3°. Nei segni dispari si parte dal segno stesso, nei pari dal nono.</td></tr>
     <tr><td>D-12</td><td>Dwadasamsa</td><td>12</td><td>Dodici parti da 2°30'. Si parte sempre dal segno stesso.</td></tr>
-    <tr><td>D-16</td><td>Shodasamsa</td><td>16</td><td>Sedici parti da 1°52'30". Si parte dall'Ariete se il segno è cardinale, dal Leone se è fisso, dal Sagittario se è mobile.</td></tr>
-    <tr><td>D-20</td><td>Vimsamsa</td><td>20</td><td>Venti parti da 1°30'. Si parte dall'Ariete se il segno è cardinale, dal Sagittario se è fisso, dal Leone se è mobile.</td></tr>
+    <tr><td>D-16</td><td>Shodasamsa</td><td>16</td><td>Sedici parti da 1°52'30". Si parte dall'Ariete se il segno è cardinale, dal Leone se è fisso, dal Sagittario se è mutevole.</td></tr>
+    <tr><td>D-20</td><td>Vimsamsa</td><td>20</td><td>Venti parti da 1°30'. Si parte dall'Ariete se il segno è cardinale, dal Sagittario se è fisso, dal Leone se è mutevole.</td></tr>
     <tr><td>D-24</td><td>Siddhamsa</td><td>24</td><td>Ventiquattro parti da 1°15'. Nei segni dispari si parte dal Leone, nei pari dal Cancro.</td></tr>
     <tr><td>D-27</td><td>Nakshatramsa</td><td>27</td><td>Ventisette parti da 1°06'40", contate di seguito dall'Ariete lungo tutto lo zodiaco.</td></tr>
     <tr><td>D-30</td><td>Trimsamsa</td><td>30</td><td>Cinque tratti disuguali, retti da Marte, Saturno, Giove, Mercurio e Venere; rovesciati nei segni pari.</td></tr>
     <tr><td>D-40</td><td>Khavedamsa</td><td>40</td><td>Quaranta parti da 45'. Nei segni dispari si parte dall'Ariete, nei pari dalla Bilancia.</td></tr>
-    <tr><td>D-45</td><td>Akshavedamsa</td><td>45</td><td>Quarantacinque parti da 40'. Si parte dall'Ariete se il segno è cardinale, dal Leone se è fisso, dal Sagittario se è mobile.</td></tr>
+    <tr><td>D-45</td><td>Akshavedamsa</td><td>45</td><td>Quarantacinque parti da 40'. Si parte dall'Ariete se il segno è cardinale, dal Leone se è fisso, dal Sagittario se è mutevole.</td></tr>
     <tr><td>D-60</td><td>Shashtiamsa</td><td>60</td><td>Sessanta parti da 30', contate dal segno stesso: vedi <a href="#d60">sotto</a>.</td></tr>
   </tbody>
 </table>
@@ -76,7 +76,7 @@
   kendra, il D-9 parte da dove dice la modalità del segno, il D-7 e il D-10 da
   dove dice la sua parità, il D-12 riparte sempre dal segno stesso. Il D-16, il
   D-20 e il D-24 partono invece da pochi segni fissi, scelti dalla modalità o
-  dalla parità: il D-16 e il D-20 usano gli stessi tre, ma con fissi e mobili
+  dalla parità: il D-16 e il D-20 usano gli stessi tre, ma con fissi e mutevoli
   scambiati. Il D-40 e il D-45 ripetono quelle forme su parti più strette.
 </p>
 

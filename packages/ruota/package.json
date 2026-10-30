@@ -1,6 +1,6 @@
 {
   "name": "@dodicisegni/ruota",
-  "version": "0.13.0",
+  "version": "0.14.0",
   "description": "Il disegno del tema: vocabolario grafico, geometria della ruota e resa in SVG",
   "license": "AGPL-3.0-or-later",
   "type": "module",

@@ -43,7 +43,7 @@ export interface DistributionInput {
 function emptyGroup(): DistributionGroup {
   return {
     elements: { fuoco: 0, terra: 0, aria: 0, acqua: 0 },
-    modalities: { cardinale: 0, fisso: 0, mobile: 0 },
+    modalities: { cardinale: 0, fisso: 0, mutevole: 0 },
     counted: [],
   };
 }

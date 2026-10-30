@@ -137,7 +137,9 @@
 <p>
   Due classificazioni dei segni. Gli elementi sono quattro, fuoco, terra, aria
   e acqua, e si ripetono in quest'ordine dall'Ariete. Le modalità sono tre,
-  cardinale, fissa e mobile, e si ripetono anch'esse.
+  cardinale, fissa e mutevole, e si ripetono anch'esse. Nei testi antichi
+  «mobili» sono i cardinali, e il terzo gruppo si chiama «comune» o
+  «bicorporeo».
   → <a href="/metodo#distribuzione">Che cosa si conta</a>
 </p>
 

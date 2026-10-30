@@ -78,7 +78,7 @@ export type AspectId =
 
 export type Element = 'fuoco' | 'terra' | 'aria' | 'acqua';
 
-export type Modality = 'cardinale' | 'fisso' | 'mobile';
+export type Modality = 'cardinale' | 'fisso' | 'mutevole';
 
 /** Un corpo da disegnare. Del corpo calcolato si guardano solo questi campi. */
 export interface CelestialBody {

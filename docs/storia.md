@@ -54,6 +54,7 @@ cambia muove la seconda cifra.
 | 0.11.0 | le ricezioni di Bonatti, dall'applicazione entro sei gradi | 26 |
 | 0.12.0 | i termini di Valente dall'ed. Pingree (cambia la Bilancia) | 26 |
 | 0.13.0 | dasha, mahadasha e antardasha al femminile (cambia un'avvertenza) | — |
+| 0.14.0 | la terza modalità è `mutevole`, non `mobile` (cambia il campo della distribuzione e quattro regole dei varga) | 30 |
 
 ## Le sessioni
 

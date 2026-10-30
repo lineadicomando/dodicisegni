@@ -421,7 +421,7 @@
         "modalities": {
           "cardinale": 4,
           "fisso": 5,
-          "mobile": 1
+          "mutevole": 1
         },
         "counted": [
           "sole",
@@ -446,7 +446,7 @@
         "modalities": {
           "cardinale": 0,
           "fisso": 2,
-          "mobile": 0
+          "mutevole": 0
         },
         "counted": [
           "nodo-nord",
@@ -463,7 +463,7 @@
         "modalities": {
           "cardinale": 1,
           "fisso": 1,
-          "mobile": 0
+          "mutevole": 0
         },
         "counted": [
           "ascendente",
@@ -1836,7 +1836,7 @@
         "modalities": {
           "cardinale": 4,
           "fisso": 5,
-          "mobile": 1
+          "mutevole": 1
         },
         "counted": [
           "sole",
@@ -1861,7 +1861,7 @@
         "modalities": {
           "cardinale": 0,
           "fisso": 2,
-          "mobile": 0
+          "mutevole": 0
         },
         "counted": [
           "nodo-nord",
@@ -1878,7 +1878,7 @@
         "modalities": {
           "cardinale": 0,
           "fisso": 0,
-          "mobile": 0
+          "mutevole": 0
         },
         "counted": []
       }

@@ -37,13 +37,13 @@ const indice = (sign: ZodiacSign): number => ZODIAC_SIGNS.indexOf(sign);
 const segno = (i: number): ZodiacSign => ZODIAC_SIGNS[((i % 12) + 12) % 12] as ZodiacSign;
 const avanti = (da: ZodiacSign, a: ZodiacSign): number => (indice(a) - indice(da) + 12) % 12;
 
-/** 0 mobile (cara), 1 fisso, 2 doppio. */
+/** 0 cardinale (cara), 1 fisso (sthira), 2 mutevole (dvisvabhāva): la convenzione è in testa a `varga.ts`. */
 const natura = (sign: ZodiacSign): number => indice(sign) % 3;
 
 /**
- * I segni guardati da un segno, §10.3: il mobile guarda i fissi tranne
- * quello che lo segue, il fisso i mobili tranne quello che lo precede, il
- * doppio gli altri doppi. La relazione è simmetrica.
+ * I segni guardati da un segno, §10.3: il cardinale guarda i fissi tranne
+ * quello che lo segue, il fisso i cardinali tranne quello che lo precede, il
+ * mutevole gli altri mutevoli. La relazione è simmetrica.
  */
 export function rasiDrishti(sign: ZodiacSign): ZodiacSign[] {
   const n = natura(sign);
@@ -165,7 +165,7 @@ export function strongerCoLord(sign: ZodiacSign, p: Posizioni): { lord: BodyId |
   const eb = RAO_EXALTATION[b] === sb;
   if (ea !== eb) return vince(ea, 'Esaltato secondo la tavola 6 (§15.5.1, 3).');
 
-  if (natura(sa) !== natura(sb)) return vince(natura(sa) > natura(sb), 'Segno doppio più forte del fisso, fisso del mobile (§15.5.1, 4).');
+  if (natura(sa) !== natura(sb)) return vince(natura(sa) > natura(sb), 'Segno mutevole più forte del fisso, fisso del cardinale (§15.5.1, 4).');
 
   const aa = avanzamento(a, p);
   const ab = avanzamento(b, p);
@@ -239,7 +239,7 @@ export function strongerRasi(x: ZodiacSign, y: ZodiacSign, p: Posizioni): { sign
   if (r4 !== 'pari') return vince(r4, 'Il signore sta in un segno di parità diversa (§15.5.2, 4).');
 
   const r5 = confronta(natura(x), natura(y));
-  if (r5 !== 'pari') return vince(r5, 'Segno doppio più forte del fisso, fisso del mobile (§15.5.2, 5).');
+  if (r5 !== 'pari') return vince(r5, 'Segno mutevole più forte del fisso, fisso del cardinale (§15.5.2, 5).');
 
   const r6 = coiSignori((lx, ly) => {
     if (lx === ly) return 'pari';

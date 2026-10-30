@@ -105,10 +105,11 @@ ragionamento, e chi ha chiesto deve poterla seguire.
 6. Il tempo, se chiesto. Il motore non converte i gradi in giorni: lo fai tu,
    dicendo che è il metodo di Lilly e che è una stima. Lilly contava i gradi
    che mancano alla perfezione e li leggeva come giorni, settimane, mesi o
-   anni secondo i segni e le case dei significatori: nei segni mobili e
-   angolari il tempo è breve, nei comuni più lungo, nei fissi il più lungo
-   (p. 110). Gli istanti esatti che trovi negli eventi sono il moto dei
-   pianeti, non la data dell'evento domandato: non presentarli come tali.
+   anni secondo i segni e le case dei significatori: nei segni cardinali (i
+   «mobili» di Lilly) e angolari il tempo è breve, nei mutevoli (i suoi
+   «comuni») più lungo, nei fissi il più lungo (p. 110). Gli istanti esatti
+   che trovi negli eventi sono il moto dei pianeti, non la data dell'evento
+   domandato: non presentarli come tali.
 
 LIMITI
 

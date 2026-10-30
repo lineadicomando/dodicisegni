@@ -52,7 +52,7 @@ const DUE_SIGNORI: Readonly<Partial<Record<ZodiacSign, readonly [BodyId, BodyId]
 /** I nove graha, che sono i soli «pianeti» che 46.161-162 conta in un segno. */
 const NOVE: readonly BodyId[] = ['sole', 'luna', 'marte', 'mercurio', 'giove', 'venere', 'saturno', 'nodo-nord', 'nodo-sud'];
 
-/** 46.163, «cara-sthira-dvandvāḥ kramato balaśālinaḥ»: cardinale, fisso, mobile, in forza crescente. */
+/** 46.163, «cara-sthira-dvandvāḥ kramato balaśālinaḥ»: cardinale, fisso, mutevole, in forza crescente. */
 const forzaDelSegno = (sign: ZodiacSign): number => indice(sign) % 3;
 
 /**
@@ -98,7 +98,7 @@ export function bhavaLord(
   if (forzaDelSegno(sa) !== forzaDelSegno(sb)) {
     return scegli(
       forzaDelSegno(sa) > forzaDelSegno(sb) ? a : b,
-      'Stessi graha: più forte il segno mobile del fisso, il fisso del cardinale (46.163).',
+      'Stessi graha: più forte il segno mutevole del fisso, il fisso del cardinale (46.163).',
     );
   }
 

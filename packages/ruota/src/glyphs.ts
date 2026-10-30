@@ -199,17 +199,17 @@ export const SIGN_MODALITY: Readonly<Record<ZodiacSign, Modality>> = {
   leone: 'fisso',
   scorpione: 'fisso',
   acquario: 'fisso',
-  gemelli: 'mobile',
-  vergine: 'mobile',
-  sagittario: 'mobile',
-  pesci: 'mobile',
+  gemelli: 'mutevole',
+  vergine: 'mutevole',
+  sagittario: 'mutevole',
+  pesci: 'mutevole',
 };
 
 /** L'ordine in cui i quattro elementi si nominano da sempre. */
 export const ELEMENT_ORDER: readonly Element[] = ['fuoco', 'terra', 'aria', 'acqua'];
 
 /** E le tre modalità, dal segno che apre la stagione a quello che la chiude. */
-export const MODALITY_ORDER: readonly Modality[] = ['cardinale', 'fisso', 'mobile'];
+export const MODALITY_ORDER: readonly Modality[] = ['cardinale', 'fisso', 'mutevole'];
 
 /**
  * Riferimenti alle custom property, non esadecimali.

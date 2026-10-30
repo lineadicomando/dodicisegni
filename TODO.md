@@ -15,97 +15,25 @@ Prima di cominciare:
   stata cercata.
 
 I riferimenti `file:riga` sono stati ricontrollati il 30 ottobre 2026 sulla
-versione 0.13.0. Le righe si spostano: se una non torna, fa fede il nome
+versione 0.14.0. Le righe si spostano: se una non torna, fa fede il nome
 della funzione o della costante accanto.
 
 ## Dove siamo
 
-Al 30 ottobre 2026, versione **0.13.0**. Sono aperte due voci, e nessuna
+Al 30 ottobre 2026, versione **0.14.0**. È aperta una voce sola, e non
 aspetta un testo:
 
 | Voce | Priorità | Taglia | Prima di cominciare |
 |---|---|---|---|
-| 30. «Mobile» vuol dire due cose: la terza modalità diventa «mutevole» | media | media | chiesta dal proprietario; il piano è nella voce, file per file, e cambia un campo delle risposte |
 | 28. La revisione della SEO | media | piccola | si fa sul server e non nel repo, e solo quando il proprietario chiede push e deploy |
 
-La 30 si può fare subito, in un commit solo. La 28 è la sola che tocca chi
-usa il sito oggi: i quattro nomi di dominio rispondono ciascuno come sito a
-sé.
+È la sola che tocca chi usa il sito oggi: i quattro nomi di dominio
+rispondono ciascuno come sito a sé.
 
 **Non pubblicato.** `origin` è fermo a `v0.5.2`: tutti i commit dopo, coi
-tag annotati da `v0.6.0` a `v0.13.0`, sono solo locali. Il push lo chiede il
+tag annotati da `v0.6.0` a `v0.14.0`, sono solo locali. Il push lo chiede il
 proprietario; si fa con `git push --follow-tags origin main`, poi il deploy
 (come, in `CLAUDE.local.md`). `git status -sb` dice quanto manca.
-
-## 30. «Mobile» vuol dire due cose: la terza modalità diventa «mutevole»
-
-**Priorità media.** Aperta il 30 ottobre 2026, dopo la revisione dei testi.
-Il motore chiama le tre modalità `cardinale`, `fisso`, `mobile`, con
-`mobile` per Gemelli, Vergine, Sagittario e Pesci. È l'uso della
-divulgazione italiana di oggi (Wikipedia, voce «Segni mobili»), ma la
-tradizione dice il contrario: per il greco (τροπικά, στερεά, δίσωμα), il
-latino (*mobilia, fixa, communia*), Lilly («Moveable, Fixed and Common, ♈ ♋
-♎ ♑ are called moveable and Cardinall», p. 88, letto sull'immagine) e
-l'astrologia tradizionale italiana (*Cielo e Terra*, la scuola di Bezza:
-«I segni tropici o mobili (oggi detti "cardinali")», e i bicorporei
-«oggi detti "mobili" con rischio di grave confusione») i **mobili sono i
-cardinali**, e il terzo gruppo è dei **comuni** o **bicorporei**. Anche il
-sanscrito: *cara*, «mobile», sono i cardinali. Le fonti sono in
-`texts/occidentale/modalita-nomi-italiani-2026`.
-
-In un sito che porta le scuole tradizionali la parola è un equivoco, e già
-oggi il repo la usa nei due sensi: `arudha-graha.ts:40` scrive «0 mobile
-(cara)», cioè cardinale, mentre `arudha.ts:55` traduce *cara-sthira-dvandva*
-con «cardinale, fisso, mobile», e `varga.ts` dice «mobile» per il doppio. E
-c'è un effetto sulle letture: `packages/lettura/src/oraria.ts:108` dice al
-modello, con Lilly, che «nei segni mobili e angolari il tempo è breve», dove
-mobili vuol dire cardinali, mentre la tabella che lo stesso modello legge
-chiama `mobile` i mutevoli.
-
-**La correzione** (chiesta dal proprietario il 30 ottobre 2026, da fare in
-un commit solo, perché cambia un valore che le risposte portano):
-
-1. Il valore: `Modality` diventa `'cardinale' | 'fisso' | 'mutevole'` in
-   `packages/core/src/types.ts:1800` e `packages/ruota/src/types.ts:81`
-   (`ruota/test/tipi.test.ts` verifica che combacino); poi
-   `SIGN_MODALITY` in `core/src/constants.ts:60-63` e
-   `ruota/src/glyphs.ts:202-205`, `MODALITY_ORDER` in `glyphs.ts:212`, la
-   distribuzione vuota in `core/src/distribution.ts:46`, l'elenco di
-   `core/src/format.ts:714`. Il campo `distribution.*.modalities.mobile`
-   delle risposte diventa `.mutevole`: è il motivo della seconda cifra.
-   «Mutevole» e non «comune»: è la parola che la divulgazione usa accanto a
-   «mobile», e non dice niente di diverso a chi conosce la tradizione.
-2. I test: `core/test/distribution.test.ts:118, 127-131, 146, 167` e il
-   fascicolo canonico (`tema.json`, `cielo.json`), da riscrivere con `-u`.
-3. Le parole del Jyotisha, dove il nome traduce il sanscrito: in
-   `varga.ts` (commenti alle righe 27, 33, 197, 206, 235, 251, 282 e le
-   `rule` di D-9, D-16, D-20, D-45), in `arudha.ts:55` e `:101` e in
-   `arudha-graha.ts:40, 44-45, 168, 242`, il terzo gruppo è «doppio» o
-   «mutevole» (*dvisvabhāva*, *dvandva*) e il primo «cardinale» (*cara*,
-   «mobile» nei testi): una sola convenzione per tutti e tre i file, scritta
-   in testa a `varga.ts`. Le `rule` dei varga cambiano testo: stanno nel
-   fascicolo `vedico.json`. La tavola di `/metodo/varga` le ripete (righe
-   58-67, e la prosa a riga 79): `metodo/jyotisha.test.ts` non le confronta,
-   vanno corrette a mano. I commenti dei test di `varga.test.ts` (righe
-   124-142, 209, 236, 240, 413) pure.
-4. Le superfici di prosa: il glossario (`glossario/tema`, «cardinale,
-   fissa e mobile», riga 140) dice «mutevole», e aggiunge in mezza riga che
-   nei testi antichi «mobili» sono i cardinali e il terzo gruppo si chiama
-   «comune» o «bicorporeo»; `packages/lettura/src/oraria.ts:108` scrive
-   «nei segni cardinali (i "mobili" di Lilly)»; la tabella della
-   distribuzione nell'interfaccia (`DistributionTable.svelte`) prende le
-   etichette da `MODALITY_ORDER`, e va controllata a occhio; le descrizioni
-   MCP e i documenti di lettura non nominano la modalità (verificare con
-   `grep -w mobile`). Restano «mobili» dove non sono modalità: i karana
-   mobili del panchanga (`panchanga.ts`, *cara karana*), i beni mobili delle
-   case dell'oraria, il quadro del nord dove «i segni sono mobili».
-5. La regola, perché non torni: in `CLAUDE.md`, *Stile*, una riga accanto
-   a quella sul genere di dasha («la terza modalità è mutevole; nei testi
-   tradizionali "mobile" vuol dire cardinale»), e una voce in `docs/decisioni.md`.
-6. Versione: seconda cifra, per il campo rinominato.
-
-Verifica: `grep -rnw mobile packages apps` non trova più la modalità; il
-fascicolo canonico cambia solo dove deve; `npm test`, `typecheck`, `lint`.
 
 ## 28. La revisione della SEO
 

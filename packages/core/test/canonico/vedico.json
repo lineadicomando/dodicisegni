@@ -461,7 +461,7 @@
           "modalities": {
             "cardinale": 1,
             "fisso": 6,
-            "mobile": 3
+            "mutevole": 3
           },
           "counted": [
             "sole",
@@ -486,7 +486,7 @@
           "modalities": {
             "cardinale": 0,
             "fisso": 0,
-            "mobile": 3
+            "mutevole": 3
           },
           "counted": [
             "nodo-nord",
@@ -504,7 +504,7 @@
           "modalities": {
             "cardinale": 2,
             "fisso": 0,
-            "mobile": 0
+            "mutevole": 0
           },
           "counted": [
             "ascendente",
@@ -1714,7 +1714,7 @@
         "varga": "d9",
         "name": "Navamsa",
         "divisions": 9,
-        "rule": "Nove parti da 3°20'. Si parte dal segno stesso se è cardinale, dal nono se è fisso, dal quinto se è mobile; cioè, detto altrimenti, da Ariete per i segni di fuoco, Capricorno per la terra, Bilancia per l'aria, Cancro per l'acqua (BPHS 6.12).",
+        "rule": "Nove parti da 3°20'. Si parte dal segno stesso se è cardinale, dal nono se è fisso, dal quinto se è mutevole; cioè, detto altrimenti, da Ariete per i segni di fuoco, Capricorno per la terra, Bilancia per l'aria, Cancro per l'acqua (BPHS 6.12).",
         "positions": [
           {
             "id": "sole",
@@ -5418,7 +5418,7 @@
           "modalities": {
             "cardinale": 1,
             "fisso": 6,
-            "mobile": 3
+            "mutevole": 3
           },
           "counted": [
             "sole",
@@ -5443,7 +5443,7 @@
           "modalities": {
             "cardinale": 0,
             "fisso": 0,
-            "mobile": 3
+            "mutevole": 3
           },
           "counted": [
             "nodo-nord",
@@ -5461,7 +5461,7 @@
           "modalities": {
             "cardinale": 2,
             "fisso": 0,
-            "mobile": 0
+            "mutevole": 0
           },
           "counted": [
             "ascendente",
@@ -15466,7 +15466,7 @@
         "varga": "d9",
         "name": "Navamsa",
         "divisions": 9,
-        "rule": "Nove parti da 3°20'. Si parte dal segno stesso se è cardinale, dal nono se è fisso, dal quinto se è mobile; cioè, detto altrimenti, da Ariete per i segni di fuoco, Capricorno per la terra, Bilancia per l'aria, Cancro per l'acqua (BPHS 6.12).",
+        "rule": "Nove parti da 3°20'. Si parte dal segno stesso se è cardinale, dal nono se è fisso, dal quinto se è mutevole; cioè, detto altrimenti, da Ariete per i segni di fuoco, Capricorno per la terra, Bilancia per l'aria, Cancro per l'acqua (BPHS 6.12).",
         "positions": [
           {
             "id": "sole",
@@ -15993,7 +15993,7 @@
         "varga": "d16",
         "name": "Shodasamsa",
         "divisions": 16,
-        "rule": "Sedici parti da 1°52'30\". Si parte dall'Ariete se il segno è cardinale, dal Leone se è fisso, dal Sagittario se è mobile, e si prosegue in ordine (BPHS 6.16).",
+        "rule": "Sedici parti da 1°52'30\". Si parte dall'Ariete se il segno è cardinale, dal Leone se è fisso, dal Sagittario se è mutevole, e si prosegue in ordine (BPHS 6.16).",
         "positions": [
           {
             "id": "sole",
@@ -16173,7 +16173,7 @@
         "varga": "d20",
         "name": "Vimsamsa",
         "divisions": 20,
-        "rule": "Venti parti da 1°30'. Si parte dall'Ariete se il segno è cardinale, dal Sagittario se è fisso, dal Leone se è mobile, e si prosegue in ordine (BPHS 6.17-21).",
+        "rule": "Venti parti da 1°30'. Si parte dall'Ariete se il segno è cardinale, dal Sagittario se è fisso, dal Leone se è mutevole, e si prosegue in ordine (BPHS 6.17-21).",
         "positions": [
           {
             "id": "sole",
@@ -17061,7 +17061,7 @@
         "varga": "d45",
         "name": "Akshavedamsa",
         "divisions": 45,
-        "rule": "Quarantacinque parti da 40'. Si parte dall'Ariete se il segno è cardinale, dal Leone se è fisso, dal Sagittario se è mobile, e si prosegue in ordine (BPHS 6.31-32).",
+        "rule": "Quarantacinque parti da 40'. Si parte dall'Ariete se il segno è cardinale, dal Leone se è fisso, dal Sagittario se è mutevole, e si prosegue in ordine (BPHS 6.31-32).",
         "positions": [
           {
             "id": "sole",
@@ -21115,7 +21115,7 @@
         "modalities": {
           "cardinale": 0,
           "fisso": 6,
-          "mobile": 4
+          "mutevole": 4
         },
         "counted": [
           "sole",
@@ -21140,7 +21140,7 @@
         "modalities": {
           "cardinale": 0,
           "fisso": 0,
-          "mobile": 3
+          "mutevole": 3
         },
         "counted": [
           "nodo-nord",
@@ -21158,7 +21158,7 @@
         "modalities": {
           "cardinale": 2,
           "fisso": 0,
-          "mobile": 0
+          "mutevole": 0
         },
         "counted": [
           "ascendente",
@@ -21573,7 +21573,7 @@
           "modalities": {
             "cardinale": 1,
             "fisso": 6,
-            "mobile": 3
+            "mutevole": 3
           },
           "counted": [
             "sole",
@@ -21598,7 +21598,7 @@
           "modalities": {
             "cardinale": 0,
             "fisso": 0,
-            "mobile": 2
+            "mutevole": 2
           },
           "counted": [
             "nodo-nord",
@@ -21615,7 +21615,7 @@
           "modalities": {
             "cardinale": 0,
             "fisso": 0,
-            "mobile": 0
+            "mutevole": 0
           },
           "counted": []
         }
@@ -22810,7 +22810,7 @@
         "varga": "d9",
         "name": "Navamsa",
         "divisions": 9,
-        "rule": "Nove parti da 3°20'. Si parte dal segno stesso se è cardinale, dal nono se è fisso, dal quinto se è mobile; cioè, detto altrimenti, da Ariete per i segni di fuoco, Capricorno per la terra, Bilancia per l'aria, Cancro per l'acqua (BPHS 6.12).",
+        "rule": "Nove parti da 3°20'. Si parte dal segno stesso se è cardinale, dal nono se è fisso, dal quinto se è mutevole; cioè, detto altrimenti, da Ariete per i segni di fuoco, Capricorno per la terra, Bilancia per l'aria, Cancro per l'acqua (BPHS 6.12).",
         "positions": [
           {
             "id": "sole",

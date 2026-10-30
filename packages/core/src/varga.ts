@@ -24,13 +24,13 @@
  * - **D-4** procede per kendra: i quarti al segno, al quarto, al settimo e
  *   al decimo.
  * - **D-9** parte da dove dice la **modalità**: dal segno stesso se cardinale,
- *   dal nono se fisso, dal quinto se mobile.
+ *   dal nono se fisso, dal quinto se mutevole.
  * - **D-7** e **D-10** si biforcano su **pari e dispari**: si parte dal
  *   segno stesso nei dispari, dal settimo (D-7) o dal nono (D-10) nei pari.
  * - **D-12** parte sempre dal segno stesso e prosegue.
  * - **D-16**, **D-20** e **D-24** partono da pochi segni fissi, come il D-9
  *   ma senza riferirsi al segno di partenza: dall'Ariete, dal Leone o dal
- *   Sagittario secondo la modalità (D-16 e D-20, con fissi e mobili
+ *   Sagittario secondo la modalità (D-16 e D-20, con fissi e mutevoli
  *   scambiati fra i due), dal Leone o dal Cancro secondo la parità (D-24).
  * - **D-30** abbandona le parti uguali: cinque tratti di ampiezza diversa,
  *   rovesciati fra segni pari e dispari.
@@ -47,6 +47,13 @@
  * `trascrizioni.md`). Il verso viaggia nella regola, la pagina sta accanto a
  * ciascuna. Le tavole che Santhanam stampa sotto i versi sono state
  * controllate contro la regola, non copiate: quella del D-27 ha un refuso.
+ *
+ * **I nomi delle tre modalità**, qui, in `arudha.ts` e in `arudha-graha.ts`,
+ * sono quelli del tema tropicale (`Modality` in `types.ts`): *cara*, che i
+ * testi e Santhanam rendono «mobile» (*movable*), è il **cardinale**; *sthira*
+ * il **fisso**; *dvisvabhāva* o *dvandva*, «di doppia natura» (*dual*), il
+ * **mutevole**. «Mobile» non si usa per nessuno dei tre: nei testi vuol dire
+ * cardinale, nella divulgazione di oggi mutevole.
  */
 
 import { grahaArudhasOf, VARGA_GRAHA_ARUDHA_SOURCE, type Posizioni } from './arudha-graha.js';
@@ -194,16 +201,16 @@ export const VARGAS: readonly VargaDefinition[] = [
   },
   {
     // BPHS 6.12, p. 72. Il «movable» di Santhanam è il cardinale, il «dual»
-    // il mobile.
+    // il mutevole.
     id: 'd9',
     name: 'Navamsa',
     divisions: 9,
     rule:
       "Nove parti da 3°20'. Si parte dal segno stesso se è cardinale, dal nono se è fisso, " +
-      'dal quinto se è mobile; cioè, detto altrimenti, da Ariete per i segni di fuoco, ' +
+      'dal quinto se è mutevole; cioè, detto altrimenti, da Ariete per i segni di fuoco, ' +
       'Capricorno per la terra, Bilancia per l\'aria, Cancro per l\'acqua (BPHS 6.12).',
     signIndex: (sign, degree) => {
-      // 0 cardinale, 1 fisso, 2 mobile: la modalità si legge dall'indice.
+      // 0 cardinale, 1 fisso, 2 mutevole: la modalità si legge dall'indice.
       const salto = [0, 8, 4][sign % 3] as number;
       return sign + salto + Math.floor(degree / (30 / 9));
     },
@@ -232,14 +239,14 @@ export const VARGAS: readonly VargaDefinition[] = [
   {
     // BPHS 6.16, pp. 74-75, con la tavola a p. 75. «Aja-siṃha-aśvito … cara-
     // ādiṣu»: dall'Ariete, dal Leone e dal Sagittario (l'«aśvin», il cavallo)
-    // per cardinali, fissi e mobili. Il verso rovescia nei segni pari le
+    // per cardinali, fissi e mutevoli. Il verso rovescia nei segni pari le
     // divinità, non i segni.
     id: 'd16',
     name: 'Shodasamsa',
     divisions: 16,
     rule:
       "Sedici parti da 1°52'30\". Si parte dall'Ariete se il segno è cardinale, dal Leone se " +
-      'è fisso, dal Sagittario se è mobile, e si prosegue in ordine (BPHS 6.16).',
+      'è fisso, dal Sagittario se è mutevole, e si prosegue in ordine (BPHS 6.16).',
     signIndex: (sign, degree) => {
       const inizio = [0, 4, 8][sign % 3] as number;
       return inizio + Math.floor((degree * 16) / 30);
@@ -248,14 +255,14 @@ export const VARGAS: readonly VargaDefinition[] = [
   {
     // BPHS 6.17-21, p. 76, con la tavola a pp. 76-77. «Kriyāc care sthire
     // cāpān mṛgendrād dvisvabhāvake»: dall'Ariete nel cardinale, dall'arco
-    // (Sagittario) nel fisso, dal leone nel mobile. Fissi e mobili sono
+    // (Sagittario) nel fisso, dal leone nel mutevole. Fissi e mutevoli sono
     // scambiati rispetto al D-16, e il sanscrito lo conferma.
     id: 'd20',
     name: 'Vimsamsa',
     divisions: 20,
     rule:
       "Venti parti da 1°30'. Si parte dall'Ariete se il segno è cardinale, dal Sagittario se " +
-      'è fisso, dal Leone se è mobile, e si prosegue in ordine (BPHS 6.17-21).',
+      'è fisso, dal Leone se è mutevole, e si prosegue in ordine (BPHS 6.17-21).',
     signIndex: (sign, degree) => {
       const inizio = [0, 8, 4][sign % 3] as number;
       return inizio + Math.floor((degree * 20) / 30);
@@ -279,7 +286,7 @@ export const VARGAS: readonly VargaDefinition[] = [
   },
   {
     // BPHS 6.24-26, trad. Santhanam, vol. I, pp. 78-79: «meṣādi-cara-bha-
-    // kramāt», dall'Ariete e dagli altri segni mobili. Santhanam lo scioglie
+    // kramāt», dall'Ariete e dagli altri segni cardinali. Santhanam lo scioglie
     // per elemento, e la sua tavola (p. 79) lo conferma colonna per colonna,
     // tranne un refuso: Gemelli, undicesima parte, stampa 3 dove la regola e
     // la colonna della Bilancia danno 5. Le due formulazioni coincidono
@@ -335,7 +342,7 @@ export const VARGAS: readonly VargaDefinition[] = [
     divisions: 45,
     rule:
       "Quarantacinque parti da 40'. Si parte dall'Ariete se il segno è cardinale, dal Leone " +
-      'se è fisso, dal Sagittario se è mobile, e si prosegue in ordine (BPHS 6.31-32).',
+      'se è fisso, dal Sagittario se è mutevole, e si prosegue in ordine (BPHS 6.31-32).',
     signIndex: (sign, degree) => {
       const inizio = [0, 4, 8][sign % 3] as number;
       return inizio + Math.floor((degree * 45) / 30);

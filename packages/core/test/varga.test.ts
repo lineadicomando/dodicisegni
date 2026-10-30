@@ -121,7 +121,7 @@ describe('D-7, che si biforca su pari e dispari', () => {
 
 describe('D-9, che parte da dove dice la modalità', () => {
   it('apre ogni segno dove la regola vuole', () => {
-    // Cardinali dal segno stesso, fissi dal nono, mobili dal quinto: detto
+    // Cardinali dal segno stesso, fissi dal nono, mutevoli dal quinto: detto
     // altrimenti, fuoco dall'Ariete, terra dal Capricorno, aria dalla
     // Bilancia, acqua dal Cancro. Le due formulazioni devono coincidere, e
     // questa prova è ciò che lo garantisce.
@@ -130,16 +130,16 @@ describe('D-9, che parte da dove dice la modalità', () => {
     expect(aperture).toEqual([
       'ariete', // Ariete, cardinale di fuoco
       'capricorno', // Toro, fisso di terra
-      'bilancia', // Gemelli, mobile d'aria
+      'bilancia', // Gemelli, mutevole d'aria
       'cancro', // Cancro, cardinale d'acqua
       'ariete', // Leone, fisso di fuoco
-      'capricorno', // Vergine, mobile di terra
+      'capricorno', // Vergine, mutevole di terra
       'bilancia', // Bilancia, cardinale d'aria
       'cancro', // Scorpione, fisso d'acqua
-      'ariete', // Sagittario, mobile di fuoco
+      'ariete', // Sagittario, mutevole di fuoco
       'capricorno', // Capricorno, cardinale di terra
       'bilancia', // Acquario, fisso d'aria
-      'cancro', // Pesci, mobile d'acqua
+      'cancro', // Pesci, mutevole d'acqua
     ]);
   });
 
@@ -200,13 +200,13 @@ function tavolaPerGruppi(gruppi: { segni: number[]; colonna: number[] }[], parti
 
 const CARDINALI = [1, 4, 7, 10];
 const FISSI = [2, 5, 8, 11];
-const MOBILI = [3, 6, 9, 12];
+const MUTEVOLI = [3, 6, 9, 12];
 
 describe('D-16, che parte da tre segni secondo la modalità', () => {
   // BPHS 6.16, trad. Santhanam, vol. I, pp. 74-75.
   const parte = 30 / 16;
 
-  it('apre i cardinali dall Ariete, i fissi dal Leone, i mobili dal Sagittario', () => {
+  it('apre i cardinali dall Ariete, i fissi dal Leone, i mutevoli dal Sagittario', () => {
     const aperture = Array.from({ length: 12 }, (_, i) => vargaSignOf(inizioSegno(i), 'd16'));
     expect(aperture).toEqual([
       'ariete', 'leone', 'sagittario', 'ariete', 'leone', 'sagittario',
@@ -228,16 +228,16 @@ describe('D-16, che parte da tre segni secondo la modalità', () => {
     controllaTavola('d16', 16, tavolaPerGruppi([
       { segni: CARDINALI, colonna: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12] },
       { segni: FISSI, colonna: [5, 6, 7, 8, 9, 10, 11, 12, 1, 2, 3, 4] },
-      { segni: MOBILI, colonna: [9, 10, 11, 12, 1, 2, 3, 4, 5, 6, 7, 8] },
+      { segni: MUTEVOLI, colonna: [9, 10, 11, 12, 1, 2, 3, 4, 5, 6, 7, 8] },
     ], 16));
   });
 });
 
-describe('D-20, con fissi e mobili scambiati rispetto al D-16', () => {
+describe('D-20, con fissi e mutevoli scambiati rispetto al D-16', () => {
   // BPHS 6.17-21, trad. Santhanam, vol. I, pp. 76-77.
   const parte = 30 / 20;
 
-  it('apre i cardinali dall Ariete, i fissi dal Sagittario, i mobili dal Leone', () => {
+  it('apre i cardinali dall Ariete, i fissi dal Sagittario, i mutevoli dal Leone', () => {
     const aperture = Array.from({ length: 12 }, (_, i) => vargaSignOf(inizioSegno(i), 'd20'));
     expect(aperture).toEqual([
       'ariete', 'sagittario', 'leone', 'ariete', 'sagittario', 'leone',
@@ -259,7 +259,7 @@ describe('D-20, con fissi e mobili scambiati rispetto al D-16', () => {
     controllaTavola('d20', 20, tavolaPerGruppi([
       { segni: CARDINALI, colonna: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12] },
       { segni: FISSI, colonna: [9, 10, 11, 12, 1, 2, 3, 4, 5, 6, 7, 8] },
-      { segni: MOBILI, colonna: [5, 6, 7, 8, 9, 10, 11, 12, 1, 2, 3, 4] },
+      { segni: MUTEVOLI, colonna: [5, 6, 7, 8, 9, 10, 11, 12, 1, 2, 3, 4] },
     ], 20));
   });
 });
@@ -410,7 +410,7 @@ describe('D-45, con la forma del D-16', () => {
   // BPHS 6.31-32, trad. Santhanam, vol. I, pp. 81-82.
   const parte = 30 / 45;
 
-  it('apre i cardinali dall Ariete, i fissi dal Leone, i mobili dal Sagittario', () => {
+  it('apre i cardinali dall Ariete, i fissi dal Leone, i mutevoli dal Sagittario', () => {
     const aperture = Array.from({ length: 12 }, (_, i) => vargaSignOf(inizioSegno(i), 'd45'));
     expect(aperture).toEqual([
       'ariete', 'leone', 'sagittario', 'ariete', 'leone', 'sagittario',
@@ -432,7 +432,7 @@ describe('D-45, con la forma del D-16', () => {
     controllaTavola('d45', 45, tavolaPerGruppi([
       { segni: CARDINALI, colonna: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12] },
       { segni: FISSI, colonna: [5, 6, 7, 8, 9, 10, 11, 12, 1, 2, 3, 4] },
-      { segni: MOBILI, colonna: [9, 10, 11, 12, 1, 2, 3, 4, 5, 6, 7, 8] },
+      { segni: MUTEVOLI, colonna: [9, 10, 11, 12, 1, 2, 3, 4, 5, 6, 7, 8] },
     ], 45));
   });
 });

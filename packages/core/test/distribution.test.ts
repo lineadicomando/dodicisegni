@@ -115,7 +115,7 @@ describe('computeDistribution', () => {
 
     expect(distribution.planets.counted).toEqual([]);
     expect(distribution.angles.elements).toEqual({ fuoco: 0, terra: 0, aria: 0, acqua: 0 });
-    expect(distribution.points.modalities).toEqual({ cardinale: 0, fisso: 0, mobile: 0 });
+    expect(distribution.points.modalities).toEqual({ cardinale: 0, fisso: 0, mutevole: 0 });
   });
 });
 
@@ -124,11 +124,11 @@ describe('la distribuzione del tema di riferimento', () => {
 
   /*
    * I dieci pianeti di questo tema, con il loro segno:
-   *   Sole Pesci (acqua, mobile)        Giove Leone (fuoco, fisso)
+   *   Sole Pesci (acqua, mutevole)      Giove Leone (fuoco, fisso)
    *   Luna Leone (fuoco, fisso)         Saturno Ariete (fuoco, cardinale)
-   *   Mercurio Acquario (aria, fisso)   Urano Vergine (terra, mobile)
+   *   Mercurio Acquario (aria, fisso)   Urano Vergine (terra, mutevole)
    *   Venere Acquario (aria, fisso)     Nettuno Scorpione (acqua, fisso)
-   *   Marte Ariete (fuoco, cardinale)   Plutone Vergine (terra, mobile)
+   *   Marte Ariete (fuoco, cardinale)   Plutone Vergine (terra, mutevole)
    */
   it('conta i dieci pianeti per elemento', () => {
     expect(chart.distribution.planets.elements).toEqual({
@@ -143,7 +143,7 @@ describe('la distribuzione del tema di riferimento', () => {
     expect(chart.distribution.planets.modalities).toEqual({
       cardinale: 2,
       fisso: 5,
-      mobile: 3,
+      mutevole: 3,
     });
   });
 
@@ -164,7 +164,7 @@ describe('la distribuzione del tema di riferimento', () => {
     expect(chart.distribution.angles.modalities).toEqual({
       cardinale: 1,
       fisso: 1,
-      mobile: 0,
+      mutevole: 0,
     });
   });
 

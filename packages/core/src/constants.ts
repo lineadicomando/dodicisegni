@@ -57,10 +57,10 @@ export const SIGN_MODALITY: Readonly<Record<ZodiacSign, Modality>> = {
   leone: 'fisso',
   scorpione: 'fisso',
   acquario: 'fisso',
-  gemelli: 'mobile',
-  vergine: 'mobile',
-  sagittario: 'mobile',
-  pesci: 'mobile',
+  gemelli: 'mutevole',
+  vergine: 'mutevole',
+  sagittario: 'mutevole',
+  pesci: 'mutevole',
 };
 
 /**

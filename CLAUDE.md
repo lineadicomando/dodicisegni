@@ -181,6 +181,10 @@ commenti resta italiana, e la prima volta che un termine compare lo si spiega
 in mezza riga. Il genere segue il sanscrito: *daśā* è femminile, e così la
 mahadasha, le antardasha, le pratyantardasha.
 
+La terza modalità è **mutevole** (Gemelli, Vergine, Sagittario, Pesci), in
+ogni sistema: nei testi tradizionali «mobile» vuol dire cardinale (*cara*, i
+*moveable* di Lilly), e nel repo non nomina nessuna modalità.
+
 ## Le fonti testuali: `texts/`
 
 Le costanti che vengono da un testo (tavole, gradi, regole) si prendono dalla

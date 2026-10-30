@@ -39,7 +39,7 @@ describe('il signore dei bhava con due signori, BPHS 29.7 e 46.157-166', () => {
   });
 
   it('a pari graha guarda la natura del segno, poi la distanza', () => {
-    // Saturno nel Cancro (cardinale), Rahu nella Vergine (mobile): vince il mobile.
+    // Saturno nel Cancro (cardinale), Rahu nella Vergine (mutevole): vince il mutevole.
     expect(bhavaLord('acquario', { saturno: 'cancro', 'nodo-nord': 'vergine' }).lord).toBe('nodo-nord');
     // Tutti e due in segni fissi, Toro e Leone: dall'Acquario il Leone è più lontano.
     expect(bhavaLord('acquario', { saturno: 'toro', 'nodo-nord': 'leone' }).lord).toBe('nodo-nord');

@@ -25,6 +25,18 @@ codice rimandano qui con «`docs/decisioni.md`».
   pratyantardasha, come il sanscrito *daśā*. Vale per pagine, CLI,
   documenti, commenti e test; la regola è anche in `CLAUDE.md`, *Stile*.
 
+- **La terza modalità è «mutevole», e «mobile» non nomina nessuna
+  modalità.** Scelto dal proprietario il 30 ottobre 2026, voce 30. Per il
+  greco, il latino, Lilly (p. 88), il sanscrito (*cara*) e la scuola di
+  Bezza i «mobili» sono i cardinali, mentre la divulgazione italiana di oggi
+  chiama così Gemelli, Vergine, Sagittario e Pesci: la parola diceva le due
+  cose anche nel repo. `Modality` è `cardinale | fisso | mutevole`, e il
+  Jyotisha usa le stesse parole (*cara* cardinale, *sthira* fisso,
+  *dvisvabhāva* mutevole; la nota è in testa a `varga.ts`). «Mutevole» e non
+  «comune» perché è la parola che la divulgazione mette accanto a «mobile»;
+  il glossario dice i nomi antichi. Le fonti sono in
+  `texts/occidentale/modalita-nomi-italiani-2026`.
+
 - **L'oraria: scuole a pacchetti, e Lilly per prima.** Deciso il 18 e il
   27 ottobre 2026 con la voce 17, chiusa il 30. Un substrato neutro, il
   corso di `corso.ts`, con sopra le scuole, ciascuna intera e nominata; una
