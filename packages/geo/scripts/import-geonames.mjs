@@ -16,9 +16,9 @@
  * Il database risultante NON è versionato: è un artefatto rigenerabile.
  */
 import { createReadStream } from 'node:fs';
-import { mkdir, open, readFile, rm, stat } from 'node:fs/promises';
+import { mkdir, open, readFile, rename, rm, stat } from 'node:fs/promises';
 import { createInterface } from 'node:readline';
-import { dirname, join } from 'node:path';
+import { basename, dirname, join } from 'node:path';
 import { DatabaseSync } from 'node:sqlite';
 import { Readable } from 'node:stream';
 import { pipeline } from 'node:stream/promises';
@@ -94,12 +94,19 @@ function mb(bytes) {
   return `${(bytes / 1024 / 1024).toFixed(1)} MB`;
 }
 
-/** Scarica in cache, in streaming: i file grandi non passano dalla memoria. */
+/**
+ * Scarica in cache, in streaming: i file grandi non passano dalla memoria.
+ *
+ * Si scrive su un `.part` che prende il nome vero solo a download finito: un
+ * download interrotto (la rete che cade, la finestra dell'app desktop chiusa a
+ * metà) lasciava altrimenti un file troncato col nome giusto, che la cache
+ * dava per buono a ogni importazione successiva, fallendo ogni volta.
+ */
 async function fetchCached(fileName) {
   const cached = join(cacheDir, fileName);
   try {
     const info = await stat(cached);
-    if (info.size > 0) {
+    if (info.size > 0 && (await usableFromCache(cached))) {
       console.log(`  ${fileName.padEnd(22)} da cache (${mb(info.size)})`);
       return cached;
     }
@@ -112,14 +119,37 @@ async function fetchCached(fileName) {
   if (!response.ok) throw new Error(`HTTP ${response.status} su ${BASE_URL}${fileName}`);
   if (!response.body) throw new Error(`risposta senza corpo per ${fileName}`);
 
-  const handle = await open(cached, 'w');
+  const partial = `${cached}.part`;
+  const handle = await open(partial, 'w');
   try {
     await pipeline(Readable.fromWeb(response.body), handle.createWriteStream());
-  } finally {
+  } catch (error) {
     await handle.close();
+    await rm(partial, { force: true });
+    throw error;
   }
+  await handle.close();
+  await rename(partial, cached);
   console.log(`ok (${mb((await stat(cached)).size)})`);
   return cached;
+}
+
+/**
+ * Un archivio ZIP in cache vale solo se la sua directory centrale si legge.
+ * Serve a chi ha già in cache un file troncato da una versione precedente
+ * di `fetchCached`, che lo scriveva direttamente col nome definitivo: lo si
+ * scarta e si riscarica, invece di fallire a ogni avvio.
+ */
+async function usableFromCache(path) {
+  if (!path.endsWith('.zip')) return true;
+  try {
+    await listZipEntries(path);
+    return true;
+  } catch {
+    console.log(`  ${basename(path).padEnd(22)} in cache ma incompleto, lo riscarico`);
+    await rm(path, { force: true });
+    return false;
+  }
 }
 
 /**
@@ -364,8 +394,14 @@ async function main() {
 
   const italian = await collectTranslations(alternatePath, wantedIds);
 
-  await rm(databasePath, { force: true });
-  const database = new DatabaseSync(databasePath);
+  // Il database si costruisce accanto e prende il nome vero solo alla fine:
+  // l'app desktop considera pronto qualunque `geonames.db` esista, e
+  // un'importazione interrotta a metà non deve lasciarne uno.
+  const buildPath = `${databasePath}.tmp`;
+  for (const suffix of ['', '-wal', '-shm', '-journal']) {
+    await rm(`${buildPath}${suffix}`, { force: true });
+  }
+  const database = new DatabaseSync(buildPath);
   database.exec(`
     PRAGMA journal_mode = WAL;
     ${(await readFile(join(packageRoot, 'schema.sql'), 'utf8')).trim()}
@@ -434,6 +470,7 @@ async function main() {
   // `-shm` anche per leggere — cioè esattamente il caso del container.
   database.exec('PRAGMA journal_mode = DELETE;');
   database.close();
+  await rename(buildPath, databasePath);
 
   const info = await stat(databasePath);
   console.log('ok\n');
