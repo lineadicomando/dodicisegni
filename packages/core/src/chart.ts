@@ -63,7 +63,7 @@ export function computeNatalChart(birth: BirthData, options: ChartOptions = {}):
   // tema dopo questo non eredita i suoi flag.
   const context = zodiacContext(initEphemeris(options.ephemerisPath), options);
   const { time, warnings: timeWarnings } = resolveTime(birth);
-  const { bodies, warnings: bodyWarnings } = computeBodies(time.julianDayUT, bodyIds, context);
+  const { bodies, warnings: bodyWarnings, mode } = computeBodies(time.julianDayUT, bodyIds, context);
 
   const warnings = [...context.warnings, ...timeWarnings, ...bodyWarnings];
 
@@ -127,7 +127,7 @@ export function computeNatalChart(birth: BirthData, options: ChartOptions = {}):
     input: birth,
     time,
     houseSystem,
-    ephemerisMode: context.mode,
+    ephemerisMode: mode,
     zodiac,
     bodies,
     houses,

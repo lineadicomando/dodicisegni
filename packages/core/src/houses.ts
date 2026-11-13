@@ -38,7 +38,17 @@ export function computeHouses(
   // `error`, dove Swiss Ephemeris segnala il ripiego su un sistema alternativo.
   const result = sweph.houses_ex2(julianDayUT, context.flags, latitude, longitude, code);
 
-  if (result.flag < 0) {
+  // Un flag negativo non è sempre un fallimento. Oltre il circolo polare, dove
+  // Placidus e Koch non sono definiti, Swiss Ephemeris ripiega su Porfirio e
+  // lo dice proprio così: `flag` a -1, il perché in `error`, e in `data` le
+  // cuspidi di Porfirio, valide. Il risultato si riconosce quindi dai dati e
+  // non dal flag: se le cuspidi e i due assi ci sono, è un ripiego e produce
+  // un avviso; se mancano, è un errore.
+  const usable =
+    result.data.houses.every((cusp) => Number.isFinite(cusp)) &&
+    Number.isFinite(result.data.points[0]) &&
+    Number.isFinite(result.data.points[1]);
+  if (result.flag < 0 && !(usable && result.error)) {
     throw new ChartError(
       'ERRORE_EFFEMERIDI',
       `Calcolo delle case fallito: ${result.error || 'errore sconosciuto'}.`,

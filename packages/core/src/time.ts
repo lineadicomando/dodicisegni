@@ -47,23 +47,31 @@ export function resolveTime(moment: LocalMoment): TimeResolution {
   const timeKnown = moment.time !== undefined;
 
   const wallClock = `${moment.date}T${normalizeTime(moment.time ?? '12:00')}`;
-  const local = DateTime.fromISO(wallClock, { zone: moment.timezone });
+  const parsed = DateTime.fromISO(wallClock, { zone: moment.timezone });
 
-  if (!local.isValid) {
+  if (!parsed.isValid) {
     throw new ChartError(
       'DATA_NON_VALIDA',
-      `Impossibile interpretare "${wallClock}" nel fuso ${moment.timezone}: ${local.invalidReason}.`,
+      `Impossibile interpretare "${wallClock}" nel fuso ${moment.timezone}: ${parsed.invalidReason}.`,
     );
   }
 
+  // Un'ora ambigua non si lascia sciogliere a Luxon: parte dall'offset che il
+  // fuso ha **adesso** e lo tiene se torna, quindi la stessa nascita darebbe
+  // un'occorrenza d'estate e l'altra d'inverno, a un'ora di distanza. Si
+  // prende la prima delle due, sempre, che è quella che l'avviso dichiara.
+  // L'ora inesistente non ha interpretazioni fra cui scegliere, e lì Luxon è
+  // deterministico: resta la sua.
+  const interpretations = interpretationsOf(wallClock, moment.timezone);
+  const local = interpretations[0] ?? parsed;
+
   if (timeKnown) {
-    const interpretations = countInterpretations(wallClock, moment.timezone);
-    if (interpretations === 0) {
+    if (interpretations.length === 0) {
       warnings.push(
         `L'ora locale ${moment.time} del ${moment.date} non è mai esistita in ${moment.timezone} ` +
           "(passaggio all'ora legale). È stata usata l'ora immediatamente successiva.",
       );
-    } else if (interpretations > 1) {
+    } else if (interpretations.length > 1) {
       warnings.push(
         `L'ora locale ${moment.time} del ${moment.date} è ambigua in ${moment.timezone} ` +
           "(ritorno all'ora solare): ricorre due volte. È stata usata la prima occorrenza, " +
@@ -132,21 +140,23 @@ function normalizeTime(time: string): string {
 }
 
 /**
- * Quante istanti UTC distinti corrispondono a un dato orario da parete.
+ * Gli istanti che corrispondono a un dato orario da parete, dal primo.
  *
- * - `0`: l'orario non esiste (salto in avanti per l'ora legale)
- * - `1`: caso normale
- * - `2`: orario ambiguo (ritorno all'ora solare)
+ * - nessuno: l'orario non esiste (salto in avanti per l'ora legale)
+ * - uno: caso normale
+ * - due: orario ambiguo (ritorno all'ora solare)
  *
  * Verifica ogni offset in vigore nell'intorno della data: per ciascuno
  * ricostruisce l'istante UTC e controlla se, riconvertito nel fuso, produce
- * di nuovo lo stesso orario da parete.
+ * di nuovo lo stesso orario da parete. Gli offset si leggono un giorno prima
+ * e uno dopo, su istanti che ambigui non sono: il risultato non dipende da
+ * come Luxon ha interpretato l'orario stesso.
  */
-function countInterpretations(wallClock: string, zone: string): number {
+function interpretationsOf(wallClock: string, zone: string): DateTime<true>[] {
   const reference = DateTime.fromISO(wallClock, { zone: 'utc' });
-  if (!reference.isValid) return 1;
-
   const base = DateTime.fromISO(wallClock, { zone });
+  if (!reference.isValid || !base.isValid) return [];
+
   const candidateOffsets = new Set<number>([
     base.offset,
     base.minus({ days: 1 }).offset,
@@ -154,12 +164,14 @@ function countInterpretations(wallClock: string, zone: string): number {
   ]);
 
   const target = reference.toFormat("yyyy-MM-dd'T'HH:mm:ss");
-  let matches = 0;
+  const matches: DateTime<true>[] = [];
   for (const offset of candidateOffsets) {
     const candidate = DateTime.fromMillis(reference.toMillis() - offset * 60_000, { zone });
-    if (candidate.toFormat("yyyy-MM-dd'T'HH:mm:ss") === target) matches += 1;
+    if (candidate.isValid && candidate.toFormat("yyyy-MM-dd'T'HH:mm:ss") === target) {
+      matches.push(candidate);
+    }
   }
-  return matches;
+  return matches.sort((a, b) => a.toMillis() - b.toMillis());
 }
 
 /**

@@ -1,4 +1,5 @@
 import { describe, expect, it } from 'vitest';
+import { computeNatalChart } from '../src/chart.js';
 import { HOUSE_SYSTEM_CODES } from '../src/constants.js';
 import { initEphemeris } from '../src/ephemeris.js';
 import { computeHouses } from '../src/houses.js';
@@ -157,5 +158,44 @@ describe('le cuspidi contro una fonte esterna', () => {
         );
       }
     }
+  });
+});
+
+/**
+ * Oltre il circolo polare Placidus e Koch non sono definiti. Swiss Ephemeris
+ * ripiega su Porfirio e lo segnala con un flag negativo, che il motore
+ * prendeva per un fallimento: da 67° in su il tema usciva con un errore
+ * invece che con le case e un'avvertenza.
+ */
+describe('le case oltre il circolo polare', () => {
+  const istante = toJulianDay(1980, 6, 21, 9);
+  const context = initEphemeris();
+
+  it.each(['placidus', 'koch'] as const)('%s ripiega su Porfirio e lo dice', (sistema) => {
+    const polare = computeHouses(istante, 68.97, 33.08, sistema, context);
+    const porfirio = computeHouses(istante, 68.97, 33.08, 'porfirio', context);
+
+    expect(polare.houses.map((casa) => casa.longitude)).toEqual(
+      porfirio.houses.map((casa) => casa.longitude),
+    );
+    expect(polare.warnings.some((avviso) => avviso.includes('Porphyry'))).toBe(true);
+    expect(porfirio.warnings).toEqual([]);
+  });
+
+  it('non avvisa sotto il circolo polare', () => {
+    expect(computeHouses(istante, 60, 33.08, 'placidus', context).warnings).toEqual([]);
+  });
+
+  it('dà un tema intero a Murmansk', () => {
+    const tema = computeNatalChart({
+      date: '1980-06-21',
+      time: '12:00',
+      latitude: 68.97,
+      longitude: 33.08,
+      timezone: 'Europe/Moscow',
+    });
+
+    expect(tema.houses).toHaveLength(12);
+    expect(tema.warnings.some((avviso) => avviso.includes('Domificazione'))).toBe(true);
   });
 });

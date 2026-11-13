@@ -48,7 +48,7 @@ export function computeSky(moment: SkyMoment, options: SkyOptions = {}): SkyChar
   }
   const context = zodiacContext(initEphemeris(options.ephemerisPath), options);
   const { time, warnings: timeWarnings } = resolveTime(moment);
-  const { bodies, warnings: bodyWarnings } = computeBodies(
+  const { bodies, warnings: bodyWarnings, mode } = computeBodies(
     time.julianDayUT,
     options.bodies ?? DEFAULT_BODIES,
     context,
@@ -67,7 +67,7 @@ export function computeSky(moment: SkyMoment, options: SkyOptions = {}): SkyChar
   const sky: SkyChart = {
     input: moment,
     time,
-    ephemerisMode: context.mode,
+    ephemerisMode: mode,
     zodiac,
     bodies,
     houses: [],

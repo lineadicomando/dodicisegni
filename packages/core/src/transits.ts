@@ -88,7 +88,7 @@ export function computeTransits(
   });
   const { time, warnings: timeWarnings } = resolveTime(moment);
   const bodyIds = options.bodies ?? DEFAULT_TRANSIT_BODIES;
-  const { bodies, warnings: bodyWarnings } = computeBodies(time.julianDayUT, bodyIds, context);
+  const { bodies, warnings: bodyWarnings, mode } = computeBodies(time.julianDayUT, bodyIds, context);
   // La casa dell'istante, se ci sarà, si scrive su questi stessi oggetti.
   const transiting: TransitingBody[] = bodies;
 
@@ -118,7 +118,7 @@ export function computeTransits(
   const chart: TransitChart = {
     input: moment,
     time,
-    ephemerisMode: context.mode,
+    ephemerisMode: mode,
     zodiac: natal.zodiac,
     // L'ayanamsa dell'istante del transito, non quello del tema: cresce di
     // circa cinquantuno secondi d'arco l'anno, e su una nascita di mezzo

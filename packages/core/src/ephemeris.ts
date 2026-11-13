@@ -109,14 +109,21 @@ export function resetEphemerisCache(): void {
  * I corpi non calcolabili (tipicamente Chirone senza il file degli asteroidi)
  * vengono omessi dal risultato e segnalati in `warnings`, senza far fallire
  * l'intero calcolo.
+ *
+ * `mode` è la modalità **usata**, che può non essere quella del contesto: i
+ * file `.se1` coprono dal 1800 al 2399, e per una data fuori di lì Swiss
+ * Ephemeris non fallisce ma passa a Moshier da sé, dicendolo solo nel flag
+ * che restituisce. Chi compone un risultato dichiara questa e non
+ * `context.mode`, o un tema del 1645 si direbbe calcolato coi file.
  */
 export function computeBodies(
   julianDayUT: number,
   bodyIds: readonly BodyId[],
   context: EphemerisContext,
-): { bodies: CelestialBody[]; warnings: string[] } {
+): { bodies: CelestialBody[]; warnings: string[]; mode: EphemerisMode } {
   const warnings: string[] = [];
   const bodies: CelestialBody[] = [];
+  const report = { moshier: false };
   // Il Nodo Sud è derivato: va calcolato dopo il Nodo Nord.
   const northNode = new Map<BodyId, CelestialBody>();
 
@@ -130,7 +137,7 @@ export function computeBodies(
       continue;
     }
 
-    const body = computeBody(julianDayUT, definition, context);
+    const body = computeBody(julianDayUT, definition, context, report);
     if (typeof body === 'string') {
       warnings.push(`${definition.name} non calcolabile: ${body}`);
       continue;
@@ -159,7 +166,14 @@ export function computeBodies(
     }
   }
 
-  return { bodies, warnings };
+  if (report.moshier && context.mode === 'swisseph') {
+    warnings.push(
+      'Data fuori dalla copertura dei file di effemeridi (1800-2399): Swiss Ephemeris ' +
+        'ha calcolato i pianeti con le effemeridi Moshier, di precisione leggermente inferiore.',
+    );
+  }
+
+  return { bodies, warnings, mode: report.moshier ? 'moshier' : context.mode };
 }
 
 /** Restituisce il corpo calcolato, oppure una stringa con il messaggio d'errore. */
@@ -167,6 +181,8 @@ function computeBody(
   julianDayUT: number,
   definition: BodyDefinition,
   context: EphemerisContext,
+  /** Dove annotare che Swiss Ephemeris è passato a Moshier da sé: vedi `computeBodies`. */
+  report?: { moshier: boolean },
 ): CelestialBody | string {
   if (definition.swephConstant === null) {
     return 'corpo derivato, non calcolabile direttamente';
@@ -181,6 +197,8 @@ function computeBody(
     return result.error || 'errore sconosciuto in calc_ut';
   }
   // `error` può contenere un avviso anche con flag >= 0: in quel caso i dati sono validi.
+  // Il flag reso dice con quali effemeridi il corpo è stato calcolato davvero.
+  if (report && (result.flag & sweph.constants.SEFLG_MOSEPH) !== 0) report.moshier = true;
 
   const [longitude, latitude, distance, speed] = result.data;
   if (

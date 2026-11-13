@@ -155,7 +155,7 @@ export function computePanchanga(
     ayanamsa: ayanamsaId,
   });
   const { time, warnings: timeWarnings } = resolveTime(moment);
-  const { bodies, warnings: bodyWarnings } = computeBodies(
+  const { bodies, warnings: bodyWarnings, mode } = computeBodies(
     time.julianDayUT,
     ['sole', 'luna'],
     context,
@@ -197,7 +197,7 @@ export function computePanchanga(
     input: moment,
     place,
     time,
-    ephemerisMode: context.mode,
+    ephemerisMode: mode,
     zodiac: 'siderale',
     ayanamsa: ayanamsaAt(time.julianDayUT, context, ayanamsaId),
     sun: sun.longitude,

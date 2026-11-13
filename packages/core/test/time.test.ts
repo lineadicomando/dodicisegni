@@ -1,4 +1,4 @@
-import { describe, expect, it } from 'vitest';
+import { describe, expect, it, vi } from 'vitest';
 import { ChartError } from '../src/errors.js';
 import { resolveTime, toJulianDay } from '../src/time.js';
 
@@ -72,6 +72,28 @@ describe('resolveTime', () => {
     });
 
     expect(warnings.some((w) => w.includes('ambigua'))).toBe(true);
+  });
+
+  it('scioglie l\'ora ambigua allo stesso modo in qualunque stagione la si calcoli', () => {
+    // Luxon, lasciato fare, parte dall'offset che il fuso ha adesso: la stessa
+    // nascita dava 00:30Z calcolata d'estate e 01:30Z d'inverno.
+    vi.useFakeTimers();
+    try {
+      for (const adesso of ['2026-01-15T12:00:00Z', '2026-07-15T12:00:00Z']) {
+        vi.setSystemTime(new Date(adesso));
+        const { time } = resolveTime({
+          date: '1990-09-30',
+          time: '02:30',
+          timezone: 'Europe/Rome',
+        });
+
+        // La prima occorrenza, ancora in ora legale: è ciò che l'avviso dichiara.
+        expect(time.utc, adesso).toBe('1990-09-30T00:30:00Z');
+        expect(time.offsetMinutes, adesso).toBe(120);
+      }
+    } finally {
+      vi.useRealTimers();
+    }
   });
 
   it('non emette avvisi per un orario ordinario', () => {

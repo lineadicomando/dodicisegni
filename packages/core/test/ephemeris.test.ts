@@ -53,6 +53,21 @@ describe('ripiego sulle effemeridi Moshier', () => {
 });
 
 describe.skipIf(!hasEphemerisFiles)('modalità Swiss Ephemeris', () => {
+  it('fuori dalla copertura dei file dichiara Moshier, non swisseph', () => {
+    // I `.se1` coprono 1800-2399. Fuori di lì Swiss Ephemeris non fallisce:
+    // passa a Moshier e lo dice solo nel flag che restituisce.
+    for (const date of ['1645-11-10', '2500-01-01']) {
+      const chart = computeNatalChart({ ...BIRTH, date, timezone: 'UTC' }, { ephemerisPath: EPHE_DIR });
+
+      expect(chart.ephemerisMode, date).toBe('moshier');
+      expect(chart.warnings.some((w) => w.includes('fuori dalla copertura')), date).toBe(true);
+    }
+
+    const dentro = computeNatalChart(BIRTH, { ephemerisPath: EPHE_DIR });
+    expect(dentro.ephemerisMode).toBe('swisseph');
+    expect(dentro.warnings.some((w) => w.includes('fuori dalla copertura'))).toBe(false);
+  });
+
   it('rileva i file e attiva il modo swisseph', () => {
     const context = initEphemeris(EPHE_DIR);
 
