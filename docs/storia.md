@@ -38,6 +38,7 @@ porta il nome del file.
 | 37, `37-ingressi-stazione.md` | `d6a0be7` |
 | 36, `36-pool.md` | `8c80e20` |
 | 31, `31-versione-nelle-risposte.md` | `bd6f720` |
+| 32, `32-testo-compatto.md` | `b7fda5a` |
 
 ## Le versioni
 
@@ -72,6 +73,7 @@ cambia muove la seconda cifra.
 | 0.18.0 | gli elenchi vuoti nei tool MCP, un bersaglio natale sconosciuto e il vuoto di corso senza corpi sono errori; il prompt dell'oraria tiene l'ora senza la data (il fascicolo canonico non li chiede) | 39 |
 | 0.19.0 | gli ingressi, i passaggi e gli incontri che si fanno e si disfano dentro un passo accanto a un'inversione del moto; la finestra con orbite sostituite oltre i quattro gradi (il fascicolo canonico non ne contiene) | 37 |
 | 0.19.1 | l'intestazione `X-Dodicisegni-Version` su tutte le risposte di `/api` | 31 |
+| 0.20.0 | `format=compact` sulle sei rotte di calcolo che non l'avevano; `/api/horary` e `/api/sky/course` rifiutano un formato sconosciuto invece di servire il JSON | 32 |
 
 ## Le sessioni
 
@@ -152,3 +154,14 @@ cambia muove la seconda cifra.
   versione su ogni risposta di `/api`, il 404 di un indirizzo che non esiste
   compreso. La prova passa dall'hook risposte già pronte; le rotte vere sono
   state controllate con `curl` contro il server compilato.
+- **14 novembre 2026.** Chiusa la voce 32 (0.20.0). `readFormat` sta in
+  `lib/server/formato.ts` e lo leggono tutte e dieci le rotte di calcolo.
+  La voce diceva terza cifra; si è mossa la seconda, perché con lei si
+  chiude la riga della 40 su `format=xml`: `/api/horary` e `/api/sky/course`
+  rispondevano 200 in JSON e ora 400, cioè una domanda che aveva una
+  risposta ne riceve un'altra. Le risposte JSON non cambiano e il fascicolo
+  canonico non si è mosso. Confrontato una volta, contro il server
+  compilato, il testo delle sei rotte con quello dei sei tool MCP per gli
+  stessi input: uguale carattere per carattere. La prova stabile
+  (`rotte-compatte.test.ts`) chiama le rotte e confronta con le funzioni di
+  resa del motore, perché `apps/web` non dipende dal server MCP.

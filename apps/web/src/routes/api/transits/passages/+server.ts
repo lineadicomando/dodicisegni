@@ -2,9 +2,11 @@ import {
   computeNatalChart,
   DEFAULT_PASSAGE_BODIES,
   type PassageOptions,
+  formatPassagesCompact,
 } from '@dodicisegni/core';
 import { placeLabel, readBirth, readChartOptions } from '#lib/server/birth.js';
 import { toHttpError } from '#lib/server/errors.js';
+import { readFormat, testo } from '#lib/server/formato.js';
 import { isHttpError } from '#lib/server/place.js';
 import { nelPool } from '#lib/server/pool.js';
 import { resolvePassageRange } from '#lib/server/range.js';
@@ -23,10 +25,15 @@ import type { RequestHandler } from './$types';
  *
  * Le finestre si misurano con le orbite dei transiti di Robert Hand, 1°, che
  * la risposta dichiara in `orbConvention`.
+ *
+ * Con `format=compact` la risposta è la tabella di testo che il server MCP dà
+ * ai suoi agenti, `text/plain`, invece del JSON, con il luogo di nascita in testa. Un altro valore è
+ * `FORMATO_NON_VALIDO`.
  */
 export const GET: RequestHandler = async ({ url, setHeaders, request }) => {
   try {
     const parameters = url.searchParams;
+    const formato = readFormat(parameters);
     const { birth, place } = readBirth(parameters);
     const options = readChartOptions(parameters);
     const chart = computeNatalChart(birth, options);
@@ -55,6 +62,12 @@ export const GET: RequestHandler = async ({ url, setHeaders, request }) => {
     // Stessa regola dei transiti: un arco indicato è una funzione pura dei
     // parametri, un arco che comincia «oggi» scade a mezzanotte.
     setHeaders({ 'cache-control': explicit ? 'private, max-age=86400' : 'no-store' });
+    if (formato === 'compact') {
+      return testo(
+        formatPassagesCompact(chart, passages, range, orbConvention, warnings),
+        place.label && `Luogo di nascita: ${place.label}`,
+      );
+    }
     return Response.json({
       chart,
       range,

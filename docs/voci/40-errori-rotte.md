@@ -15,10 +15,6 @@
   DATABASE_ASSENTE`, che mette nel 503 il percorso del database, e per
   l'avvertenza di Chirone fuori dal 1800–2399, che riporta il messaggio di
   Swiss Ephemeris col percorso della cartella delle effemeridi;
-- **`format=xml` dà 200 in JSON** su `/api/sky/course` (riga 39) e
-  `/api/horary` (riga 52), e 400 su `/api/chart` e `/api/jyotish`. La voce
-  32 accentra `readFormat`: queste due rotte vanno passate di lì con le sei
-  nuove;
 - **`/api/jyotish?date=9999-03-12`** dà `500 ERRORE_EFFEMERIDI`, mentre
   `/api/chart` con la stessa data dà 200 con le avvertenze;
 - **`time=24:00`** è accettato e diventa la mezzanotte del giorno dopo, senza

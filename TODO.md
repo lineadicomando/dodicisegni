@@ -17,7 +17,7 @@ Prima di cominciare:
 
 ## Dove siamo
 
-Al 13 novembre 2026, versione **0.19.1**, tag `v0.19.1`. `origin` e il sito
+Al 13 novembre 2026, versione **0.20.0**, tag `v0.20.0`. `origin` e il sito
 sono alla `v0.19.0`, pubblicata la sera del 13 novembre; ciò che è venuto
 dopo è in locale (`git status -sb`). Push e deploy li chiede il
 proprietario, e si fanno come in `CLAUDE.local.md`.
@@ -29,7 +29,7 @@ il nome della funzione o della costante accanto.
 Le voci vengono da tre parti:
 
 - **28**: la SEO, che aspetta i dati dei motori di ricerca;
-- **31–34**: l'integrazione con **dodicicase**, la piattaforma commerciale a
+- **33–34**: ciò che resta dell'integrazione con **dodicicase**, la piattaforma commerciale a
   codice chiuso che chiamerà dodicisegni solo in rete, senza importarne
   codice (`~/Progetti/it-dodicicase`, `docs/architettura.md`). Sono funzioni
   pubbliche e generali: nessuna aggiunge account, archivi o altro che
@@ -48,10 +48,9 @@ La colonna *Cifra* dice quale cifra della versione muove la voce
 | Voce | File in `docs/voci/` | Priorità | Taglia | Cifra | Prima di cominciare |
 |---|---|---|---|---|---|
 | 28. La revisione della SEO: leggere negli strumenti dei motori quali pagine sono escluse | `28-seo.md` | media | piccola | — | non prima di metà novembre 2026; è del proprietario, fuori dal repo |
-| 32. `format=compact` sulle sei rotte di calcolo che non l'hanno | `32-testo-compatto.md` | alta | piccola | 3ª | porta con sé due righe della 40 |
 | 33. Un servizio `motore` senza porte in `compose.yaml`, per la rete interna | `33-istanza-interna.md` | alta | piccola | — | conferma del proprietario per il server |
 | 34. La doppia licenza di `ruota` e `lettura` | `34-doppia-licenza.md` | media | piccola | — | decisione del proprietario |
-| 40. Rotte: fuso non valido dà 500, messaggi grezzi al client, `format=xml` accettato da due rotte | `40-errori-rotte.md` | media | piccola | 2ª | — |
+| 40. Rotte: fuso non valido dà 500, messaggi grezzi al client, date e ore al limite | `40-errori-rotte.md` | media | piccola | 2ª | — |
 | 41. L'oraria esce con un `TypeError` se un significatore non è calcolabile | `41-oraria-significatore.md` | media | piccola | 2ª | — |
 | 42. Prima dei fusi il tempo medio locale è quello della città del fuso, non del luogo | `42-tempo-medio-locale.md` | media | piccola | 2ª | decisione del proprietario: correggere o dichiarare |
 | 43. Tool MCP: con la Luna, tre anni rendono un milione di caratteri | `43-mcp-risposte-enormi.md` | media | piccola | 2ª | da decidere insieme per MCP e rotte |
@@ -62,5 +61,5 @@ La colonna *Cifra* dice quale cifra della versione muove la voce
 | 48. Il contorno: lint nei controlli, `npm audit`, tre prove di `ruota`, lo splash del desktop, le intestazioni | `48-contorno.md` | bassa | piccola | — | — |
 | 49. La revisione di ciò che il 13 novembre non è stato guardato | `49-revisione-resto.md` | media | grande | — | per ultima, dopo le voci 35–48; si può spezzare per riga |
 
-Un ordine che regge: le alte della revisione sono chiuse; la 32 quando
-serve dodicicase; le medie; la 49 per ultima.
+Un ordine che regge: le alte della revisione sono chiuse, e così le due funzioni
+per dodicicase (31 e 32); le medie; la 49 per ultima.

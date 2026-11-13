@@ -1,6 +1,7 @@
-import { computeNatalChart, computeTransits, type TransitOptions } from '@dodicisegni/core';
+import { computeNatalChart, computeTransits, type TransitOptions, formatTransitsCompact } from '@dodicisegni/core';
 import { placeLabel, readBirth, readChartOptions } from '#lib/server/birth.js';
 import { toHttpError } from '#lib/server/errors.js';
+import { readFormat, testo } from '#lib/server/formato.js';
 import { resolveTransitMoment } from '#lib/server/moment.js';
 import { isHttpError, LUOGO_TRANSITO, resolveOptionalPlace } from '#lib/server/place.js';
 import type { RequestHandler } from './$types';
@@ -19,10 +20,15 @@ import type { RequestHandler } from './$types';
  *
  * Risponde con il tema **e** i transiti: le posizioni natali servono comunque
  * a leggere il quadro, e chiederle due volte significherebbe ricalcolarle.
+ *
+ * Con `format=compact` la risposta è la tabella di testo che il server MCP dà
+ * ai suoi agenti, `text/plain`, invece del JSON, con il luogo di nascita e quello del transito in testa. Un altro valore è
+ * `FORMATO_NON_VALIDO`.
  */
 export const GET: RequestHandler = ({ url, setHeaders }) => {
   try {
     const parameters = url.searchParams;
+    const formato = readFormat(parameters);
     const { birth, place } = readBirth(parameters);
     const options = readChartOptions(parameters);
     const chart = computeNatalChart(birth, options);
@@ -54,6 +60,13 @@ export const GET: RequestHandler = ({ url, setHeaders }) => {
     setHeaders({
       'cache-control': explicit ? 'private, max-age=86400' : 'no-store',
     });
+    if (formato === 'compact') {
+      return testo(
+        formatTransitsCompact(chart, transits),
+        place.label && `Luogo di nascita: ${place.label}`,
+        transitPlace?.label && `Luogo del transito: ${transitPlace.label}`,
+      );
+    }
     return Response.json({
       chart,
       transits,

@@ -2,6 +2,7 @@ import { computeHoraryLilly, formatHoraryCompact, type HoraryQuestion } from '@d
 import { error } from '@sveltejs/kit';
 import { placeLabel } from '#lib/server/birth.js';
 import { toHttpError } from '#lib/server/errors.js';
+import { readFormat, testo } from '#lib/server/formato.js';
 import { resolveSkyMoment } from '#lib/server/moment.js';
 import { isHttpError, resolvePlace } from '#lib/server/place.js';
 import type { RequestHandler } from './$types';
@@ -32,6 +33,7 @@ import type { RequestHandler } from './$types';
 export const GET: RequestHandler = ({ url, setHeaders }) => {
   try {
     const parameters = url.searchParams;
+    const formato = readFormat(parameters);
     const place = resolvePlace(parameters);
     const { moment, explicit } = resolveSkyMoment(parameters, place.timezone);
     if (explicit && !moment.time) {
@@ -49,11 +51,8 @@ export const GET: RequestHandler = ({ url, setHeaders }) => {
     // Privata come un tema: l'indirizzo dice dove e quando qualcuno ha posto
     // una domanda. «Adesso» invece invecchia mentre lo si legge.
     setHeaders({ 'cache-control': explicit ? 'private, max-age=86400' : 'no-store' });
-    if (parameters.get('format') === 'compact') {
-      const intestazione = place.label ? `Luogo: ${place.label}\n` : '';
-      return new Response(intestazione + formatHoraryCompact(horary), {
-        headers: { 'content-type': 'text/plain; charset=utf-8' },
-      });
+    if (formato === 'compact') {
+      return testo(formatHoraryCompact(horary), place.label && `Luogo: ${place.label}`);
     }
     return Response.json({ horary, place: placeLabel(place) });
   } catch (cause) {

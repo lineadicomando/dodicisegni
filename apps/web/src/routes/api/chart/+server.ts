@@ -1,7 +1,7 @@
 import { computeNatalChart, formatChartCompact } from '@dodicisegni/core';
-import { error } from '@sveltejs/kit';
 import { placeLabel, readBirth, readChartOptions } from '#lib/server/birth.js';
 import { toHttpError } from '#lib/server/errors.js';
+import { readFormat, testo } from '#lib/server/formato.js';
 import { isHttpError } from '#lib/server/place.js';
 import type { RequestHandler } from './$types';
 
@@ -67,11 +67,8 @@ export const GET: RequestHandler = ({ url, setHeaders }) => {
     const chart = computeNatalChart(birth, readChartOptions(url.searchParams));
 
     if (readFormat(url.searchParams) === 'compact') {
-      const intestazione = place.label ? `Luogo di nascita: ${place.label}\n` : '';
       setHeaders({ 'cache-control': 'private, max-age=86400' });
-      return new Response(intestazione + formatChartCompact(chart), {
-        headers: { 'content-type': 'text/plain; charset=utf-8' },
-      });
+      return testo(formatChartCompact(chart), place.label && `Luogo di nascita: ${place.label}`);
     }
 
     // `private` e non `public`: la risposta è memorizzabile — un tema è una
@@ -87,22 +84,3 @@ export const GET: RequestHandler = ({ url, setHeaders }) => {
     toHttpError(cause);
   }
 };
-
-/**
- * In che forma va restituito il tema.
- *
- * Un valore non riconosciuto viene rifiutato invece che ricondotto al
- * predefinito, come nel disegno: chi scrive `format=testo` deve sapere di aver
- * sbagliato, non ricevere del JSON e credere che il parametro non esista.
- */
-function readFormat(parameters: URLSearchParams): 'json' | 'compact' {
-  const formato = parameters.get('format') ?? 'json';
-  if (formato !== 'json' && formato !== 'compact') {
-    throw error(
-      400,
-      `Formato "${formato}" non riconosciuto: attesi "json" oppure "compact".`,
-      { code: 'FORMATO_NON_VALIDO' },
-    );
-  }
-  return formato;
-}

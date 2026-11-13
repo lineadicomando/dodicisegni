@@ -14,6 +14,7 @@ import { error } from '@sveltejs/kit';
 import { placeLabel, readAyanamsa, readBirth } from '#lib/server/birth.js';
 import { readList } from '#lib/server/elenco.js';
 import { toHttpError } from '#lib/server/errors.js';
+import { readFormat, testo } from '#lib/server/formato.js';
 import { isHttpError } from '#lib/server/place.js';
 import type { RequestHandler } from './$types';
 
@@ -102,10 +103,7 @@ export const GET: RequestHandler = ({ url, setHeaders }) => {
     setHeaders({ 'cache-control': 'private, max-age=86400' });
 
     if (readFormat(parameters) === 'compact') {
-      const intestazione = place.label ? `Luogo di nascita: ${place.label}\n` : '';
-      return new Response(intestazione + formatJyotishaCompact(jyotisha), {
-        headers: { 'content-type': 'text/plain; charset=utf-8' },
-      });
+      return testo(formatJyotishaCompact(jyotisha), place.label && `Luogo di nascita: ${place.label}`);
     }
 
     return Response.json({ jyotisha, place: placeLabel(place) });
@@ -189,22 +187,4 @@ function readJyotishaOptions(parameters: URLSearchParams): JyotishaOptions {
   }
 
   return options;
-}
-
-/**
- * In che forma va restituito il tema.
- *
- * Un valore non riconosciuto viene rifiutato invece che ricondotto al
- * predefinito, come sulle altre rotte.
- */
-function readFormat(parameters: URLSearchParams): 'json' | 'compact' {
-  const formato = parameters.get('format') ?? 'json';
-  if (formato !== 'json' && formato !== 'compact') {
-    throw error(
-      400,
-      `Formato "${formato}" non riconosciuto: atteso "json" oppure "compact".`,
-      { code: 'FORMATO_NON_VALIDO' },
-    );
-  }
-  return formato;
 }

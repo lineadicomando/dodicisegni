@@ -1,6 +1,7 @@
 import { findSignCourse, formatSignCourseCompact, resolveTime, type BodyId } from '@dodicisegni/core';
 import { error } from '@sveltejs/kit';
 import { toHttpError } from '#lib/server/errors.js';
+import { readFormat, testo } from '#lib/server/formato.js';
 import { resolveSkyMoment } from '#lib/server/moment.js';
 import { isHttpError } from '#lib/server/place.js';
 import type { RequestHandler } from './$types';
@@ -27,6 +28,7 @@ const CORPI: readonly BodyId[] = ['luna', 'sole', 'mercurio', 'venere', 'marte',
 export const GET: RequestHandler = ({ url, setHeaders }) => {
   try {
     const parameters = url.searchParams;
+    const formato = readFormat(parameters);
     const body = (parameters.get('body') || 'luna') as BodyId;
     if (!CORPI.includes(body)) {
       throw error(400, `"body" deve essere uno dei sette: ${CORPI.join(', ')}.`, { code: 'CORPO_NON_VALIDO' });
@@ -36,11 +38,7 @@ export const GET: RequestHandler = ({ url, setHeaders }) => {
     const course = findSignCourse(resolveTime(moment).time.julianDayUT, body, { timezone });
 
     setHeaders({ 'cache-control': explicit ? 'public, max-age=86400' : 'no-store' });
-    if (parameters.get('format') === 'compact') {
-      return new Response(formatSignCourseCompact(course), {
-        headers: { 'content-type': 'text/plain; charset=utf-8' },
-      });
-    }
+    if (formato === 'compact') return testo(formatSignCourseCompact(course));
     return Response.json({ course });
   } catch (cause) {
     if (isHttpError(cause)) throw cause;

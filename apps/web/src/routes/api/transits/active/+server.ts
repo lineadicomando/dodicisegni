@@ -2,9 +2,11 @@ import {
   computeNatalChart,
   DEFAULT_PASSAGE_BODIES,
   type PassageOptions,
+  formatActiveTransitsCompact,
 } from '@dodicisegni/core';
 import { placeLabel, readBirth, readChartOptions } from '#lib/server/birth.js';
 import { toHttpError } from '#lib/server/errors.js';
+import { readFormat, testo } from '#lib/server/formato.js';
 import { isHttpError } from '#lib/server/place.js';
 import { nelPool } from '#lib/server/pool.js';
 import { resolvePassageRange } from '#lib/server/range.js';
@@ -28,10 +30,15 @@ import type { RequestHandler } from './$types';
  * `transitTimezone`, `minorAspects`, e `moon=true` per includere la Luna, che
  * da sola fa qualche migliaio di righe l'anno. «In orbita» vuol dire entro
  * le orbite dei transiti di Robert Hand, 1°, dichiarate in `orbConvention`.
+ *
+ * Con `format=compact` la risposta è la tabella di testo che il server MCP dà
+ * ai suoi agenti, `text/plain`, invece del JSON, con il luogo di nascita in testa. Un altro valore è
+ * `FORMATO_NON_VALIDO`.
  */
 export const GET: RequestHandler = async ({ url, setHeaders, request }) => {
   try {
     const parameters = url.searchParams;
+    const formato = readFormat(parameters);
     const { birth, place } = readBirth(parameters);
     const options = readChartOptions(parameters);
     const chart = computeNatalChart(birth, options);
@@ -57,6 +64,12 @@ export const GET: RequestHandler = async ({ url, setHeaders, request }) => {
     );
 
     setHeaders({ 'cache-control': explicit ? 'private, max-age=86400' : 'no-store' });
+    if (formato === 'compact') {
+      return testo(
+        formatActiveTransitsCompact(chart, transits, range, orbConvention, warnings),
+        place.label && `Luogo di nascita: ${place.label}`,
+      );
+    }
     return Response.json({
       chart,
       range,

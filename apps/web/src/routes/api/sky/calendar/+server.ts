@@ -1,8 +1,16 @@
-import { BODIES, type BodyId, type SkyEventOptions, type SkyPassageOptions } from '@dodicisegni/core';
+import {
+  BODIES,
+  formatSkyEventsCompact,
+  formatSkyPassagesCompact,
+  type BodyId,
+  type SkyEventOptions,
+  type SkyPassageOptions,
+} from '@dodicisegni/core';
 import { error } from '@sveltejs/kit';
 import { readZodiacOptions } from '#lib/server/birth.js';
 import { readList } from '#lib/server/elenco.js';
 import { toHttpError } from '#lib/server/errors.js';
+import { readFormat, testo } from '#lib/server/formato.js';
 import { isHttpError } from '#lib/server/place.js';
 import { nelPool } from '#lib/server/pool.js';
 import { resolvePassageRange } from '#lib/server/range.js';
@@ -26,10 +34,15 @@ import type { RequestHandler } from './$types';
  *
  * Le finestre degli incontri si misurano con le orbite dei transiti di
  * Robert Hand, 1°, dichiarate in `orbConvention`.
+ *
+ * Con `format=compact` la risposta è la tabella di testo che il server MCP dà
+ * ai suoi agenti, `text/plain`, invece del JSON: gli incontri, poi gli ingressi e le stazioni. Un altro valore è
+ * `FORMATO_NON_VALIDO`.
  */
 export const GET: RequestHandler = async ({ url, setHeaders, request }) => {
   try {
     const parameters = url.searchParams;
+    const formato = readFormat(parameters);
     const timezone = parameters.get('timezone') || 'UTC';
     const { range, explicit } = resolvePassageRange(parameters, timezone, new Date(), 'DATA_NON_VALIDA');
 
@@ -69,6 +82,17 @@ export const GET: RequestHandler = async ({ url, setHeaders, request }) => {
     // Come per il cielo di un istante la cache è condivisibile: un calendario
     // del 2026 è lo stesso per tutti. Se l'arco parte da oggi invece scade.
     setHeaders({ 'cache-control': explicit ? 'public, max-age=86400' : 'no-store' });
+
+    if (formato === 'compact') {
+      // Due tabelle, come nel tool `find_sky_events`: le avvertenze stanno
+      // sotto la prima e non si ripetono sotto la seconda.
+      return testo(
+        [
+          formatSkyPassagesCompact(incontri.passages, range, incontri.orbConvention, warnings),
+          formatSkyEventsCompact(ingressi.ingresses, stazioni.stations, range, []),
+        ].join('\n\n'),
+      );
+    }
 
     return Response.json({
       range,

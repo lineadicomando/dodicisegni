@@ -1,6 +1,7 @@
-import { MAX_ELECTION_DAYS, type BodyId, type ElectionOptions } from '@dodicisegni/core';
+import { MAX_ELECTION_DAYS, type BodyId, type ElectionOptions, formatElectionCompact } from '@dodicisegni/core';
 import { error } from '@sveltejs/kit';
 import { toHttpError } from '#lib/server/errors.js';
+import { readFormat, testo } from '#lib/server/formato.js';
 import { isHttpError, resolvePlace } from '#lib/server/place.js';
 import { nelPool } from '#lib/server/pool.js';
 import { resolvePassageRange } from '#lib/server/range.js';
@@ -19,10 +20,15 @@ import type { RequestHandler } from './$types';
  *
  * Non contiene raccomandazioni e non ne conterrà: dice quale pianeta regge
  * un'ora, non se quell'ora sia buona per qualcosa.
+ *
+ * Con `format=compact` la risposta è la tabella di testo che il server MCP dà
+ * ai suoi agenti, `text/plain`, invece del JSON, con il luogo in testa. Un altro valore è
+ * `FORMATO_NON_VALIDO`.
  */
 export const GET: RequestHandler = async ({ url, setHeaders, request }) => {
   try {
     const parameters = url.searchParams;
+    const formato = readFormat(parameters);
     const place = resolvePlace(parameters);
     const { range, explicit } = resolvePassageRange(
       parameters,
@@ -69,6 +75,10 @@ export const GET: RequestHandler = async ({ url, setHeaders, request }) => {
     // planetarie del 24 agosto 2029 a Palermo sono un fatto. Se invece parte
     // da oggi, oggi scade.
     setHeaders({ 'cache-control': explicit ? 'public, max-age=86400' : 'no-store' });
+
+    if (formato === 'compact') {
+      return testo(formatElectionCompact(election), place.label && `Luogo: ${place.label}`);
+    }
 
     return Response.json({
       range: election.range,
