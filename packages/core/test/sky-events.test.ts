@@ -73,6 +73,14 @@ describe('findSignIngresses', () => {
       findSignIngresses({ from: '2026-12-31', to: '2026-01-01', timezone: 'UTC' }),
     ).toThrow(ChartError);
   });
+
+  it('conta una volta sola un corpo chiesto due volte', () => {
+    const DUE_MESI: PassageRange = { from: '2026-01-01', to: '2026-02-28', timezone: 'UTC' };
+
+    expect(findSignIngresses(DUE_MESI, { bodies: ['luna', 'luna'] })).toEqual(
+      findSignIngresses(DUE_MESI, { bodies: ['luna'] }),
+    );
+  });
 });
 
 describe('findStations', () => {
@@ -123,6 +131,12 @@ describe('findStations', () => {
     const { stations } = findStations(ANNO_2026, { bodies: ['sole', 'luna'] });
 
     expect(stations).toHaveLength(0);
+  });
+
+  it('conta una volta sola un corpo chiesto due volte', () => {
+    expect(findStations(ANNO_2026, { bodies: ['mercurio', 'mercurio'] })).toEqual(
+      findStations(ANNO_2026, { bodies: ['mercurio'] }),
+    );
   });
 });
 

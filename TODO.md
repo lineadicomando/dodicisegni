@@ -17,9 +17,9 @@ Prima di cominciare:
 
 ## Dove siamo
 
-Al 13 novembre 2026, versione **0.15.0**, tag `v0.15.0`. **Non pubblicata**:
+Al 13 novembre 2026, versione **0.16.0**, tag `v0.16.0`. **Non pubblicata**:
 `origin` e il sito sono alla `v0.14.0`, e in locale ci sono i commit della
-revisione (`git status -sb`). Push e deploy li chiede il proprietario, e si
+revisione e della voce 35 (`git status -sb`). Push e deploy li chiede il proprietario, e si
 fanno come in `CLAUDE.local.md`.
 
 I riferimenti `file:riga` di tutte le voci sono stati ricontrollati il 13
@@ -52,7 +52,6 @@ La colonna *Cifra* dice quale cifra della versione muove la voce
 | 32. `format=compact` sulle sei rotte di calcolo che non l'hanno | `32-testo-compatto.md` | alta | piccola | 3ª | porta con sé due righe della 40 |
 | 33. Un servizio `motore` senza porte in `compose.yaml`, per la rete interna | `33-istanza-interna.md` | alta | piccola | — | conferma del proprietario per il server; meglio dopo la 31 |
 | 34. La doppia licenza di `ruota` e `lettura` | `34-doppia-licenza.md` | media | piccola | — | decisione del proprietario |
-| 35. Elenchi ripetuti nella query (`bodies`, `vargas`) tengono un thread per secondi e rendono megabyte | `35-liste-senza-tetto.md` | alta | piccola | 2ª | — |
 | 36. Il pool calcola per chi se n'è andato, la coda non ha tetto, un thread morto non la fa ripartire | `36-pool.md` | alta | media | — | mai `worker.terminate()` come scadenza: fa cadere il processo |
 | 37. Ingressi di Mercurio persi accanto a una stazione, secondo dove cade `from` | `37-ingressi-stazione.md` | alta | media | 2ª | — |
 | 38. Il reggitore del giorno planetario letto nel fuso passato e non nel luogo | `38-reggitore-del-giorno.md` | alta | piccola | 2ª | — |
@@ -68,6 +67,6 @@ La colonna *Cifra* dice quale cifra della versione muove la voce
 | 48. Il contorno: lint nei controlli, `npm audit`, tre prove di `ruota`, lo splash del desktop, le intestazioni | `48-contorno.md` | bassa | piccola | — | — |
 | 49. La revisione di ciò che il 13 novembre non è stato guardato | `49-revisione-resto.md` | media | grande | — | per ultima, dopo le voci 35–48; si può spezzare per riga |
 
-Un ordine che regge: le alte e piccole della revisione (35, 38, 39), poi 37 e
+Un ordine che regge: le alte e piccole della revisione (38, 39), poi 37 e
 36, che sono le due di taglia media; 31 e 32 quando serve dodicicase; le
 medie; la 49 per ultima.

@@ -32,6 +32,7 @@ porta il nome del file.
 | 5 | `a2e2207` |
 | 26 | `6a4898d` |
 | 30 | `66600e5` |
+| 35, `35-liste-senza-tetto.md` | `fc3fa36` |
 
 ## Le versioni
 
@@ -61,6 +62,7 @@ cambia muove la seconda cifra.
 | 0.13.0 | dasha, mahadasha e antardasha al femminile (cambia un'avvertenza) | — |
 | 0.14.0 | la terza modalità è `mutevole`, non `mobile` (cambia il campo della distribuzione e quattro regole dei varga) | 30 |
 | 0.15.0 | le case oltre il circolo polare, l'ora ambigua, Moshier dichiarato fuori copertura, le coordinate mancanti (il fascicolo canonico non le vede) | — |
+| 0.16.0 | un corpo o un varga chiesto due volte è una domanda sola; `bodies` e `vargas` più lunghi dei valori ammessi sono rifiutati (il fascicolo canonico non chiede doppioni) | 35 |
 
 ## Le sessioni
 
@@ -96,3 +98,8 @@ cambia muove la seconda cifra.
   una per file in `docs/voci/`; ricontrollati sulla 0.15.0 tutti i
   riferimenti `file:riga`; ciò che la revisione ha trovato a posto è in
   `docs/esaminato.md`.
+- **13 novembre 2026, sera.** Chiusa la voce 35 (0.16.0): `findSignIngresses`,
+  `findStations` e `computeJyotisha` tolgono i doppioni, e le due rotte
+  rifiutano l'elenco più lungo dei valori ammessi (`lib/server/elenco.ts`).
+  Contro il server compilato le due richieste della voce rispondono 400 in
+  centesimi di secondo.

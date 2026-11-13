@@ -39,7 +39,7 @@ export function findSignIngresses(
 
   const ingresses: SignIngress[] = [];
 
-  for (const bodyId of options.bodies ?? DEFAULT_PASSAGE_BODIES) {
+  for (const bodyId of distinct(options.bodies ?? DEFAULT_PASSAGE_BODIES)) {
     const samples = sample(bodyId, start, end, context, warnings);
 
     for (let i = 1; i < samples.length; i += 1) {
@@ -94,7 +94,7 @@ export function findStations(
 
   const stations: Station[] = [];
 
-  for (const bodyId of options.bodies ?? DEFAULT_PASSAGE_BODIES) {
+  for (const bodyId of distinct(options.bodies ?? DEFAULT_PASSAGE_BODIES)) {
     const samples = sample(bodyId, start, end, context, warnings);
 
     for (let i = 1; i < samples.length; i += 1) {
@@ -125,6 +125,14 @@ export function findStations(
 
   stations.sort((a, b) => a.exact.localeCompare(b.exact));
   return { stations, warnings };
+}
+
+/**
+ * Un corpo chiesto due volte è una domanda sola: senza questo ogni
+ * ripetizione rifarebbe il campionamento e raddoppierebbe gli eventi.
+ */
+function distinct(bodies: readonly BodyId[]): BodyId[] {
+  return [...new Set(bodies)];
 }
 
 /** In quale dei dodici settori di 30° cade una longitudine. */

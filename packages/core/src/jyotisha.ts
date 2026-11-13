@@ -83,7 +83,8 @@ export function computeJyotisha(
 
   const dasha = computeVimshottari(chart, options.dasha ?? { levels: 2 });
   const drishti = computeDrishti(chart, options.drishti ?? {});
-  const vargas = (options.vargas ?? ['d9']).map((id) =>
+  // Un varga chiesto due volte è una domanda sola, e la carta esce una volta.
+  const vargas = [...new Set(options.vargas ?? (['d9'] as const))].map((id) =>
     computeVarga(chart, id, options.hora ? { hora: options.hora } : {}),
   );
   const arudhas = computeArudhas(chart);

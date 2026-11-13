@@ -3,6 +3,7 @@ import { computeNatalChart } from '../src/chart.js';
 import { ChartError } from '../src/errors.js';
 import { formatVargaCompact } from '../src/format.js';
 import { HORA_CONVENTIONS, horaOf } from '../src/hora.js';
+import { computeJyotisha } from '../src/jyotisha.js';
 import { parasharaSignDignities } from '../src/dignita-parashara.js';
 import { computeVarga, SHASHTIAMSA_NAMES, shashtiamsaOf, VARGAS, vargaSignOf } from '../src/varga.js';
 import type { BirthData, VargaId } from '../src/types.js';
@@ -862,5 +863,13 @@ describe('computeVarga', () => {
   it('rifiuta un tema tropicale e un varga che non calcola', () => {
     expect(() => computeVarga(computeNatalChart(NASCITA), 'd9')).toThrow(ChartError);
     expect(() => vargaSignOf(0, 'd81' as VargaId)).toThrow(ChartError);
+  });
+});
+
+describe('i varga chiesti al tema vedico', () => {
+  it('calcola una volta sola un varga chiesto due volte', () => {
+    const carta = computeNatalChart(NASCITA, { zodiac: 'siderale', houseSystem: 'segni-interi' });
+
+    expect(computeJyotisha(carta, { vargas: ['d60', 'd9', 'd60'] }).vargas.map((v) => v.varga)).toEqual(['d60', 'd9']);
   });
 });

@@ -1,6 +1,7 @@
-import type { BodyId, SkyEventOptions, SkyPassageOptions } from '@dodicisegni/core';
+import { BODIES, type BodyId, type SkyEventOptions, type SkyPassageOptions } from '@dodicisegni/core';
 import { error } from '@sveltejs/kit';
 import { readZodiacOptions } from '#lib/server/birth.js';
+import { readList } from '#lib/server/elenco.js';
 import { toHttpError } from '#lib/server/errors.js';
 import { isHttpError } from '#lib/server/place.js';
 import { nelPool } from '#lib/server/pool.js';
@@ -86,17 +87,15 @@ export const GET: RequestHandler = async ({ url, setHeaders }) => {
  * I corpi da seguire, separati da virgola.
  *
  * Un identificatore sconosciuto lo rifiuta il motore, con il suo codice: qui
- * si controlla solo che la lista non sia vuota, perché una lista vuota
- * scivolerebbe nei predefiniti invece di dire che non si è capito.
+ * si controlla che la lista non sia vuota, perché una lista vuota
+ * scivolerebbe nei predefiniti invece di dire che non si è capito, e che non
+ * sia più lunga dei corpi che esistono.
  */
 function readBodies(parameters: URLSearchParams): BodyId[] | null {
   const raw = parameters.get('bodies');
   if (raw === null || raw === '') return null;
 
-  const bodies = raw
-    .split(',')
-    .map((id) => id.trim())
-    .filter((id) => id !== '');
+  const bodies = readList(raw, 'bodies', BODIES.length, 'CORPO_SCONOSCIUTO');
 
   if (bodies.length === 0) {
     throw error(

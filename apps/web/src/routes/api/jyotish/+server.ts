@@ -12,6 +12,7 @@ import {
 } from '@dodicisegni/core';
 import { error } from '@sveltejs/kit';
 import { placeLabel, readAyanamsa, readBirth } from '#lib/server/birth.js';
+import { readList } from '#lib/server/elenco.js';
 import { toHttpError } from '#lib/server/errors.js';
 import { isHttpError } from '#lib/server/place.js';
 import type { RequestHandler } from './$types';
@@ -146,10 +147,9 @@ function readJyotishaOptions(parameters: URLSearchParams): JyotishaOptions {
 
   const vargas = parameters.get('vargas');
   if (vargas) {
-    const chiesti = vargas
-      .split(',')
-      .map((voce) => voce.trim().toLowerCase())
-      .filter((voce) => voce.length > 0);
+    const chiesti = readList(vargas, 'vargas', VARGHE_CALCOLATE.size, 'VARGA_NON_VALIDO').map(
+      (voce) => voce.toLowerCase(),
+    );
 
     for (const id of chiesti) {
       if (!VARGHE_CALCOLATE.has(id)) {
