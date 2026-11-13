@@ -295,6 +295,24 @@ describe('planetaryHourAt', () => {
     expect(at).toMatchObject({ dayRuler: 'mercurio', ruler: 'sole', diurnal: true, index: 6 });
   });
 
+  it('legge il giorno planetario nel luogo, non nel fuso in cui lo si chiede', () => {
+    // Tokyo, 13 novembre 2026 alle 03:40 UT, dentro l'ora che comincia alle
+    // 03:16: là è venerdì a mezzogiorno passato, ma l'alba è caduta verso le
+    // 21 UT di giovedì, e chi leggeva il giorno in UT o a Roma trovava Giove.
+    // Il giorno è di Venere comunque lo si guardi, e l'ottava ora pure.
+    const TOKYO: Place = { latitude: 35.6895, longitude: 139.6917 };
+    const istante = giuliano('2026-11-13T03:40:00Z');
+    const context = initEphemeris();
+
+    for (const timezone of ['Asia/Tokyo', 'UTC', 'Europe/Rome']) {
+      expect(planetaryHourAt(istante, TOKYO, timezone, context)?.dayRuler, timezone).toBe('venere');
+
+      const { hours } = findElectionHours({ from: '2026-11-13', to: '2026-11-13', timezone }, TOKYO);
+      const ora = hours.find((h) => giuliano(h.start) <= istante && istante < giuliano(h.end))!;
+      expect(ora.ruler, timezone).toBe('venere');
+    }
+  });
+
   it('non dà ore dove il Sole non tramonta', () => {
     const { time } = resolveTime({ date: '2029-06-21', time: '12:00', timezone: 'Europe/Oslo' });
     expect(planetaryHourAt(time.julianDayUT, TROMSO, 'Europe/Oslo', initEphemeris())).toBeNull();

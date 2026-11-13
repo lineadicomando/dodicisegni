@@ -148,8 +148,8 @@ export function findElectionHours(
  * ciascuno, e la prima ora del giorno è del pianeta del giorno. `null` dove
  * il Sole non sorge o non tramonta, e quindi le ore non ci sono.
  *
- * Il fuso serve al giorno della settimana dell'alba, che decide il pianeta
- * del giorno, e all'ora locale del risultato.
+ * Il fuso serve solo all'ora locale del risultato: il pianeta del giorno
+ * viene dall'alba del luogo, e non cambia con il fuso in cui lo si chiede.
  */
 export function planetaryHourAt(
   julianDay: number,
@@ -179,7 +179,7 @@ export function planetaryHourAt(
   const position = Math.min(Math.floor((julianDay - from) / length), 11);
   const hourStart = from + position * length;
   const hourEnd = hourStart + length;
-  const dayRuler = rulerOfDay(sunrise, timezone);
+  const dayRuler = rulerOfDay(sunrise, place.longitude);
 
   return {
     ruler: chaldeanRuler(dayRuler, diurnal ? position : position + 12),
@@ -241,7 +241,7 @@ function buildPlanetaryHours(
       break;
     }
 
-    const ruler = rulerOfDay(sunrise, range.timezone);
+    const ruler = rulerOfDay(sunrise, place.longitude);
     const dayLength = (sunset - sunrise) / 12;
     const nightLength = (nextSunrise - sunset) / 12;
 
@@ -417,11 +417,19 @@ function findVoidsOfCourse(
  *
  * Cade qui la ragione per cui il giorno planetario comincia col Sole che
  * sorge: fra mezzanotte e l'alba di lunedì regge ancora la domenica.
+ *
+ * Il giorno è del **luogo**, non del fuso in cui si chiede la risposta: va
+ * dall'alba all'alba di chi sta lì. Per questo si legge nel tempo medio
+ * locale, l'alba in UT più la longitudine a quindici gradi l'ora, che non
+ * chiede nessun fuso: l'alba di Tokyo è di venerdì anche per chi la guarda
+ * da Roma, dove è ancora giovedì sera.
  */
-function rulerOfDay(sunrise: number, timezone: string): BodyId {
-  const weekday = DateTime.fromISO(julianDayToISO(sunrise), { zone: timezone }).weekday;
-  // Luxon numera da lunedì=1 a domenica=7; la tavola parte dalla domenica.
-  return WEEKDAY_RULERS[weekday % 7]!;
+function rulerOfDay(sunrise: number, longitude: number): BodyId {
+  // Il giorno giuliano cambia a mezzogiorno, e il giorno zero è un lunedì:
+  // mezzo giorno porta alla mezzanotte, uno intero alla domenica da cui
+  // parte la tavola.
+  const weekday = Math.floor(sunrise + longitude / 360 + 1.5) % 7;
+  return WEEKDAY_RULERS[weekday]!;
 }
 
 /**

@@ -33,6 +33,7 @@ porta il nome del file.
 | 26 | `6a4898d` |
 | 30 | `66600e5` |
 | 35, `35-liste-senza-tetto.md` | `fc3fa36` |
+| 38, `38-reggitore-del-giorno.md` | `1fc934e` |
 
 ## Le versioni
 
@@ -63,6 +64,7 @@ cambia muove la seconda cifra.
 | 0.14.0 | la terza modalità è `mutevole`, non `mobile` (cambia il campo della distribuzione e quattro regole dei varga) | 30 |
 | 0.15.0 | le case oltre il circolo polare, l'ora ambigua, Moshier dichiarato fuori copertura, le coordinate mancanti (il fascicolo canonico non le vede) | — |
 | 0.16.0 | un corpo o un varga chiesto due volte è una domanda sola; `bodies` e `vargas` più lunghi dei valori ammessi sono rifiutati (il fascicolo canonico non chiede doppioni) | 35 |
+| 0.17.0 | il reggitore del giorno planetario dal tempo medio locale del luogo, non dal fuso della richiesta (il fascicolo canonico chiede luogo e fuso concordi) | 38 |
 
 ## Le sessioni
 
@@ -103,3 +105,6 @@ cambia muove la seconda cifra.
   rifiutano l'elenco più lungo dei valori ammessi (`lib/server/elenco.ts`).
   Contro il server compilato le due richieste della voce rispondono 400 in
   centesimi di secondo.
+- **13 novembre 2026, sera, poi.** Chiusa la voce 38 (0.17.0): `rulerOfDay`
+  prende la longitudine e non il fuso. Tokyo alle 03:40 UT del 13 novembre
+  2026 dà Venere con `Asia/Tokyo`, `UTC` e `Europe/Rome`.
