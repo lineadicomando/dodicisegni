@@ -241,6 +241,20 @@ describe('la domanda del 1634 (Christian Astrology, pp. 177-182)', () => {
 });
 
 describe('computeHoraryLilly', () => {
+  it('dice che la figura non si può erigere quando un significatore non è calcolabile', () => {
+    // Il formato della data arriva al 9999, Moshier al 3000: prima usciva un
+    // TypeError, cioè un guasto del server per una data fuori copertura.
+    const fuori = (): unknown =>
+      computeHoraryLilly(
+        { date: '3500-01-01', time: '12:00', timezone: 'UTC' },
+        { latitude: 41.9, longitude: 12.5 },
+        { question: { house: 7 } },
+      );
+
+    expect(fuori).toThrowError(ChartError);
+    expect(fuori).toThrowError(expect.objectContaining({ code: 'DATA_NON_VALIDA' }));
+  });
+
   const ROMA = { latitude: 41.9028, longitude: 12.4964 };
 
   it('conta le case derivate', () => {

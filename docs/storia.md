@@ -39,6 +39,7 @@ porta il nome del file.
 | 36, `36-pool.md` | `8c80e20` |
 | 31, `31-versione-nelle-risposte.md` | `bd6f720` |
 | 32, `32-testo-compatto.md` | `b7fda5a` |
+| 41, `41-oraria-significatore.md` | `118b487` |
 
 ## Le versioni
 
@@ -74,6 +75,7 @@ cambia muove la seconda cifra.
 | 0.19.0 | gli ingressi, i passaggi e gli incontri che si fanno e si disfano dentro un passo accanto a un'inversione del moto; la finestra con orbite sostituite oltre i quattro gradi (il fascicolo canonico non ne contiene) | 37 |
 | 0.19.1 | l'intestazione `X-Dodicisegni-Version` su tutte le risposte di `/api` | 31 |
 | 0.20.0 | `format=compact` sulle sei rotte di calcolo che non l'avevano; `/api/horary` e `/api/sky/course` rifiutano un formato sconosciuto invece di servire il JSON | 32 |
+| 0.21.0 | l'oraria con un significatore non calcolabile dà `DATA_NON_VALIDA` invece di un `TypeError` | 41 |
 
 ## Le sessioni
 
@@ -165,3 +167,7 @@ cambia muove la seconda cifra.
   stessi input: uguale carattere per carattere. La prova stabile
   (`rotte-compatte.test.ts`) chiama le rotte e confronta con le funzioni di
   resa del motore, perché `apps/web` non dipende dal server MCP.
+- **14 novembre 2026, poi.** Chiusa la voce 41 (0.21.0). Il codice è
+  `DATA_NON_VALIDA` e non `ERRORE_EFFEMERIDI`, che sulle rotte è un 500: una
+  data fuori copertura è di chi chiede. Il messaggio non riporta le
+  avvertenze del cielo, che portano il percorso delle effemeridi (voce 40).

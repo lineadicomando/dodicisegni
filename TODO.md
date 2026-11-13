@@ -17,7 +17,7 @@ Prima di cominciare:
 
 ## Dove siamo
 
-Al 13 novembre 2026, versione **0.20.0**, tag `v0.20.0`. `origin` e il sito
+Al 13 novembre 2026, versione **0.21.0**, tag `v0.21.0`. `origin` e il sito
 sono alla `v0.19.0`, pubblicata la sera del 13 novembre; ciò che è venuto
 dopo è in locale (`git status -sb`). Push e deploy li chiede il
 proprietario, e si fanno come in `CLAUDE.local.md`.
@@ -51,7 +51,6 @@ La colonna *Cifra* dice quale cifra della versione muove la voce
 | 33. Un servizio `motore` senza porte in `compose.yaml`, per la rete interna | `33-istanza-interna.md` | alta | piccola | — | conferma del proprietario per il server |
 | 34. La doppia licenza di `ruota` e `lettura` | `34-doppia-licenza.md` | media | piccola | — | decisione del proprietario |
 | 40. Rotte: fuso non valido dà 500, messaggi grezzi al client, date e ore al limite | `40-errori-rotte.md` | media | piccola | 2ª | — |
-| 41. L'oraria esce con un `TypeError` se un significatore non è calcolabile | `41-oraria-significatore.md` | media | piccola | 2ª | — |
 | 42. Prima dei fusi il tempo medio locale è quello della città del fuso, non del luogo | `42-tempo-medio-locale.md` | media | piccola | 2ª | decisione del proprietario: correggere o dichiarare |
 | 43. Tool MCP: con la Luna, tre anni rendono un milione di caratteri | `43-mcp-risposte-enormi.md` | media | piccola | 2ª | da decidere insieme per MCP e rotte |
 | 44. Quattro descrizioni dei tool MCP non dicono ciò che il codice fa | `44-mcp-descrizioni.md` | media | piccola | — | — |

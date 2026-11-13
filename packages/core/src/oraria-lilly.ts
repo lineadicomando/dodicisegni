@@ -136,12 +136,29 @@ export function computeHoraryLilly(moment: SkyMoment, place: Place, options: Hor
   const effectiveHouse = question.derivedFrom
     ? ((question.derivedFrom - 1 + question.house - 1) % 12) + 1
     : question.house;
-  const cuspide = (numero: number): ZodiacSign => chart.houses.find((house) => house.number === numero)!.sign;
+  // Tema, cielo e transiti reggono un corpo che manca con un avviso; una
+  // figura oraria no, perché senza i suoi significatori non c'è niente da
+  // giudicare. Succede fuori dalla copertura delle effemeridi: la data la
+  // ammette il formato, non il calcolo. È un errore di chi chiede. Le
+  // avvertenze del cielo non entrano nel messaggio: riportano quello di Swiss
+  // Ephemeris, che porta con sé il percorso della cartella delle effemeridi.
+  const manca = (che: string): ChartError =>
+    new ChartError(
+      'DATA_NON_VALIDA',
+      `La figura oraria non si può erigere per questo istante: ${che} non è calcolabile. ` +
+        'Di solito la data è fuori dalla copertura delle effemeridi.',
+    );
+  const cuspide = (numero: number): ZodiacSign => {
+    const casa = chart.houses.find((house) => house.number === numero);
+    if (!casa) throw manca(`la cuspide della casa ${numero}`);
+    return casa.sign;
+  };
   const signoreAsc = DOMICILES.tradizionale[cuspide(1)];
   const signoreQuesito = DOMICILES.tradizionale[cuspide(effectiveHouse)];
 
   const significatore = (body: BodyId, role: HorarySignificator['role'], rules: number): HorarySignificator => {
-    const corpo = chart.bodies.find((b) => b.id === body)!;
+    const corpo = chart.bodies.find((b) => b.id === body);
+    if (!corpo) throw manca(`${body}, significatore del ${role}`);
     const s: HorarySignificator = { body, role, rules, longitude: corpo.longitude, sign: corpo.sign };
     const casa = condizioniDi(body)?.house;
     if (casa !== undefined) s.house = casa;
