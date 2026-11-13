@@ -41,8 +41,10 @@ export const GET: RequestHandler = async ({ url, setHeaders, request }) => {
     // Il tetto del motore è più stretto di quello dei passaggi: qui ogni
     // giorno porta ventiquattro righe, e il controllo va fatto prima di
     // chiamare, per rispondere 400 invece che 500.
+    // Estremi compresi, come li conta il motore: dal 10 gennaio al 10
+    // febbraio sono trentadue giorni di ore planetarie.
     const giorni =
-      (Date.parse(`${range.to}T00:00:00Z`) - Date.parse(`${range.from}T00:00:00Z`)) / 86_400_000;
+      (Date.parse(`${range.to}T00:00:00Z`) - Date.parse(`${range.from}T00:00:00Z`)) / 86_400_000 + 1;
     if (giorni > MAX_ELECTION_DAYS) {
       throw error(
         400,

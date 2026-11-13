@@ -30,6 +30,7 @@
  *   dice, e il motore non lo ricava.
  */
 
+import { ChartError } from './errors.js';
 import { computeVimshottari } from './dasha.js';
 import { computeParasharaDignities } from './dignita-parashara.js';
 import { computeDrishti } from './drishti.js';
@@ -70,6 +71,20 @@ export function computeJyotisha(
   options: JyotishaOptions = {},
 ): JyotishaChart {
   requireSidereal(chart.zodiac, 'Il tema vedico');
+
+  // Il tema occidentale regge un corpo che manca con un avviso; questo no,
+  // perché nakshatra, dasha e panchanga partono dalla Luna e dal Sole. Senza,
+  // usciva l'errore delle dasha, che sulle rotte è un guasto del server: ma
+  // manca quasi sempre perché la data è oltre la copertura delle effemeridi,
+  // ed è chi chiede che la deve cambiare.
+  const mancanti = (['sole', 'luna'] as const).filter((id) => !chart.bodies.some((body) => body.id === id));
+  if (mancanti.length > 0) {
+    throw new ChartError(
+      'DATA_NON_VALIDA',
+      `Il tema vedico non si può calcolare per questo istante: manca ${mancanti.join(' e ')}. ` +
+        'Di solito la data è fuori dalla copertura delle effemeridi.',
+    );
+  }
 
   const warnings: string[] = [];
 

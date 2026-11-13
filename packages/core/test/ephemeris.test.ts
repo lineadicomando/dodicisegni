@@ -2,6 +2,7 @@ import { existsSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import sweph from 'sweph';
 import { afterEach, beforeEach, describe, expect, it } from 'vitest';
+import { withoutPaths } from '../src/errors.js';
 import { computeNatalChart } from '../src/chart.js';
 import { computeBodies, initEphemeris, resetEphemerisCache } from '../src/ephemeris.js';
 import type { BirthData, BodyId } from '../src/types.js';
@@ -168,3 +169,13 @@ describe.skipIf(!hasEphemerisFiles)('scarto di Moshier dalle Swiss Ephemeris, 18
     expect(peggiore).toBeLessThan(soglia);
   });
 });
+
+describe('withoutPaths', () => {
+  it('toglie dal messaggio di Swiss Ephemeris la cartella in cui cercava', () => {
+    expect(withoutPaths("SwissEph file 'sepl_30.se1' not found in PATH '/srv/app/ephe/'")).toBe(
+      "SwissEph file 'sepl_30.se1' not found",
+    );
+    expect(withoutPaths(undefined)).toBe('');
+  });
+});
+

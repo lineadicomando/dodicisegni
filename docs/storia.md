@@ -41,6 +41,7 @@ porta il nome del file.
 | 32, `32-testo-compatto.md` | `b7fda5a` |
 | 41, `41-oraria-significatore.md` | `118b487` |
 | 44, `44-mcp-descrizioni.md` | `0460867` |
+| 40, `40-errori-rotte.md` | `2c3b3e4` |
 
 ## Le versioni
 
@@ -78,6 +79,7 @@ cambia muove la seconda cifra.
 | 0.20.0 | `format=compact` sulle sei rotte di calcolo che non l'avevano; `/api/horary` e `/api/sky/course` rifiutano un formato sconosciuto invece di servire il JSON | 32 |
 | 0.21.0 | l'oraria con un significatore non calcolabile dà `DATA_NON_VALIDA` invece di un `TypeError` | 41 |
 | 0.22.0 | `draw_chart_wheel` accetta le larghezze da 200 a 4000 come il quadro e le rotte (prima 400–2000); quattro descrizioni MCP legate al codice | 44 |
+| 0.23.0 | un fuso sconosciuto è sempre 400; i messaggi non portano percorsi del server; `/api/jyotish` fuori copertura dà `DATA_NON_VALIDA`; l'arco dell'elezione a estremi compresi; le 24:00 con l'avviso | 40 |
 
 ## Le sessioni
 
@@ -182,3 +184,14 @@ cambia muove la seconda cifra.
   toccata: l'arco di trentadue giorni lo rifiuta comunque il motore, con
   `INTERVALLO_NON_VALIDO` invece di `INTERVALLO_TROPPO_LUNGO`. Sta nella
   voce 40.
+- **14 novembre 2026, sera.** Chiusa la voce 40 (0.23.0), riga per riga e
+  riprovata contro il server compilato. Scelte prese qui: l'errore imprevisto
+  e il database delle località assente danno un testo fisso, e il messaggio
+  vero va su `console.error`; i messaggi di Swiss Ephemeris perdono il
+  percorso della cartella nel motore (`withoutPaths` in `errors.ts`), non
+  nelle rotte, perché escono anche dalla CLI e dal server MCP; le 24:00 non
+  si rifiutano, perché sui documenti si trovano, ma portano un'avvertenza;
+  il tema vedico senza Sole o Luna è `DATA_NON_VALIDA`, come l'oraria della
+  voce 41. `rotte-compatte.test.ts`, entrato con la 0.20.0, aveva sedici
+  asserzioni di tipo superflue che il lint segnala: i commit dalla 0.20.0
+  alla 0.22.0 non lo passano, questo sì.

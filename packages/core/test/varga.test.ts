@@ -873,3 +873,14 @@ describe('i varga chiesti al tema vedico', () => {
     expect(computeJyotisha(carta, { vargas: ['d60', 'd9', 'd60'] }).vargas.map((v) => v.varga)).toEqual(['d60', 'd9']);
   });
 });
+
+describe('il tema vedico fuori dalla copertura delle effemeridi', () => {
+  it('è una data da cambiare, non un guasto', () => {
+    // Nel 9999 la Luna non è calcolabile: il tema occidentale lo dice con un
+    // avviso, quello vedico non ha da dove partire.
+    const carta = computeNatalChart({ ...NASCITA, date: '9999-03-12' }, { zodiac: 'siderale', houseSystem: 'segni-interi' });
+
+    expect(() => computeJyotisha(carta)).toThrowError(expect.objectContaining({ code: 'DATA_NON_VALIDA' }));
+  });
+});
+

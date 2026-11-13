@@ -46,6 +46,16 @@ export function resolveTime(moment: LocalMoment): TimeResolution {
 
   const timeKnown = moment.time !== undefined;
 
+  // Le 24:00 sono una scrittura legittima della mezzanotte che chiude il
+  // giorno, e sui documenti si trova: l'istante è le 00:00 del giorno dopo.
+  // Va detto, perché la data che ne esce non è quella scritta.
+  if (moment.time?.startsWith('24:')) {
+    warnings.push(
+      `L'ora ${moment.time} del ${moment.date} è stata letta come la mezzanotte che chiude ` +
+        'quel giorno, cioè le 00:00 del giorno dopo.',
+    );
+  }
+
   const wallClock = `${moment.date}T${normalizeTime(moment.time ?? '12:00')}`;
   const parsed = DateTime.fromISO(wallClock, { zone: moment.timezone });
 

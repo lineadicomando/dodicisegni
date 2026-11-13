@@ -1,6 +1,6 @@
 import sweph from 'sweph';
 import { HOUSE_SYSTEM_CODES } from './constants.js';
-import { ChartError } from './errors.js';
+import { ChartError, withoutPaths } from './errors.js';
 import { arcForward, degreeInSign, normalize360, signOf } from './math.js';
 import type { EphemerisContext } from './ephemeris.js';
 import type { Angles, House, HouseSystem } from './types.js';
@@ -51,12 +51,12 @@ export function computeHouses(
   if (result.flag < 0 && !(usable && result.error)) {
     throw new ChartError(
       'ERRORE_EFFEMERIDI',
-      `Calcolo delle case fallito: ${result.error || 'errore sconosciuto'}.`,
+      `Calcolo delle case fallito: ${withoutPaths(result.error) || 'errore sconosciuto'}.`,
     );
   }
   if (result.error) {
     warnings.push(
-      `Domificazione: ${result.error} ` +
+      `Domificazione: ${withoutPaths(result.error)} ` +
         `(alle latitudini estreme Swiss Ephemeris ripiega su un sistema alternativo).`,
     );
   }

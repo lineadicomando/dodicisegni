@@ -7,6 +7,15 @@ import { resolveTime, toJulianDay } from '../src/time.js';
  * Un'ora di errore sposta l'Ascendente di circa 15 gradi, cioè mezzo segno.
  */
 describe('resolveTime', () => {
+  it('legge le 24:00 come la mezzanotte del giorno dopo, e lo dice', () => {
+    const { time, warnings } = resolveTime({ date: '1968-03-12', time: '24:00', timezone: 'Europe/Rome' });
+
+    expect(time.utc).toBe('1968-03-12T23:00:00Z');
+    expect(warnings.join(' ')).toContain('00:00 del giorno dopo');
+    // Le altre ore non ricevono l'avviso.
+    expect(resolveTime({ date: '1968-03-12', time: '23:59', timezone: 'Europe/Rome' }).warnings).toEqual([]);
+  });
+
   it('applica CET quando l\'ora legale non è in vigore', () => {
     const { time } = resolveTime({
       date: '1968-03-12',

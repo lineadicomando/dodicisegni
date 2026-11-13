@@ -72,3 +72,14 @@ describe('resolvePassageRange', () => {
     expect(capture(() => resolvePassageRange(params('from=01/01/2026'), 'Europe/Rome', ADESSO)).status).toBe(400);
   });
 });
+
+describe('un fuso che non esiste', () => {
+  it.each(['', 'from=2026-01-01&to=2026-12-31'])('è un 400 con e senza arco esplicito (%s)', (query) => {
+    // Senza `from` serviva a sapere che giorno è oggi, e cadeva con un 500.
+    const { status, body } = capture(() => resolvePassageRange(params(query), 'Foo/Bar', ADESSO));
+
+    expect(status).toBe(400);
+    expect(body.code).toBe('FUSO_ORARIO_NON_VALIDO');
+  });
+});
+

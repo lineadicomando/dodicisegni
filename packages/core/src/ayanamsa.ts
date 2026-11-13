@@ -22,7 +22,7 @@
  */
 
 import sweph from 'sweph';
-import { ChartError } from './errors.js';
+import { ChartError, withoutPaths } from './errors.js';
 import type { EphemerisContext } from './ephemeris.js';
 import type { AyanamsaId, AyanamsaInfo, ZodiacOptions } from './types.js';
 
@@ -104,7 +104,7 @@ export function ayanamsaAt(
   if (result.flag < 0) {
     throw new ChartError(
       'ERRORE_EFFEMERIDI',
-      `Ayanamsa non calcolabile: ${result.error || 'errore sconosciuto'}.`,
+      `Ayanamsa non calcolabile: ${withoutPaths(result.error) || 'errore sconosciuto'}.`,
     );
   }
 

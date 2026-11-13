@@ -19,9 +19,14 @@ export function toHttpError(cause: unknown): never {
   }
 
   if (cause instanceof GeoError) {
-    // Un database assente è un problema di installazione, non della richiesta.
-    const status = cause.code === 'QUERY_VUOTA' ? 400 : 503;
-    throw error(status, cause.message, { code: cause.code });
+    if (cause.code === 'QUERY_VUOTA') throw error(400, cause.message, { code: cause.code });
+    // Un database assente o rotto è un problema di installazione, non della
+    // richiesta. Il messaggio di `geo` dice dove lo cercava, e serve a chi
+    // amministra, non a chi chiede: va nel registro, e fuori un testo fisso.
+    console.error(cause);
+    throw error(503, 'La ricerca delle località non è disponibile su questo server.', {
+      code: cause.code,
+    });
   }
 
   if (cause instanceof PoolError) {
@@ -31,9 +36,9 @@ export function toHttpError(cause: unknown): never {
     throw error(cause.code === 'SERVER_OCCUPATO' ? 503 : 499, cause.message, { code: cause.code });
   }
 
-  throw error(
-    500,
-    cause instanceof Error ? cause.message : 'Errore interno.',
-    { code: 'ERRORE_INTERNO' },
-  );
+  // Un errore che nessuno ha previsto può dire qualunque cosa: il percorso di
+  // un file, una riga di SQL, il modulo che un thread non ha caricato. Il
+  // messaggio vero va nel registro del server; a chi chiede, un testo fisso.
+  console.error(cause);
+  throw error(500, 'Errore interno del server.', { code: 'ERRORE_INTERNO' });
 }

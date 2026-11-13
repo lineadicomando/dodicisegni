@@ -62,7 +62,7 @@ describe('format=compact sulle rotte di calcolo', () => {
   const attese: [nome: string, rotta: Rotta, query: string, atteso: () => string][] = [
     [
       '/api/transits',
-      transits as Rotta,
+      transits,
       `${NATO}&transitDate=2026-07-15&transitTime=12:00`,
       () =>
         formatTransitsCompact(
@@ -72,7 +72,7 @@ describe('format=compact sulle rotte di calcolo', () => {
     ],
     [
       '/api/transits/active',
-      active as Rotta,
+      active,
       `${NATO}&${QUANDO}`,
       () => {
         const { transits: attivi, warnings, orbConvention } = findActiveTransits(tema, ARCO, { minorAspects: false });
@@ -81,7 +81,7 @@ describe('format=compact sulle rotte di calcolo', () => {
     ],
     [
       '/api/transits/passages',
-      passages as Rotta,
+      passages,
       `${NATO}&${QUANDO}`,
       () => {
         const { passages: trovati, warnings, orbConvention } = findTransitPassages(tema, ARCO, { minorAspects: false });
@@ -90,13 +90,13 @@ describe('format=compact sulle rotte di calcolo', () => {
     ],
     [
       '/api/sky',
-      sky as Rotta,
+      sky,
       'date=2026-07-15&time=12:00&timezone=Europe/Rome',
       () => formatSkyCompact(computeSky({ date: '2026-07-15', time: '12:00', timezone: 'Europe/Rome' }, { minorAspects: false })),
     ],
     [
       '/api/sky/calendar',
-      calendar as Rotta,
+      calendar,
       `${QUANDO}&timezone=Europe/Rome`,
       () => {
         const incontri = findSkyPassages(ARCO, { minorAspects: false });
@@ -108,7 +108,7 @@ describe('format=compact sulle rotte di calcolo', () => {
     ],
     [
       '/api/election',
-      election as Rotta,
+      election,
       'from=2029-08-24&to=2029-08-25&timezone=Europe/Rome&latitude=45.0703&longitude=7.6869',
       () => formatElectionCompact(findElectionHours({ from: '2029-08-24', to: '2029-08-25', timezone: 'Europe/Rome' }, LUOGO, {})),
     ],
@@ -132,16 +132,16 @@ describe('format=compact sulle rotte di calcolo', () => {
 
 describe('un formato sconosciuto', () => {
   const tutte: [string, Rotta, string][] = [
-    ['/api/chart', chart as Rotta, NATO],
-    ['/api/jyotish', jyotish as Rotta, NATO],
-    ['/api/horary', horary as Rotta, 'house=10&date=2026-07-15&time=12:00&timezone=Europe/Rome&latitude=45.0703&longitude=7.6869'],
-    ['/api/sky/course', course as Rotta, 'date=2026-07-15&time=12:00'],
-    ['/api/transits', transits as Rotta, NATO],
-    ['/api/transits/active', active as Rotta, `${NATO}&${QUANDO}`],
-    ['/api/transits/passages', passages as Rotta, `${NATO}&${QUANDO}`],
-    ['/api/sky', sky as Rotta, 'date=2026-07-15&time=12:00'],
-    ['/api/sky/calendar', calendar as Rotta, QUANDO],
-    ['/api/election', election as Rotta, 'from=2029-08-24&timezone=Europe/Rome&latitude=45.0703&longitude=7.6869'],
+    ['/api/chart', chart, NATO],
+    ['/api/jyotish', jyotish, NATO],
+    ['/api/horary', horary, 'house=10&date=2026-07-15&time=12:00&timezone=Europe/Rome&latitude=45.0703&longitude=7.6869'],
+    ['/api/sky/course', course, 'date=2026-07-15&time=12:00'],
+    ['/api/transits', transits, NATO],
+    ['/api/transits/active', active, `${NATO}&${QUANDO}`],
+    ['/api/transits/passages', passages, `${NATO}&${QUANDO}`],
+    ['/api/sky', sky, 'date=2026-07-15&time=12:00'],
+    ['/api/sky/calendar', calendar, QUANDO],
+    ['/api/election', election, 'from=2029-08-24&timezone=Europe/Rome&latitude=45.0703&longitude=7.6869'],
   ];
 
   it.each(tutte)('%s lo rifiuta con FORMATO_NON_VALIDO', async (_nome, rotta, query) => {
@@ -153,3 +153,20 @@ describe('un formato sconosciuto', () => {
     expect(esito).toMatchObject({ status: 400, body: { code: 'FORMATO_NON_VALIDO' } });
   });
 });
+
+describe("l'arco dell'elezione", () => {
+  const LUOGO_Q = 'timezone=Europe/Rome&latitude=45.0703&longitude=7.6869';
+
+  it('si conta a estremi compresi, come nel motore', async () => {
+    // Dal 10 gennaio al 10 febbraio sono trentadue giorni: prima passava il
+    // controllo della rotta e lo fermava il motore, con un altro codice.
+    const troppi = await Promise.resolve()
+      .then(() => chiama(election as Rotta, `${LUOGO_Q}&from=2026-01-10&to=2026-02-10`))
+      .catch((sollevato: unknown) => sollevato);
+    expect(troppi).toMatchObject({ status: 400, body: { code: 'INTERVALLO_TROPPO_LUNGO' } });
+
+    const giusti = await chiama(election, `${LUOGO_Q}&from=2026-01-10&to=2026-02-09&rulers=giove`);
+    expect(giusti.status).toBe(200);
+  });
+});
+

@@ -2,7 +2,7 @@ import { existsSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import sweph from 'sweph';
 import { BODIES, type BodyDefinition } from './constants.js';
-import { ChartError } from './errors.js';
+import { ChartError, withoutPaths } from './errors.js';
 import { degreeInSign, normalize360, signOf } from './math.js';
 import type { BodyId, CelestialBody, EphemerisMode } from './types.js';
 
@@ -194,7 +194,7 @@ function computeBody(
 
   const result = sweph.calc_ut(julianDayUT, planetIndex, context.flags);
   if (result.flag < 0) {
-    return result.error || 'errore sconosciuto in calc_ut';
+    return withoutPaths(result.error) || 'errore sconosciuto in calc_ut';
   }
   // `error` può contenere un avviso anche con flag >= 0: in quel caso i dati sono validi.
   // Il flag reso dice con quali effemeridi il corpo è stato calcolato davvero.

@@ -9,7 +9,7 @@
 
 import type { PassageRange } from '@dodicisegni/core';
 import { error } from '@sveltejs/kit';
-import { wallClock } from '#lib/clock.js';
+import { isKnownTimezone, wallClock } from '#lib/clock.js';
 
 const DATE_PATTERN = /^\d{4}-\d{2}-\d{2}$/;
 const GIORNO = 86_400_000;
@@ -51,6 +51,17 @@ export function resolvePassageRange(
    */
   span: 'anno' | 'giorno' = 'anno',
 ): RequestedRange {
+  // Prima di tutto: senza `from` il fuso serve a sapere che giorno è oggi, e
+  // un fuso che non esiste lì faceva cadere `Intl` con un 500. Con `from`
+  // lo rifiuta il motore, con questo stesso codice: una regola sola.
+  if (!isKnownTimezone(timezone)) {
+    throw error(
+      400,
+      `Fuso orario "${timezone}" sconosciuto: atteso un identificatore IANA, es. Europe/Rome.`,
+      { code: 'FUSO_ORARIO_NON_VALIDO' },
+    );
+  }
+
   const from = read(parameters, 'from', dateCode);
   const to = read(parameters, 'to', dateCode);
 

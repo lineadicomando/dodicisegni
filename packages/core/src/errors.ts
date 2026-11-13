@@ -29,3 +29,15 @@ export class ChartError extends Error {
     this.code = code;
   }
 }
+
+/**
+ * Il messaggio di Swiss Ephemeris senza il percorso della cartella in cui ha
+ * cercato i file (`… not found in PATH '/…/ephe/'`).
+ *
+ * Quei messaggi finiscono nelle avvertenze, e le avvertenze escono dal
+ * motore: su un server direbbero a chiunque com'è fatto il suo disco. Il nome
+ * del file resta, che è ciò che serve a capire che cosa manca.
+ */
+export function withoutPaths(message: string | undefined): string {
+  return (message ?? '').replace(/\s*in PATH '[^']*'/g, '').trim();
+}
