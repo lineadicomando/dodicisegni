@@ -266,9 +266,12 @@ function componiOraria(
   if ('error' in place) return place.error;
 
   try {
+    // Senza `date` è oggi, e l'ora che c'è si tiene: la stessa regola del tool
+    // `compute_horary`, perché chi scrive «alle 9:40» non ha chiesto adesso.
+    const adesso = currentMoment(place.timezone);
     const moment =
       args.date === undefined
-        ? currentMoment(place.timezone)
+        ? { ...adesso, ...(args.time ? { time: args.time } : {}) }
         : { date: args.date, time: args.time!, timezone: place.timezone };
     const horary = computeHoraryLilly(
       moment,

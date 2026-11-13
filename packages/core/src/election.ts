@@ -118,6 +118,16 @@ export function findElectionHours(
     );
   }
 
+  // Senza nessun corpo oltre la Luna non c'è incontro che la tolga dal vuoto,
+  // e ogni ora dell'arco uscirebbe vuota di corso: non è una risposta.
+  if (options.bodies && options.bodies.every((id) => id === 'luna')) {
+    throw new ChartError(
+      'CORPO_SCONOSCIUTO',
+      'Il vuoto di corso si misura sugli incontri della Luna con altri corpi: ' +
+        '"bodies" ne deve nominare almeno uno diverso dalla Luna.',
+    );
+  }
+
   const periods = findVoidsOfCourse(range, start, end, options, warnings);
   const hours = buildPlanetaryHours(range, place, start, end, periods, options, context, warnings);
 

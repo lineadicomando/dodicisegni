@@ -34,6 +34,7 @@ porta il nome del file.
 | 30 | `66600e5` |
 | 35, `35-liste-senza-tetto.md` | `fc3fa36` |
 | 38, `38-reggitore-del-giorno.md` | `1fc934e` |
+| 39, `39-mcp-elenchi-vuoti.md` | `c41ffbd` |
 
 ## Le versioni
 
@@ -65,6 +66,7 @@ cambia muove la seconda cifra.
 | 0.15.0 | le case oltre il circolo polare, l'ora ambigua, Moshier dichiarato fuori copertura, le coordinate mancanti (il fascicolo canonico non le vede) | — |
 | 0.16.0 | un corpo o un varga chiesto due volte è una domanda sola; `bodies` e `vargas` più lunghi dei valori ammessi sono rifiutati (il fascicolo canonico non chiede doppioni) | 35 |
 | 0.17.0 | il reggitore del giorno planetario dal tempo medio locale del luogo, non dal fuso della richiesta (il fascicolo canonico chiede luogo e fuso concordi) | 38 |
+| 0.18.0 | gli elenchi vuoti nei tool MCP, un bersaglio natale sconosciuto e il vuoto di corso senza corpi sono errori; il prompt dell'oraria tiene l'ora senza la data (il fascicolo canonico non li chiede) | 39 |
 
 ## Le sessioni
 
@@ -108,3 +110,9 @@ cambia muove la seconda cifra.
 - **13 novembre 2026, sera, poi.** Chiusa la voce 38 (0.17.0): `rulerOfDay`
   prende la longitudine e non il fuso. Tokyo alle 03:40 UT del 13 novembre
   2026 dà Venere con `Asia/Tokyo`, `UTC` e `Europe/Rome`.
+- **13 novembre 2026, notte.** Chiusa la voce 39 (0.18.0). Negli schemi MCP
+  ogni elenco vuole almeno una voce. Due controlli sono finiti nel motore e
+  non nel server MCP, perché valgono per ogni superficie: `natalTargets`
+  rifiuta con `CORPO_SCONOSCIUTO` un nome che non è un punto natale (quello
+  che esiste ma manca nel tema resta un avviso), e `findElectionHours`
+  rifiuta `bodies` vuoto o con la sola Luna, anche su `/api/election`.

@@ -1,5 +1,6 @@
 import { computeCrossAspects } from './aspects.js';
-import { DEFAULT_TRANSIT_BODIES } from './constants.js';
+import { BODIES, DEFAULT_TRANSIT_BODIES } from './constants.js';
+import { ChartError } from './errors.js';
 import { ayanamsaAt, zodiacContext } from './ayanamsa.js';
 import { computeBodies, initEphemeris } from './ephemeris.js';
 import { computeHouses, houseOf } from './houses.js';
@@ -245,6 +246,16 @@ function degreesPerDay(from: number, to: number): number {
   return (((to - from + 540) % 360) - 180) / ANGLE_SPEED_STEP;
 }
 
+/** Tutti i nomi che un bersaglio natale può avere: i corpi, i quattro angoli, la Parte di Fortuna. */
+const NATAL_POINT_IDS: ReadonlySet<string> = new Set<NatalPointId>([
+  ...BODIES.map((body) => body.id),
+  'ascendente',
+  'medio-cielo',
+  'discendente',
+  'fondo-cielo',
+  'fortuna',
+]);
+
 /**
  * I punti natali da bersagliare, con la loro longitudine.
  *
@@ -284,6 +295,14 @@ export function natalTargets(
 
   const points: AspectPoint<NatalPointId>[] = [];
   for (const id of ids) {
+    // Un nome che non esiste non è un punto che manca in questo tema: saltarlo
+    // con un avviso lascerebbe credere che il periodo non abbia transiti.
+    if (!NATAL_POINT_IDS.has(id)) {
+      throw new ChartError(
+        'CORPO_SCONOSCIUTO',
+        `Bersaglio natale "${id}" non riconosciuto. Ammessi: ${[...NATAL_POINT_IDS].join(', ')}.`,
+      );
+    }
     const longitude = available.get(id);
     if (longitude === undefined) {
       warnings.push(`Bersaglio "${id}" non presente nel tema natale: transiti non calcolati su di esso.`);

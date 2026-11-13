@@ -485,6 +485,7 @@ export function registerComputeJyotishaChart(server: McpServer, context: ToolCon
           ),
         vargas: z
           .array(z.enum(VARGA_IDS))
+          .min(1)
           .optional()
           .describe(
             'Carte divisionali. Default: il solo d9 (navamsa), che è quella che si legge ' +
@@ -1162,6 +1163,7 @@ export function registerFindSkyEvents(server: McpServer, context: ToolContext = 
           .describe('Fuso IANA in cui leggere le date e gli istanti restituiti. Default: UTC.'),
         include: z
           .array(z.enum(SKY_EVENT_KINDS))
+          .min(1)
           .optional()
           .describe(
             'Che cosa elencare. Default: tutto. Restringere accorcia la risposta quando ' +
@@ -1169,6 +1171,7 @@ export function registerFindSkyEvents(server: McpServer, context: ToolContext = 
           ),
         bodies: z
           .array(z.string())
+          .min(1)
           .optional()
           .describe(
             'Corpi da seguire, es. ["saturno", "nettuno"] oppure ["sole", "luna"] per le ' +
@@ -1327,6 +1330,7 @@ export function registerFindElectionHours(server: McpServer, context: ToolContex
           ),
         bodies: z
           .array(z.string())
+          .min(1)
           .optional()
           .describe(
             'Corpi il cui incontro toglie la Luna dal vuoto di corso. Default: i sei ' +
@@ -1335,6 +1339,7 @@ export function registerFindElectionHours(server: McpServer, context: ToolContex
           ),
         rulers: z
           .array(z.string())
+          .min(1)
           .optional()
           .describe(
             'Restringe l\'elenco alle ore rette da questi pianeti, es. ["giove", "venere"]. ' +
@@ -1776,6 +1781,7 @@ export function registerFindTransitPassages(server: McpServer, context: ToolCont
           .describe('Fuso in cui leggere le date e gli istanti restituiti. Default: quello di nascita.'),
         bodies: z
           .array(z.string())
+          .min(1)
           .optional()
           .describe(
             'Corpi in transito da seguire, es. ["saturno", "plutone"]. Default: tutti tranne la Luna. ' +
@@ -1783,6 +1789,7 @@ export function registerFindTransitPassages(server: McpServer, context: ToolCont
           ),
         targets: z
           .array(z.string())
+          .min(1)
           .optional()
           .describe('Punti natali da bersagliare, es. ["sole", "ascendente"]. Default: corpi, ASC e MC.'),
         minor_aspects: z.boolean().optional().describe('Includi anche gli aspetti minori. Default: false.'),
@@ -1888,6 +1895,7 @@ export function registerFindActiveTransits(server: McpServer, context: ToolConte
           .describe('Fuso in cui leggere le date e gli istanti restituiti. Default: quello di nascita.'),
         bodies: z
           .array(z.string())
+          .min(1)
           .optional()
           .describe(
             'Corpi in transito da seguire, es. ["saturno", "plutone"]. Default: tutti tranne la Luna. ' +
@@ -1895,6 +1903,7 @@ export function registerFindActiveTransits(server: McpServer, context: ToolConte
           ),
         targets: z
           .array(z.string())
+          .min(1)
           .optional()
           .describe('Punti natali da bersagliare, es. ["sole", "ascendente"]. Default: corpi, ASC e MC.'),
         minor_aspects: z.boolean().optional().describe('Includi anche gli aspetti minori. Default: false.'),

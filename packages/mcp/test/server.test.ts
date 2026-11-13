@@ -1443,3 +1443,67 @@ describe('find_election_hours', () => {
     expect(textOf(result)).toMatch(/luogo/i);
   });
 });
+
+/**
+ * Risposte sbagliate che non si presentavano come errori: un elenco vuoto o
+ * un nome sconosciuto davano un successo senza contenuto, e un agente non ha
+ * modo di accorgersene.
+ */
+describe('elenchi vuoti e nomi sconosciuti', () => {
+  /** Lo schema può rifiutare con un risultato d'errore o con un'eccezione del protocollo. */
+  async function rifiutato(name: string, args: Record<string, unknown>): Promise<string> {
+    let result: Awaited<ReturnType<Client['callTool']>>;
+    try {
+      result = await client.callTool({ name, arguments: args });
+    } catch (error) {
+      return String(error);
+    }
+    expect(result.isError, `${name} ${JSON.stringify(args)}`).toBe(true);
+    return textOf(result);
+  }
+
+  const GIORNO = { location_id: ROMA_ID, from: '2026-11-13', to: '2026-11-13' };
+  const NATO = { date: '1968-03-12', time: '14:30', location_id: ROMA_ID, from: '2026-01-01', to: '2026-03-31' };
+
+  it('find_election_hours rifiuta bodies vuoto o con la sola Luna', async () => {
+    expect(await rifiutato('find_election_hours', { ...GIORNO, bodies: [] })).toContain('bodies');
+    expect(await rifiutato('find_election_hours', { ...GIORNO, bodies: ['luna'] })).toMatch(/diverso dalla Luna/);
+  });
+
+  it('find_election_hours rifiuta rulers vuoto', async () => {
+    expect(await rifiutato('find_election_hours', { ...GIORNO, rulers: [] })).toContain('rulers');
+  });
+
+  it('find_sky_events rifiuta include e bodies vuoti', async () => {
+    expect(await rifiutato('find_sky_events', { from: '2026-01-01', to: '2026-02-01', include: [] })).toContain('include');
+    expect(await rifiutato('find_sky_events', { from: '2026-01-01', to: '2026-02-01', bodies: [] })).toContain('bodies');
+  });
+
+  it.each(['find_transit_passages', 'find_active_transits'])(
+    '%s rifiuta targets sconosciuti e gli elenchi vuoti',
+    async (name) => {
+      expect(await rifiutato(name, { ...NATO, targets: ['pippo'] })).toMatch(/pippo/);
+      expect(await rifiutato(name, { ...NATO, targets: [] })).toContain('targets');
+      expect(await rifiutato(name, { ...NATO, bodies: [] })).toContain('bodies');
+    },
+  );
+
+  it('compute_jyotisha_chart rifiuta vargas vuoto', async () => {
+    expect(await rifiutato('compute_jyotisha_chart', { date: '1968-03-12', time: '14:30', location_id: ROMA_ID, vargas: [] })).toContain('vargas');
+  });
+
+  it("lettura_oraria tiene l'ora quando manca la data, come compute_horary", async () => {
+    const argomenti = { domanda: 'Otterrò il lavoro?', casa: '10', time: '03:07', location_id: String(ROMA_ID) };
+    const prompt = await client.getPrompt({ name: 'lettura_oraria', arguments: argomenti });
+    const tool = await client.callTool({
+      name: 'compute_horary',
+      arguments: { question_house: 10, time: '03:07', location_id: ROMA_ID },
+    });
+
+    expect(tool.isError).toBeFalsy();
+    // La figura del prompt è quella del tool, riga per riga: stessa data, stessa ora.
+    const figura = textOf(tool);
+    expect(String(prompt.messages[0]?.content?.text)).toContain(figura.slice(figura.indexOf('TEMA ORARIO')));
+    expect(figura).toContain('03:07');
+  });
+});

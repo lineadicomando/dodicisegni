@@ -191,6 +191,15 @@ describe('findElectionHours', () => {
     );
   });
 
+  it('rifiuta un vuoto di corso misurato su nessun corpo', () => {
+    // Senza un corpo diverso dalla Luna ogni ora uscirebbe vuota di corso.
+    for (const bodies of [[], ['luna']] as const) {
+      expect(() => findElectionHours(DUE_GIORNI, PALERMO, { bodies: [...bodies] })).toThrowError(
+        /diverso dalla Luna/,
+      );
+    }
+  });
+
   it('non dichiara filtri quando non ce ne sono', () => {
     expect(findElectionHours(DUE_GIORNI, PALERMO).filters).toBeUndefined();
   });

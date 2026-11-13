@@ -17,6 +17,17 @@ const natal: NatalChart = computeNatalChart(NAPOLI);
 const ANNO: PassageRange = { from: '2026-01-01', to: '2026-12-31', timezone: 'Europe/Rome' };
 
 describe('findTransitPassages', () => {
+  it('rifiuta un bersaglio che non esiste, e salta con un avviso quello che manca nel tema', () => {
+    // Un refuso non è un punto assente: «pippo» non deve dare un arco senza transiti.
+    expect(() =>
+      findTransitPassages(natal, ANNO, { bodies: ['saturno'], targets: ['pippo' as 'sole'] }),
+    ).toThrowError(ChartError);
+
+    // Chirone esiste ma non è fra i corpi di questo tema: resta un avviso.
+    const { warnings } = findTransitPassages(natal, ANNO, { bodies: ['saturno'], targets: ['chirone'] });
+    expect(warnings.join(' ')).toContain('chirone');
+  });
+
   it('trova i tre passaggi del ritorno di Saturno, con quello di mezzo retrogrado', () => {
     // È la prova che il calendario serve a qualcosa: un quadro istantaneo
     // vede un contatto, qui se ne vedono tre e si legge il ritmo del periodo.
