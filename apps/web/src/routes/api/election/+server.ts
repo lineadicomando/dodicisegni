@@ -20,7 +20,7 @@ import type { RequestHandler } from './$types';
  * Non contiene raccomandazioni e non ne conterrà: dice quale pianeta regge
  * un'ora, non se quell'ora sia buona per qualcosa.
  */
-export const GET: RequestHandler = async ({ url, setHeaders }) => {
+export const GET: RequestHandler = async ({ url, setHeaders, request }) => {
   try {
     const parameters = url.searchParams;
     const place = resolvePlace(parameters);
@@ -58,6 +58,7 @@ export const GET: RequestHandler = async ({ url, setHeaders }) => {
     // costa quanto tre anni di transiti, ma resta calcolo sincrono che
     // qui bloccherebbe tutto il resto.
     const election = await nelPool(
+      request.signal,
       'elezione',
       range,
       { latitude: place.latitude, longitude: place.longitude },

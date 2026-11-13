@@ -24,7 +24,7 @@ import type { RequestHandler } from './$types';
  * Le finestre si misurano con le orbite dei transiti di Robert Hand, 1°, che
  * la risposta dichiara in `orbConvention`.
  */
-export const GET: RequestHandler = async ({ url, setHeaders }) => {
+export const GET: RequestHandler = async ({ url, setHeaders, request }) => {
   try {
     const parameters = url.searchParams;
     const { birth, place } = readBirth(parameters);
@@ -45,6 +45,7 @@ export const GET: RequestHandler = async ({ url, setHeaders }) => {
     // due secondi, e qui terrebbero fermo il server per tutti. Il perché e
     // il perché sia sicuro stanno in `lib/server/pool.ts`.
     const { passages, warnings, orbConvention } = await nelPool(
+      request.signal,
       'passaggi',
       chart,
       range,

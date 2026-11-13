@@ -29,7 +29,7 @@ import type { RequestHandler } from './$types';
  * da sola fa qualche migliaio di righe l'anno. «In orbita» vuol dire entro
  * le orbite dei transiti di Robert Hand, 1°, dichiarate in `orbConvention`.
  */
-export const GET: RequestHandler = async ({ url, setHeaders }) => {
+export const GET: RequestHandler = async ({ url, setHeaders, request }) => {
   try {
     const parameters = url.searchParams;
     const { birth, place } = readBirth(parameters);
@@ -49,6 +49,7 @@ export const GET: RequestHandler = async ({ url, setHeaders }) => {
     // Costa quanto i passaggi, fino a due secondi: va nel pool per la stessa
     // ragione, scritta in `lib/server/pool.ts`.
     const { transits, warnings, orbConvention } = await nelPool(
+      request.signal,
       'attivi',
       chart,
       range,

@@ -303,3 +303,17 @@ codice rimandano qui con «`docs/decisioni.md`».
   motore e delle effemeridi. Va
   riguardato solo se la concorrenza sul sito pubblico diventa seria, e non da
   dentro il motore.
+- **Un thread del pool non si termina mai a metà di un calcolo.**
+  `worker.terminate()` mentre il thread è dentro `calc_ut` fa cadere l'intero
+  processo con `FATAL ERROR: Error::ThrowAsJavaScriptException napi_throw`,
+  dal modulo `sweph`: come scadenza o come annullamento è escluso. Chi se ne
+  va mentre aspetta **in coda** ne esce (`request.signal`, primo argomento di
+  `nelPool`); l'incarico già affidato a un thread finisce, e il risultato si
+  butta. Per questo dopo una raffica di richieste abbandonate chi arriva
+  aspetta ancora i lavori già in volo, al più uno per thread: misurato il 13
+  novembre 2026, cinque secondi invece di ventiquattro.
+- **La coda del pool tiene al più quattro incarichi per thread**
+  (`CODA_MASSIMA`), e oltre si risponde 503 `SERVER_OCCUPATO` subito. Il
+  numero è nostro e non viene da una misura del traffico: con i due secondi
+  scarsi del lavoro più lungo, l'ultimo della coda aspetta una decina di
+  secondi. Si riguarda con la concorrenza vera del sito.

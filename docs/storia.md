@@ -36,6 +36,7 @@ porta il nome del file.
 | 38, `38-reggitore-del-giorno.md` | `1fc934e` |
 | 39, `39-mcp-elenchi-vuoti.md` | `c41ffbd` |
 | 37, `37-ingressi-stazione.md` | `d6a0be7` |
+| 36, `36-pool.md` | `8c80e20` |
 
 ## Le versioni
 
@@ -130,3 +131,15 @@ cambia muove la seconda cifra.
   margine segue l'orbita più larga chiesta (`widestOrb`). Resta com'era che
   accanto a una stazione l'istante regge al minuto e non oltre: lo stesso
   ingresso esce alle 04:20 o alle 04:21 secondo la griglia.
+- **13 novembre 2026, notte fonda.** Chiusa la voce 36, senza versione. Le
+  quattro rotte del pool passano `request.signal`: la richiesta annullata
+  esce dalla coda, la coda ha un tetto (503 `SERVER_OCCUPATO`), e quando un
+  thread muore ciò che aspettava viene smistato, cosa che la voce dava per
+  dedotta e che una prova ha confermato (senza, la coda restava pendente).
+  Contro il server compilato, dopo sedici richieste di tre anni lasciate
+  cadere a 0,3 s, quella di un mese aspetta 5,0 s invece di 23,8 e il
+  processo sta a 376 MB invece di 870; di quaranta richieste lunghe tenute
+  aperte insieme, venti servite e venti rifiutate. Le scelte sono in
+  `docs/decisioni.md`. Resta alla voce 45 l'`AbortController` in
+  `lib/api.ts`: il server ora sa chi se n'è andato, ma l'interfaccia non
+  annulla ancora le richieste che supera.

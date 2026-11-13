@@ -19,7 +19,7 @@ Prima di cominciare:
 
 Al 13 novembre 2026, versione **0.19.0**, tag `v0.19.0`. **Non pubblicata**:
 `origin` e il sito sono alla `v0.14.0`, e in locale ci sono i commit della
-revisione e delle voci 35, 37, 38 e 39 (`git status -sb`). Push e deploy li chiede il proprietario, e si
+revisione e delle voci 35–39 (`git status -sb`). Push e deploy li chiede il proprietario, e si
 fanno come in `CLAUDE.local.md`.
 
 I riferimenti `file:riga` di tutte le voci sono stati ricontrollati il 13
@@ -52,17 +52,16 @@ La colonna *Cifra* dice quale cifra della versione muove la voce
 | 32. `format=compact` sulle sei rotte di calcolo che non l'hanno | `32-testo-compatto.md` | alta | piccola | 3ª | porta con sé due righe della 40 |
 | 33. Un servizio `motore` senza porte in `compose.yaml`, per la rete interna | `33-istanza-interna.md` | alta | piccola | — | conferma del proprietario per il server; meglio dopo la 31 |
 | 34. La doppia licenza di `ruota` e `lettura` | `34-doppia-licenza.md` | media | piccola | — | decisione del proprietario |
-| 36. Il pool calcola per chi se n'è andato, la coda non ha tetto, un thread morto non la fa ripartire | `36-pool.md` | alta | media | — | mai `worker.terminate()` come scadenza: fa cadere il processo |
 | 40. Rotte: fuso non valido dà 500, messaggi grezzi al client, `format=xml` accettato da due rotte | `40-errori-rotte.md` | media | piccola | 2ª | — |
 | 41. L'oraria esce con un `TypeError` se un significatore non è calcolabile | `41-oraria-significatore.md` | media | piccola | 2ª | — |
 | 42. Prima dei fusi il tempo medio locale è quello della città del fuso, non del luogo | `42-tempo-medio-locale.md` | media | piccola | 2ª | decisione del proprietario: correggere o dichiarare |
 | 43. Tool MCP: con la Luna, tre anni rendono un milione di caratteri | `43-mcp-risposte-enormi.md` | media | piccola | 2ª | da decidere insieme per MCP e rotte |
 | 44. Quattro descrizioni dei tool MCP non dicono ciò che il codice fa | `44-mcp-descrizioni.md` | media | piccola | — | — |
-| 45. Interfaccia: il link di `/vedica`, il link composto dal modulo, le risposte in corsa | `45-interfaccia-corse.md` | media | media | — | tutta dedotta: va riprodotta in un browser; si lega alla 36 |
+| 45. Interfaccia: il link di `/vedica`, il link composto dal modulo, le risposte in corsa | `45-interfaccia-corse.md` | media | media | — | tutta dedotta: va riprodotta in un browser; il lato server è fatto con la 36 |
 | 46. La ricerca delle località scorre la tabella a ogni battuta; errori di SQLite grezzi | `46-ricerca-localita.md` | media | media | — | cambia `schema.sql`: chiede una reimportazione, sul server compresa |
 | 47. Input del motore non validati (`orbs`, `normalize360`, giorno giuliano, archi, `levels`) | `47-input-motore.md` | bassa | piccola | caso per caso | — |
 | 48. Il contorno: lint nei controlli, `npm audit`, tre prove di `ruota`, lo splash del desktop, le intestazioni | `48-contorno.md` | bassa | piccola | — | — |
 | 49. La revisione di ciò che il 13 novembre non è stato guardato | `49-revisione-resto.md` | media | grande | — | per ultima, dopo le voci 35–48; si può spezzare per riga |
 
-Un ordine che regge: la 36, l'ultima alta della revisione; 31 e 32 quando serve dodicicase; le
-medie; la 49 per ultima.
+Un ordine che regge: le alte della revisione sono chiuse; 31 e 32 quando
+serve dodicicase; le medie; la 49 per ultima.

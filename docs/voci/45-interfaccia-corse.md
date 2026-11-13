@@ -20,8 +20,9 @@ aperto un browser, e la prima cosa da fare è riprodurre ogni punto.
   `lib/components/LocationSearch.svelte:80` (`search`), dove inoltre «Nessun
   risultato» compare nei 220 ms del debounce (riga 204).
 
-Con la voce 36: un `AbortController` in `lib/api.ts` chiude le corse e
-libera il pool insieme.
+Con la voce 36, chiusa: le rotte del pool leggono già `request.signal`, e una
+richiesta annullata esce dalla coda. Un `AbortController` in `lib/api.ts`
+chiude le corse e libera il pool insieme.
 
 **Versione**: niente.
 

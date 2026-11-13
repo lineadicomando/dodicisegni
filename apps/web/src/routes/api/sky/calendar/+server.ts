@@ -27,7 +27,7 @@ import type { RequestHandler } from './$types';
  * Le finestre degli incontri si misurano con le orbite dei transiti di
  * Robert Hand, 1°, dichiarate in `orbConvention`.
  */
-export const GET: RequestHandler = async ({ url, setHeaders }) => {
+export const GET: RequestHandler = async ({ url, setHeaders, request }) => {
   try {
     const parameters = url.searchParams;
     const timezone = parameters.get('timezone') || 'UTC';
@@ -53,6 +53,7 @@ export const GET: RequestHandler = async ({ url, setHeaders }) => {
     // volta sarebbe tre viaggi per un risultato solo, e qui sul filo
     // principale sarebbero circa mezzo secondo di server fermo.
     const { incontri, ingressi, stazioni } = await nelPool(
+      request.signal,
       'calendario',
       range,
       passageOptions,

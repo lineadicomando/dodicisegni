@@ -1,6 +1,7 @@
 import { ChartError } from '@dodicisegni/core';
 import { GeoError } from '@dodicisegni/geo';
 import { error } from '@sveltejs/kit';
+import { PoolError } from './pool.js';
 
 /**
  * Traduce gli errori del dominio in risposte HTTP.
@@ -21,6 +22,13 @@ export function toHttpError(cause: unknown): never {
     // Un database assente è un problema di installazione, non della richiesta.
     const status = cause.code === 'QUERY_VUOTA' ? 400 : 503;
     throw error(status, cause.message, { code: cause.code });
+  }
+
+  if (cause instanceof PoolError) {
+    // Né l'una né l'altra è colpa della richiesta: la coda piena è una
+    // condizione del server, che passa; l'annullata non ha più nessuno che la
+    // legga, e il 499 è il numero con cui la si riconosce nei registri.
+    throw error(cause.code === 'SERVER_OCCUPATO' ? 503 : 499, cause.message, { code: cause.code });
   }
 
   throw error(

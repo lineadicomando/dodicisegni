@@ -1,6 +1,14 @@
 import { computeNatalChart, ChartError, DEFAULT_PASSAGE_BODIES } from '@dodicisegni/core';
 import { afterAll, describe, expect, it } from 'vitest';
-import { chiudiPool, nelPool } from './pool';
+import {
+  chiudiPool,
+  CODA_MASSIMA,
+  fingiLaMorteDegliOccupati,
+  nelPool,
+  OPERAI,
+  PoolError,
+  statoPool,
+} from './pool';
 
 afterAll(() => chiudiPool());
 
@@ -21,7 +29,7 @@ describe('il pool restituisce quello che restituirebbe il motore', () => {
     const qui = (await import('@dodicisegni/core')).findTransitPassages(tema, ARCO, {
       minorAspects: false,
     });
-    const di_la = await nelPool('passaggi', tema, ARCO, { minorAspects: false });
+    const di_la = await nelPool(null, 'passaggi', tema, ARCO, { minorAspects: false });
 
     expect(di_la.passages).toEqual(qui.passages);
     expect(di_la.warnings).toEqual(qui.warnings);
@@ -34,7 +42,7 @@ describe('il pool restituisce quello che restituirebbe il motore', () => {
     const qui = (await import('@dodicisegni/core')).findActiveTransits(tema, ARCO, {
       minorAspects: false,
     });
-    const di_la = await nelPool('attivi', tema, ARCO, { minorAspects: false });
+    const di_la = await nelPool(null, 'attivi', tema, ARCO, { minorAspects: false });
 
     expect(di_la.transits).toEqual(qui.transits);
     expect(di_la.warnings).toEqual(qui.warnings);
@@ -43,7 +51,7 @@ describe('il pool restituisce quello che restituirebbe il motore', () => {
 
   it('il calendario del cielo, con le tre ricerche in un viaggio solo', async () => {
     const core = await import('@dodicisegni/core');
-    const esito = await nelPool('calendario', ARCO, { minorAspects: false }, {});
+    const esito = await nelPool(null, 'calendario', ARCO, { minorAspects: false }, {});
 
     expect(esito.incontri.passages).toEqual(core.findSkyPassages(ARCO, { minorAspects: false }).passages);
     expect(esito.ingressi.ingresses).toEqual(core.findSignIngresses(ARCO, {}).ingresses);
@@ -55,7 +63,7 @@ describe('il pool restituisce quello che restituirebbe il motore', () => {
     const giorno = { from: '2029-08-24', to: '2029-08-26', timezone: 'Europe/Rome' };
     const luogo = { latitude: 45.0703, longitude: 7.6869 };
 
-    const esito = await nelPool('elezione', giorno, luogo, {});
+    const esito = await nelPool(null, 'elezione', giorno, luogo, {});
     expect(esito.hours).toEqual(core.findElectionHours(giorno, luogo, {}).hours);
     expect(esito.hours.length).toBeGreaterThan(0);
   });
@@ -64,7 +72,7 @@ describe('il pool restituisce quello che restituirebbe il motore', () => {
 describe('gli errori attraversano il confine senza perdere il codice', () => {
   it('un errore di dominio torna come ChartError, non come guasto del server', async () => {
     const tema = computeNatalChart(NASCITA, {});
-    const rifiuto = nelPool('passaggi', tema, { ...ARCO, from: 'boh' }, {});
+    const rifiuto = nelPool(null, 'passaggi', tema, { ...ARCO, from: 'boh' }, {});
 
     // È il `code` che `toHttpError` guarda per rispondere 400 invece di 500:
     // perso quello, una data scritta male diventerebbe un guasto del server.
@@ -103,7 +111,7 @@ describe('lo zodiaco siderale è isolato per thread', () => {
       (['lahiri', 'raman'] as const).flatMap((ayanamsa) =>
         [0, 1].map(async () => ({
           ayanamsa,
-          esito: await nelPool('passaggi', soli[ayanamsa], ARCO, {
+          esito: await nelPool(null, 'passaggi', soli[ayanamsa], ARCO, {
             minorAspects: false,
             bodies: [...DEFAULT_PASSAGE_BODIES, 'luna'],
           }),
@@ -133,7 +141,7 @@ describe('la coda', () => {
     }));
 
     const insieme = await Promise.all(
-      archi.map((arco) => nelPool('passaggi', tema, arco, { minorAspects: false })),
+      archi.map((arco) => nelPool(null, 'passaggi', tema, arco, { minorAspects: false })),
     );
 
     const core = await import('@dodicisegni/core');
@@ -143,4 +151,65 @@ describe('la coda', () => {
       );
     });
   });
+});
+
+describe('chi se ne va, la coda piena, il thread che muore', () => {
+  const tema = computeNatalChart(NASCITA, {});
+  /**
+   * Sei mesi con la Luna: qualche decimo di secondo per thread. Non serve di
+   * più, perché tutto ciò che le prove fanno alla coda accade nello stesso
+   * giro dell'event loop in cui i thread sono stati occupati, prima che uno
+   * qualunque possa rispondere.
+   */
+  const lungo = (): Promise<unknown> =>
+    nelPool(null, 'passaggi', tema, { from: '2026-01-01', to: '2026-06-30', timezone: 'Europe/Rome' }, {
+      minorAspects: false,
+      bodies: [...DEFAULT_PASSAGE_BODIES, 'luna'],
+    });
+  const breve = (signal: AbortSignal | null = null) =>
+    nelPool(signal, 'passaggi', tema, ARCO, { minorAspects: false });
+  /** Tiene occupati tutti i thread, così che il prossimo incarico vada in coda. */
+  const occupaTutti = (): Promise<unknown>[] => Array.from({ length: OPERAI }, lungo);
+
+  it('toglie dalla coda la richiesta annullata, senza calcolarla', async () => {
+    const occupati = occupaTutti();
+    const richiesta = new AbortController();
+    const abbandonata = breve(richiesta.signal);
+    const rimasta = breve();
+    expect(statoPool().inCoda).toBe(2);
+
+    richiesta.abort();
+    await expect(abbandonata).rejects.toMatchObject({ code: 'RICHIESTA_ANNULLATA' });
+    expect(statoPool().inCoda).toBe(1);
+
+    // Chi era dietro viene servito, e chi arriva già annullato non entra.
+    await expect(rimasta).resolves.toHaveProperty('passages');
+    await expect(breve(AbortSignal.abort())).rejects.toBeInstanceOf(PoolError);
+    await Promise.all(occupati);
+  }, 30_000);
+
+  it('rifiuta subito quando la coda è piena, e serve chi era già dentro', async () => {
+    const occupati = occupaTutti();
+    const inCoda = Array.from({ length: CODA_MASSIMA }, () => breve());
+    expect(statoPool().inCoda).toBe(CODA_MASSIMA);
+
+    await expect(breve()).rejects.toMatchObject({ code: 'SERVER_OCCUPATO' });
+
+    const serviti = await Promise.all(inCoda);
+    expect(serviti).toHaveLength(CODA_MASSIMA);
+    await Promise.all(occupati);
+  }, 30_000);
+
+  it('fa ripartire la coda quando muoiono tutti i thread', async () => {
+    const occupati = occupaTutti().map((promessa) => promessa.catch((errore: Error) => errore));
+    const inAttesa = [breve(), breve()];
+
+    const sepolti = fingiLaMorteDegliOccupati();
+
+    // Chi era in volo cade con l'errore del thread; chi aspettava trova un
+    // thread nuovo, invece di restare pendente fino alla prossima richiesta.
+    for (const caduto of await Promise.all(occupati)) expect(caduto).toBeInstanceOf(Error);
+    for (const esito of await Promise.all(inAttesa)) expect(esito.passages.length).toBeGreaterThan(0);
+    await sepolti;
+  }, 30_000);
 });

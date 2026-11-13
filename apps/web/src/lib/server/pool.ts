@@ -139,7 +139,32 @@ parentPort.on('message', ({ lavoro, argomenti }) => {
  * questo esiste. Il tetto di quattro è per la memoria: ogni thread carica la
  * sua copia del motore e delle effemeridi.
  */
-const OPERAI = Math.max(1, Math.min(4, availableParallelism() - 1));
+export const OPERAI = Math.max(1, Math.min(4, availableParallelism() - 1));
+
+/**
+ * Quanti incarichi possono aspettare un thread.
+ *
+ * Senza tetto la coda cresce finché arrivano richieste, e chi è in fondo
+ * aspetta un tempo che nessuno gli ha detto: conviene rispondere subito che
+ * il server è occupato. Quattro turni per thread: con i due secondi scarsi
+ * del lavoro più lungo misurato, l'ultimo della coda aspetta una decina di
+ * secondi, che è già al limite di ciò che chi guarda una pagina sopporta.
+ */
+export const CODA_MASSIMA = OPERAI * 4;
+
+/**
+ * Gli errori del pool, che non sono del motore: non dicono che la richiesta è
+ * sbagliata ma che non è stata servita. `toHttpError` li riconosce dal `code`.
+ */
+export class PoolError extends Error {
+  constructor(
+    readonly code: 'SERVER_OCCUPATO' | 'RICHIESTA_ANNULLATA',
+    message: string,
+  ) {
+    super(message);
+    this.name = 'PoolError';
+  }
+}
 
 interface Incarico {
   lavoro: keyof Lavori;
@@ -181,19 +206,23 @@ function assumi(): Operaio {
     if (guasto) incarico.rifiuta(rimonta(guasto));
     else incarico.risolvi(esito as never);
 
-    const prossimo = coda.shift();
-    if (prossimo) affida(operaio, prossimo);
+    smista();
   });
 
   // Un thread che muore — il motore che non si carica, la memoria che finisce
   // — fa cadere l'incarico che teneva, e se ne va. Non se ne rimette uno al
-  // suo posto qui: il pool ne assume un altro alla prossima richiesta, quindi
-  // un guasto che dura non diventa un ciclo che rilancia da solo.
+  // suo posto per abitudine: un guasto che dura non deve diventare un ciclo
+  // che rilancia da solo. Ma chi aspettava in coda aspettava un thread, e se
+  // sono morti tutti non arriva più nessun messaggio a farla ripartire: la si
+  // smista qui. Ogni thread assunto così porta un incarico, e se muore anche
+  // lui lo fa cadere: i tentativi sono al più quanti gli incarichi in attesa.
   const congeda = (errore: Error) => {
     const indice = operai.indexOf(operaio);
-    if (indice >= 0) operai.splice(indice, 1);
+    if (indice < 0) return;
+    operai.splice(indice, 1);
     operaio.incarico?.rifiuta(errore);
     operaio.incarico = null;
+    smista();
   };
   worker.on('error', congeda);
   worker.on('exit', (codice) => {
@@ -202,6 +231,15 @@ function assumi(): Operaio {
 
   operai.push(operaio);
   return operaio;
+}
+
+/** Dà a chi è libero, o a un thread nuovo se c'è posto, ciò che aspetta in coda. */
+function smista(): void {
+  while (coda.length > 0) {
+    const libero = operai.find((operaio) => operaio.incarico === null);
+    if (!libero && operai.length >= OPERAI) return;
+    affida(libero ?? assumi(), coda.shift()!);
+  }
 }
 
 function affida(operaio: Operaio, incarico: Incarico): void {
@@ -233,12 +271,25 @@ function rimonta(guasto: Guasto): Error {
  *
  * Gli argomenti e il risultato attraversano il confine per copia, quindi
  * devono essere dati e basta — lo sono: il motore emette oggetti semplici.
+ *
+ * `signal` è quello della richiesta (`request.signal`), ed è il primo
+ * argomento perché nessuna rotta lo dimentichi: chi se n'è andato mentre
+ * aspettava in coda ne esce, invece di far calcolare due secondi per nessuno
+ * davanti a chi è ancora lì. L'incarico **già affidato** a un thread invece
+ * finisce: fermarlo vorrebbe dire `worker.terminate()`, e terminare un thread
+ * a metà di `calc_ut` fa cadere l'intero processo (`docs/decisioni.md`, *I
+ * thread del pool web*). `null` è per chi non ha una richiesta, cioè le prove.
  */
 export function nelPool<L extends keyof Lavori>(
+  signal: AbortSignal | null,
   lavoro: L,
   ...argomenti: Parameters<Lavori[L]>
 ): Promise<ReturnType<Lavori[L]>> {
   return new Promise((risolvi, rifiuta) => {
+    const annullata = (): PoolError =>
+      new PoolError('RICHIESTA_ANNULLATA', 'La richiesta è stata annullata prima del calcolo.');
+    if (signal?.aborted) return rifiuta(annullata());
+
     const incarico: Incarico = {
       lavoro,
       argomenti: argomenti,
@@ -247,22 +298,84 @@ export function nelPool<L extends keyof Lavori>(
     };
 
     const libero = operai.find((operaio) => operaio.incarico === null);
-    if (libero) affida(libero, incarico);
-    else if (operai.length < OPERAI) affida(assumi(), incarico);
+    if (libero) return affida(libero, incarico);
+    if (operai.length < OPERAI) return affida(assumi(), incarico);
+
     // Tutti occupati: aspetta il turno. Senza coda si assumerebbero thread
     // finché ce n'è richiesta, che è il problema di prima con un altro nome.
-    else coda.push(incarico);
+    if (coda.length >= CODA_MASSIMA) {
+      return rifiuta(
+        new PoolError(
+          'SERVER_OCCUPATO',
+          'Il server sta già calcolando troppe richieste lunghe: riprova fra qualche secondo.',
+        ),
+      );
+    }
+
+    const esce = (): void => {
+      const posto = coda.indexOf(incarico);
+      // Non è più in coda: un thread lo sta già calcolando, e lo finisce.
+      if (posto < 0) return;
+      coda.splice(posto, 1);
+      rifiuta(annullata());
+    };
+    signal?.addEventListener('abort', esce, { once: true });
+    // Servito o caduto, l'ascolto non serve più: il segnale di una richiesta
+    // vive quanto lei, ma non c'è ragione di lasciarglielo addosso.
+    const sciolto = <A extends unknown[]>(f: (...a: A) => void) => (...a: A): void => {
+      signal?.removeEventListener('abort', esce);
+      f(...a);
+    };
+    incarico.risolvi = sciolto(risolvi);
+    incarico.rifiuta = sciolto(rifiuta);
+    coda.push(incarico);
   });
 }
 
+/** Quanti thread ci sono, quanti lavorano e quanti incarichi aspettano. */
+export function statoPool(): { operai: number; occupati: number; inCoda: number } {
+  return {
+    operai: operai.length,
+    occupati: operai.filter((operaio) => operaio.incarico !== null).length,
+    inCoda: coda.length,
+  };
+}
+
 /**
- * Congeda tutti i thread.
+ * Congeda tutti i thread, e fa cadere ciò che era in volo o in attesa: una
+ * promessa lasciata pendente non si distingue da un calcolo che dura.
  *
- * Serve ai test, che altrimenti finirebbero con dei thread ancora vivi.
+ * Serve ai test, che altrimenti finirebbero con dei thread ancora vivi. Va
+ * chiamata a pool fermo: `terminate()` su un thread a metà di un calcolo è
+ * ciò che `nelPool` evita.
  */
 export async function chiudiPool(): Promise<void> {
-  const addio = operai.map((operaio) => operaio.worker.terminate());
+  const chiuso = new Error('Il pool è stato chiuso.');
+  const addio = operai.map((operaio) => {
+    operaio.incarico?.rifiuta(chiuso);
+    operaio.incarico = null;
+    return operaio.worker.terminate();
+  });
   operai.length = 0;
-  coda.length = 0;
+  for (const incarico of coda.splice(0)) incarico.rifiuta(chiuso);
   await Promise.all(addio);
+}
+
+/**
+ * Finge la morte dei thread al lavoro, per la prova che la coda riparta.
+ *
+ * Non li termina, perché terminarli a metà calcolo farebbe cadere il
+ * processo: emette l'errore che Node emetterebbe, e li congeda davvero solo
+ * quando hanno finito. La promessa si chiude allora.
+ */
+export async function fingiLaMorteDegliOccupati(): Promise<void> {
+  const occupati = operai.filter((operaio) => operaio.incarico !== null);
+  const finiti = occupati.map(
+    ({ worker }) =>
+      new Promise<void>((fatto) => {
+        worker.once('message', () => void worker.terminate().then(() => fatto()));
+      }),
+  );
+  for (const { worker } of occupati) worker.emit('error', new Error('Il thread è morto.'));
+  await Promise.all(finiti);
 }
