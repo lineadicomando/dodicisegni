@@ -7,13 +7,14 @@ import { aspectsOf } from './aspects.js';
 import { orbConventionInfo, pairOrb, transitOrbConvention } from './orbite.js';
 import {
   MAX_WINDOW_DAYS,
-  WIDEST_ORB,
   bisect,
   julianDayToISO,
   resolveRange,
   signedAngles,
+  splitAtTurns,
   stepFor,
   meanDailyMotion,
+  widestOrb,
 } from './roots.js';
 import type { AspectDefinition } from './constants.js';
 import type {
@@ -37,6 +38,8 @@ interface PairSample {
   julianDay: number;
   faster: number;
   slower: number;
+  /** La velocità con cui i due si scostano: la differenza delle due, in gradi al giorno. */
+  relative: number;
 }
 
 /**
@@ -84,10 +87,21 @@ export function findSkyPassages(
     // una finestra spalancata solo perché non è stata guardata prima.
     const margin = Math.min(
       MAX_WINDOW_DAYS,
-      WIDEST_ORB / Math.max(MIN_RELATIVE_MOTION, Math.abs(motion(faster) - motion(slower))),
+      widestOrb(options.orbs) / Math.max(MIN_RELATIVE_MOTION, Math.abs(motion(faster) - motion(slower))),
     );
 
-    const samples = samplePair(faster, slower, start - margin, end + margin, step, context, warnings);
+    // Tagliati dove la velocità relativa si inverte: lì i due possono
+    // perfezionare un aspetto e disfarlo dentro un passo solo. Non è la
+    // stazione di uno dei due, è l'istante in cui vanno alla stessa velocità.
+    // Vedi `splitAtTurns`.
+    const samples = splitAtTurns(
+      samplePair(faster, slower, start - margin, end + margin, step, context, warnings),
+      (sample) => sample.relative,
+      (julianDay) => {
+        const pair = longitudesAt(faster, slower, julianDay, context);
+        return pair === null ? null : { julianDay, ...pair };
+      },
+    );
     if (samples.length < 2) continue;
 
     for (const definition of definitions) {
@@ -267,11 +281,11 @@ function longitudesAt(
   slower: BodyId,
   julianDay: number,
   context: EphemerisContext,
-): { faster: number; slower: number } | null {
+): { faster: number; slower: number; relative: number } | null {
   const { bodies } = computeBodies(julianDay, [faster, slower], context);
   const a = bodies.find((body) => body.id === faster);
   const b = bodies.find((body) => body.id === slower);
-  return a && b ? { faster: a.longitude, slower: b.longitude } : null;
+  return a && b ? { faster: a.longitude, slower: b.longitude, relative: a.speed - b.speed } : null;
 }
 
 function motionAt(

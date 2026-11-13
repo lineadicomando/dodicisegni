@@ -147,3 +147,65 @@ describe('findTransitPassages', () => {
     expect(passage.exact).toMatch(/Z$/);
   });
 });
+
+describe('le perfezioni doppie accanto a una stazione', () => {
+  // Mercurio retrogrado si oppone alla Venere natale il 3 settembre 1925, staziona, e
+  // diretto ripassa sull'opposizione il giorno dopo: due perfezioni a ventidue ore
+  // l'una dall'altra, meno di un passo di campionamento. Col segno dello
+  // scarto confrontato ai soli capi del passo sparivano tutte e due, secondo
+  // dove cadeva l'inizio dell'arco.
+  const nato = computeNatalChart({
+    date: '1968-03-12',
+    time: '14:30',
+    latitude: 41.89,
+    longitude: 12.51,
+    timezone: 'Europe/Rome',
+  });
+
+  it.each(['1925-08-28', '1925-08-29', '1925-08-30', '1925-08-31', '1925-09-01', '1925-09-02'])(
+    'le trova tutte e due partendo dal %s',
+    (from) => {
+      for (const timezone of ['UTC', 'Asia/Kolkata', 'America/New_York']) {
+        const { passages } = findTransitPassages(
+          nato,
+          { from, to: '1925-09-10', timezone },
+          { bodies: ['mercurio'], targets: ['venere'] },
+        );
+        const opposizioni = passages.filter((p) => p.aspect === 'opposizione');
+        expect(opposizioni.map((p) => p.exact.slice(0, 10)), `${from} ${timezone}`).toEqual([
+          '1925-09-03',
+          '1925-09-04',
+        ]);
+        expect(opposizioni.map((p) => p.retrograde)).toEqual([true, false]);
+      }
+    },
+  );
+});
+
+describe('la finestra con orbite sostituite', () => {
+  it("non dipende da quanto è lungo l'arco chiesto", () => {
+    // Giove sul Sole natale il 4 aprile 2022. Con un'orbita di dodici gradi
+    // la finestra dura quasi quattro mesi: il margine tarato su quattro
+    // gradi non arrivava ai suoi bordi, e l'arco di un giorno la perdeva.
+    const nato = computeNatalChart({
+      date: '1968-03-12',
+      time: '14:30',
+      latitude: 41.89,
+      longitude: 12.51,
+      timezone: 'Europe/Rome',
+    });
+    const options = { bodies: ['giove' as const], targets: ['sole' as const], orbs: { congiunzione: 12 } };
+    const finestra = (from: string, to: string) =>
+      findTransitPassages(nato, { from, to, timezone: 'UTC' }, options).passages.find(
+        (p) => p.aspect === 'congiunzione',
+      )?.window;
+
+    // I bordi sono radici cercate da due griglie diverse: reggono al minuto.
+    const corta = finestra('2022-04-04', '2022-04-04');
+    const lunga = finestra('2021-01-01', '2023-12-31');
+    expect(corta).toBeDefined();
+    for (const bordo of ['start', 'end'] as const) {
+      expect(Math.abs(Date.parse(corta![bordo]) - Date.parse(lunga![bordo]))).toBeLessThanOrEqual(60_000);
+    }
+  });
+});

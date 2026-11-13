@@ -162,3 +162,46 @@ describe('formatSkyPassagesCompact', () => {
     expect(testo).toContain('nessun aspetto si perfeziona');
   });
 });
+
+describe('le perfezioni doppie dove la velocità relativa si inverte', () => {
+  // Mercurio, quasi fermo prima della stazione, raggiunge il trigono a
+  // Saturno il 9 ottobre 1994 e lo disfa sedici ore dopo: nessuno dei due
+  // staziona in mezzo, è la differenza delle velocità che cambia segno.
+  it.each(['1994-10-04', '1994-10-05', '1994-10-06', '1994-10-07', '1994-10-08'])(
+    'le trova tutte e due partendo dal %s',
+    (from) => {
+      for (const timezone of ['UTC', 'Asia/Kolkata', 'America/New_York']) {
+        const { passages } = findSkyPassages(
+          { from, to: '1994-10-15', timezone },
+          { bodies: ['mercurio', 'saturno'] },
+        );
+        const trigoni = passages.filter((p) => p.aspect === 'trigono');
+        expect(trigoni.map((p) => p.exact.slice(0, 13)), `${from} ${timezone}`).toEqual([
+          '1994-10-09T08',
+          '1994-10-10T00',
+        ]);
+      }
+    },
+  );
+});
+
+describe('la finestra con orbite sostituite', () => {
+  it("non dipende da quanto è lungo l'arco chiesto", () => {
+    // La congiunzione di Giove e Saturno del 21 dicembre 2020, con un'orbita
+    // di otto gradi: la finestra va da settembre a febbraio, oltre il margine
+    // tarato su quattro gradi, e l'arco di un giorno la perdeva.
+    const options = { bodies: ['giove' as const, 'saturno' as const], orbs: { congiunzione: 8 } };
+    const finestra = (from: string, to: string) =>
+      findSkyPassages({ from, to, timezone: 'UTC' }, options).passages.find(
+        (p) => p.aspect === 'congiunzione',
+      )?.window;
+
+    // I bordi sono radici cercate da due griglie diverse: reggono al minuto.
+    const corta = finestra('2020-12-21', '2020-12-21');
+    const lunga = finestra('2020-01-01', '2021-12-31');
+    expect(corta).toBeDefined();
+    for (const bordo of ['start', 'end'] as const) {
+      expect(Math.abs(Date.parse(corta![bordo]) - Date.parse(lunga![bordo]))).toBeLessThanOrEqual(60_000);
+    }
+  });
+});

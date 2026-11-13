@@ -17,9 +17,9 @@ Prima di cominciare:
 
 ## Dove siamo
 
-Al 13 novembre 2026, versione **0.18.0**, tag `v0.18.0`. **Non pubblicata**:
+Al 13 novembre 2026, versione **0.19.0**, tag `v0.19.0`. **Non pubblicata**:
 `origin` e il sito sono alla `v0.14.0`, e in locale ci sono i commit della
-revisione e delle voci 35, 38 e 39 (`git status -sb`). Push e deploy li chiede il proprietario, e si
+revisione e delle voci 35, 37, 38 e 39 (`git status -sb`). Push e deploy li chiede il proprietario, e si
 fanno come in `CLAUDE.local.md`.
 
 I riferimenti `file:riga` di tutte le voci sono stati ricontrollati il 13
@@ -53,7 +53,6 @@ La colonna *Cifra* dice quale cifra della versione muove la voce
 | 33. Un servizio `motore` senza porte in `compose.yaml`, per la rete interna | `33-istanza-interna.md` | alta | piccola | — | conferma del proprietario per il server; meglio dopo la 31 |
 | 34. La doppia licenza di `ruota` e `lettura` | `34-doppia-licenza.md` | media | piccola | — | decisione del proprietario |
 | 36. Il pool calcola per chi se n'è andato, la coda non ha tetto, un thread morto non la fa ripartire | `36-pool.md` | alta | media | — | mai `worker.terminate()` come scadenza: fa cadere il processo |
-| 37. Ingressi di Mercurio persi accanto a una stazione, secondo dove cade `from` | `37-ingressi-stazione.md` | alta | media | 2ª | — |
 | 40. Rotte: fuso non valido dà 500, messaggi grezzi al client, `format=xml` accettato da due rotte | `40-errori-rotte.md` | media | piccola | 2ª | — |
 | 41. L'oraria esce con un `TypeError` se un significatore non è calcolabile | `41-oraria-significatore.md` | media | piccola | 2ª | — |
 | 42. Prima dei fusi il tempo medio locale è quello della città del fuso, non del luogo | `42-tempo-medio-locale.md` | media | piccola | 2ª | decisione del proprietario: correggere o dichiarare |
@@ -65,5 +64,5 @@ La colonna *Cifra* dice quale cifra della versione muove la voce
 | 48. Il contorno: lint nei controlli, `npm audit`, tre prove di `ruota`, lo splash del desktop, le intestazioni | `48-contorno.md` | bassa | piccola | — | — |
 | 49. La revisione di ciò che il 13 novembre non è stato guardato | `49-revisione-resto.md` | media | grande | — | per ultima, dopo le voci 35–48; si può spezzare per riga |
 
-Un ordine che regge: 37 e 36, le due alte di taglia media; 31 e 32 quando serve dodicicase; le
+Un ordine che regge: la 36, l'ultima alta della revisione; 31 e 32 quando serve dodicicase; le
 medie; la 49 per ultima.

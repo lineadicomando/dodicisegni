@@ -14,7 +14,7 @@ import { DEFAULT_PASSAGE_BODIES, ZODIAC_SIGNS } from './constants.js';
 import { zodiacContext } from './ayanamsa.js';
 import { computeBodies, initEphemeris, type EphemerisContext } from './ephemeris.js';
 import { degreeInSign, normalize360, signOf, signedDifference } from './math.js';
-import { bisect, julianDayToISO, meanDailyMotion, resolveRange, stepFor } from './roots.js';
+import { bisect, julianDayToISO, meanDailyMotion, resolveRange, splitAtTurns, stepFor } from './roots.js';
 import type { BodyId, PassageRange, SignIngress, SkyEventOptions, Station } from './types.js';
 
 interface Sample {
@@ -40,7 +40,16 @@ export function findSignIngresses(
   const ingresses: SignIngress[] = [];
 
   for (const bodyId of distinct(options.bodies ?? DEFAULT_PASSAGE_BODIES)) {
-    const samples = sample(bodyId, start, end, context, warnings);
+    // Tagliati alle stazioni: accanto a una stazione il corpo può entrare in
+    // un segno e riuscirne dentro un passo solo. Vedi `splitAtTurns`.
+    const samples = splitAtTurns(
+      sample(bodyId, start, end, context, warnings),
+      (s) => s.speed,
+      (julianDay) => {
+        const body = bodyAt(bodyId, julianDay, context);
+        return body ? { julianDay, longitude: body.longitude, speed: body.speed } : null;
+      },
+    );
 
     for (let i = 1; i < samples.length; i += 1) {
       const before = samples[i - 1]!;

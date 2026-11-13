@@ -6,13 +6,14 @@ import { computeBodies, initEphemeris, type EphemerisContext } from './ephemeris
 import { signedDifference } from './math.js';
 import {
   MAX_WINDOW_DAYS,
-  WIDEST_ORB,
   bisect,
   julianDayToISO,
   meanDailyMotion,
   resolveRange,
   signedAngles,
+  splitAtTurns,
   stepFor,
+  widestOrb,
 } from './roots.js';
 import { natalTargets } from './transits.js';
 import type { AspectDefinition } from './constants.js';
@@ -30,6 +31,7 @@ import type {
 export interface Sample {
   julianDay: number;
   longitude: number;
+  speed: number;
 }
 
 /**
@@ -68,8 +70,17 @@ export function findTransitPassages(
     // Si campiona oltre gli estremi: un aspetto esatto il primo giorno era in
     // orbita già prima, e senza quel margine la sua finestra risulterebbe
     // aperta soltanto perché non è stata guardata.
-    const margin = Math.min(MAX_WINDOW_DAYS, WIDEST_ORB / meanDailyMotion(bodyId));
-    const samples = sampleLongitudes(bodyId, start - margin, end + margin, context, warnings);
+    const margin = Math.min(MAX_WINDOW_DAYS, widestOrb(options.orbs) / meanDailyMotion(bodyId));
+    // Tagliati alle stazioni: accanto a una stazione il corpo può passare su
+    // un punto natale e ripassarci dentro un passo solo. Vedi `splitAtTurns`.
+    const samples = splitAtTurns(
+      sampleLongitudes(bodyId, start - margin, end + margin, context, warnings),
+      (sample) => sample.speed,
+      (julianDay) => {
+        const body = bodyAt(bodyId, julianDay, context);
+        return body ? { julianDay, longitude: body.longitude, speed: body.speed } : null;
+      },
+    );
     if (samples.length < 2) continue;
 
     for (const target of targets) {
@@ -111,12 +122,12 @@ export function sampleLongitudes(
 
   const samples: Sample[] = [];
   for (let jd = from; jd < to + step; jd += step) {
-    const longitude = longitudeAt(bodyId, Math.min(jd, to), context);
-    if (longitude === null) {
+    const body = bodyAt(bodyId, Math.min(jd, to), context);
+    if (!body) {
       warnings.push(`${bodyId}: posizione non calcolabile, ${missing}.`);
       return [];
     }
-    samples.push({ julianDay: Math.min(jd, to), longitude });
+    samples.push({ julianDay: Math.min(jd, to), longitude: body.longitude, speed: body.speed });
   }
   return samples;
 }

@@ -2,6 +2,8 @@ import { describe, expect, it } from 'vitest';
 import { ChartError } from '../src/errors.js';
 import { formatSkyEventsCompact } from '../src/format.js';
 import { computeSky } from '../src/sky.js';
+import { computeBodies, initEphemeris } from '../src/ephemeris.js';
+import { signOf } from '../src/math.js';
 import { findSignIngresses, findStations } from '../src/sky-events.js';
 import type { PassageRange } from '../src/types.js';
 
@@ -73,6 +75,53 @@ describe('findSignIngresses', () => {
       findSignIngresses({ from: '2026-12-31', to: '2026-01-01', timezone: 'UTC' }),
     ).toThrow(ChartError);
   });
+
+  it.each(['1969-12-15', '1970-01-01', '1970-01-02', '1970-01-03', '1970-01-04'])(
+    'trova i due ingressi di Mercurio accanto alla stazione del 4 gennaio 1970, partendo dal %s',
+    (from) => {
+      // Entra in Acquario alle 04:20 UT, staziona alle 08:10 a nove secondi
+      // d'arco dal confine, rientra in Capricorno alle 11:59. Con il segno
+      // confrontato ai soli capi del passo, i due ingressi sparivano secondo
+      // dove cadeva l'inizio dell'arco. Così vicino alla stazione il corpo è
+      // quasi fermo, e l'istante regge al minuto e non oltre.
+      const { ingresses } = findSignIngresses(
+        { from, to: '1970-01-31', timezone: 'UTC' },
+        { bodies: ['mercurio'] },
+      );
+
+      expect(ingresses.map((i) => [i.sign, i.retrograde])).toEqual([
+        ['acquario', false],
+        ['capricorno', true],
+      ]);
+      const minuti = (iso: string): number => Date.parse(iso) / 60_000;
+      expect(Math.abs(minuti(ingresses[0]!.exact) - minuti('1970-01-04T04:20Z'))).toBeLessThanOrEqual(1);
+      expect(Math.abs(minuti(ingresses[1]!.exact) - minuti('1970-01-04T11:59Z'))).toBeLessThanOrEqual(1);
+    },
+  );
+
+  it('non perde ingressi di Mercurio in un secolo, contro una ricerca a passi di tre ore', () => {
+    // La ricerca cieca non sa niente di stazioni: guarda il segno ogni tre
+    // ore, e un soggiorno più breve non lo vede. Quello del 1970 dura sette
+    // ore e mezza, e nel secolo è il solo che il passo del moto medio perdeva.
+    const SECOLO: PassageRange = { from: '1900-01-01', to: '1999-12-31', timezone: 'UTC' };
+    const { ingresses } = findSignIngresses(SECOLO, { bodies: ['mercurio'] });
+
+    const context = initEphemeris();
+    const segnoA = (julianDay: number): string =>
+      signOf(computeBodies(julianDay, ['mercurio'], context).bodies[0]!.longitude);
+
+    const inizio = Date.parse('1900-01-01T00:00Z') / 86_400_000 + 2440587.5;
+    const fine = Date.parse('1999-12-31T23:59Z') / 86_400_000 + 2440587.5;
+    const ciechi: string[] = [];
+    let segno = segnoA(inizio);
+    for (let julianDay = inizio + 0.125; julianDay <= fine; julianDay += 0.125) {
+      const adesso = segnoA(julianDay);
+      if (adesso !== segno) ciechi.push(adesso);
+      segno = adesso;
+    }
+
+    expect(ingresses.map((i) => i.sign)).toEqual(ciechi);
+  }, 30_000);
 
   it('conta una volta sola un corpo chiesto due volte', () => {
     const DUE_MESI: PassageRange = { from: '2026-01-01', to: '2026-02-28', timezone: 'UTC' };

@@ -31,11 +31,24 @@ export const PRECISION_DAYS = 1 / 1440;
 export const MAX_WINDOW_DAYS = 1095;
 /**
  * Il margine di campionamento oltre l'arco, in gradi di moto: largo il
- * quadruplo dell'orbita dei transiti di Hand, perché chi sostituisce le
- * orbite con `orbs` le può allargare. I transiti attivi lo allargano da sé
- * quando non basta.
+ * quadruplo dell'orbita dei transiti di Hand. Chi sostituisce le orbite con
+ * `orbs` le può allargare oltre: per questo il margine si prende da
+ * `widestOrb`. I transiti attivi lo allargano ancora da sé quando non basta.
  */
 export const WIDEST_ORB = 4;
+
+/**
+ * L'orbita su cui tarare il margine: `WIDEST_ORB`, o la più larga fra quelle
+ * che chi chiama ha sostituito, se la supera. Con un margine fisso un'orbita
+ * di otto gradi lasciava senza finestra i passaggi vicini ai bordi dell'arco,
+ * e la stessa perfezione l'aveva o no secondo quanto era lungo l'arco chiesto.
+ */
+export function widestOrb(orbs: Readonly<Partial<Record<string, number>>> | undefined): number {
+  const chieste = Object.values(orbs ?? {}).filter(
+    (orb): orb is number => typeof orb === 'number' && Number.isFinite(orb),
+  );
+  return Math.max(WIDEST_ORB, ...chieste);
+}
 
 /**
  * Il moto medio di un corpo, in gradi al giorno, o un errore se il corpo non
@@ -127,4 +140,47 @@ export function julianDayToISO(julianDay: number, timezone = 'utc'): string {
       suppressSeconds: true,
     }) ?? ''
   );
+}
+
+/**
+ * I campioni, con uno in più dove il moto si inverte fra due di essi.
+ *
+ * Cercare una radice dove la funzione cambia segno ai due capi di un passo la
+ * trova solo se nel passo la funzione va in un verso. Dove il moto si inverte
+ * può attraversare lo zero due volte, andata e ritorno, e ai due capi ha lo
+ * stesso segno: Mercurio il 4 gennaio 1970 entra in Acquario, staziona a nove
+ * secondi d'arco dal confine e ne riesce in sette ore e mezza. Che un passo
+ * li contenga tutti e due dipende da dove comincia l'arco, e la stessa
+ * domanda riceveva due risposte.
+ *
+ * Tagliato all'inversione, ogni tratto ha un verso solo, e in un verso solo
+ * lo zero si attraversa al più una volta: l'estremo è diventato un campione,
+ * e il confronto dei segni torna a bastare. `speedOf` è la velocità di ciò
+ * che si insegue: quella del corpo per un confine o un punto fermo, la
+ * differenza delle due per un incontro fra corpi.
+ */
+export function splitAtTurns<S extends { julianDay: number }>(
+  samples: readonly S[],
+  speedOf: (sample: S) => number,
+  at: (julianDay: number) => S | null,
+): S[] {
+  const split: S[] = [];
+
+  for (let i = 0; i < samples.length; i += 1) {
+    const after = samples[i]!;
+    const before = samples[i - 1];
+
+    if (before && speedOf(before) * speedOf(after) < 0) {
+      const turn = bisect(before.julianDay, after.julianDay, (julianDay) => {
+        const sample = at(julianDay);
+        return sample === null ? null : speedOf(sample);
+      });
+      const sample = turn === null ? null : at(turn);
+      if (sample !== null) split.push(sample);
+    }
+
+    split.push(after);
+  }
+
+  return split;
 }

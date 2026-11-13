@@ -35,6 +35,7 @@ porta il nome del file.
 | 35, `35-liste-senza-tetto.md` | `fc3fa36` |
 | 38, `38-reggitore-del-giorno.md` | `1fc934e` |
 | 39, `39-mcp-elenchi-vuoti.md` | `c41ffbd` |
+| 37, `37-ingressi-stazione.md` | `d6a0be7` |
 
 ## Le versioni
 
@@ -67,6 +68,7 @@ cambia muove la seconda cifra.
 | 0.16.0 | un corpo o un varga chiesto due volte è una domanda sola; `bodies` e `vargas` più lunghi dei valori ammessi sono rifiutati (il fascicolo canonico non chiede doppioni) | 35 |
 | 0.17.0 | il reggitore del giorno planetario dal tempo medio locale del luogo, non dal fuso della richiesta (il fascicolo canonico chiede luogo e fuso concordi) | 38 |
 | 0.18.0 | gli elenchi vuoti nei tool MCP, un bersaglio natale sconosciuto e il vuoto di corso senza corpi sono errori; il prompt dell'oraria tiene l'ora senza la data (il fascicolo canonico non li chiede) | 39 |
+| 0.19.0 | gli ingressi, i passaggi e gli incontri che si fanno e si disfano dentro un passo accanto a un'inversione del moto; la finestra con orbite sostituite oltre i quattro gradi (il fascicolo canonico non ne contiene) | 37 |
 
 ## Le sessioni
 
@@ -116,3 +118,15 @@ cambia muove la seconda cifra.
   rifiuta con `CORPO_SCONOSCIUTO` un nome che non è un punto natale (quello
   che esiste ma manca nel tema resta un avviso), e `findElectionHours`
   rifiuta `bodies` vuoto o con la sola Luna, anche su `/api/election`.
+- **13 novembre 2026, notte, poi.** Chiusa la voce 37 (0.19.0). I campioni
+  si tagliano dove il moto si inverte (`splitAtTurns` in `roots.ts`): alla
+  stazione per gli ingressi e i passaggi natali, dove la velocità relativa
+  cambia segno per gli incontri fra due corpi. La parte che la voce dava per
+  dedotta è stata riprodotta prima di toccarla: la stessa ricerca su un
+  secolo con la griglia spostata di qualche ora (quattro fusi) dava 8903 o
+  8905 incontri e da 34290 a 34292 passaggi natali; ora 8905 e 34300 in
+  tutti e quattro. Riprodotto e corretto anche il margine fisso: con `orbs`
+  oltre i quattro gradi la finestra mancava sugli archi corti, e ora il
+  margine segue l'orbita più larga chiesta (`widestOrb`). Resta com'era che
+  accanto a una stazione l'istante regge al minuto e non oltre: lo stesso
+  ingresso esce alle 04:20 o alle 04:21 secondo la griglia.
