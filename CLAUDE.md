@@ -5,12 +5,14 @@ lo espongono su superfici diverse. Il `README.md` tiene la descrizione, la
 licenza e i comandi; qui c'è ciò che serve sapere prima di toccare qualsiasi
 cosa. Il progetto è agli inizi e **non ha una documentazione estesa**: i
 parametri si leggono nei commenti delle rotte e nelle descrizioni dei tool MCP,
-che sono la fonte. Il lavoro aperto sta in `TODO.md`: una voce per cosa, con il
-file, la riga e il modo di verificarla. In `docs/` c'è la memoria del lavoro,
-non documentazione per gli utenti: `decisioni.md` (le scelte già prese, da non
-ridiscutere), `esaminato.md` (cose cercate e lasciate fuori), `lavorare.md`
-(gli inciampi noti e come si legge una fonte), `storia.md` (voci chiuse,
-versioni, sessioni). Si leggono quando servono, non tutte all'inizio.
+che sono la fonte. Il lavoro aperto sta in `TODO.md`, che è un indice: una
+riga per voce. La voce intera (il file, la riga, il modo di verificarla) sta
+in `docs/voci/<numero>-<nome>.md`, e si legge solo quella su cui si lavora. In
+`docs/` c'è la memoria del lavoro, non documentazione per gli utenti:
+`decisioni.md` (le scelte già prese, da non ridiscutere), `esaminato.md` (cose
+cercate o controllate e lasciate stare), `lavorare.md` (gli inciampi noti e
+come si legge una fonte), `storia.md` (voci chiuse, versioni, sessioni).
+Si leggono quando servono, non tutte all'inizio.
 
 ## Mappa
 

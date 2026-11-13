@@ -7,6 +7,10 @@ riusa. L'ultima versione del file che le contiene tutte, chiuse comprese, è
 `cf5219a`, quando si chiamava ancora `ROADMAP.md`. Le voci chiuse dopo, col
 commit in cui si leggono ancora per intero (`git show <commit>:TODO.md`):
 
+Dal 13 novembre 2026 ogni voce ha un file in `docs/voci/`: una voce chiusa da
+allora si rilegge con `git show <commit>:docs/voci/<file>`, e la colonna
+porta il nome del file.
+
 | Voci | Commit |
 |---|---|
 | 20 | `3314553` |
@@ -88,3 +92,7 @@ cambia muove la seconda cifra.
   passato a Moshier (`computeBodies` ora rende la modalità usata, con
   un'avvertenza); una richiesta con fuso e senza coordinate riceveva il tema
   di 0°N 0°E (`lib/server/place.ts`, `Number(null)`).
+- **13 novembre 2026, dopo.** Il `TODO.md` diventa un indice e le voci vanno
+  una per file in `docs/voci/`; ricontrollati sulla 0.15.0 tutti i
+  riferimenti `file:riga`; ciò che la revisione ha trovato a posto è in
+  `docs/esaminato.md`.

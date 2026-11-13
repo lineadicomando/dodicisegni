@@ -143,3 +143,45 @@ cosa proporre, e il progetto in parte la spegne già (`autocomplete="off"` in
 aggiungere `name` per zittire l'avviso va ricordato che un browser che ricorda
 date e luoghi di nascita costruisce lo stesso archivio che il service worker si
 rifiuta di costruire (`lib/cache-policy.ts`).
+
+**La revisione del 13 novembre 2026: letto e trovato a posto.** Tre letture
+dell'intero progetto (motore, `apps/web`, i pacchetti minori col desktop),
+con prove eseguite sul server compilato in locale e circa settanta chiamate
+ai tool MCP. I difetti sono le voci 35–48 del `TODO.md`; ciò che non è stato
+letto è la voce 49. Questo è ciò che è stato controllato senza trovare
+niente, e non va ricontrollato finché il codice lì non cambia:
+- *i vincoli di `CLAUDE.md`*: nessun `async`, timer o Promise in
+  `packages/core/src`, CLI compresa; nessuna scrittura sul contesto in cache
+  (`zodiacContext` copia, i chiamanti copiano `warnings`); nel client solo
+  `import type` da `core`; `ruota/png` solo in `lib/server/wheel-response.ts`;
+  nessuna tabella Svelte riceve `NatalChart`; `lettura` senza import né
+  dipendenze; `ruota/src` senza `core`;
+- *SQL e iniezione*: tutto parametrizzato, `%` e `_` del `LIKE`
+  neutralizzati, `limit` chiuso a 50; i due `{@html}` (`Meta.svelte`, JSON-LD
+  con `<` neutralizzato; `QuadroVedico.svelte`, SVG senza stringhe
+  dell'utente); in `ruota` l'unica stringa esterna è `label`, con escape;
+  l'HTML reso dal server non contiene niente della query; nell'importazione
+  nessun nome di voce degli zip diventa un percorso;
+- *service worker e cache*: `/api` escluso, chiave per percorso, il corpo
+  conservato senza dati di nascita; `cache-control: private` sulle risposte
+  con una nascita e `no-store` su «adesso»;
+- *MCP*: nessuna scrittura su stdout fuori dal protocollo; ogni gestore
+  restituisce `isError`, nessuna eccezione esce; date, ore e fusi malformati
+  danno `ChartError` leggibili;
+- *desktop* (letto, non eseguito): server su `127.0.0.1`, `nodeIntegration`,
+  `contextIsolation` e `sandbox` ai default sicuri, `window.open` negato,
+  `will-navigate` confinato all'origine interna, solo http(s) verso
+  `shell.openExternal`, server chiuso su `will-quit`;
+- *il motore ai bordi*: anni 0000, 0001 e 9999, 30 febbraio, `23:60`, l'ora
+  inesistente compreso il giorno saltato di Apia, il navamsa ai gradi tondi,
+  l'arco rovesciato, la terminazione di `bisect`, della sezione aurea e dei
+  cicli delle albe, la cache di `initEphemeris` (una voce sola);
+- *il disegno*: nessun `NaN` in 288 quadri vedici (nove graha in un segno,
+  ogni lagna e stile) né nelle ruote con uno stellium a cavallo di 0°, senza
+  case o senza corpi; i tetti alla larghezza del PNG e all'arco
+  dell'elezione reggono;
+- *`npm audit`*: le due segnalazioni che arrivano in produzione (`hono`)
+  riguardano il trasporto HTTP dell'SDK MCP, che qui non si usa.
+
+Lo farebbe riaprire una modifica alla catena di calcolo, al pool, al service
+worker o a `main.ts` del desktop.
