@@ -17,10 +17,10 @@ Prima di cominciare:
 
 ## Dove siamo
 
-Al 13 novembre 2026, versione **0.19.0**, tag `v0.19.0`. **Non pubblicata**:
-`origin` e il sito sono alla `v0.14.0`, e in locale ci sono i commit della
-revisione e delle voci 35–39 (`git status -sb`). Push e deploy li chiede il proprietario, e si
-fanno come in `CLAUDE.local.md`.
+Al 13 novembre 2026, versione **0.19.1**, tag `v0.19.1`. `origin` e il sito
+sono alla `v0.19.0`, pubblicata la sera del 13 novembre; ciò che è venuto
+dopo è in locale (`git status -sb`). Push e deploy li chiede il
+proprietario, e si fanno come in `CLAUDE.local.md`.
 
 I riferimenti `file:riga` di tutte le voci sono stati ricontrollati il 13
 novembre 2026 sulla 0.15.0. Le righe si spostano: se una non torna, fa fede
@@ -48,9 +48,8 @@ La colonna *Cifra* dice quale cifra della versione muove la voce
 | Voce | File in `docs/voci/` | Priorità | Taglia | Cifra | Prima di cominciare |
 |---|---|---|---|---|---|
 | 28. La revisione della SEO: leggere negli strumenti dei motori quali pagine sono escluse | `28-seo.md` | media | piccola | — | non prima di metà novembre 2026; è del proprietario, fuori dal repo |
-| 31. La versione del motore in un'intestazione su tutte le risposte di `/api` | `31-versione-nelle-risposte.md` | alta | piccola | 3ª | — |
 | 32. `format=compact` sulle sei rotte di calcolo che non l'hanno | `32-testo-compatto.md` | alta | piccola | 3ª | porta con sé due righe della 40 |
-| 33. Un servizio `motore` senza porte in `compose.yaml`, per la rete interna | `33-istanza-interna.md` | alta | piccola | — | conferma del proprietario per il server; meglio dopo la 31 |
+| 33. Un servizio `motore` senza porte in `compose.yaml`, per la rete interna | `33-istanza-interna.md` | alta | piccola | — | conferma del proprietario per il server |
 | 34. La doppia licenza di `ruota` e `lettura` | `34-doppia-licenza.md` | media | piccola | — | decisione del proprietario |
 | 40. Rotte: fuso non valido dà 500, messaggi grezzi al client, `format=xml` accettato da due rotte | `40-errori-rotte.md` | media | piccola | 2ª | — |
 | 41. L'oraria esce con un `TypeError` se un significatore non è calcolabile | `41-oraria-significatore.md` | media | piccola | 2ª | — |
@@ -63,5 +62,5 @@ La colonna *Cifra* dice quale cifra della versione muove la voce
 | 48. Il contorno: lint nei controlli, `npm audit`, tre prove di `ruota`, lo splash del desktop, le intestazioni | `48-contorno.md` | bassa | piccola | — | — |
 | 49. La revisione di ciò che il 13 novembre non è stato guardato | `49-revisione-resto.md` | media | grande | — | per ultima, dopo le voci 35–48; si può spezzare per riga |
 
-Un ordine che regge: le alte della revisione sono chiuse; 31 e 32 quando
+Un ordine che regge: le alte della revisione sono chiuse; la 32 quando
 serve dodicicase; le medie; la 49 per ultima.

@@ -59,6 +59,9 @@ npx dodicisegni --help        # tutte le opzioni
 **Applicazione web.** Sei sezioni e due pagine di testo: `/metodo` dice come si
 calcola, `/privacy` che cosa resta sul dispositivo. Gli endpoint sono
 quattordici, tutti in GET perché un tema è una funzione pura dei suoi parametri.
+Ogni risposta di `/api`, errori e immagini compresi, porta l'intestazione
+`X-Dodicisegni-Version` con la versione del motore che l'ha prodotta: chi
+conserva un risultato sa da lì se è ancora quello che il motore darebbe.
 
 ```sh
 npm run dev -w @dodicisegni/web      # http://localhost:5173

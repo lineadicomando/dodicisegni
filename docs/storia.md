@@ -37,6 +37,7 @@ porta il nome del file.
 | 39, `39-mcp-elenchi-vuoti.md` | `c41ffbd` |
 | 37, `37-ingressi-stazione.md` | `d6a0be7` |
 | 36, `36-pool.md` | `8c80e20` |
+| 31, `31-versione-nelle-risposte.md` | `bd6f720` |
 
 ## Le versioni
 
@@ -70,6 +71,7 @@ cambia muove la seconda cifra.
 | 0.17.0 | il reggitore del giorno planetario dal tempo medio locale del luogo, non dal fuso della richiesta (il fascicolo canonico chiede luogo e fuso concordi) | 38 |
 | 0.18.0 | gli elenchi vuoti nei tool MCP, un bersaglio natale sconosciuto e il vuoto di corso senza corpi sono errori; il prompt dell'oraria tiene l'ora senza la data (il fascicolo canonico non li chiede) | 39 |
 | 0.19.0 | gli ingressi, i passaggi e gli incontri che si fanno e si disfano dentro un passo accanto a un'inversione del moto; la finestra con orbite sostituite oltre i quattro gradi (il fascicolo canonico non ne contiene) | 37 |
+| 0.19.1 | l'intestazione `X-Dodicisegni-Version` su tutte le risposte di `/api` | 31 |
 
 ## Le sessioni
 
@@ -143,3 +145,10 @@ cambia muove la seconda cifra.
   `docs/decisioni.md`. Resta alla voce 45 l'`AbortController` in
   `lib/api.ts`: il server ora sa chi se n'è andato, ma l'interfaccia non
   annulla ancora le richieste che supera.
+- **13 novembre 2026, a mezzanotte.** Pubblicato tutto: push da `v0.15.0` a
+  `v0.19.0` e deploy, col footer alla 0.19.0 e le rotte toccate provate sul
+  sito. Poi chiusa la voce 31 (0.19.1): un `handle` in
+  `apps/web/src/hooks.server.ts`, il primo hook del server, mette la
+  versione su ogni risposta di `/api`, il 404 di un indirizzo che non esiste
+  compreso. La prova passa dall'hook risposte già pronte; le rotte vere sono
+  state controllate con `curl` contro il server compilato.
