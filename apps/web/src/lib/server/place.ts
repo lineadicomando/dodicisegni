@@ -98,11 +98,15 @@ export function resolvePlace(
     };
   }
 
-  const latitude = Number(parameters.get(fields.latitude));
-  const longitude = Number(parameters.get(fields.longitude));
+  // Le coordinate passano dalla stessa lettura di quando accompagnano una
+  // località, e non da `Number()` sul parametro: `Number(null)` e `Number('')`
+  // valgono zero, e una richiesta col solo fuso riceveva il tema di 0°N 0°E,
+  // case comprese, senza che niente lo dicesse. Assente resta assente, e una
+  // latitudine di 120 gradi è un errore anche qui.
+  const { latitude, longitude } = readCoordinateOverrides(parameters, fields);
   const timezone = parameters.get('timezone');
 
-  if (!Number.isFinite(latitude) || !Number.isFinite(longitude) || !timezone) {
+  if (latitude === undefined || longitude === undefined || !timezone) {
     throw error(
       400,
       `Luogo non specificato: indica "${fields.locationId}" oppure ` +
@@ -177,7 +181,9 @@ function readCoordinateOverrides(
   ] as const) {
     const nome = fields[chiave];
     const grezzo = parameters.get(nome);
-    if (grezzo === null) continue;
+    // Vuoto vale assente, come lo manda un modulo col campo lasciato in
+    // bianco: `Number('')` è zero, e zero è l'equatore.
+    if (grezzo === null || grezzo.trim() === '') continue;
 
     const valore = Number(grezzo);
     if (!Number.isFinite(valore) || Math.abs(valore) > limite) {

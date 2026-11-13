@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { LUOGO_TRANSITO, resolveOptionalPlace } from './place';
+import { LUOGO_TRANSITO, resolveOptionalPlace, resolvePlace } from './place';
 
 /** Estrae status e corpo da un errore sollevato da `error()`. */
 function capture(run: () => unknown): { status: number; body: { message: string; code?: string } } {
@@ -67,5 +67,45 @@ describe('resolveOptionalPlace', () => {
       expect(result.body.code).toBe('LUOGO_INCOMPLETO');
       expect(result.body.message).toContain('transitLongitude');
     });
+  });
+});
+
+describe('resolvePlace', () => {
+  it('accetta coordinate e fuso senza località', () => {
+    expect(resolvePlace(params('latitude=45.07&longitude=7.69&timezone=Europe/Rome'))).toEqual({
+      latitude: 45.07,
+      longitude: 7.69,
+      timezone: 'Europe/Rome',
+    });
+  });
+
+  it('accetta l\'equatore e il meridiano zero, quando sono scritti', () => {
+    expect(resolvePlace(params('latitude=0&longitude=0&timezone=UTC'))).toMatchObject({
+      latitude: 0,
+      longitude: 0,
+    });
+  });
+
+  it('non prende per zero una coordinata che manca', () => {
+    // `Number(null)` vale 0: col solo fuso usciva il tema di 0°N 0°E.
+    for (const query of [
+      'timezone=Europe/Rome',
+      'latitude=45.07&timezone=Europe/Rome',
+      'latitude=&longitude=&timezone=Europe/Rome',
+      'latitude=45.07&longitude=7.69',
+    ]) {
+      const result = capture(() => resolvePlace(params(query)));
+
+      expect(result.status, query).toBe(400);
+      expect(result.body.code, query).toBe('LUOGO_MANCANTE');
+    }
+  });
+
+  it('rifiuta una coordinata fuori intervallo anche senza località', () => {
+    const result = capture(() =>
+      resolvePlace(params('latitude=120&longitude=7.69&timezone=Europe/Rome')),
+    );
+
+    expect(result.status).toBe(400);
   });
 });
