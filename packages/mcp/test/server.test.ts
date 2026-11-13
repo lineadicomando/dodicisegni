@@ -1507,3 +1507,60 @@ describe('elenchi vuoti e nomi sconosciuti', () => {
     expect(figura).toContain('03:07');
   });
 });
+
+/**
+ * Le descrizioni dei tool sono la fonte per chi li usa: un numero scritto a
+ * mano che resta indietro è un dato sbagliato. Qui si legano al motore.
+ */
+describe('le descrizioni dicono ciò che il codice fa', () => {
+  const descrizione = async (nome: string): Promise<string> =>
+    (await client.listTools()).tools.find((tool) => tool.name === nome)!.description!;
+
+  it('compute_transits confronta le orbite che la risorsa aspetti dichiara', async () => {
+    const testo = await descrizione('compute_transits');
+    const risorsa = await client.readResource({ uri: 'dodicisegni://riferimento/aspetti' });
+    const tavole = String(risorsa.contents[0]?.text).split('## Transiti');
+    const congiunzione = (tavola: string): string =>
+      tavola.split('\n').find((riga) => riga.startsWith('| congiunzione'))!.split('|')[4]!.trim();
+
+    // La prima colonna di ciascuna tavola è la convenzione predefinita.
+    expect(testo).toContain(`${congiunzione(tavole[1]!)} contro ${congiunzione(tavole[0]!)}`);
+  });
+
+  it('find_election_hours conta i giorni come il motore, estremi compresi', async () => {
+    const arco = async (to: string) =>
+      client.callTool({
+        name: 'find_election_hours',
+        arguments: { location_id: ROMA_ID, from: '2026-01-10', to, rulers: ['giove'] },
+      });
+
+    // Trentuno giorni passano; trentadue li ferma il tool, col suo consiglio,
+    // prima che li rifiuti il motore.
+    expect((await arco('2026-02-09')).isError).toBeFalsy();
+    const troppi = await arco('2026-02-10');
+    expect(troppi.isError).toBe(true);
+    expect(textOf(troppi)).toContain('Arco di 32 giorni: il massimo è 31');
+  });
+
+  it('compute_jyotisha_chart dice delle dasha senza ora ciò che dice il motore', async () => {
+    const testo = await descrizione('compute_jyotisha_chart');
+    const senzaOra = await client.callTool({
+      name: 'compute_jyotisha_chart',
+      arguments: { date: '1968-03-12', location_id: ROMA_ID },
+    });
+
+    expect(testo).toContain('inservibili');
+    expect(textOf(senzaOra)).toContain('inservibili');
+  });
+
+  it('la ruota e il quadro accettano le stesse larghezze', async () => {
+    const { tools } = await client.listTools();
+    const limiti = ['draw_chart_wheel', 'draw_jyotisha_chart'].map((nome) => {
+      const width = (tools.find((tool) => tool.name === nome)!.inputSchema.properties as Record<string, { minimum: number; maximum: number }>).width!;
+      return [width.minimum, width.maximum];
+    });
+
+    expect(limiti[0]).toEqual(limiti[1]);
+    expect(limiti[0]).toEqual([200, 4000]);
+  });
+});

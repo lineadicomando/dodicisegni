@@ -4,6 +4,10 @@ import {
   DIGNITY_SCHOOL_NAMES,
   HOUSE_SYSTEM_CODES,
   NATAL_ORB_CONVENTIONS,
+  TRANSIT_ORB_CONVENTIONS,
+  DEFAULT_NATAL_ORB_CONVENTION,
+  DEFAULT_TRANSIT_ORB_CONVENTION,
+  MAX_ELECTION_DAYS,
   VARGAS,
   HORA_CONVENTIONS,
   computeNatalChart,
@@ -55,6 +59,20 @@ import {
   type TransitMoment,
   type TransitOptions,
 } from '@dodicisegni/core';
+
+/**
+ * Le due orbite della congiunzione fra due pianeti, dei transiti e del tema,
+ * nelle convenzioni predefinite: il confronto che la descrizione di
+ * `compute_transits` fa a parole. Si legge dal motore, come la risorsa
+ * `aspetti`, perché una cifra scritta a mano qui era già rimasta indietro.
+ */
+const orbitaPredefinita = (
+  convenzioni: readonly { id: string; orbOf: (aspect: 'congiunzione', a: 'marte', b: 'giove') => number }[],
+  predefinita: string,
+): number => convenzioni.find((c) => c.id === predefinita)!.orbOf('congiunzione', 'marte', 'giove');
+export const ORBITE_A_CONFRONTO =
+  `${orbitaPredefinita(TRANSIT_ORB_CONVENTIONS, DEFAULT_TRANSIT_ORB_CONVENTION)}° contro ` +
+  `${orbitaPredefinita(NATAL_ORB_CONVENTIONS, DEFAULT_NATAL_ORB_CONVENTION)}° sulla congiunzione`;
 import { GeoError, getLocation, searchLocations, type Location } from '@dodicisegni/geo';
 import { paletteDi, type OpzioniDisegno } from '@dodicisegni/ruota';
 import { quadroPng, ruotaPng } from '@dodicisegni/ruota/png';
@@ -430,8 +448,9 @@ export function registerComputeJyotishaChart(server: McpServer, context: ToolCon
         'DATE, e sono aritmetica: dicono quando comincia un periodo, non che cosa accadrà ' +
         'dentro: non usarle per predire. ' +
         'Fornisci data e ora COME SONO SEGNATE sul documento di nascita, in ora locale. ' +
-        "Se l'ora è ignota ometti time: le dasha diventano indicative di anni, non di giorni, " +
-        'e il tool lo dichiara fra le avvertenze.',
+        "Se l'ora è ignota ometti time: le date delle dasha allora non sono approssimate ma " +
+        'inservibili (dodici ore di Luna spostano una mahadasha lunga di quasi cinque anni), ' +
+        'e il tool lo dichiara fra le avvertenze: non riportarle.',
       inputSchema: {
         date: z
           .string()
@@ -589,7 +608,7 @@ export function registerComputeTransits(server: McpServer, context: ToolContext 
         "case DELL'ISTANTE, che sono un'altra cosa: dicono dove i corpi stanno rispetto " +
         "all'orizzonte di quel posto, non in quale settore della vita passano. Non confonderle e " +
         'non sostituire le prime con le seconde. ' +
-        'Le orbite sono molto più strette di quelle natali (due gradi contro otto) perché ' +
+        `Le orbite sono molto più strette di quelle natali (${ORBITE_A_CONFRONTO}) perché ` +
         'altrimenti un transito di Saturno risulterebbe attivo per mesi di fila. ' +
         'Un transito è una FASE, non un evento con una data: non trasformarlo in una previsione, ' +
         'non dire che cosa accadrà né quando, e non attribuirgli un esito.',
@@ -1277,8 +1296,6 @@ export function registerFindSkyEvents(server: McpServer, context: ToolContext = 
   );
 }
 
-/** Un mese: ogni giorno porta ventiquattro ore planetarie. */
-const MAX_ELECTION_RANGE_DAYS = 31;
 
 export function registerFindElectionHours(server: McpServer, context: ToolContext = {}): void {
   server.registerTool(
@@ -1326,7 +1343,7 @@ export function registerFindElectionHours(server: McpServer, context: ToolContex
           .optional()
           .describe(
             `Ultimo giorno. Default: lo stesso di from, cioè un giorno solo. ` +
-              `Massimo ${MAX_ELECTION_RANGE_DAYS} giorni.`,
+              `Massimo ${MAX_ELECTION_DAYS} giorni, contando il primo e l'ultimo.`,
           ),
         bodies: z
           .array(z.string())
@@ -1365,11 +1382,13 @@ export function registerFindElectionHours(server: McpServer, context: ToolContex
         const from = args.from ?? currentMoment(place.timezone).date;
         const range: PassageRange = { from, to: args.to ?? from, timezone: place.timezone };
 
+        // Estremi compresi, come li conta il motore: dal 10 gennaio al 10
+        // febbraio sono trentadue giorni di ore planetarie, non trentuno.
         const durata =
-          (Date.parse(`${range.to}T00:00:00Z`) - Date.parse(`${range.from}T00:00:00Z`)) / 86_400_000;
-        if (durata > MAX_ELECTION_RANGE_DAYS) {
+          (Date.parse(`${range.to}T00:00:00Z`) - Date.parse(`${range.from}T00:00:00Z`)) / 86_400_000 + 1;
+        if (durata > MAX_ELECTION_DAYS) {
           return fail(
-            `Arco di ${Math.round(durata)} giorni: il massimo è ${MAX_ELECTION_RANGE_DAYS}, ` +
+            `Arco di ${Math.round(durata)} giorni: il massimo è ${MAX_ELECTION_DAYS}, ` +
               'perché ogni giorno porta ventiquattro ore planetarie. Chiedi periodi più brevi.',
           );
         }
@@ -1408,6 +1427,14 @@ export function registerFindElectionHours(server: McpServer, context: ToolContex
  * pianeti, gradi e numeri delle case — e costa poco.
  */
 const LARGHEZZA_MCP = 900;
+
+/**
+ * I limiti della larghezza, gli stessi per la ruota e per il quadro, e gli
+ * stessi delle rotte di disegno (`apps/web/src/lib/server/wheel.ts`): prima la
+ * ruota ne aveva di suoi, più stretti, senza una ragione scritta.
+ */
+export const LARGHEZZA_MINIMA = 200;
+export const LARGHEZZA_MASSIMA = 4000;
 
 export function registerDrawChartWheel(server: McpServer, context: ToolContext = {}): void {
   server.registerTool(
@@ -1505,11 +1532,11 @@ export function registerDrawChartWheel(server: McpServer, context: ToolContext =
         width: z
           .number()
           .int()
-          .min(400)
-          .max(2000)
+          .min(LARGHEZZA_MINIMA)
+          .max(LARGHEZZA_MASSIMA)
           .optional()
           .describe(
-            `Larghezza in punti. Default ${LARGHEZZA_MCP}. Alzala solo se chi guarda dice di ` +
+            `Larghezza in punti, da ${LARGHEZZA_MINIMA} a ${LARGHEZZA_MASSIMA}. Default ${LARGHEZZA_MCP}. Alzala solo se chi guarda dice di ` +
               "non riuscire a leggere i glifi: un'immagine più grande costa token e non " +
               'aggiunge dettaglio a un disegno di linee.',
           ),
@@ -1662,10 +1689,12 @@ export function registerDrawJyotishaChart(server: McpServer, context: ToolContex
         width: z
           .number()
           .int()
-          .min(200)
-          .max(4000)
+          .min(LARGHEZZA_MINIMA)
+          .max(LARGHEZZA_MASSIMA)
           .optional()
-          .describe(`Larghezza in punti. Default: ${LARGHEZZA_MCP}.`),
+          .describe(
+            `Larghezza in punti, da ${LARGHEZZA_MINIMA} a ${LARGHEZZA_MASSIMA}. Default: ${LARGHEZZA_MCP}.`,
+          ),
       },
     },
     async (args) => {

@@ -40,6 +40,7 @@ porta il nome del file.
 | 31, `31-versione-nelle-risposte.md` | `bd6f720` |
 | 32, `32-testo-compatto.md` | `b7fda5a` |
 | 41, `41-oraria-significatore.md` | `118b487` |
+| 44, `44-mcp-descrizioni.md` | `0460867` |
 
 ## Le versioni
 
@@ -76,6 +77,7 @@ cambia muove la seconda cifra.
 | 0.19.1 | l'intestazione `X-Dodicisegni-Version` su tutte le risposte di `/api` | 31 |
 | 0.20.0 | `format=compact` sulle sei rotte di calcolo che non l'avevano; `/api/horary` e `/api/sky/course` rifiutano un formato sconosciuto invece di servire il JSON | 32 |
 | 0.21.0 | l'oraria con un significatore non calcolabile dà `DATA_NON_VALIDA` invece di un `TypeError` | 41 |
+| 0.22.0 | `draw_chart_wheel` accetta le larghezze da 200 a 4000 come il quadro e le rotte (prima 400–2000); quattro descrizioni MCP legate al codice | 44 |
 
 ## Le sessioni
 
@@ -171,3 +173,12 @@ cambia muove la seconda cifra.
   `DATA_NON_VALIDA` e non `ERRORE_EFFEMERIDI`, che sulle rotte è un 500: una
   data fuori copertura è di chi chiede. Il messaggio non riporta le
   avvertenze del cielo, che portano il percorso delle effemeridi (voce 40).
+- **14 novembre 2026, ancora.** Chiusa la voce 44 (0.22.0). Le orbite a
+  confronto in `compute_transits` si leggono dal motore; il testo delle
+  dasha senza ora dice «inservibili» come l'avvertenza; `find_election_hours`
+  conta i giorni estremi compresi, come il motore, e usa la sua costante.
+  La seconda cifra si muove per la sola larghezza della ruota. La rotta
+  `/api/election` ha lo stesso conteggio a estremi esclusi e non è stata
+  toccata: l'arco di trentadue giorni lo rifiuta comunque il motore, con
+  `INTERVALLO_NON_VALIDO` invece di `INTERVALLO_TROPPO_LUNGO`. Sta nella
+  voce 40.

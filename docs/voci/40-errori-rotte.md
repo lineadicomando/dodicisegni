@@ -15,6 +15,11 @@
   DATABASE_ASSENTE`, che mette nel 503 il percorso del database, e per
   l'avvertenza di Chirone fuori dal 1800–2399, che riporta il messaggio di
   Swiss Ephemeris col percorso della cartella delle effemeridi;
+- **`/api/election` conta l'arco a estremi esclusi** (`giorni >
+  MAX_ELECTION_DAYS`, nella rotta) e il motore a estremi compresi: `from=2026-01-10&to=2026-02-10`
+  passa il controllo della rotta e lo rifiuta il motore, con
+  `INTERVALLO_NON_VALIDO` invece di `INTERVALLO_TROPPO_LUNGO`. Il tool MCP è
+  stato allineato con la voce 44; la rotta cambia un codice, e va qui;
 - **`/api/jyotish?date=9999-03-12`** dà `500 ERRORE_EFFEMERIDI`, mentre
   `/api/chart` con la stessa data dà 200 con le avvertenze;
 - **`time=24:00`** è accettato e diventa la mezzanotte del giorno dopo, senza

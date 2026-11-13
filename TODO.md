@@ -17,7 +17,7 @@ Prima di cominciare:
 
 ## Dove siamo
 
-Al 13 novembre 2026, versione **0.21.0**, tag `v0.21.0`. `origin` e il sito
+Al 13 novembre 2026, versione **0.22.0**, tag `v0.22.0`. `origin` e il sito
 sono alla `v0.19.0`, pubblicata la sera del 13 novembre; ciò che è venuto
 dopo è in locale (`git status -sb`). Push e deploy li chiede il
 proprietario, e si fanno come in `CLAUDE.local.md`.
@@ -53,7 +53,6 @@ La colonna *Cifra* dice quale cifra della versione muove la voce
 | 40. Rotte: fuso non valido dà 500, messaggi grezzi al client, date e ore al limite | `40-errori-rotte.md` | media | piccola | 2ª | — |
 | 42. Prima dei fusi il tempo medio locale è quello della città del fuso, non del luogo | `42-tempo-medio-locale.md` | media | piccola | 2ª | decisione del proprietario: correggere o dichiarare |
 | 43. Tool MCP: con la Luna, tre anni rendono un milione di caratteri | `43-mcp-risposte-enormi.md` | media | piccola | 2ª | da decidere insieme per MCP e rotte |
-| 44. Quattro descrizioni dei tool MCP non dicono ciò che il codice fa | `44-mcp-descrizioni.md` | media | piccola | — | — |
 | 45. Interfaccia: il link di `/vedica`, il link composto dal modulo, le risposte in corsa | `45-interfaccia-corse.md` | media | media | — | tutta dedotta: va riprodotta in un browser; il lato server è fatto con la 36 |
 | 46. La ricerca delle località scorre la tabella a ogni battuta; errori di SQLite grezzi | `46-ricerca-localita.md` | media | media | — | cambia `schema.sql`: chiede una reimportazione, sul server compresa |
 | 47. Input del motore non validati (`orbs`, `normalize360`, giorno giuliano, archi, `levels`) | `47-input-motore.md` | bassa | piccola | caso per caso | — |
