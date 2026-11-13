@@ -56,6 +56,7 @@ cambia muove la seconda cifra.
 | 0.12.0 | i termini di Valente dall'ed. Pingree (cambia la Bilancia) | 26 |
 | 0.13.0 | dasha, mahadasha e antardasha al femminile (cambia un'avvertenza) | — |
 | 0.14.0 | la terza modalità è `mutevole`, non `mobile` (cambia il campo della distribuzione e quattro regole dei varga) | 30 |
+| 0.15.0 | le case oltre il circolo polare, l'ora ambigua, Moshier dichiarato fuori copertura, le coordinate mancanti (il fascicolo canonico non le vede) | — |
 
 ## Le sessioni
 
@@ -74,3 +75,16 @@ cambia muove la seconda cifra.
   HTTPS* spento, nella `dodicisegni.it` su `http.host eq
   "www.dodicisegni.it"`. Verificato con `curl -sI` sui tre nomi secondari,
   in `http` e `https`: un salto solo, percorso e query intatti.
+- **13 novembre 2026.** Revisione dell'intero progetto, in tre letture
+  (motore, `apps/web`, i pacchetti minori col desktop): aperte le voci 35–49
+  del `TODO.md`, l'ultima per ciò che la revisione non ha letto. Quattro
+  difetti corretti subito, senza voce: oltre il circolo polare Placidus e
+  Koch davano un errore invece del ripiego su Porfirio con l'avvertenza
+  (`houses.ts` prendeva per fallimento il flag negativo con cui Swiss
+  Ephemeris lo segnala); l'ora ambigua del ritorno all'ora solare dava
+  un'occorrenza o l'altra secondo la stagione in cui si calcolava (`time.ts`
+  la lasciava sciogliere a Luxon, che parte dall'offset di adesso); fuori dal
+  1800–2399 il risultato si dichiarava `swisseph` mentre Swiss Ephemeris era
+  passato a Moshier (`computeBodies` ora rende la modalità usata, con
+  un'avvertenza); una richiesta con fuso e senza coordinate riceveva il tema
+  di 0°N 0°E (`lib/server/place.ts`, `Number(null)`).
