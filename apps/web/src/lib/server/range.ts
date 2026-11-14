@@ -7,15 +7,15 @@
  * nessuno leggerà.
  */
 
-import type { PassageRange } from '@dodicisegni/core';
+import { MAX_RANGE_DAYS, type PassageRange } from '@dodicisegni/core';
 import { error } from '@sveltejs/kit';
 import { isKnownTimezone, wallClock } from '#lib/clock.js';
 
 const DATE_PATTERN = /^\d{4}-\d{2}-\d{2}$/;
 const GIORNO = 86_400_000;
 
-/** Tre anni: il tempo in cui anche i pianeti più lenti chiudono un passaggio. */
-export const MAX_RANGE_DAYS = 1096;
+/** Tre anni, letti dal motore: lo stesso numero di MCP e riga di comando. */
+export { MAX_RANGE_DAYS };
 
 export interface RequestedRange {
   range: PassageRange;

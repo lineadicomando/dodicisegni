@@ -187,6 +187,11 @@ function computeBody(
   if (definition.swephConstant === null) {
     return 'corpo derivato, non calcolabile direttamente';
   }
+  // `NaN` è un numero per `typeof`, e Swiss Ephemeris lo restituisce senza
+  // errore: ne uscirebbe un corpo a longitudine `NaN` in Ariete.
+  if (!Number.isFinite(julianDayUT)) {
+    return 'istante non valido: il giorno giuliano non è un numero finito';
+  }
   const planetIndex = sweph.constants[definition.swephConstant as keyof typeof sweph.constants];
   if (typeof planetIndex !== 'number') {
     return `costante Swiss Ephemeris ${definition.swephConstant} non disponibile`;
@@ -202,10 +207,10 @@ function computeBody(
 
   const [longitude, latitude, distance, speed] = result.data;
   if (
-    typeof longitude !== 'number' ||
-    typeof latitude !== 'number' ||
-    typeof distance !== 'number' ||
-    typeof speed !== 'number'
+    !Number.isFinite(longitude) ||
+    !Number.isFinite(latitude) ||
+    !Number.isFinite(distance) ||
+    !Number.isFinite(speed)
   ) {
     return 'risposta inattesa da calc_ut';
   }

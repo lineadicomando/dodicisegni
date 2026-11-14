@@ -9,6 +9,7 @@ import {
   DEFAULT_TRANSIT_ORB_CONVENTION,
   assertReadable,
   MAX_ELECTION_DAYS,
+  MAX_RANGE_DAYS,
   MAX_READABLE_ROWS,
   VARGAS,
   HORA_CONVENTIONS,
@@ -1141,9 +1142,6 @@ function resolveObservation(
 
   return { place: { latitude, longitude } };
 }
-
-/** Tre anni: oltre, la ricerca costa più di quanto valga il risultato. */
-const MAX_RANGE_DAYS = 1096;
 
 /**
  * Il tetto alle righe, detto prima che l'agente lo incontri. Il numero si

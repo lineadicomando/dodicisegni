@@ -249,6 +249,31 @@ function find<Id extends string>(
 }
 
 /**
+ * Rifiuta le orbite sostituite che non sono misure: un numero non finito o
+ * negativo.
+ *
+ * Con `NaN` il confronto `orb > limit` è sempre falso, e ogni coppia di punti
+ * risulta in aspetto a qualunque distanza; un valore negativo spegne
+ * l'aspetto senza dirlo. Lo zero resta ammesso: è il modo di chiedere che un
+ * aspetto non si cerchi, e le convenzioni lo usano già.
+ */
+export function checkOrbs(overrides?: Partial<Record<AspectId, number>>): void {
+  // Una chiave presente e `undefined` è un'orbita non sostituita: `Object.entries`
+  // la dà lo stesso, e il suo tipo non lo dice.
+  const sostituite: [string, number | undefined][] = Object.entries(overrides ?? {});
+  for (const [aspect, orb] of sostituite) {
+    if (orb === undefined) continue;
+    // `Number.isFinite` scarta anche ciò che non è un numero, senza convertirlo.
+    if (!Number.isFinite(orb) || orb < 0) {
+      throw new ChartError(
+        'ORBITE_NON_VALIDE',
+        `Orbita "${String(orb)}" per ${aspect}: attesi gradi, un numero finito e non negativo.`,
+      );
+    }
+  }
+}
+
+/**
  * La convenzione come la porta il risultato: il nome, la fonte, la regola, e
  * gli aspetti di cui chi ha chiamato ha sostituito l'orbita.
  */

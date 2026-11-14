@@ -27,6 +27,14 @@ export const MIN_STEP_DAYS = 0.2;
 export const MAX_STEP_DAYS = 10;
 /** Un minuto: sotto questa soglia l'istante esatto non si affina oltre. */
 export const PRECISION_DAYS = 1 / 1440;
+/**
+ * Tre anni: l'arco più lungo che le superfici concedono alle ricerche su un
+ * periodo, perché è il tempo in cui anche i pianeti più lenti chiudono un
+ * passaggio e oltre la ricerca costa secondi. Il motore non lo impone a chi
+ * lo importa: la costante sta qui perché sito, MCP e riga di comando usino
+ * lo stesso numero.
+ */
+export const MAX_RANGE_DAYS = 1096;
 /** Oltre questo arco la finestra non è più una finestra. */
 export const MAX_WINDOW_DAYS = 1095;
 /**

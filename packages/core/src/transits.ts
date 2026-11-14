@@ -5,7 +5,7 @@ import { ayanamsaAt, zodiacContext } from './ayanamsa.js';
 import { computeBodies, initEphemeris } from './ephemeris.js';
 import { computeHouses, houseOf } from './houses.js';
 import { validatePlace } from './place.js';
-import { orbConventionInfo, transitOrbConvention } from './orbite.js';
+import { orbConventionInfo, transitOrbConvention, checkOrbs } from './orbite.js';
 import { localSiderealTime } from './sidereal.js';
 import { resolveTime } from './time.js';
 import type { EphemerisContext } from './ephemeris.js';
@@ -116,6 +116,7 @@ export function computeTransits(
   }
 
   const orbs = transitOrbConvention(options.orbConvention);
+  checkOrbs(options.orbs);
   const chart: TransitChart = {
     input: moment,
     time,

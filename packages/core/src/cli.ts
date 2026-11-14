@@ -46,6 +46,7 @@ import { findSignIngresses, findStations } from './sky-events.js';
 import { findSkyPassages } from './sky-passages.js';
 import { BODIES, DEFAULT_PASSAGE_BODIES, DIGNITY_SCHOOL_NAMES } from './constants.js';
 import { findSignCourse } from './corso.js';
+import { MAX_RANGE_DAYS } from './roots.js';
 import { computeHoraryLilly } from './oraria-lilly.js';
 import { NATAL_ORB_CONVENTIONS } from './orbite.js';
 import { computeSky } from './sky.js';
@@ -198,7 +199,8 @@ Transiti
 Passaggi
   --passages            Elenca gli istanti in cui i transiti si perfezionano
   --from <YYYY-MM-DD>   Inizio dell'arco. Se omesso, oggi
-  --to <YYYY-MM-DD>     Fine dell'arco. Se omessa, un anno dopo l'inizio
+  --to <YYYY-MM-DD>     Fine dell'arco. Se omessa, un anno dopo l'inizio.
+                        Al più tre anni
   --moon                Includi la Luna, esclusa perché ne perfeziona a migliaia
   --attivi              Al posto degli istanti esatti, i transiti in orbita in
                         qualche momento dell'arco: da quando a quando, quanto
@@ -1274,6 +1276,18 @@ function passageRange(
   const timezone = values['transit-tz'] ?? birthTimezone;
   const from = values.from ?? currentMoment(timezone).date;
   const to = values.to ?? addYear(from);
+
+  // Lo stesso tetto del sito e del server MCP: il motore non lo impone, e
+  // senza di questo trent'anni di cielo tenevano fermo il terminale.
+  const giorni = (Date.parse(`${to}T00:00:00Z`) - Date.parse(`${from}T00:00:00Z`)) / 86_400_000;
+  if (giorni > MAX_RANGE_DAYS) {
+    throw new ChartError(
+      'INTERVALLO_NON_VALIDO',
+      `Arco di ${Math.round(giorni)} giorni: il massimo è ${MAX_RANGE_DAYS}, cioè tre anni. ` +
+        "Chiedi periodi più brevi, uno dopo l'altro.",
+    );
+  }
+
   return { from, to, timezone };
 }
 

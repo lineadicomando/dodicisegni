@@ -86,6 +86,9 @@ export function findSignCourse(
   body: BodyId,
   options: SignCourseOptions = {},
 ): SignCourse {
+  if (!Number.isFinite(julianDay)) {
+    throw new ChartError('DATA_NON_VALIDA', 'Istante non valido: il giorno giuliano non è un numero finito.');
+  }
   const context = initEphemeris(options.ephemerisPath);
   const warnings: string[] = [...context.warnings];
   const timezone = options.timezone ?? 'UTC';
@@ -99,8 +102,8 @@ export function findSignCourse(
     throw new ChartError('CORPO_SCONOSCIUTO', `${body}: posizione non calcolabile all'istante richiesto.`);
   }
 
-  const exit = findIngress(body, julianDay, 'dopo', warnings);
-  const entry = findIngress(body, julianDay, 'prima', warnings);
+  const exit = findIngress(body, julianDay, 'dopo', warnings, options.ephemerisPath);
+  const entry = findIngress(body, julianDay, 'prima', warnings, options.ephemerisPath);
   const segnoFinisce = exit?.julianDay ?? julianDay + MAX_COURSE_DAYS;
   const end = options.until !== undefined ? Math.min(segnoFinisce, Math.max(options.until, julianDay)) : segnoFinisce;
   const conUscita = exit !== undefined && exit.julianDay <= end;
@@ -276,11 +279,20 @@ interface Ingresso {
  * dal tempo che il corpo impiega di solito a fare un segno e si raddoppia fino
  * al tetto: per la Luna bastano tre giorni, per Saturno ne servono mesi.
  */
-function findIngress(body: BodyId, julianDay: number, verso: 'prima' | 'dopo', warnings: string[]): Ingresso | undefined {
+function findIngress(
+  body: BodyId,
+  julianDay: number,
+  verso: 'prima' | 'dopo',
+  warnings: string[],
+  ephemerisPath?: string,
+): Ingresso | undefined {
   let giorni = Math.min(MAX_COURSE_DAYS, Math.ceil((30 / meanDailyMotion(body)) * 1.2) + 2);
   for (;;) {
     const range = verso === 'dopo' ? dayRange(julianDay, julianDay + giorni) : dayRange(julianDay - giorni, julianDay);
-    const { ingresses, warnings: ingressWarnings } = findSignIngresses(range, { bodies: [body] });
+    const { ingresses, warnings: ingressWarnings } = findSignIngresses(range, {
+      bodies: [body],
+      ...(ephemerisPath ? { ephemerisPath } : {}),
+    });
     for (const warning of ingressWarnings) if (!warnings.includes(warning)) warnings.push(warning);
     const candidati = ingresses
       .map((ingress) => ({ ...ingress, julianDay: isoToJulianDay(ingress.exact) }))

@@ -4,7 +4,11 @@ import type { ZodiacSign } from './types.js';
 /** Riporta un angolo qualsiasi nell'intervallo [0, 360). */
 export function normalize360(degrees: number): number {
   const value = degrees % 360;
-  return value < 0 ? value + 360 : value;
+  if (value >= 0) return value;
+  // Un negativo minuscolo sommato a 360 dà 360 esatto, per arrotondamento: e
+  // 360 è fuori dall'intervallo, cioè un tredicesimo segno per chi divide.
+  const shifted = value + 360;
+  return shifted === 360 ? 0 : shifted;
 }
 
 /**

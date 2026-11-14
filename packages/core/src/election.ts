@@ -167,6 +167,9 @@ export function planetaryHourAt(
   timezone: string,
   context: EphemerisContext,
 ): PlanetaryHourAt | null {
+  if (!Number.isFinite(julianDay)) {
+    throw new ChartError('DATA_NON_VALIDA', 'Istante non valido: il giorno giuliano non è un numero finito.');
+  }
   // L'ultima alba non successiva all'istante: si parte da un giorno prima e
   // si avanza, come in `buildPlanetaryHours`.
   let sunrise = riseOrSet('rise', julianDay - 1, place, context);

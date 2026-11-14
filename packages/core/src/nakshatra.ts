@@ -139,14 +139,16 @@ export function nakshatraOf(siderealLongitude: number): NakshatraPosition {
     );
   }
 
-  const degree = longitude - index * NAKSHATRA_SPAN;
+  // Sul confine fra due nakshatra il prodotto può superare la longitudine
+  // dell'ultima cifra, e il resto uscire negativo: sarebbe il pada zero.
+  const degree = Math.max(0, longitude - index * NAKSHATRA_SPAN);
 
   return {
     id: definition.id,
     name: definition.name,
     index: index + 1,
     lord: VIMSHOTTARI_ORDER[index % 9] as BodyId,
-    pada: (Math.floor(degree / PADA_SPAN) + 1) as 1 | 2 | 3 | 4,
+    pada: Math.min(4, Math.floor(degree / PADA_SPAN) + 1) as 1 | 2 | 3 | 4,
     degree,
   };
 }

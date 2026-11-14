@@ -4,7 +4,7 @@ import {
 import { computeBodies, initEphemeris, type EphemerisContext } from './ephemeris.js';
 import { signedDifference } from './math.js';
 import { aspectsOf } from './aspects.js';
-import { orbConventionInfo, pairOrb, transitOrbConvention } from './orbite.js';
+import { orbConventionInfo, pairOrb, transitOrbConvention, checkOrbs } from './orbite.js';
 import {
   MAX_WINDOW_DAYS,
   bisect,
@@ -68,6 +68,7 @@ export function findSkyPassages(
   options: SkyPassageOptions = {},
 ): { passages: SkyPassage[]; warnings: string[]; orbConvention: OrbConventionInfo } {
   const convention = transitOrbConvention(options.orbConvention);
+  checkOrbs(options.orbs);
   const context = initEphemeris(options.ephemerisPath);
   const warnings: string[] = [...context.warnings];
 

@@ -1,6 +1,6 @@
 import { ASPECTS, NON_ASPECTING_PAIRS, type AspectDefinition } from './constants.js';
 import { angularSeparation } from './math.js';
-import { natalOrbConvention, pairOrb, type OrbConventionDefinition } from './orbite.js';
+import { checkOrbs, natalOrbConvention, pairOrb, type OrbConventionDefinition } from './orbite.js';
 import type { Aspect, AspectId, AspectPoint, BodyId, CelestialBody, PointAspect } from './types.js';
 
 /** Passo temporale massimo, in giorni, per stabilire se un aspetto è applicativo. */
@@ -132,6 +132,7 @@ function aspectBetween<From extends string, To extends string>(
 
 function rulesFor(options: AspectOptions): AspectRules {
   const convention = options.convention ?? natalOrbConvention();
+  checkOrbs(options.orbs);
   return {
     definitions: aspectsOf(convention, options.minorAspects ?? false),
     convention,

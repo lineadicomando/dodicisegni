@@ -85,7 +85,17 @@ export function computeVimshottari(
     );
   }
 
-  const levels = options.levels ?? 2;
+  const chiesti: number = options.levels ?? 2;
+  // Il tipo lo dice già, ma dalla riga di comando e da chi importa arriva un
+  // numero qualunque: ogni ordine in più moltiplica i periodi per nove, e al
+  // sesto sono seicentomila.
+  if (chiesti !== 1 && chiesti !== 2 && chiesti !== 3) {
+    throw new ChartError(
+      'LIVELLI_DASHA_NON_VALIDI',
+      `Ordini di dasha "${String(chiesti)}" non validi: attesi 1, 2 oppure 3.`,
+    );
+  }
+  const levels = chiesti;
   const yearLength = options.yearLength ?? 'solare';
   const daysPerYear = DASHA_DAYS_PER_YEAR[yearLength];
 

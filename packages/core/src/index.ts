@@ -13,6 +13,7 @@ export { findActiveTransits } from './attivi.js';
 export { findSkyPassages } from './sky-passages.js';
 export { findSignIngresses, findStations } from './sky-events.js';
 export { findElectionHours, MAX_ELECTION_DAYS, planetaryHourAt } from './election.js';
+export { MAX_RANGE_DAYS } from './roots.js';
 export { findSignCourse, MAX_COURSE_DAYS } from './corso.js';
 export {
   classifyLilly,

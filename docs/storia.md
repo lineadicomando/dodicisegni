@@ -44,6 +44,7 @@ porta il nome del file.
 | 40, `40-errori-rotte.md` | `2c3b3e4` |
 | 42, `42-tempo-medio-locale.md` | `7ec1eb5` |
 | 43, `43-mcp-risposte-enormi.md` | `c2a98b2` |
+| 47, `47-input-motore.md` | `7a2ac59` |
 
 ## Le versioni
 
@@ -84,6 +85,7 @@ cambia muove la seconda cifra.
 | 0.23.0 | un fuso sconosciuto è sempre 400; i messaggi non portano percorsi del server; `/api/jyotish` fuori copertura dà `DATA_NON_VALIDA`; l'arco dell'elezione a estremi compresi; le 24:00 con l'avviso | 40 |
 | 0.24.0 | un'ora data prima dell'ora unica porta l'avvertenza che è stata letta come tempo medio della città del fuso; `/metodo#tempo-medio` | 42 |
 | 0.25.0 | oltre mille righe `find_transit_passages`, `find_active_transits`, `find_sky_events` e il testo compatto delle tre rotte gemelle rispondono `RISPOSTA_TROPPO_LUNGA`; il JSON delle rotte resta senza tetto | 43 |
+| 0.26.0 | il corso nel segno cerca gli ingressi con le effemeridi chieste e non con quelle predefinite (un minuto di differenza nel fascicolo, `oraria.json`); orbite non finite o negative, ordini di dasha fuori da 1–3 e giorni giuliani non finiti si rifiutano; `normalize360` non rende più 360; la riga di comando ha il tetto di tre anni | 47 |
 
 ## Le sessioni
 
@@ -221,3 +223,17 @@ cambia muove la seconda cifra.
   caratteri): il numero della voce veniva dalla Luna insieme agli altri
   corpi. La riga di comando non ha tetto: chi la usa ha un terminale e un
   file.
+- **14 novembre 2026, mattina.** Pubblicata la 0.25.0 (push e deploy,
+  verificata sul sito). Chiusa la voce 47 (0.26.0), una prova per riga in
+  `test/input.test.ts`. La riga *dedotta* era vera e muove il fascicolo:
+  `findIngress` non inoltrava `ephemerisPath`, quindi il corso nel segno di
+  un calcolo Moshier cercava gli ingressi con i file Swiss della cartella
+  predefinita, e `entered` dell'oraria canonica si sposta di un minuto. È la
+  ragione della seconda cifra. Scelte prese qui: l'orbita zero resta ammessa,
+  perché è il modo di spegnere un aspetto e le convenzioni lo usano; il
+  tetto di tre anni agli archi **non entra nel motore**, perché
+  `findSignCourse` cerca fino a 1100 giorni e chi importa la libreria paga
+  ciò che chiede: `MAX_RANGE_DAYS` sta in `roots.ts` come numero unico, e lo
+  applicano il sito, il server MCP e ora la riga di comando; gli ordini di
+  dasha hanno il codice `LIVELLI_DASHA_NON_VALIDI`, lo stesso che la rotta
+  usava già di suo.

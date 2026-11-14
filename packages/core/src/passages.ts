@@ -1,6 +1,6 @@
 import { DEFAULT_PASSAGE_BODIES } from './constants.js';
 import { aspectsOf } from './aspects.js';
-import { orbConventionInfo, pairOrb, transitOrbConvention } from './orbite.js';
+import { orbConventionInfo, pairOrb, transitOrbConvention, checkOrbs } from './orbite.js';
 import { zodiacContext } from './ayanamsa.js';
 import { computeBodies, initEphemeris, type EphemerisContext } from './ephemeris.js';
 import { signedDifference } from './math.js';
@@ -51,6 +51,7 @@ export function findTransitPassages(
   options: PassageOptions = {},
 ): { passages: TransitPassage[]; warnings: string[]; orbConvention: OrbConventionInfo } {
   const convention = transitOrbConvention(options.orbConvention);
+  checkOrbs(options.orbs);
   // Come nei transiti: lo zodiaco è quello del tema bersagliato.
   const context = zodiacContext(initEphemeris(options.ephemerisPath), {
     zodiac: natal.zodiac,
