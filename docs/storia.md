@@ -45,6 +45,7 @@ porta il nome del file.
 | 42, `42-tempo-medio-locale.md` | `7ec1eb5` |
 | 43, `43-mcp-risposte-enormi.md` | `c2a98b2` |
 | 47, `47-input-motore.md` | `7a2ac59` |
+| 48, `48-contorno.md` | `2aaff7b` |
 
 ## Le versioni
 
@@ -237,3 +238,18 @@ cambia muove la seconda cifra.
   applicano il sito, il server MCP e ora la riga di comando; gli ordini di
   dasha hanno il codice `LIVELLI_DASHA_NON_VALIDI`, lo stesso che la rotta
   usava già di suo.
+- **14 novembre 2026, mattina, poi.** Chiusa la voce 48, senza versione.
+  Il lint gira nei controlli, dopo `typecheck`. `npm audit fix`: in
+  produzione zero segnalazioni (`npm audit --omit=dev`); ne restano sedici
+  negli strumenti (`minimatch`, `deepmerge` sotto eslint ed
+  electron-builder), nessuna alta, che si chiudono solo con `--force` e un
+  salto di versione maggiore: lasciate. Le tre prove di `ruota` continuano a
+  importare i tipi di `core`, perché disegnano una carta fatta come la fa il
+  motore: corretta la frase di `CLAUDE.md`, non le prove. Il desktop non è
+  stato eseguito: la correzione dello splash è scritta sulla lettura, e
+  passa i tipi. Le intestazioni: né Caddy né Cloudflare ne aggiungono
+  (`curl -sI`, 14 novembre), quindi `Referrer-Policy: same-origin` e
+  `X-Content-Type-Options: nosniff` stanno nell'`handle`, su pagine e
+  `/api`, provate sul server compilato. Niente Content-Security-Policy e
+  niente `X-Frame-Options`: la prima va provata pagina per pagina, e nessuna
+  delle due ha oggi qualcosa da proteggere (nessun account, nessuna azione).

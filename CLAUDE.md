@@ -97,9 +97,10 @@ il motore usa Moshier invece delle effemeridi Swiss.
 - Le tabelle Svelte prendono **i dati, non il tema**: legarle a `NatalChart`
   le rende inutilizzabili per i transiti.
 - **`packages/ruota` non importa da `core`, nemmeno i tipi**: li ridichiara in
-  `types.ts`, e `test/tipi.test.ts` verifica che combacino. Quel test è l'unico
-  punto che vede `core`, ed è la ragione per cui `core` sta fra le sue
-  dipendenze di sviluppo. Serve a rompere il
+  `types.ts`, e `test/tipi.test.ts` verifica che combacino. Solo le prove
+  vedono `core`, ed è la ragione per cui sta fra le dipendenze di sviluppo:
+  quel test ne importa anche un valore, le altre i soli tipi, per disegnare
+  una carta fatta come la fa il motore. Serve a rompere il
   ciclo con la CLI, che vive in `core` e disegna. Il disegno riceve una carta
   già calcolata e non deve poterne calcolare una.
 - **Il PNG sta in `@dodicisegni/ruota/png`**, punto d'ingresso separato:

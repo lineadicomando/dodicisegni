@@ -29,3 +29,16 @@ describe("l'intestazione della versione", () => {
     expect(uscita.headers.has(VERSION_HEADER)).toBe(false);
   });
 });
+
+describe('le intestazioni di sicurezza', () => {
+  it.each(['/metodo', '/api/chart', '/?date=1968-03-12&time=14:30&locationId=3172394'])(
+    'stanno su %s',
+    async (percorso) => {
+      const uscita = await attraverso(percorso, new Response('ok'));
+
+      // Gli indirizzi portano una nascita: fuori dal sito non ne esce niente.
+      expect(uscita.headers.get('referrer-policy')).toBe('same-origin');
+      expect(uscita.headers.get('x-content-type-options')).toBe('nosniff');
+    },
+  );
+});

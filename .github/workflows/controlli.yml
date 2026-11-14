@@ -1,4 +1,4 @@
-# I due comandi che questo progetto lancia a mano prima di ogni commit, lanciati
+# I tre comandi che questo progetto lancia a mano prima di ogni commit, lanciati
 # da qualcun altro. Non c'è un passo di `build`: `typecheck` compila già ruota,
 # lettura, core e geo per davvero — se non compilano, fallisce lì.
 #
@@ -60,6 +60,10 @@ jobs:
       - run: npm test
 
       - run: npm run typecheck
+
+      # Dopo `typecheck`, che compila i pacchetti: le regole che leggono i tipi
+      # vogliono i `dist` di chi si importa.
+      - run: npm run lint
 
   # Il Dockerfile ha una lista di workspace scritta a mano — i manifesti da
   # copiare, l'ordine di compilazione, i `dist` da portare nel runtime — e

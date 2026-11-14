@@ -192,8 +192,15 @@ async function importaDatabase({ finestra: splash, pronta }: Avanzamento): Promi
   // `null` quando il processo muore di segnale, cioè quando la finestra chiusa
   // l'ha interrotto: vale come «non è arrivata in fondo», al pari di un codice
   // diverso da zero.
-  const codice = await new Promise<number | null>((esce) => processo.once('exit', esce));
-  splash.destroy();
+  // Anche `error`: se il processo non parte affatto `exit` non arriva mai, e
+  // senza un gestore l'evento farebbe cadere l'applicazione.
+  const codice = await new Promise<number | null>((esce) => {
+    processo.once('exit', esce);
+    processo.once('error', () => esce(null));
+  });
+  // Chi ha chiuso la finestra l'ha già distrutta, e distruggerla due volte
+  // solleva `Object has been destroyed` al posto del messaggio qui sotto.
+  if (!splash.isDestroyed()) splash.destroy();
   if (codice !== 0) {
     throw new Error("L'importazione non è andata a buon fine; si può riprovare al prossimo avvio.");
   }

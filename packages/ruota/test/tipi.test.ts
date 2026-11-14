@@ -7,8 +7,10 @@
  * finché non lo si vede: che è esattamente il genere di errore silenzioso per
  * cui la geometria era stata messa alla prova.
  *
- * Il motore lo si importa qui e in nessun altro punto del pacchetto: un test
- * gira dopo che tutto è stato compilato, quindi non crea il ciclo.
+ * Il motore lo vedono solo le prove, mai `src`: un test gira dopo che tutto è
+ * stato compilato, quindi non crea il ciclo. Questa ne importa anche un
+ * valore; quelle del disegno i soli tipi, per costruire una carta fatta come
+ * la fa il motore.
  */
 
 import type * as core from '@dodicisegni/core';
