@@ -19,7 +19,7 @@ niente. Chiusa una riga, la si segna qui sotto e la si toglie dall'elenco.
 
 | Riga | Stato |
 |---|---|
-| 1. Tavole e regole di dottrina | Lilly fatta (14 novembre 2026, voce 51 → 0.27.0); restano le altre scuole |
+| 1. Tavole e regole di dottrina | Lilly fatta (14 novembre 2026, voce 51 → 0.27.0); Tolomeo fatto (15 novembre 2026, niente da correggere); restano Valente, Bonatti, il filo comune, il Jyotisha |
 | 2–9 | da fare |
 
 ## Le righe, in ordine di quanto può costare un errore
@@ -32,9 +32,9 @@ I file senza cartella stanno in `packages/core/src/`.
    quali pagine, per ogni file, lo dice `texts/INDICE.md`), e nel conto
    vanno le costanti senza una pagina accanto. Fatta per Lilly
    (`dignita-lilly.ts`, `condizioni-lilly.ts`, `oraria-lilly.ts`, e di
-   `dignita.ts` ciò che viene da p. 104). Restano, una sessione ciascuna:
-   - *Tolomeo*: `dignita-tolomeo.ts`, e di `dignita.ts` I.17 e I.19, più
-     Firmico II.3.5-6 e Leo p. 117 che lo stesso file cita;
+   `dignita.ts` ciò che viene da p. 104) e per Tolomeo (`dignita-tolomeo.ts`,
+   di `dignita.ts` I.17 e I.19, Firmico II.3.5-6, Leo p. 117). Restano, una
+   sessione ciascuna:
    - *Valente*: `dignita-valente.ts`, e di `dignita.ts` I.2;
    - *Bonatti*: `dignita-bonatti.ts` (gotico: l'OCR non orienta);
    - *il filo comune*: `dignita-tema.ts`, `constants.ts`;

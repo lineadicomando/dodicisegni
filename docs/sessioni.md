@@ -277,4 +277,22 @@ si è arrivati. Le tavole delle voci chiuse e delle versioni sono in
   proverà (5 e 9). Verificato che ogni file e ogni nome citato esista nel
   codice. In `docs/lavorare.md`, *Rileggere una tavola*, gli strumenti con
   cui si è riletto Lilly.
+- **15 novembre 2026.** Voce 49, prima riga, scuola di Tolomeo. Le tavole
+  erano state lette il 29 ottobre sull'HTML di LacusCurtius, salvo i
+  termini: rilette ora sulla scansione della Loeb. I.17 (pp. 79-83) contro
+  `DOMICILI_TRADIZIONALI`, I.19 (pp. 89-91) contro le esaltazioni e le
+  «depression», I.18 (pp. 83-87) contro `TRIANGOLI` coi co-reggenti
+  dell'acqua, la tavola greca di p. 106 cella per cella contro `TERMINI`
+  (nella Bilancia il 5 del terzo tratto è sbiadito e il totale 16 lo
+  conferma), i passi di p. 103 (le somme) e p. 105 (il Leone a Saturno nel
+  testo, Venere sola sul triangolo del Toro), l'apparato di pp. 106-107
+  contro `PTOLEMY_TERMS_SOURCE`. Ricontate le somme sulla tavola compilata:
+  57, 79, 66, 82, 76. Riletti anche Firmico p. 44 (i sette gradi delle
+  esaltazioni, con le tre correzioni dell'apparato già nella sua `FONTE.md`)
+  e Leo p. 117. Tutto combacia, nessun difetto, nessuna costante senza
+  pagina. Resta una frase senza fonte salvata: in `DOMICILI_MODERNI`
+  Urano all'Acquario «già nell'Ottocento (Varley, 1828)» viene da una fonte
+  secondaria che il commento non nomina e che `texts/` non ha; è una nota
+  storica, non un valore, e il commento lo dichiara. Pagine salvate in
+  `texts/occidentale/tolomeo-tetrabiblos-robbins-1940/pagine/`.
 

@@ -95,6 +95,12 @@ proprietario, e su archive.org quel libro non si presta.
   state chiuse le corse della voce 45 (`docs/sessioni.md`). I campi legati
   con `bind:value` si cambiano assegnando `.value` e lanciando un evento
   `input` con `bubbles: true`;
+- `npm test` con la macchina carica (un `pdftoppm`, una build) fa scadere
+  le prove lente oltre i 5 secondi, in `oraria-lilly.test.ts`,
+  `server.test.ts` di `mcp` e `rotte-compatte.test.ts`, e in quest'ultimo
+  il worker del pool interrotto a metà di una `calc_ut` muore con `FATAL
+  ERROR … napi_throw` e SIGABRT. Non è un guasto del pool: si rilancia la
+  suite da sola, e passa (15 novembre 2026);
 - il server compilato si prova su una porta sua (`PORT=3187 npm start -w
   @dodicisegni/web`), così non si scontra con un server di sviluppo aperto.
 
