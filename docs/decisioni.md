@@ -332,3 +332,8 @@ codice rimandano qui con «`docs/decisioni.md`».
   legge un programma (l'interfaccia, chi chiama in rete) e toglierglielo
   cambierebbe una risposta che oggi usa senza danno. Il numero, mille, è
   nostro: tiene la risposta sotto i centomila caratteri.
+- **`ruota` e `lettura` restano AGPL, come tutto il repo.** Scelta del
+  proprietario, 14 novembre 2026 (voce 34). La doppia licenza serviva a
+  dodicicase, che è fermo. Se si riapre, la condizione che la rendeva
+  possibile va ricontrollata: un solo autore su quei pacchetti
+  (`git shortlog -sne HEAD -- packages/ruota packages/lettura`).

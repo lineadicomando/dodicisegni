@@ -46,6 +46,8 @@ porta il nome del file.
 | 43, `43-mcp-risposte-enormi.md` | `c2a98b2` |
 | 47, `47-input-motore.md` | `7a2ac59` |
 | 48, `48-contorno.md` | `2aaff7b` |
+| 28, `28-seo.md` | `acc68d7` |
+| 34, `34-doppia-licenza.md` | `acc68d7` |
 
 ## Le versioni
 
@@ -253,3 +255,9 @@ cambia muove la seconda cifra.
   `/api`, provate sul server compilato. Niente Content-Security-Policy e
   niente `X-Frame-Options`: la prima va provata pagina per pagina, e nessuna
   delle due ha oggi qualcosa da proteggere (nessun account, nessuna azione).
+- **14 novembre 2026, più tardi.** Chiuse due voci sulla parola del
+  proprietario, senza codice. La 28: ha letto gli strumenti dei motori e non
+  risultano pagine escluse, quindi non c'è altro da fare. La 34: dodicicase è
+  fermo, e `ruota` e `lettura` restano AGPL come il resto (in
+  `docs/decisioni.md`). La 33, che serve a dodicicase, resta aperta ma non ha
+  più fretta.
