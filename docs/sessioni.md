@@ -259,4 +259,16 @@ si è arrivati. Le tavole delle voci chiuse e delle versioni sono in
   non li conta o li conta a favore. Non si è trovata una figura in cui un
   terzo, non la Luna, faccia cadere la condizione. La lettura proposta è nel
   file della voce e aspetta la conferma del proprietario.
+- **14 novembre 2026, chiusa la voce 51 (0.27.0).** Il proprietario ha
+  confermato la lettura. `qualitaDellaPerfezione` dà per sestile e trigono
+  una terza voce, `nessun-aspetto-malevolo`, dal corso dei due significatori
+  che il calcolo aveva già; il dettaglio nomina chi arriva prima. Provata su
+  tre figure: Roma, 1 gennaio 2026 alle 9 (il Sole passa dall'opposizione di
+  Giove prima del sestile di Saturno: la condizione cade, e non era una
+  proibizione, perché Saturno è il più pesante); p. 220 e il cap. LIX di
+  p. 385, dove vale come le legge Lilly. Tolta l'esclusione della Luna le due
+  figure di Lilly cadono, ed è la prova che la regge. Nel fascicolo canonico
+  cambia solo l'elenco delle letture di `oraria.json`. Aggiornati il
+  documento di lettura dell'oraria e `/metodo`; tabella compatta, pagina e
+  tool stampano le voci di `quality` che arrivano e non sono stati toccati.
 

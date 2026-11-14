@@ -319,11 +319,29 @@ describe('le condizioni di qualità della perfezione, p. 125', () => {
     expect(q.get('forti')?.holds).toBeUndefined();
   });
 
+  it('per sestile e trigono dicono l\'aspetto malevolo di un terzo che arriva prima, p. 125', () => {
+    // «(and meet with no malevolent Aspect to intervene ere they come to be
+    // in perfect ✶ or △». Il Sole va al sestile di Saturno del 17 gennaio, e
+    // il 10 passa dall'opposizione di Giove. Non è una proibizione, che
+    // guarda solo ciò che perfeziona il più pesante, Saturno.
+    const h = figura('2026-01-01', '09:00');
+    const q = qualita('2026-01-01', '09:00');
+    expect([...q.keys()]).toEqual(['case-buone', 'forti', 'nessun-aspetto-malevolo']);
+    expect(q.get('nessun-aspetto-malevolo')).toMatchObject({
+      page: 125,
+      holds: false,
+      detail: 'Prima: opposizione di Giove a Sole.',
+    });
+    expect(h.impediments.map((i) => i.by)).not.toContain('giove');
+  });
+
   it('dicono le letture con cui sono calcolate', () => {
     const letture = figura('2026-01-21', '15:00').readings.join(' ');
     expect(letture).toContain('tutte tranne la 6, l\'8 e la 12');
     expect(letture).toContain('nella casa del grado in cui si compie');
     expect(letture).toContain('vuol dire non peregrino');
+    expect(letture).toContain('un tipo di aspetto e non l\'aspetto di un malefico');
+    expect(letture).toContain('La Luna cosignificatrice non conta');
   });
 });
 
@@ -413,6 +431,44 @@ describe('altre figure del libro II', () => {
     });
   });
 
+  describe('«A Lady, if marry the Gentleman desired?», pp. 385-388', () => {
+    // «♂ 16. June 1646, 19.26 P.M.», «Hor: astr: ♄», «☽ a vac: ad ☍ ☉»: ore
+    // astronomiche dal mezzogiorno del 16, cioè le 7:26 del 17 giugno
+    // giuliano, il 27 gregoriano. Ascendente 17°11' ♌, ☉ 5°31' ♋, ♄ 14°53' ♉.
+    const h = computeHoraryLilly({ date: '1646-06-27', time: '07:26', timezone: 'Europe/London' }, LONDRA, {
+      question: { house: 7 },
+    });
+    const pos = (id: string) => h.chart.bodies.find((b) => b.id === id)?.longitude;
+
+    it('ha le posizioni della figura', () => {
+      // L'Ascendente del motore è a 15°56' ♌: oltre un grado dalla figura,
+      // quanto fanno cinque minuti d'orologio.
+      expect(Math.abs((h.chart.angles?.ascendant ?? NaN) - (4 * 30 + 17 + 11 / 60))).toBeLessThan(1.5);
+      vicino(pos('sole'), 3, 5, 31);
+      vicino(pos('saturno'), 1, 14, 53);
+      expect(h.chart.dignities!.lilly!.conditions.hour).toMatchObject({ ruler: 'saturno' });
+      expect(h.significators.map((s) => s.body)).toEqual(['sole', 'saturno', 'luna']);
+    });
+
+    it('trova il sestile dei significatori il 27 giugno giuliano, senza impedimenti', () => {
+      // «♄ and ☉ came to ✶ aspect the 27th of the same moneth»; «no manner
+      // of prohibition, abscission or frustration».
+      const sestile = h.perfections.find((f) => f.mode === 'aspetto');
+      expect(sestile).toMatchObject({ aspect: 'sestile' });
+      expect(sestile?.exact.slice(0, 10)).toBe('1646-07-07');
+      expect(h.impediments).toEqual([]);
+    });
+
+    it('non conta fra gli aspetti malevoli l\'opposizione della Luna al Sole, che Lilly legge a favore', () => {
+      // «the application of the ☽ to the Lord of the ascendant, though by ☍,
+      // yet with Reception, was another small argument».
+      const sole = h.courses.find((c) => c.body === 'sole')!;
+      expect(sole.events[0]).toMatchObject({ aspect: 'opposizione', with: 'luna' });
+      const sestile = h.perfections.find((f) => f.mode === 'aspetto');
+      expect(sestile?.quality?.find((c) => c.id === 'nessun-aspetto-malevolo')).toMatchObject({ holds: true });
+    });
+  });
+
   describe('«If I should purchase Master B. his houses», pp. 219-221', () => {
     // «31 Mar. 1634, 6 Hor. P.M.», «Dns diei ☽, Hor: astr ☉», «☽ a ☌ ♂ ad □
     // ♄»: il 10 aprile gregoriano, la domanda di Lilly stesso sulla casa in
@@ -461,6 +517,16 @@ describe('altre figure del libro II', () => {
       // a favore («the ☉ was in perfect △ with ♄ … Lord of my eleventh»).
       // Il motore segue la regola, e la divergenza resta scritta qui.
       expect(h.impediments).toContainEqual(expect.objectContaining({ mode: 'proibizione', by: 'sole' }));
+    });
+
+    it('non conta fra gli aspetti malevoli il quadrato e l\'opposizione della Luna, come Lilly', () => {
+      // Prima del trigono la Luna fa quadrato a Saturno e opposizione a
+      // Venere, e Lilly scrive «had no abscission or frustration ere the
+      // perfect aspect»: la cosignificatrice non interviene (p. 124).
+      const venere = h.courses.find((c) => c.body === 'venere')!;
+      expect(venere.events[0]).toMatchObject({ aspect: 'opposizione', with: 'luna' });
+      const trigono = h.perfections.find((f) => f.mode === 'aspetto');
+      expect(trigono?.quality?.find((c) => c.id === 'nessun-aspetto-malevolo')).toMatchObject({ holds: true });
     });
 
     it('trova Marte retrogrado, Giove cadente in esilio, la Luna da Marte al quadrato di Saturno', () => {

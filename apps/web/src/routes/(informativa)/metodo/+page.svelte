@@ -594,8 +594,11 @@
   e per l'aspetto il calcolo riporta anche le condizioni che p. 125 mette a
   ciascun modo: la casa in cui la congiunzione si compie, se i significatori
   applicano da case buone (quelle a cui la tavola delle fortezze di p. 115 dà
-  punti positivi: tutte tranne la sesta, l'ottava e la dodicesima), se nel
-  quadrato hanno dignità, e nell'opposizione la mutua ricezione per domicilio
+  punti positivi: tutte tranne la sesta, l'ottava e la dodicesima), se prima
+  di un sestile o di un trigono un altro pianeta porta a uno dei due un
+  quadrato o un'opposizione (il «malevolent Aspect» di p. 125, che per Lilly è
+  un tipo di aspetto e non l'aspetto di un malefico; la Luna cosignificatrice
+  non conta), se nel quadrato hanno dignità, e nell'opposizione la mutua ricezione per domicilio
   e la Luna. «Ben dignificato» e «forte» non hanno una soglia nel testo, e
   restano non calcolati con i dati accanto. Le considerazioni prima del
   giudizio di pp. 121-123 sono riportate come fatti, mai come un

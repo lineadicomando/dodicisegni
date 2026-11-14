@@ -26,7 +26,8 @@ Che cosa resta, in ordine di quanto può costare un errore:
   può spezzare per scuola. **Fatta il 14 novembre 2026 la scuola di Lilly**
   (`dignita-lilly.ts`, `condizioni-lilly.ts`, `oraria-lilly.ts` e, di
   `dignita.ts`, domicili, esilio, esaltazioni e cadute contro p. 104): che
-  cosa è stato letto sta in `docs/sessioni.md`, e ne è uscita la voce 51.
+  cosa è stato letto sta in `docs/sessioni.md`, e ne è uscita la voce 51, chiusa con la
+  0.27.0.
   **Restano**: di `dignita.ts` i luoghi di Tolomeo (I.17, I.19), Valente
   (I.2), Firmico (II.3.5-6) e Leo (p. 117); `dignita-tolomeo.ts`,
   `dignita-valente.ts`, `dignita-bonatti.ts`, `dignita-tema.ts`; il

@@ -54,6 +54,7 @@ porta il nome del file.
 | 28, `28-seo.md` | `acc68d7` |
 | 34, `34-doppia-licenza.md` | `acc68d7` |
 | 50, `50-tempo-del-luogo.md` | `73fccb5` |
+| 51, `51-oraria-aspetto-malevolo.md` | `a5e8139` |
 | 45, `45-interfaccia-corse.md` | `f43c550` |
 | 46, `46-ricerca-localita.md` | `cf47502` |
 
@@ -98,3 +99,4 @@ cambia muove la seconda cifra.
 | 0.25.0 | oltre mille righe `find_transit_passages`, `find_active_transits`, `find_sky_events` e il testo compatto delle tre rotte gemelle rispondono `RISPOSTA_TROPPO_LUNGA`; il JSON delle rotte resta senza tetto | 43 |
 | 0.26.0 | il corso nel segno cerca gli ingressi con le effemeridi chieste e non con quelle predefinite (un minuto di differenza nel fascicolo, `oraria.json`); orbite non finite o negative, ordini di dasha fuori da 1–3 e giorni giuliani non finiti si rifiutano; `normalize360` non rende più 360; la riga di comando ha il tetto di tre anni | 47 |
 | 0.26.1 | l'ora di nascita si può leggere sul tempo medio o sul tempo vero del luogo: `clock` su rotte e MCP, `--orologio` sulla riga di comando, un interruttore nel modulo | 50 |
+| 0.27.0 | l'oraria di Lilly riporta per sestile e trigono la terza condizione di p. 125: nessun quadrato o opposizione di un altro pianeta a un significatore prima della perfezione, la Luna cosignificatrice esclusa (una lettura in più in `oraria.json`) | 51 |

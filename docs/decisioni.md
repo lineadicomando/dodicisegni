@@ -338,3 +338,20 @@ codice rimandano qui con «`docs/decisioni.md`».
   dodicicase, che è fermo. Se si riapre, la condizione che la rendeva
   possibile va ricontrollata: un solo autore su quei pacchetti
   (`git shortlog -sne HEAD -- packages/ruota packages/lettura`).
+- **Il «malevolent Aspect» di p. 125 è il quadrato o l'opposizione di un
+  terzo, e la Luna cosignificatrice non lo porta.** Scelta del proprietario,
+  14 novembre 2026 (voce 51), dopo la lettura dei luoghi del libro. Per
+  sestile e trigono l'oraria di Lilly dà la condizione per valida quando
+  nessun pianeta, tolti i due significatori e la Luna cosignificatrice,
+  perfeziona un quadrato o un'opposizione con uno dei due prima del loro
+  aspetto. L'aspetto malevolo è un tipo di aspetto (pp. 102, 106, 260), non
+  l'aspetto di un malefico; la Luna è esclusa perché nelle figure di pp. 220
+  e 385-387 Lilly non conta i suoi quadrati e le sue opposizioni, o li conta
+  a favore. Fuori, e dichiarato nei `readings`: la congiunzione con Saturno
+  o Marte e l'aspetto solo in orbita. La proibizione resta quella di
+  pp. 110-111. Il capitolo sul pianeta che impedisce (pp. 184-186) è
+  un'altra dottrina, non entrata. La farebbe riaprire una figura del libro
+  II in cui Lilly nomini un terzo che interviene così e la giudichi
+  diversamente: quelle oltre p. 296 non sono state cercate, tranne il
+  cap. LIX.
+

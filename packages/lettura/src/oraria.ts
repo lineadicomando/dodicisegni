@@ -88,10 +88,11 @@ ragionamento, e chi ha chiesto deve poterla seguire.
    due hanno dignità, per opposizione raramente e con fatica. Le righe
    «Qualità» sotto la perfezione dicono le condizioni che p. 125 mette a
    ciascun modo (la casa in cui la congiunzione si compie, le case da cui i
-   significatori applicano, la dignità per il quadrato, la mutua ricezione e
-   la Luna per l'opposizione): usale, e dove una dice «non calcolata»
-   giudicala tu dai dati che riporta, dicendolo. Una traslazione
-   o una collezione indicano che la cosa passa attraverso una terza persona,
+   significatori applicano, per sestile e trigono se un altro pianeta porta
+   a uno dei due un quadrato o un'opposizione prima che si incontrino, la
+   dignità per il quadrato, la mutua ricezione e la Luna per l'opposizione):
+   usale, e dove una dice «non calcolata» giudicala tu dai dati che riporta,
+   dicendolo. Una traslazione o una collezione indicano che la cosa passa attraverso una terza persona,
    quella che il pianeta di mezzo significa per la casa che regge (p. 126).
    Se non c'è nessun modo della perfezione, dillo: è anch'esso una risposta.
    La ricezione fra i significatori, per Lilly, può portare a compimento ciò

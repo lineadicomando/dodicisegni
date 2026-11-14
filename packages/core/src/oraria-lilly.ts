@@ -70,6 +70,12 @@ export const HORARY_LILLY_READINGS: readonly string[] = [
     'Succedant house»), con le cuspidi della figura.',
   'Qualità della perfezione: «have dignity in the Degrees wherein they are» (quadrato) vuol dire non peregrino (p. 112); ' +
     '«essentially well dignified» e «Essentially or Accidentally strong» non hanno una soglia, e non si calcolano.',
+  'Qualità della perfezione, sestile e trigono: «no malevolent Aspect to intervene» (p. 125) vuol dire che nessun altro pianeta ' +
+    'perfeziona un quadrato o un\'opposizione con uno dei due significatori prima del loro aspetto. L\'aspetto malevolo è un ' +
+    'tipo di aspetto e non l\'aspetto di un malefico (pp. 102, 106, 260). La Luna cosignificatrice non conta: nelle figure di ' +
+    'pp. 220 e 385-387 porta quadrati e opposizioni ai significatori, e Lilly non li conta o li conta a favore. La congiunzione ' +
+    'con Saturno o Marte resta fuori, perché è l\'afflizione di un pianeta e non di un aspetto (p. 102); conta l\'aspetto ' +
+    'esatto, non quello solo in orbita.',
 ];
 
 /**
@@ -223,6 +229,8 @@ export function computeHoraryLilly(moment: SkyMoment, place: Place, options: Hor
       houses: chart.houses,
       mutue: chart.dignities!.receptions.mutual,
       luna: courses.get('luna')!,
+      courses,
+      ...(signoreAsc !== 'luna' && signoreQuesito !== 'luna' ? { cosignificator: 'luna' as const } : {}),
       ephemerisPath: options.ephemerisPath,
     });
   }
@@ -447,6 +455,10 @@ function qualitaDellaPerfezione(input: {
   houses: readonly House[];
   mutue: readonly MutualReception[];
   luna: SignCourse;
+  /** Il corso dei sette, per ciò che arriva ai significatori prima della perfezione. */
+  courses: ReadonlyMap<BodyId, SignCourse>;
+  /** La Luna quando è cosignificatrice (p. 124): i suoi aspetti non intervengono. */
+  cosignificator?: BodyId;
   ephemerisPath: string | undefined;
 }): HoraryConsideration[] {
   const { finding, querente, quesito, condizioni } = input;
@@ -484,6 +496,40 @@ function qualitaDellaPerfezione(input: {
       due.map((id) => `${nome(id)} ${condizioni.get(id)?.score.totals.net ?? '?'}`).join(', ') +
       '.',
   });
+
+  // La terza condizione di sestile e trigono: i quadrati e le opposizioni che
+  // un terzo perfeziona con uno dei due prima del loro aspetto. La lettura,
+  // con le pagine, è in `HORARY_LILLY_READINGS`.
+  const nessunAspettoMalevolo = (): HoraryConsideration => {
+    const consideration: HoraryConsideration = {
+      id: 'nessun-aspetto-malevolo',
+      page: 125,
+      text:
+        'Nessun aspetto malevolo, quadrato o opposizione di un altro pianeta, raggiunge i significatori prima ' +
+        'che il loro aspetto sia esatto («meet with no malevolent Aspect to intervene»).',
+    };
+    const limite = finding.exact;
+    if (limite === undefined || due.some((id) => !input.courses.has(id))) return consideration;
+    const intervenuti = due.flatMap((id) =>
+      (input.courses.get(id)?.events ?? []).flatMap((e) =>
+        e.kind === 'aspetto' &&
+        (e.aspect === 'quadrato' || e.aspect === 'opposizione') &&
+        e.exact < limite &&
+        SETTE.includes(e.with) &&
+        !due.includes(e.with) &&
+        e.with !== input.cosignificator
+          ? [{ id, with: e.with, aspect: e.aspect, exact: e.exact }]
+          : [],
+      ),
+    );
+    intervenuti.sort((x, y) => x.exact.localeCompare(y.exact));
+    consideration.holds = intervenuti.length === 0;
+    if (intervenuti.length > 0) {
+      consideration.detail =
+        'Prima: ' + intervenuti.map((e) => `${e.aspect} di ${nome(e.with)} a ${nome(e.id)}`).join(', ') + '.';
+    }
+    return consideration;
+  };
 
   if (finding.mode === 'congiunzione') {
     const risultato: HoraryConsideration[] = [];
@@ -531,6 +577,7 @@ function qualitaDellaPerfezione(input: {
     return [
       caseBuone('Applicano da case buone («out of good Houses»).'),
       forti('Applicano da luoghi in cui sono ben dignificati («essentially well dignified»).'),
+      nessunAspettoMalevolo(),
     ];
   }
   if (aspetto === 'quadrato') {
