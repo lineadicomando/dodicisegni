@@ -1,6 +1,8 @@
 # 33. Un'istanza interna del motore
 
-**Priorità bassa dal 14 novembre 2026**: dodicicase è fermo. dodicicase chiamerà il motore sulla
+**Priorità bassa dal 14 novembre 2026**: il proprietario ha detto che
+dodicicase è fermo, e questa voce serve solo a lui. Non si comincia finché
+non lo riapre. Com'era pensata: dodicicase chiamerà il motore sulla
 rete interna del server (`net-com`), non dall'indirizzo pubblico, per due
 ragioni: il pool ha al massimo quattro thread (`docs/decisioni.md`, *I
 thread del pool web*), e un import di centinaia di clienti o un lotto di

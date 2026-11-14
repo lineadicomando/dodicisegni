@@ -104,4 +104,6 @@ Il cambio di versione non è un commit a sé: sta nell'ultimo della serie.
 - **Nel client di `apps/web` si importano solo tipi da `core`.** Un import di
   valore trascina le effemeridi nel bundle del browser.
 - Se il risultato può crescere senza limite (un arco di date), serve un tetto:
-  `MAX_RANGE_DAYS` in `tools.ts` e `lib/server/range.ts` sono il precedente.
+  `MAX_RANGE_DAYS` (in `core`, `roots.ts`: lo applicano sito, MCP e riga di
+  comando) per i giorni, e `assertReadable` in `format.ts` per le righe di
+  ciò che legge un agente, sono i precedenti.

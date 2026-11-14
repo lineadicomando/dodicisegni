@@ -1,6 +1,8 @@
 # 49. La revisione di ciò che non è stato guardato
 
-**Priorità media, per ultima.** La revisione del 13 novembre 2026 ha letto a
+**Priorità media.** Era «per ultima, dopo le voci 35–48»: sono tutte chiuse,
+quindi è la prossima. Si può spezzare per riga dell'elenco, una sessione per
+riga. La revisione del 13 novembre 2026 ha letto a
 fondo le rotte, `lib/server`, il nucleo del motore (tempo, effemeridi, case,
 tema, cielo, transiti, passaggi, eventi, elezione, panchanga), `packages/mcp`,
 `packages/geo`, `packages/lettura`, il disegno della ruota e `main.ts` del
@@ -27,7 +29,9 @@ Che cosa resta, in ordine di quanto può costare un errore:
   `hora.ts`, `drishti.ts`; e `corso.ts`, `aspects.ts`, `orbite.ts`,
   `distribution.ts`;
 - **`packages/core/src/format.ts`**, non letto: è il testo che leggono gli
-  agenti e la base di `format=compact` (voce 32). Un campo del risultato che
+  agenti e la base di `format=compact`. Il 14 novembre ci sono entrati
+  `assertReadable` (il tetto alle righe) e `clockLabel` (l'orologio nella
+  riga di testa), ma il resto non è stato letto. Un campo del risultato che
   la tabella non riporta, o riporta arrotondato male, non lo vede nessuna
   prova che guardi il JSON;
 - **`packages/core/src/cli.ts`**, letto solo il parsing dei numeri, e
@@ -38,24 +42,45 @@ Che cosa resta, in ordine di quanto può costare un errore:
   promettono contro ciò che il codice fa: due delle correzioni del 13
   novembre erano promesse di `/metodo` non mantenute), e l'**accessibilità**
   oltre ciò che `docs/esaminato.md` registra, con la skill
-  `chrome-devtools-mcp:a11y-debugging`. Va fatta **in un browser**, anche
-  per chiudere il «dedotto» della voce 45;
+  `chrome-devtools-mcp:a11y-debugging`. Va fatta **in un browser**: come si
+  prova lì una corsa o un campo sta in `docs/lavorare.md`;
 - **`packages/ruota/src/quadro-svg.ts`**, provato a tappeto ma non letto riga
   per riga, `glyphs.ts`, `types.ts`;
 - **`apps/desktop`** eseguito davvero: la revisione non aveva un binario di
-  Electron e ha solo letto;
+  Electron e ha solo letto. Vale anche per la correzione del 14 novembre in
+  `importaDatabase` (`main.ts`): chiudere la finestra durante l'importazione
+  deve dare il messaggio «L'importazione non è andata a buon fine…» e non
+  `Object has been destroyed`, ed è scritta sulla sola lettura;
 - **le prove stesse**, mai lette: che cosa affermano e che cosa no. Tre dei
   quattro difetti corretti il 13 novembre avevano una prova accanto che
   guardava altro (l'avviso dell'ora ambigua c'era, l'ora giusta nessuno la
   controllava; Tromsø provava l'assenza dell'alba e non le case). Da cercare:
   prove che controllano solo che un avviso esista, e casi di bordo che il
   nome della prova promette e il corpo non tocca;
-- **la produzione**, non toccata: intestazioni, log (la promessa di
-  `/privacy` sulle query string, che la voce 33 chiede comunque di
-  controllare), il comportamento dietro Cloudflare.
+- **la produzione**: restano i log (la promessa di `/privacy` sulle query
+  string, che la voce 33 chiede comunque di controllare) e il comportamento
+  dietro Cloudflare. Le intestazioni sono fatte: `Referrer-Policy` e
+  `X-Content-Type-Options` le manda `hooks.server.ts`; una
+  Content-Security-Policy non c'è, per scelta, e se la si vuole va provata
+  pagina per pagina;
+- **ciò che le voci chiuse il 14 novembre hanno lasciato non provato**
+  (il resto è in `docs/sessioni.md`, alla voce):
+  - voce 45: link e lettura presi da ciò che è a schermo sono provati in un
+    browser solo su `/vedica`, non sul tema natale né sui transiti; le corse
+    solo sull'elezione e sulla ricerca delle località, non sui passaggi dei
+    transiti né sul calendario del cielo, che usano lo stesso codice;
+  - voce 50: nel modulo l'interruttore «Ora di un orologio locale» non è
+    stato cliccato a mano (provato l'indirizzo che lo accende, la richiesta
+    che ne parte e la riga di testa);
+  - voce 46: il controllo dei `.txt` di GeoNames (`looksLikeTable` in
+    `scripts/import-geonames.mjs`) è provato sui due file in cache, senza
+    rilanciare l'importazione né simulare una risposta HTML;
+  - voce 43: il tetto di mille righe è nostro e non viene da una misura
+    d'uso; `find_sky_events` con la sola Luna su tre anni passa (23 mila
+    caratteri).
 
 **Versione**: niente, finché non trova qualcosa.
 
 **Verifica**: la voce si chiude quando ogni riga dell'elenco ha accanto, in
-`docs/storia.md`, che cosa è stato letto e che cosa ne è uscito; non quando
+`docs/sessioni.md`, che cosa è stato letto e che cosa ne è uscito; non quando
 non si trova più niente.

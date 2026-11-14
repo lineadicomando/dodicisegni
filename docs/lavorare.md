@@ -72,6 +72,32 @@ proprietario, e su archive.org quel libro non si presta.
   stampano senza `--lettura`), le dignità di una scuola con `--dignita
   <scuola>` e una nascita con l'ora, perché ci sia la setta.
 
+- **il lint si guarda intero, e prima di ogni commit**: `npm run lint | tail
+  -1` è una riga vuota anche quando ci sono errori. Tre tag (0.20.0–0.22.0)
+  sono usciti senza passarlo. I più frequenti: un controllo che i tipi danno
+  per inutile (`no-unnecessary-condition`) su un valore che a runtime può
+  arrivare sbagliato, e lì si allarga il tipo della variabile invece di
+  togliere il controllo; le asserzioni di tipo superflue nelle prove, che
+  `npx eslint --fix` toglie da sé;
+- `vitest` non mostra i `console.log` delle prove che passano: per guardare
+  un valore lo si scrive in un file sotto `/tmp`;
+- una prova che avvolge l'`expect` in un `try/catch` passa sempre: nel `try`
+  va solo la chiamata, e l'asserzione dopo. Una prova nuova si guarda cadere
+  almeno una volta senza la correzione;
+- **la premessa di una voce si verifica prima di lavorarci**, anche quando
+  non è marcata *dedotto*: la 46 dava per necessaria una reimportazione del
+  database che non serviva, la 43 riportava un numero che non si riproduceva,
+  e la riga dedotta della 47 era invece un difetto vero che ha mosso il
+  fascicolo canonico;
+- per provare una corsa fra due richieste in un browser si sostituisce
+  `window.fetch` dalla console con una versione che ritarda la prima
+  chiamata e registra se il suo `signal` risulta annullato: è come sono
+  state chiuse le corse della voce 45 (`docs/sessioni.md`). I campi legati
+  con `bind:value` si cambiano assegnando `.value` e lanciando un evento
+  `input` con `bubbles: true`;
+- il server compilato si prova su una porta sua (`PORT=3187 npm start -w
+  @dodicisegni/web`), così non si scontra con un server di sviluppo aperto.
+
 Per spegnere il server di sviluppo lanciato in sottofondo si usa la porta
 (`fuser -k 5173/tcp`), non `pkill -f` col numero della porta: il comando
 contiene lo stesso numero e chiude anche la shell che lo lancia. E prima di
