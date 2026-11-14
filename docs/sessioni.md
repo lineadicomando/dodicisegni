@@ -311,3 +311,9 @@ si è arrivati. Le tavole delle voci chiuse e delle versioni sono in
   e II.40 (p. 126, lo Scorpione «ταπείνωμα» della Luna). Il codice resta
   com'è, e il commento a `valensDignitiesOf` ora cita i due luoghi; nessuna
   risposta cambia.
+- **15 novembre 2026, riordino.** `TODO.md` riallineato (versione pushata,
+  sito ancora alla 0.26.1); nella voce 49 le scuole della riga 1 hanno una
+  riga ciascuna nello *Stato* e non si ripetono nel testo. Verificato che
+  ogni file e nome citato dalle voci 33 e 49 esista. In `texts/INDICE.md`
+  tre rimandi alla vecchia sezione *Esaminato* del TODO puntano ora a
+  `docs/esaminato.md`.

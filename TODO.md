@@ -12,15 +12,16 @@ arrivati a una cosa. `docs/lavorare.md` tiene gli inciampi e il metodo.
 
 ## Dove siamo
 
-Al 14 novembre 2026: versione **0.27.0**, tag `v0.27.0`, commit `a47069b`,
-**non pubblicata**: `origin` e il sito (https://dodicisegni.it) sono alla
-0.26.1, commit `a1f605e`. `git status -sb` deve dire «avanti» dei soli
-commit locali; altro è lavoro lasciato a metà. Push e deploy li chiede il
-proprietario, e si fanno come in `CLAUDE.local.md`.
+Al 15 novembre 2026: versione **0.27.0** (tag `v0.27.0`, commit `a47069b`),
+pushata su `origin` col lavoro che la segue, che non muove la versione. Il
+sito (https://dodicisegni.it) è ancora alla **0.26.1**: il deploy della
+0.27.0 non è stato chiesto. `git status -sb` deve dire che `main` è
+allineato a `origin`, o avanti dei soli commit della sessione; altro è
+lavoro lasciato a metà. Push e deploy li chiede il proprietario, e si fanno
+come in `CLAUDE.local.md`.
 
-**Da dove si riprende**: voce 49, riga 1, una scuola per sessione. Lilly,
-Tolomeo e Valente sono fatti; la prossima è una fra Bonatti, il filo comune
-(`dignita-tema.ts`, `constants.ts`) e il Jyotisha.
+**Da dove si riprende**: voce 49, riga 1, la prossima scuola. Quali restano
+lo dice la tabella *Stato* della voce.
 
 ## Le voci
 

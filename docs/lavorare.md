@@ -145,7 +145,13 @@ Come si è fatta la revisione di Lilly (voce 49), e funziona per le altre:
   `docs/esaminato.md`, *Le figure del libro II*; un'ora «19.26 P.M.» è
   astronomica, contata dal mezzogiorno;
 - le pagine lette si salvano in `pagine/`, i passi in `trascrizioni.md`, e
-  `FONTE.md` e `texts/INDICE.md` si aggiornano nella stessa sessione.
+  `FONTE.md` e `texts/INDICE.md` si aggiornano nella stessa sessione;
+- una trascrizione che dice «coincide con…» o una lettura fatta sull'HTML
+  (LacusCurtius) non è una lettura dell'immagine: nelle revisioni di
+  Tolomeo e di Valente erano proprio quelle le parti da rifare;
+- le foto di Pingree (Valente) sono doppie pagine a bassa risoluzione:
+  `magick foto.png -crop 50%x100% +repage -resize 170% metà-%d.png`, o ϛ̄
+  (6) e ζ (7) non si distinguono.
 
 Nel Jyotisha le superfici sono cinque: la tabella compatta (`format.ts`), la
 pagina `/vedica` (un componente per sezione), la descrizione di

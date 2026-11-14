@@ -19,7 +19,13 @@ niente. Chiusa una riga, la si segna qui sotto e la si toglie dall'elenco.
 
 | Riga | Stato |
 |---|---|
-| 1. Tavole e regole di dottrina | Lilly fatta (14 novembre 2026, voce 51 → 0.27.0); Tolomeo e Valente fatti (15 novembre 2026: niente da correggere, una lettura di Valente dichiarata nel commento); restano Bonatti, il filo comune, il Jyotisha |
+| 1. Tavole e regole di dottrina | in corso, una scuola per sessione (sotto) |
+| 1a. Lilly: `dignita-lilly.ts`, `condizioni-lilly.ts`, `oraria-lilly.ts`, `dignita.ts` p. 104 | fatta il 14 novembre 2026: un difetto, voce 51 → 0.27.0 |
+| 1b. Tolomeo: `dignita-tolomeo.ts`, `dignita.ts` I.17 e I.19, Firmico p. 44, Leo p. 117 | fatta il 15 novembre 2026: niente da correggere |
+| 1c. Valente: `dignita-valente.ts`, `dignita.ts` I.2 | fatta il 15 novembre 2026: una lettura dichiarata nel commento |
+| 1d. Bonatti | da fare |
+| 1e. Il filo comune | da fare |
+| 1f. Il Jyotisha | da fare |
 | 2–9 | da fare |
 
 ## Le righe, in ordine di quanto può costare un errore
@@ -30,13 +36,14 @@ I file senza cartella stanno in `packages/core/src/`.
    codice: ogni costante contro l'immagine della pagina in `texts/`
    (`docs/lavorare.md`, *Come si legge una fonte* e *Rileggere una tavola*;
    quali pagine, per ogni file, lo dice `texts/INDICE.md`), e nel conto
-   vanno le costanti senza una pagina accanto. Fatta per Lilly
-   (`dignita-lilly.ts`, `condizioni-lilly.ts`, `oraria-lilly.ts`, e di
-   `dignita.ts` ciò che viene da p. 104) e per Tolomeo (`dignita-tolomeo.ts`,
-   di `dignita.ts` I.17 e I.19, Firmico II.3.5-6, Leo p. 117) e per Valente
-   (`dignita-valente.ts`, e di `dignita.ts` I.2). Restano, una sessione
-   ciascuna:
-   - *Bonatti*: `dignita-bonatti.ts` (gotico: l'OCR non orienta);
+   vanno le costanti senza una pagina accanto. Le scuole fatte sono nello
+   *Stato*; il racconto di ciascuna, con quello che è stato lasciato, è in
+   `docs/sessioni.md` (cercare «Voce 49, prima riga»). Una lettura che il
+   codice segue senza dirlo si dichiara nel commento, con il luogo che la
+   regge; se il testo non la regge, è un difetto. Restano:
+   - *Bonatti*: `dignita-bonatti.ts` (gotico: l'OCR non orienta; la mappa
+     fra fogli e pagine del PDF è nella `FONTE.md` della fonte, e le pagine
+     dei capp. V-XVII sono già in `pagine/`);
    - *il filo comune*: `dignita-tema.ts`, `constants.ts`;
    - *Jyotisha*: `dignita-parashara.ts`, `maitri.ts`, `vimshopaka.ts`,
      `varga-buoni.ts`, `arudha.ts`, `arudha-graha.ts`.
