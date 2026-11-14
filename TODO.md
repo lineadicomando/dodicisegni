@@ -18,8 +18,8 @@ Al 14 novembre 2026: versione **0.27.0**, tag `v0.27.0`, commit `a47069b`,
 commit locali; altro è lavoro lasciato a metà. Push e deploy li chiede il
 proprietario, e si fanno come in `CLAUDE.local.md`.
 
-**Da dove si riprende**: voce 49, riga 1, una scuola per sessione. Lilly e
-Tolomeo sono fatti; la prossima è una fra Valente, Bonatti, il filo comune
+**Da dove si riprende**: voce 49, riga 1, una scuola per sessione. Lilly,
+Tolomeo e Valente sono fatti; la prossima è una fra Bonatti, il filo comune
 (`dignita-tema.ts`, `constants.ts`) e il Jyotisha.
 
 ## Le voci

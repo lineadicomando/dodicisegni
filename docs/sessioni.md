@@ -295,4 +295,19 @@ si è arrivati. Le tavole delle voci chiuse e delle versioni sono in
   secondaria che il commento non nomina e che `texts/` non ha; è una nota
   storica, non un valore, e il commento lo dichiara. Pagine salvate in
   `texts/occidentale/tolomeo-tetrabiblos-robbins-1940/pagine/`.
-
+- **15 novembre 2026, dopo Tolomeo.** Voce 49, prima riga, scuola di
+  Valente. I termini di I.3 riletti tutti e dodici sulle foto di Pingree
+  (finora la trascrizione ne riportava tre e diceva «come Kroll» per gli
+  altri nove): sessanta celle, combaciano con `TERMINI`; ricontate le somme
+  dichiarate in `VALENS_TERMS_SOURCE` (57, 80, 68, 82, 73). Nel Capricorno il
+  4 di Marte è una correzione di Kroll al 6 di M, e ora la trascrizione lo
+  dice. II.1 (pp. 55-56) contro `TRIANGOLI` e III.4 (p. 140) contro
+  `ESALTAZIONI`, sull'immagine di Kroll: combaciano. I domicili di I.2 erano
+  già stati riletti sull'immagine il 29 ottobre e non si sono rifatti.
+  Trovata una lettura non dichiarata: III.4 dà esaltazioni e cadute per
+  grado, e `valensDignitiesOf` le conta sul segno intero, come fa Lilly, che
+  però lo dichiara. Cercato nell'indice di Kroll se Valente usi anche la
+  forma per segno: sì, II.18 (p. 80, l'esaltazione del Sole è «ἐπὶ Κριόν»)
+  e II.40 (p. 126, lo Scorpione «ταπείνωμα» della Luna). Il codice resta
+  com'è, e il commento a `valensDignitiesOf` ora cita i due luoghi; nessuna
+  risposta cambia.

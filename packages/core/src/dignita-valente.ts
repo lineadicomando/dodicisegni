@@ -124,7 +124,7 @@ export function valensExaltation(body: BodyId): { sign: ZodiacSign; degree: numb
   return (ESALTAZIONI as Partial<Record<BodyId, { sign: ZodiacSign; degree: number }>>)[body];
 }
 
-/** Il segno di caduta: l'opposto dell'esaltazione, «ἐν ταῖς διαμέτροις μοίραις». */
+/** Il segno di caduta: l'opposto dell'esaltazione, «ἐν ταῖς διαμέτροις μοίραις» (vedi `valensDignitiesOf`). */
 export function valensFall(body: BodyId): ZodiacSign | undefined {
   const esaltazione = valensExaltation(body);
   return esaltazione ? signOf(ZODIAC_SIGNS.indexOf(esaltazione.sign) * 30 + 180) : undefined;
@@ -175,6 +175,13 @@ export function valensRulersAt(longitude: number, sect: Sect | undefined): Valen
  * Le dignità e la debilità di un corpo nel grado in cui sta: domicilio,
  * esaltazione, triangolo, termine e caduta. Il triangolo vale per tutti e tre
  * i signori. Solo i sette: gli altri corpi ricevono un elenco vuoto.
+ *
+ * Esaltazione e caduta valgono per tutto il segno. III.4 (p. 140) dà il
+ * grado, e sta in `valensExaltation`, ma Valente stesso chiama ὕψωμα e
+ * ταπείνωμα un segno intero: in II.18 (p. 80, rr. 12-13) il Sole va contato
+ * «ἐπὶ Κριόν, ὅ ἐστιν ὕψωμα αὐτοῦ», e in II.40 (p. 126, rr. 14-17) lo
+ * Scorpione è il ταπείνωμα della Luna. Il grado non restringe la dignità,
+ * come in Lilly.
  */
 export function valensDignitiesOf(body: BodyId, longitude: number): ValensDignity[] {
   if (!(VALENS_PLANETS as readonly BodyId[]).includes(body)) return [];
