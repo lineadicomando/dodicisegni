@@ -118,6 +118,29 @@ autore resta fuori e lo si scrive; se ce l'ha, la scelta si fa fare al
 proprietario prima del codice, e finisce in `docs/decisioni.md`. Ogni risultato porta
 la sua fonte in un campo `source` o `rule`.
 
+### Rileggere una tavola
+
+Come si è fatta la revisione di Lilly (voce 49), e funziona per le altre:
+
+- le immagini le legge lo strumento che apre i file, non la shell; una
+  tavola fitta va ritagliata e ingrandita prima (`magick pagina.jpg -crop
+  LxA+X+Y +repage -resize 180% ritaglio.jpg`), o i glifi non si distinguono;
+- per trovare una frase in una pagina senza aprirla intera: `tesseract
+  pagina.jpg - -l eng tsv`, la colonna 8 è l'altezza della parola, e si
+  ritaglia una fascia attorno; più fasce si impilano con `magick … -append`
+  e si leggono in un'immagine sola;
+- per trovare in un libro i luoghi di una parola si cerca nell'`ocr.txt`
+  (in Lilly la s lunga è una `f`: `Afpeft`, `abfciffion`), poi si rende la
+  pagina dal PDF (`pdftoppm -f N -l N -r 200 -jpeg -singlefile`) e la si
+  legge; la mappa fra pagina stampata e pagina del PDF è nella `FONTE.md`;
+- una figura di Lilly si ricalcola col motore compilato
+  (`packages/core/dist/index.js`, `computeHoraryLilly` e `findSignCourse`)
+  in uno script sotto `/tmp`: le conversioni di data e ora sono in
+  `docs/esaminato.md`, *Le figure del libro II*; un'ora «19.26 P.M.» è
+  astronomica, contata dal mezzogiorno;
+- le pagine lette si salvano in `pagine/`, i passi in `trascrizioni.md`, e
+  `FONTE.md` e `texts/INDICE.md` si aggiornano nella stessa sessione.
+
 Nel Jyotisha le superfici sono cinque: la tabella compatta (`format.ts`), la
 pagina `/vedica` (un componente per sezione), la descrizione di
 `compute_jyotisha_chart` (`packages/mcp/src/tools.ts`), il documento di

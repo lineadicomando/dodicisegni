@@ -271,4 +271,10 @@ si è arrivati. Le tavole delle voci chiuse e delle versioni sono in
   cambia solo l'elenco delle letture di `oraria.json`. Aggiornati il
   documento di lettura dell'oraria e `/metodo`; tabella compatta, pagina e
   tool stampano le voci di `quality` che arrivano e non sono stati toccati.
+- **14 novembre 2026, riordino.** `TODO.md` e la voce 49 riscritti per
+  riprendere: la voce ha le nove righe numerate con lo stato, e ciò che le
+  voci 45, 46, 50 e 51 non hanno provato a mano sta nella riga dove lo si
+  proverà (5 e 9). Verificato che ogni file e ogni nome citato esista nel
+  codice. In `docs/lavorare.md`, *Rileggere una tavola*, gli strumenti con
+  cui si è riletto Lilly.
 
