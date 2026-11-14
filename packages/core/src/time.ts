@@ -12,12 +12,22 @@ const TIME_PATTERN = /^\d{2}:\d{2}(:\d{2})?$/;
 
 /**
  * Converte data e ora **locali** in Tempo Universale, applicando le regole
- * storiche del fuso (ora legale di guerra, tempo medio locale pre-1893, ecc.).
+ * storiche del fuso (ora legale di guerra, ora unica adottata nel 1893, ecc.).
  *
  * È il punto più delicato del calcolo: un errore di un'ora qui sposta
  * l'Ascendente di circa 15 gradi.
  *
- * Gli avvisi riguardano la sola conversione — ora ambigua o mai esistita. Che
+ * **Prima dell'ora unica il fuso non sa dove si è nati.** Il database dei fusi
+ * dà a tutto il paese il tempo medio della città che dà il nome al fuso:
+ * `Europe/Rome` nel 1850 vale 49 minuti e 56 secondi a Roma, a Lecce e a
+ * Torino, che sul proprio meridiano ne avrebbero 73 e 31. Qui non si
+ * corregge, perché lo stesso scarto è anche l'ora legale di un paese che ha
+ * adottato il tempo della capitale (l'Italia prima del 1893, la Francia fino
+ * al 1911), e fra i due casi il runtime non distingue: dà lo scarto e non il
+ * suo nome. Si dichiara, con l'avviso di `avvisoTempoMedio`.
+ *
+ * Gli avvisi riguardano la sola conversione — ora ambigua o mai esistita,
+ * tempo medio di una città, le 24:00. Che
  * l'ora manchi si legge in `timeKnown`, e a dire che cosa comporti è chi sa
  * di che istante si tratti: in un tema natale sposta le case, in un quadro di
  * transiti quasi solo la Luna.
@@ -90,6 +100,12 @@ export function resolveTime(moment: LocalMoment): TimeResolution {
     }
   }
 
+  // Senza l'ora il tema non ha case, e venti minuti sul mezzogiorno di
+  // ripiego non spostano niente che la carta mostri come certo.
+  if (timeKnown && isCityMeanTime(local.offset)) {
+    warnings.push(avvisoTempoMedio(moment, local.offset));
+  }
+
   const utc = local.toUTC();
 
   return {
@@ -107,6 +123,32 @@ export function resolveTime(moment: LocalMoment): TimeResolution {
     },
     warnings,
   };
+}
+
+/**
+ * Uno scarto da Greenwich che non è un numero intero di minuti è il tempo
+ * medio di un meridiano, non un fuso: nessun fuso è mai stato definito al
+ * secondo. È il solo segno che il runtime lascia, e non dice se quel tempo
+ * fosse locale o già legale per tutto il paese.
+ */
+function isCityMeanTime(offsetMinutes: number): boolean {
+  return !Number.isInteger(offsetMinutes);
+}
+
+function avvisoTempoMedio(moment: LocalMoment, offsetMinutes: number): string {
+  const secondi = Math.round(Math.abs(offsetMinutes) * 60);
+  const scarto =
+    `${offsetMinutes < 0 ? '-' : '+'}${Math.floor(secondi / 3600)}:` +
+    `${String(Math.floor((secondi % 3600) / 60)).padStart(2, '0')}:` +
+    String(secondi % 60).padStart(2, '0');
+
+  return (
+    `Nel ${moment.date.slice(0, 4)} ${moment.timezone} non era ancora un fuso: l'ora è stata letta ` +
+    `come tempo medio della città che gli dà il nome (${scarto} da Greenwich), per qualunque ` +
+    "luogo. Se l'orologio del luogo seguiva il proprio meridiano, l'istante vero si sposta di " +
+    'quattro minuti per ogni grado di longitudine che lo separa da quella città, e con lui ' +
+    "l'Ascendente e le case."
+  );
 }
 
 /**

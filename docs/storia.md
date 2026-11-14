@@ -42,6 +42,7 @@ porta il nome del file.
 | 41, `41-oraria-significatore.md` | `118b487` |
 | 44, `44-mcp-descrizioni.md` | `0460867` |
 | 40, `40-errori-rotte.md` | `2c3b3e4` |
+| 42, `42-tempo-medio-locale.md` | `7ec1eb5` |
 
 ## Le versioni
 
@@ -80,6 +81,7 @@ cambia muove la seconda cifra.
 | 0.21.0 | l'oraria con un significatore non calcolabile dà `DATA_NON_VALIDA` invece di un `TypeError` | 41 |
 | 0.22.0 | `draw_chart_wheel` accetta le larghezze da 200 a 4000 come il quadro e le rotte (prima 400–2000); quattro descrizioni MCP legate al codice | 44 |
 | 0.23.0 | un fuso sconosciuto è sempre 400; i messaggi non portano percorsi del server; `/api/jyotish` fuori copertura dà `DATA_NON_VALIDA`; l'arco dell'elezione a estremi compresi; le 24:00 con l'avviso | 40 |
+| 0.24.0 | un'ora data prima dell'ora unica porta l'avvertenza che è stata letta come tempo medio della città del fuso; `/metodo#tempo-medio` | 42 |
 
 ## Le sessioni
 
@@ -195,3 +197,12 @@ cambia muove la seconda cifra.
   voce 41. `rotte-compatte.test.ts`, entrato con la 0.20.0, aveva sedici
   asserzioni di tipo superflue che il lint segnala: i commit dalla 0.20.0
   alla 0.22.0 non lo passano, questo sì.
+- **14 novembre 2026, notte.** Chiusa la voce 42 (0.24.0) per la via che il
+  proprietario ha scelto: dichiarare, non correggere. Il segno è uno scarto da
+  Greenwich che non fa un numero intero di minuti, il solo che il runtime
+  lasci: non distingue il tempo locale dal tempo di una capitale esteso per
+  legge a tutto il paese, e l'avvertenza è scritta per valere in entrambi i
+  casi. Senza l'ora non si emette. Il fascicolo canonico non si muove (non ha
+  nascite così vecchie): la seconda cifra la decide la voce, perché un tema
+  del 1850 riceve un'avvertenza che prima non aveva. Aperta la voce 50, la
+  via esplicita per chi sa che l'orologio seguiva il meridiano del luogo.

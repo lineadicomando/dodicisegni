@@ -317,3 +317,10 @@ codice rimandano qui con «`docs/decisioni.md`».
   numero è nostro e non viene da una misura del traffico: con i due secondi
   scarsi del lavoro più lungo, l'ultimo della coda aspetta una decina di
   secondi. Si riguarda con la concorrenza vera del sito.
+- **Prima dell'ora unica l'ora non si corregge col meridiano del luogo: si
+  dichiara.** Scelta del proprietario, 14 novembre 2026 (voce 42). Lo stesso
+  scarto del database dei fusi è il tempo locale della città di riferimento
+  oppure l'ora legale di un paese che ha adottato il tempo della capitale, e
+  il runtime non dice quale; e un atto non dice quale orologio guardasse chi
+  l'ha scritto. Il motore avverte e lascia l'ora com'è; chi vuole il tempo
+  del luogo lo chiederà per nome (voce 50).

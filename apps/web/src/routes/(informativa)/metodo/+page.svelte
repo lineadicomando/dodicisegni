@@ -166,6 +166,26 @@
   una carta più povera, non una carta approssimata.
 </p>
 
+<h2 id="tempo-medio">Prima dei fusi orari</h2>
+
+<p>
+  L'ora di nascita si converte con le regole storiche del fuso: l'ora legale di
+  guerra, i cambi di legge, l'anno in cui un paese ha adottato l'ora unica.
+  Prima di quell'anno ogni città teneva l'ora del proprio meridiano, e il
+  registro dei fusi ne conserva una sola per paese: quella della città che dà
+  il nome al fuso. Per una nascita del 1850 a Lecce o a Torino il sito legge
+  l'ora come tempo medio di Roma, che dal meridiano di Lecce dista ventitré
+  minuti e da quello di Torino diciannove.
+</p>
+
+<p>
+  Il sito non corregge, e lo dichiara con un'avvertenza accanto al tema. Lo
+  stesso scarto è infatti anche l'ora che un paese si è dato per legge quando
+  ha esteso a tutti il tempo della capitale, e da un atto non si ricava quale
+  orologio guardasse chi l'ha scritto. Chi lo sa sposta l'ora di quattro
+  minuti per ogni grado di longitudine.
+</p>
+
 <h2 id="corpi">I corpi</h2>
 
 <p>

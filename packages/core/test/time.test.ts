@@ -105,6 +105,46 @@ describe('resolveTime', () => {
     }
   });
 
+  describe('prima dell\'ora unica', () => {
+    const nel1850 = (longitude: number) =>
+      resolveTime({ date: '1850-06-01', time: '12:00', latitude: 41, longitude, timezone: 'Europe/Rome' });
+
+    it('dà a Roma, Lecce e Torino lo stesso istante, e dice che è il tempo di Roma', () => {
+      const [roma, lecce, torino] = [12.4964, 18.1743, 7.6869].map(nel1850);
+
+      // Il fuso non sa dove si è nati: i tre istanti coincidono, ed è questo
+      // che l'avviso dichiara invece di lasciarlo passare per un fatto.
+      expect(lecce!.time.utc).toBe(roma!.time.utc);
+      expect(torino!.time.utc).toBe(roma!.time.utc);
+      expect(roma!.time.offsetMinutes).toBeCloseTo(49.93, 2);
+
+      for (const { warnings } of [roma!, lecce!, torino!]) {
+        expect(warnings).toHaveLength(1);
+        expect(warnings[0]).toContain('+0:49:56 da Greenwich');
+        expect(warnings[0]).toContain('quattro minuti per ogni grado');
+      }
+    });
+
+    it('tace dopo l\'ora unica, e sui fusi a tre quarti d\'ora', () => {
+      expect(
+        resolveTime({ date: '1893-11-01', time: '12:00', timezone: 'Europe/Rome' }).warnings,
+      ).toEqual([]);
+      // Il Nepal sta a +5:45: è un fuso vero, non il tempo di una città.
+      expect(
+        resolveTime({ date: '2024-06-15', time: '12:00', timezone: 'Asia/Kathmandu' }).warnings,
+      ).toEqual([]);
+    });
+
+    it('lo dice anche a ovest di Greenwich, col segno giusto', () => {
+      const { warnings } = resolveTime({ date: '1850-06-01', time: '12:00', timezone: 'America/New_York' });
+      expect(warnings[0]).toContain('-4:56:02 da Greenwich');
+    });
+
+    it('senza l\'ora non lo dice: non ci sono case da spostare', () => {
+      expect(resolveTime({ date: '1850-06-01', timezone: 'Europe/Rome' }).warnings).toEqual([]);
+    });
+  });
+
   it('non emette avvisi per un orario ordinario', () => {
     const { warnings } = resolveTime({
       date: '2024-06-15',
