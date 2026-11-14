@@ -55,6 +55,7 @@ import { computeTransits } from './transits.js';
 import { VERSION } from './version.js';
 import type {
   BirthData,
+  LocalClock,
   BodyId,
   HoraryQuestion,
   NatalChart,
@@ -95,6 +96,12 @@ Opzioni
   --lat <gradi>         Latitudine, positiva a Nord (obbligatoria)
   --lon <gradi>         Longitudine, positiva a Est (obbligatoria)
   --tz <IANA>           Fuso orario, es. Europe/Rome (obbligatorio)
+  --orologio <quale>    Su quale orologio è stata letta l'ora di nascita: fuso
+                        (default), tempo-medio-locale (il meridiano del luogo,
+                        quattro minuti per grado: gli orologi prima dell'ora
+                        unica) o tempo-vero-locale (la meridiana: il medio più
+                        l'equazione del tempo). Con gli ultimi due --tz non
+                        entra nel conto dell'ora di nascita
   --houses <sistema>    placidus (default), koch, segni-interi, equale,
                         regiomontano, campano, porfirio, topocentrico, alcabizio
   --minor               Includi anche gli aspetti minori
@@ -378,6 +385,7 @@ function main(argv: string[]): number {
       lat: { type: 'string' },
       lon: { type: 'string' },
       tz: { type: 'string' },
+      orologio: { type: 'string' },
       houses: { type: 'string' },
       minor: { type: 'boolean', default: false },
       zodiaco: { type: 'string' },
@@ -614,6 +622,8 @@ function main(argv: string[]): number {
     timezone: values.tz as string,
   };
   if (values.time) birth.time = values.time;
+  // Un nome sconosciuto lo rifiuta il motore, dicendo quali esistono.
+  if (values.orologio) birth.clock = values.orologio as LocalClock;
 
   const zodiaco = zodiacoDa(values);
   if (zodiaco === null) return 2;

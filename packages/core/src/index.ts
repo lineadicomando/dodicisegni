@@ -219,6 +219,7 @@ export {
   systemTimezone,
   toJulianDay,
   type TimeResolution,
+  LOCAL_CLOCKS,
 } from './time.js';
 export { chartSect, computePartOfFortune } from './points.js';
 export { localSiderealTime } from './sidereal.js';
@@ -318,6 +319,7 @@ export type {
   JyotishaChart,
   JyotishaOptions,
   Karana,
+  LocalClock,
   LocalMoment,
   Modality,
   NakshatraId,

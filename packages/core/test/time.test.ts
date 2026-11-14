@@ -145,6 +145,70 @@ describe('resolveTime', () => {
     });
   });
 
+  describe("l'ora letta su un orologio del luogo", () => {
+    const LECCE = { date: '1850-06-01', time: '12:00', latitude: 40.35, longitude: 18.1743, timezone: 'Europe/Rome' };
+
+    it('il tempo medio conta quattro minuti per grado, e il fuso non entra', () => {
+      const { time, warnings } = resolveTime({ ...LECCE, clock: 'tempo-medio-locale' });
+
+      // 18,1743° × 4 = 72 minuti e 42 secondi a Est di Greenwich.
+      expect(time.utc).toBe('1850-06-01T10:47:18Z');
+      expect(time.offsetMinutes).toBeCloseTo(72.7, 10);
+      expect(time.clock).toBe('tempo-medio-locale');
+      expect(time.equationOfTimeMinutes).toBeUndefined();
+      // Niente avvertenza sul tempo medio di Roma: non è stato usato.
+      expect(warnings).toEqual([]);
+
+      const altrove = resolveTime({ ...LECCE, timezone: 'Asia/Tokyo', clock: 'tempo-medio-locale' });
+      expect(altrove.time.utc).toBe(time.utc);
+    });
+
+    it('sta ventitré minuti prima della lettura col fuso', () => {
+      const fuso = resolveTime(LECCE).time.julianDayUT;
+      const medio = resolveTime({ ...LECCE, clock: 'tempo-medio-locale' }).time.julianDayUT;
+      expect((fuso - medio) * 1440).toBeCloseTo(72.7 - 49.9333, 2);
+    });
+
+    it("il tempo vero aggiunge l'equazione del tempo, e la espone", () => {
+      // Ai primi di novembre la meridiana anticipa l'orologio di oltre sedici
+      // minuti, a metà febbraio lo ritarda di quattordici: i due estremi
+      // dell'anno, che ogni almanacco riporta.
+      const novembre = resolveTime({ date: '2026-11-03', time: '12:00', longitude: 0, timezone: 'UTC', clock: 'tempo-vero-locale' }).time;
+      expect(novembre.equationOfTimeMinutes).toBeGreaterThan(16.3);
+      expect(novembre.equationOfTimeMinutes).toBeLessThan(16.5);
+      // A Greenwich il mezzogiorno vero cade allora alle 11:43 dell'orologio.
+      expect(novembre.utc.slice(0, 16)).toBe('2026-11-03T11:43');
+
+      const febbraio = resolveTime({ date: '2026-02-11', time: '12:00', longitude: 0, timezone: 'UTC', clock: 'tempo-vero-locale' }).time;
+      expect(febbraio.equationOfTimeMinutes).toBeLessThan(-14);
+      expect(febbraio.equationOfTimeMinutes).toBeGreaterThan(-14.4);
+      expect(febbraio.utc.slice(0, 16)).toBe('2026-02-11T12:14');
+
+      // Lo scarto è la somma dei due componenti.
+      const lecce = resolveTime({ ...LECCE, clock: 'tempo-vero-locale' }).time;
+      expect(lecce.offsetMinutes).toBeCloseTo(72.7 + lecce.equationOfTimeMinutes!, 10);
+    });
+
+    it("col fuso, che è il caso ordinario, il risultato non porta l'orologio", () => {
+      expect(resolveTime({ ...LECCE, clock: 'fuso' }).time).toEqual(resolveTime(LECCE).time);
+      expect(resolveTime(LECCE).time).not.toHaveProperty('clock');
+    });
+
+    it('senza un luogo si rifiuta, e così un nome sconosciuto', () => {
+      const senzaLuogo = { date: '1850-06-01', time: '12:00', timezone: 'Europe/Rome' };
+      for (const clock of ['tempo-medio-locale', 'tempo-vero-locale'] as const) {
+        expect(() => resolveTime({ ...senzaLuogo, clock })).toThrow(/un luogo non c'è/);
+      }
+      expect(() => resolveTime({ ...LECCE, clock: 'siderale' as 'fuso' })).toThrow(/ammessi fuso, tempo-medio-locale/);
+    });
+
+    it("senza l'ora vale il mezzogiorno di quell'orologio", () => {
+      const { time } = resolveTime({ ...LECCE, time: undefined, clock: 'tempo-medio-locale' });
+      expect(time.timeKnown).toBe(false);
+      expect(time.utc).toBe('1850-06-01T10:47:18Z');
+    });
+  });
+
   it('non emette avvisi per un orario ordinario', () => {
     const { warnings } = resolveTime({
       date: '2024-06-15',

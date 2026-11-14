@@ -1,6 +1,10 @@
-import { DateTime, IANAZone } from 'luxon';
+import { DateTime, FixedOffsetZone, IANAZone } from 'luxon';
+import { equationOfTime } from './ephemeris.js';
 import { ChartError } from './errors.js';
-import type { LocalMoment, ResolvedTime } from './types.js';
+import type { LocalClock, LocalMoment, ResolvedTime } from './types.js';
+
+/** Gli orologi su cui un'ora si può leggere: vedi `LocalClock`. */
+export const LOCAL_CLOCKS: readonly LocalClock[] = ['fuso', 'tempo-medio-locale', 'tempo-vero-locale'];
 
 export interface TimeResolution {
   time: ResolvedTime;
@@ -24,7 +28,9 @@ const TIME_PATTERN = /^\d{2}:\d{2}(:\d{2})?$/;
  * corregge, perché lo stesso scarto è anche l'ora legale di un paese che ha
  * adottato il tempo della capitale (l'Italia prima del 1893, la Francia fino
  * al 1911), e fra i due casi il runtime non distingue: dà lo scarto e non il
- * suo nome. Si dichiara, con l'avviso di `avvisoTempoMedio`.
+ * suo nome. Si dichiara, con l'avviso di `avvisoTempoMedio`. Chi sa quale
+ * orologio segnava l'ora lo dice con `clock`, e allora il fuso non entra nel
+ * conto: vedi `resolveLocalClock`.
  *
  * Gli avvisi riguardano la sola conversione — ora ambigua o mai esistita,
  * tempo medio di una città, le 24:00. Che
@@ -32,7 +38,7 @@ const TIME_PATTERN = /^\d{2}:\d{2}(:\d{2})?$/;
  * di che istante si tratti: in un tema natale sposta le case, in un quadro di
  * transiti quasi solo la Luna.
  */
-export function resolveTime(moment: LocalMoment): TimeResolution {
+export function resolveTime(moment: LocalMoment & { longitude?: number }): TimeResolution {
   const warnings: string[] = [];
 
   if (!DATE_PATTERN.test(moment.date)) {
@@ -56,6 +62,14 @@ export function resolveTime(moment: LocalMoment): TimeResolution {
 
   const timeKnown = moment.time !== undefined;
 
+  const clock: string = moment.clock ?? 'fuso';
+  if (!(LOCAL_CLOCKS as readonly string[]).includes(clock)) {
+    throw new ChartError(
+      'OROLOGIO_NON_VALIDO',
+      `Orologio "${clock}" sconosciuto: ammessi ${LOCAL_CLOCKS.join(', ')}.`,
+    );
+  }
+
   // Le 24:00 sono una scrittura legittima della mezzanotte che chiude il
   // giorno, e sui documenti si trova: l'istante è le 00:00 del giorno dopo.
   // Va detto, perché la data che ne esce non è quella scritta.
@@ -74,6 +88,13 @@ export function resolveTime(moment: LocalMoment): TimeResolution {
       'DATA_NON_VALIDA',
       `Impossibile interpretare "${wallClock}" nel fuso ${moment.timezone}: ${parsed.invalidReason}.`,
     );
+  }
+
+  if (clock !== 'fuso') {
+    return {
+      time: resolveLocalClock(moment, clock as Exclude<LocalClock, 'fuso'>, wallClock, timeKnown),
+      warnings,
+    };
   }
 
   // Un'ora ambigua non si lascia sciogliere a Luxon: parte dall'offset che il
@@ -123,6 +144,85 @@ export function resolveTime(moment: LocalMoment): TimeResolution {
     },
     warnings,
   };
+}
+
+/**
+ * L'ora letta su un orologio del luogo: il tempo medio del suo meridiano, o
+ * il tempo vero della meridiana.
+ *
+ * Il fuso qui non entra: il tempo medio locale precede Greenwich di quattro
+ * minuti per ogni grado di longitudine Est, e il tempo vero precede il medio
+ * dell'equazione del tempo. Questa dipende dall'istante, che è ciò che si
+ * cerca: la si valuta sull'istante ricavato dal tempo medio e poi si
+ * ricalcola una volta, che basta perché in un quarto d'ora cambia di meno di
+ * un secondo.
+ */
+function resolveLocalClock(
+  moment: LocalMoment & { longitude?: number },
+  clock: Exclude<LocalClock, 'fuso'>,
+  wallClock: string,
+  timeKnown: boolean,
+): ResolvedTime {
+  const { longitude } = moment;
+  if (longitude === undefined || !Number.isFinite(longitude) || Math.abs(longitude) > 180) {
+    throw new ChartError(
+      'OROLOGIO_NON_VALIDO',
+      `L'orologio "${clock}" si conta dal meridiano del luogo, e qui un luogo non c'è: vale per ` +
+        'una nascita. Per un istante senza luogo, un arco o dei transiti indica un fuso.',
+    );
+  }
+
+  // L'ora da parete letta come se fosse UTC: è solo un modo di farne un
+  // numero, e lo scarto si toglie subito dopo.
+  const parete = DateTime.fromISO(wallClock, { zone: 'utc' });
+  if (!parete.isValid) {
+    throw new ChartError('DATA_NON_VALIDA', `Impossibile interpretare "${wallClock}".`);
+  }
+
+  // Al secondo intero, come l'equazione del tempo: l'ora è scritta al minuto.
+  const medio = Math.round(longitude * 240) / 60;
+  let equazione = 0;
+  if (clock === 'tempo-vero-locale') {
+    for (let giro = 0; giro < 2; giro++) {
+      const istante = parete.minus({ minutes: medio + equazione });
+      const valore = equationOfTime(julianDayOf(istante));
+      if (valore === null) {
+        throw new ChartError(
+          'DATA_NON_VALIDA',
+          "L'equazione del tempo non si può calcolare per questo istante: di solito la data è " +
+            'fuori dalla copertura delle effemeridi. Il tempo medio locale non ne ha bisogno.',
+        );
+      }
+      equazione = valore * 1440;
+    }
+  }
+
+  const offsetMinutes = medio + equazione;
+  const utc = parete.minus({ minutes: offsetMinutes }).toUTC();
+  // La stessa ora da parete di partenza, con lo scarto scritto accanto.
+  const local = utc.setZone(FixedOffsetZone.instance(offsetMinutes)).toISO({ suppressMilliseconds: true });
+  if (local === null) {
+    throw new ChartError('DATA_NON_VALIDA', `Impossibile scrivere "${wallClock}" con il suo scarto.`);
+  }
+
+  return {
+    julianDayUT: julianDayOf(utc),
+    utc: utc.toISO({ suppressMilliseconds: true }),
+    local,
+    offsetMinutes,
+    timeKnown,
+    clock,
+    ...(clock === 'tempo-vero-locale' ? { equationOfTimeMinutes: equazione } : {}),
+  };
+}
+
+function julianDayOf(utc: DateTime): number {
+  return toJulianDay(
+    utc.year,
+    utc.month,
+    utc.day,
+    utc.hour + utc.minute / 60 + utc.second / 3600 + utc.millisecond / 3_600_000,
+  );
 }
 
 /**

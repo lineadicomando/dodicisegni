@@ -4,6 +4,7 @@ import { PARASHARA_GRAHAS, PARASHARA_NODES, parasharaExaltation, parasharaNodeSi
 import { formatDegrees, formatZodiacal } from './math.js';
 import { grahaName, nakshatraOf, requireSidereal } from './nakshatra.js';
 import type {
+  ResolvedTime,
   Angles,
   Aspect,
   AyanamsaInfo,
@@ -76,7 +77,7 @@ export function formatChartCompact(
 
   const place = formatPlace(input);
   const when = time.timeKnown
-    ? `${input.date} ${input.time} (${input.timezone}, UTC${formatOffset(time.offsetMinutes)})`
+    ? `${input.date} ${input.time} (${clockLabel(input.timezone, time)})`
     : `${input.date} (ora ignota)`;
 
   lines.push(`TEMA NATALE — ${when} — ${place}`);
@@ -124,7 +125,7 @@ export function formatSkyCompact(sky: SkyChart): string {
   const { input, time } = sky;
 
   const when = time.timeKnown
-    ? `${input.date} ${input.time} (${input.timezone}, UTC${formatOffset(time.offsetMinutes)})`
+    ? `${input.date} ${input.time} (${clockLabel(input.timezone, time)})`
     : `${input.date} (ora non indicata, mezzogiorno locale)`;
 
   const lines = [
@@ -170,7 +171,7 @@ export function formatTransitsCompact(natal: NatalChart, transits: TransitChart)
   const { input, time } = transits;
 
   const when = time.timeKnown
-    ? `${input.date} ${input.time} (${input.timezone}, UTC${formatOffset(time.offsetMinutes)})`
+    ? `${input.date} ${input.time} (${clockLabel(input.timezone, time)})`
     : `${input.date} (ora non indicata, mezzogiorno locale)`;
   const birth = natal.time.timeKnown
     ? `${natal.input.date} ${natal.input.time}`
@@ -1621,6 +1622,25 @@ function formatPlace(place: Place): string {
 function formatCoordinate(value: number, positive: string, negative: string): string {
   const hemisphere = value >= 0 ? positive : negative;
   return `${Math.abs(value).toFixed(4)}${hemisphere}`;
+}
+
+/**
+ * Su quale orologio l'ora è stata letta, per la riga di testa: il fuso, o un
+ * orologio del luogo con il suo scarto e, per il tempo vero, l'equazione del
+ * tempo che lo separa dal medio.
+ */
+function clockLabel(timezone: string, time: ResolvedTime): string {
+  const scarto = `UTC${formatOffset(time.offsetMinutes)}`;
+  if (time.clock === 'tempo-medio-locale') return `tempo medio locale, ${scarto}`;
+  if (time.clock === 'tempo-vero-locale') {
+    const equazione = time.equationOfTimeMinutes ?? 0;
+    const secondi = Math.round(Math.abs(equazione) * 60);
+    return (
+      `tempo vero locale, ${scarto}, equazione del tempo ` +
+      `${equazione < 0 ? '-' : '+'}${Math.floor(secondi / 60)}m${String(secondi % 60).padStart(2, '0')}s`
+    );
+  }
+  return `${timezone}, ${scarto}`;
 }
 
 function formatOffset(minutes: number): string {

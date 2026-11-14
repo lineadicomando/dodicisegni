@@ -92,6 +92,18 @@ const FASCICOLO: Record<string, () => Record<string, unknown>> = {
     // Senza ora: niente case, niente angoli, la Luna con la sua escursione.
     'Napoli 1968, ora ignota': computeNatalChart({ ...NAPOLI, time: undefined }, E),
   }),
+  // L'ora letta su un orologio del luogo invece che sul fuso: l'istante, e gli
+  // assi che ne dipendono. Lecce nel 1850, prima dell'ora unica.
+  orologio: () =>
+    Object.fromEntries(
+      (['fuso', 'tempo-medio-locale', 'tempo-vero-locale'] as const).map((clock) => {
+        const tema = computeNatalChart(
+          { date: '1850-06-01', time: '12:00', latitude: 40.35, longitude: 18.1743, timezone: 'Europe/Rome', clock },
+          E,
+        );
+        return [clock, { time: tema.time, angles: tema.angles, warnings: tema.warnings }];
+      }),
+    ),
   dignita: () => ({
     lilly: computeNatalChart(NAPOLI, { ...E, dignitySchool: 'lilly' }).dignities,
     tolomeo: computeNatalChart(NAPOLI, { ...E, dignitySchool: 'tolomeo' }).dignities,

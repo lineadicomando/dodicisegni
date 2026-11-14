@@ -1,0 +1,63 @@
+{
+  "fuso": {
+    "time": {
+      "julianDayUT": 2396909.965324074,
+      "utc": "1850-06-01T11:10:04Z",
+      "local": "1850-06-01T12:00:00+00:49",
+      "offsetMinutes": 49.93333333333333,
+      "timeKnown": true
+    },
+    "angles": {
+      "ascendant": 168.27874108413513,
+      "midheaven": 76.44173960997722,
+      "descendant": 348.27874108413516,
+      "imumCoeli": 256.4417396099772,
+      "vertex": 328.73179927510364
+    },
+    "warnings": [
+      "File di effemeridi non trovati in /fascicolo-canonico-senza-effemeridi: uso le effemeridi Moshier (nessun file richiesto, precisione leggermente inferiore, Chirone non disponibile). Esegui `npm run ephe:download -w @dodicisegni/core` per la precisione piena.",
+      "Nel 1850 Europe/Rome non era ancora un fuso: l'ora è stata letta come tempo medio della città che gli dà il nome (+0:49:56 da Greenwich), per qualunque luogo. Se l'orologio del luogo seguiva il proprio meridiano, l'istante vero si sposta di quattro minuti per ogni grado di longitudine che lo separa da quella città, e con lui l'Ascendente e le case."
+    ]
+  },
+  "tempo-medio-locale": {
+    "time": {
+      "julianDayUT": 2396909.949513889,
+      "utc": "1850-06-01T10:47:18Z",
+      "local": "1850-06-01T12:00:00+01:12",
+      "offsetMinutes": 72.7,
+      "timeKnown": true,
+      "clock": "tempo-medio-locale"
+    },
+    "angles": {
+      "ascendant": 163.74861123007477,
+      "midheaven": 71.12870763058922,
+      "descendant": 343.74861123007474,
+      "imumCoeli": 251.12870763058922,
+      "vertex": 318.2416352018118
+    },
+    "warnings": [
+      "File di effemeridi non trovati in /fascicolo-canonico-senza-effemeridi: uso le effemeridi Moshier (nessun file richiesto, precisione leggermente inferiore, Chirone non disponibile). Esegui `npm run ephe:download -w @dodicisegni/core` per la precisione piena."
+    ]
+  },
+  "tempo-vero-locale": {
+    "time": {
+      "julianDayUT": 2396909.9477199074,
+      "utc": "1850-06-01T10:44:43Z",
+      "local": "1850-06-01T12:00:00+01:15",
+      "offsetMinutes": 75.28333333333333,
+      "timeKnown": true,
+      "clock": "tempo-vero-locale",
+      "equationOfTimeMinutes": 2.5833333333333335
+    },
+    "angles": {
+      "ascendant": 163.2351973598761,
+      "midheaven": 70.52255594224322,
+      "descendant": 343.2351973598761,
+      "imumCoeli": 250.52255594224323,
+      "vertex": 317.1218483532973
+    },
+    "warnings": [
+      "File di effemeridi non trovati in /fascicolo-canonico-senza-effemeridi: uso le effemeridi Moshier (nessun file richiesto, precisione leggermente inferiore, Chirone non disponibile). Esegui `npm run ephe:download -w @dodicisegni/core` per la precisione piena."
+    ]
+  }
+}

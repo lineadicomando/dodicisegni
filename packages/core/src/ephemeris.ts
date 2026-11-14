@@ -274,3 +274,22 @@ function defaultEphemerisPath(): string {
 function joinPath(base: string, file: string): string {
   return base.endsWith('/') ? `${base}${file}` : `${base}/${file}`;
 }
+
+/**
+ * L'equazione del tempo a un istante, in giorni: tempo solare vero meno tempo
+ * solare medio (`swe_time_equ`).
+ *
+ * Arrotondata al secondo di tempo. Swiss Ephemeris la ricava dall'ascensione
+ * retta del Sole con le effemeridi che trova, e fra i file `.se1` e Moshier
+ * corre qualche centesimo di secondo: abbastanza perché la stessa nascita
+ * desse due giorni giuliani diversi su due macchine. Un'ora di nascita è
+ * scritta al minuto, e il secondo intero è già più di quanto porti.
+ *
+ * `null` quando non è calcolabile, cioè fuori dalla copertura delle effemeridi.
+ */
+export function equationOfTime(julianDayUT: number): number | null {
+  if (!Number.isFinite(julianDayUT)) return null;
+  const result = sweph.time_equ(julianDayUT);
+  if (result.flag < 0 || !Number.isFinite(result.data)) return null;
+  return Math.round(result.data * 86_400) / 86_400;
+}

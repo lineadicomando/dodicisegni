@@ -1464,7 +1464,29 @@ export interface LocalMoment {
   time?: string;
   /** Identificatore IANA del fuso orario, es. `Europe/Rome`. */
   timezone: string;
+  /**
+   * Su quale orologio è stata letta l'ora. Default: `fuso`. Gli altri due
+   * vogliono la longitudine del luogo, quindi valgono per una nascita e non
+   * per un istante senza luogo.
+   */
+  clock?: LocalClock;
 }
+
+/**
+ * L'orologio su cui un'ora è stata letta.
+ *
+ * - `fuso`: l'ora civile, convertita con le regole storiche del fuso.
+ * - `tempo-medio-locale`: il tempo medio del meridiano del luogo, quattro
+ *   minuti per grado di longitudine da Greenwich. È l'ora degli orologi
+ *   pubblici prima dell'ora unica.
+ * - `tempo-vero-locale`: il tempo solare vero del luogo, quello della
+ *   meridiana, dove il mezzogiorno è il passaggio del Sole al meridiano.
+ *   Differisce dal medio dell'equazione del tempo, fino a sedici minuti.
+ *
+ * Il motore non sceglie fra i tre: prima dell'ora unica un atto non dice
+ * quale orologio guardasse chi l'ha scritto, e lo decide chi chiede.
+ */
+export type LocalClock = 'fuso' | 'tempo-medio-locale' | 'tempo-vero-locale';
 
 /**
  * Un punto sulla superficie terrestre.
@@ -1539,10 +1561,26 @@ export interface ResolvedTime {
   utc: string;
   /** Istante locale in formato ISO 8601 con offset. */
   local: string;
-  /** Scarto dal UTC in minuti, come risultante dal database tzdata storico. */
+  /**
+   * Scarto dal UTC in minuti: dal database tzdata storico, oppure, con un
+   * orologio locale, dalla longitudine del luogo (più l'equazione del tempo
+   * per il tempo vero).
+   */
   offsetMinutes: number;
   /** `false` quando l'ora di nascita non è stata fornita. */
   timeKnown: boolean;
+  /**
+   * L'orologio locale su cui l'ora è stata letta, quando non è quello del
+   * fuso. Assente con `fuso`, che è il caso ordinario.
+   */
+  clock?: Exclude<LocalClock, 'fuso'>;
+  /**
+   * L'equazione del tempo all'istante, in minuti: tempo vero meno tempo
+   * medio, secondo Swiss Ephemeris (`swe_time_equ`), arrotondata al secondo.
+   * Solo con `tempo-vero-locale`: è il componente che lo distingue dal medio,
+   * esposto perché chi usa un'altra tavola rifaccia il conto.
+   */
+  equationOfTimeMinutes?: number;
 }
 
 export interface CelestialBody {
