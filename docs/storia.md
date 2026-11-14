@@ -43,6 +43,7 @@ porta il nome del file.
 | 44, `44-mcp-descrizioni.md` | `0460867` |
 | 40, `40-errori-rotte.md` | `2c3b3e4` |
 | 42, `42-tempo-medio-locale.md` | `7ec1eb5` |
+| 43, `43-mcp-risposte-enormi.md` | `c2a98b2` |
 
 ## Le versioni
 
@@ -82,6 +83,7 @@ cambia muove la seconda cifra.
 | 0.22.0 | `draw_chart_wheel` accetta le larghezze da 200 a 4000 come il quadro e le rotte (prima 400–2000); quattro descrizioni MCP legate al codice | 44 |
 | 0.23.0 | un fuso sconosciuto è sempre 400; i messaggi non portano percorsi del server; `/api/jyotish` fuori copertura dà `DATA_NON_VALIDA`; l'arco dell'elezione a estremi compresi; le 24:00 con l'avviso | 40 |
 | 0.24.0 | un'ora data prima dell'ora unica porta l'avvertenza che è stata letta come tempo medio della città del fuso; `/metodo#tempo-medio` | 42 |
+| 0.25.0 | oltre mille righe `find_transit_passages`, `find_active_transits`, `find_sky_events` e il testo compatto delle tre rotte gemelle rispondono `RISPOSTA_TROPPO_LUNGA`; il JSON delle rotte resta senza tetto | 43 |
 
 ## Le sessioni
 
@@ -206,3 +208,16 @@ cambia muove la seconda cifra.
   nascite così vecchie): la seconda cifra la decide la voce, perché un tema
   del 1850 riceve un'avvertenza che prima non aveva. Aperta la voce 50, la
   via esplicita per chi sa che l'orologio seguiva il meridiano del luogo.
+- **14 novembre 2026, notte, poi.** Chiusa la voce 43 (0.25.0) come ha scelto
+  il proprietario: un tetto alle righe, come errore e non come taglio, dove
+  legge un agente (i tre tool MCP in entrambi i formati, e `format=compact`
+  sulle rotte); il JSON delle rotte intatto. Il tetto è `MAX_READABLE_ROWS`
+  in `format.ts`, mille righe, scelto sulle misure scritte nel suo commento:
+  un anno coi corpi predefiniti (circa 450 righe) e tre mesi di Luna (circa
+  370) passano, tre anni coi predefiniti (circa 1400, 117–138 mila caratteri)
+  no, e prima erano serviti. Il calcolo si paga prima del rifiuto: 4,2 s per
+  la chiamata peggiore della voce, che ora rende 226 caratteri invece di
+  1.220.988. `find_sky_events` con la sola Luna su tre anni passa (23 mila
+  caratteri): il numero della voce veniva dalla Luna insieme agli altri
+  corpi. La riga di comando non ha tetto: chi la usa ha un terminale e un
+  file.

@@ -1,4 +1,5 @@
 import {
+  assertReadable,
   computeNatalChart,
   DEFAULT_PASSAGE_BODIES,
   type PassageOptions,
@@ -6,7 +7,7 @@ import {
 } from '@dodicisegni/core';
 import { placeLabel, readBirth, readChartOptions } from '#lib/server/birth.js';
 import { toHttpError } from '#lib/server/errors.js';
-import { readFormat, testo } from '#lib/server/formato.js';
+import { readFormat, testo, VIA_DEL_JSON } from '#lib/server/formato.js';
 import { isHttpError } from '#lib/server/place.js';
 import { nelPool } from '#lib/server/pool.js';
 import { resolvePassageRange } from '#lib/server/range.js';
@@ -28,7 +29,8 @@ import type { RequestHandler } from './$types';
  *
  * Con `format=compact` la risposta è la tabella di testo che il server MCP dà
  * ai suoi agenti, `text/plain`, invece del JSON, con il luogo di nascita in testa. Un altro valore è
- * `FORMATO_NON_VALIDO`.
+ * `FORMATO_NON_VALIDO`. Il testo ha un tetto di mille righe, oltre il quale la
+ * risposta è `RISPOSTA_TROPPO_LUNGA` e dice come restringere; il JSON non ce l'ha.
  */
 export const GET: RequestHandler = async ({ url, setHeaders, request }) => {
   try {
@@ -58,6 +60,8 @@ export const GET: RequestHandler = async ({ url, setHeaders, request }) => {
       range,
       passageOptions,
     );
+
+    if (formato === 'compact') assertReadable(passages.length, range, VIA_DEL_JSON);
 
     // Stessa regola dei transiti: un arco indicato è una funzione pura dei
     // parametri, un arco che comincia «oggi» scade a mezzanotte.

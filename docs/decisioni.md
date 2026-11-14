@@ -324,3 +324,11 @@ codice rimandano qui con «`docs/decisioni.md`».
   il runtime non dice quale; e un atto non dice quale orologio guardasse chi
   l'ha scritto. Il motore avverte e lascia l'ora com'è; chi vuole il tempo
   del luogo lo chiederà per nome (voce 50).
+- **Un elenco troppo lungo si rifiuta, non si tronca, e solo dove lo legge un
+  agente.** Scelta del proprietario, 14 novembre 2026 (voce 43). Oltre
+  `MAX_READABLE_ROWS` righe i tool MCP e il testo compatto delle rotte
+  rispondono `RISPOSTA_TROPPO_LUNGA` con il modo di restringere: un elenco
+  tagliato si legge come intero. Il JSON delle rotte non ha tetto, perché lo
+  legge un programma (l'interfaccia, chi chiama in rete) e toglierglielo
+  cambierebbe una risposta che oggi usa senza danno. Il numero, mille, è
+  nostro: tiene la risposta sotto i centomila caratteri.

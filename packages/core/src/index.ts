@@ -233,6 +233,8 @@ export {
   VIMSHOTTARI_ORDER,
 } from './nakshatra.js';
 export {
+  assertReadable,
+  MAX_READABLE_ROWS,
   formatActiveTransitsCompact,
   formatChartCompact,
   formatDashaCompact,

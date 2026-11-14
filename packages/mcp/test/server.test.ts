@@ -1563,4 +1563,43 @@ describe('le descrizioni dicono ciò che il codice fa', () => {
     expect(limiti[0]).toEqual(limiti[1]);
     expect(limiti[0]).toEqual([200, 4000]);
   });
+
+  describe('gli elenchi troppo lunghi per essere letti', () => {
+    const NATO = { date: '1968-03-12', time: '14:30', latitude: 40.8518, longitude: 14.2681, timezone: 'Europe/Rome' };
+    const ANNO = { from: '2026-01-01', to: '2026-12-31' };
+    const TUTTI = ['sole', 'luna', 'mercurio', 'venere', 'marte', 'giove', 'saturno', 'urano', 'nettuno', 'plutone'];
+
+    it.each([
+      ['find_transit_passages', { ...NATO, ...ANNO, bodies: ['luna'] }],
+      ['find_active_transits', { ...NATO, ...ANNO, bodies: ['luna'] }],
+      ['find_sky_events', { ...ANNO, bodies: TUTTI }],
+    ])('%s rifiuta invece di rendere migliaia di righe, e dice come restringere', async (name, argomenti) => {
+      for (const format of ['compact', 'json']) {
+        const result = await client.callTool({ name, arguments: { ...argomenti, format } });
+
+        expect(result.isError, format).toBe(true);
+        expect(textOf(result), format).toMatch(/l'elenco ha \d{4,} righe: se ne rendono al più 1000/);
+        expect(textOf(result), format).toMatch(/arco più corto.*meno corpi/);
+        expect(textOf(result).length, format).toBeLessThan(500);
+      }
+    });
+
+    it("un anno coi corpi predefiniti passa, e tre mesi di Luna pure", async () => {
+      const anno = await client.callTool({ name: 'find_transit_passages', arguments: { ...NATO, ...ANNO } });
+      expect(anno.isError).toBeFalsy();
+
+      const luna = await client.callTool({
+        name: 'find_active_transits',
+        arguments: { ...NATO, from: '2026-01-01', to: '2026-03-31', bodies: ['luna'] },
+      });
+      expect(luna.isError).toBeFalsy();
+    });
+
+    it('le descrizioni dei tre tool lo dicono prima', async () => {
+      const { tools } = await client.listTools();
+      for (const nome of ['find_transit_passages', 'find_active_transits', 'find_sky_events']) {
+        expect(tools.find((tool) => tool.name === nome)!.description, nome).toContain('Oltre 1000 righe');
+      }
+    });
+  });
 });

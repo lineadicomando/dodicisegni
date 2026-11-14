@@ -1,4 +1,5 @@
 import { BODIES, NATAL_POINT_NAMES, SIGN_ABBR, ZODIAC_SIGNS } from './constants.js';
+import { ChartError } from './errors.js';
 import { PARASHARA_GRAHAS, PARASHARA_NODES, parasharaExaltation, parasharaNodeSigns } from './dignita-parashara.js';
 import { formatDegrees, formatZodiacal } from './math.js';
 import { grahaName, nakshatraOf, requireSidereal } from './nakshatra.js';
@@ -214,6 +215,41 @@ export function formatTransitsCompact(natal: NatalChart, transits: TransitChart)
   lines.push(...warningLines(transits.warnings));
 
   return lines.join('\n');
+}
+
+/**
+ * Quante righe porta, al più, un elenco reso a chi lo legge per intero.
+ *
+ * Gli elenchi su un arco di tempo (passaggi, transiti attivi, calendario del
+ * cielo) hanno un tetto di tre anni che conta i giorni e non le righe: con la
+ * Luna fra i corpi tre anni sono oltre diecimila righe e un milione di
+ * caratteri, che un agente riceve in una risposta sola e non può leggere.
+ * Mille righe sono un po' meno di centomila caratteri (misurato il 14
+ * novembre 2026: 85–97 per riga), e ci stanno larghi l'anno intero coi corpi
+ * predefiniti (circa 450) e tre mesi di Luna (circa 370). Il numero è nostro.
+ *
+ * Vale dove il lettore è un agente: i tool MCP e il testo compatto delle
+ * rotte. Il JSON delle rotte lo legge un programma, e non ha tetto.
+ */
+export const MAX_READABLE_ROWS = 1000;
+
+/**
+ * Rifiuta un elenco troppo lungo per essere letto, dicendo come restringerlo.
+ *
+ * Non lo tronca: un elenco tagliato si legge come intero. `altrimenti` è la
+ * via d'uscita che una superficie ha in più, se ne ha una.
+ */
+export function assertReadable(rows: number, range: PassageRange, altrimenti = ''): void {
+  if (rows <= MAX_READABLE_ROWS) return;
+
+  throw new ChartError(
+    'RISPOSTA_TROPPO_LUNGA',
+    `Dal ${range.from} al ${range.to} l'elenco ha ${rows} righe: se ne rendono al più ` +
+      `${MAX_READABLE_ROWS}. Restringi la richiesta: un arco più corto (con la Luna, non più di ` +
+      'tre mesi), meno corpi, oppure senza gli aspetti minori' +
+      (altrimenti ? `; ${altrimenti}` : '') +
+      '.',
+  );
 }
 
 /**

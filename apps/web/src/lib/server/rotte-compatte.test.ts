@@ -170,3 +170,27 @@ describe("l'arco dell'elezione", () => {
   });
 });
 
+describe('il tetto alle righe del testo compatto', () => {
+  // Un anno di Luna, coi corpi predefiniti, sono circa duemila passaggi.
+  const LUNA = `${NATO}&from=2026-01-01&to=2026-12-31&moon=true`;
+  const TUTTI = 'from=2026-01-01&to=2026-12-31&bodies=sole,luna,mercurio,venere,marte,giove,saturno,urano,nettuno,plutone';
+
+  const lunghe: [string, Rotta, string][] = [
+    ['/api/transits/passages', passages, LUNA],
+    ['/api/transits/active', active, LUNA],
+    ['/api/sky/calendar', calendar, TUTTI],
+  ];
+
+  it.each(lunghe)('%s rifiuta il testo e serve il JSON', async (_nome, rotta, query) => {
+    const testo = await Promise.resolve()
+      .then(() => chiama(rotta, `${query}&format=compact`))
+      .catch((sollevato: unknown) => sollevato);
+    expect(testo).toMatchObject({ status: 400, body: { code: 'RISPOSTA_TROPPO_LUNGA' } });
+    expect((testo as { body: { message: string } }).body.message).toContain('il JSON non ha tetto');
+
+    // Il JSON lo legge un programma: per lui un megabyte è solo un megabyte.
+    const json = await chiama(rotta, query);
+    expect(json.status).toBe(200);
+  });
+});
+

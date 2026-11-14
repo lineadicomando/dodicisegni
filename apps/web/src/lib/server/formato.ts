@@ -34,3 +34,10 @@ export function testo(tabella: string, ...provenienza: (string | null | undefine
     headers: { 'content-type': 'text/plain; charset=utf-8' },
   });
 }
+
+/**
+ * Ciò che una rotta può dire in più a chi ha chiesto un testo troppo lungo
+ * (`assertReadable`, nel motore): qui il JSON esiste e lo legge un programma,
+ * quindi il tetto alle righe non lo riguarda.
+ */
+export const VIA_DEL_JSON = 'oppure togli format=compact: il JSON non ha tetto';

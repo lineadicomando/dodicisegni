@@ -7,7 +7,9 @@ import {
   TRANSIT_ORB_CONVENTIONS,
   DEFAULT_NATAL_ORB_CONVENTION,
   DEFAULT_TRANSIT_ORB_CONVENTION,
+  assertReadable,
   MAX_ELECTION_DAYS,
+  MAX_READABLE_ROWS,
   VARGAS,
   HORA_CONVENTIONS,
   computeNatalChart,
@@ -1143,6 +1145,14 @@ function resolveObservation(
 /** Tre anni: oltre, la ricerca costa più di quanto valga il risultato. */
 const MAX_RANGE_DAYS = 1096;
 
+/**
+ * Il tetto alle righe, detto prima che l'agente lo incontri. Il numero si
+ * legge dal motore, che è chi rifiuta.
+ */
+const TETTO_RIGHE =
+  `Oltre ${MAX_READABLE_ROWS} righe la risposta è un errore e non un elenco tagliato: con la ` +
+  'Luna fra i corpi resta sotto i tre mesi, e su archi di anni non chiedere gli aspetti minori. ';
+
 const SKY_EVENT_KINDS = ['incontri', 'ingressi', 'stazioni'] as const;
 
 export function registerFindSkyEvents(server: McpServer, context: ToolContext = {}): void {
@@ -1163,6 +1173,7 @@ export function registerFindSkyEvents(server: McpServer, context: ToolContext = 
         'e mezzo: chiedila per nome in bodies se ti servono le lunazioni. ' +
         'Un ingresso non è sempre un progresso: un pianeta che retrograda rientra nel segno ' +
         'da cui era uscito, e i tre attraversamenti sono un passaggio solo. ' +
+        TETTO_RIGHE +
         "Restano istanti astronomici, non eventi che accadranno a qualcuno.",
       inputSchema: {
         ...ZODIAC_SCHEMA,
@@ -1252,6 +1263,11 @@ export function registerFindSkyEvents(server: McpServer, context: ToolContext = 
         const warnings = [
           ...new Set([...incontri.warnings, ...ingressi.warnings, ...stazioni.warnings]),
         ];
+
+        assertReadable(
+          incontri.passages.length + ingressi.ingresses.length + stazioni.stations.length,
+          range,
+        );
 
         if (args.format === 'json') {
           return ok(
@@ -1778,6 +1794,7 @@ export function registerFindTransitPassages(server: McpServer, context: ToolCont
         'c\'è find_active_transits: qui un transito in orbita per tutto l\'arco ma esatto fuori non compare. ' +
         'OMETTI from per partire da oggi: la data corrente la mette il server. ' +
         'La Luna è esclusa perché da sola perfeziona qualche migliaio di aspetti all\'anno. ' +
+        TETTO_RIGHE +
         "Restano dati astronomici: l'istante in cui un angolo si chiude, non un evento che " +
         'accadrà. Non trasformare una data in una previsione e non dire che cosa succederà.',
       inputSchema: {
@@ -1862,6 +1879,8 @@ export function registerFindTransitPassages(server: McpServer, context: ToolCont
           passageOptions,
         );
 
+        assertReadable(passages.length, range);
+
         if (args.format === 'json') {
           return ok(JSON.stringify({ range, orbConvention, passages, warnings }, null, 2));
         }
@@ -1891,7 +1910,9 @@ export function registerFindActiveTransits(server: McpServer, context: ToolConte
         "l'arco, quanto è stretto ai due bordi, le perfezioni che cadono dentro e, se non ce ne " +
         "sono, l'avvicinamento massimo. Il periodo si dice con from e to, non con un nome. " +
         'OMETTI from per partire da oggi: la data corrente la mette il server. La Luna è esclusa ' +
-        "perché da sola fa qualche migliaio di righe l'anno. Non c'è nessun punteggio, e non " +
+        "perché da sola fa qualche migliaio di righe l'anno. " +
+        TETTO_RIGHE +
+        "Non c'è nessun punteggio, e non " +
         'inventarne uno: quale transito conti di più non lo dicono i dati. Restano dati ' +
         "astronomici, non eventi: non dire che cosa succederà nel periodo.",
       inputSchema: {
@@ -1975,6 +1996,8 @@ export function registerFindActiveTransits(server: McpServer, context: ToolConte
           range,
           passageOptions,
         );
+
+        assertReadable(transits.length, range);
 
         if (args.format === 'json') {
           return ok(JSON.stringify({ range, orbConvention, transits, warnings }, null, 2));

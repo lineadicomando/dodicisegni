@@ -17,7 +17,7 @@ Prima di cominciare:
 
 ## Dove siamo
 
-Al 13 novembre 2026, versione **0.24.0**, tag `v0.24.0`. `origin` e il sito
+Al 13 novembre 2026, versione **0.25.0**, tag `v0.25.0`. `origin` e il sito
 sono alla `v0.19.0`, pubblicata la sera del 13 novembre; ciò che è venuto
 dopo è in locale (`git status -sb`). Push e deploy li chiede il
 proprietario, e si fanno come in `CLAUDE.local.md`.
@@ -52,7 +52,6 @@ La colonna *Cifra* dice quale cifra della versione muove la voce
 | 28. La revisione della SEO: leggere negli strumenti dei motori quali pagine sono escluse | `28-seo.md` | media | piccola | — | non prima di metà novembre 2026; è del proprietario, fuori dal repo |
 | 33. Un servizio `motore` senza porte in `compose.yaml`, per la rete interna | `33-istanza-interna.md` | alta | piccola | — | conferma del proprietario per il server |
 | 34. La doppia licenza di `ruota` e `lettura` | `34-doppia-licenza.md` | media | piccola | — | decisione del proprietario |
-| 43. Tool MCP: con la Luna, tre anni rendono un milione di caratteri | `43-mcp-risposte-enormi.md` | media | piccola | 2ª | da decidere insieme per MCP e rotte |
 | 45. Interfaccia: il link di `/vedica`, il link composto dal modulo, le risposte in corsa | `45-interfaccia-corse.md` | media | media | — | tutta dedotta: va riprodotta in un browser; il lato server è fatto con la 36 |
 | 46. La ricerca delle località scorre la tabella a ogni battuta; errori di SQLite grezzi | `46-ricerca-localita.md` | media | media | — | cambia `schema.sql`: chiede una reimportazione, sul server compresa |
 | 47. Input del motore non validati (`orbs`, `normalize360`, giorno giuliano, archi, `levels`) | `47-input-motore.md` | bassa | piccola | caso per caso | — |
@@ -61,4 +60,5 @@ La colonna *Cifra* dice quale cifra della versione muove la voce
 | 50. Un valore esplicito per il tempo medio del luogo, prima dei fusi | `50-tempo-del-luogo.md` | bassa | piccola | 3ª | — |
 
 Un ordine che regge: le alte della revisione sono chiuse, e così le due funzioni
-per dodicicase (31 e 32); le medie; la 49 per ultima.
+per dodicicase (31 e 32) e le due medie che aspettavano una decisione (42 e
+43); le medie che restano; la 49 per ultima.

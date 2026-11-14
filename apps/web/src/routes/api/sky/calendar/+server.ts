@@ -1,4 +1,5 @@
 import {
+  assertReadable,
   BODIES,
   formatSkyEventsCompact,
   formatSkyPassagesCompact,
@@ -10,7 +11,7 @@ import { error } from '@sveltejs/kit';
 import { readZodiacOptions } from '#lib/server/birth.js';
 import { readList } from '#lib/server/elenco.js';
 import { toHttpError } from '#lib/server/errors.js';
-import { readFormat, testo } from '#lib/server/formato.js';
+import { readFormat, testo, VIA_DEL_JSON } from '#lib/server/formato.js';
 import { isHttpError } from '#lib/server/place.js';
 import { nelPool } from '#lib/server/pool.js';
 import { resolvePassageRange } from '#lib/server/range.js';
@@ -37,7 +38,8 @@ import type { RequestHandler } from './$types';
  *
  * Con `format=compact` la risposta è la tabella di testo che il server MCP dà
  * ai suoi agenti, `text/plain`, invece del JSON: gli incontri, poi gli ingressi e le stazioni. Un altro valore è
- * `FORMATO_NON_VALIDO`.
+ * `FORMATO_NON_VALIDO`. Il testo ha un tetto di mille righe, oltre il quale la
+ * risposta è `RISPOSTA_TROPPO_LUNGA` e dice come restringere; il JSON non ce l'ha.
  */
 export const GET: RequestHandler = async ({ url, setHeaders, request }) => {
   try {
@@ -78,6 +80,14 @@ export const GET: RequestHandler = async ({ url, setHeaders, request }) => {
     const warnings = [
       ...new Set([...incontri.warnings, ...ingressi.warnings, ...stazioni.warnings]),
     ];
+
+    if (formato === 'compact') {
+      assertReadable(
+        incontri.passages.length + ingressi.ingresses.length + stazioni.stations.length,
+        range,
+        VIA_DEL_JSON,
+      );
+    }
 
     // Come per il cielo di un istante la cache è condivisibile: un calendario
     // del 2026 è lo stesso per tutti. Se l'arco parte da oggi invece scade.
