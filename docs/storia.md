@@ -49,6 +49,7 @@ porta il nome del file.
 | 28, `28-seo.md` | `acc68d7` |
 | 34, `34-doppia-licenza.md` | `acc68d7` |
 | 50, `50-tempo-del-luogo.md` | `73fccb5` |
+| 45, `45-interfaccia-corse.md` | `f43c550` |
 
 ## Le versioni
 
@@ -278,3 +279,19 @@ cambia muove la seconda cifra.
   `OROLOGIO_NON_VALIDO`. Provato sul server compilato e nel browser: Lecce
   1850, 23 e 26 minuti prima della lettura col fuso, Ascendente spostato di
   quattro gradi e mezzo e di cinque.
+- **14 novembre 2026, sera.** Pubblicata la 0.26.1 (push e deploy,
+  verificata sul sito). Chiusa la voce 45, senza versione, riproducendo ogni
+  punto in un browser sul server compilato. Il link di `/vedica` ora
+  ricostruisce tutte le opzioni (`lib/vedica-opzioni.ts`, l'inverso di
+  `jyotishaParameters`). Link e lettura di tema, vedica e transiti vengono dai
+  parametri di ciò che è a schermo (`mostrati`), non dal modulo: cambiata la
+  data senza ricalcolare, il link copiato è rimasto quello del tema mostrato.
+  Le corse si chiudono con `Corsa` (`lib/corsa.ts`), che annulla la richiesta
+  precedente con un `AbortController`: passaggi, calendario del cielo,
+  elezione e ricerca delle località. Provato ritardando la prima risposta:
+  due passi di ‹ › nell'elezione, e «ro» poi «roma» nella ricerca; la prima
+  richiesta risulta annullata e a schermo resta la seconda. «Nessun
+  risultato» non compare più durante l'attesa della battuta. I passaggi e il
+  calendario usano lo stesso codice e non sono stati riprodotti a parte. Il
+  contatore `ultima` dei tre `calcola` è rimasto com'era: funziona, e quelle
+  rotte non passano dal pool.

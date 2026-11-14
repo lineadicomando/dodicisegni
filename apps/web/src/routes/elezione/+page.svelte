@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { Corsa } from '#lib/corsa.js';
   import type {
     BodyId,
     HouseSystem,
@@ -168,19 +169,28 @@
     })();
   });
 
+  /** Un calcolo alla volta: vedi `lib/corsa.ts`. */
+  const corsa = new Corsa();
+
   async function load(): Promise<boolean> {
     if (!location) return false;
 
+    // Due passi di ‹ › ravvicinati non tornano in ordine: senza, la prima
+    // risposta poteva coprire la seconda, sotto la data della seconda.
+    const segnale = corsa.parti();
     loading = true;
     errorMessage = null;
 
     try {
-      election = await fetchElection(
+      const risposta = await fetchElection(
         electionParameters(location, from, GIORNI - 1, {
           ruler: ruler === '' ? null : ruler,
           skipMoonVoid,
         }),
+        segnale,
       );
+      if (segnale.aborted) return false;
+      election = risposta;
       nellIndirizzo();
       // L'ora scelta apparteneva all'elenco precedente: un giorno diverso, o
       // un filtro diverso, non la contiene più. Tenerne a schermo la ruota
@@ -188,13 +198,14 @@
       dimentica();
       return true;
     } catch (cause) {
+      if (segnale.aborted) return false;
       errorMessage =
         cause instanceof RequestError ? cause.message : 'Calcolo dell\'elezione non riuscito.';
       election = null;
       dimentica();
       return false;
     } finally {
-      loading = false;
+      if (!segnale.aborted) loading = false;
     }
   }
 

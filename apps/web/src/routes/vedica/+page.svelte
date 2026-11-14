@@ -43,7 +43,7 @@
   import StrumentiLettura from '#lib/components/StrumentiLettura.svelte';
   import VargaTable from '#lib/components/VargaTable.svelte';
   import { Evidenza } from '#lib/evidenza.svelte.js';
-  import { ayanamsaOrDefault } from '#lib/zodiacs.js';
+  import { jyotishaOptionsFromParameters } from '#lib/vedica-opzioni.js';
 
   // La nascita è la stessa delle altre sezioni: chi l'ha scritta nel tema la
   // ritrova qui, e viceversa.
@@ -122,6 +122,8 @@
 
   /** Come nel tema: due scelte ravvicinate non tornano nell'ordine in cui sono state chieste. */
   let ultima = 0;
+  /** I parametri di ciò che è a schermo: link e lettura vengono da qui, come nel tema. */
+  let mostrati = $state<URLSearchParams | null>(null);
 
   async function calcola(): Promise<boolean> {
     if (!canSubmit) return false;
@@ -131,8 +133,10 @@
     errorMessage = null;
 
     try {
-      const body = await fetchJyotisha(jyotishaParameters(birth, opzioniVediche));
+      const parametri = jyotishaParameters(birth, opzioniVediche);
+      const body = await fetchJyotisha(parametri);
       if (richiesta !== ultima) return false;
+      mostrati = parametri;
       jyotisha = body.jyotisha;
       placeLabel = body.place?.label ?? null;
       return true;
@@ -188,7 +192,15 @@
       if (!luogo) return;
 
       birthStore.value = birthFromParameters(parametri, luogo);
-      ayanamsa = ayanamsaOrDefault(parametri.get('ayanamsa'));
+      // Tutte le opzioni che il link scrive, non il solo ayanamsa: chi lo apre
+      // deve vedere le date e le divisionali di chi l'ha copiato.
+      const lette = jyotishaOptionsFromParameters(parametri);
+      ayanamsa = lette.ayanamsa;
+      dashaLevels = lette.dashaLevels;
+      dashaYear = lette.dashaYear;
+      vargas = lette.vargas;
+      hora = lette.hora;
+      drishtiNodes = lette.drishtiNodes;
 
       if (await calcola()) aperto = false;
     })();
@@ -322,14 +334,15 @@
           svg={disegno}
           {evidenza}
           nome={['vedico', placeLabel, jyotisha.chart.input.date]}
-          link={() => jyotishaParameters(birth, opzioniVediche)}
+          link={() => mostrati ?? jyotishaParameters(birth, opzioniVediche)}
         />
       </div>
 
       <div class="tabelle">
         <StrumentiLettura
           sistema="jyotisha"
-          tavola={() => fetchJyotishaCompact(jyotishaParameters(birth, opzioniVediche))}
+          tavola={() =>
+            fetchJyotishaCompact(mostrati ?? jyotishaParameters(birth, opzioniVediche))}
         />
 
         <BodyTable bodies={graha} {evidenza} title="Graha" houseTitle="Bhava" />

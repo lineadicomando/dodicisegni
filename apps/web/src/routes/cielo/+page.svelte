@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { Corsa } from '#lib/corsa.js';
   import type { AyanamsaId, HouseSystem, NatalOrbConvention, SkyChart, Zodiac } from '@dodicisegni/core';
   import type { Location } from '@dodicisegni/geo';
   import { onMount } from 'svelte';
@@ -209,17 +210,24 @@
     if (await load()) aperto = false;
   }
 
+  /** Una ricerca del calendario alla volta: vedi `lib/corsa.ts`. */
+  const corsaCalendario = new Corsa();
+
   async function loadCalendar(): Promise<void> {
+    const segnale = corsaCalendario.parti();
     loadingCalendar = true;
     calendarError = null;
 
     try {
-      calendar = await fetchSkyCalendar(skyCalendarParameters(moment, MESI, zodiac));
+      const risposta = await fetchSkyCalendar(skyCalendarParameters(moment, MESI, zodiac), segnale);
+      if (segnale.aborted) return;
+      calendar = risposta;
     } catch (cause) {
+      if (segnale.aborted) return;
       calendarError =
         cause instanceof RequestError ? cause.message : 'Ricerca del calendario non riuscita.';
     } finally {
-      loadingCalendar = false;
+      if (!segnale.aborted) loadingCalendar = false;
     }
   }
 

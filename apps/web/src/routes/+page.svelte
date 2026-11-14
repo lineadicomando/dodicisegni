@@ -92,6 +92,12 @@
    * prenderebbe lo schermo.
    */
   let ultima = 0;
+  /**
+   * I parametri di ciò che è a schermo. Link e lettura si compongono da questi
+   * e non dal modulo: chi cambia una data senza ricalcolare copierebbe
+   * l'indirizzo, o il prompt, di un'altra nascita sotto il tema vecchio.
+   */
+  let mostrati = $state<URLSearchParams | null>(null);
 
   /** `true` se il tema a schermo è quello che questa chiamata ha chiesto. */
   async function calcola(): Promise<boolean> {
@@ -102,8 +108,10 @@
     errorMessage = null;
 
     try {
-      const body = await fetchChart(chartParameters(birth, opzioniTema));
+      const parametri = chartParameters(birth, opzioniTema);
+      const body = await fetchChart(parametri);
       if (richiesta !== ultima) return false;
+      mostrati = parametri;
       chart = body.chart;
       placeLabel = body.place?.label ?? null;
       return true;
@@ -295,7 +303,7 @@
           svg={disegno}
           {evidenza}
           nome={['tema', placeLabel, chart.input.date]}
-          link={() => chartParameters(birth, opzioniTema)}
+          link={() => mostrati ?? chartParameters(birth, opzioniTema)}
         />
         {#if chart.aspects.length > 0}
           <p class="suggerimento istruzione">
@@ -310,7 +318,9 @@
              aspetti lo troverebbe solo chi ha scorso tutto. Qui e non sotto la
              ruota perché quella è appesa, e un elemento appeso non viene spinto
              da ciò che lo segue — se lo porta sotto, sovrapponendocisi. -->
-        <StrumentiLettura tavola={() => fetchChartCompact(chartParameters(birth, opzioniTema))} />
+        <StrumentiLettura
+          tavola={() => fetchChartCompact(mostrati ?? chartParameters(birth, opzioniTema))}
+        />
 
         <BodyTable bodies={chart.bodies} partOfFortune={chart.partOfFortune} {evidenza} />
 

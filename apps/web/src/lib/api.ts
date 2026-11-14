@@ -350,10 +350,12 @@ export function skyCalendarParameters(
 
 export async function fetchSkyCalendar(
   parameters: URLSearchParams,
+  signal?: AbortSignal,
 ): Promise<SkyCalendarResponse> {
   return request<SkyCalendarResponse>(
     `/api/sky/calendar?${parameters}`,
     'Ricerca del calendario non riuscita',
+    signal,
   );
 }
 
@@ -397,10 +399,14 @@ export function electionParameters(
   return parameters;
 }
 
-export async function fetchElection(parameters: URLSearchParams): Promise<ElectionResponse> {
+export async function fetchElection(
+  parameters: URLSearchParams,
+  signal?: AbortSignal,
+): Promise<ElectionResponse> {
   return request<ElectionResponse>(
     `/api/election?${parameters}`,
     'Calcolo dell\'elezione non riuscito',
+    signal,
   );
 }
 
@@ -511,17 +517,26 @@ export function passageParameters(
   return parameters;
 }
 
-export async function fetchPassages(parameters: URLSearchParams): Promise<PassagesResponse> {
+export async function fetchPassages(
+  parameters: URLSearchParams,
+  signal?: AbortSignal,
+): Promise<PassagesResponse> {
   return request<PassagesResponse>(
     `/api/transits/passages?${parameters}`,
     'Ricerca dei passaggi non riuscita',
+    signal,
   );
 }
 
-async function request<T>(url: string, fallback: string): Promise<T> {
+/**
+ * `signal` annulla la richiesta: chi lo passa controlla `signal.aborted` prima
+ * di usare l'esito, e l'errore che esce da una richiesta annullata non è un
+ * guasto da mostrare (`lib/corsa.ts`).
+ */
+async function request<T>(url: string, fallback: string, signal?: AbortSignal): Promise<T> {
   let response: Response;
   try {
-    response = await fetch(url);
+    response = await fetch(url, signal ? { signal } : undefined);
   } catch {
     throw new RequestError(`${fallback}: server non raggiungibile.`);
   }

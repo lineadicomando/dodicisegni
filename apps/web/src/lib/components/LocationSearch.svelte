@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { Corsa } from '#lib/corsa.js';
   import type { Location } from '@dodicisegni/geo';
   import { untrack } from 'svelte';
 
@@ -77,32 +78,44 @@
     return parts.join(', ');
   }
 
+  /** Una ricerca alla volta: vedi `lib/corsa.ts`. */
+  const corsa = new Corsa();
+
   async function search(text: string): Promise<void> {
+    // Ogni battuta annulla la ricerca di quella prima: senza, i risultati di
+    // «ro» potevano arrivare dopo quelli di «roma» e coprirli.
+    const segnale = corsa.parti();
     if (text.trim().length < 2) {
       results = [];
       open = false;
+      loading = false;
       return;
     }
 
     loading = true;
     errorMessage = null;
     try {
-      const response = await fetch(`/api/locations?q=${encodeURIComponent(text)}&limit=8`);
+      const response = await fetch(`/api/locations?q=${encodeURIComponent(text)}&limit=8`, {
+        signal: segnale,
+      });
       if (!response.ok) {
         const body = await response.json().catch(() => ({}));
+        if (segnale.aborted) return;
         errorMessage = body.message ?? 'Ricerca non riuscita.';
         results = [];
         return;
       }
       const body = (await response.json()) as { results: Location[] };
+      if (segnale.aborted) return;
       results = body.results;
       open = true;
       activeIndex = -1;
     } catch {
+      if (segnale.aborted) return;
       errorMessage = 'Ricerca non riuscita: server non raggiungibile.';
       results = [];
     } finally {
-      loading = false;
+      if (!segnale.aborted) loading = false;
     }
   }
 
@@ -114,6 +127,10 @@
     if (selected) onselect(null);
 
     clearTimeout(timer);
+    // «Sta cercando» comincia dalla battuta, non dalla richiesta: nei 220 ms
+    // di attesa il campo non era né in ricerca né con risultati, e sotto
+    // compariva «Nessun risultato» per un testo ancora da cercare.
+    loading = query.trim().length >= 2;
     timer = setTimeout(() => void search(query), 220);
   }
 

@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { Corsa } from '#lib/corsa.js';
   import type {
     AyanamsaId,
     HouseSystem,
@@ -105,6 +106,12 @@
    * di un istante già superato arriverebbe dopo e si prenderebbe lo schermo.
    */
   let ultima = 0;
+  /**
+   * I parametri di ciò che è a schermo. Il link si compone da questi e non dal
+   * modulo: chi cambia una data senza ricalcolare copierebbe l'indirizzo di
+   * un'altra nascita sotto il tema vecchio.
+   */
+  let mostrati = $state<URLSearchParams | null>(null);
 
   /**
    * A quali condizioni è stato calcolato il quadro che si sta guardando.
@@ -186,10 +193,10 @@
     errorMessage = null;
 
     try {
-      const body = await fetchTransits(
-        transitParameters(birth, opzioniTema, transit, transitLocation),
-      );
+      const parametri = transitParameters(birth, opzioniTema, transit, transitLocation);
+      const body = await fetchTransits(parametri);
       if (richiesta !== ultima) return false;
+      mostrati = parametri;
       chart = body.chart;
       transits = body.transits;
       placeLabel = body.place?.label ?? null;
@@ -226,20 +233,27 @@
     transit = { ...transit, timezone: location?.timezone ?? nowMoment().timezone };
   }
 
+  /** Una ricerca dei passaggi alla volta: vedi `lib/corsa.ts`. */
+  const corsaPassaggi = new Corsa();
+
   async function loadPassages(): Promise<void> {
+    const segnale = corsaPassaggi.parti();
     loadingPassages = true;
     passagesError = null;
 
     try {
       const body = await fetchPassages(
         passageParameters(birth, opzioniTema, transit, MESI),
+        segnale,
       );
+      if (segnale.aborted) return;
       passages = body.passages;
     } catch (cause) {
+      if (segnale.aborted) return;
       passagesError =
         cause instanceof RequestError ? cause.message : 'Ricerca dei passaggi non riuscita.';
     } finally {
-      loadingPassages = false;
+      if (!segnale.aborted) loadingPassages = false;
     }
   }
 </script>
@@ -351,8 +365,7 @@
           svg={disegno}
           {evidenza}
           nome={['transiti', placeLabel, transits.input.date]}
-          link={() =>
-            transitParameters(birth, opzioniTema, transit, transitLocation)}
+          link={() => mostrati ?? transitParameters(birth, opzioniTema, transit, transitLocation)}
         />
       </div>
 

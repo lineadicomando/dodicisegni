@@ -20,6 +20,7 @@ import {
   AYANAMSAS as AYANAMSA_DEFINITIONS,
   DEFAULT_NATAL_ORB_CONVENTION,
   DIGNITY_SCHOOL_NAMES,
+  HORA_CONVENTIONS,
   HOUSE_SYSTEM_CODES,
   LOCAL_CLOCKS,
   NATAL_ORB_CONVENTIONS,
@@ -32,9 +33,17 @@ import { OROLOGI } from './orologi';
 import { DEFAULT_ORB_CONVENTION, ORB_CONVENTIONS } from './orbite';
 import { DIGNITY_SCHOOLS } from './scuole-dignita';
 import { SCHEMI_VARGA, VARGHE } from './varghe';
+import { HORE } from './vedica-opzioni';
 import { AYANAMSAS } from './zodiacs';
 
 describe('gli elenchi del client combaciano con il motore', () => {
+  it('le hora di vedica-opzioni.ts sono quelle di HORA_CONVENTIONS', () => {
+    expect(
+      [...HORE],
+      'lib/vedica-opzioni.ts è rimasto indietro rispetto a HORA_CONVENTIONS in packages/core/src/hora.ts',
+    ).toEqual(HORA_CONVENTIONS.map((convenzione) => convenzione.id));
+  });
+
   it('gli orologi di orologi.ts sono quelli di LOCAL_CLOCKS', () => {
     expect(
       OROLOGI.map((orologio) => orologio.value),

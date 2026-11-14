@@ -17,9 +17,9 @@ Prima di cominciare:
 
 ## Dove siamo
 
-Al 14 novembre 2026, versione **0.26.1**, tag `v0.26.1`. `origin` e il sito
-sono alla `v0.25.0`, pubblicata la mattina del 14 novembre; ciò che è venuto
-dopo è in locale (`git status -sb`). Push e deploy li chiede il
+Al 14 novembre 2026, versione **0.26.1**, tag `v0.26.1`, che è anche ciò
+che sta su `origin` e sul sito, pubblicato la sera del 14 novembre; ciò che
+è venuto dopo è in locale (`git status -sb`). Push e deploy li chiede il
 proprietario, e si fanno come in `CLAUDE.local.md`.
 
 I riferimenti `file:riga` di tutte le voci sono stati ricontrollati il 13
@@ -46,7 +46,6 @@ La colonna *Cifra* dice quale cifra della versione muove la voce
 | Voce | File in `docs/voci/` | Priorità | Taglia | Cifra | Prima di cominciare |
 |---|---|---|---|---|---|
 | 33. Un servizio `motore` senza porte in `compose.yaml`, per la rete interna | `33-istanza-interna.md` | bassa | piccola | — | dodicicase è fermo; conferma del proprietario per il server |
-| 45. Interfaccia: il link di `/vedica`, il link composto dal modulo, le risposte in corsa | `45-interfaccia-corse.md` | media | media | — | tutta dedotta: va riprodotta in un browser; il lato server è fatto con la 36 |
 | 46. La ricerca delle località scorre la tabella a ogni battuta; errori di SQLite grezzi | `46-ricerca-localita.md` | media | media | — | cambia `schema.sql`: chiede una reimportazione, sul server compresa |
 | 49. La revisione di ciò che il 13 novembre non è stato guardato | `49-revisione-resto.md` | media | grande | — | per ultima, dopo le voci 35–48; si può spezzare per riga |
 
