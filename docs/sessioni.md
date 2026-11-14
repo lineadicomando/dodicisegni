@@ -223,3 +223,40 @@ si è arrivati. Le tavole delle voci chiuse e delle versioni sono in
   `search_location` ha un `max(200)`. I `.txt` di GeoNames si controllano
   come tavole, in cache e appena scaricati. Il proprietario aveva dato il via
   libera a lavorare sul server per la reimportazione: non è servito.
+- **14 novembre 2026, dopo la voce 46.** Voce 49, prima riga (le tavole di dottrina),
+  scuola di Lilly. Rilette sull'immagine, non sulle trascrizioni: la tavola
+  di p. 104 cella per cella (domicili, esaltazioni coi gradi e i Nodi,
+  triplicità, i sessanta termini, le trentasei facce, esilio e caduta) contro
+  `dignita-lilly.ts` e i domicili, l'esilio, le esaltazioni e le cadute di
+  `dignita.ts`; la tavola di p. 115 contro i punti di `condizioni-lilly.ts`;
+  quella di p. 145 contro la Parte di Fortuna; i sette moti medi (pp. 57,
+  61, 65, 69, 72, 76, 80); le soglie di p. 113 (8°30', 17°, 17') e di p. 122
+  (0-2 e 27-29 gradi, la Via Combusta); p. 125 contro
+  `qualitaDellaPerfezione`. Tutte le costanti combaciano. Contro le sole
+  trascrizioni, senza riaprire l'immagine: le nature dei sette (pp. 58-81),
+  orientale e occidentale e l'assedio (p. 114), il partile (p. 106), i
+  cinque gradi (p. 33), le definizioni di pp. 108-113 e 126 e le
+  considerazioni di pp. 121-123; le regole del codice le seguono. Un solo
+  difetto, la voce 51: a p. 125 il sestile e il trigono hanno una terza
+  condizione («no malevolent Aspect to intervene») che l'oraria non riporta.
+  Due cose notate e lasciate, perché sono letture già dichiarate nei
+  `readings`: la frustrazione di p. 112 è «corporally», e il motore la dà per
+  qualunque aspetto del più pesante con uno più pesante ancora; una ricezione
+  mutua mista (uno per domicilio, l'altro per esaltazione) non prende punti
+  dalla tavola di p. 115 e non toglie il peregrino. Nessuna costante della
+  scuola è senza pagina. Non lette in questa sessione: `orbite.ts` e
+  `corso.ts` (seconda riga della voce) e `apps/web/src/lib/case-lilly.ts`.
+- **14 novembre 2026, sulla voce 51.** Cercato nel libro di Lilly che cosa
+  sia il «malevolent Aspect» di p. 125, senza toccare il codice. Lette a
+  vista e salvate le pp. 102, 184-186, 260, 310-311, 317, 385, 387-388, 445
+  e 530. L'aspetto malevolo è il quadrato o l'opposizione, di qualunque
+  pianeta (pp. 102, 106, 260); ciò che «intervenes» ha altrove i nomi delle
+  definizioni (p. 317, p. 445). Ricalcolate due figure che Lilly giudica:
+  quella di p. 220 e quella del cap. LIX (p. 385, 27 giugno 1646 gregoriano
+  alle 07:26: il motore dà l'ora di Saturno e il sestile Sole-Saturno il
+  giorno che dice Lilly). In tutte e due la Luna cosignificatrice porta
+  quadrati o opposizioni ai significatori prima della perfezione, e Lilly
+  non li conta o li conta a favore. Non si è trovata una figura in cui un
+  terzo, non la Luna, faccia cadere la condizione. La lettura proposta è nel
+  file della voce e aspetta la conferma del proprietario.
+

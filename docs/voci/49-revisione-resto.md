@@ -23,7 +23,15 @@ Che cosa resta, in ordine di quanto può costare un errore:
   revisione non è di codice ma di fonte: ogni costante contro la pagina in
   `texts/`, col metodo di `docs/lavorare.md`, *Le fonti*, e nel conto vanno
   le costanti che non hanno una pagina accanto. È la parte più lunga, e si
-  può spezzare per scuola;
+  può spezzare per scuola. **Fatta il 14 novembre 2026 la scuola di Lilly**
+  (`dignita-lilly.ts`, `condizioni-lilly.ts`, `oraria-lilly.ts` e, di
+  `dignita.ts`, domicili, esilio, esaltazioni e cadute contro p. 104): che
+  cosa è stato letto sta in `docs/sessioni.md`, e ne è uscita la voce 51.
+  **Restano**: di `dignita.ts` i luoghi di Tolomeo (I.17, I.19), Valente
+  (I.2), Firmico (II.3.5-6) e Leo (p. 117); `dignita-tolomeo.ts`,
+  `dignita-valente.ts`, `dignita-bonatti.ts`, `dignita-tema.ts`; il
+  Jyotisha (`dignita-parashara.ts`, `maitri.ts`, `vimshopaka.ts`,
+  `varga-buoni.ts`, `arudha.ts`, `arudha-graha.ts`); `constants.ts`;
 - **il Jyotisha, letto senza i commenti o solo per l'aritmetica**:
   `jyotisha.ts`, `dasha.ts`, `nakshatra.ts`, `stati.ts`, `varga.ts`,
   `hora.ts`, `drishti.ts`; e `corso.ts`, `aspects.ts`, `orbite.ts`,

@@ -185,3 +185,12 @@ niente, e non va ricontrollato finché il codice lì non cambia:
 
 Lo farebbe riaprire una modifica alla catena di calcolo, al pool, al service
 worker o a `main.ts` del desktop.
+
+**Le tavole di Lilly, rilette il 14 novembre 2026 (voce 49).** Le tavole di
+pp. 104, 115 e 145, i moti medi di pp. 57-80 e le soglie di pp. 113 e 122
+sono state confrontate una per una con l'immagine della pagina e combaciano
+con `dignita-lilly.ts`, `condizioni-lilly.ts` e `oraria-lilly.ts`; il
+dettaglio è in `docs/sessioni.md`. Non vanno ricontrollate finché quei file
+non cambiano. La frustrazione estesa a ogni aspetto e la ricezione mutua
+mista che non conta sono letture dichiarate, non sviste: le farebbe riaprire
+un luogo del libro II in cui Lilly le applica diversamente.
