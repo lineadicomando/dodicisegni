@@ -1,4 +1,4 @@
-import { mkdtempSync, rmSync } from 'node:fs';
+import { mkdtempSync, rmSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { DatabaseSync } from 'node:sqlite';
@@ -207,9 +207,32 @@ describe('searchLocations', () => {
   });
 
   it('tratta i metacaratteri di LIKE come testo, non come jolly', () => {
-    // Senza escape, "%" corrisponderebbe a qualunque località.
+    // La ricerca non usa più LIKE; la prova resta, perché la promessa è la stessa.
     expect(searchLocations('%', { databasePath })).toHaveLength(0);
     expect(searchLocations('_ome', { databasePath })).toHaveLength(0);
+  });
+
+  it('una query più lunga di qualunque nome non trova niente, senza errori di SQLite', () => {
+    // Con LIKE sessantamila caratteri davano «LIKE or GLOB pattern too complex».
+    expect(searchLocations('a'.repeat(60_000), { databasePath })).toEqual([]);
+  });
+
+  it('un file che non è un database si nomina, e non resta in cache', () => {
+    const finto = join(directory, 'finto.db');
+    writeFileSync(finto, 'questo non è un database, è un file di testo qualunque\n'.repeat(50));
+
+    for (let volta = 0; volta < 2; volta++) {
+      let errore: unknown;
+      try {
+        searchLocations('Rome', { databasePath: finto });
+      } catch (sollevato) {
+        errore = sollevato;
+      }
+      expect(errore, `volta ${volta}`).toBeInstanceOf(GeoError);
+      expect((errore as GeoError).code, `volta ${volta}`).toBe('DATABASE_CORROTTO');
+    }
+    // E il database buono risponde ancora.
+    expect(searchLocations('Rome', { databasePath }).length).toBeGreaterThan(0);
   });
 
   it('rifiuta una query vuota', () => {

@@ -46,7 +46,6 @@ La colonna *Cifra* dice quale cifra della versione muove la voce
 | Voce | File in `docs/voci/` | Priorità | Taglia | Cifra | Prima di cominciare |
 |---|---|---|---|---|---|
 | 33. Un servizio `motore` senza porte in `compose.yaml`, per la rete interna | `33-istanza-interna.md` | bassa | piccola | — | dodicicase è fermo; conferma del proprietario per il server |
-| 46. La ricerca delle località scorre la tabella a ogni battuta; errori di SQLite grezzi | `46-ricerca-localita.md` | media | media | — | cambia `schema.sql`: chiede una reimportazione, sul server compresa |
 | 49. La revisione di ciò che il 13 novembre non è stato guardato | `49-revisione-resto.md` | media | grande | — | per ultima, dopo le voci 35–48; si può spezzare per riga |
 
 Un ordine che regge: le alte della revisione sono chiuse, e così le due funzioni

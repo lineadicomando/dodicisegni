@@ -129,9 +129,32 @@ async function fetchCached(fileName) {
     throw error;
   }
   await handle.close();
+  // Un 200 non è ancora il file: un proxy o una pagina di cortesia rispondono
+  // 200 con dell'HTML, e un `countryInfo.txt` così darebbe un database
+  // «riuscito» coi paesi nominati per sigla. Si guarda prima di dargli il
+  // nome vero, così in cache non ci entra.
+  if (!(await looksLikeTable(partial))) {
+    await rm(partial, { force: true });
+    throw new Error(`${fileName}: la risposta non è una tavola GeoNames (righe separate da tabulazioni)`);
+  }
   await rename(partial, cached);
   console.log(`ok (${mb((await stat(cached)).size)})`);
   return cached;
+}
+
+/**
+ * Un `.txt` di GeoNames è una tavola: righe di campi separati da
+ * tabulazioni, più qualche commento con `#`. Le due che si scaricano hanno
+ * centinaia di righe (i paesi) o migliaia (le regioni): cinquanta righe con
+ * almeno tre tabulazioni bastano a distinguerle da una pagina HTML, che non
+ * ne ha nessuna. Gli zip non passano di qui: per loro garantisce la
+ * directory centrale.
+ */
+async function looksLikeTable(path) {
+  if (path.replace(/\.part$/, '').endsWith('.zip')) return true;
+  const righe = (await readFile(path, 'utf8')).split('\n');
+  const tavola = righe.filter((riga) => !riga.startsWith('#') && riga.split('\t').length > 3);
+  return tavola.length >= 50;
 }
 
 /**
@@ -141,7 +164,12 @@ async function fetchCached(fileName) {
  * scarta e si riscarica, invece di fallire a ogni avvio.
  */
 async function usableFromCache(path) {
-  if (!path.endsWith('.zip')) return true;
+  if (!path.endsWith('.zip')) {
+    if (await looksLikeTable(path)) return true;
+    console.log(`  ${basename(path).padEnd(22)} in cache ma non è una tavola, lo riscarico`);
+    await rm(path, { force: true });
+    return false;
+  }
   try {
     await listZipEntries(path);
     return true;

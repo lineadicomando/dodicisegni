@@ -257,6 +257,7 @@ export function registerSearchLocation(server: McpServer, context: ToolContext =
         query: z
           .string()
           .min(1)
+          .max(200)
           .describe('Nome della località. Sono riconosciuti gli esonimi, es. "Monaco di Baviera".'),
         country_code: z
           .string()

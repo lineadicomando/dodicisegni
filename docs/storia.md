@@ -50,6 +50,7 @@ porta il nome del file.
 | 34, `34-doppia-licenza.md` | `acc68d7` |
 | 50, `50-tempo-del-luogo.md` | `73fccb5` |
 | 45, `45-interfaccia-corse.md` | `f43c550` |
+| 46, `46-ricerca-localita.md` | `cf47502` |
 
 ## Le versioni
 
@@ -295,3 +296,19 @@ cambia muove la seconda cifra.
   calendario usano lo stesso codice e non sono stati riprodotti a parte. Il
   contatore `ultima` dei tre `calcola` è rimasto com'era: funziona, e quelle
   rotte non passano dal pool.
+- **14 novembre 2026, tarda sera.** Chiusa la voce 46, senza versione e
+  **senza toccare `schema.sql`**: la voce dava per necessaria una
+  reimportazione, e non lo è. `search_name` è già normalizzato, quindi il
+  prefisso si cerca come intervallo (`>= 'rom' AND < 'rom' + U+10FFFF`) e
+  l'intervallo usa l'indice che c'era, `idx_location_names_search`: il piano
+  passa da `SCAN n` a `SEARCH n USING COVERING INDEX`. Misurato sul dataset
+  vero con venti query (latine, cirilliche, giapponesi, coi metacaratteri di
+  LIKE), a 8 e a 50 risultati: stessi risultati nello stesso ordine, e da
+  53 ms a meno di uno per tre lettere; una lettera sola resta fra 10 e 75 ms,
+  perché le righe da raggruppare sono centinaia di migliaia, ma l'interfaccia
+  cerca da due. Un file che non è un database dà `DATABASE_CORROTTO` e non
+  resta in cache (`PRAGMA schema_version` all'apertura); una query di
+  sessantamila caratteri non trova niente, senza errori; lo schema di
+  `search_location` ha un `max(200)`. I `.txt` di GeoNames si controllano
+  come tavole, in cache e appena scaricati. Il proprietario aveva dato il via
+  libera a lavorare sul server per la reimportazione: non è servito.

@@ -48,11 +48,22 @@ export function openDatabase(databasePath?: string): DatabaseSync {
   // connessione va chiusa, non accumulata.
   closeDatabase();
 
+  let database: DatabaseSync | undefined;
   try {
-    const database = new DatabaseSync(path, { readOnly: true });
+    database = new DatabaseSync(path, { readOnly: true });
+    // `DatabaseSync` apre in modo pigro: un file che non è un database passa
+    // di qui senza errori e cade alla prima query, col messaggio grezzo di
+    // SQLite e con la connessione rotta già in cache. Leggere una riga
+    // dell'intestazione lo fa cadere adesso, dove lo si può nominare.
+    database.prepare('PRAGMA schema_version').get();
     cached = { path, database };
     return database;
   } catch (error) {
+    try {
+      database?.close();
+    } catch {
+      // Non si era aperta davvero: non c'è niente da chiudere.
+    }
     throw new GeoError(
       'DATABASE_CORROTTO',
       `Impossibile aprire ${path}: ${error instanceof Error ? error.message : String(error)}`,
