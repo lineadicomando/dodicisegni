@@ -17,7 +17,9 @@ import {
   type DignitySchool,
   type HouseSystem,
   type NatalOrbConvention,
+  type LocalClock,
   type ZodiacOptions,
+  LOCAL_CLOCKS,
 } from '@dodicisegni/core';
 import { error } from '@sveltejs/kit';
 import { resolvePlace, type ResolvedPlace } from './place';
@@ -57,6 +59,21 @@ export function readBirth(parameters: URLSearchParams): RequestedBirth {
   };
   const time = parameters.get('time');
   if (time) birth.time = time;
+
+  // Su quale orologio è stata letta l'ora: il fuso della località, se non si
+  // dice altro. Gli altri due contano dal meridiano del luogo, che qui c'è
+  // sempre.
+  const clock = parameters.get('clock');
+  if (clock) {
+    if (!(LOCAL_CLOCKS as readonly string[]).includes(clock)) {
+      throw error(
+        400,
+        `Orologio "${clock}" sconosciuto: ammessi ${LOCAL_CLOCKS.join(', ')}.`,
+        { code: 'OROLOGIO_NON_VALIDO' },
+      );
+    }
+    birth.clock = clock as LocalClock;
+  }
 
   return { birth, place };
 }

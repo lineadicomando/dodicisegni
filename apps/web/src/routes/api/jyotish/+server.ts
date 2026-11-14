@@ -36,6 +36,7 @@ const VARGHE_CALCOLATE = new Set<string>(VARGAS.map((varga) => varga.id));
  * c'è quella rotta.
  *
  * I parametri della nascita sono gli stessi di `/api/chart`: `date`, `time`,
+ * `clock` (l'orologio su cui l'ora è stata letta, spiegato là),
  * e il luogo con `locationId` oppure con la terna `latitude` + `longitude` +
  * `timezone`.
  *

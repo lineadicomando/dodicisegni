@@ -21,18 +21,27 @@ import {
   DEFAULT_NATAL_ORB_CONVENTION,
   DIGNITY_SCHOOL_NAMES,
   HOUSE_SYSTEM_CODES,
+  LOCAL_CLOCKS,
   NATAL_ORB_CONVENTIONS,
   VARGA_SCHEMES,
   VARGAS,
 } from '@dodicisegni/core';
 import { describe, expect, it } from 'vitest';
 import { HOUSE_SYSTEMS } from './house-systems';
+import { OROLOGI } from './orologi';
 import { DEFAULT_ORB_CONVENTION, ORB_CONVENTIONS } from './orbite';
 import { DIGNITY_SCHOOLS } from './scuole-dignita';
 import { SCHEMI_VARGA, VARGHE } from './varghe';
 import { AYANAMSAS } from './zodiacs';
 
 describe('gli elenchi del client combaciano con il motore', () => {
+  it('gli orologi di orologi.ts sono quelli di LOCAL_CLOCKS', () => {
+    expect(
+      OROLOGI.map((orologio) => orologio.value),
+      'lib/orologi.ts è rimasto indietro rispetto a LOCAL_CLOCKS in packages/core/src/time.ts',
+    ).toEqual([...LOCAL_CLOCKS]);
+  });
+
   it('gli ayanamsa di zodiacs.ts sono quelli di AYANAMSAS', () => {
     expect(
       AYANAMSAS.map((ayanamsa) => ayanamsa.value),

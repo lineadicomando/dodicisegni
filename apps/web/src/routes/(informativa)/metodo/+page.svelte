@@ -182,8 +182,19 @@
   Il sito non corregge, e lo dichiara con un'avvertenza accanto al tema. Lo
   stesso scarto è infatti anche l'ora che un paese si è dato per legge quando
   ha esteso a tutti il tempo della capitale, e da un atto non si ricava quale
-  orologio guardasse chi l'ha scritto. Chi lo sa sposta l'ora di quattro
-  minuti per ogni grado di longitudine.
+  orologio guardasse chi l'ha scritto.
+</p>
+
+<p>
+  Chi lo sa lo dice: sotto l'ora di nascita, «Ora di un orologio locale» fa
+  leggere l'ora sul meridiano del luogo invece che sul fuso. Il
+  <strong>tempo medio locale</strong> conta quattro minuti per ogni grado di
+  longitudine da Greenwich, ed è l'ora degli orologi pubblici di allora. Il
+  <strong>tempo vero locale</strong> è quello della meridiana, dove il
+  mezzogiorno è il passaggio del Sole: si scosta dal medio dell'equazione del
+  tempo, fino a sedici minuti ai primi di novembre e a quattordici a metà
+  febbraio, e il tema la riporta accanto all'ora. Il sito non sceglie fra i
+  tre orologi: lo fa chi ha l'atto davanti.
 </p>
 
 <h2 id="corpi">I corpi</h2>

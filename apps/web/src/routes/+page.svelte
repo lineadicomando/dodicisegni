@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { orologioLetto } from '#lib/orologi.js';
   import type { AyanamsaId, HouseSystem, NatalChart, NatalOrbConvention, Zodiac } from '@dodicisegni/core';
   import { onMount } from 'svelte';
   import { page } from '$app/state';
@@ -136,7 +137,7 @@
       ? ` · siderale ${carta.ayanamsa.name}`
       : '';
     return (
-      `${carta.input.date}${ora} · ${carta.input.timezone} · UT ${ut}` +
+      `${carta.input.date}${ora} · ${orologioLetto(carta.time, carta.input.timezone)} · UT ${ut}` +
       ` · TSL ${carta.siderealTime.formatted}${settore}${zodiaco}` +
       ` · effemeridi ${carta.ephemerisMode}`
     );

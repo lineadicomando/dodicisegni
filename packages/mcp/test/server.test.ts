@@ -4,6 +4,7 @@ import { join } from 'node:path';
 import { DatabaseSync } from 'node:sqlite';
 import { Client } from '@modelcontextprotocol/sdk/client/index.js';
 import { InMemoryTransport } from '@modelcontextprotocol/sdk/inMemory.js';
+import { LOCAL_CLOCKS } from '@dodicisegni/core';
 import { loadSchema, normalizeName } from '@dodicisegni/geo';
 import { afterAll, beforeAll, describe, expect, it } from 'vitest';
 import { createServer } from '../src/server.js';
@@ -1602,4 +1603,41 @@ describe('le descrizioni dicono ciò che il codice fa', () => {
       }
     });
   });
+
+  describe("l'orologio dell'ora di nascita", () => {
+    const LECCE = { date: '1850-06-01', time: '12:00', latitude: 40.35, longitude: 18.1743, timezone: 'Europe/Rome' };
+
+    it('col fuso avverte, col tempo medio o vero del luogo lo nomina in testa', async () => {
+      const fuso = textOf(await client.callTool({ name: 'compute_natal_chart', arguments: LECCE }));
+      expect(fuso).toContain('non era ancora un fuso');
+      expect(fuso).toContain('UT: 1850-06-01T11:10:04Z');
+
+      const medio = textOf(
+        await client.callTool({ name: 'compute_natal_chart', arguments: { ...LECCE, clock: 'tempo-medio-locale' } }),
+      );
+      expect(medio).toContain('(tempo medio locale, UTC+01:13)');
+      expect(medio).toContain('UT: 1850-06-01T10:47:18Z');
+      expect(medio).not.toContain('non era ancora un fuso');
+
+      const vero = textOf(
+        await client.callTool({ name: 'compute_jyotisha_chart', arguments: { ...LECCE, clock: 'tempo-vero-locale' } }),
+      );
+      expect(vero).toMatch(/tempo vero locale, UTC\+01:15, equazione del tempo \+2m35s/);
+    });
+
+    it('lo offrono tutti i tool che partono da una nascita, con i valori del motore', async () => {
+      const { tools } = await client.listTools();
+      const conNascita = tools.filter((tool) => {
+        const properties = tool.inputSchema.properties as Record<string, { description?: string }>;
+        return properties.time?.description?.startsWith('Ora di nascita');
+      });
+
+      expect(conNascita.length).toBe(7);
+      for (const tool of conNascita) {
+        const clock = (tool.inputSchema.properties as Record<string, { enum?: string[] }>).clock;
+        expect(clock?.enum, tool.name).toEqual([...LOCAL_CLOCKS]);
+      }
+    });
+  });
 });
+

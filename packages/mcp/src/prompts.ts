@@ -30,10 +30,11 @@ import {
   formatJyotishaCompact,
   type BirthData,
   type ChartOptions,
+  type LocalClock,
 } from '@dodicisegni/core';
 import { letturaDaIncollare, letturaOrariaDaIncollare, SISTEMI, type Sistema } from '@dodicisegni/lettura';
 import { z } from 'zod';
-import { describeError, resolvePlace, type ToolContext } from './tools.js';
+import { CLOCK_SCHEMA, describeError, resolvePlace, type ToolContext } from './tools.js';
 
 /** Il sistema predefinito: l'astrologia occidentale, che è ciò che si aspetta
  * chi non specifica niente. */
@@ -57,6 +58,7 @@ export function registerLetturaDelTema(server: McpServer, context: ToolContext =
           .string()
           .regex(/^\d{4}-\d{2}-\d{2}$/, 'Formato atteso: YYYY-MM-DD.')
           .describe('Data di nascita locale, formato YYYY-MM-DD.'),
+        ...CLOCK_SCHEMA,
         time: z
           .string()
           .regex(/^\d{2}:\d{2}(:\d{2})?$/, 'Formato atteso: HH:mm.')
@@ -105,6 +107,7 @@ function componi(
   args: {
     date: string;
     time?: string | undefined;
+    clock?: LocalClock | undefined;
     location_id?: string | undefined;
     latitude?: string | undefined;
     longitude?: string | undefined;
@@ -152,6 +155,7 @@ function componi(
       timezone: place.timezone,
     };
     if (args.time !== undefined) birth.time = args.time;
+    if (args.clock !== undefined) birth.clock = args.clock;
 
     // Il tema che accompagna le istruzioni è quello che le istruzioni
     // descrivono. Un tema tropicale sotto le istruzioni vediche non darebbe un

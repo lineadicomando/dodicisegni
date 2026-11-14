@@ -135,6 +135,26 @@ function nonEmpty<T extends string>(values: readonly T[]): [T, ...T[]] {
 const AYANAMSAS = nonEmpty<AyanamsaId>(AYANAMSA_DEFINITIONS.map((ayanamsa) => ayanamsa.id));
 
 /**
+ * L'orologio dell'ora di nascita, uguale per ogni tool che parta da una
+ * nascita. Una definizione sola, come per lo zodiaco qui sotto.
+ */
+export const CLOCK_SCHEMA = {
+  clock: z
+    .enum(['fuso', 'tempo-medio-locale', 'tempo-vero-locale'])
+    .optional()
+    .describe(
+      "Su quale orologio è stata letta l'ora di nascita. OMETTILO quasi sempre: il default, " +
+        'fuso, è l\'ora civile con le regole storiche del fuso. Gli altri due servono alle ' +
+        "nascite di prima dell'ora unica (in Italia prima del 1893), quando ogni città teneva " +
+        "l'ora del proprio meridiano: tempo-medio-locale conta quattro minuti per grado di " +
+        'longitudine del luogo, tempo-vero-locale è l\'ora della meridiana (il medio più ' +
+        "l'equazione del tempo). Non sceglierlo tu: usalo solo se chi chiede dice quale " +
+        "orologio segnava l'ora, o dopo averglielo chiesto quando il tool avverte che l'ora " +
+        'è stata letta come tempo medio della città del fuso.',
+    ),
+};
+
+/**
  * I due parametri dello zodiaco, uguali per ogni tool che riporti un segno.
  *
  * Una definizione sola e non quattro copie: le descrizioni dei tool sono la
@@ -297,6 +317,7 @@ export function registerComputeNatalChart(server: McpServer, context: ToolContex
           .string()
           .regex(/^\d{4}-\d{2}-\d{2}$/)
           .describe('Data di nascita locale, formato YYYY-MM-DD.'),
+        ...CLOCK_SCHEMA,
         time: z
           .string()
           .regex(/^\d{2}:\d{2}(:\d{2})?$/)
@@ -392,6 +413,7 @@ export function registerComputeNatalChart(server: McpServer, context: ToolContex
           timezone: place.timezone,
         };
         if (args.time !== undefined) birth.time = args.time;
+        if (args.clock !== undefined) birth.clock = args.clock;
 
         const zodiaco = zodiacOptions(args);
         if ('error' in zodiaco) return fail(zodiaco.error);
@@ -459,6 +481,7 @@ export function registerComputeJyotishaChart(server: McpServer, context: ToolCon
           .string()
           .regex(/^\d{4}-\d{2}-\d{2}$/)
           .describe('Data di nascita locale, formato YYYY-MM-DD.'),
+        ...CLOCK_SCHEMA,
         time: z
           .string()
           .regex(/^\d{2}:\d{2}(:\d{2})?$/)
@@ -567,6 +590,7 @@ export function registerComputeJyotishaChart(server: McpServer, context: ToolCon
           timezone: place.timezone,
         };
         if (args.time !== undefined) birth.time = args.time;
+        if (args.clock !== undefined) birth.clock = args.clock;
 
         // Siderale e a segni interi non sono predefiniti che si possono
         // cambiare: sono ciò che rende vedico questo tema. Chi vuole altro
@@ -620,6 +644,7 @@ export function registerComputeTransits(server: McpServer, context: ToolContext 
           .string()
           .regex(/^\d{4}-\d{2}-\d{2}$/)
           .describe('Data di nascita locale, formato YYYY-MM-DD.'),
+        ...CLOCK_SCHEMA,
         time: z
           .string()
           .regex(/^\d{2}:\d{2}(:\d{2})?$/)
@@ -714,6 +739,7 @@ export function registerComputeTransits(server: McpServer, context: ToolContext 
           timezone: place.timezone,
         };
         if (args.time !== undefined) birth.time = args.time;
+        if (args.clock !== undefined) birth.clock = args.clock;
 
         const zodiaco = zodiacOptions(args);
         if ('error' in zodiaco) return fail(zodiaco.error);
@@ -1472,6 +1498,7 @@ export function registerDrawChartWheel(server: McpServer, context: ToolContext =
           .string()
           .regex(/^\d{4}-\d{2}-\d{2}$/)
           .describe('Data di nascita locale, formato YYYY-MM-DD.'),
+        ...CLOCK_SCHEMA,
         time: z
           .string()
           .regex(/^\d{2}:\d{2}(:\d{2})?$/)
@@ -1568,6 +1595,7 @@ export function registerDrawChartWheel(server: McpServer, context: ToolContext =
           timezone: place.timezone,
         };
         if (args.time !== undefined) birth.time = args.time;
+        if (args.clock !== undefined) birth.clock = args.clock;
 
         const zodiaco = zodiacOptions(args);
         if ('error' in zodiaco) return fail(zodiaco.error);
@@ -1657,6 +1685,7 @@ export function registerDrawJyotishaChart(server: McpServer, context: ToolContex
           .string()
           .regex(/^\d{4}-\d{2}-\d{2}$/)
           .describe('Data di nascita locale, formato YYYY-MM-DD.'),
+        ...CLOCK_SCHEMA,
         time: z
           .string()
           .regex(/^\d{2}:\d{2}(:\d{2})?$/)
@@ -1723,6 +1752,7 @@ export function registerDrawJyotishaChart(server: McpServer, context: ToolContex
           timezone: place.timezone,
         };
         if (args.time !== undefined) birth.time = args.time;
+        if (args.clock !== undefined) birth.clock = args.clock;
 
         const options: ChartOptions = { zodiac: 'siderale', houseSystem: 'segni-interi' };
         if (args.ayanamsa) options.ayanamsa = args.ayanamsa;
@@ -1800,6 +1830,7 @@ export function registerFindTransitPassages(server: McpServer, context: ToolCont
           .string()
           .regex(/^\d{4}-\d{2}-\d{2}$/)
           .describe('Data di nascita locale, formato YYYY-MM-DD.'),
+        ...CLOCK_SCHEMA,
         time: z
           .string()
           .regex(/^\d{2}:\d{2}(:\d{2})?$/)
@@ -1852,6 +1883,7 @@ export function registerFindTransitPassages(server: McpServer, context: ToolCont
           timezone: place.timezone,
         };
         if (args.time !== undefined) birth.time = args.time;
+        if (args.clock !== undefined) birth.clock = args.clock;
 
         const options: ChartOptions = { minorAspects: args.minor_aspects ?? false };
         if (context.ephemerisPath) options.ephemerisPath = context.ephemerisPath;
@@ -1918,6 +1950,7 @@ export function registerFindActiveTransits(server: McpServer, context: ToolConte
           .string()
           .regex(/^\d{4}-\d{2}-\d{2}$/)
           .describe('Data di nascita locale, formato YYYY-MM-DD.'),
+        ...CLOCK_SCHEMA,
         time: z
           .string()
           .regex(/^\d{2}:\d{2}(:\d{2})?$/)
@@ -1970,6 +2003,7 @@ export function registerFindActiveTransits(server: McpServer, context: ToolConte
           timezone: place.timezone,
         };
         if (args.time !== undefined) birth.time = args.time;
+        if (args.clock !== undefined) birth.clock = args.clock;
 
         const options: ChartOptions = { minorAspects: args.minor_aspects ?? false };
         if (context.ephemerisPath) options.ephemerisPath = context.ephemerisPath;

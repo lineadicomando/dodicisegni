@@ -17,7 +17,7 @@ Prima di cominciare:
 
 ## Dove siamo
 
-Al 14 novembre 2026, versione **0.26.0**, tag `v0.26.0`. `origin` e il sito
+Al 14 novembre 2026, versione **0.26.1**, tag `v0.26.1`. `origin` e il sito
 sono alla `v0.25.0`, pubblicata la mattina del 14 novembre; ciò che è venuto
 dopo è in locale (`git status -sb`). Push e deploy li chiede il
 proprietario, e si fanno come in `CLAUDE.local.md`.
@@ -26,7 +26,7 @@ I riferimenti `file:riga` di tutte le voci sono stati ricontrollati il 13
 novembre 2026 sulla 0.15.0. Le righe si spostano: se una non torna, fa fede
 il nome della funzione o della costante accanto.
 
-Le voci vengono da tre parti:
+Le voci vengono da due parti:
 
 - **33**: ciò che resta dell'integrazione con **dodicicase**, la piattaforma commerciale a
   codice chiuso che chiamerebbe dodicisegni solo in rete, senza importarne
@@ -37,8 +37,6 @@ Le voci vengono da tre parti:
   *dedotto* viene dalla sola lettura, e la prima cosa da fare è riprodurlo.
   Che cosa la revisione ha letto e trovato a posto sta in
   `docs/esaminato.md`; che cosa non ha letto è la voce 49.
-- **50**: ciò che la voce 42, chiusa con un'avvertenza, ha lasciato a chi
-  vuole di più.
 
 ## Le voci
 
@@ -51,7 +49,6 @@ La colonna *Cifra* dice quale cifra della versione muove la voce
 | 45. Interfaccia: il link di `/vedica`, il link composto dal modulo, le risposte in corsa | `45-interfaccia-corse.md` | media | media | — | tutta dedotta: va riprodotta in un browser; il lato server è fatto con la 36 |
 | 46. La ricerca delle località scorre la tabella a ogni battuta; errori di SQLite grezzi | `46-ricerca-localita.md` | media | media | — | cambia `schema.sql`: chiede una reimportazione, sul server compresa |
 | 49. La revisione di ciò che il 13 novembre non è stato guardato | `49-revisione-resto.md` | media | grande | — | per ultima, dopo le voci 35–48; si può spezzare per riga |
-| 50. Un valore esplicito per il tempo medio del luogo, prima dei fusi | `50-tempo-del-luogo.md` | bassa | piccola | 3ª | — |
 
 Un ordine che regge: le alte della revisione sono chiuse, e così le due funzioni
 per dodicicase (31 e 32) e le due medie che aspettavano una decisione (42 e

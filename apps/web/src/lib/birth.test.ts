@@ -1,6 +1,8 @@
 import type { Location } from '@dodicisegni/geo';
+import { orologioLetto } from './orologi';
 import { describe, expect, it } from 'vitest';
 import {
+  birthFromParameters,
   emptyBirthInput,
   isComplete,
   refinedCoordinates,
@@ -109,3 +111,22 @@ describe('resetCoordinates', () => {
     expect(input.longitude).toBe('');
   });
 });
+
+describe("l'orologio in un indirizzo", () => {
+  it('torna nel modulo, e una parola sconosciuta vale il fuso', () => {
+    const letto = (query: string) => birthFromParameters(new URLSearchParams(query), null).clock;
+
+    expect(letto('date=1850-06-01&time=12:00&clock=tempo-vero-locale')).toBe('tempo-vero-locale');
+    expect(letto('date=1850-06-01&time=12:00')).toBe('fuso');
+    expect(letto('date=1850-06-01&time=12:00&clock=boh')).toBe('fuso');
+  });
+});
+
+describe("l'orologio nella riga di testa", () => {
+  it('nomina il fuso solo quando è il fuso ad aver letto l’ora', () => {
+    expect(orologioLetto({}, 'Europe/Rome')).toBe('Europe/Rome');
+    expect(orologioLetto({ clock: 'tempo-medio-locale' }, 'Europe/Rome')).toBe('tempo medio locale');
+    expect(orologioLetto({ clock: 'tempo-vero-locale' }, 'Europe/Rome')).toBe('tempo vero locale');
+  });
+});
+

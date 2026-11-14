@@ -323,7 +323,8 @@ codice rimandano qui con «`docs/decisioni.md`».
   oppure l'ora legale di un paese che ha adottato il tempo della capitale, e
   il runtime non dice quale; e un atto non dice quale orologio guardasse chi
   l'ha scritto. Il motore avverte e lascia l'ora com'è; chi vuole il tempo
-  del luogo lo chiederà per nome (voce 50).
+  del luogo lo chiede per nome, con `clock` (voce 50, chiusa lo stesso
+  giorno): tempo medio o tempo vero, accanto al fuso e non al suo posto.
 - **Un elenco troppo lungo si rifiuta, non si tronca, e solo dove lo legge un
   agente.** Scelta del proprietario, 14 novembre 2026 (voce 43). Oltre
   `MAX_READABLE_ROWS` righe i tool MCP e il testo compatto delle rotte

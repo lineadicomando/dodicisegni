@@ -11,8 +11,10 @@
  * legge nel campo. L'interpretazione sta in `coordinates.ts`.
  */
 
+import type { LocalClock } from '@dodicisegni/core';
 import type { Location } from '@dodicisegni/geo';
 import { formatCoordinate, parseCoordinate } from './coordinates';
+import { orologioDa } from './orologi';
 
 export interface BirthInput {
   /** Data locale, `YYYY-MM-DD`. */
@@ -20,6 +22,8 @@ export interface BirthInput {
   /** Ora locale, `HH:mm`. Ignorata se `timeUnknown`. */
   time: string;
   timeUnknown: boolean;
+  /** Su quale orologio è stata letta l'ora: quasi sempre `fuso`. */
+  clock: LocalClock;
   location: Location | null;
   /** Se falso valgono le coordinate della località, non quelle nei campi. */
   refineCoordinates: boolean;
@@ -32,6 +36,7 @@ export function emptyBirthInput(): BirthInput {
     date: '',
     time: '',
     timeUnknown: false,
+    clock: 'fuso',
     location: null,
     refineCoordinates: false,
     latitude: '',
@@ -85,6 +90,7 @@ export function birthFromParameters(
   input.date = parametri.get('date') ?? '';
   input.time = parametri.get('time') ?? '';
   input.timeUnknown = input.time === '';
+  input.clock = orologioDa(parametri.get('clock'));
   input.location = location;
   resetCoordinates(input);
 

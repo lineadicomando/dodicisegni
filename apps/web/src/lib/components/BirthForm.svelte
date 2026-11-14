@@ -3,6 +3,7 @@
   import { resetCoordinates, type BirthInput } from '#lib/birth.js';
   import LocationSearch from '#lib/components/LocationSearch.svelte';
   import { distanceKm, formatCoordinateDMS, parseCoordinate } from '#lib/coordinates.js';
+  import { OROLOGI } from '#lib/orologi.js';
 
   interface Props {
     value: BirthInput;
@@ -53,6 +54,29 @@
       <input type="checkbox" bind:checked={value.timeUnknown} />
       <span>Ora sconosciuta</span>
     </label>
+    <!--
+      Un interruttore e non un menu sempre in vista: riguarda le nascite di
+      prima dell'ora unica, e a tutte le altre non deve chiedere niente.
+    -->
+    <label class="interruttore">
+      <input
+        type="checkbox"
+        checked={value.clock !== 'fuso'}
+        disabled={value.timeUnknown}
+        onchange={(evento) => {
+          value.clock = evento.currentTarget.checked ? 'tempo-medio-locale' : 'fuso';
+        }}
+      />
+      <span>Ora di un orologio locale</span>
+    </label>
+    {#if value.clock !== 'fuso' && !value.timeUnknown}
+      <label for="orologio" class="nascosto">Orologio</label>
+      <select id="orologio" bind:value={value.clock}>
+        {#each OROLOGI.filter((orologio) => orologio.value !== 'fuso') as orologio (orologio.value)}
+          <option value={orologio.value}>{orologio.label}</option>
+        {/each}
+      </select>
+    {/if}
   </div>
 
   <LocationSearch selected={value.location} onselect={selectLocation} />
@@ -124,6 +148,16 @@
       {/if}
     </div>
   </div>
+{/if}
+
+{#if value.clock !== 'fuso' && !value.timeUnknown}
+  <p class="nota">
+    L'ora è letta sul meridiano del luogo e non sul fuso: quattro minuti per
+    ogni grado di longitudine{value.clock === 'tempo-vero-locale'
+      ? ", più l'equazione del tempo, che è lo scarto fra la meridiana e l'orologio"
+      : ''}. Serve alle nascite di prima dell'ora unica: il perché è in
+    <a href="/metodo#tempo-medio">Metodo</a>.
+  </p>
 {/if}
 
 {#if value.timeUnknown}

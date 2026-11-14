@@ -50,6 +50,19 @@ describe('readBirth', () => {
     });
   });
 
+  it("legge l'orologio dell'ora, e ne rifiuta uno sconosciuto", () => {
+    const { birth } = readBirth(params(`date=1850-06-01&time=12:00&clock=tempo-vero-locale&${NAPOLI}`));
+    expect(birth.clock).toBe('tempo-vero-locale');
+
+    // Senza, la nascita non lo porta: il fuso è il caso ordinario.
+    expect(readBirth(params(`date=1850-06-01&time=12:00&${NAPOLI}`)).birth).not.toHaveProperty('clock');
+
+    const errore = capture(() => readBirth(params(`date=1850-06-01&time=12:00&clock=siderale&${NAPOLI}`)));
+    expect(errore.status).toBe(400);
+    expect(errore.body.code).toBe('OROLOGIO_NON_VALIDO');
+    expect(errore.body.message).toContain('tempo-medio-locale');
+  });
+
   it('pretende la data', () => {
     const result = capture(() => readBirth(params(NAPOLI)));
 

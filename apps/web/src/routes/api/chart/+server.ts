@@ -15,6 +15,14 @@ import type { RequestHandler } from './$types';
  * `timezone`; la terna dev'essere completa, perché senza fuso orario non è
  * possibile convertire l'ora locale in Tempo Universale.
  *
+ * `clock` dice su quale orologio l'ora è stata letta: `fuso` (default, l'ora
+ * civile), `tempo-medio-locale` (il meridiano del luogo, quattro minuti per
+ * grado) o `tempo-vero-locale` (la meridiana: il medio più l'equazione del
+ * tempo). Gli ultimi due servono alle nascite di prima dell'ora unica, e con
+ * loro il fuso non entra nel conto: `chart.time` porta allora `clock` e, per
+ * il tempo vero, `equationOfTimeMinutes`. Vale su ogni rotta che parte da una
+ * nascita. Un altro valore è `OROLOGIO_NON_VALIDO`.
+ *
  * Con `zodiac=siderale` le longitudini si contano dalle stelle fisse invece
  * che dal punto vernale: oltre ventiquattro gradi di differenza, quasi un
  * segno. `ayanamsa` sceglie la convenzione — `lahiri` (default),

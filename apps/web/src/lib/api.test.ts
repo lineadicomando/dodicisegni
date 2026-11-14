@@ -111,6 +111,19 @@ describe('chartParameters', () => {
     expect(() => chartParameters(input, OPZIONI)).toThrow(RequestError);
   });
 
+  it("scrive l'orologio solo quando non è quello del fuso, e solo se l'ora c'è", () => {
+    const input = nascita();
+    expect(chartParameters(input, OPZIONI).has('clock')).toBe(false);
+
+    input.clock = 'tempo-medio-locale';
+    expect(chartParameters(input, OPZIONI).get('clock')).toBe('tempo-medio-locale');
+    // Ciò che il client scrive, il server lo rilegge uguale.
+    expect(readBirth(chartParameters(input, OPZIONI)).birth.clock).toBe('tempo-medio-locale');
+
+    input.timeUnknown = true;
+    expect(chartParameters(input, OPZIONI).has('clock')).toBe(false);
+  });
+
   describe('lo zodiaco', () => {
     it('non scrive il tropicale, che è quel che dice un parametro assente', () => {
       const parameters = chartParameters(nascita(), { ...OPZIONI, zodiac: 'tropicale' });

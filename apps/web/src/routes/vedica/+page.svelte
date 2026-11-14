@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { orologioLetto } from '#lib/orologi.js';
   import type {
     AyanamsaId,
     DashaYear,
@@ -152,7 +153,7 @@
     const ora = carta.time.timeKnown ? ` · ${carta.input.time}` : ' · ora ignota';
     const ayanamsaDetto = carta.ayanamsa ? ` · ayanamsa ${carta.ayanamsa.name}` : '';
     return (
-      `${carta.input.date}${ora} · ${carta.input.timezone}` +
+      `${carta.input.date}${ora} · ${orologioLetto(carta.time, carta.input.timezone)}` +
       `${ayanamsaDetto} · case a segni interi · effemeridi ${carta.ephemerisMode}`
     );
   }

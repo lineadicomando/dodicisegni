@@ -115,6 +115,15 @@ function setZodiac(parameters: URLSearchParams, options: ChartOptionsInput): voi
 }
 
 /**
+ * L'orologio dell'ora di nascita, scritto solo quando non è quello del fuso:
+ * è il caso ordinario, e un indirizzo che lo ripetesse sarebbe più lungo
+ * senza dire niente. Senza l'ora non c'è niente da leggere su nessun orologio.
+ */
+function setClock(parameters: URLSearchParams, birth: BirthInput): void {
+  if (!birth.timeUnknown && birth.clock !== 'fuso') parameters.set('clock', birth.clock);
+}
+
+/**
  * Compone i parametri di `/api/chart`.
  *
  * `locationId` viaggia sempre insieme alle coordinate corrette, quando ci
@@ -138,6 +147,7 @@ export function chartParameters(
   if (options.dignitySchool) parameters.set('dignitySchool', options.dignitySchool);
 
   if (!birth.timeUnknown && birth.time) parameters.set('time', birth.time);
+  setClock(parameters, birth);
 
   const refined = refinedCoordinates(birth);
   if (refined) {
@@ -241,6 +251,7 @@ export function jyotishaParameters(
   });
 
   if (!birth.timeUnknown && birth.time) parameters.set('time', birth.time);
+  setClock(parameters, birth);
   if (options.vargas.includes('d2')) parameters.set('hora', options.hora);
 
   const refined = refinedCoordinates(birth);

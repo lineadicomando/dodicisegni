@@ -48,6 +48,7 @@ porta il nome del file.
 | 48, `48-contorno.md` | `2aaff7b` |
 | 28, `28-seo.md` | `acc68d7` |
 | 34, `34-doppia-licenza.md` | `acc68d7` |
+| 50, `50-tempo-del-luogo.md` | `73fccb5` |
 
 ## Le versioni
 
@@ -89,6 +90,7 @@ cambia muove la seconda cifra.
 | 0.24.0 | un'ora data prima dell'ora unica porta l'avvertenza che è stata letta come tempo medio della città del fuso; `/metodo#tempo-medio` | 42 |
 | 0.25.0 | oltre mille righe `find_transit_passages`, `find_active_transits`, `find_sky_events` e il testo compatto delle tre rotte gemelle rispondono `RISPOSTA_TROPPO_LUNGA`; il JSON delle rotte resta senza tetto | 43 |
 | 0.26.0 | il corso nel segno cerca gli ingressi con le effemeridi chieste e non con quelle predefinite (un minuto di differenza nel fascicolo, `oraria.json`); orbite non finite o negative, ordini di dasha fuori da 1–3 e giorni giuliani non finiti si rifiutano; `normalize360` non rende più 360; la riga di comando ha il tetto di tre anni | 47 |
+| 0.26.1 | l'ora di nascita si può leggere sul tempo medio o sul tempo vero del luogo: `clock` su rotte e MCP, `--orologio` sulla riga di comando, un interruttore nel modulo | 50 |
 
 ## Le sessioni
 
@@ -261,3 +263,18 @@ cambia muove la seconda cifra.
   fermo, e `ruota` e `lettura` restano AGPL come il resto (in
   `docs/decisioni.md`). La 33, che serve a dodicicase, resta aperta ma non ha
   più fretta.
+- **14 novembre 2026, pomeriggio.** Chiusa la voce 50 (0.26.1), col tempo
+  medio e col tempo vero come ha chiesto il proprietario. È un'opzione della
+  nascita, `clock`, accanto al fuso e non al suo posto: il fuso serve ancora a
+  tutto il resto (gli archi, le ore scritte dei transiti), e un valore
+  speciale al suo posto li avrebbe rotti. `ResolvedTime` porta `clock` solo
+  quando non è `fuso`, quindi nessuna risposta di prima cambia: terza cifra,
+  e il fascicolo guadagna `orologio.json` senza toccare gli altri. Il tempo
+  vero usa `swe_time_equ`, esposta in `equationOfTimeMinutes`; equazione e
+  scarto del meridiano sono arrotondati al secondo, perché fra i file `.se1`
+  e Moshier corrono centesimi che avrebbero dato due giorni giuliani diversi
+  su due macchine. Vale per le nascite (ogni rotta e tool che ne parte, e il
+  prompt di lettura); un istante senza luogo lo rifiuta con
+  `OROLOGIO_NON_VALIDO`. Provato sul server compilato e nel browser: Lecce
+  1850, 23 e 26 minuti prima della lettura col fuso, Ascendente spostato di
+  quattro gradi e mezzo e di cinque.
