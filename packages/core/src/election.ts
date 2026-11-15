@@ -448,9 +448,10 @@ function rulerOfDay(sunrise: number, longitude: number): BodyId {
 /**
  * Il reggitore dell'ora numero `offset` del giorno, secondo l'ordine caldeo.
  *
- * L'ordine è quello delle velocità apparenti decrescenti — Saturno, Giove,
- * Marte, Sole, Venere, Mercurio, Luna — e la prima ora del giorno è retta dal
- * pianeta del giorno. Ventiquattro ore dopo la catena si è spostata di tre
+ * L'ordine è quello dei cieli, dal più alto (`CHALDEAN_ORDER`) — Saturno,
+ * Giove, Marte, Sole, Venere, Mercurio, Luna — e la prima ora del giorno è
+ * retta dal pianeta del giorno. Lilly (p. 482) fa l'esempio della domenica:
+ * ☉, ♀, ☿, ☽, ♄, ♃ per le prime sei ore, e la Luna alla prima del lunedì. Ventiquattro ore dopo la catena si è spostata di tre
  * posizioni: è il motivo per cui i giorni della settimana hanno l'ordine che
  * hanno, e non quello dei pianeti.
  */

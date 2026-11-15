@@ -27,10 +27,14 @@ export const ZODIAC_SIGNS: readonly ZodiacSign[] = [
 /**
  * L'elemento di ciascun segno: la triplicità.
  *
- * Non è interpretazione ma classificazione, e su questa non esiste scuola che
- * dissenta — l'Ariete è di fuoco da Tolomeo in poi. Quel che è interpretazione
- * comincia un passo più in là, quando dal conteggio si tirano conclusioni: e
- * quello il motore non lo fa.
+ * Non è interpretazione ma classificazione, e i quattro gruppi sono gli
+ * stessi in ogni scuola del repo: i triangoli di Tolomeo (I.18, Robbins
+ * p. 83, che li nomina per il sesso dei segni e per i venti, non per gli
+ * elementi), i triangoli di Valente, le triplicità di Bonatti (tratt. II,
+ * cap. XI, ff. 17r-17v, coi nomi: «igneum», «terreum», «aereum»,
+ * «aquaticum») e di Lilly. Quel che è interpretazione comincia un passo più
+ * in là, quando dal conteggio si tirano conclusioni: e quello il motore non
+ * lo fa.
  */
 export const SIGN_ELEMENT: Readonly<Record<ZodiacSign, Element>> = {
   ariete: 'fuoco',
@@ -47,7 +51,12 @@ export const SIGN_ELEMENT: Readonly<Record<ZodiacSign, Element>> = {
   pesci: 'acqua',
 };
 
-/** La modalità di ciascun segno: la quadruplicità. */
+/**
+ * La modalità di ciascun segno: la quadruplicità. I gruppi sono quelli di
+ * Lilly, *Christian Astrology*, p. 88: «♈ ♋ ♎ ♑ are called moveable and
+ * Cardinall», i fissi «♉ ♌ ♏ ♒», i comuni «♊ ♍ ♐ ♓». Il suo «moveable» è il
+ * cardinale, e la terza si chiama mutevole (`CLAUDE.md`, *Stile*).
+ */
 export const SIGN_MODALITY: Readonly<Record<ZodiacSign, Modality>> = {
   ariete: 'cardinale',
   cancro: 'cardinale',
@@ -193,8 +202,12 @@ export const DEFAULT_PASSAGE_BODIES: readonly BodyId[] = DEFAULT_TRANSIT_BODIES.
 );
 
 /**
- * L'ordine caldeo: i sette pianeti classici per velocità apparente decrescente
- * vista dalla Terra.
+ * L'ordine caldeo: i sette pianeti classici dal cielo più alto al più basso,
+ * da Saturno alla Luna. Lilly lo elenca così per le ore planetarie
+ * (*Christian Astrology*, cap. XCVII, p. 482: «Saturne, Jupiter, Mars, Sol,
+ * Venus, Mercury, Luna»), e Bonatti lo dà come ordine dei cerchi (tratt. II,
+ * cap. IV, f. 14v). Non è un ordine di velocità: Saturno è il più lento, e
+ * Sole, Venere e Mercurio compiono il giro in un anno tutti e tre.
  *
  * Regge la successione delle ore planetarie. Ventiquattro ore avanzano di tre
  * posizioni nella catena, ed è da questo scarto che nasce l'ordine dei giorni
@@ -211,7 +224,9 @@ export const CHALDEAN_ORDER: readonly BodyId[] = [
 ];
 
 /**
- * Il pianeta che regge ciascun giorno della settimana, da domenica a sabato.
+ * Il pianeta che regge ciascun giorno della settimana, da domenica a sabato:
+ * Lilly, *Christian Astrology*, p. 482, «as to Sunday, ☉; to Monday, ☽ …
+ * to Saturday, ♄».
  *
  * L'ordine sopravvive intatto nei nomi italiani dei giorni — lunedì la Luna,
  * martedì Marte, fino a sabato che è il giorno di Saturno sotto il nome del

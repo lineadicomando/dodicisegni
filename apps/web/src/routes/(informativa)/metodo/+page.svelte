@@ -350,11 +350,12 @@
 <h2 id="distribuzione">La distribuzione fra elementi e modalità</h2>
 
 <p>
-  Che l'Ariete sia di fuoco non è interpretazione ma classificazione, e su
-  quella non c'è scuola che dissenta da Tolomeo in poi. Il punto delicato è
-  <strong>decidere che cosa contare</strong>. Includere gli assi? La
-  Parte di Fortuna? I Nodi? Le scuole non concordano, e un totale solo
-  nasconderebbe la scelta dentro un numero.
+  Che l'Ariete sia di fuoco non è interpretazione ma classificazione, e i
+  quattro gruppi di segni sono gli stessi in ogni scuola: Tolomeo li chiama
+  triangoli e li distingue per i venti, Bonatti e Lilly per gli elementi.
+  Il punto delicato è <strong>decidere che cosa contare</strong>. Includere
+  gli assi? La Parte di Fortuna? I Nodi? Le scuole non concordano, e un
+  totale solo nasconderebbe la scelta dentro un numero.
 </p>
 
 <p>
@@ -431,7 +432,8 @@
 
 <p>
   La successione dei reggitori segue l'ordine caldeo, cioè i sette pianeti
-  classici per velocità apparente decrescente. Ventiquattro ore avanzano di tre
+  classici dal cielo più alto al più basso, da Saturno alla Luna, come li
+  elenca Lilly nel capitolo sulle ore planetarie. Ventiquattro ore avanzano di tre
   posizioni nella catena, e da questo scarto nasce l'ordine dei giorni della
   settimana: non è quello dei pianeti, e sopravvive intatto nei nomi italiani
   dei giorni.

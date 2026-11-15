@@ -337,3 +337,20 @@ si è arrivati. Le tavole delle voci chiuse e delle versioni sono in
   e Mercurio); le due sentenze di Alcabizio a p. 168, che la trascrizione
   del 30 ottobre in parte saltava e che il codice non calcola
   (`docs/decisioni.md`).
+- **15 novembre 2026, dopo Bonatti.** Voce 49, prima riga, il filo comune.
+  `dignita-tema.ts` non ha costanti: applica le tavole delle scuole, e
+  `CONTATE` e `FONTE_RICEZIONI` tornano con `docs/decisioni.md` (comuni per
+  Tolomeo e Valente, sue per Lilly e Bonatti). In `constants.ts` le costanti
+  di dottrina sono quattro. Le modalità combaciano con Lilly p. 88 (già
+  salvata); ora il commento cita la pagina. L'ordine caldeo e i reggenti dei
+  giorni non avevano una pagina: letta e salvata Lilly p. 482 (cap. XCVII,
+  PDF p. 516, lo scarto +34 vale ancora), che dà l'ordine, i giorni e
+  l'esempio della domenica, e combaciano anche con `chaldeanRuler`. Due
+  affermazioni senza fonte, nel codice e su `/metodo`: l'ordine caldeo «per
+  velocità apparente decrescente» (comincia da Saturno, il più lento, e
+  Sole, Venere e Mercurio hanno lo stesso anno: è l'ordine dei cieli, come
+  in Bonatti, tratt. II, cap. IV) e «l'Ariete è di fuoco da Tolomeo in poi»
+  (Tolomeo, I.18, p. 83, forma gli stessi triangoli ma non li nomina per
+  elemento; i nomi sono in Bonatti, cap. XI). Corrette tutte e due; nessuna
+  risposta cambia, la versione resta 0.28.0. `MEAN_DAILY_MOTION` non è
+  dottrina: serve solo al passo di campionamento in `roots.ts`.
