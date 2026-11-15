@@ -100,3 +100,4 @@ cambia muove la seconda cifra.
 | 0.26.0 | il corso nel segno cerca gli ingressi con le effemeridi chieste e non con quelle predefinite (un minuto di differenza nel fascicolo, `oraria.json`); orbite non finite o negative, ordini di dasha fuori da 1–3 e giorni giuliani non finiti si rifiutano; `normalize360` non rende più 360; la riga di comando ha il tetto di tre anni | 47 |
 | 0.26.1 | l'ora di nascita si può leggere sul tempo medio o sul tempo vero del luogo: `clock` su rotte e MCP, `--orologio` sulla riga di comando, un interruttore nel modulo | 50 |
 | 0.27.0 | l'oraria di Lilly riporta per sestile e trigono la terza condizione di p. 125: nessun quadrato o opposizione di un altro pianeta a un significatore prima della perfezione, la Luna cosignificatrice esclusa (una lettura in più in `oraria.json`) | 51 |
+| 0.28.0 | la riga dei termini di Bonatti (`termsSource`) cita per il Leone la fine del cap. XIV, dove il passo sta, e non il cap. XV | 49 |

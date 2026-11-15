@@ -113,8 +113,8 @@ describe('i termini di Bonatti, cap. XIV', () => {
       if (ZODIAC_SIGNS[Math.floor(grado / 30)] === 'leone') continue;
       expect(bonattiTermRuler(grado)).toBe(ptolemyTermRuler(grado));
     }
-    // Cap. XV: «primus terminus leonis assignatus fuit saturno … in leone
-    // ubi iupiter locatur postremus».
+    // Fine del cap. XIV (f. 20r): «primus terminus leonis assignatus fuit
+    // saturno … in leone ubi iupiter locatur postremus».
     expect(bonattiTermRuler(lon('leone', 0))).toBe('saturno');
     expect(bonattiTermRuler(lon('leone', 29))).toBe('giove');
     expect(ptolemyTermRuler(lon('leone', 0))).toBe('giove');

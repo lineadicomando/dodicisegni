@@ -317,3 +317,23 @@ si è arrivati. Le tavole delle voci chiuse e delle versioni sono in
   ogni file e nome citato dalle voci 33 e 49 esista. In `texts/INDICE.md`
   tre rimandi alla vecchia sezione *Esaminato* del TODO puntano ora a
   `docs/esaminato.md`.
+- **15 novembre 2026, dopo il riordino.** Voce 49, prima riga, scuola di
+  Bonatti. Riletti sulle immagini della stampa del 1491 i capp. V-XVII del
+  tratt. II (ff. 14v-21r) e il tratt. III alle pp. 158-159 e 167-168. I
+  valori combaciano tutti: domicili, esili, le nove esaltazioni col grado
+  (ritagliate e ingrandite), cadute, le quattro triplicità coi tre signori,
+  le sessanta celle dei termini con le somme stampate, le facce nel testo e
+  nella tavola di 21r, la regola dell'applicazione (l'esempio di p. 158 sta
+  proprio a sei gradi) e della ricezione, coi numeri degli esempi di p. 168.
+  Un difetto: il passo sul Leone («primus terminus leonis assignatus fuit
+  saturno») è la fine del cap. XIV, prima del titolo del XV, e
+  `BONATTI_TERMS_SOURCE` diceva «cap. XV». Corretto; il fascicolo canonico
+  cambia in una riga (`dignita.json`, `termsSource`) e la versione passa a
+  0.28.0. Tre letture dichiarate nel commento, nessuna risposta cambia per
+  loro: l'esaltazione sul segno intero (p. 168, la Luna a 3° dell'Ariete
+  ricevuta dal Sole «de exaltatione sua»); l'ordine dei pesi, che il passo
+  dell'applicazione non scrive e il cap. IV del tratt. II (f. 14v) sì, coi
+  cerchi da Saturno alla Luna (i periodi da soli non separano Sole, Venere
+  e Mercurio); le due sentenze di Alcabizio a p. 168, che la trascrizione
+  del 30 ottobre in parte saltava e che il codice non calcola
+  (`docs/decisioni.md`).

@@ -116,7 +116,11 @@ codice rimandano qui con «`docs/decisioni.md`».
   `corso.ts` non serve (`bonattiReceptionsOf` in `dignita-bonatti.ts`). Il
   5-4-5-3 del signore dell'anno non diventa un punteggio delle dignità. Il
   resto non era una scelta: le tavole sono quelle stampate, e nel Leone la
-  tavola e il testo di Bonatti concordano.
+  tavola e il testo di Bonatti concordano. Le due sentenze di Alcabizio che
+  Bonatti riferisce senza respingerle (p. 168: basta una dignità qualunque;
+  il pianeta nella sua dignità dà forza a chi gli si congiunge) non entrano:
+  sono di Alcabizio, e mescolarle farebbe un ibrido. Lo dice il commento a
+  `bonattiReceptionsOf` (revisione del 15 novembre 2026).
 
 - **La scuola di Tolomeo segue la tavola greca di Robbins com'è stampata.**
   Scelto dal proprietario il 29 ottobre 2026, con la voce 19. I termini

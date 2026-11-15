@@ -58,7 +58,7 @@ export const BONATTI_SOURCE =
 export const BONATTI_TERMS_SOURCE =
   'Termini: tavola del cap. XIV (f. 19v), quelli che Bonatti dice di Tolomeo, con le somme dei termini egizi ' +
   '(Saturno 57, Giove 79, Marte 66, Venere 82, Mercurio 76). Uguali alla tavola greca di Robbins in undici segni; ' +
-  'nel Leone Saturno è primo e Giove ultimo, come il cap. XV spiega e come Tolomeo scrive a p. 105.';
+  'nel Leone Saturno è primo e Giove ultimo, come la fine del cap. XIV spiega (f. 20r) e come Tolomeo scrive a p. 105.';
 
 /** I sette pianeti, gli unici a cui Bonatti dà domicili, triplicità, termini e facce. */
 export const BONATTI_PLANETS = [
@@ -134,9 +134,10 @@ const TRIPLICITA: Readonly<
  * qui sommati). Il tratto comprende il suo inizio ed esclude la fine, come
  * negli altri pacchetti.
  *
- * Nel Leone la tavola mette Saturno primo e Giove ultimo, e il cap. XV (f.
- * 20r) lo dice: «primus terminus leonis assignatus fuit saturno … preter
- * quam in leone ubi iupiter locatur postremus». Non è un refuso, ed è la
+ * Nel Leone la tavola mette Saturno primo e Giove ultimo, e la fine del
+ * cap. XIV (f. 20r, prima del titolo del XV) lo dice: «primus terminus leonis
+ * assignatus fuit saturno … preter quam in leone ubi iupiter locatur
+ * postremus». Non è un refuso, ed è la
  * sola differenza dalla tavola greca di Robbins in `dignita-tolomeo.ts`.
  */
 const TERMINI: Readonly<Record<ZodiacSign, readonly (readonly [BonattiPlanet, number])[]>> = {
@@ -234,7 +235,9 @@ export function bonattiRulersAt(longitude: number, sect: Sect | undefined): Bona
  * Le dignità e le debilità di un corpo nel grado in cui sta. La triplicità
  * vale per tutti e tre i signori, senza bisogno della setta (vedi
  * `TRIPLICITA`). L'esaltazione vale per tutto il segno, e il grado sta in
- * `bonattiExaltation`.
+ * `bonattiExaltation`: è la lettura degli esempi della ricezione (tratt. III,
+ * PDF p. 168), dove la Luna a 3° dell'Ariete è ricevuta dal Sole «de
+ * exaltatione sua», sedici gradi prima del 19.
  *
  * I Nodi hanno solo esaltazione e caduta; Urano, Nettuno, Plutone e gli altri
  * punti in Bonatti non ci sono, e ricevono un elenco vuoto.
@@ -258,8 +261,11 @@ export function bonattiDignitiesOf(body: BodyId, longitude: number): BonattiDign
  * Dal più leggero al più pesante: l'ordine delle sfere, dalla Luna a
  * Saturno. Il passo (tratt. III, parte 2, cap. 4, PDF p. 158) dice che il
  * leggero si applica sempre al pesante, «donec perueniatur ad saturnum», che
- * non si applica a nessuno; il resto dell'ordine non lo scrive, e questo è
- * quello delle sfere, dichiarato in `BONATTI_RECEPTION_SOURCE`.
+ * non si applica a nessuno; il resto dell'ordine lì non lo scrive. Lo scrive
+ * il tratt. II, parte 2, cap. IV (f. 14v): i cerchi da Saturno, «primus et
+ * altior», a quello della Luna, «inferior … et terre propinquior». I periodi
+ * dello stesso capitolo non bastano: il Sole, Venere e Mercurio compiono il
+ * loro corso tutti in un anno, e li separa solo l'ordine dei cerchi.
  */
 export const BONATTI_WEIGHT_ORDER = [
   'luna',
@@ -331,6 +337,14 @@ export function bonattiReceptionBy(receiver: BodyId, longitude: number): Recepti
  * Le ricezioni di Bonatti fra i sette pianeti: il più pesante riceve il più
  * leggero che si applica a lui, se questi sta nelle sue dignità. Non ci sono
  * ricezioni mutue: l'applicazione va in un verso solo.
+ *
+ * È la regola che Bonatti dà come sua («Hoc quidem verum est», PDF p. 167).
+ * A p. 168 riferisce due sentenze di Alcabizio, senza respingerle («non
+ * infringo nec dico esse abiciendam»): che basti una dignità qualunque, e che
+ * un pianeta nella sua dignità, congiunto a un altro che vi abbia una dignità,
+ * gli dia la sua forza (l'esempio di Marte a 5° e Giove a 9° dell'Ariete, dove
+ * dà il più leggero). Non sono calcolate: sono di Alcabizio, e la scuola è
+ * quella di Bonatti (`docs/decisioni.md`).
  */
 export function bonattiReceptionsOf(bodies: readonly CelestialBody[]): Reception[] {
   const pianeti = BONATTI_WEIGHT_ORDER.flatMap((id) => bodies.filter((body) => body.id === id));

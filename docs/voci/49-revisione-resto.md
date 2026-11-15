@@ -23,7 +23,7 @@ niente. Chiusa una riga, la si segna qui sotto e la si toglie dall'elenco.
 | 1a. Lilly: `dignita-lilly.ts`, `condizioni-lilly.ts`, `oraria-lilly.ts`, `dignita.ts` p. 104 | fatta il 14 novembre 2026: un difetto, voce 51 → 0.27.0 |
 | 1b. Tolomeo: `dignita-tolomeo.ts`, `dignita.ts` I.17 e I.19, Firmico p. 44, Leo p. 117 | fatta il 15 novembre 2026: niente da correggere |
 | 1c. Valente: `dignita-valente.ts`, `dignita.ts` I.2 | fatta il 15 novembre 2026: una lettura dichiarata nel commento |
-| 1d. Bonatti | da fare |
+| 1d. Bonatti: `dignita-bonatti.ts`, tratt. II capp. IV-XVII, tratt. III pp. 158-159 e 167-168 | fatta il 15 novembre 2026: una citazione sbagliata → 0.28.0, tre letture dichiarate nel commento |
 | 1e. Il filo comune | da fare |
 | 1f. Il Jyotisha | da fare |
 | 2–9 | da fare |
@@ -41,9 +41,6 @@ I file senza cartella stanno in `packages/core/src/`.
    `docs/sessioni.md` (cercare «Voce 49, prima riga»). Una lettura che il
    codice segue senza dirlo si dichiara nel commento, con il luogo che la
    regge; se il testo non la regge, è un difetto. Restano:
-   - *Bonatti*: `dignita-bonatti.ts` (gotico: l'OCR non orienta; la mappa
-     fra fogli e pagine del PDF è nella `FONTE.md` della fonte, e le pagine
-     dei capp. V-XVII sono già in `pagine/`);
    - *il filo comune*: `dignita-tema.ts`, `constants.ts`;
    - *Jyotisha*: `dignita-parashara.ts`, `maitri.ts`, `vimshopaka.ts`,
      `varga-buoni.ts`, `arudha.ts`, `arudha-graha.ts`.

@@ -1655,7 +1655,7 @@
     "bonatti": {
       "school": "bonatti",
       "source": "Bonatti, Decem tractatus astronomiae (Ratdolt 1491), tratt. II, parte 2: domicili cap. VI, esilio cap. VII, esaltazioni col grado e i Nodi cap. VIII, cadute cap. X, triplicità coi tre signori cap. XI, termini cap. XIV, facce caldee cap. XVII (ff. 14v-21r); niente punteggio.",
-      "termsSource": "Termini: tavola del cap. XIV (f. 19v), quelli che Bonatti dice di Tolomeo, con le somme dei termini egizi (Saturno 57, Giove 79, Marte 66, Venere 82, Mercurio 76). Uguali alla tavola greca di Robbins in undici segni; nel Leone Saturno è primo e Giove ultimo, come il cap. XV spiega e come Tolomeo scrive a p. 105.",
+      "termsSource": "Termini: tavola del cap. XIV (f. 19v), quelli che Bonatti dice di Tolomeo, con le somme dei termini egizi (Saturno 57, Giove 79, Marte 66, Venere 82, Mercurio 76). Uguali alla tavola greca di Robbins in undici segni; nel Leone Saturno è primo e Giove ultimo, come la fine del cap. XIV spiega (f. 20r) e come Tolomeo scrive a p. 105.",
       "bodies": [
         {
           "id": "sole",
