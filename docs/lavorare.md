@@ -1,7 +1,8 @@
 # Come si lavora qui
 
 Le cose da sapere prima di toccare il codice, che `CLAUDE.md` non dice:
-gli inciampi noti e il metodo con cui si sono lette le fonti.
+gli inciampi noti, il metodo con cui si sono lette le fonti e come si
+chiude e si apre una voce del `TODO.md`.
 
 ## Le fonti
 
@@ -167,3 +168,20 @@ Nelle scuole occidentali le superfici sono quelle del tema tropicale e del
 cielo, che porta la scuola anche senza nascita (`/api/sky`, `compute_sky`,
 la pagina Cielo): l'elenco completo, con quello che nessun test controlla,
 sta nel commento in testa a `packages/core/src/dignita-tema.ts`.
+
+## Chiudere e aprire una voce
+
+Chiudere: togliere la riga dal `TODO.md`, `git rm` del suo file in
+`docs/voci/`, e segnare
+
+- in `docs/storia.md` una riga nella tavola delle voci chiuse, col commit
+  **prima** della chiusura (quello in cui il file si legge ancora: una voce
+  aperta e chiusa nella stessa sessione vuole quindi due commit) e, se la
+  versione si muove, la riga nella tavola delle versioni;
+- in `docs/sessioni.md` che cosa si è scelto e misurato;
+- in `docs/decisioni.md` le scelte che restano valide;
+- nel `TODO.md`, *Dove siamo*.
+
+Aprire: il contrario, col numero dopo l'ultimo (il `TODO.md` dice quale), e
+un file in `docs/voci/<numero>-<nome>.md` che dica priorità, come
+riprodurre, quale cifra muove e come si verifica.

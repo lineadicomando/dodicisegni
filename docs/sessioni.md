@@ -354,3 +354,11 @@ si è arrivati. Le tavole delle voci chiuse e delle versioni sono in
   elemento; i nomi sono in Bonatti, cap. XI). Corrette tutte e due; nessuna
   risposta cambia, la versione resta 0.28.0. `MEAN_DAILY_MOTION` non è
   dottrina: serve solo al passo di campionamento in `roots.ts`.
+- **15 novembre 2026, riordino dopo il filo comune.** `TODO.md` riallineato
+  (0.28.0 pushata, sito ancora alla 0.26.1, si riprende dalla riga 1f della
+  voce 49). Per leggere meno a ogni ripresa: la procedura per chiudere e
+  aprire una voce passa dal `TODO.md` a `docs/lavorare.md`, e nella voce 49
+  le scuole fatte stanno in una riga dello *Stato*, coi sei file del
+  Jyotisha e le loro fonti nella riga dopo. Verificato che ogni file e nome
+  citato da `TODO.md` e dalle voci 33 e 49 esista; fuori dal repo restano
+  solo i nomi del server (voce 33).

@@ -19,13 +19,8 @@ niente. Chiusa una riga, la si segna qui sotto e la si toglie dall'elenco.
 
 | Riga | Stato |
 |---|---|
-| 1. Tavole e regole di dottrina | in corso, una scuola per sessione (sotto) |
-| 1a. Lilly: `dignita-lilly.ts`, `condizioni-lilly.ts`, `oraria-lilly.ts`, `dignita.ts` p. 104 | fatta il 14 novembre 2026: un difetto, voce 51 → 0.27.0 |
-| 1b. Tolomeo: `dignita-tolomeo.ts`, `dignita.ts` I.17 e I.19, Firmico p. 44, Leo p. 117 | fatta il 15 novembre 2026: niente da correggere |
-| 1c. Valente: `dignita-valente.ts`, `dignita.ts` I.2 | fatta il 15 novembre 2026: una lettura dichiarata nel commento |
-| 1d. Bonatti: `dignita-bonatti.ts`, tratt. II capp. IV-XVII, tratt. III pp. 158-159 e 167-168 | fatta il 15 novembre 2026: una citazione sbagliata → 0.28.0, tre letture dichiarate nel commento |
-| 1e. Il filo comune: `dignita-tema.ts`, `constants.ts` | fatta il 15 novembre 2026: due affermazioni senza fonte corrette nei commenti e su `/metodo`, tre costanti con la pagina |
-| 1f. Il Jyotisha | da fare |
+| 1a-1e. Lilly, Tolomeo, Valente, Bonatti, il filo comune (`dignita-tema.ts`, `constants.ts`) | fatte il 14 e 15 novembre 2026: due difetti (voce 51 → 0.27.0; una citazione di Bonatti → 0.28.0), le letture dichiarate nei commenti. Il racconto in `docs/sessioni.md`, «Voce 49, prima riga» |
+| 1f. Il Jyotisha: `dignita-parashara.ts`, `maitri.ts`, `vimshopaka.ts`, `varga-buoni.ts`, `arudha.ts`, `arudha-graha.ts` | **la prossima**. Le fonti: il BPHS di Santhanam (`texts/jyotisha/bphs-santhanam-1992-vol1` e `-vol2`) per i primi cinque; Narasimha Rao, *Integrated Approach* (`narasimha-rao-vedic-astrology-integrated-approach-2000`), per `arudha-graha.ts` e in parte `varga-buoni.ts`. Quali śloka e paragrafi per ogni file lo dice `texts/INDICE.md` |
 | 2–9 | da fare |
 
 ## Le righe, in ordine di quanto può costare un errore
@@ -40,9 +35,7 @@ I file senza cartella stanno in `packages/core/src/`.
    *Stato*; il racconto di ciascuna, con quello che è stato lasciato, è in
    `docs/sessioni.md` (cercare «Voce 49, prima riga»). Una lettura che il
    codice segue senza dirlo si dichiara nel commento, con il luogo che la
-   regge; se il testo non la regge, è un difetto. Restano:
-   - *Jyotisha*: `dignita-parashara.ts`, `maitri.ts`, `vimshopaka.ts`,
-     `varga-buoni.ts`, `arudha.ts`, `arudha-graha.ts`.
+   regge; se il testo non la regge, è un difetto.
 2. **Il Jyotisha, letto senza i commenti o solo per l'aritmetica**:
    `jyotisha.ts`, `dasha.ts`, `nakshatra.ts`, `stati.ts`, `varga.ts`,
    `hora.ts`, `drishti.ts`; e `corso.ts`, `aspects.ts`, `orbite.ts`,

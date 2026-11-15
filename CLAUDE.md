@@ -10,8 +10,8 @@ riga per voce. La voce intera (il file, la riga, il modo di verificarla) sta
 in `docs/voci/<numero>-<nome>.md`, e si legge solo quella su cui si lavora. In
 `docs/` c'è la memoria del lavoro, non documentazione per gli utenti:
 `decisioni.md` (le scelte già prese, da non ridiscutere), `esaminato.md` (cose
-cercate o controllate e lasciate stare), `lavorare.md` (gli inciampi noti e
-come si legge una fonte), `storia.md` (in quale commit si rilegge una voce
+cercate o controllate e lasciate stare), `lavorare.md` (gli inciampi noti,
+come si legge una fonte, come si chiude e si apre una voce), `storia.md` (in quale commit si rilegge una voce
 chiusa, che cosa ha portato ogni versione), `sessioni.md` (il racconto delle
 sessioni, da cercare per numero di voce).
 Si leggono quando servono, non tutte all'inizio.
